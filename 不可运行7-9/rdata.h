@@ -1,0 +1,55 @@
+#pragma once
+
+#include "s.h" 
+extern dd off_4AC230;
+extern dd off_4AC244;//
+extern dd off_4AC248;//
+extern dd off_4AC24C;//
+extern dd off_4AC250;//
+extern dq dbl_4AC260;//
+extern dd off_4AC2B8;//
+extern dd off_4AC2BC;//
+extern dd off_4AC2C0;//
+extern dd off_4AC2C4;//
+extern dd off_4AC2D8;//
+extern dd off_4AC2DC;//
+extern dd off_4AC2E0;//
+extern dd off_4AC2E4;//
+extern dd off_4AC2E8;//
+extern dd off_4AC2FC;//
+extern dd off_4AC300;//
+extern dd off_4AC304;//
+extern dd off_4AC318;//
+extern dd off_4AC32C;//
+extern dd off_4AC330;//
+extern dd off_4AC334;//
+extern dd off_4AC338;//
+extern dd off_4AC34C;//
+extern dd off_4AC360;//
+extern dd off_4AC364;//
+extern dd off_4AC368;//
+extern dd off_4AC36C;//
+extern dd off_4AC370;//
+extern dd off_4AC374;//
+extern dd off_4AC388;//
+extern dd off_4AC38C;//
+extern dd off_4AC3A0;//
+extern dd off_4AC3B4;//
+extern dd off_4AC3B8;//
+extern dd off_4AC3BC;//
+
+extern dq dbl_4AC3C0;//
+extern dq dbl_4AC3C8;//
+extern dq dbl_4AC540;
+
+extern char Source[];
+//extern PSCOPETABLE_ENTRY stru_4AC480;
+extern char stru_4AC480[];
+extern byte byte_4AC560[];
+extern db byte_4AC8C4;//
+extern dw SrcStr;
+extern char unk_4ACA48[];
+extern byte byte_4AFF40[];
+
+
+//----------------------------------------------

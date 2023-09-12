@@ -1,0 +1,51 @@
+#include "sub.h" 
+int sub_48A700(int thisx)
+{
+    *(_BYTE*)(thisx + 12) = 1;
+    *(_WORD*)(thisx + 10) = -1;
+    *(_DWORD*)(thisx + 44) = -1;
+    *(_DWORD*)(thisx + 40) = *(_DWORD*)(thisx + 16);
+    *(_DWORD*)(thisx + 104) = *(_DWORD*)(thisx + 20);
+    *(_DWORD*)(thisx + 108) = *(_DWORD*)(thisx + 24);
+    *(_DWORD*)(thisx + 112) = *(_DWORD*)(thisx + 28);
+    *(_DWORD*)(thisx + 140) = *(_DWORD*)(thisx + 32);
+    *(_DWORD*)(thisx + 144) = *(_DWORD*)(thisx + 36);
+    *(_BYTE*)(thisx + 148) = 0;
+    *(_DWORD*)(thisx + 152) = 0;
+    *(_DWORD*)(thisx + 156) = 0;
+    *(_DWORD*)(thisx + 52) = 0;
+    *(_DWORD*)(thisx + 56) = 0;
+    *(_DWORD*)(thisx + 60) = 0;
+    *(_DWORD*)(thisx + 96) = 0;
+    *(_DWORD*)(thisx + 100) = 0;
+    *(_BYTE*)(thisx + 48) = 0;
+    *(_DWORD*)(thisx + 92) = 0;
+    *(_DWORD*)(thisx + 80) = 0;
+    *(_BYTE*)(thisx + 84) = 0;
+    *(_BYTE*)(thisx + 76) = 0;
+    *(_BYTE*)(thisx + 86) = *(_BYTE*)(thisx + 85);
+    *(_DWORD*)(thisx + 88) = -1;
+    *(_DWORD*)(thisx + 164) = 0;
+    *(_DWORD*)(thisx + 116) = 0;
+    *(_DWORD*)(thisx + 120) = 0;
+    *(_DWORD*)(thisx + 124) = 0;
+    *(_DWORD*)(thisx + 128) = 0;
+    *(_DWORD*)(thisx + 132) = 0;
+    *(_DWORD*)(thisx + 136) = 0;
+    *(_DWORD*)(thisx + 64) = 0;
+    *(_DWORD*)(thisx + 68) = 0;
+    *(_WORD*)(thisx + 72) = 100;
+    *(_WORD*)(thisx + 74) = 100;
+    *(_BYTE*)(thisx + 224) = 0;
+    memset((void*)(thisx + 228), 0, 0x38u);
+    memset((void*)(thisx + 284), 0, 0x34u);
+    *(_DWORD*)(thisx + 332) = 83;
+    memset((void*)(thisx + 336), 0, 8u);
+    *(_BYTE*)(thisx + 346) = 0;
+    memset((void*)(thisx + 348), 0, 0x20u);
+    memset((void*)(thisx + 380), 0, 8u);
+    *(_BYTE*)(thisx + 388) = 0;
+    memset((void*)(thisx + 392), 0, 0x20u);
+    memset((void*)(thisx + 424), 0, 8u);
+    return sub_48E02B((_DWORD*)thisx);
+}

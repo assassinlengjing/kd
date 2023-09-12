@@ -1,0 +1,6 @@
+#include "sub.h"
+
+char sub_4016F0(_BYTE* thisx)
+{
+    return thisx[18];
+}

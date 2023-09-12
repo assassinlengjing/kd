@@ -1,0 +1,10 @@
+#include "sub.h" 
+_DWORD* sub_43E560(_DWORD* thisx, int a2)
+{
+    _DWORD* result; // eax
+
+    result = thisx;
+    thisx[94] = a2;
+    return result;
+}
+
