@@ -32659,9 +32659,10 @@ void sub_446442(_DWORD* thisx, int a2, int a3)
 	sub_48651C(thisx + 32, (_DWORD*)a2, (_DWORD*)a3);
 }
 
- 
+ //return thisx[7];
 int sub_446465(char* thisx)
 {
+    //return thisx[7];
     return unknown_libname_11((_DWORD*)thisx + 32);
 }
 
@@ -66296,10 +66297,10 @@ unsigned __int16* sub_48D421(int thisx, int a2)
         {
             return sub_48DD3C(thisx);
         }
-        else
+        else 
         {
             sub_49C15E((int)&v27);//初始化，赋值常数，v27是个坑啊
-            v26 = *(__int16*)(thisx + 72) * sub_446465((char*)unk_4B9B10) / 100;
+            v26 = *(__int16*)(thisx + 72) * sub_446465((char*)unk_4B9B10) / 100;//sub_446465()return thisx[7];
             if (*(_BYTE*)(thisx + 8) && *(_BYTE*)(thisx + 8) != 1)
             {
                 if (*(_BYTE*)(thisx + 8) == 2)
@@ -78553,7 +78554,7 @@ int  unknown_libname_10(_DWORD *thisx)
 {
   return thisx[8];
 }
-// Microsoft VisualC 2-14/net runtime
+// return thisx[7];
 int  unknown_libname_11(_DWORD *thisx)
 {
   return thisx[7];
