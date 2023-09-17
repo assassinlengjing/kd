@@ -1372,7 +1372,7 @@ LABEL_29:
   if ( dword_4B86B0 < dword_4B86B0 + dword_4B86B4 )
   {
     v8 = dword_4B86B4;
-    v9 = (_DWORD *)(12 * dword_4B86B0 + 4949568);
+    v9 = (_DWORD *)(12 * dword_4B86B0 + dword_4B863C[1]);// ddd 4B8640
     do
     {
       *v9 = 0;
@@ -1533,9 +1533,9 @@ int *__cdecl siglookup(int a1)
   {
     do
       result += 3;
-    while ( (unsigned int)result < 12 * (int)dword_4B86B8 + 4949560 && result[1] != a1 );
+    while ( (unsigned int)result < 12 * (int)dword_4B86B8 + dword_4B8638 && result[1] != a1 );//ddd 4B8638
   }
-  if ( (unsigned int)result >= 12 * (int)dword_4B86B8 + 4949560 || result[1] != a1 )
+  if ( (unsigned int)result >= 12 * (int)dword_4B86B8 + dword_4B8638 || result[1] != a1 )//ddd 4B8638
     return 0;
   return result;
 }
@@ -1544,6 +1544,7 @@ int *__cdecl siglookup(int a1)
 //堆栈正确
 void  start()
 {
+
   DWORD Version; // eax//获取系统版本
   int wShowWindow; // eax
   HMODULE ModuleHandleA; // eax
@@ -2745,7 +2746,7 @@ void __fastcall sub_40230C(int a1)
             if (Concurrency::details::UMSFreeVirtualProcessorRoot::GetExecutingProxy((Concurrency::details::UMSFreeVirtualProcessorRoot*)unk_4B9B10) == (struct Concurrency::details::UMSThreadProxy*)23)
             {
                 Src = *(unsigned __int8*)(a1 + 195) + dword_4B9234;
-                v42 = 8 * *(unsigned __int8*)(a1 + 193) + 4952720;
+                v42 = 8 * *(unsigned __int8*)(a1 + 193) + 4952720;//dd 4B 9290
             }
             else if (*(unsigned __int8*)(a1 + 195) < 4u && sub_41BA53(a1, 0x26u, 0) || *(_DWORD*)(a1 + 524))
             {
@@ -38573,7 +38574,7 @@ void sub_454469(_BYTE* thisx, int a2)
         v33 = 56 * (a2 % 4) + 48;
         v25 = (unsigned __int8)sub_4575B4((unsigned char*)thisx, a2, 1);
         v26 = (unsigned __int8)sub_401710((_BYTE*)(dword_4B92E0 + 36 * *(unsigned __int16*)&thisx[2 * a2 + 2564]));
-        sub_4A1307((int)word_4B9290, (Concurrency::details::HardwareAffinity*)(8 * v25 + 4952656));
+        sub_4A1307((int)word_4B9290, (Concurrency::details::HardwareAffinity*)(8 * v25 + word_4B9250));//ddd 4B9250
         sub_485E5A((int)dword_4B93A4 + 24 * v26, (unsigned short*)word_4B9290);
         SetRect(&v30, 24 * (unsigned __int8)thisx[a2 + 2580], 0, 24, 16);
         v31 = dword_4B9234;
@@ -48311,7 +48312,7 @@ unsigned __int16* sub_46881A(int thisx)
                                 ++v105;
                         }
                         *(_WORD*)(thisx + 2 * i + 2564) = v105;
-                        sub_476E46(*(unsigned __int16*)(thisx + 2 * i + 2564), (void*)(8 * i + 4952656));
+                        sub_476E46(*(unsigned __int16*)(thisx + 2 * i + 2564), (void*)(8 * i + word_4B9250));//ddd 4B9250
                         sub_43FFC3((_DWORD*)unk_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
                         v122 = 1;
                     }
@@ -48325,7 +48326,7 @@ unsigned __int16* sub_46881A(int thisx)
                     {
                         *(_WORD*)(thisx + 2 * i + 2564) = (word_4B99E4 + v120 + *(unsigned __int16*)(thisx + 2 * i + 2564))
                             % word_4B99E4;
-                        sub_476E46(*(unsigned __int16*)(thisx + 2 * i + 2564), (void*)(8 * i + 4952656));
+                        sub_476E46(*(unsigned __int16*)(thisx + 2 * i + 2564), (void*)(8 * i + word_4B9250));//ddd 4B9250
                         sub_43FFC3((_DWORD*)unk_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
                         v122 = 1;
                     }
@@ -48466,7 +48467,7 @@ unsigned __int16* sub_46881A(int thisx)
                                     *(_WORD*)(thisx + 2 * i + 2564) = *(_WORD*)(thisx + 244 * i + 1630);
                                     *(_WORD*)(thisx + 244 * i + 1630) = -1;
                                 }
-                                sub_476E46(*(unsigned __int16*)(thisx + 2 * i + 2564), (void*)(8 * i + 4952656));
+                                sub_476E46(*(unsigned __int16*)(thisx + 2 * i + 2564), (void*)(8 * i + word_4B9250));//ddd 4B9250
                             }
                         }
                         else if (*(_BYTE*)(thisx + 81) || !*((_BYTE*)dword_4B92DC + v108))
@@ -48657,7 +48658,7 @@ unsigned __int16* sub_46881A(int thisx)
                         *(_BYTE*)(i + thisx + 2600) = 0;
                         *(_BYTE*)(i + thisx + 2584) = 2;
                         *(_WORD*)(thisx + 2 * i + 2564) = i;
-                        sub_476E46(*(unsigned __int16*)(thisx + 2 * i + 2564), (void*)(8 * i + 4952656));
+                        sub_476E46(*(unsigned __int16*)(thisx + 2 * i + 2564), (void*)(8 * i + word_4B9250));//ddd 4B9250
                     }
                     else
                     {
@@ -48712,12 +48713,12 @@ unsigned __int16* sub_46881A(int thisx)
                 if (*(__int16*)(v85 + 238) < 0)
                 {
                     *(_WORD*)(v83 + 238) = i;
-                    sub_476E46(i, (void*)(8 * i + 4952656));
+                    sub_476E46(i, (void*)(8 * i + 4952656));//ddd 4B9250
                 }
                 else
                 {
                     *(_WORD*)(v83 + 238) = -(__int16)(*(_WORD*)(v85 + 238) + 2);
-                    sub_476E46(*(__int16*)(v85 + 238), (void*)(8 * i + 4952656));
+                    sub_476E46(*(__int16*)(v85 + 238), (void*)(8 * i + word_4B9250));//ddd 4B9250
                 }
                 v122 = 1;
             }
@@ -49470,7 +49471,7 @@ void sub_46B8AE(_BYTE* thisx, int a2)
                         v88 = a2;
                         v89 = (unsigned __int8)sub_401710((_BYTE*)(36 * v94 + dword_4B92E0));
                         v87 = (unsigned short*)word_4B9290;
-                        sub_4A1307((int)word_4B9290, (Concurrency::details::HardwareAffinity*)(8 * a2 + 4952656));
+                        sub_4A1307((int)word_4B9290, (Concurrency::details::HardwareAffinity*)(8 * a2 + word_4B9250));//ddd 4B9250
                         sub_485E5A((int)dword_4B93A4 + 24 * v89, (unsigned short*)word_4B9290);
                         v92 = (unsigned __int8)thisx[a2 + 2580];
                         if (v100 == 4)
@@ -49614,7 +49615,7 @@ void sub_46B8AE(_BYTE* thisx, int a2)
                 v103 = v106;
                 v104 = yTop + 60;
                 v32 = (unsigned __int8)sub_401710((_BYTE*)(36 * v33 + dword_4B92E0));
-                sub_4A1307((int)word_4B9290, (Concurrency::details::HardwareAffinity*)(8 * a2 + 4952656));
+                sub_4A1307((int)word_4B9290, (Concurrency::details::HardwareAffinity*)(8 * a2 + word_4B9250));//ddd 4B9250
                 sub_485E5A((int)dword_4B93A4 + 24 * v32, (unsigned short*)word_4B9290);
                 v36 = (char)thisx[244 * a2 + 1396 + 28 * v96];
                 SetRect(&rc, 24 * v36, 0, 24, 24);
@@ -49664,7 +49665,7 @@ void sub_46B8AE(_BYTE* thisx, int a2)
                 v103 = v31;
                 v104 = v29 + 9;
                 v27 = (unsigned __int8)sub_401710((_BYTE*)(36 * v28 + dword_4B92E0));
-                sub_4A1307((int)word_4B9290, (Concurrency::details::HardwareAffinity*)(8 * a2 + 4952656));
+                sub_4A1307((int)word_4B9290, (Concurrency::details::HardwareAffinity*)(8 * a2 + word_4B9250));//ddd 4B9250
                 sub_485E5A((int)dword_4B93A4 + 24 * v27, (unsigned short*)word_4B9290);
                 SetRect(&rc, 24 * v30 + 1, 0, 19, 8);
                 v102 = dword_4B9234;
@@ -50219,7 +50220,7 @@ int sub_46DD55(int a1, double a2, double a3, double a4)
                 ReadFile(hFile, &Buffer[k], 3u, (LPDWORD)&NumberOfBytesRead, 0);
             CloseHandle(hFile);
         }
-        sub_4A0AE7((void*)(8 * i + 4952656), (int)Buffer, 256);
+        sub_4A0AE7((void*)(8 * i + word_4B9250), (int)Buffer, 256);//ddd 4B9250
     }
     for (m = 0; m < 4; ++m)
     {
@@ -50235,8 +50236,8 @@ int sub_46DD55(int a1, double a2, double a3, double a4)
                     + 244 * m
                     + 1392)
                 + dword_4B92E0));
-            sub_4A1307(8 * (i + 2 * m) + 4952720, (Concurrency::details::HardwareAffinity*)(8 * m + 4952656));
-            sub_485E5A((int)dword_4B93A4 + 24 * v6, (unsigned __int16*)(8 * (i + 2 * m) + 4952720));
+            sub_4A1307(8 * (i + 2 * m) + (int)(&word_4B9290), (Concurrency::details::HardwareAffinity*)(8 * m + (int)&word_4B9250));// ddd 4B9290   4B 9250
+            sub_485E5A((int)dword_4B93A4 + 24 * v6, (unsigned __int16*)(8 * (i + 2 * m) + word_4B9290));// ddd 4B9290
         }
     }
     sub_46D3E1();
@@ -50488,8 +50489,8 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
                     v23 = *(_BYTE*)(v24 + 4);
                     v25 = (unsigned __int8)sub_401710((_BYTE*)(dword_4B92E0 + 36 * *(_DWORD*)v24));
                 }
-                sub_4A1307(8 * (m + 2 * j) + 4952720, (Concurrency::details::HardwareAffinity*)(8 * j + 4952656));
-                sub_485E5A((int)dword_4B93A4 + 24 * v25, (unsigned __int16*)(8 * (m + 2 * j) + 4952720));
+                sub_4A1307(8 * (m + 2 * j) + (int)word_4B9290, (Concurrency::details::HardwareAffinity*)(8 * j + (int)word_4B9250)); // ddd word_4B9290   4B9250
+                sub_485E5A((int)dword_4B93A4 + 24 * v25, (unsigned __int16*)(8 * (m + 2 * j) + word_4B9290));// ddd 4B9290
                 v27 = (_WORD*)(thisx + 612 * (j + 4 * m) + 2628);
                 sub_475010(v27, v26);
                 sub_474FF0((char*)v27, v23);
@@ -50920,7 +50921,7 @@ void sub_46F18C(int thisx, int a2)
                 v94 = v98;
                 v95 = v89 + 8;
                 v93 = v92 + dword_4B9234;
-                v97 = 8 * (m + 2 * a2) + 4952720;
+                v97 = 8 * (m + 2 * a2) + (int)word_4B9290;// ddd 4B9290
                 SetRect(&v91, 0, 0, 16, 8);
                 sub_4A03B3((short*)unk_4BDC60, dword_4B9248, &v93, (_DWORD*)&v91);
             }
@@ -51899,6 +51900,7 @@ void sub_471F33(int thisx)
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
     int v25; // [esp+18D4h] [ebp-4h]
+    char v24_tc[8];//..怎么这里也有填充项
     int v24; // [esp+18C8h] [ebp-10h]
     int v23; // [esp+18C4h] [ebp-14h]
     int v22; // [esp+18C0h] [ebp-18h] BYREF
@@ -51977,7 +51979,7 @@ void sub_471F33(int thisx)
     for (i = 0; i < 5; ++i)
     {
         sub_49DB90(v12);
-        v12[14] = 8 * i + 4952720;
+        v12[14] = 8 * i + (int)word_4B9290;// ddd 4B9290
         wsprintfA(FileName, "Graphic\\KK_Result3_Body%02d.bmp", i + 1);
         if (sub_49DA45((_DWORD*)unk_4BDC60, FileName, (int)v12) >= 0 && v23)
         {
@@ -52004,7 +52006,7 @@ void sub_471F33(int thisx)
         LOWORD(v6) = (unsigned __int8)sub_401710(v3);
         sub_4784EA(v7, (_DWORD)v5);
         sub_485DFD((int)dword_4B93A4 + 24 * (unsigned __int16)v6, (int)v5);
-        sub_4A0AE7((void*)(8 * i + 4952720), (int)v5, 256);
+        sub_4A0AE7((void*)(8 * i + word_4B9290), (int)v5, 256);// ddd 4B9290
     }
     v25 = -1;
     sub_482C2F(v19);
@@ -56111,6 +56113,7 @@ int sub_479E2A()
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
     int v15; // [esp+1570h] [ebp-4h]
+    int v14_tc[8];
     int v14; // [esp+1564h] [ebp-10h]
     int v13; // [esp+1560h] [ebp-14h]
     CHAR String1[256]; // [esp+1460h] [ebp-114h] BYREF
@@ -56122,13 +56125,23 @@ int sub_479E2A()
     int v6[4]; // [esp+28h] [ebp-154Ch] BYREF
     int j; // [esp+24h] [ebp-1550h]
     _DWORD* Block; // [esp+10h] [ebp-1564h]
+    char v3_tc[12];
     int v3; // [esp+0h] [ebp-1574h]
     char* v2; // eax
     void* v0; // esp
 
 
-    v0 = alloca(5480);
-    sub_482BF0(v6);
+    v0 = alloca(5480);//？？很奇怪这里申请了内存却又没有用到
+    /*
+        它的汇编程序里
+        push    ebp
+        mov     ebp, esp
+        push    0FFFFFFFFh，，这里没有给栈分配空间，所以alloca函数是分配空间的，所以上面那句alloca函数在这里根本没用
+
+     */
+
+
+    sub_482BF0(v6);// //主要是把4个int的内存结构初始化为0,初始化
     v15 = 0;
     if (sub_482C74((int)v6, aDataCheergirld))
     {
@@ -56730,12 +56743,12 @@ int sub_47AC9D()
     {
         wsprintfA(v11, "%s\\Data\\TilePat%02d.dat", Buffer, i);
         wsprintfA(v12, "%s\\Data\\CharGraphic%02d.dat", Buffer, i);
-        //v13 = (int*)(4 * i + 4952904);
-        //v15 = (void*)(2 * i + 4952892);
-        //v14 = (int*)(4 * i + 4952868);
-        //v16 = (__int16*)(2 * i + 4952856);
+        //v13 = (int*)(4 * i + 4952904);//4B9348
+        //v15 = (void*)(2 * i + 4952892);//4B933C
+        //v14 = (int*)(4 * i + 4952868);//4B9324
+        //v16 = (__int16*)(2 * i + 4952856);//
         v13 = (int*)(4 * i + (int)&dword_4B9348);
-        v15 = (void*)(2 * i + (int)&dword_4B9328[17]);
+        v15 = (void*)(2 * i + (int)&dword_4B9328[16]); //4B933C
         v14 = (int*)(4 * i + (int)&dword_4B9324);
         v16 = (__int16*)(2 * i + (int)&word_4B9318);
 
@@ -57519,8 +57532,8 @@ int sub_47C427()
                 ReadFile(hFile, &Buffer[j], 3u, (LPDWORD)&NumberOfBytesRead, 0);
             CloseHandle(hFile);
         }
-        sub_4A0AE7((void*)(8 * i + 4952656), (int)Buffer, 256);
-        sub_4A0AE7((void*)(8 * i + 4952720), (int)Buffer, 256);
+        sub_4A0AE7((void*)(8 * i + word_4B9250), (int)Buffer, 256);//ddd 4B9250
+        sub_4A0AE7((void*)(8 * i + word_4B9290), (int)Buffer, 256);// ddd 4B9290
     }
     return 1;
 }
@@ -61490,7 +61503,7 @@ int sub_483B1D(int thisx, LPCSTR lpFileName)
         LOBYTE(v15) = 14;
         WriteFile(*(HANDLE*)(thisx + 4), &v15, 1u, (LPDWORD)&NumberOfBytesWritten, 0);
         for (i = 0; i < (unsigned __int8)v15; ++i)
-            WriteFile(*(HANDLE*)(thisx + 4), (LPCVOID)(2 * i + 4954540), 2u, (LPDWORD)&NumberOfBytesWritten, 0);
+            WriteFile(*(HANDLE*)(thisx + 4), (LPCVOID)(2 * i + word_4B99AC), 2u, (LPDWORD)&NumberOfBytesWritten, 0);//ddd 4B99AC
         v12[0] = byte_4B99C8;
         WriteFile(*(HANDLE*)(thisx + 4), v12, 1u, (LPDWORD)&NumberOfBytesWritten, 0);
         v12[0] = byte_4B99C9;
@@ -61808,7 +61821,7 @@ int sub_484723(int thisx, LPCSTR lpFileName)
             ReadFile(hFile, byte_4B99A3, 8u, (LPDWORD)&NumberOfBytesRead, 0);
             ReadFile(hFile, (LPVOID)(thisx + 2225), 1u, (LPDWORD)&NumberOfBytesRead, 0);
             for (i = 0; i < *(unsigned __int8*)(thisx + 2225); ++i)
-                ReadFile(hFile, (LPVOID)(2 * i + 4954540), 2u, (LPDWORD)&NumberOfBytesRead, 0);
+                ReadFile(hFile, (LPVOID)(2 * i + word_4B99AC), 2u, (LPDWORD)&NumberOfBytesRead, 0);//ddd 4B99AC
             ReadFile(hFile, &byte_4B99C8, 1u, (LPDWORD)&NumberOfBytesRead, 0);
             ReadFile(hFile, &byte_4B99C9, 1u, (LPDWORD)&NumberOfBytesRead, 0);
             ReadFile(hFile, &byte_4B99CA, 1u, (LPDWORD)&NumberOfBytesRead, 0);
@@ -63013,6 +63026,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
     int v92; // [esp+2798h] [ebp-4h]
+    int v91_tc[8];
     int v91; // [esp+278Ch] [ebp-10h]
     int v90; // [esp+2788h] [ebp-14h]
     int v89; // [esp+2784h] [ebp-18h]
@@ -63103,7 +63117,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
     void* v2; // esp
 
 
-    v2 = alloca(10128);
+    v2 = alloca(10128);//？？很奇怪这里申请了内存却又没有用到
     sub_482BF0(v80);//初始化
     v92 = 0;
     if (!sub_482C74((int)v80, lpFileName))
@@ -63170,9 +63184,9 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                                                     }
                                                     if (i >= 2)
                                                     {
-                                                        Group = GetGroup((Concurrency::details::HardwareAffinity*)(8 * v53 + 4952720));
-                                                        sub_4A0A7B(8 * v52 + 4952720, Group);
-                                                        sub_4A1307(8 * v52 + 4952720, (Concurrency::details::HardwareAffinity*)(8 * v53 + 4952720));
+                                                        Group = GetGroup((Concurrency::details::HardwareAffinity*)(8 * v53 + (int)word_4B9290));// ddd word_4B9290
+                                                        sub_4A0A7B(8 * v52 + (int)word_4B9290, Group);// ddd 4B9290
+                                                        sub_4A1307(8 * v52 + (int)word_4B9290, (Concurrency::details::HardwareAffinity*)(8 * v53 + (int)word_4B9290));// ddd 4B9290 word_4B9290
                                                     }
                                                 }
                                             }
@@ -63281,7 +63295,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                                 sub_49DB90(v66);
                                 if (v72 >= 0)
                                 {
-                                    v63 = (void*)(8 * v72 + 4952720);
+                                    v63 = (void*)(8 * v72 + word_4B9290);// ddd 4B9290
                                     v66[14] = (int)v63;
                                     sub_4A1450((_DWORD*)v64);
                                     LOBYTE(v92) = 1;
@@ -65746,7 +65760,7 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
                 v37 = sub_48A4E3(v144, 4u);
                 v34 = sub_48A4E3(v144, 3u);
                 v23 = sub_48A4E3(v144, 2u);
-                sub_4A0B26((unsigned __int16*)(8 * v73 + 4952720), v74, v23, v34, v37);
+                sub_4A0B26((unsigned __int16*)(8 * v73 + word_4B9290), v74, v23, v34, v37);/// ddd 4B9290
             }
             break;
         case 0x21u:
@@ -66408,7 +66422,7 @@ unsigned __int16* sub_48D421(int thisx, int a2)
                 v18 = sub_426210((char*)unk_4B9B10);
                 v19 = (_DWORD*)sub_489A73(v18, *(unsigned __int8*)(thisx + 76));
                 if (*(char*)(thisx + 86) >= 0)
-                    v32 = 8 * *(char*)(thisx + 86) + 4952720;
+                    v32 = 8 * *(char*)(thisx + 86) + (int)word_4B9290;//ddd 4B9290
                 if (v19)
                 {
                     if (*(int*)(thisx + 88) < 0)
@@ -75907,6 +75921,7 @@ int sub_49B9E0(_DWORD* thisx, LPCSTR lpFileName)
         }
         else
         {
+            //一般不到这里，这里之后会报错
             sub_49B98C(thisx);//初始化
             return 0;
         }
@@ -79030,7 +79045,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
 
     
     sub_47907D(FileName);//保存配置文件
-    sub_47B2C4();
+    //sub_47B2C4();
 
     //关闭什么系统句柄
     if (ho)
@@ -80579,7 +80594,7 @@ int __cdecl _write(int FileHandle, const void *Buf, unsigned int MaxCharCount)
 
 
   if ( FileHandle < uNumber
-    && (v3 = (_DWORD *)(4 * (FileHandle >> 5) + 5031616),
+    && (v3 = (_DWORD *)(4 * (FileHandle >> 5) + dword_4CC6C0),//ddd dword_4CC6C0
         v4 = 8 * (FileHandle & 0x1F),
         v5 = *(_BYTE *)(dword_4CC6C0[FileHandle >> 5] + v4 + 4),
         (v5 & 1) != 0) )
@@ -80853,8 +80868,8 @@ BOOL __cdecl __crtGetStringTypeA(
     WORD CharType; // [esp+18h] [ebp-1Ch] BYREF
     int cchWideChar; // [esp+14h] [ebp-20h]
     WCHAR* v16; // [esp+10h] [ebp-24h]
-    //WCHAR v15[512]; // [esp+0h] [ebp-34h] BYREF
-    WCHAR v15[8]; // [esp+0h] [ebp-34h] BYREF
+    WCHAR v15[512]; // [esp+0h] [ebp-34h] BYREF,这里为什么是512呢，因为tmd alloca函数
+    //WCHAR v15[8]; // [esp+0h] [ebp-34h] BYREF
     int v14; // eax
     void* v13; // esp
     int v12; // eax
@@ -80893,15 +80908,16 @@ BOOL __cdecl __crtGetStringTypeA(
         v12 = 2 * v10 + 3;
         LOBYTE(v12) = v12 & 0xFC;
         v13 = alloca(v12);
-        ms_exc.old_esp = (DWORD)v15;
-        v16 = v15;
-        memset(v15, 0, v11);
+        //修复bug，看原版看ida
+        ms_exc.old_esp = (DWORD)v13;
+        //v16 = v13;不需要了
+        memset(v13, 0, v11);
         ms_exc.registration.TryLevel = -1;
-        if ( v15 )
+        if (v13)
         {
-          v14 = MultiByteToWideChar(CodePage, 1u, lpSrcStr, cchSrc, v15, cchWideChar);
+          v14 = MultiByteToWideChar(CodePage, 1u, lpSrcStr, cchSrc, (LPWSTR)v13, cchWideChar);
           if ( v14 )
-            return GetStringTypeW(dwInfoType, v15, v14, lpCharType);
+            return GetStringTypeW(dwInfoType, (LPWSTR)v13, v14, lpCharType);
         }
       }
     }
@@ -80949,8 +80965,8 @@ int __cdecl __crtLCMapStringA(
     WCHAR* v21; // [esp+18h] [ebp-20h]
     LPWSTR lpWideCharStr; // [esp+14h] [ebp-24h]
     int v19; // [esp+10h] [ebp-28h]
-    //WCHAR v18[256]; // [esp+0h] [ebp-38h] BYREF
-    WCHAR v18[8]; // [esp+0h] [ebp-38h] BYREF
+    WCHAR v18[512]; // [esp+0h] [ebp-38h] BYREF，因为alloca附近没有被正常反编译，所以手动处理了
+    //WCHAR v18[8]; // [esp+0h] [ebp-38h] BYREF
     int v17; // eax
     void* v16; // esp
     int v15; // eax
@@ -80960,9 +80976,6 @@ int __cdecl __crtLCMapStringA(
     int v11; // eax
     int v10; // ebx
     int v9; // eax
-
-
-
 
   if ( !dword_4CB434 )
   {
@@ -80992,11 +81005,12 @@ int __cdecl __crtLCMapStringA(
     return 0;
   v11 = 2 * v9 + 3;
   LOBYTE(v11) = v11 & 0xFC;
+  //修复bug，看原版看ida
   v12 = alloca(v11);
-  ms_exc.old_esp = (DWORD)v18;
-  lpWideCharStr = v18;
+  ms_exc.old_esp = (DWORD)v12;
+  lpWideCharStr = (LPWSTR)v12;
   ms_exc.registration.TryLevel = -1;
-  if ( !v18 )
+  if ( !v12)
     return 0;
   if ( !MultiByteToWideChar(CodePage, 1u, lpSrcStr, cchSrc, lpWideCharStr, v10) )
     return 0;
@@ -81011,28 +81025,35 @@ int __cdecl __crtLCMapStringA(
       return 0;
   }
   else
-  {
+{
+    //修复bug版
     v15 = 2 * v13 + 3;
     LOBYTE(v15) = v15 & 0xFC;
     v16 = alloca(v15);
-    ms_exc.old_esp = (DWORD)v18;
-    v21 = v18;
+    ms_exc.old_esp = (DWORD)v16;
+    v21 = (WCHAR*)v16;
     ms_exc.registration.TryLevel = -1;
-    if ( !v18 || !LCMapStringW(Locale, dwMapFlags, lpWideCharStr, v22, v18, v14) )
-      return 0;
-    v17 = cchDest ? WideCharToMultiByte(CodePage, 0x220u, v18, v14, lpDestStr, cchDest, 0, 0) : WideCharToMultiByte(
-                                                                                                  CodePage,
-                                                                                                  0x220u,
-                                                                                                  v18,
-                                                                                                  v14,
-                                                                                                  0,
-                                                                                                  0,
-                                                                                                  0,
-                                                                                                  0);
+    if ( !v16 || !LCMapStringW(Locale, dwMapFlags, lpWideCharStr, v22, (LPWSTR)v16, v14) )
+    return 0;
+    v17 = cchDest ? WideCharToMultiByte(CodePage, 0x220u, (LPCWCH)v16, v14, lpDestStr, cchDest, 0, 0) : WideCharToMultiByte(CodePage,0x220u,(LPCWCH)v16,v14,0,0,0,0);
     v14 = v17;
     if ( !v17 )
-      return 0;
-  }
+    return 0;
+}
+  //{
+  //  v15 = 2 * v13 + 3;
+  //  LOBYTE(v15) = v15 & 0xFC;
+  //  v16 = alloca(v15);
+  //  ms_exc.old_esp = (DWORD)v18;
+  //  v21 = v18;
+  //  ms_exc.registration.TryLevel = -1;
+  //  if ( !v18 || !LCMapStringW(Locale, dwMapFlags, lpWideCharStr, v22, v18, v14) )
+  //    return 0;
+  //  v17 = cchDest ? WideCharToMultiByte(CodePage, 0x220u, v18, v14, lpDestStr, cchDest, 0, 0) : WideCharToMultiByte( CodePage, 0x220u, v18, v14,  0, 0, 0, 0);
+  //  v14 = v17;
+  //  if ( !v17 )
+  //    return 0;
+  //}
   return v14;
 }
 
