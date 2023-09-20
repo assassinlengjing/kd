@@ -2261,7 +2261,7 @@ int sub_40197E(_BYTE* thisx, HANDLE hFile, int a3, int a4)
     DWORD NumberOfBytesRead; // [esp+8h] [ebp-4h] BYREF
     int Buffer; // [esp+4h] [ebp-8h] BYREF
 
-
+    //初始化
     sub_401B16((int)thisx);
     if (!a4)
     {
@@ -2287,7 +2287,7 @@ int sub_40197E(_BYTE* thisx, HANDLE hFile, int a3, int a4)
     return 1;
 }
 
- //275分之一
+ //初始化
 void** sub_401B16(int thisx)
 {
     *(_BYTE*)(thisx + 4) = 0;
@@ -2434,7 +2434,7 @@ void** sub_401E35(void** thisx)
     return sub_401E48(thisx);
 }
 
-//275分之一的偏移144
+//初始化
 void** sub_401E48(void** thisx)
 {
     void** result; // eax
@@ -5365,7 +5365,7 @@ unsigned __int8 sub_409096(int thisx)
     char v25_tc[24];//                 
     int v25; // [esp+4Ch] [ebp-1Ch]]  
     int v24; // [esp+48h] [ebp-20h]   
-    int v23_tc[12];//                  
+    char v23_tc[12];//                  
     int v23; // [esp+38h] [ebp-30h]  
     int v22; // [esp+34h] [ebp-34h]   
     int v21; // [esp+30h] [ebp-38h] BYREF
@@ -29957,6 +29957,7 @@ int sub_44076B(int thisx, int a2)
 
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
+    char v19_ct[4];
     int v19; // [esp+40h] [ebp-8h]
     int v18; // [esp+3Ch] [ebp-Ch] BYREF
     int v17; // [esp+38h] [ebp-10h] BYREF
@@ -31265,7 +31266,7 @@ void* sub_4428A0(void* thisx, char a2)
 int sub_443059(_DWORD* thisx, double a2, double a3, double a4, char a5)
 {
     sub_474DB0((char*)unk_4BDC60, a5);//thisx[50440] = a2;
-    switch (thisx[26])
+    switch (thisx[26])//游戏场景编号
     {
     case 1://开场动画状态
         sub_456FC8((int)thisx);
@@ -31288,7 +31289,7 @@ int sub_443059(_DWORD* thisx, double a2, double a3, double a4, char a5)
     case 7:
         sub_44ED4D((UINT)thisx);
         break;
-    case 8://堆栈模式
+    case 8://对战模式
         sub_447651((int)thisx);
         break;
     case 9:
@@ -39495,7 +39496,7 @@ void sub_456FC8(int thisx)
             v2 = 0;
         if (v2)
         {
-            sub_488981((int*)(thisx + 128));//括号,会报错
+            sub_488981((int*)(thisx + 128));
             for (i = 0; i < 32; ++i)
                 sub_4419F6(thisx + 36 * i + 9608);
             for (j = 0; j < 8; ++j)
@@ -56113,7 +56114,7 @@ int sub_479E2A()
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
     int v15; // [esp+1570h] [ebp-4h]
-    int v14_tc[8];
+    char v14_tc[8];
     int v14; // [esp+1564h] [ebp-10h]
     int v13; // [esp+1560h] [ebp-14h]
     CHAR String1[256]; // [esp+1460h] [ebp-114h] BYREF
@@ -56249,6 +56250,8 @@ int sub_479E2A()
         return 0;
     }
 } 
+
+//hFile = tp.dat , a2 = dword_4B9348[0-5] ，lpBuffer = dword_4B9328[0-5]
 int __cdecl sub_47A326(HANDLE hFile, int a2, LPVOID lpBuffer)
 {
     //    _DWORD* v4; // [esp+0h] [ebp-28h]
@@ -56282,7 +56285,7 @@ int __cdecl sub_47A326(HANDLE hFile, int a2, LPVOID lpBuffer)
     if (Block)
     {
         *Block = v9;
-        eh_vector_constructor_iterator(Block + 1, 0xCu, v9, sub_48F630, sub_48F666);
+        eh_vector_constructor_iterator(Block + 1, 12, v9, sub_48F630, sub_48F666);
             v4 = Block + 1;
     }
     else
@@ -56296,7 +56299,8 @@ int __cdecl sub_47A326(HANDLE hFile, int a2, LPVOID lpBuffer)
     return 1;
 }
 
- 
+//
+//hFile = CG.dat ,a2 = dword_4B9324[0-5],lpBuffer = word_4B9318[0-5]
 int __cdecl sub_47A42F(HANDLE hFile, int a2, LPVOID lpBuffer)
 {
     //    _DWORD* v4; // [esp+0h] [ebp-28h]
@@ -56337,10 +56341,14 @@ int __cdecl sub_47A42F(HANDLE hFile, int a2, LPVOID lpBuffer)
         v4 = 0;
     }
     v10 = -1;
-    *(_DWORD*)a2 = (_DWORD)v4;
+    *(_DWORD*)a2 = (_DWORD)v4;//a2是//a2 = for in dword_4B9324[0-5]，里面存的是new的地址
     int size_2 = *(unsigned __int16*)lpBuffer;
-    for (i = 0; i < *(unsigned __int16*)lpBuffer; ++i)
+    for (i = 0; i < *(unsigned __int16*)lpBuffer; ++i)//lpBuffer = 275
+    {
+        //每个块的大小为152，一共lpBuffer个，
+        //a2是//a2 = for in dword_4B9324[0-5]，hfile是文件，buffer是文件的第一个字节数据
         sub_40197E((_BYTE*)(152 * i + *(_DWORD*)a2), hFile, (unsigned __int8)Buffer, 0);
+    }
     return 1;
 }
 
@@ -56436,6 +56444,19 @@ int __cdecl sub_47A42F(HANDLE hFile, int a2, LPVOID lpBuffer)
 //    }
 //    return 1;
 //} 
+
+
+/*
+* \\Data\\Double_Dragon_CG.dat
+* \\Data\\Double_Dragon_Tp.dat
+* 
+* lpFileName = xxx_tp.dat文件
+* a0 = dword_4B9348[0-5]
+* a1 = dword_4B9324[0-5]
+* a2 = dword_4B9328[0-5]
+* a3 = word_4B9318[0-5]
+* lpFileName2 = _cg.dat
+*/
 int sub_47A55C(LPCSTR lpFileName, int a0, int a1, int a2,int a3, LPCSTR lpFileName2)
 {
     //    _DWORD* v2; // esi
@@ -56500,7 +56521,8 @@ int sub_47A55C(LPCSTR lpFileName, int a0, int a1, int a2,int a3, LPCSTR lpFileNa
     if (hObject == (HANDLE)-1)
         return 0;
     //if (!sub_47A326(hObject, *((_DWORD*)lpFileName + 130), *((LPVOID*)lpFileName + 132)))
-    if (!sub_47A326(hObject, *(int*)a0, *(LPVOID*)a2))//为什么他这里的堆栈顺序是反过来的？？？
+    //hObject = tp.dat , a0 = dword_4B9348[0-5] ， a2 = dword_4B9328[0-5]
+    if (!sub_47A326(hObject, *(int*)a0, *(LPVOID*)a2))//为什么他这里的堆栈顺序是反过来的？？？堆栈确实是反过来的。
         goto LABEL_4;
     CloseHandle(hObject);
     //hObject = CreateFileA(lpFileName + 260, 0x80000000, 0, 0, 3u, 0x80u, 0);
@@ -56508,6 +56530,7 @@ int sub_47A55C(LPCSTR lpFileName, int a0, int a1, int a2,int a3, LPCSTR lpFileNa
     if (hObject == (HANDLE)-1)
         return 0;
     //if (!sub_47A42F(hObject, *((_DWORD*)lpFileName + 131), *((LPVOID*)lpFileName + 133)))
+    //hObject = CG.dat ，a1 = dword_4B9324[0-5],a3 = word_4B9318[0-5]
     if (!sub_47A42F(hObject, *(int*)a1, *((LPVOID*)a3)))
     {
     LABEL_4:
@@ -56748,7 +56771,7 @@ int sub_47AC9D()
         //v14 = (int*)(4 * i + 4952868);//4B9324
         //v16 = (__int16*)(2 * i + 4952856);//
         v13 = (int*)(4 * i + (int)&dword_4B9348);
-        v15 = (void*)(2 * i + (int)&dword_4B9328[16]); //4B933C
+        v15 = (void*)(2 * i + (int)&dword_4B9328); //4B933C,这虽然名字不同，但地址是对应的
         v14 = (int*)(4 * i + (int)&dword_4B9324);
         v16 = (__int16*)(2 * i + (int)&word_4B9318);
 
@@ -63026,7 +63049,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
     int v92; // [esp+2798h] [ebp-4h]
-    int v91_tc[8];
+    char v91_tc[8];
     int v91; // [esp+278Ch] [ebp-10h]
     int v90; // [esp+2788h] [ebp-14h]
     int v89; // [esp+2784h] [ebp-18h]
@@ -66153,7 +66176,7 @@ void sub_48CD23(int thisx)
             if (*(_BYTE*)(i + thisx + 336))
                 --* (_BYTE*)(i + thisx + 336);
         }
-        v9 = sub_426210((char*)unk_4B9B10);
+        v9 = sub_426210((char*)unk_4B9B10);//return thisx + 128;
         v21 = sub_486633((_DWORD*)v9, *(_DWORD*)(thisx + 104) / 100, *(_DWORD*)(thisx + 108) / 100);
         v13 = *(_DWORD*)(thisx + 104);
         v11 = *(_DWORD*)(thisx + 108);
@@ -75159,7 +75182,7 @@ int __cdecl messagebox(LPCSTR lpText)
     return 0;
 }
 
- 
+ //初始化，常速赋值
 void sub_499868(void* thisx)
 {
     *(_DWORD*)thisx = 0;
@@ -79041,10 +79064,10 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
 
     //sub_43F951((int*)unk_4BDB28);//关闭什么句柄,暂时注释
     timeEndPeriod(1u);//时间线结束段
-    wsprintfA(FileName, "%s\\%s", Buffer, aKdIni_0);//获取配置文件路径
+    //wsprintfA(FileName, "%s\\%s", Buffer, aKdIni_0);//获取配置文件路径
 
     
-    sub_47907D(FileName);//保存配置文件
+    //sub_47907D(FileName);//保存配置文件
     //sub_47B2C4();
 
     //关闭什么系统句柄
@@ -83306,7 +83329,7 @@ int sub_49A318(int thisx)
     int k; // [esp+4h] [ebp-8h]
 
 
-    eh_vector_constructor_iterator((void *)thisx, 0x18u, 2048, sub_499868, unknown_libname_28);
+    eh_vector_constructor_iterator((void *)thisx, 24, 2048, sub_499868, unknown_libname_28);
         * (_DWORD*)(thisx + 50516) = 0;
     *(_DWORD*)(thisx + 50520) = 0;
     *(_DWORD*)(thisx + 50512) = 0;
@@ -83319,8 +83342,8 @@ int sub_49A318(int thisx)
     *(_DWORD*)(thisx + 50500) = 0;
     *(_BYTE*)(thisx + 50441) = -1;
     *(_BYTE*)(thisx + 50445) = 0;
-    memset((void*)(thisx + 49156), 0, 0x400u);
-    memset((void*)(thisx + 50180), 0, 0x100u);
+    memset((void*)(thisx + 49156), 0, 1024);
+    memset((void*)(thisx + 50180), 0, 256);
     for (i = 0; i < 256; ++i)
     {
         *(_BYTE*)(thisx + 4 * i + 49156) = (-1 - i) * (i % 3 == 0);

@@ -3,10 +3,6 @@
 #include "struct.h"
 #include <winternl.h>
 
-
-//#include <concrtrm.h>
-#include <concurrencysal.h>
-
 #define code_1
 //#define code_t
 
