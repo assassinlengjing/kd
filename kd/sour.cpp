@@ -81488,8 +81488,8 @@ int *__cdecl __shr_12(int *a1)
   return result;
 }
 
-
-//这个this是unk_4B9B10
+//初始化
+//这个this是unk_4B9B10,赋值常数
 char* sub_4428D0(char* thisx)
 {
     //    int v1; // edx
