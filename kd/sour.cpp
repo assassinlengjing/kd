@@ -2282,8 +2282,8 @@ int sub_40197E(_BYTE* thisx, HANDLE hFile, int a3, int a4)
     }
     if (!sub_401ED9(thisx + 144 ,hFile, a3))
         return 0;
-    ReadFile(hFile, thisx + 16, 0x10u, (LPDWORD)&NumberOfBytesRead, 0);
-    ReadFile(hFile, thisx + 80, 0x10u, (LPDWORD)&NumberOfBytesRead, 0);
+    ReadFile(hFile, thisx + 16, 16, (LPDWORD)&NumberOfBytesRead, 0);
+    ReadFile(hFile, thisx + 80, 16, (LPDWORD)&NumberOfBytesRead, 0);
     return 1;
 }
 
@@ -2300,7 +2300,7 @@ void** sub_401B16(int thisx)
     return sub_401E48((void**)(thisx + 144));
 }
 
- 
+ //初始化
 _BYTE* sub_401B7C(_BYTE* thisx)
 {
 
@@ -2478,7 +2478,7 @@ int sub_401ED9(_BYTE* thisx, HANDLE hFile, int a3)
     void* v4; // [esp+0h] [ebp-28h]
 
 
-    sub_401E48((void**)thisx);
+    sub_401E48((void**)thisx);//初始化
     if (a3)
         ReadFile(hFile, thisx, 1u, (LPDWORD)&NumberOfBytesRead, 0);
     else
@@ -2488,7 +2488,7 @@ int sub_401ED9(_BYTE* thisx, HANDLE hFile, int a3)
     v10 = 0;
     if (Block)
     {
-        sub_402080((int)Block, 8, v9, (void(*)(int))sub_401B7C);
+        sub_402080((int)Block, 8, v9, (void(*)(int))sub_401B7C);//sub_401B7C初始化函数
         v4 = Block;
     }
     else
@@ -2511,7 +2511,7 @@ int sub_401ED9(_BYTE* thisx, HANDLE hFile, int a3)
     }
     else
     {
-        sub_401E48((void**)thisx);
+        sub_401E48((void**)thisx);//初始化
         return 0;
     }
 }
@@ -56517,7 +56517,7 @@ int sub_47A55C(LPCSTR lpFileName, int a0, int a1, int a2,int a3, LPCSTR lpFileNa
     _DWORD* v2; // esi
 
 
-    hObject = CreateFileA(lpFileName, 0x80000000, 0, 0, 3u, 0x80u, 0);
+    hObject = CreateFileA(lpFileName, 0x80000000, 0, 0, 3u, 128, 0);
     if (hObject == (HANDLE)-1)
         return 0;
     //if (!sub_47A326(hObject, *((_DWORD*)lpFileName + 130), *((LPVOID*)lpFileName + 132)))
@@ -56586,7 +56586,8 @@ int sub_47A55C(LPCSTR lpFileName, int a0, int a1, int a2,int a3, LPCSTR lpFileNa
     return 1;
 }
 
-
+// hFile = "%s\\Data\\WeaponCG.dat"//CG Computer Graphics是只计算机图形
+//一次调用
 int __cdecl sub_47A8B4(HANDLE hFile)
 {
     //    int v2; // [esp+0h] [ebp-128h]
@@ -56611,7 +56612,7 @@ int __cdecl sub_47A8B4(HANDLE hFile)
     int v2; // [esp+0h] [ebp-128h]
 
 
-    ReadFile(hFile, Buffer, 0xCu, (LPDWORD)&NumberOfBytesRead, 0);
+    ReadFile(hFile, Buffer, 12, (LPDWORD)&NumberOfBytesRead, 0);
     if (lstrcmpiA(Buffer, aWpgraphic))
         return 0;
     ReadFile(hFile, &v5, 1u, (LPDWORD)&NumberOfBytesRead, 0);
@@ -56622,7 +56623,7 @@ int __cdecl sub_47A8B4(HANDLE hFile)
     if (Block)
     {
         *Block = v6;
-        eh_vector_constructor_iterator(Block + 1, 0x8Cu, v6, sub_4909B0, sub_4909D5);
+        eh_vector_constructor_iterator(Block + 1, 140, v6, sub_4909B0, sub_4909D5);
             v2 = (int)(Block + 1);
     }
     else
@@ -56745,17 +56746,17 @@ int sub_47AC9D()
 
 
     wsprintfA(FileName, "%s\\Data\\WeaponTP.dat", Buffer);
-    hObject = CreateFileA(FileName, 0x80000000, 0, 0, 3u, 0x80u, 0);
+    hObject = CreateFileA(FileName, 0x80000000, 0, 0, 3u, 128, 0);
     if (hObject == (HANDLE)-1)
         return 0;
     if (!sub_47A326(hObject, (int)&dword_4B92F0, &word_4B92F4))
         goto LABEL_4;
     CloseHandle(hObject);
     wsprintfA(FileName, "%s\\Data\\WeaponCG.dat", Buffer);
-    hObject = CreateFileA(FileName, 0x80000000, 0, 0, 3u, 0x80u, 0);
+    hObject = CreateFileA(FileName, 0x80000000, 0, 0, 3u, 128, 0);
     if (hObject == (HANDLE)-1)
         return 0;
-    if (!sub_47A8B4(hObject))
+    if (!sub_47A8B4(hObject))//一次调用
     {
     LABEL_4:
         CloseHandle(hObject);
@@ -57169,7 +57170,7 @@ int __cdecl sub_47BC5A(int a1, int a2, LPCSTR lpString, int a4, int a5)
     //int tt[12] = {};//其实这里的空间没有被用到，奇怪
 
     check_stack c( __FILE__, __LINE__);
-    int tt[12] = {};//其实这里的空间没有被用到，奇怪
+    char v12_tc[44] = {};//其实这里的空间没有被用到，奇怪。。。后来发现sub_49C15E((_DWORD)&v10);内用到了
     int v12; // [esp+28h] [ebp-30h]
     int v11; // [esp+24h] [ebp-34h]
     int v10; // [esp+20h] [ebp-38h] BYREF
@@ -57180,7 +57181,8 @@ int __cdecl sub_47BC5A(int a1, int a2, LPCSTR lpString, int a4, int a5)
     int result; // eax
 
 
-    sub_49C15E((_DWORD)&v10);
+    sub_49C15E((_DWORD)&v10);//初始化，赋值常数
+
     v12 = a2;
     v8 = lstrlenA(lpString);
     v6 = a1;
@@ -66761,6 +66763,7 @@ __int16 sub_48E110(char* thisx, int a2)
     return sub_48E130((short*)&thisx[24 * a2]);
 }
  
+//return thisx[4];
 __int16 sub_48E130(_WORD* thisx)
 {
     return thisx[4];
@@ -67303,6 +67306,7 @@ int sub_48F55F(int thisx)
             -1);
 }
  
+//初始化
 _DWORD* sub_48F5E0(_DWORD* thisx, char a2)
 {
     sub_48F08B(thisx);
@@ -67315,7 +67319,8 @@ char* sub_48F610(char* thisx)
 {
     return thisx + 2546;
 }
- 
+
+//初始化，常数
 void sub_48F630(void* thisx)
 {
     *(_DWORD*)thisx = (_DWORD)&off_4AC3B4;
@@ -67325,12 +67330,14 @@ void sub_48F630(void* thisx)
     *((_DWORD*)thisx + 2) = 0;
 }
  
+//初始化，常数
 void sub_48F666(void* thisx)
 {
     *(_DWORD*)thisx = (_DWORD)&off_4AC3B4;
     sub_48F682((int)thisx);
 }
  
+//初始化
 int sub_48F682(int thisx)
 {
     int result; // eax
@@ -67348,7 +67355,7 @@ int sub_48F6C5(LPVOID* thisx, HANDLE hFile)
 {
     DWORD NumberOfBytesRead; // [esp+8h] [ebp-4h] BYREF
 
-    sub_48F682((int)thisx);
+    sub_48F682((int)thisx);//初始化
     if (!ReadFile(hFile, thisx + 1, 1u, (LPDWORD)&NumberOfBytesRead, 0))
         return 0;
     if (!ReadFile(hFile, (char*)thisx + 6, 1u, (LPDWORD)&NumberOfBytesRead, 0))
@@ -67368,7 +67375,7 @@ int sub_48F6C5(LPVOID* thisx, HANDLE hFile)
     {
         return 1;
     }
-    sub_48F682((int)thisx);
+    sub_48F682((int)thisx);//初始化
     return 0;
 }
  
@@ -67934,8 +67941,8 @@ int sub_4909F7(unsigned __int8* thisx, HANDLE hFile, int a3)
 
     if (!sub_401ED9((char*)thisx + 132, hFile, a3))
         return 0;
-    ReadFile(hFile, thisx + 4, 0x10u, (LPDWORD)&NumberOfBytesRead, 0);
-    ReadFile(hFile, thisx + 68, 0x10u, (LPDWORD)&NumberOfBytesRead, 0);
+    ReadFile(hFile, thisx + 4, 16, (LPDWORD)&NumberOfBytesRead, 0);
+    ReadFile(hFile, thisx + 68, 16, (LPDWORD)&NumberOfBytesRead, 0);
     return 1;
 }
 
@@ -77971,12 +77978,12 @@ void sub_4A03B3(_WORD* thisx, int a2, int* a3, _DWORD* a4)
         {
             v6[1] = 0;
             v6[0] = 0;
-            LOWORD(v7) = sub_4260F0(&thisx[12 * a2]);
+            LOWORD(v7) = sub_4260F0(&thisx[12 * a2]);//return thisx[3];
             v7 = (unsigned __int16)v7;
-            LOWORD(v8) = sub_48E130(&thisx[12 * a2]);
+            LOWORD(v8) = sub_48E130(&thisx[12 * a2]); //return thisx[4];
             v8 = (unsigned __int16)v8;
             a3[3] = (int)v6;
-            v4 = unknown_libname_30((_DWORD*)&thisx[12 * a2]);
+            v4 = unknown_libname_30((_DWORD*)&thisx[12 * a2]);//return *(_DWORD *)thisx;
             sub_49C541((_DWORD*)&thisx[12 * *a3], v4, (int)a3, (tagRECT*)a4);
         }
     }
@@ -78756,7 +78763,7 @@ char  unknown_libname_3(void *thisx)
 {
   return *(_BYTE *)thisx;
 }
-// Microsoft VisualC 2-14/net runtime
+//return *(_DWORD *)thisx;
 int  unknown_libname_30(_DWORD* thisx)
 {
   return *(_DWORD *)thisx;
