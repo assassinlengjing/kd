@@ -3088,11 +3088,11 @@ int sub_402C05(int thisx)
             }
             else
             {
-                sub_476009((int*)&player_list[27 * *(unsigned __int8*)(thisx + 184)]);
-                v2 = sub_476A79((int*)&player_list[27 * *(unsigned __int8*)(thisx + 184)]);
-                v61 = v2 - sub_476A64((int*)&player_list[27 * *(unsigned __int8*)(thisx + 184)]);
-                v3 = sub_476A4F((int*)&player_list[27 * *(unsigned __int8*)(thisx + 184)]);
-                v58 = v3 - sub_476A3A((int*)&player_list[27 * *(unsigned __int8*)(thisx + 184)]);
+                sub_476009((char*)(&player_list[108 * *(unsigned __int8*)(thisx + 184)]));
+                v2 = sub_476A79((int*)&player_list[108 * *(unsigned __int8*)(thisx + 184)]);
+                v61 = v2 - sub_476A64((int*)&player_list[108 * *(unsigned __int8*)(thisx + 184)]);
+                v3 = sub_476A4F((int*)&player_list[108 * *(unsigned __int8*)(thisx + 184)]);
+                v58 = v3 - sub_476A3A((int*)&player_list[108 * *(unsigned __int8*)(thisx + 184)]);
             }
             for (j = 0; j < 6; ++j)
             {
@@ -3111,7 +3111,7 @@ int sub_402C05(int thisx)
                 }
                 else
                 {
-                    v45 = sub_476485((int*)&player_list[27 * *(unsigned __int8*)(thisx + 184)], j);
+                    v45 = sub_476485((int*)&player_list[108 * *(unsigned __int8*)(thisx + 184)], j);
                 }
                 if (v45)
                 {
@@ -29569,7 +29569,7 @@ int sub_43FC33(_DWORD* thisx, LPSTR pszFileName, int a3)
         v10[2] = v8.cksize;
         v10[4] = v14;
 
-        IDirectSound* IDS_a3 = (IDirectSound*)a3;
+        IDirectSound* IDS_a3 = (IDirectSound*)a3;//a3 = unk_4BDB28
         v9 = IDS_a3->CreateSoundBuffer((LPCDSBUFFERDESC)v10, (LPDIRECTSOUNDBUFFER*)thisx, 0);
         //v9 = (*(int(__stdcall**)(int, int*, _DWORD*, _DWORD))(*(_DWORD*)a3 + 12))(a3, v10, thisx, 0);
         if (v9)
@@ -31277,10 +31277,10 @@ int sub_443059(_DWORD* thisx, double a2, double a3, double a4, char a5)
     case 3://游戏模式选择 状态
         sub_44C60C((int)thisx);
         break;
-    case 4:
+    case 4://故事模式配置游戏开始设置，生存模式选择人物
         sub_474BC1((int)thisx);
         break;
-    case 5:
+    case 5://设置界面
         sub_44E835((int)thisx);
         break;
     case 6:
@@ -31289,55 +31289,55 @@ int sub_443059(_DWORD* thisx, double a2, double a3, double a4, char a5)
     case 7:
         sub_44ED4D((UINT)thisx);
         break;
-    case 8://对战模式
+    case 8://对战模式，选择人物
         sub_447651((int)thisx);
         break;
     case 9:
         sub_452368((int)thisx);
         break;
-    case 0xA:
+    case 0xA://战斗场景，人物开始动作
         sub_44E5BA(thisx, a2, a3, a4);
         break;
-    case 0xB:
+    case 0xB://战斗场景
         sub_448929((int)thisx, a2, a3, a4);
         break;
-    case 0xC:
+    case 0xC://战斗场景，战斗判定输赢
         sub_44B63F((int)thisx, a2, a3, a4);
         break;
-    case 0xD:
+    case 0xD://故事模式，选择名字界面
         sub_457F11((int)thisx);
         break;
-    case 0xE:
+    case 0xE://故事模式，人物信息界面
         sub_45AB5E((int)thisx);
         break;
-    case 0xF:
+    case 0xF://故事模式，休息室后准备界面
         sub_45BDE8((int)thisx);
         break;
     case 0x10:
         sub_45C809((int)thisx);
         break;
-    case 0x11:
+    case 0x11://故事模式，排名
         sub_45CC4E((int)thisx);
         break;
     case 0x12:
         sub_45D7AB((int)thisx);
         break;
-    case 0x13:
+    case 0x13://休息室
         sub_45E773((int)thisx);
         break;
-    case 0x14:
+    case 0x14://故事模式，选择记录界面
         sub_4617E5((int)thisx);
         break;
-    case 0x15:
+    case 0x15:////格斗比赛，选择场景
         sub_47336A((int)thisx);
         break;
-    case 0x16:
+    case 0x16://格斗比赛，选择人物界面
         sub_46881A((int)thisx);
         break;
-    case 0x17:
+    case 0x17://格斗比赛，选择场景后，选择队员
         sub_46E35A((int)thisx, a2, a3, a4);
         break;
-    case 0x18:
+    case 0x18://格斗比赛，战斗场景后，啦啦队
         sub_470C48((int)thisx);
         break;
     case 0x19:
@@ -36212,7 +36212,7 @@ int sub_44E835(int thisx)
     return sub_47B91A(92, 16 * (*(_DWORD*)(thisx + 2528) - *(unsigned __int16*)(thisx + 2564)) + 60, asc_4B0CA8, 0, -1);
 }
 
- 
+ //tmd，这里也有接收键盘输入
 UINT sub_44ED4D(UINT thisx)
 {
     //    int v1; // esi
@@ -36354,8 +36354,8 @@ UINT sub_44ED4D(UINT thisx)
                     LOBYTE(v6) = *(_BYTE*)(thisx + 2528);
                     if (sub_476DC7(v6, 0))
                     {
-                        //sub_47652C(player_list[27 * *(_DWORD*)(thisx + 2528)], *(_DWORD*)(thisx + 2536));
-                        sub_47652C((int*)&player_list[27 * *(_DWORD*)(thisx + 2528)], *(_DWORD*)(thisx + 2536));
+                        //sub_47652C(player_list[108 * *(_DWORD*)(thisx + 2528)], *(_DWORD*)(thisx + 2536));
+                        sub_47652C((int*)&player_list[108 * *(_DWORD*)(thisx + 2528)], *(_DWORD*)(thisx + 2536));
                         *(_BYTE*)(thisx + 2562) = 2;
                         *(_BYTE*)(thisx + *(_DWORD*)(thisx + 2528) + 2588) = 2;
                         *(_WORD*)(thisx + 2 * *(_DWORD*)(thisx + 2528) + 2564) = 0;
@@ -36400,7 +36400,7 @@ UINT sub_44ED4D(UINT thisx)
             if (sub_476DC7(0, 0))
             {
                 *(_BYTE*)(thisx + 2562) = 1;
-                *(_DWORD*)(thisx + 2536) = (char)sub_4768D5((int*)&player_list[27 * *(_DWORD*)(thisx + 2528)]);
+                *(_DWORD*)(thisx + 2536) = (char)sub_4768D5((int*)&player_list[108 * *(_DWORD*)(thisx + 2528)]);
                 if (*(_DWORD*)(thisx + 2536))
                 {
                     if (*(int*)(thisx + 2536) >= 1)
@@ -36442,7 +36442,7 @@ UINT sub_44ED4D(UINT thisx)
         sub_47B7ED(v29 - 8, v39, String, 0, -1);
         if (!*(_BYTE*)(thisx + 2562) && *(_DWORD*)(thisx + 2528) == i)
             sub_47B91A(v29 - 20, v39, asc_4B0CB8, 0, -1);
-        v27 = sub_4768D5((int*)&player_list[27 * i]);
+        v27 = sub_4768D5((int*)&player_list[108 * i]);
         if (*(_BYTE*)(thisx + 2562) == 1 && *(_DWORD*)(thisx + 2528) == i)
         {
             if (*(int*)(thisx + 2536) >= 0)
@@ -36473,7 +36473,7 @@ UINT sub_44ED4D(UINT thisx)
                     v26 = v39 + 36;
                     for (k = 0; k < 11; ++k)
                     {
-                        v11 = sub_4768F5((int*)&player_list[27 * i], k);
+                        v11 = sub_4768F5((int*)&player_list[108 * i], k);
                         v23 = MapVirtualKeyA(v11, 0);
                         GetKeyNameTextA(v23 << 16, v22, 16);
                         v28 = lstrlenA(v22);
@@ -36509,7 +36509,7 @@ UINT sub_44ED4D(UINT thisx)
                     {
                         v26 = v39 + 146;
                     }
-                    v24 = sub_4768BD((int*)&player_list[27 * i], m);
+                    v24 = sub_4768BD((int*)&player_list[108 * i], m);
                     if (v24 < 0)
                     {
                         switch (v24)
@@ -36535,7 +36535,7 @@ UINT sub_44ED4D(UINT thisx)
                     }
                     else
                     {
-                        v8 = sub_4768BD((int*)&player_list[27 * i], m);
+                        v8 = sub_4768BD((int*)&player_list[108 * i], m);
                         wsprintfA(String, "%d", v8 + 1);
                         v12 = v26;
                         v9 = lstrlenA(String);
@@ -36583,7 +36583,7 @@ UINT sub_44ED4D(UINT thisx)
                         if (*(_BYTE*)(i + thisx + 2588) == 1)
                         {
                             *(_BYTE*)(thisx + 11 * i + 11264 + *(unsigned __int16*)(thisx + 2 * i + 2564)) = v16;
-                            sub_47690D((int*)&player_list[27 * i], *(_BYTE*)(thisx + 2 * i + 2564), v16);
+                            sub_47690D((char*)&player_list[108 * i], *(_BYTE*)(thisx + 2 * i + 2564), v16);
                             ++* (_WORD*)(thisx + 2 * i + 2564);
                             sub_43FFC3((int*)unk_4BDB28, dword_4B9A00, -1, 100, 100, 0);
                         }
@@ -36593,8 +36593,8 @@ UINT sub_44ED4D(UINT thisx)
                 {
                     for (n = -4;
                         n < 16
-                        && (n >= 0 || !sub_476A8E((int*)&player_list[27 * i], n))
-                        && (n < 0 || !sub_47646A((int*)&player_list[27 * i], n));
+                        && (n >= 0 || !sub_476A8E((int*)&player_list[108 * i], n))
+                        && (n < 0 || !sub_47646A((int*)&player_list[108 * i], n));
                         ++n)
                     {
                         ;
@@ -36608,12 +36608,12 @@ UINT sub_44ED4D(UINT thisx)
                         for (ii = -4; ii < 16; ++ii)
                         {
                             if (ii >= 0)
-                                v18 = sub_47646A((int*)&player_list[27 * i], ii);
+                                v18 = sub_47646A((int*)&player_list[108 * i], ii);
                             else
-                                v18 = sub_476A8E((int*)&player_list[27 * i], ii);
+                                v18 = sub_476A8E((int*)&player_list[108 * i], ii);
                             if (v18)
                             {
-                                sub_4768A2((int*)&player_list[27 * i], *(_BYTE*)(thisx + 2 * i + 2564), ii);
+                                sub_4768A2((int*)&player_list[108 * i], *(_BYTE*)(thisx + 2 * i + 2564), ii);
                                 *(_BYTE*)(thisx + 11 * i + 11176 + (unsigned __int16)(*(_WORD*)(thisx + 2 * i + 2564))++) = ii;
                                 sub_43FFC3((int*)unk_4BDB28, dword_4B9A00, -1, 100, 100, 0);
                                 break;
@@ -36818,7 +36818,7 @@ int sub_44FE88(int thisx, LPCSTR lpFileName)
     wsprintfA(AppName, aInitdevice);
     for (i = 0; i < 8; ++i)
     {
-        v2 = sub_4768D5((_DWORD*)(char*)&player_list + 27 * i);
+        v2 = sub_4768D5((_DWORD*)(char*)&player_list + 108 * i);
         wsprintfA(&String[v36], "%dP = %d", i + 1, v2 - 1);
         v36 += lstrlenA(&String[v36]) + 1;
         String[v36] = 0;
@@ -36989,7 +36989,7 @@ UINT sub_450FF8(int thisx, LPCSTR lpFileName)
         wsprintfA(AppName, aInitdevice_0);//AppName = "InitDevice"
         wsprintfA(KeyName, "%dP", nDefault + 1);//每一P玩家 KeyName = 1P，2P 3P...
         v12 = GetPrivateProfileIntA(AppName, KeyName, nDefault, lpFileName);
-        sub_47652C((_DWORD*)&player_list[27 * nDefault], v12);////其实只是配置手柄相关的，暂时不看
+        sub_47652C((_DWORD*)&player_list[108 * nDefault], v12);////其实只是配置手柄相关的，暂时不看
         wsprintfA(AppName, "JoyStickAssign%dP", nDefault + 1);
         for (i = 0; i < 11; ++i)
         {
@@ -37067,12 +37067,13 @@ UINT sub_450FF8(int thisx, LPCSTR lpFileName)
     {
         for (k = 0; k < 11; ++k)
         {
-            sub_4768A2((int*)&player_list[27 * nDefault],       k,          *(_BYTE*)(thisx + 11 * nDefault + k + 11176)); //k位置 = *(_BYTE*)(thisx + 11 * nDefault + k + 11176)
+            sub_4768A2((int*)&player_list[108 * nDefault],       k,          *(_BYTE*)(thisx + 11 * nDefault + k + 11176)); //k位置 = *(_BYTE*)(thisx + 11 * nDefault + k + 11176)
             result = k + 1;
         }
+        //战斗键盘按键赋值
         for (m = 0; m < 11; ++m)
         {
-            sub_47690D((int*)&player_list[27 * nDefault],       m,      *(_BYTE*)(thisx + 11 * nDefault + m + 11264));//m位置 =  *(_BYTE*)(thisx + 11 * nDefault + m + 11264)
+            sub_47690D((char*)&player_list[108 * nDefault],       m,      *(_BYTE*)(thisx + 11 * nDefault + m + 11264));//m位置 =  *(_BYTE*)(thisx + 11 * nDefault + m + 11264)
             result = m + 1;
         }
     }
@@ -37325,6 +37326,7 @@ int sub_452045(_BYTE* thisx, int a2, int a3, int a4, int a5)
 
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
+    char v21_tc[44];
     int v21; // [esp+30h] [ebp-30h]
     int v20; // [esp+2Ch] [ebp-34h]
     int v19; // [esp+28h] [ebp-38h] BYREF
@@ -38194,7 +38196,7 @@ int sub_453AAA(int thisx)
     int v3[14]; // [esp+4h] [ebp-38h] BYREF
     int result; // eax
 
-
+    //初始化，常数
     sub_49C15E((int)v3);
     v3[1] = 0;
     v3[2] = 0;
@@ -38203,7 +38205,7 @@ int sub_453AAA(int thisx)
     result = *(unsigned __int8*)(thisx + 2516);
     if (!*(_BYTE*)(thisx + 2516))
     {
-        sub_477F0C(0);
+        sub_477F0C(0);// //接收键盘输入，a1是第几号玩家
         if (sub_476DC7(0, 0) || sub_476DC7(0, 1) || (result = sub_476DC7(0, 2)) != 0)
         {
             *(_DWORD*)(thisx + 108) = 3;
@@ -39514,7 +39516,7 @@ void sub_456FC8(int thisx)
         sub_441DB3(thisx + 36 * k + 9608);
     if (*(_DWORD*)(thisx + 1292))
         sub_47F98B((_DWORD*)(thisx + 736));
-    sub_477F0C(0);
+    sub_477F0C(0);//内有接收键盘输入
     if (sub_476DC7(0, 0))
         *(_DWORD*)(thisx + 1296) = 1;
     if (*(_DWORD*)(thisx + 1296) && *(_BYTE*)(thisx + 2516) != 2)
@@ -54096,8 +54098,8 @@ _BYTE* sub_475FA0(_BYTE* thisx)
         thisx[j + 76] = j - 4;
     return thisx;
 }
- 
-BOOL sub_476009(int* thisx)
+ //tmd,这里才是接收键盘输入
+BOOL sub_476009(char* thisx)
 {
     //    int v1; // eax
     //    int v2; // eax
@@ -54128,63 +54130,63 @@ BOOL sub_476009(int* thisx)
     *((_DWORD*)thisx + 9) = 1;
     *((_DWORD*)thisx + 8) = 1;
     *((_DWORD*)thisx + 14) = 0;
-    if (GetAsyncKeyState((unsigned __int8)thisx[92]) < 0)
+    if (GetAsyncKeyState((unsigned __int8)thisx[92]) < 0)//W
         *((_DWORD*)thisx + 9) = 0;
-    if (GetAsyncKeyState((unsigned __int8)thisx[93]) < 0)
+    if (GetAsyncKeyState((unsigned __int8)thisx[93]) < 0)//s
         *((_DWORD*)thisx + 9) = 2;
-    if (GetAsyncKeyState((unsigned __int8)thisx[94]) < 0)
+    if (GetAsyncKeyState((unsigned __int8)thisx[94]) < 0)//a
         *((_DWORD*)thisx + 8) = 0;
-    if (GetAsyncKeyState((unsigned __int8)thisx[95]) < 0)
+    if (GetAsyncKeyState((unsigned __int8)thisx[95]) < 0)//d
         *((_DWORD*)thisx + 8) = 2;
-    if (GetAsyncKeyState((unsigned __int8)thisx[96]) < 0)
+    if (GetAsyncKeyState((unsigned __int8)thisx[96]) < 0)//j
     {
         v1 = *((_DWORD*)thisx + 14);
         LOBYTE(v1) = v1 | 1;
         *((_DWORD*)thisx + 14) = v1;
     }
-    if (GetAsyncKeyState((unsigned __int8)thisx[97]) < 0)
+    if (GetAsyncKeyState((unsigned __int8)thisx[97]) < 0)//k
     {
         v2 = *((_DWORD*)thisx + 14);
         LOBYTE(v2) = v2 | 2;
         *((_DWORD*)thisx + 14) = v2;
     }
-    if (GetAsyncKeyState((unsigned __int8)thisx[98]) < 0)
+    if (GetAsyncKeyState((unsigned __int8)thisx[98]) < 0)//l
     {
         v3 = *((_DWORD*)thisx + 14);
         LOBYTE(v3) = v3 | 4;
         *((_DWORD*)thisx + 14) = v3;
     }
-    if (GetAsyncKeyState((unsigned __int8)thisx[99]) < 0)
+    if (GetAsyncKeyState((unsigned __int8)thisx[99]) < 0)//u
     {
         v4 = *((_DWORD*)thisx + 14);
         LOBYTE(v4) = v4 | 8;
         *((_DWORD*)thisx + 14) = v4;
     }
-    if (GetAsyncKeyState((unsigned __int8)thisx[100]) < 0)
+    if (GetAsyncKeyState((unsigned __int8)thisx[100]) < 0)//i
     {
         v5 = *((_DWORD*)thisx + 14);
         LOBYTE(v5) = v5 | 0x10;
         *((_DWORD*)thisx + 14) = v5;
     }
-    if (GetAsyncKeyState((unsigned __int8)thisx[101]) < 0)
+    if (GetAsyncKeyState((unsigned __int8)thisx[101]) < 0)//o
     {
         v6 = *((_DWORD*)thisx + 14);
         LOBYTE(v6) = v6 | 0x20;
         *((_DWORD*)thisx + 14) = v6;
     }
-    if (GetAsyncKeyState((unsigned __int8)thisx[102]) < 0)
+    if (GetAsyncKeyState((unsigned __int8)thisx[102]) < 0)//\r回车键
     {
         v7 = *((_DWORD*)thisx + 14);
         LOBYTE(v7) = v7 | 0x40;
         *((_DWORD*)thisx + 14) = v7;
     }
-    if (GetAsyncKeyState((unsigned __int8)thisx[103]) < 0)
+    if (GetAsyncKeyState((unsigned __int8)thisx[103]) < 0)//0
     {
         v8 = *((_DWORD*)thisx + 14);
         LOBYTE(v8) = v8 | 0x80;
         *((_DWORD*)thisx + 14) = v8;
     }
-    if (GetAsyncKeyState((unsigned __int8)thisx[104]) < 0)
+    if (GetAsyncKeyState((unsigned __int8)thisx[104]) < 0)//4
     {
         v9 = *((_DWORD*)thisx + 14);
         BYTE1(v9) |= 1u;
@@ -54331,7 +54333,7 @@ BOOL sub_476485(_DWORD* thisx, char a2)
     return result;
 }
 //其实只是配置手柄相关的
-//thisx = 玩家数据地址
+//thisx = 玩家数据地址，a2表示第几号玩家
 void* sub_47652C(_DWORD* thisx, signed int a2)
 {
     check_stack c(__FILE__, __LINE__);
@@ -54457,12 +54459,12 @@ char sub_4768F5(int* thisx, char a2)
 }
 
  
-int sub_47690D(int* thisx, char a2, char a3)
+int sub_47690D(char* thisx, char a2, char a3)
 {
     int result; // eax
 
     result = a2;
-    thisx[a2 + (92/4)] = a3;
+    thisx[a2 + 92] = a3;
     return result;
 }
  
@@ -55078,7 +55080,7 @@ BOOL __cdecl sub_47744C(unsigned __int8 a1, unsigned __int8 a2)
     return v20 == 0;
 }
 
- 
+ //接收键盘输入，a1是第几号玩家
 int __cdecl sub_477F0C(unsigned __int8 a1)
 {
     //    int result; // eax
@@ -55093,10 +55095,10 @@ int __cdecl sub_477F0C(unsigned __int8 a1)
     int result; // eax
 
 
-    result = sub_476009((int*)&player_list[27 * a1]);//??
+    result = sub_476009((char*)(&player_list[108 * a1]));//接收键盘输入
     for (i = 0; i < 4; ++i)
     {
-        if (sub_476928((_DWORD*)&player_list[27 * a1], -(char)(i + 1)))
+        if (sub_476928((_DWORD*)&player_list[108 * a1], -(char)(i + 1)))
         {
             if ((unsigned __int8)byte_4B4154 <= (int)(unsigned __int8)byte_4B93EC[4 * a1 + i])
                 byte_4B93EC[4 * a1 + i] = byte_4B4154 - 4;
@@ -55110,7 +55112,7 @@ int __cdecl sub_477F0C(unsigned __int8 a1)
     }
     for (j = 0; j < 7; ++j)
     {
-        if (sub_476485((_DWORD*)&player_list[27 * a1], j))
+        if (sub_476485((_DWORD*)&player_list[108 * a1], j))
         {
             if (j < 5 && (unsigned __int8)byte_4B4154 <= (int)(unsigned __int8)byte_4B93B4[7 * a1 + j])
                 byte_4B93B4[7 * a1 + j] = 0;
@@ -56983,16 +56985,20 @@ int __cdecl sub_47B7ED(int a1, int a2, LPCSTR lpString, int a4, int a5)
 
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
+    char v11_tc[44];
     int v11; // [esp+24h] [ebp-30h]
     int v10; // [esp+20h] [ebp-34h]
     int v9; // [esp+1Ch] [ebp-38h] BYREF
+
+
     struct tagRECT rc; // [esp+Ch] [ebp-48h] BYREF
     int i; // [esp+8h] [ebp-4Ch]
     int v6; // [esp+4h] [ebp-50h]
     int result; // eax
 
 
-    sub_49C15E((_DWORD)&v9);
+    sub_49C15E((_DWORD)&v9);//初始化，赋值常数
+
     v10 = a1;
     v11 = a2;
     v6 = lstrlenA(lpString);
@@ -57052,6 +57058,7 @@ int __cdecl sub_47B91A(int a1, int a2, LPCSTR lpString, int a4, int a5)
     check_stack c(__FILE__, __LINE__);
     int v20; // [esp+68h] [ebp-4h]
     struct tagRECT rc; // [esp+58h] [ebp-14h] BYREF
+    int v18_tc[44];
     int v18; // [esp+28h] [ebp-44h]
     int v17[2]; // [esp+20h] [ebp-4Ch] BYREF
     int v16; // [esp+1Ch] [ebp-50h]
@@ -57068,7 +57075,8 @@ int __cdecl sub_47B91A(int a1, int a2, LPCSTR lpString, int a4, int a5)
     int result; // eax
 
 
-    sub_49C15E((int)v17);
+    sub_49C15E((int)v17);//初始化，赋值常数
+
     v20 = a1 - 8;
     v15 = a2;
     v16 = lstrlenA(lpString);
@@ -75421,6 +75429,57 @@ int sub_4998E0(int thisx, int a2)
     HDC hdc;
     r = IDDS_50520->GetDC(&hdc);
 
+    //STDMETHOD(QueryInterface) (THIS_ REFIID riid, LPVOID FAR* ppvObj) PURE;0
+    //STDMETHOD_(ULONG, AddRef) (THIS)  PURE;4
+    //STDMETHOD_(ULONG, Release) (THIS) PURE;8
+    //STDMETHOD(AddAttachedSurface)(THIS_ LPDIRECTDRAWSURFACE7) PURE;12
+    //STDMETHOD(AddOverlayDirtyRect)(THIS_ LPRECT) PURE;16
+    //STDMETHOD(Blt)(THIS_ LPRECT, LPDIRECTDRAWSURFACE7, LPRECT, DWORD, LPDDBLTFX) PURE;20
+    //STDMETHOD(BltBatch)(THIS_ LPDDBLTBATCH, DWORD, DWORD) PURE;24
+    //STDMETHOD(BltFast)(THIS_ DWORD, DWORD, LPDIRECTDRAWSURFACE7, LPRECT, DWORD) PURE;28
+    //STDMETHOD(DeleteAttachedSurface)(THIS_ DWORD, LPDIRECTDRAWSURFACE7) PURE;32
+    //STDMETHOD(EnumAttachedSurfaces)(THIS_ LPVOID, LPDDENUMSURFACESCALLBACK7) PURE;36
+    //STDMETHOD(EnumOverlayZOrders)(THIS_ DWORD, LPVOID, LPDDENUMSURFACESCALLBACK7) PURE;40
+    //STDMETHOD(Flip)(THIS_ LPDIRECTDRAWSURFACE7, DWORD) PURE;44
+    //STDMETHOD(GetAttachedSurface)(THIS_ LPDDSCAPS2, LPDIRECTDRAWSURFACE7 FAR*) PURE;48
+    //STDMETHOD(GetBltStatus)(THIS_ DWORD) PURE;52
+    //STDMETHOD(GetCaps)(THIS_ LPDDSCAPS2) PURE;56
+    //STDMETHOD(GetClipper)(THIS_ LPDIRECTDRAWCLIPPER FAR*) PURE;60
+    //STDMETHOD(GetColorKey)(THIS_ DWORD, LPDDCOLORKEY) PURE;64
+    //STDMETHOD(GetDC)(THIS_ HDC FAR*) PURE;68
+    //STDMETHOD(GetFlipStatus)(THIS_ DWORD) PURE;72
+    //STDMETHOD(GetOverlayPosition)(THIS_ LPLONG, LPLONG) PURE;76
+    //STDMETHOD(GetPalette)(THIS_ LPDIRECTDRAWPALETTE FAR*) PURE;80
+    //STDMETHOD(GetPixelFormat)(THIS_ LPDDPIXELFORMAT) PURE;84
+    //STDMETHOD(GetSurfaceDesc)(THIS_ LPDDSURFACEDESC2) PURE;88
+    //STDMETHOD(Initialize)(THIS_ LPDIRECTDRAW, LPDDSURFACEDESC2) PURE;92
+    //STDMETHOD(IsLost)(THIS) PURE;96
+    //STDMETHOD(Lock)(THIS_ LPRECT, LPDDSURFACEDESC2, DWORD, HANDLE) PURE;100
+    //STDMETHOD(ReleaseDC)(THIS_ HDC) PURE;104
+    //STDMETHOD(Restore)(THIS) PURE;108
+    //STDMETHOD(SetClipper)(THIS_ LPDIRECTDRAWCLIPPER) PURE;112
+    //STDMETHOD(SetColorKey)(THIS_ DWORD, LPDDCOLORKEY) PURE;116
+    //STDMETHOD(SetOverlayPosition)(THIS_ LONG, LONG) PURE;120
+    //STDMETHOD(SetPalette)(THIS_ LPDIRECTDRAWPALETTE) PURE;124
+    //STDMETHOD(Unlock)(THIS_ LPRECT) PURE;128
+    //STDMETHOD(UpdateOverlay)(THIS_ LPRECT, LPDIRECTDRAWSURFACE7, LPRECT, DWORD, LPDDOVERLAYFX) PURE;132
+    //STDMETHOD(UpdateOverlayDisplay)(THIS_ DWORD) PURE;136
+    //STDMETHOD(UpdateOverlayZOrder)(THIS_ DWORD, LPDIRECTDRAWSURFACE7) PURE;140
+    //STDMETHOD(GetDDInterface)(THIS_ LPVOID FAR*) PURE;144
+    //STDMETHOD(PageLock)(THIS_ DWORD) PURE;148
+    //STDMETHOD(PageUnlock)(THIS_ DWORD) PURE;152
+    //STDMETHOD(SetSurfaceDesc)(THIS_ LPDDSURFACEDESC2, DWORD) PURE;156
+    //STDMETHOD(SetPrivateData)(THIS_ REFGUID, LPVOID, DWORD, DWORD) PURE;160
+    //STDMETHOD(GetPrivateData)(THIS_ REFGUID, LPVOID, LPDWORD) PURE;164
+    //STDMETHOD(FreePrivateData)(THIS_ REFGUID) PURE;168
+    //STDMETHOD(GetUniquenessValue)(THIS_ LPDWORD) PURE;172
+    //STDMETHOD(ChangeUniquenessValue)(THIS) PURE;176
+    //STDMETHOD(SetPriority)(THIS_ DWORD) PURE;180
+    //STDMETHOD(GetPriority)(THIS_ LPDWORD) PURE;184
+    //STDMETHOD(SetLOD)(THIS_ DWORD) PURE;188
+    //STDMETHOD(GetLOD)(THIS_ LPDWORD) PURE;192
+
+
     if (
         *(_BYTE*)(thisx + 50443)
         && r
@@ -75447,28 +75506,28 @@ int sub_49A184(_DWORD** thisx)
     for (i = 0; i < 2048; ++i)
         sub_49B04B((int*) & thisx[6 * i]);
     sub_49B882(thisx);
-    if (thisx[12630])
+    if (thisx[12630])//50520
     {
         (*(void(**)(_DWORD*, _DWORD*))(*thisx[12630] + 8))(thisx[12630], thisx[12630]);
         thisx[12630] = 0;
     }
-    if (thisx[12628])
+    if (thisx[12628])//DDSf 50512
     {
         (*(void(__stdcall**)(_DWORD*))(*thisx[12628] + 8))(thisx[12628]);
         thisx[12628] = 0;
     }
-    if (thisx[12632])
+    if (thisx[12632])//50528
     {
         (*(void(__stdcall**)(_DWORD*))(*thisx[12632] + 8))(thisx[12632]);
         thisx[12632] = 0;
     }
     result = (int)thisx;
-    if (thisx[12627])
+    if (thisx[12627])//50508
     {
         result = (*(int(**)(_DWORD*, _DWORD*))(*thisx[12627] + 8))(thisx[12627], thisx[12627]);
         thisx[12627] = 0;
     }
-    if (thisx[12626])
+    if (thisx[12626])//50504
     {
         (*(void(__stdcall**)(_DWORD*))(*thisx[12626] + 8))(thisx[12626]);
         result = (int)thisx;
@@ -75517,7 +75576,8 @@ int sub_49A518(int thisx)
     {
 
         //if (        (*(int(__stdcall**)(_DWORD, HDC*))           (**(_DWORD**)(thisx + 50520) + 68))            (*(_DWORD*)(thisx + 50520), &hdcSrc)           )
-        IDirectDrawSurface7* IDDS_50520 = (IDirectDrawSurface7*)*(_DWORD*)(thisx + 50520);
+        //IDirectDrawSurface7* IDDS_50520 = (IDirectDrawSurface7*)*(_DWORD*)(thisx + 50520);
+        IDirectDrawSurface7* IDDS_50520 = (IDirectDrawSurface7*)*(_DWORD*)((int)(&unk_4BDC60) + 50520);
 
         HRESULT res = IDDS_50520->GetDC(&hdcSrc);
         res = MAKE_DDHRESULT(res);
@@ -75833,7 +75893,7 @@ int sub_49B04B(_DWORD* thisx)
 
 
 
- //
+ //thisx = unk_4BDC60[10]
 int sub_49B578(_DWORD* thisx, int a2, int a3, int a4, char a5)
 {
     //int v6; // edx
@@ -75870,7 +75930,7 @@ int sub_49B578(_DWORD* thisx, int a2, int a3, int a4, char a5)
             *thisx = 0;
         }
 
-        IDirectDraw7* IDD_a2 = (IDirectDraw7*)a2;
+        IDirectDraw7* IDD_a2 = (IDirectDraw7*)a2;//a2 = unk_4BDC60+50508
         b = IDD_a2->CreateSurface((LPDDSURFACEDESC2)v8, (LPDIRECTDRAWSURFACE7*)thisx, 0);
 
         //int* f = (int*)(*(_DWORD*)a2 + 24);
@@ -75885,7 +75945,7 @@ int sub_49B578(_DWORD* thisx, int a2, int a3, int a4, char a5)
         }
         else
         {
-            IDirectDrawSurface7* IDDS_thisx = (IDirectDrawSurface7*)*thisx;
+            IDirectDrawSurface7* IDDS_thisx = (IDirectDrawSurface7*)*thisx;//this = unk_4BDC60[10]
             (*IDDS_thisx).Restore();//(*(void(**)(_DWORD, _DWORD))        (*(int*)*thisx + 108))       (*thisx, *thisx);
             return 1;
         }
@@ -75899,7 +75959,7 @@ int sub_49B578(_DWORD* thisx, int a2, int a3, int a4, char a5)
  //
 int sub_49B882(_DWORD** thisx)
 {
-    if (thisx[12631])
+    if (thisx[12631])//50524
     {
         (*(void(**)(_DWORD*, _DWORD*))(*thisx[12631] + 8))(thisx[12631], thisx[12631]);
         thisx[12631] = 0;
@@ -75965,7 +76025,7 @@ int sub_49B9E0(_DWORD* thisx, LPCSTR lpFileName)
 
 
 //初始化，赋值常数
-//thisx 52字节
+//thisx 56字节
 int sub_49C15E(int thisx)
 {
     check_stack c(__FILE__, __LINE__);
@@ -76117,7 +76177,7 @@ int sub_49C541(_DWORD* thisx, int a2, int a3, struct tagRECT* a4)
                     v25 = v8;
                     v11[1] |= 4u;
                 }
-                IDirectDrawSurface7* IDDS_a2 = (IDirectDrawSurface7 *)(a2);
+                IDirectDrawSurface7* IDDS_a2 = (IDirectDrawSurface7 *)(a2);// a2 = unk_4BDC60+50516 or unk_4BDC60+50520
                 result = IDDS_a2->Blt((LPRECT)&v15, (LPDIRECTDRAWSURFACE7)*thisx,(LPRECT)&v21,v25,(LPDDBLTFX)v11);//画帧数
                 HRESULT res = MAKE_HRESULT(1,0x876,result);
                 //result = (*(int(__stdcall**)(int, int*, _DWORD, int*, int, int*))(*(_DWORD*)a2 + 20))(a2,&v15, *thisx, &v21,v25, v11);
@@ -76266,7 +76326,7 @@ int  sub_49CDF4(_DWORD* thisx, int a2)
         {
             v4[0] = *(_DWORD*)(a2 + 4);
             v4[1] = *(_DWORD*)(a2 + 4);
-            IDirectDrawSurface7 * IDDS_thisx = (IDirectDrawSurface7*)*thisx;
+            IDirectDrawSurface7 * IDDS_thisx = (IDirectDrawSurface7*)*thisx;//this = unk_4BDC60*i*24
             (*IDDS_thisx).SetColorKey(8, (LPDDCOLORKEY)v4);//(*(void(__stdcall**)(_DWORD, int, int*))(*(_DWORD*)*thisx + 116))(*thisx, 8, v4);
             *((_BYTE*)thisx + 5) = 1;
         }
@@ -76316,7 +76376,10 @@ int  sub_49D0B7(_DWORD* thisx, int a2, int a3, int cy, void* Src)
 
     if (*thisx || thisx[3])
     {
-        if ((*(int(__stdcall**)(_DWORD, HDC*))(*(_DWORD*)*thisx + 68))(*thisx, &hdc))
+        IDirectDrawSurface7 * IDDS = (IDirectDrawSurface7*)*thisx;//unk_4BDC60[10]
+        bool b = IDDS->GetDC(&hdc);
+        //if ((*(int(__stdcall**)(_DWORD, HDC*))(*(_DWORD*)*thisx + 68))(*thisx, &hdc))
+        if (b)
         {
             messagebox(byte_4B7DA4);
             return 0;
@@ -76347,7 +76410,7 @@ int  sub_49D0B7(_DWORD* thisx, int a2, int a3, int cy, void* Src)
                 DeleteObject(h);
                 DeleteDC(hdcSrc);
 
-                IDirectDrawSurface7* IDDS_thisx = (IDirectDrawSurface7*)*thisx;
+                IDirectDrawSurface7* IDDS_thisx = (IDirectDrawSurface7*)*thisx;//this = unk_4BDC60*i*24
                 IDDS_thisx->ReleaseDC(hdc);
                 //(*(void(**)(_DWORD, _DWORD, HDC))(*(_DWORD*)*thisx + 104))(*thisx, *thisx, hdc);
                 return 1;
@@ -76554,7 +76617,7 @@ int sub_49D318(int thisx, int a2)
                         else
                         {
                             v4 = ((unsigned __int8)Src[4 * v8] << 16) | ((unsigned __int8)Src[4 * v8 + 1] << 8) | (unsigned __int8)Src[4 * v8 + 2];
-                            v3 = unknown_libname_30((_DWORD*)(void*)(24 * i + thisx));
+                            v3 = unknown_libname_30((_DWORD*)(void*)(24 * i + thisx));// return *(_DWORD *)thisx;
                             v12 = sub_4A246A(v3, v4);
                         }
                     }
@@ -77290,14 +77353,9 @@ _DWORD* sub_49EDC1(int a1, int a2, _DWORD* a3, int a4)
                         memset(v8, 0, sizeof(v8));
                         v8[0] = 100;
                         v8[20] = a4;
-                        result = (_DWORD*)(*(int(__thiscall**)(_DWORD, _DWORD, _DWORD*, _DWORD, _DWORD, int, int*))(**(_DWORD**)(a1 + 50520) + 20))(
-                            *(_DWORD*)(a1 + 50520),
-                            *(_DWORD*)(a1 + 50520),
-                            a3,
-                            0,
-                            0,
-                            16778240,
-                            v8);
+                        //result = (_DWORD*)(*(int(__thiscall**)(_DWORD, _DWORD, _DWORD*, _DWORD, _DWORD, int, int*))(**(_DWORD**)(a1 + 50520) + 20))(*(_DWORD*)(a1 + 50520),*(_DWORD*)(a1 + 50520), a3,0,0,16778240,v8);
+                        IDirectDrawSurface7* IDDSf_50520 = (IDirectDrawSurface7*)*(int*)(a1 + 50520); 
+                        result = (int*)IDDSf_50520->Blt((LPRECT)a3,0,0,16778240,(LPDDBLTFX)v8);
                         if (result)
                         {
                             wsprintfA(Text, aFillrect, *a3, a3[1], a3[2], a3[3]);
@@ -78582,7 +78640,7 @@ int __cdecl sub_4A246A(int a1, COLORREF color)
 
     int size = sizeof(_DDSURFACEDESC2);
 
-    IDirectDrawSurface7* IDDS_a1 = (IDirectDrawSurface7*)a1;
+    IDirectDrawSurface7* IDDS_a1 = (IDirectDrawSurface7*)a1;////this = unk_4BDC60*i*24
 
     v4 = -1;
     //if (color != -1 && !(*(int(__stdcall**)(int, HDC*))(*(_DWORD*)a1 + 68))(a1, &hdc))
@@ -78941,7 +78999,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
     for (i = 0; i < 8; ++i)//该不会是那8给player吧，但应该不是战斗中的内存
     {
         //其实只是配置手柄相关的
-        sub_47652C((int*)&player_list[27 * i], i);//做了很多初始化，仔细看看内存位置对否//sub_47652C，除了奇怪字符其他全解
+        sub_47652C((int*)&player_list[108 * i], i);//做了很多初始化，仔细看看内存位置对否//sub_47652C，除了奇怪字符其他全解
     }
 
     //这个狗配置又是什么意思，但是可以确实，可能都是一些逻辑值
@@ -79029,7 +79087,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
                     {
                         wsprintfA(String, "%d", dword_4CA1CC);
                         //画出FPS数值
-                        sub_47BC5A(0, 0, String, 0, -1);
+                        //sub_47BC5A(0, 0, String, 0, -1);
                     }
 
                     //这个变量大部分时间为0..
@@ -83337,13 +83395,13 @@ int sub_49A318(int thisx)
 
 
     eh_vector_constructor_iterator((void *)thisx, 24, 2048, sub_499868, unknown_libname_28);
-        * (_DWORD*)(thisx + 50516) = 0;
-    *(_DWORD*)(thisx + 50520) = 0;
-    *(_DWORD*)(thisx + 50512) = 0;
-    *(_DWORD*)(thisx + 50504) = 0;
-    *(_DWORD*)(thisx + 50508) = 0;
-    *(_DWORD*)(thisx + 50524) = 0;
-    *(_DWORD*)(thisx + 50528) = 0;
+        * (_DWORD*)(thisx + 50516) = 0; //12629
+    *(_DWORD*)(thisx + 50520) = 0;//12630
+    *(_DWORD*)(thisx + 50512) = 0; //12628
+    *(_DWORD*)(thisx + 50504) = 0;//12626
+    *(_DWORD*)(thisx + 50508) = 0;//12627
+    *(_DWORD*)(thisx + 50524) = 0;//12631
+    *(_DWORD*)(thisx + 50528) = 0;//12622
     *(_DWORD*)(thisx + 49152) = 0;
     *(_DWORD*)(thisx + 50436) = 0;
     *(_DWORD*)(thisx + 50500) = 0;
