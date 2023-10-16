@@ -75426,9 +75426,11 @@ int sub_4998E0(int thisx, int a2)
     //(*(int(__stdcall**)(_DWORD, int*, int, _DWORD))(**(_DWORD**)(thisx + 50508) + 24))(*(_DWORD*)(thisx + 50508),v4,thisx + 50520,0)  
     HRESULT r = (*IDD_50508)->CreateSurface((LPDDSURFACEDESC2)v4, (LPDIRECTDRAWSURFACE7*)(thisx + 50520), 0);
     IDirectDrawSurface7* IDDS_50520 = (IDirectDrawSurface7*)*(_DWORD*)(thisx + 50520);
-    HDC hdc;
-    r = IDDS_50520->GetDC(&hdc);
-
+    //原来一直没用吗
+    //HDC hdc;
+    //r = IDDS_50520->GetDC(&hdc);
+    //IDDS_50520->ReleaseDC(hdc);
+    //r = IDDS_50520->GetDC(&hdc);
     //STDMETHOD(QueryInterface) (THIS_ REFIID riid, LPVOID FAR* ppvObj) PURE;0
     //STDMETHOD_(ULONG, AddRef) (THIS)  PURE;4
     //STDMETHOD_(ULONG, Release) (THIS) PURE;8
@@ -75580,10 +75582,10 @@ int sub_49A518(int thisx)
         IDirectDrawSurface7* IDDS_50520 = (IDirectDrawSurface7*)*(_DWORD*)((int)(&unk_4BDC60) + 50520);
 
         HRESULT res = IDDS_50520->GetDC(&hdcSrc);
-        res = MAKE_DDHRESULT(res);
+        res = MAKE_DDHRESULT(res);//#define DDERR_DCALREADYCREATED                  MAKE_DDHRESULT( 620 )
         if (res)
             //MessageBoxA(*(HWND*)(thisx + 50500), aMPddssysscGetd, byte_4B75FC, 0);
-            printf("%s---%s\n", aMPddssysscGetd,byte_4B75FC);
+            printf("%s---%s----%x\n", aMPddssysscGetd,byte_4B75FC,res);
         hdc = GetDC(*(HWND*)(thisx + 50500));
         if (*(_WORD*)(thisx + 50446) == 256)
             BitBlt(hdc, 0, 0, *(_DWORD*)(thisx + 50492), *(_DWORD*)(thisx + 50496), hdcSrc, 0, 0, 13369376/*0xCC0020u*/);
@@ -75603,25 +75605,16 @@ int sub_49A518(int thisx)
         if (*(_BYTE*)(thisx + 50444))
         {
             if (*(_WORD*)(thisx + 50446) == 256)
-                v6 = (*(int(__stdcall**)(_DWORD, LONG, LONG, _DWORD, _DWORD, _DWORD))(**(_DWORD**)(thisx + 50516) + 28))(
-                    *(_DWORD*)(thisx + 50516),
-                    Point.x,
-                    Point.x,
-                    *(_DWORD*)(thisx + 50520),
-                    0,
-                    0);
+            {
+                IDirectDrawSurface7* IDDS_50516 = (IDirectDrawSurface7*)*(_DWORD*)(thisx + 50516);
+                v6 = IDDS_50516->BltFast(Point.x, Point.x, (LPDIRECTDRAWSURFACE7)*(_DWORD*)(thisx + 50520), 0, 0);
+                //v6 = (*(int(__stdcall**)(_DWORD, LONG, LONG, _DWORD, _DWORD, _DWORD))(**(_DWORD**)(thisx + 50516) + 28))(*(_DWORD*)(thisx + 50516), Point.x, Point.x, *(_DWORD*)(thisx + 50520), 0, 0);
+            }
             else
-                v6 = (*(int(__stdcall**)(_DWORD, int, _DWORD, int, _DWORD, _DWORD))(**(_DWORD**)(thisx + 50512) + 20))(
-                    *(_DWORD*)(thisx + 50512),
-                    thisx + 50468,
-                    *(_DWORD*)(thisx + 50520),
-                    thisx + 50484,
-                    0,
-                    0);
-            result = (*(int(__stdcall**)(_DWORD, _DWORD, int))(**(_DWORD**)(thisx + 50512) + 44))(
-                *(_DWORD*)(thisx + 50512),
-                0,
-                1);
+            {
+                v6 = (*(int(__stdcall**)(_DWORD, int, _DWORD, int, _DWORD, _DWORD))(**(_DWORD**)(thisx + 50512) + 20))(*(_DWORD*)(thisx + 50512), thisx + 50468, *(_DWORD*)(thisx + 50520), thisx + 50484, 0, 0);
+            }
+            result = (*(int(__stdcall**)(_DWORD, _DWORD, int))(**(_DWORD**)(thisx + 50512) + 44))(*(_DWORD*)(thisx + 50512), 0,1);
             v6 = result;
         }
         else
@@ -75669,6 +75662,8 @@ int sub_49A518(int thisx)
                 0);
         v6 = result;
     }
+    // -2005532222 = 0x887601c2
+    HRESULT res = MAKE_DDHRESULT(0x887601c2);
     if (v6 == -2005532222)
     {
         IDirectDrawSurface7* IDDS_50512 = (IDirectDrawSurface7*)*(int*)(thisx + 50512);
@@ -77438,11 +77433,13 @@ int sub_49EF70(
     int v32; // [esp+104h] [ebp-14h]
     int v31; // [esp+100h] [ebp-18h]
     int v30; // [esp+FCh] [ebp-1Ch]
+    char tc_v29[84];
     _WORD* v29; // [esp+A4h] [ebp-74h]
     int v28[9]; // [esp+80h] [ebp-98h] BYREF
     int v27; // [esp+7Ch] [ebp-9Ch]
     int v26; // [esp+7Ch] [ebp-9Ch]
     unsigned __int16 v25; // [esp+78h] [ebp-A0h]
+    //???
     unsigned __int16 v24; // [esp+70h] [ebp-A8h]
     __int16 v23; // [esp+68h] [ebp-B0h]
     unsigned __int16 v22; // [esp+64h] [ebp-B4h]
@@ -77456,6 +77453,7 @@ int sub_49EF70(
     int k; // [esp+3Ch] [ebp-DCh]
     _WORD* v13; // [esp+38h] [ebp-E0h]
     int m; // [esp+34h] [ebp-E4h]
+    char tc_v11[24];
     int v11; // [esp+18h] [ebp-100h]
     unsigned int* v10; // [esp+14h] [ebp-104h]
     int j; // [esp+10h] [ebp-108h]
