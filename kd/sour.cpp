@@ -9219,6 +9219,8 @@ int sub_412502(int thisx, int a2)
 }
 
  //减血函数
+//thisx是角色地址
+//a2是将要减少的血量
 void sub_41261C(_WORD* thisx, int a2, int a3, int a4)
 {
     if ((unsigned __int16)thisx[107] - a2 > 0)
@@ -31287,7 +31289,7 @@ int sub_443059(_DWORD* thisx, double a2, double a3, double a4, char a5)
         sub_46753B((int)thisx);
         break;
     case 7:
-        sub_44ED4D((UINT)thisx);
+        sub_44ED4D((UINT)thisx);//内有键盘输入。。但这个状态是什么时候还未知
         break;
     case 8://对战模式，选择人物
         sub_447651((int)thisx);
@@ -35364,7 +35366,7 @@ unsigned __int8  sub_44C60C(int thisx)
     unsigned __int8 result; // al
 
 
-    sub_477F0C(0);
+    sub_477F0C(0);//接收键盘输入
     v38 = 0;
     v36 = 0;
     v39 = 0;
@@ -54127,16 +54129,16 @@ BOOL sub_476009(char* thisx)
 
     if (*(_DWORD*)thisx)
         return joyGetPosEx(*((_DWORD*)thisx + 1), (LPJOYINFOEX)(thisx + 24)) == 0;
-    *((_DWORD*)thisx + 9) = 1;
-    *((_DWORD*)thisx + 8) = 1;
-    *((_DWORD*)thisx + 14) = 0;
+    *((_DWORD*)thisx + 9) = 1;//W和S的按键标志位，初始化
+    *((_DWORD*)thisx + 8) = 1;//A和D的按键标志位，初始化
+    *((_DWORD*)thisx + 14) = 0;//按钮区按键的标志位，初始化，位标志，一个位表示一个按键标志位
     if (GetAsyncKeyState((unsigned __int8)thisx[92]) < 0)//W
         *((_DWORD*)thisx + 9) = 0;
-    if (GetAsyncKeyState((unsigned __int8)thisx[93]) < 0)//s
+    if (GetAsyncKeyState((unsigned __int8)thisx[93]) < 0)//S
         *((_DWORD*)thisx + 9) = 2;
-    if (GetAsyncKeyState((unsigned __int8)thisx[94]) < 0)//a
+    if (GetAsyncKeyState((unsigned __int8)thisx[94]) < 0)//A
         *((_DWORD*)thisx + 8) = 0;
-    if (GetAsyncKeyState((unsigned __int8)thisx[95]) < 0)//d
+    if (GetAsyncKeyState((unsigned __int8)thisx[95]) < 0)//D
         *((_DWORD*)thisx + 8) = 2;
     if (GetAsyncKeyState((unsigned __int8)thisx[96]) < 0)//j
     {
@@ -54165,28 +54167,28 @@ BOOL sub_476009(char* thisx)
     if (GetAsyncKeyState((unsigned __int8)thisx[100]) < 0)//i
     {
         v5 = *((_DWORD*)thisx + 14);
-        LOBYTE(v5) = v5 | 0x10;
+        LOBYTE(v5) = v5 | 16;
         *((_DWORD*)thisx + 14) = v5;
     }
     if (GetAsyncKeyState((unsigned __int8)thisx[101]) < 0)//o
     {
         v6 = *((_DWORD*)thisx + 14);
-        LOBYTE(v6) = v6 | 0x20;
+        LOBYTE(v6) = v6 | 32;
         *((_DWORD*)thisx + 14) = v6;
     }
     if (GetAsyncKeyState((unsigned __int8)thisx[102]) < 0)//\r回车键
     {
         v7 = *((_DWORD*)thisx + 14);
-        LOBYTE(v7) = v7 | 0x40;
+        LOBYTE(v7) = v7 | 64;
         *((_DWORD*)thisx + 14) = v7;
     }
-    if (GetAsyncKeyState((unsigned __int8)thisx[103]) < 0)//0
+    if (GetAsyncKeyState((unsigned __int8)thisx[103]) < 0)//值为0，未定义按键
     {
         v8 = *((_DWORD*)thisx + 14);
-        LOBYTE(v8) = v8 | 0x80;
+        LOBYTE(v8) = v8 | 128;
         *((_DWORD*)thisx + 14) = v8;
     }
-    if (GetAsyncKeyState((unsigned __int8)thisx[104]) < 0)//4
+    if (GetAsyncKeyState((unsigned __int8)thisx[104]) < 0)//值为4，未定义按键
     {
         v9 = *((_DWORD*)thisx + 14);
         BYTE1(v9) |= 1u;
@@ -57162,7 +57164,8 @@ int __cdecl sub_47B91A(int a1, int a2, LPCSTR lpString, int a4, int a5)
     return result;
 } 
 
-
+//画帧数
+//lpString = 要画的帧数数字
 int __cdecl sub_47BC5A(int a1, int a2, LPCSTR lpString, int a4, int a5)
 {
     //int result; // eax
@@ -57211,6 +57214,7 @@ int __cdecl sub_47BC5A(int a1, int a2, LPCSTR lpString, int a4, int a5)
         {
             v11 = v6 + 8 * i;
             v10 = dword_4B921C;
+            lpString = "SB";
             SetRect(&rc, 8 * ((lpString[i] + 15) % 16), 8 * ((lpString[i] + 15) / 16), 8, 8);
             sub_4A03B3((short*)unk_4BDC60, a5, &v10, (_DWORD*)&rc);
             if ((a4 & 1) != 0)
@@ -75590,7 +75594,6 @@ int sub_49A518(int thisx)
         if (*(_WORD*)(thisx + 50446) == 256)
             BitBlt(hdc, 0, 0, *(_DWORD*)(thisx + 50492), *(_DWORD*)(thisx + 50496), hdcSrc, 0, 0, 13369376/*0xCC0020u*/);
         else
-
             StretchBlt(hdc,0,0, *(_DWORD*)(thisx + 50476), *(_DWORD*)(thisx + 50480), hdcSrc, 0, 0, *(_DWORD*)(thisx + 50492),*(_DWORD*)(thisx + 50496),13369376/*0xCC0020u*/);
         if (hdcSrc)
         {
@@ -75632,14 +75635,9 @@ int sub_49A518(int thisx)
             else
             {
                 SetRect(&rc, Point.x, Point.y, Point.x + *(_DWORD*)(thisx + 50476), Point.y + *(_DWORD*)(thisx + 50480));
-                result = (*(int(__stdcall**)(_DWORD, struct tagRECT*, _DWORD, int, _DWORD, _DWORD))(**(_DWORD**)(thisx + 50512)
-                    + 20))(
-                        *(_DWORD*)(thisx + 50512),
-                        &rc,
-                        *(_DWORD*)(thisx + 50520),
-                        thisx + 50484,
-                        0,
-                        0);
+                IDirectDrawSurface7* IDDS_50512 = (IDirectDrawSurface7*)*(_DWORD*)(thisx + 50512);
+                result = IDDS_50512->Blt(&rc, (LPDIRECTDRAWSURFACE7)*(_DWORD*)(thisx + 50520), (LPRECT)(thisx + 50484), 0, 0);
+                //result = (*(int(__stdcall**)(_DWORD, struct tagRECT*, _DWORD, int, _DWORD, _DWORD))(**(_DWORD**)(thisx + 50512)+ 20))(*(_DWORD*)(thisx + 50512), &rc,*(_DWORD*)(thisx + 50520),thisx + 50484,0,0);
             }
             v6 = result;
         }
@@ -79027,7 +79025,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
         return 0;
     }
 
-    ho = (HGDIOBJ)CreateFontA(14, 0, 0, 0, 100, 0, 0, 0, 128, 0, 0, 0, 1u, pszFaceName);//设置字体
+    ho = (HGDIOBJ)CreateFontA(14, 0, 0, 0, 100, 0, 0, 0, 128, 0, 0, 0, 1u, pszFaceName);//设置字体，设置字符集
 
     sub_456F35((int*)unk_4B9B10);//还是读取某些配置,可能是颜色相关的配置
 
@@ -79085,7 +79083,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
                     {
                         wsprintfA(String, "%d", dword_4CA1CC);
                         //画出FPS数值
-                        //sub_47BC5A(0, 0, String, 0, -1);
+                        sub_47BC5A(0, 0, String, 0, -1);
                     }
 
                     //这个变量大部分时间为0..
