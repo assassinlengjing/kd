@@ -40,14 +40,21 @@ public:
 
 void check_stack_fun()
 {
-    for (auto it = v.begin(); it != v.end(); ++it)
+    try
     {
-        if (it->first->t != ULLONG_MAX)
+        for (auto it = v.begin(); it != v.end(); ++it)
         {
-            printf(it->second.c_str());
-            printf("\n");
-            __asm int 3
+            if (it->first->t != ULLONG_MAX)
+            {
+                printf(it->second.c_str());
+                printf("\n");
+                __asm int 3
+            }
         }
+    }
+    catch (const int e)
+    {
+        printf("xxxxxxxxxx\n");
     }
 }
 
@@ -199,9 +206,12 @@ unsigned int Concurrency::details::VirtualProcessor::GetId(Concurrency::details:
 {
 	return *((_DWORD*)thisxx + 34);
 }
+
+//this = unk_4B9B10+128
 unsigned int  Concurrency::details::ExecutionResource::GetNodeId(
     Concurrency::details::ExecutionResource* thisxx)
 {
+    //return *(unk_4B9B10+128) + (9*4 = 36) = unk_4B9B10 + 164
     return *((_DWORD*)thisxx + 9);
 }
 
@@ -2033,6 +2043,7 @@ void sub_4013E8(void* thisx)
     sub_401404((int)thisx);
 }
 
+//初始化
 int sub_401404(int thisx)
 {
     int result; // eax
@@ -2048,6 +2059,7 @@ int sub_401404(int thisx)
     *(_DWORD*)(thisx + 16) = 0;
     return result;
 }
+
 BOOL sub_4014A3(void* thisx, LPCSTR lpString2, LPCSTR a3)
 {
     //    CHAR FileName[260]; // [esp+4h] [ebp-218h] BYREF
@@ -29157,7 +29169,7 @@ BOOL sub_43F0C8(int* thisx)
  
 void* sub_43F100(void* thisx, char a2)
 {
-    sub_43EED1(thisx);
+    sub_43EED1(thisx);//Set   *(_DWORD*)thisx = off_4AC2BC;
     if ((a2 & 1) != 0)
         operator delete(thisx);
     return thisx;
@@ -29173,7 +29185,7 @@ void sub_43F130(void* thisx)
     *((_DWORD*)thisx + 3) = 0;
 }
 
- //某类的初始化
+ //某类的初始化 //*(_DWORD*)thisx = off_4AC2C0;
 void sub_43F164(void* thisx)
 {
     *(_DWORD*)thisx = off_4AC2C0;
@@ -29289,7 +29301,7 @@ int sub_43F308(int thisx)
  
 void* sub_43F330(void* thisx, char a2)
 {
-    sub_43F164(thisx);
+    sub_43F164(thisx); //*(_DWORD*)thisx = off_4AC2C0;
     if ((a2 & 1) != 0)
         operator delete(thisx);
     return thisx;
@@ -29401,7 +29413,7 @@ int sub_43F7F7(DWORD* thisx, int a2)
         }
         else
         {
-            thisx[48] = (DWORD)CreateThread(0, 0, (LPTHREAD_START_ROUTINE)StartAddress, thisx, 0, (LPDWORD)thisx + 47);
+            //thisx[48] = (DWORD)CreateThread(0, 0, (LPTHREAD_START_ROUTINE)StartAddress, thisx, 0, (LPDWORD)thisx + 47);
             return 1;
         }
     }
@@ -29607,26 +29619,8 @@ int sub_43FC33(_DWORD* thisx, LPSTR pszFileName, int a3)
         else
         {
             IDirectSoundBuffer* IDSB_this = (IDirectSoundBuffer*)*thisx;
-            v9 = IDSB_this->Lock(
-                0,
-                0,
-                (LPVOID*)&v12,
-                (LPDWORD)&v13,
-                0,
-                0,
-                2);
-            //v9 = (*(int(**)(_DWORD, _DWORD, _DWORD, _DWORD, int*, int*, _DWORD, _DWORD, int))(*(_DWORD*)*thisx + 44))(
-            //    *thisx,
-            //    *thisx,
-            //    0,
-            //    0,
-            //    &v12,
-            //    &v13,
-            //    0,
-            //    0,
-            //    2);
-
-
+            v9 = IDSB_this->Lock(0,0,(LPVOID*)&v12,(LPDWORD)&v13,0,0,2);
+            //v9 = (*(int(**)(_DWORD, _DWORD, _DWORD, _DWORD, int*, int*, _DWORD, _DWORD, int))(*(_DWORD*)*thisx + 44))(*thisx,*thisx,0,0, &v12,&v13,0,0,2);
             if (v9)
             {
                 messagebox(byte_4B055C);
@@ -29635,13 +29629,7 @@ int sub_43FC33(_DWORD* thisx, LPSTR pszFileName, int a3)
             }
             else if (sub_4900C4(hmmio, v13, v12, (int)&v8, (int)&v11))
             {
-                (*(void(**)(_DWORD, _DWORD, int, int, _DWORD, _DWORD))(*(_DWORD*)*thisx + 76))(
-                    *thisx,
-                    *thisx,
-                    v12,
-                    v13,
-                    0,
-                    0);
+                (*(void(**)(_DWORD, _DWORD, int, int, _DWORD, _DWORD))(*(_DWORD*)*thisx + 76))(*thisx,*thisx,v12,v13,0,0);
                 sub_4901B9(&hmmio, (HGLOBAL*)&v14);
                 return 0;
             }
@@ -29870,7 +29858,8 @@ int sub_440363(_DWORD* thisx)
     {
         if (!thisx[i + 2])
             return i;
-        (*(void(**)(_DWORD, _DWORD, int*))(*(_DWORD*)thisx[i + 2] + 36))(thisx[i + 2], thisx[i + 2], &v3);
+        //thisx = unk_4BDB28
+        (*(void(**)(_DWORD, _DWORD, int*))      (*(_DWORD*)thisx[i + 2] + 36))    (thisx[i + 2], thisx[i + 2], &v3);
         if ((v3 & 1) == 0)
             return i;
     }
@@ -29973,6 +29962,7 @@ int sub_44076B(int thisx, int a2)
     int v9; // [esp+18h] [ebp-30h]
     char v8[4]; // [esp+14h] [ebp-34h] BYREF
     int v7; // [esp+10h] [ebp-38h] BYREF
+    char tc_v6[4];
     int v6; // [esp+8h] [ebp-40h]
     int Size; // [esp+4h] [ebp-44h]
     int v3; // eax
@@ -31267,7 +31257,7 @@ void* sub_4428A0(void* thisx, char a2)
 //4B9B10 + (26*4)//0x68 = 4B9B78
 int sub_443059(_DWORD* thisx, double a2, double a3, double a4, char a5)
 {
-    sub_474DB0((char*)unk_4BDC60, a5);//thisx[50440] = a2;
+    sub_474DB0((char*)unk_4BDC60, a5);//set thisx[50440] = a5;
     switch (thisx[26])//游戏场景编号
     {
     case 1://开场动画状态
@@ -31354,7 +31344,7 @@ int sub_443059(_DWORD* thisx, double a2, double a3, double a4, char a5)
     default:
         break;
     }
-    sub_4532F2((int)thisx, a2, a3, a4);// //tmd,处理接收键盘的
+    sub_4532F2((int)thisx, a2, a3, a4);//
     sub_457408((int)thisx);
     return sub_48E8E1((int)(thisx + 325));
 }
@@ -32708,7 +32698,7 @@ int sub_446497(_DWORD* thisx, int a2, int a3)
 }
 
 
- 
+ //this = unk_4B9B10
 unsigned int sub_4464BA(int thisx)
 {
     return ExecutionResource::GetNodeId((ExecutionResource*)(thisx + 128));
@@ -35281,7 +35271,7 @@ int sub_44C3D6(int thisx)
     return sub_456D33((const CHAR*)thisx, aMenuWav, 1, 0);
 }
 
- 
+//thisx = unk_4B9B10
 unsigned __int8  sub_44C60C(int thisx)
 {
     //    unsigned __int8 result; // al
@@ -35372,7 +35362,9 @@ unsigned __int8  sub_44C60C(int thisx)
     v39 = 0;
     if (*(_DWORD*)(thisx + 15640) && !*(_BYTE*)(thisx + 2516))
     {
-        v39 = (*(int(**)(_DWORD))(**(_DWORD**)(thisx + 15640) + 16))(*(_DWORD*)(thisx + 15640));
+        //thisx = unk_4B9B10
+        //unk_4B9B10 + 15640
+        v39 = (*(int(**)(_DWORD))(**(_DWORD**)(thisx + 15640) + 16))    (*(_DWORD*)(thisx + 15640));//sub_480227
         *(_DWORD*)(thisx + 2528) = unknown_libname_13(*(_DWORD**)(thisx + 15640));
     }
     switch (*(_BYTE*)(thisx + 2562))
@@ -35980,7 +35972,8 @@ _DWORD*  sub_44E543(_DWORD* thisx)
 }
 
 
- 
+//战斗场景，人物开始动作
+//thisx = unk_4B9B10
 int sub_44E5BA(_DWORD* thisx, double a2, double a3, double a4)
 {
     //    int v6[14]; // [esp+4h] [ebp-3Ch] BYREF
@@ -35993,8 +35986,8 @@ int sub_44E5BA(_DWORD* thisx, double a2, double a3, double a4)
     int v6[14]; // [esp+4h] [ebp-3Ch] BYREF
 
 
-    sub_488981(thisx + 32);
-    sub_486476(thisx + 32);
+    sub_488981(thisx + 32);//unk_4B9B10 + 128
+    sub_486476(thisx + 32);//unk_4B9B10 + 128
     for (i = 0; i < 8; ++i)
     {
         if (unknown_libname_7(&thisx[153 * i + 657]))
@@ -36646,7 +36639,7 @@ _BYTE* sub_44FE2E(int thisx)
 	return sub_455268((_BYTE*)thisx, -1);
 }
 
- 
+//保存配置文件
 int sub_44FE88(int thisx, LPCSTR lpFileName)
 {
     //    char v2; // al
@@ -37925,7 +37918,7 @@ _DWORD* sub_4532B9(_DWORD* thisx)
     return result;
 }
 
- //tmd,处理接收键盘的
+ //
 void sub_4532F2(int a1, double a2, double a3, double a4)
 {
     //    int v4; // edx
@@ -38758,7 +38751,7 @@ int sub_4554F8(_DWORD* thisx)
     result = (int)thisx;
     thisx[2273] = 0;
     for (i = 0; i < 32; ++i)
-        result = sub_43F308((int)&thisx[4 * i + 2274]);
+        result = sub_43F308((int)&thisx[4 * i + 2274]);//初始化
     return result;
 }
 
@@ -39466,13 +39459,14 @@ int sub_456F35(_DWORD* thisx)
     thisx[633] = 0;
     thisx[622] = 100;
     thisx[623] = 0;
-    dword_4B93AC = 0;
+    dword_4B93AC = 0;//"FRAME:%d"游戏经过多少逻辑帧
     sub_4891E4(thisx + 32, aDemoOpeningTxt);//aDemoOpeningTxt =  "Demo\\Opening.txt"
     sub_47F958(thisx + 184);
     return sub_456169(thisx);//初始化
 }
 
 //thisx = unk_4B9B10
+//开场动画状态
 void sub_456FC8(int thisx)
 {
     //    int v2; // [esp+4h] [ebp-8h]
@@ -39492,15 +39486,15 @@ void sub_456FC8(int thisx)
     if (*(int*)(thisx + 2488) > 100)//4BA4C8//一直是100
         dword_4B99EC = 1;
     *(_DWORD*)(thisx + 2492) += *(_DWORD*)(thisx + 2488);//自曾100
-    while (*(int*)(thisx + 2492) >= 100)
+    while (*(int*)(thisx + 2492) >= 100)    //所以一般是大于100的
     {
         *(_DWORD*)(thisx + 2492) -= 100;//自减100
         v2 = 1;
-        if (dword_4B91D4 && !byte_4B91D1 || *(int*)(thisx + 2528) > 0)
+        if (dword_4B91D4 && !byte_4B91D1 || *(int*)(thisx + 2528) > 0) //一般来说不会进入
             v2 = 0;
         if (v2)
         {
-            sub_488981((int*)(thisx + 128));
+            sub_488981((int*)(thisx + 128));//这里估计是处理数据的
             for (i = 0; i < 32; ++i)
                 sub_4419F6(thisx + 36 * i + 9608);
             for (j = 0; j < 8; ++j)
@@ -39508,10 +39502,10 @@ void sub_456FC8(int thisx)
             if (*(_DWORD*)(thisx + 1292))
                 sub_47F211(thisx + 736);
             byte_4B91D1 = 0;
-            ++dword_4B93AC;
+            ++dword_4B93AC;//"FRAME:%d"游戏经过多少逻辑帧
         }
     }
-    sub_486476((_DWORD*)(thisx + 128));
+    sub_486476((_DWORD*)(thisx + 128));//这里估计是根据数据显示画面的
     if (*(_BYTE*)(thisx + 11364))
         sub_44325C(thisx);
     for (k = 0; k < 32; ++k)
@@ -54188,7 +54182,7 @@ BOOL sub_476009(char* thisx)
         LOBYTE(v8) = v8 | 128;
         *((_DWORD*)thisx + 14) = v8;
     }
-    if (GetAsyncKeyState((unsigned __int8)thisx[104]) < 0)//值为4，未定义按键
+    if (GetAsyncKeyState((unsigned __int8)thisx[104]) < 0)//值为4，鼠标中键
     {
         v9 = *((_DWORD*)thisx + 14);
         BYTE1(v9) |= 1u;
@@ -55791,6 +55785,7 @@ char __cdecl sub_47900E(_DWORD* a1, unsigned __int8 a2, int a3, int a4)
     return sub_478682(a1, a2, v6, 0, a4, -1);
 }
  
+//保存配置文件
 int __cdecl sub_47907D(LPCSTR lpFileName)
 {
     return sub_44FE88((int)unk_4B9B10, lpFileName);
@@ -57213,9 +57208,8 @@ int __cdecl sub_47BC5A(int a1, int a2, LPCSTR lpString, int a4, int a5)
         if (lpString[i] != 32)
         {
             v11 = v6 + 8 * i;
-            v10 = dword_4B921C;
-            lpString = "SB";
-            SetRect(&rc, 8 * ((lpString[i] + 15) % 16), 8 * ((lpString[i] + 15) / 16), 8, 8);
+            v10 = dword_4B921C;//可能是显示帧数DDSf对象的下标，这个对象专门用来显示字体字符相关的
+            SetRect(&rc, 8 * ((lpString[i] + 15) % 16), 8 * ((lpString[i] + 15) / 16), 8, 8);//计算字符的矩形
             sub_4A03B3((short*)unk_4BDC60, a5, &v10, (_DWORD*)&rc);
             if ((a4 & 1) != 0)
             {
@@ -62928,6 +62922,7 @@ void sub_486947(_DWORD* thisx, int a2, int a3)
     }
 }
  
+//初始化
 int(***  sub_4869CF(int thisx))(_DWORD, int)
 {
     //    int( * **result)(_DWORD, int); // eax
@@ -62967,6 +62962,7 @@ int(***  sub_4869CF(int thisx))(_DWORD, int)
     *(_DWORD*)(thisx + 352) = 0;
     return result;
 } 
+
 int sub_486B0E(int thisx, LPCSTR lpFileName)
 {
     //    void* v2; // esp
@@ -63389,7 +63385,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                         }
                         if (n == 6)
                         {
-                            v75 = sub_49D318((int)unk_4BDC60, (int)&v78);//报错
+                            v75 = sub_49D318((int)unk_4BDC60, (int)&v78);
                             if (v75 > 0 && *(_DWORD*)(thisx + 304) == -1)
                                 *(_DWORD*)(thisx + 304) = v78[0];
                         }
@@ -63876,6 +63872,8 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
     sub_482C2F(v80);
     return 1;
 } 
+
+//this = unk_4B9B10 + 128
 _DWORD* sub_488981(_DWORD* thisx)
 {
     _DWORD* result; // eax
@@ -64026,6 +64024,7 @@ int sub_488E1E(_DWORD* thisx, int a2)
         return 0;
 }
  
+//初始化
 _BYTE* sub_488E57(_BYTE* thisx)
 {
     _BYTE* result; // eax
@@ -64037,6 +64036,7 @@ _BYTE* sub_488E57(_BYTE* thisx)
     return result;
 }
  
+//初始化
 _DWORD* sub_488E76(_DWORD* thisx)
 {
     _DWORD* result; // eax
@@ -64221,15 +64221,16 @@ int sub_4891E4(_DWORD* thisx, LPCSTR lpFileName)
     return 1;
 }
  
+//初始化
 int(*** sub_489289(void* thisx))(_DWORD, int)
 {
     int( * **result)(_DWORD, int); // eax
     int i; // [esp+4h] [ebp-4h]
 
-    result = sub_4869CF((int)thisx);
+    result = sub_4869CF((int)thisx);//初始化
     for (i = 0; i < 3; ++i)
     {
-        sub_401404((int)thisx + 32 * i + 512);
+        sub_401404((int)thisx + 32 * i + 512);//初始化
         result = (int(***)(_DWORD, int))(i + 1);
     }
     return result;
@@ -64274,14 +64275,15 @@ int sub_48933F(int thisx, int a2, LPCSTR lpString)
     }
 }
  
+//this = unk_4B9B10[128]
 int sub_4893BC(_DWORD* thisx, int a2)
 {
     int i; // [esp+4h] [ebp-4h]
 
     for (i = 0; i < thisx[84]; ++i)
     {
-        if (unknown_libname_30((_DWORD*)thisx[83] + 8 * i) == a2)
-            return unknown_libname_22((_DWORD*)(thisx[83] + 8 * i));
+        if (unknown_libname_30((_DWORD*)thisx[83] + (8 * i)) == a2)//return [0];
+            return unknown_libname_22((_DWORD*)(thisx[83] + (8 * i)));//return thisx[1];
     }
     return 0;
 }
@@ -64296,7 +64298,7 @@ int sub_48941E(_DWORD* thisx, LPCSTR lpFileName)
     int v4[15]; // [esp+4h] [ebp-3Ch] BYREF
 
 
-    sub_49DB90(v4);
+    sub_49DB90(v4); //初始化，赋值常数
     v4[1] = 0;
     v4[2] = 0;
     v4[3] = -1;
@@ -64483,15 +64485,17 @@ void sub_4897EE(void* a1, double a2, char a3, char a4)
         v5 = -v5;
     sub_4A3090((double)v4, (double)v4, (double)v5);
 } 
+
+//初始化
 int(*** sub_4898D3(_DWORD* thisx))(_DWORD, int)
 {
 	thisx[7] = 0;
 	thisx[9] = 0;
 	thisx[85] = 100;
 	thisx[86] = 0;
-	sub_48151A((int)(thisx + 1));
-	sub_4869CF((int)thisx);
-	return sub_489289(thisx);
+	sub_48151A((int)(thisx + 1));//初始化
+	sub_4869CF((int)thisx);//初始化
+	return sub_489289(thisx);//初始化
 }
  
 int sub_489927(void* thisx, int a2, int a3, int a4, _DWORD* a5)
@@ -64652,6 +64656,7 @@ char* sub_489D60(char* thisx, char a2)
     }
 }
  
+//
 _BYTE* sub_489E30(_BYTE* thisx, char a2)
 {
     _BYTE* result; // eax
@@ -64924,7 +64929,7 @@ char sub_48A49F(_WORD* thisx, unsigned __int8 a2, __int16 a3, char a4)
  
 int sub_48A4E3(__int16* thisx, unsigned __int8 a2)
 {
-    if (a2 >= 0x10u)
+    if (a2 >= 16)
         return 0;
     if (*((_BYTE*)thisx + a2 + 34))
         return dword_4B9AEC[thisx[a2 + 1]];
@@ -64959,7 +64964,8 @@ _BYTE* sub_48A596(_BYTE* thisx)
     }
     return result;
 }
- 
+
+ //初始化 + 赋值常数
 int sub_48A5DA(int thisx, char a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, char a10)
 {
     int result; // eax
@@ -64994,6 +65000,8 @@ int sub_48A5DA(int thisx, char a2, int a3, int a4, int a5, int a6, int a7, int a
     return result;
 }
  
+
+//初始化 + 赋值常数
 int sub_48A700(int thisx)
 {
     *(_BYTE*)(thisx + 12) = 1;
@@ -65044,7 +65052,8 @@ int sub_48A700(int thisx)
     memset((void*)(thisx + 424), 0, 8u);
     return sub_48E02B((_DWORD*)thisx);
 }
- 
+
+//this = unk_4B9B10 + 128 + (82 * 4) + ( n * 432) , a2 = 0 , a3 = 1
 void sub_48A94C(int thisx, _BYTE* a2, int a3)
 {
     //    int* v3; // esi
@@ -65459,7 +65468,7 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
             }
             else
             {
-                v118 = sub_426210((char*)unk_4B9B10);
+                v118 = sub_426210((char*)unk_4B9B10);// return  unk_4B9B10[128];
                 if (v118)
                 {
                     v33 = sub_48A4E3(v144, 1u);
@@ -65470,12 +65479,12 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
             }
             break;
         case 0xAu:
-            v117 = sub_426210((char*)unk_4B9B10);
+            v117 = sub_426210((char*)unk_4B9B10);//return thisx + 128;
             if (v117)
             {
                 v12 = sub_48A4E3(v144, 0);
                 v13 = (const CHAR*)sub_4893BC((_DWORD*)v117, v12);
-                sub_48941E((_DWORD*)v117, v13);
+                sub_48941E((_DWORD*)v117, v13);//这里加载游戏状态1的背景图片
             }
             break;
         case 0xBu:
@@ -66135,6 +66144,8 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
         }
     }
 } 
+
+//this = unk_4B9B10 + 128 + (82 * 4) + ( n * 432)
 void sub_48CD23(int thisx)
 {
     //    BOOL v1; // [esp+0h] [ebp-78h]
@@ -75264,7 +75275,7 @@ int sub_4998E0(int thisx, int a2)
     if (b)
     {
         MessageBoxA(0, aDirectdrawObje, aDdrawerror, 0);
-    LABEL_52:
+    LABEL_52://出错，然后把DD相关对象赋值0，再退出游戏
         sub_49A184((_DWORD**)thisx);
         return 0;
     }
@@ -75336,8 +75347,6 @@ int sub_4998E0(int thisx, int a2)
             0))
         {
             *(_WORD*)(thisx + 50446) *= 2;
-            
-
             if ((*(int(__stdcall**)(_DWORD, int, int, int, _DWORD, _DWORD))(**(_DWORD**)(thisx + 50508) + 84))(
                 *(_DWORD*)(thisx + 50508),
                 (*(__int16*)(thisx + 50446) * *(__int16*)(thisx + 50448)) >> 8,
@@ -75358,7 +75367,7 @@ int sub_4998E0(int thisx, int a2)
     if (!*(_BYTE*)(thisx + 50442) && ((v8[19] & 0x40) == 0 || v8[21] != 16))
     {
         //设置16位兼容的，不用也可以
-        //MessageBoxA(*(HWND*)(thisx + 50500), &byte_4B74F8, aNot16bit, 0);
+        //MessageBoxA(*(HWND*)(thisx + 50500), (LPCSTR)&byte_4B74F8, aNot16bit, 0);
         //goto LABEL_52;
     }
     v10 = &v8[18];
@@ -75430,28 +75439,29 @@ int sub_4998E0(int thisx, int a2)
     //(*(int(__stdcall**)(_DWORD, int*, int, _DWORD))(**(_DWORD**)(thisx + 50508) + 24))(*(_DWORD*)(thisx + 50508),v4,thisx + 50520,0)  
     HRESULT r = (*IDD_50508)->CreateSurface((LPDDSURFACEDESC2)v4, (LPDIRECTDRAWSURFACE7*)(thisx + 50520), 0);
     IDirectDrawSurface7* IDDS_50520 = (IDirectDrawSurface7*)*(_DWORD*)(thisx + 50520);
-    //原来一直没用吗
-    //HDC hdc;
-    //r = IDDS_50520->GetDC(&hdc);
-    //IDDS_50520->ReleaseDC(hdc);
-    //r = IDDS_50520->GetDC(&hdc);
+
+    for (int i = 0; i <= 49*4; i+= 4)
+    {
+        printf("0x%X  i = %d\n", (*(int(__stdcall**)())(**(_DWORD**)(thisx + 50512) + i)),i);
+    }
+    
     //STDMETHOD(QueryInterface) (THIS_ REFIID riid, LPVOID FAR* ppvObj) PURE;0
     //STDMETHOD_(ULONG, AddRef) (THIS)  PURE;4
     //STDMETHOD_(ULONG, Release) (THIS) PURE;8
-    //STDMETHOD(AddAttachedSurface)(THIS_ LPDIRECTDRAWSURFACE7) PURE;12
-    //STDMETHOD(AddOverlayDirtyRect)(THIS_ LPRECT) PURE;16
-    //STDMETHOD(Blt)(THIS_ LPRECT, LPDIRECTDRAWSURFACE7, LPRECT, DWORD, LPDDBLTFX) PURE;20
-    //STDMETHOD(BltBatch)(THIS_ LPDDBLTBATCH, DWORD, DWORD) PURE;24
-    //STDMETHOD(BltFast)(THIS_ DWORD, DWORD, LPDIRECTDRAWSURFACE7, LPRECT, DWORD) PURE;28
-    //STDMETHOD(DeleteAttachedSurface)(THIS_ DWORD, LPDIRECTDRAWSURFACE7) PURE;32
-    //STDMETHOD(EnumAttachedSurfaces)(THIS_ LPVOID, LPDDENUMSURFACESCALLBACK7) PURE;36
-    //STDMETHOD(EnumOverlayZOrders)(THIS_ DWORD, LPVOID, LPDDENUMSURFACESCALLBACK7) PURE;40
-    //STDMETHOD(Flip)(THIS_ LPDIRECTDRAWSURFACE7, DWORD) PURE;44
-    //STDMETHOD(GetAttachedSurface)(THIS_ LPDDSCAPS2, LPDIRECTDRAWSURFACE7 FAR*) PURE;48
-    //STDMETHOD(GetBltStatus)(THIS_ DWORD) PURE;52
-    //STDMETHOD(GetCaps)(THIS_ LPDDSCAPS2) PURE;56
-    //STDMETHOD(GetClipper)(THIS_ LPDIRECTDRAWCLIPPER FAR*) PURE;60
-    //STDMETHOD(GetColorKey)(THIS_ DWORD, LPDDCOLORKEY) PURE;64
+    //STDMETHOD(AddAttachedSurface)(THIS_ LPDIRECTDRAWSURFACE7) PURE;12  0x7AE2F820 完成
+    //STDMETHOD(AddOverlayDirtyRect)(THIS_ LPRECT) PURE;16               0x7AE5E210
+    //STDMETHOD(Blt)(THIS_ LPRECT, LPDIRECTDRAWSURFACE7, LPRECT, DWORD, LPDDBLTFX) PURE;20  0x7ae479b0
+    //STDMETHOD(BltBatch)(THIS_ LPDDBLTBATCH, DWORD, DWORD) PURE;24                         0x7ae4a5b0
+    //STDMETHOD(BltFast)(THIS_ DWORD, DWORD, LPDIRECTDRAWSURFACE7, LPRECT, DWORD) PURE;28   0x7ae4a6d0
+    //STDMETHOD(DeleteAttachedSurface)(THIS_ DWORD, LPDIRECTDRAWSURFACE7) PURE;32           0x7ae2fe10
+    //STDMETHOD(EnumAttachedSurfaces)(THIS_ LPVOID, LPDDENUMSURFACESCALLBACK7) PURE;36      0x7ae2ffd0
+    //STDMETHOD(EnumOverlayZOrders)(THIS_ DWORD, LPVOID, LPDDENUMSURFACESCALLBACK7) PURE;40 0x7ae5e430
+    //STDMETHOD(Flip)(THIS_ LPDIRECTDRAWSURFACE7, DWORD) PURE;44                            0x7ae35dc0
+    //STDMETHOD(GetAttachedSurface)(THIS_ LPDDSCAPS2, LPDIRECTDRAWSURFACE7 FAR*) PURE;48    0x7ae30190
+    //STDMETHOD(GetBltStatus)(THIS_ DWORD) PURE;52                                          0x7ae36a80
+    //STDMETHOD(GetCaps)(THIS_ LPDDSCAPS2) PURE;56                                          0x7ae36c50
+    //STDMETHOD(GetClipper)(THIS_ LPDIRECTDRAWCLIPPER FAR*) PURE;60                         0x7ae32870
+    //STDMETHOD(GetColorKey)(THIS_ DWORD, LPDDCOLORKEY) PURE;64                             0x7ae4e600
     //STDMETHOD(GetDC)(THIS_ HDC FAR*) PURE;68
     //STDMETHOD(GetFlipStatus)(THIS_ DWORD) PURE;72
     //STDMETHOD(GetOverlayPosition)(THIS_ LPLONG, LPLONG) PURE;76
@@ -75484,7 +75494,111 @@ int sub_4998E0(int thisx, int a2)
     //STDMETHOD(GetPriority)(THIS_ LPDWORD) PURE;184
     //STDMETHOD(SetLOD)(THIS_ DWORD) PURE;188
     //STDMETHOD(GetLOD)(THIS_ LPDWORD) PURE;192
+    /*
+    0x5779CF60  i = 0
+        0x5779CE60  i = 4
+        0x5779D350  i = 8
+        0x5777F820  i = 12
+        0x577AE210  i = 16
+        0x577979B0  i = 20
+        0x5779A5B0  i = 24
+        0x5779A6D0  i = 28
+        0x5777FE10  i = 32
+        0x5777FFD0  i = 36
+        0x577AE430  i = 40
+        0x57785DC0  i = 44
+        0x57780190  i = 48
+        0x57786A80  i = 52
+        0x57786C50  i = 56
+        0x57782870  i = 60
+        0x5779E600  i = 64
+        0x57786D90  i = 68
+        0x57787040  i = 72
+        0x577AE6E0  i = 76
+        0x577A1420  i = 80
+        0x57787380  i = 84
+        0x577875C0  i = 88
+        0x57754060  i = 92
+        0x57787800  i = 96
+        0x57779820  i = 100
+        0x57787A60  i = 104
+        0x57787C80  i = 108
+        0x577829B0  i = 112
+        0x5779E850  i = 116
+        0x577AE8B0  i = 120
+        0x577A1580  i = 124
+        0x57779C90  i = 128
+        0x577AEC00  i = 132
+        0x577AF5A0  i = 136
+        0x577AF7D0  i = 140
+        0x57786F60  i = 144
+        0x57787930  i = 148
+        0x57787930  i = 152
+        0x57788180  i = 156
+        0x577B0230  i = 160
+        0x577B0060  i = 164
+        0x577AFF80  i = 168
+        0x577B0150  i = 172
+        0x577AFE80  i = 176
+        0x0  i = 180
+        0x0  i = 184
+        0x0  i = 188
+        0x5775EDB0  i = 192
+        0x5775F310  i = 196
 
+
+
+        0x795ECF60  i = 0
+0x795ECE60  i = 4
+0x795ED350  i = 8
+0x795CF820  i = 12
+0x795FE210  i = 16
+0x795E79B0  i = 20
+0x795EA5B0  i = 24
+0x795EA6D0  i = 28
+0x795CFE10  i = 32
+0x795CFFD0  i = 36
+0x795FE430  i = 40
+0x795D5DC0  i = 44
+0x795D0190  i = 48
+0x795D6A80  i = 52
+0x795D6C50  i = 56
+0x795D2870  i = 60
+0x795EE600  i = 64
+0x795D6D90  i = 68
+0x795D7040  i = 72
+0x795FE6E0  i = 76
+0x795F1420  i = 80
+0x795D7380  i = 84
+0x795D75C0  i = 88
+0x795A4060  i = 92
+0x795D7800  i = 96
+0x795C9820  i = 100
+0x795D7A60  i = 104
+0x795D7C80  i = 108
+0x795D29B0  i = 112
+0x795EE850  i = 116
+0x795FE8B0  i = 120
+0x795F1580  i = 124
+0x795C9C90  i = 128
+0x795FEC00  i = 132
+0x795FF5A0  i = 136
+0x795FF7D0  i = 140
+0x795D6F60  i = 144
+0x795D7930  i = 148
+0x795D7930  i = 152
+0x795D8180  i = 156
+0x79600230  i = 160
+0x79600060  i = 164
+0x795FFF80  i = 168
+0x79600150  i = 172
+0x795FFE80  i = 176
+0x0  i = 180
+0x0  i = 184
+0x0  i = 188
+0x795AEDB0  i = 192
+0x795AF310  i = 196
+        */
 
     if (
         *(_BYTE*)(thisx + 50443)
@@ -75586,7 +75700,7 @@ int sub_49A518(int thisx)
         IDirectDrawSurface7* IDDS_50520 = (IDirectDrawSurface7*)*(_DWORD*)((int)(&unk_4BDC60) + 50520);
 
         HRESULT res = IDDS_50520->GetDC(&hdcSrc);
-        res = MAKE_DDHRESULT(res);//#define DDERR_DCALREADYCREATED                  MAKE_DDHRESULT( 620 )
+        //res = MAKE_DDHRESULT(res);//#define DDERR_DCALREADYCREATED                  MAKE_DDHRESULT( 620 )
         if (res)
             //MessageBoxA(*(HWND*)(thisx + 50500), aMPddssysscGetd, byte_4B75FC, 0);
             printf("%s---%s----%x\n", aMPddssysscGetd,byte_4B75FC,res);
@@ -75615,7 +75729,9 @@ int sub_49A518(int thisx)
             }
             else
             {
-                v6 = (*(int(__stdcall**)(_DWORD, int, _DWORD, int, _DWORD, _DWORD))(**(_DWORD**)(thisx + 50512) + 20))(*(_DWORD*)(thisx + 50512), thisx + 50468, *(_DWORD*)(thisx + 50520), thisx + 50484, 0, 0);
+                //v6 = (*(int(__stdcall**)(_DWORD, int, _DWORD, int, _DWORD, _DWORD))(**(_DWORD**)(thisx + 50512) + 20))(*(_DWORD*)(thisx + 50512), thisx + 50468, *(_DWORD*)(thisx + 50520), thisx + 50484, 0, 0);
+                IDirectDrawSurface7* IDDS_50512 = (IDirectDrawSurface7*)*(_DWORD*)(thisx + 50512);
+                v6 = IDDS_50512->Blt((LPRECT)(thisx + 50468), (LPDIRECTDRAWSURFACE7)*(_DWORD*)(thisx + 50520), (LPRECT)(thisx + 50484), 0, 0);
             }
             result = (*(int(__stdcall**)(_DWORD, _DWORD, int))(**(_DWORD**)(thisx + 50512) + 44))(*(_DWORD*)(thisx + 50512), 0,1);
             v6 = result;
@@ -75624,13 +75740,9 @@ int sub_49A518(int thisx)
         {
             if (*(_WORD*)(thisx + 50446) == 256)
             {
-                result = (*(int(__stdcall**)(_DWORD, LONG, LONG, _DWORD, _DWORD, _DWORD))(**(_DWORD**)(thisx + 50512) + 28))(
-                    *(_DWORD*)(thisx + 50512),
-                    Point.x,
-                    Point.y,
-                    *(_DWORD*)(thisx + 50520),
-                    0,
-                    0);
+                IDirectDrawSurface7* IDDS_50512 = (IDirectDrawSurface7*)*(_DWORD*)(thisx + 50512);
+                result = IDDS_50512->BltFast((DWORD)Point.x, (DWORD)Point.y, (LPDIRECTDRAWSURFACE7) * (_DWORD*)(thisx + 50520), 0, 0);
+                //result = (*(int(__stdcall**)(_DWORD, LONG, LONG, _DWORD, _DWORD, _DWORD))(**(_DWORD**)(thisx + 50512) + 28))(*(_DWORD*)(thisx + 50512),Point.x,Point.y,*(_DWORD*)(thisx + 50520),0,0);
             }
             else
             {
@@ -75645,19 +75757,17 @@ int sub_49A518(int thisx)
     else
     {
         if (*(_BYTE*)(thisx + 50444))
-            result = (*(int(**)(_DWORD, _DWORD, _DWORD, int))(**(_DWORD**)(thisx + 50512) + 44))(
-                *(_DWORD*)(thisx + 50512),
-                *(_DWORD*)(thisx + 50512),
-                0,
-                1);
+        {
+            result = (*(int(**)(_DWORD, _DWORD, _DWORD, int))(**(_DWORD**)(thisx + 50512) + 44))(*(_DWORD*)(thisx + 50512), *(_DWORD*)(thisx + 50512), 0, 1);
+            IDirectDrawSurface7* IDDS_50512 = (IDirectDrawSurface7*)*(_DWORD*)(thisx + 50512);
+            //result = IDDS_50512->Flip(0, 1);
+        } 
         else
-            result = (*(int(__stdcall**)(_DWORD, LONG, LONG, _DWORD, _DWORD, _DWORD))(**(_DWORD**)(thisx + 50512) + 28))(
-                *(_DWORD*)(thisx + 50512),
-                Point.x,
-                Point.y,
-                *(_DWORD*)(thisx + 50516),
-                0,
-                0);
+        {
+            //result = (*(int(__stdcall**)(_DWORD, LONG, LONG, _DWORD, _DWORD, _DWORD))(**(_DWORD**)(thisx + 50512) + 28))(*(_DWORD*)(thisx + 50512), Point.x, Point.y, *(_DWORD*)(thisx + 50516), 0, 0);
+            IDirectDrawSurface7* IDDS_50512 = (IDirectDrawSurface7*)*(_DWORD*)(thisx + 50512);
+            result = IDDS_50512->BltFast(Point.x, Point.y, (LPDIRECTDRAWSURFACE7)*(_DWORD*)(thisx + 50516), 0, 0);
+        }
         v6 = result;
     }
     // -2005532222 = 0x887601c2
@@ -75845,13 +75955,9 @@ unsigned __int16* sub_49ABE2(unsigned __int16* thisx, int a2, int a3)
                     LOBYTE(v8) = LOBYTE(v15[1]) | 4;
                     v15[1] = v8;
                 }
-                result = (unsigned __int16*)(*(int(__stdcall**)(int, struct tagRECT*, _DWORD, struct tagRECT*, int, int*))(*(_DWORD*)a2 + 20))(
-                    a2,
-                    &v17,
-                    *(_DWORD*)thisx,
-                    &rc,
-                    v20,
-                    v15);
+                IDirectDrawSurface7* IDDS_50520 = (IDirectDrawSurface7*)a2;
+                IDDS_50520->Blt(&v17, (LPDIRECTDRAWSURFACE7)*(_DWORD*)thisx, &rc, v20, (LPDDBLTFX)v15);
+                //result = (unsigned __int16*)(*(int(__stdcall**)(int, struct tagRECT*, _DWORD, struct tagRECT*, int, int*))(*(_DWORD*)a2 + 20))(a2,&v17,*(_DWORD*)thisx,&rc,v20,v15);
                 v16 = result;
                 if (result)
                 {
@@ -76043,7 +76149,7 @@ int sub_49C15E(int thisx)
  
 
 
- //
+ //this = 副DDSf对象，a2是主DDSf对象，a3是56结构体
 int sub_49C541(_DWORD* thisx, int a2, int a3, struct tagRECT* a4)
 {
     //    int result; // eax
@@ -76192,7 +76298,9 @@ int sub_49C541(_DWORD* thisx, int a2, int a3, struct tagRECT* a4)
     }
     return result;
 } 
-//
+
+//this = unk_4BDC60 a2 = DDSf对象下标
+
 int sub_49C8A6(int thisx, int* a2, _DWORD* a3)
 {
     int result; // eax
@@ -76662,7 +76770,7 @@ int  sub_49DA45(_DWORD* thisx, LPCSTR lpFileName, int a3)
     sub_49B9E0(thisx, lpFileName);//把文件内的数据读取到内存
     if (!thisx[12609])
         return 0;
-    v5 = sub_49D318((int)thisx, a3);
+    v5 = sub_49D318((int)thisx, a3);//把读取到的内存数据关联到DDSf对象上
     sub_49B98C(thisx);//初始化
     return v5;
 }
@@ -76704,13 +76812,9 @@ int  sub_49DB00(_DWORD* thisx, int a2)
     {
         v3[0] = 100;
         v3[20] = a2;
-        return (*(int(__stdcall**)(_DWORD, _DWORD, _DWORD, _DWORD, int, int*))(*(_DWORD*)*thisx + 20))(
-            *thisx,
-            0,
-            0,
-            0,
-            16778240,
-            v3);
+        IDirectDrawSurface7* IDDSf = (IDirectDrawSurface7*)*thisx;
+        return IDDSf->Blt(0, 0, 0, 16778240, (LPDDBLTFX)v3);
+        //return (*(int(__stdcall**)(_DWORD, _DWORD, _DWORD, _DWORD, int, int*))(*(_DWORD*)*thisx + 20))(*thisx,0,0,0,16778240,v3);
     }
     return result;
 }
@@ -77361,14 +77465,9 @@ _DWORD* sub_49EDC1(int a1, int a2, _DWORD* a3, int a4)
                     memset(v6, 0, sizeof(v6));
                     v6[0] = 100;
                     v6[20] = a4;
-                    result = (_DWORD*)(*(int(__thiscall**)(_DWORD, _DWORD, _DWORD*, _DWORD, _DWORD, int, int*))(**(_DWORD**)(a1 + 50516) + 20))(
-                        *(_DWORD*)(a1 + 50516),
-                        *(_DWORD*)(a1 + 50516),
-                        a3,
-                        0,
-                        0,
-                        16778240,
-                        v6);
+                    IDirectDrawSurface7* IDDSf_50516 = (IDirectDrawSurface7*)*(int*)(a1 + 50516);
+                    result = (int*)IDDSf_50516->Blt((LPRECT)a3, 0, 0, 16778240, (LPDDBLTFX)v6);
+                    //result = (_DWORD*)(*(int(__thiscall**)(_DWORD, _DWORD, _DWORD*, _DWORD, _DWORD, int, int*))(**(_DWORD**)(a1 + 50516) + 20))(*(_DWORD*)(a1 + 50516),*(_DWORD*)(a1 + 50516),a3,0,0,16778240,v6);
                     if (result)
                         return (_DWORD*)messagebox(byte_4B809C);
                 }
@@ -77431,9 +77530,10 @@ int sub_49EF70(
     int v32; // [esp+104h] [ebp-14h]
     int v31; // [esp+100h] [ebp-18h]
     int v30; // [esp+FCh] [ebp-1Ch]
-    char tc_v29[84];
-    _WORD* v29; // [esp+A4h] [ebp-74h]
-    int v28[9]; // [esp+80h] [ebp-98h] BYREF
+    char tc_v29[84]; //124
+    _WORD* v29; // [esp+A4h] [ebp-74h] 40
+    int v28[9]; // [esp+80h] [ebp-98h] BYREF 36
+
     int v27; // [esp+7Ch] [ebp-9Ch]
     int v26; // [esp+7Ch] [ebp-9Ch]
     unsigned __int16 v25; // [esp+78h] [ebp-A0h]
@@ -77476,7 +77576,10 @@ int sub_49EF70(
         if (a2[3] > *(_DWORD*)(thisx + 50464))
             a2[3] = *(_DWORD*)(thisx + 50464);
         v28[0] = 124;
-        result = (*(int(__stdcall**)(int, _DWORD*, int*, int, _DWORD))(*(_DWORD*)v20 + 100))(v20, a2, v28, 1, 0);
+        //result = (*(int(__stdcall**)(int, _DWORD*, int*, int, _DWORD))(*(_DWORD*)v20 + 100))(v20, a2, v28, 1, 0);
+        IDirectDrawSurface7* IDDS_50520 = (IDirectDrawSurface7*)v20;
+        result = IDDS_50520->Lock((LPRECT)a2, (LPDDSURFACEDESC2)v28, 1, 0);
+
         v33 = result;
         if (!result)
         {
@@ -77531,7 +77634,8 @@ int sub_49EF70(
                     v16 = &v13[v26];
                 }
             }
-            return (*(int(__stdcall**)(int, _DWORD*))(*(_DWORD*)v20 + 128))(v20, a2);
+            //return (*(int(__stdcall**)(int, _DWORD*))(*(_DWORD*)v20 + 128))(v20, a2);
+            return IDDS_50520->Unlock((LPRECT)a2);
         }
     }
     return result;
@@ -77999,17 +78103,16 @@ _DWORD* sub_4A0337(_DWORD* thisx, _DWORD* a2, int a3)
             memset(v5, 0, sizeof(v5));
             v5[0] = 100;
             v5[20] = a3;
-            return (_DWORD*)(*(int(__stdcall**)(_DWORD, _DWORD*, _DWORD, _DWORD, int, int*))(*(_DWORD*)*thisx + 20))(
-                *thisx,
-                a2,
-                0,
-                0,
-                16778240,
-                v5);
+            IDirectDrawSurface7* IDDSf = (IDirectDrawSurface7*)*thisx;
+            return (int*)IDDSf->Blt((LPRECT)a2, 0, 0, 16778240, (LPDDBLTFX)v5);
+            //return (_DWORD*)(*(int(__stdcall**)(_DWORD, _DWORD*, _DWORD, _DWORD, int, int*))(*(_DWORD*)*thisx + 20))(*thisx,a2,0,0,16778240,v5);
         }
     }
     return result;
-} 
+}
+
+//this = unk_4BDC60 a3 = DDSf对象下标
+
 void sub_4A03B3(_WORD* thisx, int a2, int* a3, _DWORD* a4)
 {
     //    int v4; // eax
@@ -78660,6 +78763,7 @@ int __cdecl sub_4A246A(int a1, COLORREF color)
             v4 &= (1 << v8) - 1;
         }
         IDDS_a1->Unlock(0);
+
         //(*(void(__stdcall**)(int, _DWORD))(*(_DWORD*)a1 + 128))(a1, 0);
     }
     //if (color != -1 && !(*(int(__stdcall**)(int, HDC*))(*(_DWORD*)a1 + 68))(a1, &hdc))
@@ -78977,7 +79081,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
     dword_4B9364 = 0;
     dword_4B9360 = 0;
     dword_4B93B0 = 0;
-    dword_4B93AC = 0;
+    dword_4B93AC = 0;//"FRAME:%d"游戏经过多少逻辑帧
     Time = timeGetTime();
     v11 = Time;
     v16 = 0;
@@ -79060,7 +79164,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
                         while (v16 >= 17)
                         {
                             //暂且不管，咋们开启同步就执行不到这个
-                            sub_443059((int*)unk_4B9B10, v4, v5, v6, 0);
+                            //sub_443059((int*)unk_4B9B10, v4, v5, v6, 0);//这个是处理对应时间上的同步的，如果发现时间过得太快了，就直接跳过动画显示对应时间的帧画面
                             v16 -= 17;
                         }
                     }
@@ -79076,7 +79180,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
                     }
 
                     sub_440B04((int*)unk_4BDB28);
-                    sub_443059((int*)unk_4B9B10, v4, v5, v6, 1);
+                    sub_443059((int*)unk_4B9B10, v4, v5, v6, 1);//游戏的主要逻辑
 
                     //判断是否显示FPS
                     if (dword_4B99F4)
