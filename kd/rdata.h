@@ -48,7 +48,7 @@ extern char stru_4AC480[];
 extern byte byte_4AC560[];
 extern db byte_4AC8C4;//
 extern dw SrcStr;
-extern char unk_4ACA48[];
+extern char byte_4ACA48[];
 extern byte byte_4AFF40[];
 
 

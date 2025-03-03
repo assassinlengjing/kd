@@ -39,6 +39,21 @@
     <ClCompile Include="sour.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="B10.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="C60.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="player_list.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cppm">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="data_2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="data.h">

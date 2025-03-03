@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C++ Launch",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}\\kd.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      //"console": "externalTerminal", // 使用外部终端
+      "preLaunchTask": "build with cl", // 在调试之前执行的构建任务
+      "logging": {
+        "engineLogging": false
+      },
+      "symbolSearchPath": "D:\\Users\\lengjing\\source\\repos\\kd",  // 指定 PDB 文件所在目录
+      "sourceFileMap": {
+        "/path/in/debugger": "D:\\Users\\lengjing\\source\\repos\\kd\\kd"  // 映射调试器中的路径到本地路径
+    }
+    }
+  ]
+}

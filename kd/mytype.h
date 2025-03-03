@@ -82,7 +82,7 @@
 #define DWORD4(x)   DWORDEn(x,  4)
 
 #define _DWORD int
-#define DWORD  long
+#define DWORD  int //֮ǰ#define DWORD  long
 #define dword int
 //#define BYTE char
 #define _BYTE char

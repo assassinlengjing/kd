@@ -2,7 +2,7 @@
 #include "concurrency.h"
 #include "math.h"
 #include "dsound.h"
-extern unsigned char ida_chars[];
+extern char ida_chars[];
 
 using namespace Concurrency;
 
@@ -13,103 +13,103 @@ using namespace Concurrency;
 using namespace Concurrency::details;
 #endif
 
-int sub_4260D0(_DWORD* thisx);
+int sub_4260D0(_DWORD* thisx);//get
 
-int sub_426090(_DWORD* thisx);
-int sub_4260B0(_DWORD* thisx);
-char sub_426070(_BYTE* thisx);
-__int16 sub_4260F0(_WORD* thisx);
-char sub_426030(_BYTE* thisx);
-_DWORD* sub_426050(_DWORD* thisx, int a2);
-__int16  sub_426130(_WORD* thisx);
-__int16 sub_426110(_WORD* thisx);
-int sub_426010(_DWORD* thisx);
+int sub_426090(_DWORD* thisx);//get
+int sub_4260B0(_DWORD* thisx);//get
+char sub_426070(_BYTE* thisx);//get
+__int16 sub_4260F0(_WORD* thisx);//get
+char sub_426030(_BYTE* thisx);//get
+_DWORD* sub_426050(_DWORD* thisx, int a2);//set
+__int16  sub_426130(_WORD* thisx);//get
+__int16 sub_426110(_WORD* thisx);//get
+int sub_426010(_DWORD* thisx);//get
 //void unbuffered(streambuf* thisx, int a2);
 
 
-_BYTE* sub_401000(_BYTE* thisx);
-void sub_401119(_DWORD* thisx);
-int sub_401135(_CancellationTokenRegistration** thisx);
-int __stdcall sub_401265(_DWORD** thisx, int a2);
-void* sub_401320(_DWORD* thisx, char a2);
-struct _CancellationTokenState* _GetToken(_CancellationTokenRegistration* thisx);
-char* unknown_libname_1(char* thisx);
-void sub_401390(void* thisx);
-void sub_4013E8(void* thisx);
-int sub_401404(int thisx);
-BOOL sub_4014A3(void* thisx, LPCSTR lpString2, LPCSTR a3);
-int sub_401531(_DWORD* thisx, LPCSTR lpFileName, int a3);
-int sub_401568(_DWORD* thisx, LPCSTR lpFileName, int a3);
-void sub_40159F(_DWORD* thisx, int a2, int a3, int a4);
-void sub_4015C7(int thisx, int a2, int a3, int a4, int a5);
-void* sub_4016C0(void* thisx, char a2);;
-char sub_4016F0(_BYTE* thisx);
-char sub_401710(_BYTE* thisx);
-void sub_401730(void* thisx);
-void sub_40174E(void* thisx);
-LPSTR sub_401762(CHAR* thisx, LPCSTR lpString2);
-BOOL sub_401782(_BYTE* thisx, int a2);
-int sub_4017EE(_WORD* thisx, unsigned __int16 a2);
-int sub_40181C(unsigned __int8* thisx);
-void sub_401870(void* thisx);
-void sub_401927(void* thisx);
-int sub_40197E(_BYTE* thisx, HANDLE hFile, int a3, int a4);
-void** sub_401B16(int thisx);
-_BYTE* sub_401B7C(_BYTE* thisx);
-int __stdcall sub_401BD0(_DWORD* thisx, char a1);
-__int16 __stdcall sub_401BEF(_DWORD* thisx, char a2);
-char __stdcall sub_401C1E(_DWORD* thisx, char a2, int a3);
-char __stdcall sub_401C5B(_DWORD* thisx, char a2, int a3);
-char __stdcall sub_401C98(_DWORD* thisx, char a2);
-char __stdcall sub_401CC6(_DWORD* thisx, char a2);
-int __stdcall sub_401D24(_DWORD* thisx, char a2, char a3, int a4);
-int __stdcall sub_401D62(_DWORD* thisx, char a2, char a3, int a4);
-int sub_401DFE(char* thisx);
-_DWORD* sub_401E17(_DWORD* thisx);
-void** sub_401E35(void** thisx);
-void** sub_401E48(void** thisx);
-int sub_401E83(_DWORD* thisx, unsigned __int8 a2);
-int unknown_libname_2(_DWORD* thisx);
-char unknown_libname_3(void* thisx);
-int sub_401ED9(_BYTE* thisx, HANDLE hFile, int a3);
-int __stdcall sub_402080(int a1, int a2, int a3, void (*a4)(int));
-_DWORD* sub_4020B0(_DWORD* thisx);
-void sub_40211F(void* thisx);
-void __fastcall sub_40230C(int a1);
-int sub_402C05(int thisx);
-int sub_407756(int thisx, int a2, int a3, int a4);
-void sub_408F50(int thisx, double a2, double a3, double a4, int a5);
-unsigned __int8 sub_409096(int thisx);
-int sub_409273(int thisx, int a2);
-void sub_4097DF(void* thisx, int a2);
-void sub_4097FE(int a1, double a2, double a3, double a4);
-int sub_41242D(int thisx);
-int sub_412502(int thisx, int a2);
+_BYTE* sub_401000(_BYTE* thisx);//初始化
+void sub_401119(_DWORD* thisx);//init
+int sub_401135(_CancellationTokenRegistration** thisx);//设置某个状态
+int __stdcall sub_401265(_DWORD** thisx, int a2);//set
+void* sub_401320(_DWORD* thisx, char a2);//inti
+struct _CancellationTokenState* _GetToken(_CancellationTokenRegistration* thisx);//get
+char* unknown_libname_1(char* thisx);//get
+void sub_401390(void* thisx);//init
+void sub_4013E8(void* thisx);//init
+int sub_401404(int thisx);//init
+BOOL sub_4014A3(void* thisx, LPCSTR lpString2, LPCSTR a3);//set
+int sub_401531(_DWORD* thisx, LPCSTR lpFileName, int a3);//set
+int sub_401568(_DWORD* thisx, LPCSTR lpFileName, int a3);//set
+void sub_40159F(_DWORD* thisx, int a2, int a3, int a4);//set
+void sub_4015C7(int thisx, int a2, int a3, int a4, int a5);//set
+void* sub_4016C0(void* thisx, char a2);//init
+char sub_4016F0(_BYTE* thisx);//get
+char sub_401710(_BYTE* thisx);//get
+void sub_401730(void* thisx);//init
+void sub_40174E(void* thisx);//init
+LPSTR sub_401762(CHAR* thisx, LPCSTR lpString2);//set
+BOOL sub_401782(_BYTE* thisx, int a2);//is
+int sub_4017EE(_WORD* thisx, unsigned __int16 a2);//set
+int sub_40181C(unsigned __int8* thisx);//set
+void sub_401870(void* thisx);//init
+void sub_401927(void* thisx);//init
+int sub_40197E(_BYTE* thisx, HANDLE hFile, int a3, int a4);//读取文件
+void** sub_401B16(int thisx);//init
+_BYTE* sub_401B7C(_BYTE* thisx);//init
+int __stdcall sub_401BD0(_DWORD* thisx, char a1);//get
+__int16 __stdcall sub_401BEF(_DWORD* thisx, char a2);//get
+char __stdcall sub_401C1E(_DWORD* thisx, char a2, int a3);//get
+char __stdcall sub_401C5B(_DWORD* thisx, char a2, int a3);//get
+char __stdcall sub_401C98(_DWORD* thisx, char a2);//get
+char __stdcall sub_401CC6(_DWORD* thisx, char a2);//get
+int __stdcall sub_401D24(_DWORD* thisx, char a2, char a3, int a4);//get
+int __stdcall sub_401D62(_DWORD* thisx, char a2, char a3, int a4);//get
+int sub_401DFE(char* thisx);//get
+_DWORD* sub_401E17(_DWORD* thisx);//init
+void** sub_401E35(void** thisx);//get
+void** sub_401E48(void** thisx);//init
+int sub_401E83(_DWORD* thisx, unsigned __int8 a2);//get
+int unknown_libname_2(_DWORD* thisx);//get
+char unknown_libname_3(void* thisx);//get
+int sub_401ED9(_BYTE* thisx, HANDLE hFile, int a3);//读取文件
+int __stdcall sub_402080(int a1, int a2, int a3, void (*a4)(int));//init
+_DWORD* sub_4020B0(_DWORD* thisx);//init
+void sub_40211F(void* thisx);//init
+void __fastcall sub_40230C(int a1);//big fun
+int sub_402C05(int thisx);//big fun
+int sub_407756(int thisx, int a2, int a3, int a4);//big fun
+void sub_408F50(int thisx, double a2, double a3, double a4, int a5);//复杂
+unsigned __int8 sub_409096(int thisx);//游戏对象的复杂状态更新和计算
+int sub_409273(int thisx, int a2);//big fun
+void sub_4097DF(void* thisx, int a2);//set
+void sub_4097FE(int a1, double a2, double a3, double a4);//big
+int sub_41242D(int thisx);//update
+int sub_412502(int thisx, int a2);//update set
 void sub_41261C(_WORD* thisx, int a2, int a3, int a4);//修改HP，this为hero结构头，a2是将要受到的伤害
-void sub_4126CE(int thisx, double a2, double a3, double a4);
-_DWORD* sub_41714D(_DWORD* thisx, int a2);
+void sub_4126CE(int thisx, double a2, double a3, double a4);//big
+_DWORD* sub_41714D(_DWORD* thisx, int a2);//set
 int sub_417173(int thisx, unsigned __int8 a2);
 _DWORD* sub_41745B(_DWORD* thisx, unsigned __int8 a2);
 __int16 sub_4175B4(int thisx, int a2);
-int sub_417763(_WORD* thisx);//修改HP，this为hero结构头,开始前战斗前初始化HP
-int sub_417780(int thisx);
-__int16 sub_417924(int thisx, int a2, int a3);
-unsigned __int8* sub_417BBB(int thisx, int a2);
-void sub_417C15(int thisx, unsigned __int8 a2);
-_BYTE* sub_417C83(int thisx);
-_BYTE* sub_417DCC(int thisx);
-_DWORD* sub_417E1D(_DWORD* thisx);
-int sub_417E42(int thisx);
-_DWORD* sub_417E88(_DWORD* thisx);
-_DWORD* sub_417EAD(_DWORD* thisx);
-int  sub_417EE0(int thisx);
-int  sub_417FC1(int thisx);
-_DWORD* sub_41807A(_DWORD* thisx);
-void** sub_418130(void** thisx);
-__int16 __fastcall sub_4181B5(int a1);
-unsigned __int8* sub_41B465(_DWORD* thisx);
-BOOL sub_41B65C(int thisx);
-_DWORD* sub_41B6CF(_DWORD* thisx, int a2, int a3);
+int sub_417763(_WORD* thisx);//init HP，this为hero结构头,开始前战斗前初始化HP
+int sub_417780(int thisx);//update
+__int16 sub_417924(int thisx, int a2, int a3);//为某个对象添加buff
+unsigned __int8* sub_417BBB(int thisx, int a2);//init
+void sub_417C15(int thisx, unsigned __int8 a2);//set
+_BYTE* sub_417C83(int thisx);//init
+_BYTE* sub_417DCC(int thisx);//clear
+_DWORD* sub_417E1D(_DWORD* thisx);//init
+int sub_417E42(int thisx);//init
+_DWORD* sub_417E88(_DWORD* thisx);//set
+_DWORD* sub_417EAD(_DWORD* thisx);//set
+int  sub_417EE0(int thisx);//init
+int  sub_417FC1(int thisx);//init
+_DWORD* sub_41807A(_DWORD* thisx);//init
+void** sub_418130(void** thisx);//init
+__int16 __fastcall sub_4181B5(int a1);//big
+unsigned __int8* sub_41B465(_DWORD* thisx);//随机操作
+BOOL sub_41B65C(int thisx);//is
+_DWORD* sub_41B6CF(_DWORD* thisx, int a2, int a3);//set
 int sub_41B6F5(int thisx);
 int sub_41B990(int thisx, int a2, int a3);
 int sub_41BA53(int thisx, unsigned __int8 a2, int a3);
@@ -869,11 +869,11 @@ int __cdecl sub_47C20C(unsigned __int16 a1);
 int __cdecl sub_47C25B(unsigned __int8 a1);
 int sub_47C427();
 int sub_47C5F0();
-int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
+int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);//主函数
 int __cdecl sub_47E539(HINSTANCE hInstance);//对程序实例做一些配置，不用管
-int __cdecl sub_47E5AC(HINSTANCE hInstance, int nCmdShow);
-LRESULT __stdcall sub_47E7B6(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
-int unknown_libname_21(_DWORD* thisx);
+int __cdecl sub_47E5AC(HINSTANCE hInstance, int nCmdShow);//创建窗口，显示窗口
+LRESULT __stdcall sub_47E7B6(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);//自定义消息函数
+int unknown_libname_21(_DWORD* thisx);// 获取资源的高度
 _BYTE* sub_47EA90(_BYTE* thisx, char a2);
 _BYTE* sub_47EAB0(_BYTE* thisx, char a2);
 _BYTE* sub_47EAD0(_BYTE* thisx, char a2);
@@ -1305,6 +1305,7 @@ int sub_4A1C28(_DWORD* thisx, void* a2, int a3, int a4, int a5);
 //void* sub_4A1CA0(int thisx, void* Src);
 //int __cdecl sub_4A202A(int a1, HGDIOBJ h, int xSrc, int ySrc, int wSrc, int hSrc);
 int __cdecl sub_4A246A(int a1, COLORREF color);
+//一下函数都是系统函数
 //int __cdecl sub_4A25CE(int a1, LPCSTR name, int a3, int cy, char a5, int a6);
 //void __stdcall _JumpToContinuation(void* a1, struct EHRegistrationNode* a2);
 //int __cdecl sub_4A2738(int a1, int a2);
@@ -1338,36 +1339,36 @@ int __cdecl sub_4A246A(int a1, COLORREF color);
 //    PVOID TargetFrame,
 //    struct _CONTEXT* a5);
 //TryBlockMapEntry* __cdecl _GetRangeOfTrysToCheck(const struct _s_FuncInfo* a1, int a2, int a3, unsigned int* a4, unsigned int* a5);
-void __cdecl _global_unwind2(PVOID TargetFrame);
+void __cdecl _global_unwind2(PVOID TargetFrame);//不管
 //int __cdecl _unwind_handler(int a1, int a2, int a3, _DWORD* a4);
 //int  _local_unwind2(int a1, int a2, int a3);
 //int __cdecl _abnormal_termination();
 //void __stdcall _NLG_Notify1(int a1);
-int _NLG_Notify(int result, int a2, int a3);//int _NLG_Notify(int result, int a2, int a3);
+int _NLG_Notify(int result, int a2, int a3);//int _NLG_Notify(int result, int a2, int a3);//不管
 void __cdecl operator delete(void* Block); //void __cdecl operator delete(void* Block);
 //void* __cdecl memset(void* a1, int Val, size_t Size);
 //int __cdecl  my_new(size_t Size);
-void* __cdecl operator new(size_t Size);
-int __cdecl sub_4A2B56(int a1);
+void* __cdecl operator new(size_t Size);//不管
+int __cdecl sub_4A2B56(int a1);//不管
 //int __cdecl rand();
-unsigned int _fpmath();
-void nullsub_1();
+unsigned int _fpmath();//不管
+//void nullsub_1();
 //char* (__cdecl* _cfltcvt_init())(int a1, char* Str, int a3, size_t Size, int a5);
-__int64 _ftol(double a1);//__int64 _ftol(double a1);
+//__int64 _ftol(double a1);//__int64 _ftol(double a1);
 //double _CIsin(double x);//double _CIsin(double x);
-//double __cdecl sin(double X);//???
+//double __cdecl sin(double X);
 //double _CIcos(double x); //double _CIcos(double x);
-//double __cdecl cos(double X);//????????
-void sub_4A3090(double a1, double a2, double a3);
-void sub_4A3090(double a1, double a2);
-void sub_4A3090(double a1, double a2, double a3, double a4);
+//double __cdecl cos(double X);
+void sub_4A3090(double a1, double a2, double a3);//不管
+void sub_4A3090(double a1, double a2);//不管
+void sub_4A3090(double a1, double a2, double a3, double a4);//不管
 //char* __cdecl strcpy(char* Destination, const char* Source);
 //char* __cdecl strcat(char* Destination, const char* Source);
 //size_t __cdecl strlen(const char* Str);
 //double _CIlog10(double x);//double _CIlog10(double x);
-//double __cdecl log10(double X);//???
+//double __cdecl log10(double X);
 
-void __stdcall __ArrayUnwind(void* a1, unsigned int a2, int a3, void(*a4)(void*));
+void __stdcall __ArrayUnwind(void* a1, unsigned int a2, int a3, void(*a4)(void*));//不管
 
 //int __cdecl atoi(const char* String);
 //int sprintf(char* const Buffer, const char* const Format, ...);
@@ -1376,8 +1377,8 @@ void __stdcall __ArrayUnwind(void* a1, unsigned int a2, int a3, void(*a4)(void*)
 //int __cdecl atexit(void(__cdecl* Func)());
 //wchar_t* __cdecl wcscpy(wchar_t* Destination, const wchar_t* Source);
 void start();
-void __cdecl _amsg_exit(DWORD NumberOfBytesWritten);
-void __cdecl fast_error_exit(DWORD NumberOfBytesWritten);
+void __cdecl _amsg_exit(DWORD NumberOfBytesWritten);//不管
+void __cdecl fast_error_exit(DWORD NumberOfBytesWritten);//不管
 //int  __InternalCxxFrameHandler(
 //    EXCEPTION_POINTERS* a1,
 //    int a2,
@@ -1415,7 +1416,7 @@ void __cdecl fast_error_exit(DWORD NumberOfBytesWritten);
     //void* a5,
     //int a6,
     //unsigned int a7);
-BOOL __cdecl ExFilterRethrow(struct _EXCEPTION_POINTERS* a1);
+BOOL __cdecl ExFilterRethrow(struct _EXCEPTION_POINTERS* a1);//不管
 //void BuildCatchObject(
 //    struct EHExceptionRecord* a1,
 //    struct EHExceptionRecord* a2,
@@ -1425,24 +1426,24 @@ BOOL __cdecl ExFilterRethrow(struct _EXCEPTION_POINTERS* a1);
 //int __cdecl unknown_libname_34(int a1);
 //char* __cdecl AdjustPointer(void* a1, const struct PMD* a2);//调整指针
 //void __stdcall _CallSettingFrame(int a1, int a2, int a3);
-void sub_4A3FCC();
+void sub_4A3FCC();//不管
 //void sub_4A4022(EXCEPTION_POINTERS* a1, int a2, int a3, int a4);//void sub_4A4022(EXCEPTION_POINTERS * a1, int a2, int a3, int a4);
 //void __cdecl free(void* Block);
 //void* __cdecl malloc(size_t Size);
-_DWORD* __cdecl _nh_malloc(size_t Size, int a2);
-_DWORD* __cdecl _heap_alloc(unsigned int a1);
-unsigned int _setdefaultprecision();
-BOOL _ms_p5_test_fdiv();
-int _ms_p5_mp_test_fdiv();
+_DWORD* __cdecl _nh_malloc(size_t Size, int a2);//不管
+_DWORD* __cdecl _heap_alloc(unsigned int a1);//不管
+unsigned int _setdefaultprecision();//不管
+BOOL _ms_p5_test_fdiv();//不管
+int _ms_p5_mp_test_fdiv();//不管
 //char __cdecl _forcdecpt(char* a1);
 //char* __cdecl _cropzeros(char* a1);
 //BOOL __cdecl _positive(double* a1);
 //_DWORD* __cdecl _fassign(int a1, _DWORD* a2, int a3);
-_BYTE* __cdecl _cftoe(double* a1, _BYTE* a2, int a3, int a4);
-char* __cdecl _cftof(int a1, char* Str, size_t Size);
+_BYTE* __cdecl _cftoe(double* a1, _BYTE* a2, int a3, int a4);//不管
+char* __cdecl _cftof(int a1, char* Str, size_t Size);//不管
 //char* __cdecl _cftog(int a1, char* Str, size_t Size, int a4);
-_BYTE* __cdecl _cftoe_g(double* a1, _BYTE* a2, int a3, int a4);
-char* __cdecl _cftof_g(int a1, char* Str, size_t Size);
+_BYTE* __cdecl _cftoe_g(double* a1, _BYTE* a2, int a3, int a4);//不管
+char* __cdecl _cftof_g(int a1, char* Str, size_t Size);//不管
 //char* __cdecl _cfltcvt(int a1, char* Str, int a3, size_t Size, int a5);
 //void __cdecl _shift(char* Str, int a2);
 //int _trandisp1(int a1, __int16 a2, int a3, __int16 a4, double _ST7);//int _trandisp1(int a1, __int16 a2@<cx>, int a3, __int16 a4, double _ST7);
@@ -1455,98 +1456,98 @@ char* __cdecl _cftof_g(int a1, char* Str, size_t Size);
 //double __fastcall _fload_withFB(int a1, _DWORD* a2);
 //int __cdecl _checkTOS_withFB(int a1, int a2);
 //void __check_overflow_exit();
-void _startTwoArgErrorHandling();
+void _startTwoArgErrorHandling();//不管
 //double _startOneArgErrorHandling(int a1, int a2, int a3, double a4, __int16 a5, int a6, int a7, int a8);//double _startOneArgErrorHandling(int a1,int a2,int a3,double a4, __int16 a5,int a6,int a7,int a8);
 //double  fFASN(int a1, long double a2, long double a3);
 //void AugmentSinCos(int a1, long double a2); //void AugmentSinCos(int a1, long double a2);
-double _rtpiby2();
-void postv();
+double _rtpiby2();//不管
+//void postv();
 //void _cintrindisp2(double a1, double a2, int a3, __int16 a4);
 //void _cintrindisp1(double a1, int a2, __int16 a3, __int16 a4);
 //void _ctrandisp2(double a1, double a2, double a3);
 //double ctranexit(_DWORD* a1, double result);
 //double cintrinexit(_DWORD* a1, double result);//double cintrinexit(_DWORD* a1, double result);
 //void _ctrandisp1(double a1, double a2);
-double __cdecl _fload(double a1);
+//double __cdecl _fload(double a1);
 //void zerotoxdone();
 //void expbigret();
 //void _ffexpm1(char a1, int _EBP);
-void isintTOS(double a1);
-void isintTOSret();
-void noerror();
+//void isintTOS(double a1);
+//void isintTOSret();
+//void noerror();
 //int __cdecl _except_handler3(int a1, PVOID TargetFrame, int a3);
 //int __stdcall _seh_longjmp_unwind(int* a1);
 //int __cdecl _isctype(int C, int Type);
-int __fastcall hard(int a1, int a2, int a3, int a4, int a5, int a6);
-int __cdecl _flsbuf(int Ch, myFILE* File);
-int __cdecl _output(myFILE* File, int a2, int a3);
-int __cdecl write_char(int a1, myFILE* File, int a3);
-int __cdecl write_multi_char(int a1, int a2, myFILE* File, int a4);
-int __cdecl write_string(int a1, int a2, myFILE* File, int a4);
-int __cdecl get_int_arg(_DWORD* a1);
+//int __fastcall hard(int a1, int a2, int a3, int a4, int a5, int a6);
+//int __cdecl _flsbuf(int Ch, myFILE* File);
+//int __cdecl _output(myFILE* File, int a2, int a3);
+//int __cdecl write_char(int a1, myFILE* File, int a3);
+//int __cdecl write_multi_char(int a1, int a2, myFILE* File, int a4);
+//int __cdecl write_string(int a1, int a2, myFILE* File, int a4);
+//int __cdecl get_int_arg(_DWORD* a1);
 __int64 __cdecl get_int64_arg(_DWORD* a1);
 __int16 __cdecl get_short_arg(_DWORD* a1);
 //void* __cdecl realloc(void* Block, size_t Size);
-void _cinit();
+void _cinit();//不管
 //void __cdecl exit(int Code);
 //void _exit(int Code);
-void __cdecl doexit(UINT uExitCode, int a2, int a3);
+void __cdecl doexit(UINT uExitCode, int a2, int a3);//不管
 //void __cdecl _initterm(_PVFV* First, _PVFV* Last);
 //size_t __cdecl _msize(void* Block);
 //LONG __cdecl _XcptFilter(int a1, struct _EXCEPTION_POINTERS* ExceptionInfo);
 //int* __cdecl xcptlookup(int a1);
-_BYTE* _wincmdln();
-void _setenvp();
-int _setargv();
-_DWORD* __cdecl parse_cmdline(unsigned __int8* a1, unsigned __int8** a2, unsigned __int8* a3, _DWORD* a4, _DWORD* a5);
-CHAR* __crtGetEnvironmentStringsA();
-UINT _ioinit();
-int __cdecl _heap_init(int a1);
-int* _FF_MSGBANNER();
-int* __cdecl _NMSG_WRITE(DWORD NumberOfBytesWritten);
-LONG __stdcall __CxxUnhandledExceptionFilter(struct _EXCEPTION_POINTERS* ExceptionInfo, int a2, int a3);
-LONG(__stdcall* sub_4A655B())(struct _EXCEPTION_POINTERS* ExceptionInfo);
-LPTOP_LEVEL_EXCEPTION_FILTER sub_4A656C();
+_BYTE* _wincmdln();//不管
+void _setenvp();//不管
+int _setargv();//不管
+_DWORD* __cdecl parse_cmdline(unsigned __int8* a1, unsigned __int8** a2, unsigned __int8* a3, _DWORD* a4, _DWORD* a5);//不管
+CHAR* __crtGetEnvironmentStringsA();//不管
+UINT _ioinit();//不管
+int __cdecl _heap_init(int a1);//不管
+int* _FF_MSGBANNER();//不管
+int* __cdecl _NMSG_WRITE(DWORD NumberOfBytesWritten);//不管
+LONG __stdcall __CxxUnhandledExceptionFilter(struct _EXCEPTION_POINTERS* ExceptionInfo, int a2, int a3);//不管
+LONG(__stdcall* sub_4A655B())(struct _EXCEPTION_POINTERS* ExceptionInfo);//不管
+LPTOP_LEVEL_EXCEPTION_FILTER sub_4A656C();//不管
 //BOOL __cdecl _ValidateRead(const void* lp, UINT_PTR ucb);
 //BOOL __cdecl _ValidateWrite(void* lp, UINT_PTR ucb);
-BOOL __cdecl _ValidateExecute(FARPROC lpfn);
+BOOL __cdecl _ValidateExecute(FARPROC lpfn);//不管
 //int __cdecl strcmp(const char* Str1, const char* Str2);
-void* __cdecl memcpy_0(void* a1, const void* Src, size_t Size);
+void* __cdecl memcpy_0(void* a1, const void* Src, size_t Size);//不管
 //void __cdecl abort();
-int __sbh_heap_init();
+int __sbh_heap_init();//不管
 //char* __cdecl __sbh_find_block(int a1);
 //_DWORD* __cdecl __sbh_free_block(_DWORD* a1, unsigned int a2);
-_DWORD* __cdecl __sbh_alloc_block(int a1);
-char* __sbh_alloc_new_region();
-int __cdecl __sbh_alloc_new_group(_DWORD* a1);
+_DWORD* __cdecl __sbh_alloc_block(int a1);//不管
+char* __sbh_alloc_new_region();//不管
+int __cdecl __sbh_alloc_new_group(_DWORD* a1);//不管
 //int __cdecl __sbh_resize_block(_DWORD* a1, int a2, int a3);
 //int __cdecl _callnewh(size_t Size);
 //unsigned int __cdecl _control87(unsigned int NewValue, unsigned int Mask);
 //unsigned int __cdecl _controlfp(unsigned int NewValue, unsigned int Mask);
 //char __cdecl _abstract_cw(char a1);
-char __cdecl _hw_cw(int a1);
+char __cdecl _hw_cw(int a1);//不管
 //int __cdecl tolower(int C);
-int __cdecl _ZeroTail(int a1, int a2);
-int __cdecl _IncMan(int a1, int a2);
-int __cdecl _RoundMan(int a1, int a2);
-_DWORD* __cdecl _CopyMan(int a1, _DWORD* a2);
-int __cdecl _FillZeroMan(_DWORD* a1);
-int __cdecl _IsZeroMan(_DWORD* a1);
-int* __cdecl _ShrMan(int* a1, int a2);
-int __cdecl _ld12cvt(unsigned __int16* a1, _DWORD* a2, int* a3);
-int __cdecl sub_4A7A9D(unsigned __int16* a1, _DWORD* a2);
-int __cdecl sub_4A7AB3(unsigned __int16* a1, _DWORD* a2);
-int __cdecl sub_4A7AC9(_DWORD* a1, int a2);
-int __cdecl sub_4A7AF6(_DWORD* a1, int a2);
-char* __cdecl _fptostr(void* a1, int a2, int a3);
-int* __cdecl _fltout(int a1);
-int __dtold(unsigned int a1, int a2, int* a3);
+int __cdecl _ZeroTail(int a1, int a2);//不管
+int __cdecl _IncMan(int a1, int a2);//不管
+int __cdecl _RoundMan(int a1, int a2);//不管
+_DWORD* __cdecl _CopyMan(int a1, _DWORD* a2);//不管
+int __cdecl _FillZeroMan(_DWORD* a1);//不管
+int __cdecl _IsZeroMan(_DWORD* a1);//不管
+int* __cdecl _ShrMan(int* a1, int a2);//不管
+int __cdecl _ld12cvt(unsigned __int16* a1, _DWORD* a2, int* a3);//不管
+int __cdecl sub_4A7A9D(unsigned __int16* a1, _DWORD* a2);//不管
+int __cdecl sub_4A7AB3(unsigned __int16* a1, _DWORD* a2);//不管
+int __cdecl sub_4A7AC9(_DWORD* a1, int a2);//不管
+int __cdecl sub_4A7AF6(_DWORD* a1, int a2);//不管
+char* __cdecl _fptostr(void* a1, int a2, int a3);//不管
+int* __cdecl _fltout(int a1);//不管
+int __dtold(unsigned int a1, int a2, int* a3);//不管
 //void _fptrap();
 //int __cdecl _87except(int a1, int a2, unsigned __int16* a3);
 //int __cdecl _powhlp(double a1, double a2, int a3);
 //int __cdecl _d_inttype(double X);
 //double __cdecl unknown_libname_35(_TBYTE a1, _TBYTE a2);
-//void unknown_libname_36();//??????????????????????
+//void unknown_libname_36();
 //void unknown_libname_37(double a1, double a2);//void  unknown_libname_37(double a1, double a2);
 //void unknown_libname_38(double a1, double a2);//void unknown_libname_38(double a1, double a2);
 //void unknown_libname_48(double a1, double a2);//void <edx, ecx, st0> unknown_libname_48(double a1, double a2);
@@ -1554,37 +1555,37 @@ int __dtold(unsigned int a1, int a2, int* a3);
 //int unknown_libname_50(double a1, double a2);//int <ecx, st0> unknown_libname_50(double a1, double a2);
 //unsigned int unknown_libname_51(char a1, __int128 a2, int a3, int a4, __int128 a5);//unsigned int unknown_libname_51(char a1, __int128 a2, int a3, int a4, __int128 a5);
 //int unknown_libname_52(double a1, double a2);//int <ecx, st0> unknown_libname_52(double a1, double a2);
-BOOL __cdecl __crtGetStringTypeA(DWORD dwInfoType, LPCSTR lpSrcStr, int cchSrc, LPWORD lpCharType, UINT CodePage, LCID Locale, int a7);
-int __cdecl _lseek(int FileHandle, int Offset, int Origin);
-int __cdecl _write(int FileHandle, const void* Buf, unsigned int MaxCharCount);
-int __cdecl _getbuf(_DWORD* a1);
-int __cdecl _isatty(int FileHandle);
-int __initstdio();
-int __endstdio();
+BOOL __cdecl __crtGetStringTypeA(DWORD dwInfoType, LPCSTR lpSrcStr, int cchSrc, LPWORD lpCharType, UINT CodePage, LCID Locale, int a7);//不管
+int __cdecl _lseek(int FileHandle, int Offset, int Origin);//不管
+int __cdecl _write(int FileHandle, const void* Buf, unsigned int MaxCharCount);//不管
+int __cdecl _getbuf(_DWORD* a1);//不管
+int __cdecl _isatty(int FileHandle);//不管
+int __initstdio();//不管
+int __endstdio();//不管
 //int __cdecl wctomb(char* MbCh, wchar_t WCh);
-unsigned int __stdcall _aulldiv(unsigned __int64 a1, __int64 a2);
-unsigned __int64 __stdcall _aullrem(unsigned __int64 a1, __int64 a2);
-int __cdecl _ismbblead(unsigned int Ch);
-int __cdecl x_ismbbtype(unsigned __int8 a1, int a2, unsigned __int8 a3);
-int __cdecl _setmbcp(int CodePage);
-UINT __cdecl getSystemCP(UINT a1);
-int __cdecl CPtoLCID(int a1);
-int setSBCS();
-unsigned int setSBUpLow();
-int __initmbctable();
-int __cdecl __crtMessageBoxA(const CHAR* a1, const CHAR* a2, UINT a3);
+//unsigned int __stdcall _aulldiv(unsigned __int64 a1, __int64 a2);
+//unsigned __int64 __stdcall _aullrem(unsigned __int64 a1, __int64 a2);
+int __cdecl _ismbblead(unsigned int Ch);//不管
+int __cdecl x_ismbbtype(unsigned __int8 a1, int a2, unsigned __int8 a3);//不管
+int __cdecl _setmbcp(int CodePage);//不管
+UINT __cdecl getSystemCP(UINT a1);//不管
+int __cdecl CPtoLCID(int a1);//不管
+int setSBCS();//不管
+unsigned int setSBUpLow();//不管
+int __initmbctable();//不管
+int __cdecl __crtMessageBoxA(const CHAR* a1, const CHAR* a2, UINT a3);//不管
 //char* __cdecl strncpy(char* Destination, const char* Source, size_t Count);
-int __cdecl raise(int Signal);
-int* __cdecl siglookup(int a1);
-int __cdecl __crtLCMapStringA(LCID Locale, DWORD dwMapFlags, LPCSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest, UINT CodePage, int a8);
-_BYTE* __cdecl strncnt(_BYTE* a1, int a2);
-int __cdecl __addl(unsigned int a1, unsigned int a2, unsigned int* a3);
-int __cdecl __add_12(_DWORD* a1, _DWORD* a2);
-_DWORD* __cdecl __shl_12(_DWORD* a1);
-int* __cdecl __shr_12(int* a1);
-__int16 __cdecl __mtold12(char* a1, int a2, int a3);
-int __cdecl __strgtold12(int a1, char** a2, char* a3, int a4, int a5, int a6, int a7);
-int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5);//
+//int __cdecl raise(int Signal);//不管
+//int* __cdecl siglookup(int a1);//不管
+int __cdecl __crtLCMapStringA(LCID Locale, DWORD dwMapFlags, LPCSTR lpSrcStr, int cchSrc, LPSTR lpDestStr, int cchDest, UINT CodePage, int a8);//不管
+_BYTE* __cdecl strncnt(_BYTE* a1, int a2);//不管
+int __cdecl __addl(unsigned int a1, unsigned int a2, unsigned int* a3);//不管
+int __cdecl __add_12(_DWORD* a1, _DWORD* a2);//不管
+_DWORD* __cdecl __shl_12(_DWORD* a1);//不管
+int* __cdecl __shr_12(int* a1);//不管
+__int16 __cdecl __mtold12(char* a1, int a2, int a3);//不管
+int __cdecl __strgtold12(int a1, char** a2, char* a3, int a4, int a5, int a6, int a7);//不管
+int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5);//不管
 //ULONG_PTR __cdecl _raise_exc(ULONG_PTR Arguments, int a2, DWORD dwExceptionCode, int a4, int a5, int a6);
 //BOOL __cdecl _handle_exc(char a1, double* a2, __int16 a3);
 //errno_t __cdecl _set_errno(int Value);
@@ -1598,17 +1599,17 @@ int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5);//
 //double __cdecl _decomp(double a1, int a2);
 //double __cdecl _frnd(double a1);
 //int __cdecl _fpclass(double X);
-_DWORD* __cdecl _dosmaperr(unsigned int a1);//
+_DWORD* __cdecl _dosmaperr(unsigned int a1);//不管
 //int __cdecl _free_osfhnd(int a1);
-intptr_t __cdecl _get_osfhandle(int FileHandle);
+intptr_t __cdecl _get_osfhandle(int FileHandle);//不管
 //void* __cdecl calloc(size_t Count, size_t Size);
 //int __cdecl _fcloseall();
 //int __cdecl fflush(myFILE* Stream);
 //int __cdecl _flush(_DWORD* a1);
-int sub_4AAF2F();
-int __cdecl flsall(int a1);
-int __cdecl __ld12mul(int a1, int a2);//
-void __cdecl __multtenpow12(_WORD* a1, int a2, int a3);//
+int sub_4AAF2F();//不管
+int __cdecl flsall(int a1);//不管
+int __cdecl __ld12mul(int a1, int a2);//不管
+void __cdecl __multtenpow12(_WORD* a1, int a2, int a3);//不管
 //int __cdecl fclose(myFILE* Stream);
 //int __cdecl _commit(int FileHandle);
 //int __cdecl _close(int FileHandle);
@@ -1644,18 +1645,16 @@ void __cdecl __multtenpow12(_WORD* a1, int a2, int a3);//
 //HRESULT __stdcall DirectDrawCreate(GUID* lpGUID, LPDIRECTDRAW* lplpDD, IUnknown* pUnkOuter);
 
 //struct _TaskCollectionBase* GetExecutingCollection(ContextBase* thisx);
-char MarkedForDetachment(_BYTE* thisx);//
+char MarkedForDetachment(_BYTE* thisx);//标记为禁止分离，不管
 //bool _GetRuntimeOwnsLifetime(_UnrealizedChore* thisx);
-type_info* vector_deleting_destructor(type_info* thisx, unsigned int a2);//
+type_info* vector_deleting_destructor(type_info* thisx, unsigned int a2);//不管，析构函数
 //unsigned int GetId(VirtualProcessor * thisx);
-unsigned __int16  GetGroup(//
-    Concurrency::details::HardwareAffinity* thisxx);
+unsigned __int16  GetGroup(Concurrency::details::HardwareAffinity* thisxx);//不管
 //void SetOwningNode(SchedulingRing* thisx,struct SchedulingNode* a2);
-void _SetRuntimeOwnsLifetime(_UnrealizedChore* thisx, bool a2);//
-void _SetDetached(_UnrealizedChore* thisx, bool a2);//
+void _SetRuntimeOwnsLifetime(_UnrealizedChore* thisx, bool a2);//_设置运行时拥有生命周期，不管
+void _SetDetached(_UnrealizedChore* thisx, bool a2);//不管，_设置已分离
 
-type_info* vector_deleting_destructor(type_info* thisx, unsigned int a2);
 //void delbuf(ios* thisx, int a2);
-void __stdcall eh_vector_destructor_iterator(void* a1, unsigned int a2, int a3, void (*a4)(void*));//
-void __stdcall eh_vector_constructor_iterator(void* a1, unsigned int a2, int a3, void (*a4)(void*), void (*a5)(void*));//
+void __stdcall eh_vector_destructor_iterator(void* a1, unsigned int a2, int a3, void (*a4)(void*));//析构函数，不管
+void __stdcall eh_vector_constructor_iterator(void* a1, unsigned int a2, int a3, void (*a4)(void*), void (*a5)(void*));//构造函数，不管
 

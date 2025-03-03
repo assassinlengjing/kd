@@ -34,25 +34,25 @@ extern int dword_4B0044;
 //extern _PVFV dword_4B004C;
 extern int dword_4B004C;
 
-extern unk unk_4B0050[];
+extern unk byte_4B0050[];
 
 extern CHAR byte_4B0060[];
 
-extern unk unk_4B0078[];
+extern unk byte_4B0078[];
 
 extern CHAR byte_4B0088[];
 
-extern unk unk_4B00A8[];
+extern unk byte_4B00A8[];
 
 extern CHAR byte_4B00B8[];
 
 extern CHAR byte_4B00D0[];
 
-extern unk unk_4B00DC[];
+extern unk byte_4B00DC[];
 
 extern CHAR byte_4B00E8[];
 
-extern unk unk_4B00F8[];
+extern unk byte_4B00F8[];
 
 extern CHAR byte_4B0104[];
 
@@ -314,17 +314,17 @@ extern CHAR byte_4B0B8C[];
 
 extern CHAR asc_4B0BA0[];
 
-extern unk unk_4B0BA4[];
+extern unk byte_4B0BA4[];
 
-extern unk unk_4B0BB4[];
+extern unk byte_4B0BB4[];
 
 extern CHAR aMenuWav[];
 
-extern unk unk_4B0C10[];
+extern unk byte_4B0C10[];
 
-extern unk unk_4B0C28[];
+extern unk byte_4B0C28[];
 
-extern unk unk_4B0C5C[];
+extern unk byte_4B0C5C[];
 
 extern CHAR byte_4B0C68[];
 
@@ -1006,7 +1006,7 @@ extern CHAR byte_4B2640[];
 
 extern CHAR byte_4B2658[];
 
-extern unk unk_4B265C[];
+extern unk byte_4B265C[];
 
 extern CHAR byte_4B2660[];
 
@@ -1054,7 +1054,7 @@ extern CHAR aD_7[];
 
 extern CHAR aD_8[];
 
-extern unk unk_4B2724[];
+extern unk byte_4B2724[];
 
 extern CHAR byte_4B2730[];
 
@@ -1868,7 +1868,7 @@ extern CHAR aKkEndWav[];
 
 extern char aDdEnddemoTxt[];
 
-extern unk unk_4B3E50[];
+extern unk byte_4B3E50[];
 
 extern CHAR byte_4B3E6C[];
 
@@ -1898,9 +1898,9 @@ extern int funcs_476478[];
 
 extern byte byte_4B4154;
 
-extern byte byte_4B4158[];
+extern const byte byte_4B4158[];
 
-extern byte byte_4B4159[];
+extern  const byte byte_4B4159[];
 
 extern byte byte_4B443C[];
 
@@ -1940,7 +1940,7 @@ extern CHAR aGraphic02dppal_2[];
 
 extern char aSpecialmovelis[];
 
-extern unk unk_4B5B70[];
+extern unk byte_4B5B70[];
 
 extern word word_4B5B74;
 
@@ -1960,11 +1960,11 @@ extern byte byte_4B5B82;
 
 extern char a2d2d_0[];
 
-extern unk unk_4B5B90[];
+extern unk byte_4B5B90[];
 
-extern unk unk_4B5B9C[];
+extern unk byte_4B5B9C[];
 
-extern unk unk_4B5BBC[];
+extern unk byte_4B5BBC[];
 
 extern char aS_0[];
 
@@ -2360,37 +2360,37 @@ extern CHAR byte_4B6B74[];
 
 extern CHAR byte_4B6B78[];
 
-extern unk unk_4B6B8C[];
+extern unk byte_4B6B8C[];
 
 extern CHAR byte_4B6BA0[];
 
 extern CHAR byte_4B6BB4[];
 
-extern unk unk_4B6BC8[];
+extern unk byte_4B6BC8[];
 
 extern CHAR byte_4B6BD8[];
 
 extern CHAR byte_4B6BEC[];
 
-extern unk unk_4B6BFC[];
+extern unk byte_4B6BFC[];
 
 extern CHAR byte_4B6C08[];
 
-extern unk unk_4B6C1C[];
+extern unk byte_4B6C1C[];
 
 extern CHAR byte_4B6C28[];
 
-extern unk unk_4B6C38[];
+extern unk byte_4B6C38[];
 
 extern CHAR byte_4B6C4C[];
 
 extern CHAR byte_4B6C5C[];
 
-extern unk unk_4B6C70[];
+extern unk byte_4B6C70[];
 
 extern CHAR byte_4B6C7C[];
 
-extern unk unk_4B6C8C[];
+extern unk byte_4B6C8C[];
 
 extern CHAR byte_4B6CA0[];
 
@@ -2398,7 +2398,7 @@ extern CHAR byte_4B6CB8[];
 
 extern CHAR aKdMapdata[];
 
-extern unk unk_4B6CD4[];
+extern unk byte_4B6CD4[];
 
 extern CHAR aPosDSizeD[];
 
@@ -2536,15 +2536,15 @@ extern CHAR aHelp_0[];
 
 extern CHAR aName[];
 
-extern unk unk_4B6FF8[];
+extern unk byte_4B6FF8[];
 
 extern CHAR byte_4B7028[];
 
-extern unk unk_4B7034[];
+extern unk byte_4B7034[];
 
 extern CHAR byte_4B7044[];
 
-extern unk unk_4B7064[];
+extern unk byte_4B7064[];
 
 extern CHAR byte_4B7078[];
 
@@ -2554,15 +2554,15 @@ extern CHAR byte_4B70A0[];
 
 extern CHAR byte_4B70B8[];
 
-extern unk unk_4B70D4[];
+extern unk byte_4B70D4[];
 
 extern CHAR byte_4B70E4[];
 
-extern unk unk_4B70FC[];
+extern unk byte_4B70FC[];
 
 extern CHAR byte_4B7108[];
 
-extern unk unk_4B7118[];
+extern unk byte_4B7118[];
 
 extern CHAR byte_4B7124[];
 
@@ -2640,13 +2640,13 @@ extern CHAR aMPddssysscGetd[];
 
 extern char aError01[];
 
-extern unk unk_4B7628[];
+extern unk byte_4B7628[];
 
 extern char aEntrypaterror[];
 
-extern unk unk_4B7640[];
+extern unk byte_4B7640[];
 
-extern unk unk_4B7664[];
+extern unk byte_4B7664[];
 
 extern char aEntrypaterror_0[];
 
@@ -2688,23 +2688,23 @@ extern CHAR byte_4B7818[];
 
 extern char aError06[];
 
-extern unk unk_4B7854[];
+extern unk byte_4B7854[];
 
 extern char aError07[];
 
-extern unk unk_4B7880[];
+extern unk byte_4B7880[];
 
 extern char aError07_0[];
 
-extern unk unk_4B78A8[];
+extern unk byte_4B78A8[];
 
 extern char aError07_1[];
 
-extern unk unk_4B78D4[];
+extern unk byte_4B78D4[];
 
 extern char aError07_2[];
 
-extern unk unk_4B7900[];
+extern unk byte_4B7900[];
 
 extern char aError07_3[];
 
@@ -2772,15 +2772,15 @@ extern CHAR aEntrybit2[];
 
 extern char aError_56[];
 
-extern unk unk_4B7BBC[];
+extern unk byte_4B7BBC[];
 
-extern unk unk_4B7BD8[];
+extern unk byte_4B7BD8[];
 
-extern unk unk_4B7BEC[];
+extern unk byte_4B7BEC[];
 
 extern char aError_57[];
 
-extern unk unk_4B7C1C[];
+extern unk byte_4B7C1C[];
 
 extern CHAR aError_58[];
 
@@ -2792,7 +2792,7 @@ extern CHAR byte_4B7C60[];
 
 extern char aError_60[];
 
-extern unk unk_4B7C70[];
+extern unk byte_4B7C70[];
 
 extern CHAR aError_61[];
 
@@ -2808,7 +2808,7 @@ extern CHAR asc_4B7CF8[];
 
 extern char aError_62[];
 
-extern unk unk_4B7D04[];
+extern unk byte_4B7D04[];
 
 extern CHAR aGetdcFailed[];
 
@@ -2816,7 +2816,7 @@ extern CHAR aReleasedcFaile[];
 
 extern char aError_63[];
 
-extern unk unk_4B7D4C[];
+extern unk byte_4B7D4C[];
 
 extern CHAR byte_4B7D68[];
 
@@ -2858,9 +2858,9 @@ extern CHAR aEntrybit3[];
 
 extern char aLpddsNull_0[];
 
-extern unk unk_4B7FA8[];
+extern unk byte_4B7FA8[];
 
-extern unk unk_4B7FCC[];
+extern unk byte_4B7FCC[];
 
 extern char aDderrInvalidre[];
 
@@ -2888,27 +2888,27 @@ extern CHAR aLockerror2DDDD[];
 
 extern char aError_65[];
 
-extern unk unk_4B8100[];
+extern unk byte_4B8100[];
 
 extern char aError_66[];
 
-extern unk unk_4B8134[];
+extern unk byte_4B8134[];
 
-extern unk unk_4B8150[];
+extern unk byte_4B8150[];
 
-extern unk unk_4B8164[];
+extern unk byte_4B8164[];
 
-extern unk unk_4B8184[];
+extern unk byte_4B8184[];
 
-extern unk unk_4B8198[];
+extern unk byte_4B8198[];
 
 extern char aIDEndDWDHD[];
 
 extern char aError_67[];
 
-extern unk unk_4B81E4[];
+extern unk byte_4B81E4[];
 
-extern unk unk_4B81F8[];
+extern unk byte_4B81F8[];
 
 extern CHAR aImagefile[];
 
@@ -2926,9 +2926,9 @@ extern int dword_4B82A0;
 
 extern int off_4B82B8;
 
-extern unk unk_4B82D0[];
+extern unk byte_4B82D0[];
 
-extern unk unk_4B82E0[];
+extern unk byte_4B82E0[];
 
 extern char aLog10[];
 
@@ -2956,9 +2956,9 @@ extern char tbyte_4B833A[];
 
 extern char dbl_4B8344[];
 
-extern unk unk_4B834D[];
+extern unk byte_4B834D[];
 
-extern unk unk_4B8360[];
+extern unk byte_4B8360[];
 
 extern char tbyte_4B83B0[];
 
@@ -2992,7 +2992,7 @@ extern dword dword_4B86B8;
 
 extern dword dword_4B86BC;
 
-extern unk unk_4B86C0[];
+extern unk byte_4B86C0[];
 
 extern dword dword_4B86D0[];
 
@@ -3000,9 +3000,9 @@ extern char off_4B86D4[];
 
 extern char dword_4B8760[];
 
-extern unk unk_4B8768[];
+extern unk byte_4B8768[];
 
-extern unk unk_4B8780[];
+extern unk byte_4B8780[];
 
 extern byte byte_4B87A0[];
 
@@ -3026,23 +3026,23 @@ extern char jpt_4A804D[];
 
 extern char off_4B8900[];
 
-extern unk unk_4B8910[];
+extern unk byte_4B8910[];
 
-extern unk unk_4B8920[];
+extern unk byte_4B8920[];
 
-extern unk unk_4B8940[];
+extern unk byte_4B8940[];
 
-extern unk unk_4B8970[];
+extern unk byte_4B8970[];
 
 extern byte byte_4B8B80[];
 
-extern unk unk_4B8B88[];
+extern unk byte_4B8B88[];
 
-extern unk unk_4B8B8C[];
+extern unk byte_4B8B8C[];
 
-extern unk unk_4B8B98[];
+extern unk byte_4B8B98[];
 
-extern unk unk_4B8C78[];
+extern unk byte_4B8C78[];
 
 extern dword dword_4B8D58;
 
@@ -3058,13 +3058,13 @@ extern char dbl_4B8D88[];
 
 extern char dbl_4B8D98[];
 
-extern unk unk_4B8DA0[];
+extern unk byte_4B8DA0[];
 
 extern char dword_4B8DA4[];
 
-extern unk unk_4B8F08[];
+extern unk byte_4B8F08[];
 
-extern unk unk_4B9068[];
+extern unk byte_4B9068[];
 
 //是否垂直同步等待
 extern byte byte_4B91D0;
@@ -3150,18 +3150,18 @@ extern word word_4B92F4;
 
 extern word word_4B92F8[];
 
-//unk unk_4B92FA;short
-extern short unk_4B92FA;
+//unk byte_4B92FA;short
+extern short byte_4B92FA;
 extern dword dword_4B92FC[2];
-//unk unk_4B9300;int
-extern int unk_4B9300;
-//unk unk_4B9304;short
-extern int unk_4B9304;
-//unk unk_4B9306;short
-extern short unk_4B9306;
+//unk byte_4B9300;int
+extern int byte_4B9300;
+//unk byte_4B9304;short
+extern int byte_4B9304;
+//unk byte_4B9306;short
+extern short byte_4B9306;
 extern dword dword_4B9308[2];;
-//unk unk_4B930C;int
-extern int unk_4B930C;
+//unk byte_4B930C;int
+extern int byte_4B930C;
 
 extern dword dword_4B9310[];
 
@@ -3211,7 +3211,7 @@ extern byte byte_4B93EE[];
 
 extern byte byte_4B93EF[];
 
-//extern unk unk_4B9410[];
+//extern unk byte_4B9410[];
 extern int player_list[];
 
 extern char Buffer[];
@@ -3418,12 +3418,12 @@ extern int dword_4B9AF8;
 
 extern int dword_4B9B08;
 
-extern char unk_4B9B10[];
+extern char byte_4B9B10[];
 
 //DirectSound//音乐
-extern char unk_4BDB28[];
+extern char byte_4BDB28[];
 
-extern unk unk_4BDC60[];
+extern unk byte_4BDC60[];
 
 
 extern HGDIOBJ ho;
@@ -3551,7 +3551,7 @@ extern word word_4CB3D8;
 
 extern byte byte_4CB3DA;
 
-extern unk unk_4CB3DC[];
+extern unk byte_4CB3DC[];
 
 extern dword dword_4CB3F8;
 
@@ -3598,7 +3598,7 @@ extern dword dword_4CB46C;
 
 extern byte byte_4CB480[];
 
-extern unk unk_4CB580[];
+extern unk byte_4CB580[];
 
 extern byte byte_4CB581[];
 
@@ -3606,7 +3606,7 @@ extern LCID Locale;
 
 extern int dword_4CB688;
 
-extern unk unk_4CB6A0[];
+extern unk byte_4CB6A0[];
 
 extern size_t Count;
 
@@ -3626,7 +3626,7 @@ extern HANDLE hHeap;
 
 extern dword dword_4CC6C0[];
 
-extern unk unk_4CC6C4[];
+extern unk byte_4CC6C4[];
 
 extern UINT uNumber;
 
@@ -3763,6 +3763,7 @@ extern CHAR byte_4B0BF0[];
 extern CHAR byte_4B1616[];
 extern CHAR byte_4B1662[];
 extern CHAR byte_4B1698[];
+extern CHAR byte_4B0BA4_2[];
 extern CHAR byte_4B0BA4[];
 extern CHAR byte_4B0BF4[];
 extern CHAR byte_4B1559[];
@@ -3780,7 +3781,7 @@ extern CHAR byte_4B2850[];
 extern CHAR byte_4B2930[];
 extern CHAR byte_4B1F22[];
 extern CHAR byte_4B1B38[] ;
-extern CHAR byte_4B0C10[] ;
+//extern CHAR byte_4B0C10[] ;暂时保留，改前缀命名重复，byte_4B0C10，unk_4B0C10，byte_4B0BB4，unk_4B0BB4
 extern CHAR byte_4B2DB2[];
 extern CHAR byte_4B1B52[];
 extern CHAR byte_4B2884[];
@@ -3805,22 +3806,22 @@ extern CHAR aChardataTxt[];
 extern CHAR aGraphicFaceBmp[];
 extern CHAR byte_4AF907[];
 extern CHAR byte_4AF949[];
-extern unk unk_4AF9BB[];
+extern unk byte_4AF9BB[];
 extern CHAR byte_4AF9CC[];
 extern CHAR byte_4AFA1C[];
-extern unk unk_4AFA76[];
+extern unk byte_4AFA76[];
 extern CHAR byte_4AFA83[];
 extern CHAR byte_4AFAD7[] ;
-extern unk unk_4AFB11[];
+extern unk byte_4AFB11[];
 extern CHAR byte_4AFB1E[];
-extern unk unk_4AFB11[];
+extern unk byte_4AFB11[];
 extern CHAR byte_4AFB6C[];
-extern unk unk_4AFC02[];
+extern unk byte_4AFC02[];
 extern CHAR byte_4AFC1A[];
 extern CHAR byte_4AFC4C[];
-extern unk unk_4AFB11[];
+extern unk byte_4AFB11[];
 extern CHAR byte_4AFCA0[];
-extern unk unk_4AFD14[];
+extern unk byte_4AFD14[];
 extern CHAR byte_4AFD21[];
 extern CHAR byte_4B2D45[];
 extern CHAR byte_4B17DC[];
@@ -3831,25 +3832,19 @@ extern CHAR byte_4B17D4[];
 extern CHAR asc_4B17D8[];
 extern CHAR aThis[];
 extern CHAR byte_4B1F62[];
-extern unk unk_4B1F9C[];
+extern unk byte_4B1F9C[];
 extern CHAR byte_4B21D4[];
-extern unk unk_4B0C59[];
+extern unk byte_4B0C59[];
 extern CHAR byte_4B2246[];
-extern unk unk_4B1FC8[];
+extern unk byte_4B1FC8[];
 extern CHAR byte_4B22F2[];
 extern CHAR byte_4B2352[];
 extern CHAR byte_4B2746[];
-extern unk unk_4B0C59[];
+extern unk byte_4B0C59[];
 extern CHAR byte_4B279E[];
-extern unk unk_4B2A50[] ;
+extern unk byte_4B2A50[] ;
 extern CHAR byte_4B2A5D[];
-extern unk unk_4B2A75[];
+extern unk byte_4B2A75[];
 extern unk dword_4B8768[];
 extern unk dword_4B8780[];
 extern void* MessageBoxA_0;
-
-
-
-
-
-
