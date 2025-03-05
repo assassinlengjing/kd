@@ -17,6 +17,33 @@
 #include <unordered_map>
 #include <stack>
 
+// 类型列表
+const char* types[] = {
+    "__int8*",
+    "__int8",
+    "_WORD*",
+    "__int16",
+    "int", "char", "tagRECT", "float", "_cpinfo", "CHAR",
+    "WORD", "_STARTUPINFOA", "CPPEH_RECORD", "_DWORD", "void", "bool",
+    "BOOL", "ISchedulerProxy", "IUMSCompletionList", "UMSThreadScheduler",
+    "_MMIOINFO", "MMRESULT", "streambuf", "HANDLE",
+    "_BYTE",
+    "LONG",
+    "UINT",
+    "HINSTANCE",
+    "tagMSG",
+    "tagJOYCAPSA",
+    "joyinfo_tag",
+    "INT",
+    "HDC",
+    "HBITMAP",
+    "HGDIOBJ",
+    "_MMCKINFO",
+    "HMMIO",
+    "size_t",
+    "SchedulingNode","_UnrealizedChore","_CancellationTokenRegistration","_CancellationTokenState",
+};
+
 std::map<int, int> m;//函数地址，数量
 int m2 = 0;
 int old = 0;
@@ -100,19 +127,6 @@ void mySleep(int a)
 
 #define byte_ad(a1) ida_chars + (a1 - 0x4AC230)
 
-// 类型列表
-const char* types[] = {
-    "int", "char", "struct tagRECT", "float", "struct _cpinfo", "CHAR",
-    "WORD", "_STARTUPINFOA", "CPPEH_RECORD", "_DWORD", "void", "bool",
-    "BOOL", "ISchedulerProxy", "IUMSCompletionList", "UMSThreadScheduler",
-    "_MMIOINFO", "MMRESULT", "streambuf", "HANDLE",
-    "_BYTE",
-    "LONG",
-    "UINT",
-    "HINSTANCE",
-};
-
-
 int fineebp(char* code) {
     // 查找 ebp- 的位置
     char*  index = strstr(code, "ebp-"); //查找结束符
@@ -145,6 +159,7 @@ std::map<std::string*, int> variable_names;
 std::string var_name;
 
 void xxx(const char* code) {
+    variable_names.clear();
     char line[256] = {};  // 存储当前行
     int maxh = 0;
     int start_pos = 0;
@@ -177,37 +192,47 @@ void xxx(const char* code) {
             }
             // 遍历类型列表
             const char* t = 0;
-            int int_pos = 0;
+            char* int_pos = 0;
             int length = sizeof(types) / sizeof(types[0]);
             for (int j = 0; j < length; j++) {
                 t = types[j];
-                int_pos = strstr(line, t) - line;  // 查找类型的位置
-                if (int_pos >= 0)
+                int_pos = strstr(line, t);  // 查找类型的位置
+                if (int_pos > 0)
                 {
                     break;
                 }
             }
-            if (int_pos < 0)
+            if (int_pos <= 0)
             {
                 __asm int 3
             }
-            int start = int_pos + strlen(t) + 1;  // 跳过类型名和空格
-            char tt[16] = {};
-            int end = strcspn(line, ";"); //查找结束符
-            if (start < end + start) {
-                for (int i1 = start; i1 > end; i1++)
+            char* start = strstr(int_pos, " ") + 1; // 跳过类型名和空格
+            char tt[24] = {};
+            char* end = strstr(line, ";"); //查找结束符
+            if (start < end) {
+                for (int i1 = 0; start < end;i1++)
                 {
-                    tt[i1 - start] = line[i1];
+                    tt[i1] = *start;
+                    start++;
                 }
-                int pos = strcspn(t, "["); //查找结束符
-                for (int i2 = 0; i2 > pos; i2)
+                char* pos = strstr(tt, "["); //查找结束符
+                var_name.clear();
+                if (pos)
                 {
-                    var_name += t[i2];
+                    char* tem = tt;
+                    for (; tem < pos; tem++)
+                    {
+                        var_name += *tem;
+                    }
                 }
+                else
+                {
+                    var_name = tt;
+                }
+
                 std::string* name = stringPool.getString(var_name);
                 // 存储变量名和ebp值
                 variable_names[name] = ebp;
-                break;
             }
             line_index = 0;  // 清空当前行，准备处理下一行
         }
@@ -333,9 +358,13 @@ bool check_stack_fun2(std::initializer_list<std::pair<const char*, void*>> list,
             if (is_show || use)
                 std::cout << "注释变量地址：" << variable_names[p_name];
         }
+        if (variable_names[p_name] == 0)
+        {
+            __asm int 3
+        }
         if (variable_names[p_name] != a)
         {
-            if(variable_names[p_name] != 0)
+            //if(variable_names[p_name] != 0)
                 if (is_show || use)
                     std::cout << "     未对齐：";
         }
@@ -35621,7 +35650,7 @@ int sub_44C3D6(int thisx)
     byte_4B99CB = *(_BYTE*)(thisx + 79);
     byte_4B99CC = *(_BYTE*)(thisx + 80);
     byte_4B99CD = *(_BYTE*)(thisx + 81);
-    sub_480054(thisx + 15644, (int)byte_4B0BA4+4);//thisx = b10,绘制目录文字，游戏模式,我加的2
+    sub_480054(thisx + 15644, (int)byte_4B0BA4);//thisx = b10,绘制目录文字，游戏模式,我加的2
     sub_475630((_BYTE*)(thisx + 15644), 14, 2, 11, 4);
     sub_475690((_BYTE*)(thisx + 15644), 2);
     streambuf::unbuffered((streambuf*)(thisx + 15644), 0);
@@ -77693,8 +77722,38 @@ int sub_4A0CA2(int thisx, int a2, int a3, struct tagRECT* p_rc)
 {
 
 
-    Warning();//修正堆栈
+    //修正堆栈
     check_stack c(__FILE__, __LINE__);
+    int v31; // [esp+10Ch] [ebp-4h]
+    struct tagRECT rc; // [esp+FCh] [ebp-14h] BYREF
+    int i; // [esp+F8h] [ebp-18h]
+    int v28[31]; // [esp+7Ch] [ebp-94h] BYREF
+    __int16 v27; // [esp+78h] [ebp-98h]
+    int v26[4]; // [esp+68h] [ebp-A8h] BYREF
+    int v25; // [esp+64h] [ebp-ACh]
+    int v24; // [esp+60h] [ebp-B0h]
+    int v23; // [esp+5Ch] [ebp-B4h]
+    char tc_37[16]; //20
+    LONG top; // [esp+48h] [ebp-C8h]
+    LONG left; // [esp+44h] [ebp-CCh]
+    LONG right; // [esp+40h] [ebp-D0h]
+    int v19; // [esp+3Ch] [ebp-D4h]
+    int v18; // [esp+38h] [ebp-D8h]
+    int v17; // [esp+34h] [ebp-DCh]
+    int bottom; // [esp+30h] [ebp-E0h]
+    int v15; // [esp+2Ch] [ebp-E4h]
+    int v14; // [esp+28h] [ebp-E8h]
+    int v13; // [esp+24h] [ebp-ECh]
+    int v12; // [esp+20h] [ebp-F0h]
+    int v11; // [esp+1Ch] [ebp-F4h]
+    int v10; // [esp+18h] [ebp-F8h]
+    _WORD* v9; // [esp+14h] [ebp-FCh]
+    LONG j; // [esp+10h] [ebp-100h]
+    unsigned __int8* v7; // [esp+Ch] [ebp-104h],改改改
+    int v6; // [esp+8h] [ebp-108h],改改改
+    int result; // eax
+
+    const char* var = R"(
     int v31; // [esp+10Ch] [ebp-4h]
     struct tagRECT rc; // [esp+FCh] [ebp-14h] BYREF
     int i; // [esp+F8h] [ebp-18h]
@@ -77722,8 +77781,39 @@ int sub_4A0CA2(int thisx, int a2, int a3, struct tagRECT* p_rc)
     LONG j; // [esp+10h] [ebp-100h]
     unsigned __int8* v7; // [esp+Ch] [ebp-104h]
     unsigned __int8 v6; // [esp+8h] [ebp-108h]
-    int result; // eax
-
+    )";
+    if (!check_stack_fun2({
+        TO(c)
+        TO(v31)
+        TO(rc)
+        TO(i)
+        TO(v28)
+        TO(v27)
+        TO(v26)
+        TO(v25)
+        TO(v24)
+        TO(v23)
+        TO(top)
+        TO(left)
+        TO(right)
+        TO(v19)
+        TO(v18)
+        TO(v17)
+        TO(bottom)
+        TO(v15)
+        TO(v14)
+        TO(v13)
+        TO(v12)
+        TO(v11)
+        TO(v10)
+        TO(v9)
+        TO(j)
+        TO(v7)
+        TO(v6)
+        }, 0x108, var))
+    {
+        __asm int 3
+    }
 
     result = thisx;
     if (*(_DWORD*)(thisx + 16) && *(_DWORD*)(thisx + 12))
@@ -78452,8 +78542,8 @@ type_info* vector_deleting_destructor2(type_info* thisx, unsigned int a2)
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
 
-    InstallDetour(timeGetTime, myTimeGetTime, (void**)&TrueMessageBoxW);
-    InstallDetour(Sleep, mySleep, (void**)&TrueMessageBoxW);
+    //InstallDetour(timeGetTime, myTimeGetTime, (void**)&TrueMessageBoxW);
+    //InstallDetour(Sleep, mySleep, (void**)&TrueMessageBoxW);
 
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
