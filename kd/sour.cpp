@@ -56828,7 +56828,7 @@ int __cdecl sub_47B91A(int a1, int a2, LPCSTR lpString, int a4, int a5)
                     v17[0] = dword_4B921C;
                     SetRect(&rc, 8 * (m % 16), 8 * (m / 16), 8, 8);
                     if (a5 == -1)
-                        sub_49C8A6((int)byte_ad(0x4BDC60), v17, (int*)&rc);
+                        sub_49C8A6((int)byte_4BDC60, v17, (int*)&rc);
                     else
                         sub_4A03B3((short*)byte_4BDC60, a5, v17, (int*)&rc);
                     if (v10 || v11)
@@ -77718,6 +77718,7 @@ int sub_4A0C45(unsigned __int16* thisx, int a1, unsigned __int16 a2)
     return result;
 }
 
+//thisx是副本表面对象，
 int sub_4A0CA2(int thisx, int a2, int a3, struct tagRECT* p_rc)
 {
 
@@ -78542,8 +78543,8 @@ type_info* vector_deleting_destructor2(type_info* thisx, unsigned int a2)
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
 
-    //InstallDetour(timeGetTime, myTimeGetTime, (void**)&TrueMessageBoxW);
-    //InstallDetour(Sleep, mySleep, (void**)&TrueMessageBoxW);
+    InstallDetour(timeGetTime, myTimeGetTime, (void**)&TrueMessageBoxW);
+    InstallDetour(Sleep, mySleep, (void**)&TrueMessageBoxW);
 
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
