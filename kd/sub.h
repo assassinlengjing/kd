@@ -14,5 +14,7 @@
 #include <mutex>
 #include <dsound.h>
 
+extern int main_thread_id;
+extern int thread2_id;
 
 #define TEST 2

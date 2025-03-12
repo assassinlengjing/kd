@@ -44,9 +44,64 @@ const char* types[] = {
     "SchedulingNode","_UnrealizedChore","_CancellationTokenRegistration","_CancellationTokenState",
 };
 
+IDirectDrawSurface7* suf;
+DDSURFACEDESC2 ddsd = { 0 };
 void myBitBlt(HDC hdcDest,  int Width, int Height,HDC hdcSrc)
 {
     BitBlt(hdcDest,0,0, Width, Height, hdcSrc,0,0, SRCCOPY);
+}
+BOOL CompareSurfaces(IDirectDrawSurface7* pSurface1, IDirectDrawSurface7* pSurface2)
+{
+    if (!pSurface1 || !pSurface2)
+        return FALSE;
+
+    // 获取两个表面的描述信息
+    DDSURFACEDESC2 ddsd1, ddsd2;
+    ZeroMemory(&ddsd1, sizeof(ddsd1));
+    ZeroMemory(&ddsd2, sizeof(ddsd2));
+    ddsd1.dwSize = sizeof(ddsd1);
+    ddsd2.dwSize = sizeof(ddsd2);
+
+    if (FAILED(pSurface1->Lock(nullptr, &ddsd1, DDLOCK_WAIT, nullptr)) ||
+        FAILED(pSurface2->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr)))
+    {
+        return FALSE; // 锁定失败
+    }
+
+    // 确保表面大小一致
+    if (ddsd1.dwWidth != ddsd2.dwWidth || ddsd1.dwHeight != ddsd2.dwHeight)
+    {
+        pSurface1->Unlock(nullptr);
+        pSurface2->Unlock(nullptr);
+        return FALSE; // 尺寸不一致
+    }
+
+    // 比较表面的每个像素
+    BOOL bEqual = TRUE;
+    for (DWORD y = 0; y < ddsd1.dwHeight; ++y)
+    {
+        BYTE* pLine1 = (BYTE*)ddsd1.lpSurface + y * ddsd1.lPitch;
+        BYTE* pLine2 = (BYTE*)ddsd2.lpSurface + y * ddsd2.lPitch;
+
+        for (DWORD x = 0; x < ddsd1.dwWidth; ++x)
+        {
+            // 假设两个表面为32位颜色格式，按字节逐像素比较
+            if (memcmp(pLine1 + x * 4, pLine2 + x * 4, 4) != 0) // 比较每个像素的4个字节
+            {
+                bEqual = FALSE;
+                break;
+            }
+        }
+
+        if (!bEqual)
+            break;
+    }
+
+    // 解锁表面
+    pSurface1->Unlock(nullptr);
+    pSurface2->Unlock(nullptr);
+
+    return bEqual;
 }
 
 std::map<int, int> m;//函数地址，数量
@@ -252,50 +307,45 @@ void check_stack_fun();
 std::deque<check_stack*> v;
 std::deque<check_stack*> v2;
 
+
 char t2[60] = {};
+long long t0 = ULLONG_MAX;
+
 class check_stack
 {
 public:
-
-    
-    PWSTR threadName = nullptr; // 用于存储线程名称
+    int threadId = 0;
     std::pair<const char*, int> s;
-    char t[60] = {};
-    //long long t = ULLONG_MAX;
+    //char t[60] = {};
+    long long t = ULLONG_MAX;
     check_stack(auto file, auto line)
     {
         //std::string_view s = std::format("{},{}", file, line);
         s = {file,line};
+
+        threadId = GetCurrentThreadId();
+
+        if (threadId == main_thread_id)
+        {
+            v.push_back(this);
+            check_stack_fun();
+        }
+        if (threadId == thread2_id)
+        {
+            v.push_back(this);
+            check_stack_fun();
+        }
         
-
-        HANDLE threadHandle = GetCurrentThread(); // 获取当前线程句柄
-
-        // 调用 API 获取线程描述
-        HRESULT hr = GetThreadDescription(threadHandle, &threadName);
-        if (hr == 0)
-        {
-            __asm int 3
-        }
-        if (wcscmp(threadName, L"aaa") == 0)
-        {
-            v.push_back(this);
-            check_stack_fun();
-        }
-        if (wcscmp(threadName, L"bbb") == 0)
-        {
-            v.push_back(this);
-            check_stack_fun();
-        }
     }
 
     ~check_stack()
     {
-        if (wcscmp(threadName, L"aaa") == 0)
+        if (threadId == main_thread_id)
         {
             v.pop_back();
             check_stack_fun();
         }
-        if (wcscmp(threadName, L"bbb") == 0)
+        if (threadId == thread2_id)
         {
             v2.pop_back();
             check_stack_fun();
@@ -309,8 +359,8 @@ void check_stack_fun()
     {
         for (auto it:v)
         {
-            //if (it->first->t != t2)
-            if (std::equal(it->t, it->t + 60, t2) == false)
+            if (it->t != t0)
+            //if (std::equal(it->t, it->t + 60, t2) == false)
             {
                 std::cout << it << std::endl;
                 printf("\n");
@@ -1620,6 +1670,10 @@ void delete2(void* ptr) noexcept {
 
 void* __cdecl new2(size_t Size)
 {
+    if (Size == 138)
+    {
+        __asm int 3
+    }
     me += Size;
     //return _nh_malloc(Size, 1);
     void* res = std::malloc(Size);
@@ -2347,7 +2401,7 @@ void  start()
     dword_4CB280 = (unsigned __int8)Version;//tmd，这个变量根本没有被用过
     dword_4CB27C = BYTE1(Version) + ((unsigned __int8)Version << 8);//tmd，这个变量根本没有被用过
     dword_4CB278 = HIWORD(Version);//tmd，这个变量根本没有被用过
-
+    
     if (!_heap_init(0))
         fast_error_exit(28);
     ms_exc.registration.TryLevel = 0;
@@ -2439,8 +2493,8 @@ void start()
 DWORD __stdcall StartAddress(LPVOID lpThreadParameter)
 {
     HANDLE threadHandle = GetCurrentThread(); // 获取当前线程句柄
-    // 设置线程名称
-    SetThreadDescription(threadHandle, L"bbb");
+
+    thread2_id = GetCurrentThreadId(); // 获取当前线程id
     return sub_440A5D((int)lpThreadParameter);
 }
 
@@ -74371,6 +74425,7 @@ int sub_4998E0(int thisx, int a2)
         v11[26] |= 0x18u;
     }
     //if ((*(int(__stdcall**)(int, int*, int, int))(**(int**)(thisx + 50508) + 24))( *(int*)(thisx + 50508), v11,thisx + 50512, 0))
+
     if ((*IDD_50508)->CreateSurface((LPDDSURFACEDESC2)v11, (LPDIRECTDRAWSURFACE7*)(thisx + 50512), 0))
     {
         MessageBoxA(0, byte_4B7528, aError04, 0);//无法创建主曲面。
@@ -74398,6 +74453,10 @@ int sub_4998E0(int thisx, int a2)
 
     //(*(int(__stdcall**)(int, int*, int, int))(**(int**)(thisx + 50508) + 24))(*(int*)(thisx + 50508),v4,thisx + 50520,0)  
     HRESULT r = (*IDD_50508)->CreateSurface((LPDDSURFACEDESC2)v4, (LPDIRECTDRAWSURFACE7*)(thisx + 50520), 0);
+    {//{}
+        memcpy(&ddsd, (LPDDSURFACEDESC2)v4, sizeof(DDSURFACEDESC2));
+        (*IDD_50508)->CreateSurface(&ddsd, &suf, 0);
+    }
     IDirectDrawSurface7* IDDS_50520 = (IDirectDrawSurface7*)*(int*)(thisx + 50520);
 
     for (int i = 0; i <= 49 * 4; i += 4)
@@ -74982,28 +75041,28 @@ unsigned __int16* sub_49ABE2(unsigned __int16* thisx, int a2, int a3)
                 }
                 IDirectDrawSurface7* IDDS_50520 = (IDirectDrawSurface7*)a2;
                 IDDS_50520->Blt(&v17, (LPDIRECTDRAWSURFACE7) * (int*)thisx, &rc, v20, (LPDDBLTFX)v15);//旧代码 result = (unsigned __int16*)(*(int(__stdcall**)(int, struct tagRECT*, int, struct tagRECT*, int, int*))(*(int*)a2 + 20))(a2,&v17,*(int*)thisx,&rc,v20,v15);
-                {//{}
-                        //绘制每个动态的图形
-                    HWND hwnd = FindWindow(0, L"新建文本文档.txt - 记事本");
-                    if (!hwnd)
-                    {
-                        __asm int 3
-                    }
-                    HDC hdc;
-                    HDC hdcSrc;
-                    IDirectDrawSurface7* IDDS_505 = (LPDIRECTDRAWSURFACE7) * (int*)thisx;
-                    HRESULT res = IDDS_505->GetDC(&hdcSrc);
-                    RECT rect;
-                    GetClientRect(hwnd, &rect);
-                    HBRUSH hBrush = (HBRUSH)GetStockObject(WHITE_BRUSH);
-                    hdc = GetDC(hwnd);
-                    FillRect(hdc, &rect, hBrush);
-                    ReleaseDC(hwnd, hdc);
-                    hdc = GetDC(hwnd);
-                    BitBlt(hdc, v17.left, v17.top, v17.right, v17.bottom, hdcSrc, rc.left, rc.top, SRCCOPY);
-                    IDDS_505->ReleaseDC(hdcSrc);
-                    ReleaseDC(hwnd, hdc);
-                }
+                //{//{}
+                //        //绘制每个动态的图形
+                //    HWND hwnd = FindWindow(0, L"新建文本文档.txt - 记事本");
+                //    if (!hwnd)
+                //    {
+                //        __asm int 3
+                //    }
+                //    HDC hdc;
+                //    HDC hdcSrc;
+                //    IDirectDrawSurface7* IDDS_505 = (LPDIRECTDRAWSURFACE7) * (int*)thisx;
+                //    HRESULT res = IDDS_505->GetDC(&hdcSrc);
+                //    RECT rect;
+                //    GetClientRect(hwnd, &rect);
+                //    HBRUSH hBrush = (HBRUSH)GetStockObject(WHITE_BRUSH);
+                //    hdc = GetDC(hwnd);
+                //    FillRect(hdc, &rect, hBrush);
+                //    ReleaseDC(hwnd, hdc);
+                //    hdc = GetDC(hwnd);
+                //    BitBlt(hdc, v17.left, v17.top, v17.right, v17.bottom, hdcSrc, rc.left, rc.top, SRCCOPY);
+                //    IDDS_505->ReleaseDC(hdcSrc);
+                //    ReleaseDC(hwnd, hdc);
+                //}
                 v16 = result;
                 if (result)
                 {
@@ -75378,6 +75437,7 @@ int sub_49C541(int* thisx, int a2, int a3, struct tagRECT* a4)
                 HRESULT res = MAKE_HRESULT(1, 0x876, result);
                 //旧代码 result = (*(int(__stdcall**)(int, int*, int, int*, int, int*))(*(int*)a2 + 20))(a2,&v15, *thisx, &v21,v25, v11);
                 //{//{}
+
                 //    //这里是绘制帧数的表面，和其他文字
                 //    HWND hwnd = FindWindow(0, L"新建文本文档.txt - 记事本");
                 //    if (!hwnd)
@@ -75387,7 +75447,7 @@ int sub_49C541(int* thisx, int a2, int a3, struct tagRECT* a4)
                 //    HDC hdc;
                 //    HDC hdcSrc;
                 //    IDirectDrawSurface7* IDDS_505 = (LPDIRECTDRAWSURFACE7) * (int*)thisx;
-                //    HRESULT res = IDDS_505->GetDC(&hdcSrc);
+                //    
                 //    hdc = GetDC(hwnd);
                 //    RECT rect;
                 //    GetClientRect(hwnd, &rect);
@@ -75395,9 +75455,52 @@ int sub_49C541(int* thisx, int a2, int a3, struct tagRECT* a4)
                 //    FillRect(hdc, &rect, hBrush);
                 //    ReleaseDC(hwnd, hdc);
                 //    hdc = GetDC(hwnd);
+                //    //suf->Blt((LPRECT)&v15, (LPDIRECTDRAWSURFACE7)* (int*)thisx, (LPRECT)&v21, v25, (LPDDBLTFX)v11);
+                //    
+                //    HRESULT res = IDDS_505->GetDC(&hdcSrc);
                 //    BitBlt(hdc, v15, v16, v17, v18, hdcSrc, v21, v22, SRCCOPY);
+                //    //StretchBlt(hdc, v15, v16, v17, v18, hdcSrc, v21, v22,v23,v24, SRCCOPY);
                 //    IDDS_505->ReleaseDC(hdcSrc);
                 //}
+                {//{}
+                    DDBLTFX ddbltfx;
+                    ZeroMemory(&ddbltfx, sizeof(ddbltfx));
+                    ddbltfx.dwSize = sizeof(ddbltfx);
+                    ddbltfx.dwFillColor = RGB(255, 255, 255); // 纯白色
+
+                    suf->Blt(nullptr, nullptr, nullptr, DDBLT_COLORFILL | DDBLT_WAIT, &ddbltfx);
+                    //这里是绘制帧数的表面，和其他文字
+                    HWND hwnd = FindWindow(0, L"新建文本文档.txt - 记事本");
+                    if (!hwnd)
+                    {
+                        __asm int 3
+                    }
+                    HDC hdc;
+                    HDC hdcSrc;
+                    HDC hdcSrc2;
+                    IDirectDrawSurface7* IDDS_505 = (LPDIRECTDRAWSURFACE7) * (int*)thisx;
+
+                    hdc = GetDC(hwnd);
+                    RECT rect;
+                    GetClientRect(hwnd, &rect);
+                    HBRUSH hBrush = (HBRUSH)GetStockObject(WHITE_BRUSH);
+                    FillRect(hdc, &rect, hBrush);
+                    
+                    IDDS_505->GetDC(&hdcSrc);
+
+                    //StretchBlt(hdc, v15, v16, v17*8, v18*8, hdcSrc, v21, v22,v23,v24, SRCCOPY);
+                    suf->Blt((LPRECT)&v15, IDDS_505, (LPRECT)&v21, 0, 0);
+                    if (CompareSurfaces(suf, IDDS_505))
+                    {
+                        __asm int 3
+                    }
+
+                    suf->GetDC(&hdcSrc2);
+                    BitBlt(hdc, v15, v16, v17, v18, hdcSrc2, v15, v16, SRCCOPY);
+                    IDDS_505->ReleaseDC(hdcSrc);
+                    suf->ReleaseDC(hdcSrc2);
+                    ReleaseDC(hwnd, hdc);
+                }
                 v12 = result;
                 if (result)
                 {
@@ -75654,14 +75757,20 @@ int  sub_49D0B7(int* thisx, int a2, int a3, int cy, void* Src)
                 //画图函数，但是发现也没什么用
                 BitBlt(hdc, 0, 0, a3, cy, hdcSrc, 0, 0, 0xCC0020u);
                 //{//{}
-                //    //意义不明的表面，游戏改变场景这里也没运行不到了
+                //    //每次加载图形文件资源，就是显示加载的图形
                 //    HWND hwnd = FindWindow(0, L"新建文本文档.txt - 记事本");
                 //    if (!hwnd)
                 //    {
                 //        __asm int 3
                 //    }
-                //    HDC hdc = GetDC(hwnd);
+                //    HDC hdc;
+                //    RECT rect;
+                //    hdc = GetDC(hwnd);
+                //    GetClientRect(hwnd, &rect);
+                //    HBRUSH hBrush = (HBRUSH)GetStockObject(WHITE_BRUSH);
+                //    FillRect(hdc, &rect, hBrush);
                 //    BitBlt(hdc, 0, 0, a3, cy, hdcSrc, 0, 0, 0xCC0020u);
+                //    ReleaseDC(hwnd, hdc);
                 //}
                 SelectObject(hdcSrc, v10);
                 DeleteObject(h);
@@ -76984,7 +77093,7 @@ int* sub_49EDC1(int a1, int a2, int* a3, int a4)
                         IDirectDrawSurface7* IDDSf_50520 = (IDirectDrawSurface7*)*(int*)(a1 + 50520);
                         result = (int*)IDDSf_50520->Blt((LPRECT)a3, 0, 0, 16778240, (LPDDBLTFX)v8);
                         //{//{}
-                        //       //意义不明，只画了一次
+                        //       //意义不明，切换场景时候画一次背景，就没有了
                         //    HWND hwnd = FindWindow(0, L"新建文本文档.txt - 记事本");
                         //    if (!hwnd)
                         //    {
@@ -77668,7 +77777,7 @@ int v5[25]; // [esp+4h] [ebp-64h] BYREF
             v5[20] = a3;
             IDirectDrawSurface7* IDDSf = (IDirectDrawSurface7*)*thisx;
             //{//{}
-            //       //意义不明的表面，貌似绘制了一些内容
+            //       //意义不明的表面，每次都绘制已经显示了的文字区域
             //    HWND hwnd = FindWindow(0, L"新建文本文档.txt - 记事本");
             //    if (!hwnd)
             //    {
@@ -78662,7 +78771,6 @@ type_info* vector_deleting_destructor2(type_info* thisx, unsigned int a2)
 
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-
     InstallDetour(timeGetTime, myTimeGetTime, (void**)&TrueMessageBoxW);
     InstallDetour(Sleep, mySleep, (void**)&TrueMessageBoxW);
 
@@ -78811,6 +78919,20 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
     dword_4B99EC = 1;////如果获取焦点的时候，且程序设置又是不允许后台运行，该值为1，失去焦点又不允许后台允许该值为0
     timeBeginPeriod(1u);//什么开启时间段开启
 
+
+    {
+
+
+        DDSURFACEDESC2 ddsd = { 0 };
+        ddsd.dwSize = sizeof(ddsd);
+        ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
+        ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
+        ddsd.dwWidth = 640;
+        ddsd.dwHeight = 480;
+        
+        IDirectDraw7* IDD_a2 = (IDirectDraw7*)*(int*)(byte_4BDC60 + 50508);//a2 = byte_4BDC60+50508
+        //(*IDD_a2).CreateSurface(&ddsd, &suf, 0);
+    }
     while (1)
     {
         while (1)

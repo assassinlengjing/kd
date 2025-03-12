@@ -8,7 +8,8 @@ import test;
 #include <iostream>
 #include <string>
 
-
+int main_thread_id = 0;
+int thread2_id = 0;
 
 class Share_Memory {
 public:
@@ -78,10 +79,8 @@ int main() //对应start函数
 
 	a = sizeof(CPPEH_RECORD);
 	//scanf("%d", &a);
-	HANDLE threadHandle = GetCurrentThread(); // 获取当前线程句柄
 
-	// 设置线程名称
-	SetThreadDescription(threadHandle, L"aaa");
+	main_thread_id = GetCurrentThreadId(); // 获取当前线程id
 
 	int c[] = {1,2,3,4,5,6,7,8};
 	//CreateThread(0, 0, (LPTHREAD_START_ROUTINE)my, 0, 0, 0);
