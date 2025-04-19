@@ -1914,8 +1914,8 @@ extern byte byte_4B4624[];
 
 extern byte byte_4B4625[];
 
+//应该合并
 extern byte byte_4B4644[];
-
 extern byte byte_4B4645[];
 
 extern unk byte_4B4664[];

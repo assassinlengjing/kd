@@ -44,65 +44,111 @@ const char* types[] = {
     "SchedulingNode","_UnrealizedChore","_CancellationTokenRegistration","_CancellationTokenState",
 };
 
-IDirectDrawSurface7* suf;
-DDSURFACEDESC2 ddsd = { 0 };
+void debugbreak()
+{
+    
+}
+
+int
+WINAPI
+myMessageBoxA(
+    _In_opt_ HWND hWnd,
+    _In_opt_ LPCSTR lpText,
+    _In_opt_ LPCSTR lpCaption,
+    _In_ UINT uType)
+{
+    __asm int 3
+    return 0;
+}
+
+
+LPDIRECTDRAW2* lpdd = NULL;
+LPDIRECTDRAWSURFACE7 lpddsPrimary = NULL;
+LPDIRECTDRAWSURFACE7 lpddsBack = NULL;
+
+HRESULT InitDirectDraw() {
+    //HRESULT hr;
+    //// 初始化 DirectDraw
+    //hr = DirectDrawCreate(NULL, (LPDIRECTDRAW*)(byte_4BDC60 + 50504), NULL);
+    //if (FAILED(hr)) return hr;
+    //lpdd = (LPDIRECTDRAW2*)(LPDIRECTDRAW*)(byte_4BDC60 + 50504);
+    //// 设置模式
+    //hr = (*lpdd)->SetCooperativeLevel(hWnd, DDSCL_FULLSCREEN | DDSCL_EXCLUSIVE);
+    //if (FAILED(hr)) return hr;
+
+    //// 创建主显示表面
+    //DDSURFACEDESC2 ddsd = { 0 };
+    //ddsd.dwSize = sizeof(ddsd);
+    //hr = (*lpdd)->CreateSurface((LPDDSURFACEDESC) & ddsd, (LPDIRECTDRAWSURFACE*) & lpddsPrimary, NULL);
+    //if (FAILED(hr)) return hr;
+
+    //// 创建后台表面
+    //ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
+    //ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
+    //ddsd.dwWidth = 640;
+    //ddsd.dwHeight = 480;
+    //hr = (*lpdd)->CreateSurface((LPDDSURFACEDESC)&ddsd, (LPDIRECTDRAWSURFACE*)&lpddsBack, NULL);
+    //if (FAILED(hr)) return hr;
+
+    return S_OK;
+}
 void myBitBlt(HDC hdcDest,  int Width, int Height,HDC hdcSrc)
 {
     BitBlt(hdcDest,0,0, Width, Height, hdcSrc,0,0, SRCCOPY);
 }
-BOOL CompareSurfaces(IDirectDrawSurface7* pSurface1, IDirectDrawSurface7* pSurface2)
-{
-    if (!pSurface1 || !pSurface2)
-        return FALSE;
-
-    // 获取两个表面的描述信息
-    DDSURFACEDESC2 ddsd1, ddsd2;
-    ZeroMemory(&ddsd1, sizeof(ddsd1));
-    ZeroMemory(&ddsd2, sizeof(ddsd2));
-    ddsd1.dwSize = sizeof(ddsd1);
-    ddsd2.dwSize = sizeof(ddsd2);
-
-    if (FAILED(pSurface1->Lock(nullptr, &ddsd1, DDLOCK_WAIT, nullptr)) ||
-        FAILED(pSurface2->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr)))
-    {
-        return FALSE; // 锁定失败
-    }
-
-    // 确保表面大小一致
-    if (ddsd1.dwWidth != ddsd2.dwWidth || ddsd1.dwHeight != ddsd2.dwHeight)
-    {
-        pSurface1->Unlock(nullptr);
-        pSurface2->Unlock(nullptr);
-        return FALSE; // 尺寸不一致
-    }
-
-    // 比较表面的每个像素
-    BOOL bEqual = TRUE;
-    for (DWORD y = 0; y < ddsd1.dwHeight; ++y)
-    {
-        BYTE* pLine1 = (BYTE*)ddsd1.lpSurface + y * ddsd1.lPitch;
-        BYTE* pLine2 = (BYTE*)ddsd2.lpSurface + y * ddsd2.lPitch;
-
-        for (DWORD x = 0; x < ddsd1.dwWidth; ++x)
-        {
-            // 假设两个表面为32位颜色格式，按字节逐像素比较
-            if (memcmp(pLine1 + x * 4, pLine2 + x * 4, 4) != 0) // 比较每个像素的4个字节
-            {
-                bEqual = FALSE;
-                break;
-            }
-        }
-
-        if (!bEqual)
-            break;
-    }
-
-    // 解锁表面
-    pSurface1->Unlock(nullptr);
-    pSurface2->Unlock(nullptr);
-
-    return bEqual;
-}
+//BOOL CompareSurfaces(IDirectDrawSurface7* pSurface1, IDirectDrawSurface7* pSurface2)
+//{
+//    if (!pSurface1 || !pSurface2)
+//        return FALSE;
+//
+//    // 获取两个表面的描述信息
+//    DDSURFACEDESC2 ddsd1, ddsd2;
+//    ZeroMemory(&ddsd1, sizeof(ddsd1));
+//    ZeroMemory(&ddsd2, sizeof(ddsd2));
+//    ddsd1.dwSize = sizeof(ddsd1);
+//    ddsd2.dwSize = sizeof(ddsd2);
+//
+//    if (FAILED(pSurface1->Lock(nullptr, &ddsd1, DDLOCK_WAIT, nullptr)) ||
+//        FAILED(pSurface2->Lock(nullptr, &ddsd2, DDLOCK_WAIT, nullptr)))
+//    {
+//        return FALSE; // 锁定失败
+//    }
+//
+//    // 确保表面大小一致
+//    if (ddsd1.dwWidth != ddsd2.dwWidth || ddsd1.dwHeight != ddsd2.dwHeight)
+//    {
+//        pSurface1->Unlock(nullptr);
+//        pSurface2->Unlock(nullptr);
+//        return FALSE; // 尺寸不一致
+//    }
+//
+//    // 比较表面的每个像素
+//    BOOL bEqual = TRUE;
+//    for (DWORD y = 0; y < ddsd1.dwHeight; ++y)
+//    {
+//        BYTE* pLine1 = (BYTE*)ddsd1.lpSurface + y * ddsd1.lPitch;
+//        BYTE* pLine2 = (BYTE*)ddsd2.lpSurface + y * ddsd2.lPitch;
+//
+//        for (DWORD x = 0; x < ddsd1.dwWidth; ++x)
+//        {
+//            // 假设两个表面为32位颜色格式，按字节逐像素比较
+//            if (memcmp(pLine1 + x * 4, pLine2 + x * 4, 4) != 0) // 比较每个像素的4个字节
+//            {
+//                bEqual = FALSE;
+//                break;
+//            }
+//        }
+//
+//        if (!bEqual)
+//            break;
+//    }
+//
+//    // 解锁表面
+//    pSurface1->Unlock(nullptr);
+//    pSurface2->Unlock(nullptr);
+//
+//    return bEqual;
+//}
 
 std::map<int, int> m;//函数地址，数量
 int m2 = 0;
@@ -183,9 +229,9 @@ void mySleep(int a)
 // 宏：将变量名转化为字符串
 #define TO(var) {#var,&var},
 
-#define byte_get(a1,a2) ida_chars[a1 - 0x4AC230  + a2]
+#define byte_get_value(a1,a2) ida_chars[a1 - 0x4AC230  + a2]
 
-#define byte_ad(a1) ida_chars + (a1 - 0x4AC230)
+#define byte__get_address(a1) ida_chars + (a1 - 0x4AC230)
 
 int fineebp(char* code) {
     // 查找 ebp- 的位置
@@ -53836,51 +53882,70 @@ BOOL sub_476009(char* thisx)
     *((int*)thisx + 8) = 1;//A和D的按键标志位，初始化
     *((int*)thisx + 14) = 0;//按钮区按键的标志位，初始化，位标志，一个位表示一个按键标志位
     if (GetAsyncKeyState((unsigned __int8)thisx[92]) < 0)//W
+    {
+        printf("W被按下\n");
         *((int*)thisx + 9) = 0;
+    }
     if (GetAsyncKeyState((unsigned __int8)thisx[93]) < 0)//S
+    {
+        printf("S被按下\n");
         *((int*)thisx + 9) = 2;
+    }
     if (GetAsyncKeyState((unsigned __int8)thisx[94]) < 0)//A
+    {
+        printf("A被按下\n");
         *((int*)thisx + 8) = 0;
+    }
     if (GetAsyncKeyState((unsigned __int8)thisx[95]) < 0)//D
+    {
+        printf("D被按下\n");
         *((int*)thisx + 8) = 2;
+    }
     if (GetAsyncKeyState((unsigned __int8)thisx[96]) < 0)//j
     {
+        printf("J被按下\n");
         v1 = *((int*)thisx + 14);
         LOBYTE(v1) = v1 | 1;
         *((int*)thisx + 14) = v1;
     }
     if (GetAsyncKeyState((unsigned __int8)thisx[97]) < 0)//k
     {
+        printf("K被按下\n");
         v2 = *((int*)thisx + 14);
         LOBYTE(v2) = v2 | 2;
         *((int*)thisx + 14) = v2;
     }
     if (GetAsyncKeyState((unsigned __int8)thisx[98]) < 0)//l
     {
+        printf("L被按下\n");
         v3 = *((int*)thisx + 14);
         LOBYTE(v3) = v3 | 4;
         *((int*)thisx + 14) = v3;
     }
     if (GetAsyncKeyState((unsigned __int8)thisx[99]) < 0)//u
     {
+        printf("U被按下\n");
         v4 = *((int*)thisx + 14);
         LOBYTE(v4) = v4 | 8;
         *((int*)thisx + 14) = v4;
     }
     if (GetAsyncKeyState((unsigned __int8)thisx[100]) < 0)//i
     {
+        printf("I被按下\n");
         v5 = *((int*)thisx + 14);
         LOBYTE(v5) = v5 | 16;
         *((int*)thisx + 14) = v5;
     }
     if (GetAsyncKeyState((unsigned __int8)thisx[101]) < 0)//o
     {
+        printf("O被按下\n");
         v6 = *((int*)thisx + 14);
         LOBYTE(v6) = v6 | 32;
         *((int*)thisx + 14) = v6;
     }
     if (GetAsyncKeyState((unsigned __int8)thisx[102]) < 0)//\r回车键
     {
+        printf("回车键被按下\n");
         v7 = *((int*)thisx + 14);
         LOBYTE(v7) = v7 | 64;
         *((int*)thisx + 14) = v7;
@@ -53893,6 +53958,7 @@ BOOL sub_476009(char* thisx)
     }
     if (GetAsyncKeyState((unsigned __int8)thisx[104]) < 0)//值为4，鼠标中键
     {
+        printf("鼠标中键被按下\n");
         v9 = *((int*)thisx + 14);
         BYTE1(v9) |= 1u;
         *((int*)thisx + 14) = v9;
@@ -54915,11 +54981,14 @@ int sub_47818A()
         __asm int 3
     }
 
-    sub_4A1450((int*)v2);
+    sub_4A1450((int*)v2);//初始化头部资源资源对象
     v4 = 0;
-    if (!sub_4A14C0((short*)v2, aGraphicHeadBmp_0))
+    if (!sub_4A14C0((short*)v2, aGraphicHeadBmp_0))//加载头部资源文件到v2头部资源文件对象
         goto LABEL_8;
-    dword_4B9368 = unknown_libname_21((int*)v2) / 8;
+    //存储，头部资源文件的高度/8，也就是有多少行资源，有64行资源
+    dword_4B9368 = unknown_libname_21((int*)v2) / 8;//获取资源的高度 / 8，估计是每个小头资源是8bit，所以除以8看有多少个小资源
+
+    //错误才进入
     if (dword_4B9368 <= 0)
     {
         dword_4B9368 = 0;
@@ -54927,10 +54996,13 @@ int sub_47818A()
         sub_4A148B((void**)v2);
         return 0;
     }
-    dword_4B9364 = new2(4 * dword_4B9368);
-    if (dword_4B9364 && (memset((void*)dword_4B9364, 0, 4 * dword_4B9368), (dword_4B9360 = new2(4 * dword_4B9368)) != 0))
+
+    dword_4B9364 = new2(4 * dword_4B9368); //头部资源文件的高度 / 8，也就是有多少行资源，有64行资源，64再乘以4的大小，256
+    if (    dword_4B9364    &&     (memset((void*)dword_4B9364, 0, 4 * dword_4B9368), (dword_4B9360 = new2(4 * dword_4B9368)) != 0)    )
     {
         memset((void*)dword_4B9360, 0, 4 * dword_4B9368);
+
+        //对64行头部位资源for
         for (i = 0; i < dword_4B9368; ++i)
         {
             v1 = new2(dword_4B93A0);
@@ -54949,7 +55021,7 @@ int sub_47818A()
     }
     else
     {
-    LABEL_8:
+    LABEL_8://出错进入
         v4 = -1;
         sub_4A148B((void**)v2);
         return 0;
@@ -56355,9 +56427,9 @@ int sub_47AA55()
 
     sub_482BF0(v3);
     v6 = 0;
-    if (!sub_482C74((int)v3, aGraphicSkincol))
+    if (!sub_482C74((int)v3, aGraphicSkincol))//皮肤颜色脚本，读取txt文件数据
         goto LABEL_11;
-    dword_4B93A0 = sub_4831B2(v3, aStart_10, aEnd_6);
+    dword_4B93A0 = sub_4831B2(v3, aStart_10, aEnd_6);//就是检查txt格式是否完整，返回有效行的行数
     if ((int)dword_4B93A0 <= 0)
         goto LABEL_11;
     v5 = dword_4B93A0;
@@ -56375,12 +56447,13 @@ int sub_47AA55()
     }
     LOBYTE(v6) = 0;
     dword_4B93A4 = v1;
-    if (v1 && (Src = new2(2 * dword_4B93A0)) != 0 && (dword_4B9394 = new2(8 * dword_4B93A0)) != 0)
+    if (v1 && (Src = new2(2 * dword_4B93A0)) != 0 && (dword_4B9394 = new2(8 * dword_4B93A0)) != 0)//分配有效行数*2和有效行数*8的两个内存区域Src和dword_4B9394
     {
         sub_48328F(v3, aStart_11);
         sub_482FAA(v3);
         for (i = 0; i < (int)dword_4B93A0; ++i)
         {
+            //处理有效行配置，未完成解析？？？？？
             if (!sub_485BCA((int)dword_4B93A4 + 24 * i, v3))
                 goto LABEL_11;
         }
@@ -56867,16 +56940,16 @@ int __cdecl sub_47B91A(int a1, int a2, LPCSTR lpString, int a4, int a5)
             {
                 for (k = 0; k < 10; ++k)
                 {
-                    if (String1[0] == byte_get(0x4B4624,3 * k) && String1[1] == byte_get(0x4B4625,3 * k))
+                    if (String1[0] == byte_get_value(0x4B4624,3 * k) && String1[1] == byte_get_value(0x4B4625,3 * k))
                     {
                         v11 = 1;
-                        String1[0] = byte_get(0x4B4644, 3 * k);
-                        String1[1] = byte_get(0x4B4645, 3 * k);
+                        String1[0] = byte_get_value(0x4B4644, 3 * k);
+                        String1[1] = byte_get_value(0x4B4645, 3 * k);
                         break;
                     }
                 }
             }
-            for (m = 0; m < 246 && (String1[0] != byte_get(0x4B4158,3 * m) || String1[1] != byte_get(0x4B4159, 3 * m)); ++m)
+            for (m = 0; m < 246 && (String1[0] != byte_get_value(0x4B4158,3 * m) || String1[1] != byte_get_value(0x4B4159, 3 * m)); ++m)
                 ;//????
             if (m != 246)
             {
@@ -61437,6 +61510,10 @@ int sub_482C74(int thisx, LPCSTR lpFileName)
 //这个堆栈溢出是无限调用函数导致的，之前的报错，现在已经修复了。
 //thisx，是一个4个int大小的数组
 //lpString1，是Stage\\Stage%02d_data.txt文件路径
+// txt配置项文件
+//这个函数 sub_482D44(int* thisx, LPSTR lpString1) 的功能是从一段内存中，按行读取有效的字符串（忽略空格、换行符、注释等），保存到 lpString1 中，并返回是否成功读取。
+//读取有效字符串那一行内容并返回
+//也许不是读取一行，而是读取一行中的一个项
 int sub_482D44(int* thisx, LPSTR lpString1)
 {
     ////CHAR v4[21]; // [esp+4h] [ebp-24h] BYREF
@@ -61449,55 +61526,69 @@ int sub_482D44(int* thisx, LPSTR lpString1)
 
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
-    int v8; // [esp+24h] [ebp-4h]//用作下标
-    int v7; // [esp+20h] [ebp-8h]//用作字符串长度
-    int v6; // [esp+1Ch] [ebp-Ch]//用作判断是否要初始化某些变量
-    char v5; // [esp+18h] [ebp-10h]//用作某个地图的首个字符存储
-    CHAR v4[24]; // [esp+4h] [ebp-24h] BYREF//ida是这样的
+    int v8; // [esp+24h] [ebp-4h]//用作下标，// 字符串起始位置（偏移）
+    int v7; // [esp+20h] [ebp-8h]//用作字符串长度 // 字符串长度
+    int v6; // [esp+1Ch] [ebp-Ch]// 标志位，是否重启一行解析（通常在换行后置1）
+    char v5; // [esp+18h] [ebp-10h]// 当前读取的字符
+    CHAR v4[24]; // [esp+4h] [ebp-24h] BYREF//ida是这样的 // 报错调试用字符串（如果越界）
 
-    if (!*thisx)
+    if (!*thisx)// 如果基地址为0，则读取失败
         return 0;
     v7 = 0;
     v8 = thisx[2];
     v6 = 0;
     while (1)
     {
-        if (v6)//这个标志为1表示找到下一行数据
+        if (v6)//这个标志为1表示找到下一行数据，// 如果上次遇到换行或斜杠，重新开始新一行的解析
         {
-            v6 = 0;
-            *lpString1 = 0;
-            v7 = 0;
-            v8 = thisx[2];//下一行数据在内存内的下标
+            v6 = 0;// 标志位，是否重启一行解析（通常在换行后置1）
+            *lpString1 = 0;//内容清除
+            v7 = 0;//字符串长度
+            v8 = thisx[2];//下一行数据在内存内的下标，// 重设起始偏移
         }
 
+        // 边界检查：是否已经读完文件
         if (thisx[2] >= thisx[1])//thisx[2]疑是作为下标，thisx[1]是文件大小，不能超过文件大小
             break;
 
+        // 当前字符
         v5 = *(_BYTE*)(*thisx + thisx[2]);//这里是读取内存保存的数据。那个data.text的，毕竟*thisx的整个空间，拿出下一行数据
 
+        // 把TAB替换成空格
         if (v5 == 9)//9，水平定位符
             v5 = 32;//32，空格
+
+
         switch (v5)
         {
+
+
         case 47://  '/'
+            // 如果当前是注释符号 '/'，并且前面没有读到内容（v7 == 0）
+            // 并且 thisx[3] 标记为1（前面读取过内容），表示新的一行
             if (thisx[3] && !v7)
             {
-                sub_482FAA(thisx);
-                *lpString1 = 110;
+                sub_482FAA(thisx);//处理地图的txt文件里的注释行
+                *lpString1 = 110;// 返回字符串 "n" 110 = "n"
                 lpString1[1] = 0;
                 thisx[3] = 0;
-                dword_4CA1D0 = 0;
+                dword_4CA1D0 = 0;//// 全局标志清除
                 return 1;
             }
-            if (!sub_482FAA(thisx))//如果找到换行符，在thisx[2]下记录位置，返回1
+            if (!sub_482FAA(thisx))//如果找到换行符，在thisx[2]下记录位置，返回1  如果*this没有内容了，就返回0
                 return 0;//没找到就退出
-            v6 = 1;
+            v6 = 1;// 标记为重新开始下一行
             break;
         case 13://CR字符
         case 10://换行符
+
+            // 如果当前已经读取了一些字符
             if (thisx[3] && v7)
                 goto LABEL_35;
+
+            // 跳过换行符
             ++thisx[2];
+            // 前面有内容但这一行为空？
             if (thisx[3] && !v7)
             {
                 *lpString1 = 110;
@@ -61511,30 +61602,35 @@ int sub_482D44(int* thisx, LPSTR lpString1)
             ++thisx[2];
             goto LABEL_35;
         default:
+            // 如果是空格并且我们已经有字符串开始了，视为空格终结
             if (v5 == 32 && v7)
             {
                 ++thisx[2];
                 goto LABEL_35;
             }
+            // 如果是非空格或字符串已开始，继续追加字符
             if (v5 != 32 || v7)
             {
                 ++v7;
                 ++thisx[2];
-                thisx[3] = 1;
+                thisx[3] = 1; // 标记读取状态
             }
             else
             {
+                // 否则只是跳过前导空格
                 v8 = ++thisx[2];
             }
             break;
         }
     }
+    // 到文件尾，如果没读到有效内容，则失败
     if (!v7)
     {
         wsprintfA(v4, " pos %d size %d ", thisx[2], thisx[1]);
         return 0;
     }
 LABEL_35:
+    // 复制解析出的字符串（从v8开始，长度v7）
     LPSTR res = lstrcpynA(lpString1, (LPCSTR)(v8 + *thisx), v7 + 1);
     //StringCchCopy((STRSAFE_LPWSTR)lpString1, v7 + 1,(STRSAFE_LPWSTR)(v8 + *thisx));这句好奇怪，逆向的代码没有这句，这是谁加的
     return 1;
@@ -61778,11 +61874,12 @@ LABEL_35:
 
 //如果找到换行符，在thisx[2]下记录位置，返回1
 //1，是一个4个int大小的数组
-//int[0],是内存空间首地址
+//int[0],是内存空间首地址,是一个txt文件的数据
 //int[1]是文件大小，也就内存空间大小
 //int[2]是下标，当前读取的位置
 //int[3]是用作真假标记，0表示需要处理开始新的内容，1表示在处理内容
 //处理地图的txt文件里的注释行
+//处理txt内的无效行，注释行，更新下标，以后续处理
 int sub_482FAA(int* thisx)
 {
     unsigned int i; // [esp+8h] [ebp-4h]
@@ -61792,7 +61889,7 @@ int sub_482FAA(int* thisx)
     if (!*thisx)
         return 0;
 
-    for (i = thisx[2]; i < thisx[1]; ++i)
+    for (i = thisx[2]; i < thisx[1]; ++i)//如果没有内容了就返回0
     {
         if (*(_BYTE*)(*thisx + i) == 10)//对整个内存空间遍历，找到换行符，其实是以//往后遍历，找到换行符，作用是忽略注释内容
         {
@@ -61885,7 +61982,7 @@ int __stdcall sub_48307F(LPCSTR lpString)
 }
 */
 
-//初始化
+//初始化或异常后初始化
 int* sub_48314A(int* thisx)
 {
     int* result; // eax
@@ -61897,6 +61994,8 @@ int* sub_48314A(int* thisx)
     return result;
 }
 
+//设置 thisx 的解析偏移指针为 a2，前提是不能超过文件大小。否则调用 sub_48314A 来处理异常情况。
+//你可以把它理解成 fseek()，给当前“文件数据”设置一个新读取偏移量，相当于重定位到文件某一位置继续解析。
 int* sub_483173(int* thisx, int* a2)
 {
     int* result; // eax
@@ -61910,7 +62009,9 @@ int* sub_483173(int* thisx, int* a2)
     return result;
 }
 
-
+//从数据中查找某一行文本，并返回它是第几行（从 0 开始）
+//它其实就是一个“行号查找器”，在一个通过 thisx 指定的数据块中，逐行读取，直到匹配到目标字符串 lpString1，然后返回它是第几行。
+//就是检查txt格式是否完整，返回a2到lpString1有效行的行数
 int sub_4831B2(int* thisx, LPCSTR a2, LPCSTR lpString1)
 {
 
@@ -61919,7 +62020,7 @@ int sub_4831B2(int* thisx, LPCSTR a2, LPCSTR lpString1)
     int v7; // [esp+108h] [ebp-4h]
     //
     CHAR String2[256]; // [esp+8h] [ebp-104h] BYREF
-    int* v5; // [esp+4h] [ebp-108h]
+    int* v5; // [esp+4h] [ebp-108h]//是存储下标位置
 
     const char* var = R"(
     int v7; // [esp+108h] [ebp-4h]
@@ -61937,32 +62038,33 @@ int sub_4831B2(int* thisx, LPCSTR a2, LPCSTR lpString1)
         __asm int 3
     }
 
-    v5 = (int*)thisx[2];
+    v5 = (int*)thisx[2];//是存储下标位置
     v7 = 0;
     if (!lpString1)
         return -1;
     if (!a2)
         goto LABEL_7;
-    if (!sub_48328F(thisx, a2))
-        return -1;
-    sub_482FAA(thisx);
+    if (!sub_48328F(thisx, a2))//a2是起点字符 "#START"
+        return -1;//没有找到起点字符串返回失败
+    sub_482FAA(thisx);//处理txt内的无效行，注释行，更新下标，以后续处理
     while (1)
     {
     LABEL_7:
-        if (!sub_482D44(thisx, String2))
+        if (!sub_482D44(thisx, String2))//读取有效字符串那一行内容并返回
         {
-            sub_483173(thisx, v5);
+            sub_483173(thisx, v5); //设置 thisx 的解析偏移指针为 v5，前提是不能超过文件大小。否则调用 sub_48314A 来处理异常情况。
             return -1;
         }
         if (!lstrcmpiA(lpString1, String2))
             break;
         ++v7;
-        sub_482FAA(thisx);
+        sub_482FAA(thisx);//处理txt内的无效行，注释行，更新下标，以后续处理
     }
     sub_483173(thisx, v5);
     return v7;
 }
 
+//查找txt配置项的"#START"起点字符串
 int sub_48328F(int* thisx, LPCSTR lpString1)
 {
     //    CHAR String2[256]; // [esp+8h] [ebp-100h] BYREF
@@ -61975,21 +62077,35 @@ int sub_48328F(int* thisx, LPCSTR lpString1)
 
     while (1)
     {
-        if (!sub_482D44(thisx, String2))
-            return 0;
-        if (!lstrcmpiA(lpString1, String2))
+        if (!sub_482D44(thisx, String2))//从最近下标读取一行有效的字符串
+            return 0;// 如果读取失败（没有更多项），返回 0
+        if (!lstrcmpiA(lpString1, String2))// 如果和目标字符串匹配（不区分大小写），跳出循环
             break;
-        sub_482FAA(thisx);
+        sub_482FAA(thisx);//处理txt内的无效行，更新下标，以后续处理
     }
-    sub_48330A(thisx);
+    sub_48330A(thisx);//将读取位置回退到当前或上一行的行首，用于在逐行读取中做回滚处理。
     return 1;
 }
 
+//将读取位置回退到当前或上一行的行首，用于在逐行读取中做回滚处理。
 int* sub_48330A(int* thisx)
 {
     int* result; // eax
     int i; // [esp+4h] [ebp-4h]
 
+    //向前找最近的换行符 \r(13) 或 \n(10)
+    //一旦找到，就 i++，跳到换行符的 下一个字节，即行的起始位置
+    //如果找不到，就设为 0，也就是文件最开头
+    /*
+    * 比如
+    * Line A\r\n  ← 位置 0 ~ 8
+      Line B\r\n  ← 位置 9 ~ 17
+      Line C\r\n  ← 位置 18 ~ 26
+         ↑ 当前 thisx[2] = 26
+
+        调用 sub_48330A(thisx) 后，它会回退到：
+        thisx[2] = 18  // 即 Line C 的开头
+    */
     for (i = thisx[2] - 1; i >= 0; --i)
     {
         if (*(_BYTE*)(*thisx + i) == 13 || *(_BYTE*)(*thisx + i) == 10)
@@ -63139,7 +63255,7 @@ char* sub_485B10(char* thisx)
     return thisx + 11380;
 }
 
-
+//txt配置项对象的初始化，一行内容一个对象
 void sub_485B30(void* thisx)
 {
     *(int*)thisx = off_4AC360;
@@ -63150,6 +63266,7 @@ void sub_485B30(void* thisx)
     *((int*)thisx + 2) = 0;
 }
 
+//txt配置项对象的析构，一行内容一个对象
 void sub_485B78(void* thisx)
 {
     *(int*)thisx = off_4AC360;
@@ -63159,14 +63276,15 @@ void sub_485B78(void* thisx)
         delete2(*((void**)thisx + 5));
 }
 
+//this对象是处理一行txt内存的对象，txt配置项对象
 int sub_485BCA(int thisx, int* a2)
 {
 
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
-    char String[256]; // [esp+18h] [ebp-100h] BYREF
-    int v5; // [esp+14h] [ebp-104h]
-    int v4; // [esp+10h] [ebp-108h]
+    char String[256]; // [esp+18h] [ebp-100h] BYREF // 用于临时存储一行文本（被 sub_482D44 填充）
+    int v5; // [esp+14h] [ebp-104h]                 // 字段编号（0~5）
+    int v4; // [esp+10h] [ebp-108h]                 // 当前第几个数据项（例如第几个敌人/元素）
 
     const char* var = R"(
     char String[256]; // [esp+18h] [ebp-100h] BYREF
@@ -63183,22 +63301,33 @@ int sub_485BCA(int thisx, int* a2)
         __asm int 3
     }
 
-    if (!a2)
+    if (!a2)// 如果 a2（读取器）为空，返回失败
         return 0;
+
     v5 = 0;
     v4 = 0;
+
+    // 主循环：循环读取并解析文本行，直到遇到终止符或读取完毕
+    //解析一行的数据
     while (1)
     {
+        // 尝试读取一行文本，失败则返回，//读取有效字符串那一行内容并返回，而是读取一行中的一个项
         if (!sub_482D44(a2, String))
             return 0;
+
+        // 如果读到以 'n' 开头的行，表示该组数据读取完成（可能是“next”）
         if (String[0] == 110)
             return 1;
+
+        // 根据当前字段编号处理数据
         switch (v5)
         {
         case 0:
+            // 第一个字段：整数 ID，存入 thisx + 4
             *(int*)(thisx + 4) = atoi(String);
             break;
         case 1:
+            // 第二个字段：数据项数量（count），存入 thisx + 12（2字节）
             *(_WORD*)(thisx + 12) = atoi(String);
             if (*(_WORD*)(thisx + 12))
             {
@@ -63206,10 +63335,12 @@ int sub_485BCA(int thisx, int* a2)
                 *(int*)(thisx + 20) = (int)new2(4 * *(unsigned __int16*)(thisx + 12));
             }
             break;
+            // 第三字段（循环）：将当前字符串转换为 byte，写入 thisx + 16 的缓冲区第 v4 项
         case 2:
             *(_BYTE*)(*(int*)(thisx + 16) + v4) = atoi(String);
             break;
         case 3:
+
             *(_BYTE*)(*(int*)(thisx + 20) + 4 * v4 + 2) = atoi(String);
             break;
         case 4:
@@ -63226,7 +63357,7 @@ int sub_485BCA(int thisx, int* a2)
             v5 = 2;
             if (++v4 >= *(unsigned __int16*)(thisx + 12))
             {
-                sub_482FAA(a2);
+                sub_482FAA(a2);//处理txt内的无效行，注释行，更新下标，以后续处理
                 return 1;
             }
         }
@@ -74453,10 +74584,7 @@ int sub_4998E0(int thisx, int a2)
 
     //(*(int(__stdcall**)(int, int*, int, int))(**(int**)(thisx + 50508) + 24))(*(int*)(thisx + 50508),v4,thisx + 50520,0)  
     HRESULT r = (*IDD_50508)->CreateSurface((LPDDSURFACEDESC2)v4, (LPDIRECTDRAWSURFACE7*)(thisx + 50520), 0);
-    {//{}
-        memcpy(&ddsd, (LPDDSURFACEDESC2)v4, sizeof(DDSURFACEDESC2));
-        (*IDD_50508)->CreateSurface(&ddsd, &suf, 0);
-    }
+
     IDirectDrawSurface7* IDDS_50520 = (IDirectDrawSurface7*)*(int*)(thisx + 50520);
 
     for (int i = 0; i <= 49 * 4; i += 4)
@@ -75041,28 +75169,28 @@ unsigned __int16* sub_49ABE2(unsigned __int16* thisx, int a2, int a3)
                 }
                 IDirectDrawSurface7* IDDS_50520 = (IDirectDrawSurface7*)a2;
                 IDDS_50520->Blt(&v17, (LPDIRECTDRAWSURFACE7) * (int*)thisx, &rc, v20, (LPDDBLTFX)v15);//旧代码 result = (unsigned __int16*)(*(int(__stdcall**)(int, struct tagRECT*, int, struct tagRECT*, int, int*))(*(int*)a2 + 20))(a2,&v17,*(int*)thisx,&rc,v20,v15);
-                //{//{}
-                //        //绘制每个动态的图形
-                //    HWND hwnd = FindWindow(0, L"新建文本文档.txt - 记事本");
-                //    if (!hwnd)
-                //    {
-                //        __asm int 3
-                //    }
-                //    HDC hdc;
-                //    HDC hdcSrc;
-                //    IDirectDrawSurface7* IDDS_505 = (LPDIRECTDRAWSURFACE7) * (int*)thisx;
-                //    HRESULT res = IDDS_505->GetDC(&hdcSrc);
-                //    RECT rect;
-                //    GetClientRect(hwnd, &rect);
-                //    HBRUSH hBrush = (HBRUSH)GetStockObject(WHITE_BRUSH);
-                //    hdc = GetDC(hwnd);
-                //    FillRect(hdc, &rect, hBrush);
-                //    ReleaseDC(hwnd, hdc);
-                //    hdc = GetDC(hwnd);
-                //    BitBlt(hdc, v17.left, v17.top, v17.right, v17.bottom, hdcSrc, rc.left, rc.top, SRCCOPY);
-                //    IDDS_505->ReleaseDC(hdcSrc);
-                //    ReleaseDC(hwnd, hdc);
-                //}
+                {//{}
+                        //绘制每个动态的图形
+                    HWND hwnd = FindWindow(0, L"新建文本文档.txt - 记事本");
+                    if (!hwnd)
+                    {
+                        __asm int 3
+                    }
+                    HDC hdc;
+                    HDC hdcSrc;
+                    IDirectDrawSurface7* IDDS_505 = (LPDIRECTDRAWSURFACE7) * (int*)thisx;
+                    HRESULT res = IDDS_505->GetDC(&hdcSrc);
+                    RECT rect;
+                    GetClientRect(hwnd, &rect);
+                    HBRUSH hBrush = (HBRUSH)GetStockObject(WHITE_BRUSH);
+                    hdc = GetDC(hwnd);
+                    FillRect(hdc, &rect, hBrush);
+                    ReleaseDC(hwnd, hdc);
+                    hdc = GetDC(hwnd);
+                    BitBlt(hdc, v17.left, v17.top, v17.right, v17.bottom, hdcSrc, rc.left, rc.top, SRCCOPY);
+                    IDDS_505->ReleaseDC(hdcSrc);
+                    ReleaseDC(hwnd, hdc);
+                }
                 v16 = result;
                 if (result)
                 {
@@ -75458,49 +75586,48 @@ int sub_49C541(int* thisx, int a2, int a3, struct tagRECT* a4)
                 //    //suf->Blt((LPRECT)&v15, (LPDIRECTDRAWSURFACE7)* (int*)thisx, (LPRECT)&v21, v25, (LPDDBLTFX)v11);
                 //    
                 //    HRESULT res = IDDS_505->GetDC(&hdcSrc);
-                //    BitBlt(hdc, v15, v16, v17, v18, hdcSrc, v21, v22, SRCCOPY);
-                //    //StretchBlt(hdc, v15, v16, v17, v18, hdcSrc, v21, v22,v23,v24, SRCCOPY);
+                //    //BitBlt(hdc, v15, v16, v17, v18, hdcSrc, v21, v22, SRCCOPY);
+                //    StretchBlt(hdc, v15, v16, v17, v18, hdcSrc, v21, v22,v23 - v21,v24 - v22, SRCCOPY);
                 //    IDDS_505->ReleaseDC(hdcSrc);
                 //}
-                {//{}
-                    DDBLTFX ddbltfx;
-                    ZeroMemory(&ddbltfx, sizeof(ddbltfx));
-                    ddbltfx.dwSize = sizeof(ddbltfx);
-                    ddbltfx.dwFillColor = RGB(255, 255, 255); // 纯白色
+                //{//{}
+                //    DDBLTFX ddbltfx;
+                //    ZeroMemory(&ddbltfx, sizeof(ddbltfx));
+                //    ddbltfx.dwSize = sizeof(ddbltfx);
+                //    ddbltfx.dwFillColor = RGB(255, 255, 255); // 纯白色
 
-                    suf->Blt(nullptr, nullptr, nullptr, DDBLT_COLORFILL | DDBLT_WAIT, &ddbltfx);
-                    //这里是绘制帧数的表面，和其他文字
-                    HWND hwnd = FindWindow(0, L"新建文本文档.txt - 记事本");
-                    if (!hwnd)
-                    {
-                        __asm int 3
-                    }
-                    HDC hdc;
-                    HDC hdcSrc;
-                    HDC hdcSrc2;
-                    IDirectDrawSurface7* IDDS_505 = (LPDIRECTDRAWSURFACE7) * (int*)thisx;
+                //    //lpddsPrimary->Blt(nullptr, nullptr, nullptr, DDBLT_COLORFILL | DDBLT_WAIT, &ddbltfx);
+                //    //这里是绘制帧数的表面，和其他文字
+                //    HWND hwnd = FindWindow(0, L"新建文本文档.txt - 记事本");
+                //    if (!hwnd)
+                //    {
+                //        __asm int 3
+                //    }
+                //    HDC hdc;
+                //    HDC hdcSrc;
+                //    HDC hdcSrc2;
+                //    IDirectDrawSurface7* IDDS_505 = (LPDIRECTDRAWSURFACE7) * (int*)thisx;
 
-                    hdc = GetDC(hwnd);
-                    RECT rect;
-                    GetClientRect(hwnd, &rect);
-                    HBRUSH hBrush = (HBRUSH)GetStockObject(WHITE_BRUSH);
-                    FillRect(hdc, &rect, hBrush);
-                    
-                    IDDS_505->GetDC(&hdcSrc);
+                //    hdc = GetDC(hwnd);
+                //    RECT rect;
+                //    GetClientRect(hwnd, &rect);
+                //    HBRUSH hBrush = (HBRUSH)GetStockObject(WHITE_BRUSH);
+                //    FillRect(hdc, &rect, hBrush);
+                //    
+                //    IDDS_505->GetDC(&hdcSrc);
 
-                    //StretchBlt(hdc, v15, v16, v17*8, v18*8, hdcSrc, v21, v22,v23,v24, SRCCOPY);
-                    suf->Blt((LPRECT)&v15, IDDS_505, (LPRECT)&v21, 0, 0);
-                    if (CompareSurfaces(suf, IDDS_505))
-                    {
-                        __asm int 3
-                    }
+                //    //lpddsPrimary->Blt((LPRECT)&v15, IDDS_505, (LPRECT)&v21, 0, 0);
+                //    if (CompareSurfaces(lpddsPrimary, IDDS_505) == false)
+                //    {
+                //        debugbreak();
+                //    }
 
-                    suf->GetDC(&hdcSrc2);
-                    BitBlt(hdc, v15, v16, v17, v18, hdcSrc2, v15, v16, SRCCOPY);
-                    IDDS_505->ReleaseDC(hdcSrc);
-                    suf->ReleaseDC(hdcSrc2);
-                    ReleaseDC(hwnd, hdc);
-                }
+                //    //lpddsPrimary->GetDC(&hdcSrc2);
+                //    BitBlt(hdc, v15, v16, v17, v18, hdcSrc, v21, v22, SRCCOPY);//和其他bitblt函数一样，但是这个却是安装范围处理，其他地方却是安装边界处理
+                //    IDDS_505->ReleaseDC(hdcSrc);
+                //    //lpddsPrimary->ReleaseDC(hdcSrc2);
+                //    ReleaseDC(hwnd, hdc);
+                //}
                 v12 = result;
                 if (result)
                 {
@@ -78222,6 +78349,8 @@ int* sub_4A1450(int* thisx)
     thisx[337] = 0;
     return thisx;
 }
+
+//错误才进入
 //thisx = byte_4BDC60[12609*4]
 void sub_4A148B(void** thisx)
 {
@@ -78773,6 +78902,8 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
 {
     InstallDetour(timeGetTime, myTimeGetTime, (void**)&TrueMessageBoxW);
     InstallDetour(Sleep, mySleep, (void**)&TrueMessageBoxW);
+    InstallDetour(MessageBoxA, myMessageBoxA, (void**)&TrueMessageBoxW);
+    
 
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
@@ -78861,14 +78992,14 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
     dword_4B92F0 = 0;
     dword_4B92E8 = 0;
     dword_4B9368 = 0;
-    dword_4B9364 = 0;
-    dword_4B9360 = 0;
-    dword_4B93B0 = 0;
+    dword_4B9364 = 0;//头部资源文件的高度 / 8，也就是有多少行资源，有64行资源，64再乘以4的大小，256
+    dword_4B9360 = 0;//头部资源文件的高度 / 8，也就是有多少行资源，有64行资源，64再乘以4的大小，256
+    dword_4B93B0 = 0; //逻辑帧计数器，用于记录总的逻辑帧数
     dword_4B93AC = 0;//"FRAME:%d"游戏经过多少逻辑帧
-    Time = timeGetTime();
-    v11 = Time;
-    v16 = 0;
-    v13 = 0;
+    Time = timeGetTime();// 获取当前时间戳，单位为毫秒
+    v11 = Time;// 将当前时间戳存储在v11中，作为前一帧的时间戳
+    v16 = 0;// 初始化累积时间值，用于帧率控制
+    v13 = 0;// 初始化帧计数器，用于计算每秒的帧数
 
     //把时间保存到一个奇怪的变量内
     sub_4A2B56(Time);
@@ -78904,6 +79035,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
     {
         return 0;
     }
+    InitDirectDraw();
 
     v8 = sub_47C5F0();//读取图形文件
 
@@ -78919,20 +79051,6 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
     dword_4B99EC = 1;////如果获取焦点的时候，且程序设置又是不允许后台运行，该值为1，失去焦点又不允许后台允许该值为0
     timeBeginPeriod(1u);//什么开启时间段开启
 
-
-    {
-
-
-        DDSURFACEDESC2 ddsd = { 0 };
-        ddsd.dwSize = sizeof(ddsd);
-        ddsd.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
-        ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
-        ddsd.dwWidth = 640;
-        ddsd.dwHeight = 480;
-        
-        IDirectDraw7* IDD_a2 = (IDirectDraw7*)*(int*)(byte_4BDC60 + 50508);//a2 = byte_4BDC60+50508
-        //(*IDD_a2).CreateSurface(&ddsd, &suf, 0);
-    }
     while (1)
     {
         while (1)
