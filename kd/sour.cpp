@@ -21,7 +21,7 @@
 const char* types[] = {
     "__int8*",
     "__int8",
-    "_WORD*",
+    "short*",
     "__int16",
     "int", "char", "tagRECT", "float", "_cpinfo", "CHAR",
     "WORD", "_STARTUPINFOA", "CPPEH_RECORD", "int", "void", "bool",
@@ -821,7 +821,7 @@ unsigned int  Concurrency::details::VirtualProcessor::GetExecutionResourceId(
 unsigned __int16  GetGroup(
     Concurrency::details::HardwareAffinity* thisxx)
 {
-    return *((_WORD*)thisxx + 2);
+    return *((short*)thisxx + 2);
 }
 
 //get
@@ -2631,12 +2631,12 @@ copy_start:
                         goto _byte_0; // 如果是 '\0'，跳转到处理字节 0
                     if (!BYTE1(v8)) // 检查第二个字节是否为 '\0'
                     {
-                        *(_WORD*)v6 = (unsigned __int8)v8; // 拷贝 2 字节
+                        *(short*)v6 = (unsigned __int8)v8; // 拷贝 2 字节
                         return Destination; // 返回 Destination
                     }
                     if ((v8 & 0xFF0000) == 0) // 检查第三个字节是否为 '\0'
                     {
-                        *(_WORD*)v6 = v8; // 拷贝 2 字节
+                        *(short*)v6 = v8; // 拷贝 2 字节
                         result = Destination; // 保存 Destination 的起始地址
                         v6[2] = 0; // 添加终止符 '\0'
                         return result; // 返回 Destination
@@ -2723,7 +2723,7 @@ int __cdecl strcmp(const char* Str1, const char* Str2)
     }
 
     // 处理前两个字节
-    v8 = *(_WORD*)v2; // 读取 Str1 当前的 2 字节块
+    v8 = *(short*)v2; // 读取 Str1 当前的 2 字节块
     v2 += 2; // 移动到下一个字符
     v5 = (unsigned __int8)v8 < (unsigned int)*v3; // 比较低字节
     if ((_BYTE)v8 != *v3) // 如果不相等，返回结果
@@ -3070,9 +3070,9 @@ void sub_401390(void* thisx)
 {
     check_stack c(__FILE__, __LINE__);
     *(int*)thisx = (int)off_4AC244;
-    *((_WORD*)thisx + 2) = 0;
+    *((short*)thisx + 2) = 0;
     *((int*)thisx + 2) = 0;
-    *((_WORD*)thisx + 6) = 0;
+    *((short*)thisx + 6) = 0;
     *((int*)thisx + 4) = 0;
     *((int*)thisx + 5) = 0;
     *((int*)thisx + 6) = 0;
@@ -3093,12 +3093,12 @@ int sub_401404(int thisx)
 
     if (*(int*)(thisx + 8))
         (***(void(****)(int, int))(thisx + 8))(*(int*)(thisx + 8), 3);
-    *(_WORD*)(thisx + 4) = 0;
+    *(short*)(thisx + 4) = 0;
     *(int*)(thisx + 8) = 0;
     if (*(int*)(thisx + 16))
         (***(void(****)(int, int))(thisx + 16))(*(int*)(thisx + 16), 3);
     result = thisx;
-    *(_WORD*)(thisx + 12) = 0;
+    *(short*)(thisx + 12) = 0;
     *(int*)(thisx + 16) = 0;
     return result;
 }
@@ -3268,7 +3268,7 @@ BOOL sub_401782(_BYTE* thisx, int a2)
 }
 
 //set
-int sub_4017EE(_WORD* thisx, unsigned __int16 a2)
+int sub_4017EE(short* thisx, unsigned __int16 a2)
 {
     int result; // eax
 
@@ -3383,7 +3383,7 @@ _BYTE* sub_401B7C(_BYTE* thisx)
     int i; // [esp+4h] [ebp-4h]
 
 
-    *(_WORD*)thisx = 0;
+    *(short*)thisx = 0;
     thisx[6] = 0;
     thisx[7] = 0;
     for (i = 0; i < 2; ++i)
@@ -3409,7 +3409,7 @@ __int16 __stdcall sub_401BEF(int* thisx, char a2)
 
     v2 = sub_401BD0(thisx, a2);
     if (v2)
-        return *(_WORD*)v2;
+        return *(short*)v2;
     else
         return 0;
 }
@@ -3671,12 +3671,12 @@ void sub_40211F(void* thisx)
     sub_41807A((int*)thisx + 8);
     *(int*)thisx = off_4AC250;
     *((int*)thisx + 40) = 0;
-    *((_WORD*)thisx + 93) = 0;
+    *((short*)thisx + 93) = 0;
     *((int*)thisx + 82) = 0;
     *((int*)thisx + 83) = 0;
     *((int*)thisx + 84) = 0;
     *((int*)thisx + 106) = 1;
-    *((_WORD*)thisx + 102) = 0;
+    *((short*)thisx + 102) = 0;
     *((_BYTE*)thisx + 212) = 0;
     *((_BYTE*)thisx + 195) = 3;
     *((int*)thisx + 107) = 3;
@@ -5672,12 +5672,12 @@ LABEL_921:
     }
     if (*(_BYTE*)(thisx + 592))
         --* (_BYTE*)(thisx + 592);
-    if (*(_WORD*)(thisx + 596))
+    if (*(short*)(thisx + 596))
     {
-        if (!-- * (_WORD*)(thisx + 596))
+        if (!-- * (short*)(thisx + 596))
         {
             *(_BYTE*)(thisx + 593) = 0;
-            *(_WORD*)(thisx + 594) = 0;
+            *(short*)(thisx + 594) = 0;
         }
     }
     result = thisx;
@@ -5844,9 +5844,9 @@ int sub_407756(int thisx, int a2, int a3, int a4)
                 if (!v25)
                     v25 = 1;
                 if (*(unsigned __int16*)(thisx + 214) >= v25)
-                    *(_WORD*)(thisx + 214) -= v25;
+                    *(short*)(thisx + 214) -= v25;
                 else
-                    *(_WORD*)(thisx + 214) = 0;
+                    *(short*)(thisx + 214) = 0;
             }
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A28, -1, 100, 100, 0);
         LABEL_248:
@@ -5856,12 +5856,12 @@ int sub_407756(int thisx, int a2, int a3, int a4)
         }
         if (*(int*)(a3 + 48) == 112)
         {
-            sub_41EF8A((_WORD*)thisx, v25);
-            sub_41F169((_WORD*)thisx, *(unsigned __int16*)(thisx + 242));
+            sub_41EF8A((short*)thisx, v25);
+            sub_41F169((short*)thisx, *(unsigned __int16*)(thisx + 242));
         }
         else
         {
-            sub_41261C((_WORD*)thisx, v25, *(int*)(a3 + 32), 1); //减血函数
+            sub_41261C((short*)thisx, v25, *(int*)(a3 + 32), 1); //减血函数
             if (!*(_BYTE*)(thisx + 558) && !*(int*)(thisx + 560))
             {
                 if (v25 >= 3)
@@ -6056,7 +6056,7 @@ int sub_407756(int thisx, int a2, int a3, int a4)
                 {
                     v18 = *(int*)(a3 + 8);
                     if (*(__int16*)(thisx + 246) < v18)
-                        *(_WORD*)(thisx + 246) = v18;
+                        *(short*)(thisx + 246) = v18;
                 }
                 if (*(int*)(thisx + 432) == 46 || *(int*)(thisx + 432) == 47)
                 {
@@ -6198,7 +6198,7 @@ int sub_407756(int thisx, int a2, int a3, int a4)
         if (*(int*)(thisx + 428) == 135)
         {
             v5 = rand();
-            sub_41261C((_WORD*)thisx, v5 % 10 + 1, 0, 1); //减血函数
+            sub_41261C((short*)thisx, v5 % 10 + 1, 0, 1); //减血函数
             *(int*)(thisx + 432) = 34;
             *(int*)(thisx + 436) = *(int*)(a3 + 12) == 0;
             *(int*)(thisx + 444) = 0;
@@ -6716,7 +6716,7 @@ int sub_409273(int thisx, int a2)
         }
         *(_BYTE*)(thisx + 471) = 0;
         *(_BYTE*)(thisx + 472) = 0;
-        *(_WORD*)(thisx + 246) = 0;
+        *(short*)(thisx + 246) = 0;
     }
     switch (a2)
     {
@@ -7010,7 +7010,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
     int v4; // esi
 
 
-    if (*(int*)(a1 + 428) >= 44 && *(int*)(a1 + 428) <= 47 && !*(_WORD*)(a1 + 214))
+    if (*(int*)(a1 + 428) >= 44 && *(int*)(a1 + 428) <= 47 && !*(short*)(a1 + 214))
     {
         if (*(int*)(a1 + 428) == 44 || *(int*)(a1 + 428) == 46)
             *(int*)(a1 + 432) = 78;
@@ -7024,7 +7024,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         *(_BYTE*)(a1 + 213) = -1;
         *(_BYTE*)(a1 + 257) = 0;
         *(_BYTE*)(a1 + 249) = 0;
-        *(_WORD*)(a1 + 244) = 0;
+        *(short*)(a1 + 244) = 0;
         *(_BYTE*)(a1 + 254) = 0;
         *(_BYTE*)(a1 + 255) = 1;
         *(_BYTE*)(a1 + 256) = 6;
@@ -7060,22 +7060,22 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
     case 3:
         *(_BYTE*)(a1 + 212) = 0;
         if (*(int*)(a1 + 288))
-            *(_WORD*)(a1 + 204) = 44;
+            *(short*)(a1 + 204) = 44;
         else
-            *(_WORD*)(a1 + 204) = 0;
+            *(short*)(a1 + 204) = 0;
         if (*(int*)(a1 + 480))
         {
             if (sub_494AA9(*(_BYTE**)(a1 + 480), 0))
             {
-                *(_WORD*)(a1 + 204) = 135;
+                *(short*)(a1 + 204) = 135;
             }
             else if (sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
             {
-                *(_WORD*)(a1 + 204) = 215;
+                *(short*)(a1 + 204) = 215;
             }
         }
         if (*(char*)(a1 + 608) > 0)
-            *(_WORD*)(a1 + 204) = *(char*)(a1 + 608);
+            *(short*)(a1 + 204) = *(char*)(a1 + 608);
         *(int*)(a1 + 444) = 0;
         *(int*)(a1 + 448) = 0;
         *(int*)(a1 + 396) = 1;
@@ -7089,15 +7089,15 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         *(int*)(a1 + 408) = *(int*)(a1 + 444) < 4 && !*(int*)(a1 + 392);
         if (*(int*)(a1 + 392))
         {
-            *(_WORD*)(a1 + 204) = 238;
+            *(short*)(a1 + 204) = 238;
         }
         else if (sub_41BA53(a1, 0xAu, 0))
         {
-            *(_WORD*)(a1 + 204) = 68;
+            *(short*)(a1 + 204) = 68;
         }
         else
         {
-            *(_WORD*)(a1 + 204) = 61;
+            *(short*)(a1 + 204) = 61;
         }
         return;
     case 4:
@@ -7109,20 +7109,20 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         {
             if (sub_494AA9(*(_BYTE**)(a1 + 480), 0))
             {
-                *(_WORD*)(a1 + 204) = 135;
+                *(short*)(a1 + 204) = 135;
             }
             else if (sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
             {
-                *(_WORD*)(a1 + 204) = 215;
+                *(short*)(a1 + 204) = 215;
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 0;
+                *(short*)(a1 + 204) = 0;
             }
         }
         else
         {
-            *(_WORD*)(a1 + 204) = 3 * (*(int*)(a1 + 428) == 5) + 4 * (*(int*)(a1 + 428) == 4);
+            *(short*)(a1 + 204) = 3 * (*(int*)(a1 + 428) == 5) + 4 * (*(int*)(a1 + 428) == 4);
         }
         if (*(int*)(a1 + 444) > 60)
         {
@@ -7158,21 +7158,21 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     if (*(int*)(a1 + 444) >= 30)
                     {
                         if (*(int*)(a1 + 444) < 40)
-                            *(_WORD*)(a1 + 204) = 0;
+                            *(short*)(a1 + 204) = 0;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 2;
+                        *(short*)(a1 + 204) = 2;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 1;
+                    *(short*)(a1 + 204) = 1;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 2;
+                *(short*)(a1 + 204) = 2;
             }
         }
         else if (*(int*)(a1 + 444) >= 10)
@@ -7182,21 +7182,21 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 if (*(int*)(a1 + 444) >= 30)
                 {
                     if (*(int*)(a1 + 444) < 40)
-                        *(_WORD*)(a1 + 204) = v69;
+                        *(short*)(a1 + 204) = v69;
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = v69 + 2;
+                    *(short*)(a1 + 204) = v69 + 2;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = v69;
+                *(short*)(a1 + 204) = v69;
             }
         }
         else
         {
-            *(_WORD*)(a1 + 204) = v69 + 1;
+            *(short*)(a1 + 204) = v69 + 1;
         }
         return;
     case 0x38:
@@ -7204,9 +7204,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         if (*(int*)(a1 + 444) == 20)
             *(int*)(a1 + 444) = 0;
         if (*(int*)(a1 + 444) >= 10)
-            *(_WORD*)(a1 + 204) = 30;
+            *(short*)(a1 + 204) = 30;
         else
-            *(_WORD*)(a1 + 204) = 43;
+            *(short*)(a1 + 204) = 43;
         if (*(int*)(a1 + 304))
         {
             if (sub_425F30((int*)*(int*)(a1 + 304)) != 55)
@@ -7238,31 +7238,31 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         if (*(int*)(a1 + 288))
         {
             if (*(int*)(a1 + 348) >= 0)
-                *(_WORD*)(a1 + 204) = 53;
+                *(short*)(a1 + 204) = 53;
             else
-                *(_WORD*)(a1 + 204) = 52;
+                *(short*)(a1 + 204) = 52;
         }
         else if (*(int*)(a1 + 480) && sub_494AA9(*(_BYTE**)(a1 + 480), 0))
         {
             if (*(int*)(a1 + 444) >= 8)
-                *(_WORD*)(a1 + 204) = 139;
+                *(short*)(a1 + 204) = 139;
             else
-                *(_WORD*)(a1 + 204) = 6;
+                *(short*)(a1 + 204) = 6;
         }
         else if (*(int*)(a1 + 480) && sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
         {
             if (*(int*)(a1 + 444) >= 8)
-                *(_WORD*)(a1 + 204) = 221;
+                *(short*)(a1 + 204) = 221;
             else
-                *(_WORD*)(a1 + 204) = 222;
+                *(short*)(a1 + 204) = 222;
         }
         else if (*(int*)(a1 + 444) >= 8)
         {
-            *(_WORD*)(a1 + 204) = 5;
+            *(short*)(a1 + 204) = 5;
         }
         else
         {
-            *(_WORD*)(a1 + 204) = 6;
+            *(short*)(a1 + 204) = 6;
         }
         if (*(int*)(a1 + 444) == 8)
             *(int*)(a1 + 404) = 1;
@@ -7280,7 +7280,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 v4 = sub_417924(a1, 3, 1);
                 v5 = sub_41D067(a1, 1) / 2 + v4;
                 v6 = sub_41CA5F(a1, 1);
-                sub_41F169((_WORD*)a1, (v5 + v6 / 2) / 3);
+                sub_41F169((short*)a1, (v5 + v6 / 2) / 3);
                 memset((void*)(a1 + 453), 0, 8u);
                 memset((void*)(a1 + 461), 0, 8u);
             }
@@ -7295,30 +7295,30 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         if (*(int*)(a1 + 288))
         {
             if (*(int*)(a1 + 348) >= 0)
-                *(_WORD*)(a1 + 204) = 53;
+                *(short*)(a1 + 204) = 53;
             else
-                *(_WORD*)(a1 + 204) = 52;
+                *(short*)(a1 + 204) = 52;
         }
         else if (*(int*)(a1 + 480) && sub_494AA9(*(_BYTE**)(a1 + 480), 0))
         {
             if (*(int*)(a1 + 444) >= 8)
-                *(_WORD*)(a1 + 204) = 139;
+                *(short*)(a1 + 204) = 139;
             else
-                *(_WORD*)(a1 + 204) = 6;
+                *(short*)(a1 + 204) = 6;
         }
         else if (*(int*)(a1 + 480) && sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
         {
             if (*(int*)(a1 + 444) >= 8)
-                *(_WORD*)(a1 + 204) = 221;
+                *(short*)(a1 + 204) = 221;
             else
-                *(_WORD*)(a1 + 204) = 222;
+                *(short*)(a1 + 204) = 222;
         }
         else if (*(int*)(a1 + 480) || !sub_41BA53(a1, 0x2Bu, 0))
         {
             if (*(int*)(a1 + 444) >= 8)
-                *(_WORD*)(a1 + 204) = 5;
+                *(short*)(a1 + 204) = 5;
             else
-                *(_WORD*)(a1 + 204) = 6;
+                *(short*)(a1 + 204) = 6;
         }
         else
         {
@@ -7327,7 +7327,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 memset((void*)(a1 + 453), 0, 8u);
                 memset((void*)(a1 + 461), 0, 8u);
             }
-            *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 190;
+            *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 190;
         }
         if (*(int*)(a1 + 444) == 8)
             *(int*)(a1 + 404) = 1;
@@ -7338,15 +7338,15 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         *(int*)(a1 + 448) = 0;
         if (*(int*)(a1 + 288))
         {
-            *(_WORD*)(a1 + 204) = 45;
+            *(short*)(a1 + 204) = 45;
         }
         else if (*(int*)(a1 + 480) && sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
         {
-            *(_WORD*)(a1 + 204) = 222;
+            *(short*)(a1 + 204) = 222;
         }
         else
         {
-            *(_WORD*)(a1 + 204) = 6;
+            *(short*)(a1 + 204) = 6;
         }
         if (*(int*)(a1 + 444) > 6)
             *(int*)(a1 + 432) = 3;
@@ -7355,9 +7355,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
     case 0x1C:
         *(_BYTE*)(a1 + 212) = 0;
         if (*(int*)(a1 + 480) && sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
-            *(_WORD*)(a1 + 204) = 222;
+            *(short*)(a1 + 204) = 222;
         else
-            *(_WORD*)(a1 + 204) = 6;
+            *(short*)(a1 + 204) = 6;
         if (*(int*)(a1 + 444) >= 12)
         {
             if (*(_BYTE*)(a1 + 237))
@@ -7373,15 +7373,15 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         ++* (int*)(a1 + 448);
         if (*(int*)(a1 + 288))
         {
-            *(_WORD*)(a1 + 204) = 2 * (*(int*)(a1 + 444) / 10 % 2) + 46;
+            *(short*)(a1 + 204) = 2 * (*(int*)(a1 + 444) / 10 % 2) + 46;
         }
         else if (*(int*)(a1 + 480) && sub_494AA9(*(_BYTE**)(a1 + 480), 0))
         {
-            *(_WORD*)(a1 + 204) = 3 * (*(int*)(a1 + 444) / 5 % 2) + 135;
+            *(short*)(a1 + 204) = 3 * (*(int*)(a1 + 444) / 5 % 2) + 135;
         }
         else if (*(int*)(a1 + 480) && sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
         {
-            *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 5 % 3 + 218;
+            *(short*)(a1 + 204) = *(int*)(a1 + 444) / 5 % 3 + 218;
         }
         else if (*(_BYTE*)(a1 + 188) == 1)
         {
@@ -7393,21 +7393,21 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     if (*(int*)(a1 + 444) >= 21)
                     {
                         if (*(int*)(a1 + 444) < 28)
-                            *(_WORD*)(a1 + 204) = 0;
+                            *(short*)(a1 + 204) = 0;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 2;
+                        *(short*)(a1 + 204) = 2;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 1;
+                    *(short*)(a1 + 204) = 1;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 2;
+                *(short*)(a1 + 204) = 2;
             }
             if (*(int*)(a1 + 444) == 28)
                 *(int*)(a1 + 444) = 0;
@@ -7417,11 +7417,11 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         else if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
         {
             *(_BYTE*)(a1 + 212) = 1;
-            *(_WORD*)(a1 + 204) = 3 * (*(int*)(a1 + 444) / 5 % 2);
+            *(short*)(a1 + 204) = 3 * (*(int*)(a1 + 444) / 5 % 2);
         }
         else
         {
-            *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 5 % 6 + 7;
+            *(short*)(a1 + 204) = *(int*)(a1 + 444) / 5 % 6 + 7;
         }
         return;
     case 0xB:
@@ -7433,18 +7433,18 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 356) *= 2;
         }
         if (*(int*)(a1 + 288))
-            *(_WORD*)(a1 + 204) = 45;
+            *(short*)(a1 + 204) = 45;
         else
-            *(_WORD*)(a1 + 204) = 4;
+            *(short*)(a1 + 204) = 4;
         if (*(int*)(a1 + 480) && sub_494AA9(*(_BYTE**)(a1 + 480), 0))
-            *(_WORD*)(a1 + 204) = 135;
+            *(short*)(a1 + 204) = 135;
         if (*(int*)(a1 + 480) && sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
         {
-            *(_WORD*)(a1 + 204) = 215;
+            *(short*)(a1 + 204) = 215;
         }
         else if (*(int*)(a1 + 480))
         {
-            *(_WORD*)(a1 + 204) = 0;
+            *(short*)(a1 + 204) = 0;
         }
         if (*(int*)(a1 + 444) >= 30)
         {
@@ -7464,31 +7464,31 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         if (*(int*)(a1 + 288))
         {
             if (*(int*)(a1 + 444) >= 6)
-                *(_WORD*)(a1 + 204) = 53;
+                *(short*)(a1 + 204) = 53;
             else
-                *(_WORD*)(a1 + 204) = 52;
+                *(short*)(a1 + 204) = 52;
         }
         else if (*(int*)(a1 + 480) && sub_494AA9(*(_BYTE**)(a1 + 480), 0))
         {
             if (*(int*)(a1 + 444) >= 6)
-                *(_WORD*)(a1 + 204) = 139;
+                *(short*)(a1 + 204) = 139;
             else
-                *(_WORD*)(a1 + 204) = 6;
+                *(short*)(a1 + 204) = 6;
         }
         if (*(int*)(a1 + 480) && sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
         {
             if (*(int*)(a1 + 444) >= 6)
-                *(_WORD*)(a1 + 204) = 221;
+                *(short*)(a1 + 204) = 221;
             else
-                *(_WORD*)(a1 + 204) = 222;
+                *(short*)(a1 + 204) = 222;
         }
         else if (*(int*)(a1 + 444) >= 6)
         {
-            *(_WORD*)(a1 + 204) = 25;
+            *(short*)(a1 + 204) = 25;
         }
         else
         {
-            *(_WORD*)(a1 + 204) = 6;
+            *(short*)(a1 + 204) = 6;
         }
         if (*(int*)(a1 + 444) == 5)
         {
@@ -7500,7 +7500,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         if (*(int*)(a1 + 304))
         {
             *(_BYTE*)(a1 + 212) = 0;
-            *(_WORD*)(a1 + 204) = 56;
+            *(short*)(a1 + 204) = 56;
             SchedulerProxy = Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 304));
             if (SchedulerProxy == (struct Concurrency::ISchedulerProxy*)71)
             {
@@ -7531,16 +7531,16 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             if (*(int*)(a1 + 444) >= 8)
             {
                 if (*(int*)(a1 + 444) < 10)
-                    *(_WORD*)(a1 + 204) = 58;
+                    *(short*)(a1 + 204) = 58;
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 57;
+                *(short*)(a1 + 204) = 57;
             }
             if (*(int*)(a1 + 444) == 8)
             {
                 v7 = sub_41CB3B(a1, 1);
-                sub_41EF8A((_WORD*)a1, v7 / 15);
+                sub_41EF8A((short*)a1, v7 / 15);
                 sub_417C15(*(int*)(a1 + 304), *(_BYTE*)(a1 + 242));
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A0C, -1, 100, 100, 0);
             }
@@ -7584,23 +7584,23 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     if (*(int*)(a1 + 444) >= 13)
                     {
                         if (*(int*)(a1 + 444) >= 17)
-                            *(_WORD*)(a1 + 204) = 252;
+                            *(short*)(a1 + 204) = 252;
                         else
-                            *(_WORD*)(a1 + 204) = 251;
+                            *(short*)(a1 + 204) = 251;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 250;
+                        *(short*)(a1 + 204) = 250;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 249;
+                    *(short*)(a1 + 204) = 249;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 24;
+                *(short*)(a1 + 204) = 24;
             }
             if (*(int*)(a1 + 444) == 13)
             {
@@ -7647,18 +7647,18 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     if (*(int*)(a1 + 444) >= 13)
                     {
                         if (*(int*)(a1 + 444) >= 17)
-                            *(_WORD*)(a1 + 204) = 18;
+                            *(short*)(a1 + 204) = 18;
                         else
-                            *(_WORD*)(a1 + 204) = 17;
+                            *(short*)(a1 + 204) = 17;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 16;
+                        *(short*)(a1 + 204) = 16;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 13;
+                    *(short*)(a1 + 204) = 13;
                 }
             }
             else if (*(int*)(a1 + 444) >= 9)
@@ -7666,18 +7666,18 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 if (*(int*)(a1 + 444) >= 13)
                 {
                     if (*(int*)(a1 + 444) >= 17)
-                        *(_WORD*)(a1 + 204) = 27;
+                        *(short*)(a1 + 204) = 27;
                     else
-                        *(_WORD*)(a1 + 204) = 28;
+                        *(short*)(a1 + 204) = 28;
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 26;
+                    *(short*)(a1 + 204) = 26;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 13;
+                *(short*)(a1 + 204) = 13;
             }
             if (*(int*)(a1 + 444) == 21)
             {
@@ -7705,13 +7705,13 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             if (*(int*)(a1 + 444) >= 8)
             {
                 if (*(int*)(a1 + 444) >= 21)
-                    *(_WORD*)(a1 + 204) = 41;
+                    *(short*)(a1 + 204) = 41;
                 else
-                    *(_WORD*)(a1 + 204) = 40;
+                    *(short*)(a1 + 204) = 40;
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 39;
+                *(short*)(a1 + 204) = 39;
             }
         }
         else
@@ -7730,13 +7730,13 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             if (*(int*)(a1 + 444) >= 8)
             {
                 if (*(int*)(a1 + 444) >= 18)
-                    *(_WORD*)(a1 + 204) = 41;
+                    *(short*)(a1 + 204) = 41;
                 else
-                    *(_WORD*)(a1 + 204) = 40;
+                    *(short*)(a1 + 204) = 40;
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 42;
+                *(short*)(a1 + 204) = 42;
             }
         }
         else
@@ -7779,7 +7779,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             }
             if (!v65)
                 v65 = 1;
-            sub_41EF8A(*(_WORD**)(a1 + 304), v65);
+            sub_41EF8A(*(short**)(a1 + 304), v65);
             *(int*)(a1 + 340) = 0;
             *(int*)(a1 + 344) = 0;
             *(int*)(a1 + 352) = 0;
@@ -7796,18 +7796,18 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 {
                     if (*(int*)(a1 + 444) == 51)
                         *(int*)(a1 + 304) = 0;
-                    *(_WORD*)(a1 + 204) = 57;
+                    *(short*)(a1 + 204) = 57;
                 }
                 else
                 {
                     if (*(int*)(a1 + 444) == 46)
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A24, -1, 100, 100, 0);
-                    *(_WORD*)(a1 + 204) = 56;
+                    *(short*)(a1 + 204) = 56;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 5 % 3 + 53;
+                *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 5 % 3 + 53;
                 if ((*(int*)(a1 + 444) - 1) % 15 == 5)
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A5C, -1, 100, 100, 0);
             }
@@ -7856,36 +7856,36 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                 if (*(int*)(a1 + 444) < 57)
                                 {
                                     *(_BYTE*)(a1 + 212) = 0;
-                                    *(_WORD*)(a1 + 204) = 30;
+                                    *(short*)(a1 + 204) = 30;
                                 }
                             }
                             else
                             {
                                 *(_BYTE*)(a1 + 212) = 0;
-                                *(_WORD*)(a1 + 204) = 31;
+                                *(short*)(a1 + 204) = 31;
                             }
                         }
                         else
                         {
                             *(_BYTE*)(a1 + 212) = 0;
-                            *(_WORD*)(a1 + 204) = 30;
+                            *(short*)(a1 + 204) = 30;
                         }
                     }
                     else
                     {
                         *(_BYTE*)(a1 + 212) = 1;
-                        *(_WORD*)(a1 + 204) = 11;
+                        *(short*)(a1 + 204) = 11;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 30;
+                    *(short*)(a1 + 204) = 30;
                 }
             }
             else
             {
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = 31;
+                *(short*)(a1 + 204) = 31;
             }
             if (*(int*)(a1 + 444) >= 81)
             {
@@ -7911,39 +7911,39 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                 if (*(int*)(a1 + 444) >= 50)
                                 {
                                     *(_BYTE*)(a1 + 212) = 0;
-                                    *(_WORD*)(a1 + 204) = 6;
+                                    *(short*)(a1 + 204) = 6;
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 13;
+                                    *(short*)(a1 + 204) = 13;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 13;
+                                *(short*)(a1 + 204) = 13;
                                 if (*(int*)(a1 + 436) == 1 && *(int*)(a1 + 444) % 6 <= 2)
-                                    *(_WORD*)(a1 + 204) = 14;
+                                    *(short*)(a1 + 204) = 14;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 12;
+                            *(short*)(a1 + 204) = 12;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 11;
+                        *(short*)(a1 + 204) = 11;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 10;
+                    *(short*)(a1 + 204) = 10;
                 }
             }
             else
             {
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = 31;
+                *(short*)(a1 + 204) = 31;
             }
             if (*(int*)(a1 + 444) == 15)
             {
@@ -7985,25 +7985,25 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 if (*(int*)(a1 + 444) == 8)
                 {
                     *(_BYTE*)(a1 + 212) = 1;
-                    *(_WORD*)(a1 + 204) = 17;
+                    *(short*)(a1 + 204) = 17;
                     *(int*)(a1 + 392) = 1;
                     *(int*)(a1 + 348) = -380;
                     *(int*)(a1 + 360) = 20;
                 }
                 else if (*(int*)(a1 + 436))
                 {
-                    *(_WORD*)(a1 + 204) = 5;
+                    *(short*)(a1 + 204) = 5;
                     *(int*)(a1 + 304) = 0;
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 17;
+                    *(short*)(a1 + 204) = 17;
                 }
             }
             else
             {
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = 31;
+                *(short*)(a1 + 204) = 31;
             }
             break;
         case 3:
@@ -8039,43 +8039,43 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                 {
                                     if (*(int*)(a1 + 444) >= 36)
                                     {
-                                        *(_WORD*)(a1 + 204) = 4;
+                                        *(short*)(a1 + 204) = 4;
                                     }
                                     else
                                     {
                                         *(_BYTE*)(a1 + 212) = 0;
-                                        *(_WORD*)(a1 + 204) = 2;
+                                        *(short*)(a1 + 204) = 2;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 15;
+                                    *(short*)(a1 + 204) = 15;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 16;
+                                *(short*)(a1 + 204) = 16;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 17;
+                            *(short*)(a1 + 204) = 17;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 16;
+                        *(short*)(a1 + 204) = 16;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 15;
+                    *(short*)(a1 + 204) = 15;
                 }
             }
             else
             {
                 *(_BYTE*)(a1 + 212) = 1;
-                *(_WORD*)(a1 + 204) = 14;
+                *(short*)(a1 + 204) = 14;
             }
             if (*(int*)(a1 + 444) == 1)
                 *(int*)(a1 + 424) = *(int*)(a1 + 424) == 0;
@@ -8120,7 +8120,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                         {
                             v60 = v63 - 1200 * ((*(int*)(a1 + 424) == 0) - *(int*)(a1 + 424));
                             *(int*)(a1 + 424) = *(int*)(a1 + 424) == 0;
-                            *(_WORD*)(a1 + 204) = 197;
+                            *(short*)(a1 + 204) = 197;
                         }
                     }
                     else
@@ -8128,7 +8128,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                         v60 = 200 * ((*(int*)(a1 + 424) == 0) - *(int*)(a1 + 424)) + v63;
                         v61 = v64 - 1300;
                         *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) + 1;
-                        *(_WORD*)(a1 + 204) = 199;
+                        *(short*)(a1 + 204) = 199;
                     }
                 }
                 else
@@ -8136,13 +8136,13 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     v60 = 1200 * ((*(int*)(a1 + 424) == 0) - *(int*)(a1 + 424)) + v63;
                     v61 = v64 - 1300;
                     *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) - 1;
-                    *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 5 % 3;
-                    if (*(_WORD*)(a1 + 204))
-                        *(_WORD*)(a1 + 204) = 197;
+                    *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 5 % 3;
+                    if (*(short*)(a1 + 204))
+                        *(short*)(a1 + 204) = 197;
                     else
-                        *(_WORD*)(a1 + 204) = 198;
+                        *(short*)(a1 + 204) = 198;
                     if ((*(int*)(a1 + 444) - 1) % 15 == 5)
-                        sub_41261C((_WORD*)a1, 3 * *(unsigned __int16*)(a1 + 242) / 4, 0, 1); //减血函数
+                        sub_41261C((short*)a1, 3 * *(unsigned __int16*)(a1 + 242) / 4, 0, 1); //减血函数
                 }
                 *(int*)(a1 + 372) = v60 - *(int*)(a1 + 328);
                 *(int*)(a1 + 340) = 0;
@@ -8178,13 +8178,13 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     if (*(int*)(a1 + 444) >= 5)
                     {
                         if (*(int*)(a1 + 444) >= 20)
-                            *(_WORD*)(a1 + 204) = 17;
+                            *(short*)(a1 + 204) = 17;
                         else
-                            *(_WORD*)(a1 + 204) = 16;
+                            *(short*)(a1 + 204) = 16;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 15;
+                        *(short*)(a1 + 204) = 15;
                     }
                     if (*(int*)(a1 + 444) == 28)
                     {
@@ -8198,14 +8198,14 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                         v53 = *(unsigned __int16*)(a1 + 242) / 3;
                         if (!v53)
                             v53 = 1;
-                        sub_41261C((_WORD*)a1, v53, *(int*)(a1 + 304), 1); //减血函数
+                        sub_41261C((short*)a1, v53, *(int*)(a1 + 304), 1); //减血函数
                     }
                     if (*(int*)(a1 + 444) == 24)
                     {
                         v52 = 2 * *(unsigned __int16*)(a1 + 242) / 3;
                         if (!v52)
                             v52 = 1;
-                        sub_41261C((_WORD*)a1, v52, *(int*)(a1 + 304), 1); //减血函数
+                        sub_41261C((short*)a1, v52, *(int*)(a1 + 304), 1); //减血函数
                     }
                     break;
                 case 2:
@@ -8223,7 +8223,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                         (int*)byte_4B9B10,
                                         *(int*)(a1 + 328) / 100,
                                         *(int*)(a1 + 332) / 100);
-                                sub_41261C((_WORD*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
+                                sub_41261C((short*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
                             }
                             else if (*(int*)(a1 + 436) == 2)
                             {
@@ -8232,7 +8232,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                 *(int*)(a1 + 348) = -200;
                                 *(int*)(a1 + 360) = 20;
                                 *(int*)(a1 + 372) = 100 * (*(int*)(a1 + 424) - (*(int*)(a1 + 424) == 0));
-                                *(_WORD*)(a1 + 204) = 18;
+                                *(short*)(a1 + 204) = 18;
                             }
                         }
                         else
@@ -8241,9 +8241,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                             *(_BYTE*)(a1 + 212) = 0;
                             *(int*)(a1 + 424) = sub_425D70(*(int**)(a1 + 304));
                             if (*(int*)(a1 + 444) >= 24)
-                                *(_WORD*)(a1 + 204) = 33;
+                                *(short*)(a1 + 204) = 33;
                             else
-                                *(_WORD*)(a1 + 204) = 22;
+                                *(short*)(a1 + 204) = 22;
                             if (sub_426010(*(int**)(a1 + 304)) == 1)
                             {
                                 sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
@@ -8254,7 +8254,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     else
                     {
                         *(_BYTE*)(a1 + 212) = 0;
-                        *(_WORD*)(a1 + 204) = 14;
+                        *(short*)(a1 + 204) = 14;
                         *(int*)(a1 + 436) = 0;
                     }
                     break;
@@ -8266,18 +8266,18 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                         if (*(int*)(a1 + 444) >= 12)
                         {
                             if (*(int*)(a1 + 444) >= 24)
-                                *(_WORD*)(a1 + 204) = 17;
+                                *(short*)(a1 + 204) = 17;
                             else
-                                *(_WORD*)(a1 + 204) = 19;
+                                *(short*)(a1 + 204) = 19;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 71;
+                            *(short*)(a1 + 204) = 71;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 13;
+                        *(short*)(a1 + 204) = 13;
                     }
                     if (*(int*)(a1 + 444) == 8)
                     {
@@ -8293,7 +8293,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                 *(int*)(a1 + 328) / 100,
                                 *(int*)(a1 + 332) / 100);
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
-                        sub_41261C((_WORD*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
+                        sub_41261C((short*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
                     }
                     if (*(int*)(a1 + 444) >= 40)
                     {
@@ -8339,37 +8339,37 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                         if (*(int*)(a1 + 444) == 49)
                                         {
                                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A20, -1, 100, 100, 0);
-                                            sub_41261C((_WORD*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
+                                            sub_41261C((short*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
                                         }
                                         v56 = v57;
                                         v54 = -100 * sub_446497((int*)byte_4B9B10, v55 / 100, *(int*)(a1 + 332) / 100);
                                         *(int*)(a1 + 392) = v54 > v57;
-                                        *(_WORD*)(a1 + 204) = 33;
+                                        *(short*)(a1 + 204) = 33;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 22;
+                                    *(short*)(a1 + 204) = 22;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 32;
+                                *(short*)(a1 + 204) = 32;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 20;
+                            *(short*)(a1 + 204) = 20;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 19;
+                        *(short*)(a1 + 204) = 19;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 21;
+                    *(short*)(a1 + 204) = 21;
                 }
                 if (*(int*)(a1 + 444) > 100)
                 {
@@ -8414,7 +8414,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             }
             if (!v51)
                 v51 = 1;
-            sub_41EF8A(*(_WORD**)(a1 + 304), v51);
+            sub_41EF8A(*(short**)(a1 + 304), v51);
             *(int*)(a1 + 372) = 0;
             *(int*)(a1 + 376) = 0;
             *(int*)(a1 + 340) = 0;
@@ -8446,21 +8446,21 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                         if (*(int*)(a1 + 444) >= 40)
                         {
                             *(_BYTE*)(a1 + 212) = 0;
-                            *(_WORD*)(a1 + 204) = 6;
+                            *(short*)(a1 + 204) = 6;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 17;
+                            *(short*)(a1 + 204) = 17;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 16;
+                        *(short*)(a1 + 204) = 16;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 15;
+                    *(short*)(a1 + 204) = 15;
                 }
                 if (*(int*)(a1 + 444) >= 56)
                 {
@@ -8497,13 +8497,13 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 if (*(int*)(a1 + 444) >= 4)
                 {
                     if (*(int*)(a1 + 444) >= 20)
-                        *(_WORD*)(a1 + 204) = 33;
+                        *(short*)(a1 + 204) = 33;
                     else
-                        *(_WORD*)(a1 + 204) = 53;
+                        *(short*)(a1 + 204) = 53;
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 52;
+                    *(short*)(a1 + 204) = 52;
                 }
                 break;
             case 3:
@@ -8533,43 +8533,43 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                         if (*(int*)(a1 + 444) >= 36)
                                         {
                                             *(_BYTE*)(a1 + 212) = 0;
-                                            *(_WORD*)(a1 + 204) = 20;
+                                            *(short*)(a1 + 204) = 20;
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 18;
+                                            *(short*)(a1 + 204) = 18;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 19;
+                                        *(short*)(a1 + 204) = 19;
                                     }
                                 }
                                 else
                                 {
                                     *(_BYTE*)(a1 + 212) = 1;
-                                    *(_WORD*)(a1 + 204) = 18;
+                                    *(short*)(a1 + 204) = 18;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 20;
+                                *(short*)(a1 + 204) = 20;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 21;
+                            *(short*)(a1 + 204) = 21;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 30;
+                        *(short*)(a1 + 204) = 30;
                     }
                 }
                 else
                 {
                     *(_BYTE*)(a1 + 212) = 0;
-                    *(_WORD*)(a1 + 204) = 31;
+                    *(short*)(a1 + 204) = 31;
                 }
                 if (*(int*)(a1 + 444) == 16)
                 {
@@ -8609,36 +8609,36 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                             if (*(int*)(a1 + 444) >= 54)
                             {
                                 *(_BYTE*)(a1 + 212) = 0;
-                                *(_WORD*)(a1 + 204) = 6;
+                                *(short*)(a1 + 204) = 6;
                             }
                             else
                             {
                                 *(_BYTE*)(a1 + 212) = 1;
-                                *(_WORD*)(a1 + 204) = 13;
+                                *(short*)(a1 + 204) = 13;
                             }
                         }
                         else
                         {
                             *(_BYTE*)(a1 + 212) = 1;
-                            *(_WORD*)(a1 + 204) = 12;
+                            *(short*)(a1 + 204) = 12;
                         }
                     }
                     else
                     {
                         *(_BYTE*)(a1 + 212) = 1;
-                        *(_WORD*)(a1 + 204) = 11;
+                        *(short*)(a1 + 204) = 11;
                     }
                 }
                 else
                 {
                     *(_BYTE*)(a1 + 212) = 0;
-                    *(_WORD*)(a1 + 204) = 30;
+                    *(short*)(a1 + 204) = 30;
                 }
             }
             else
             {
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = 31;
+                *(short*)(a1 + 204) = 31;
             }
             if (*(int*)(a1 + 444) >= 64)
             {
@@ -8683,8 +8683,8 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                 *(int*)(a1 + 348) = 0;
                                 *(int*)(a1 + 360) = 0;
                                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
-                                *(_WORD*)(a1 + 204) = 17;
-                                sub_41261C((_WORD*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
+                                *(short*)(a1 + 204) = 17;
+                                sub_41261C((short*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
                             }
                             else if (*(int*)(a1 + 444) >= 35)
                             {
@@ -8696,24 +8696,24 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 18;
+                                    *(short*)(a1 + 204) = 18;
                                 }
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 18;
+                            *(short*)(a1 + 204) = 18;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 18;
+                        *(short*)(a1 + 204) = 18;
                         *(int*)(a1 + 348) = 0;
                     }
                     break;
                 case 2:
                     *(_BYTE*)(a1 + 212) = 0;
-                    *(_WORD*)(a1 + 204) = 18;
+                    *(short*)(a1 + 204) = 18;
                     if (*(int*)(a1 + 444) == 1)
                     {
                         *(int*)(a1 + 436) = 0;
@@ -8726,14 +8726,14 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                             if (sub_426010(*(int**)(a1 + 304)) != 1 || *(int*)(a1 + 436))
                             {
                                 if (*(int*)(a1 + 436) == 1)
-                                    *(_WORD*)(a1 + 204) = 17;
+                                    *(short*)(a1 + 204) = 17;
                             }
                             else
                             {
                                 sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
-                                sub_41261C((_WORD*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
+                                sub_41261C((short*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
                                 *(int*)(a1 + 436) = 1;
-                                *(_WORD*)(a1 + 204) = 17;
+                                *(short*)(a1 + 204) = 17;
                                 *(int*)(a1 + 336) = sub_446497(
                                     (int*)byte_4B9B10,
                                     *(int*)(a1 + 328) / 100,
@@ -8771,17 +8771,17 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                             if (*(int*)(a1 + 444) >= 16)
                             {
                                 if (*(int*)(a1 + 444) > 24)
-                                    *(_WORD*)(a1 + 204) = 19;
+                                    *(short*)(a1 + 204) = 19;
                             }
                             else
                             {
                                 *(int*)(a1 + 392) = 1;
-                                *(_WORD*)(a1 + 204) = 17;
+                                *(short*)(a1 + 204) = 17;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 16;
+                            *(short*)(a1 + 204) = 16;
                         }
                         if (*(int*)(a1 + 444) == 16)
                         {
@@ -8811,21 +8811,21 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     if (*(int*)(a1 + 444) >= 24)
                     {
                         if (*(int*)(a1 + 444) < 54)
-                            *(_WORD*)(a1 + 204) = 33;
+                            *(short*)(a1 + 204) = 33;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 17;
+                        *(short*)(a1 + 204) = 17;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 16;
+                    *(short*)(a1 + 204) = 16;
                 }
                 if (*(int*)(a1 + 444) == 24)
                 {
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A20, -1, 100, 100, 0);
-                    sub_41261C((_WORD*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
+                    sub_41261C((short*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
                 }
                 else if (*(int*)(a1 + 444) >= 54)
                 {
@@ -8846,10 +8846,10 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         if (*(int*)(a1 + 444) == 1)
         {
             *(int*)(a1 + 436) = 0;
-            *(_WORD*)(a1 + 204) = 49;
+            *(short*)(a1 + 204) = 49;
             *(_BYTE*)(a1 + 248) = 2;
             *(_BYTE*)(a1 + 253) = 1;
-            sub_41F169((_WORD*)a1, 2 * *(unsigned __int16*)(a1 + 242));
+            sub_41F169((short*)a1, 2 * *(unsigned __int16*)(a1 + 242));
             *(_BYTE*)(a1 + 213) = 5;
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
@@ -8867,9 +8867,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 436) = 2;
             *(_BYTE*)(a1 + 257) = 2;
             *(int*)(a1 + 340) = -*(int*)(a1 + 372) / 2;
-            *(_WORD*)(a1 + 204) = 28;
+            *(short*)(a1 + 204) = 28;
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
-            sub_41261C((_WORD*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 316), 1); //减血函数
+            sub_41261C((short*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 316), 1); //减血函数
             if (*(int*)(a1 + 392))
             {
                 *(int*)(a1 + 432) = 29;
@@ -8885,9 +8885,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
     case 0xE:
         *(_BYTE*)(a1 + 212) = 0;
         if (sub_425FF0((int*)a1))
-            *(_WORD*)(a1 + 204) = 158;
+            *(short*)(a1 + 204) = 158;
         else
-            *(_WORD*)(a1 + 204) = 13;
+            *(short*)(a1 + 204) = 13;
         if (*(int*)(a1 + 444) > 15)
             *(int*)(a1 + 432) = 3;
         if (*(int*)(a1 + 444) <= 1)
@@ -8920,18 +8920,18 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 372) = 0;
         }
         if (*(int*)(a1 + 444) >= 10)
-            *(_WORD*)(a1 + 204) = 15;
+            *(short*)(a1 + 204) = 15;
         else
-            *(_WORD*)(a1 + 204) = 14;
+            *(short*)(a1 + 204) = 14;
         if (*(int*)(a1 + 444) > 120)
             *(int*)(a1 + 432) = 3;
         return;
     case 0x10:
         *(_BYTE*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) >= 5)
-            *(_WORD*)(a1 + 204) = 16;
+            *(short*)(a1 + 204) = 16;
         else
-            *(_WORD*)(a1 + 204) = 13;
+            *(short*)(a1 + 204) = 13;
         if (*(int*)(a1 + 444) <= 1)
         {
             if (*(int*)(a1 + 436))
@@ -8956,24 +8956,24 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         {
         case 0x17:
             *(_BYTE*)(a1 + 248) = 14;
-            *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 8 % 2 + 174;
+            *(short*)(a1 + 204) = *(int*)(a1 + 444) / 8 % 2 + 174;
             break;
         case 0x18:
             *(_BYTE*)(a1 + 248) = 15;
-            *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 2 + 176;
+            *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 2 + 176;
             break;
         case 0x19:
             *(_BYTE*)(a1 + 248) = 16;
-            *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 3 + 178;
+            *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 3 + 178;
             break;
         case 0x11:
             *(_BYTE*)(a1 + 248) = 4;
-            *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 2 + 72;
+            *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 2 + 72;
             break;
         }
         *(_BYTE*)(a1 + 255) = 0;
         *(_BYTE*)(a1 + 253) = 1;
-        sub_41F169((_WORD*)a1, 30);
+        sub_41F169((short*)a1, 30);
         *(_BYTE*)(a1 + 213) = -1;
         if (*(int*)(a1 + 444) <= 1)
         {
@@ -8995,16 +8995,16 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         switch (*(int*)(a1 + 428))
         {
         case 0x12:
-            *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 8 % 2 + 174;
+            *(short*)(a1 + 204) = *(int*)(a1 + 444) / 8 % 2 + 174;
             break;
         case 0x14:
-            *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 2 + 176;
+            *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 2 + 176;
             break;
         case 0x15:
-            *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 3 + 178;
+            *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 3 + 178;
             break;
         case 0x16:
-            *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 2 + 185;
+            *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 2 + 185;
             break;
         }
         return;
@@ -9018,9 +9018,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 424) = *(int*)(a1 + 424) == 0;
         *(_BYTE*)(a1 + 212) = 0;
         if (*(int*)(a1 + 348) >= 0)
-            *(_WORD*)(a1 + 204) = 19;
+            *(short*)(a1 + 204) = 19;
         else
-            *(_WORD*)(a1 + 204) = 16;
+            *(short*)(a1 + 204) = 16;
         return;
     case 0x25:
         *(_BYTE*)(a1 + 212) = 0;
@@ -9044,26 +9044,26 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         {
             if (*(int*)(a1 + 444) >= 21)
             {
-                *(_WORD*)(a1 + 204) = 19;
+                *(short*)(a1 + 204) = 19;
             }
             else if ((!*(int*)(a1 + 424) || *(int*)(a1 + 372) >= 0)
                 && (*(int*)(a1 + 424) || *(int*)(a1 + 372) <= 0))
             {
-                *(_WORD*)(a1 + 204) = 28;
+                *(short*)(a1 + 204) = 28;
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 17;
+                *(short*)(a1 + 204) = 17;
             }
         }
         else if ((!*(int*)(a1 + 424) || *(int*)(a1 + 372) >= 0)
             && (*(int*)(a1 + 424) || *(int*)(a1 + 372) <= 0))
         {
-            *(_WORD*)(a1 + 204) = 26;
+            *(short*)(a1 + 204) = 26;
         }
         else
         {
-            *(_WORD*)(a1 + 204) = 16;
+            *(short*)(a1 + 204) = 16;
         }
         return;
     case 0x22:
@@ -9088,9 +9088,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 360) = 40;
         }
         if ((!*(int*)(a1 + 424) || *(int*)(a1 + 372) >= 0) && (*(int*)(a1 + 424) || *(int*)(a1 + 372) <= 0))
-            *(_WORD*)(a1 + 204) = 26;
+            *(short*)(a1 + 204) = 26;
         else
-            *(_WORD*)(a1 + 204) = 16;
+            *(short*)(a1 + 204) = 16;
         return;
     case 0x24:
         if (*(int*)(a1 + 444) <= 1)
@@ -9110,9 +9110,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         }
         *(_BYTE*)(a1 + 212) = 0;
         if ((!*(int*)(a1 + 424) || *(int*)(a1 + 372) >= 0) && (*(int*)(a1 + 424) || *(int*)(a1 + 372) <= 0))
-            *(_WORD*)(a1 + 204) = 26;
+            *(short*)(a1 + 204) = 26;
         else
-            *(_WORD*)(a1 + 204) = 16;
+            *(short*)(a1 + 204) = 16;
         return;
     case 0x26:
         if (*(int*)(a1 + 444) == 1)
@@ -9122,7 +9122,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 356) = 0;
         }
         *(_BYTE*)(a1 + 212) = 0;
-        *(_WORD*)(a1 + 204) = 16;
+        *(short*)(a1 + 204) = 16;
         return;
     case 0x23:
         *(_BYTE*)(a1 + 212) = 0;
@@ -9143,9 +9143,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 360) = 30;
         }
         if ((!*(int*)(a1 + 424) || *(int*)(a1 + 372) >= 0) && (*(int*)(a1 + 424) || *(int*)(a1 + 372) <= 0))
-            *(_WORD*)(a1 + 204) = 26;
+            *(short*)(a1 + 204) = 26;
         else
-            *(_WORD*)(a1 + 204) = 16;
+            *(short*)(a1 + 204) = 16;
         return;
     case 0x1D:
         if (*(int*)(a1 + 444) == 1)
@@ -9157,9 +9157,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         *(int*)(a1 + 380) = 0;
         *(_BYTE*)(a1 + 212) = 0;
         if ((!*(int*)(a1 + 424) || *(int*)(a1 + 372) >= 0) && (*(int*)(a1 + 424) || *(int*)(a1 + 372) <= 0))
-            *(_WORD*)(a1 + 204) = 26;
+            *(short*)(a1 + 204) = 26;
         else
-            *(_WORD*)(a1 + 204) = 16;
+            *(short*)(a1 + 204) = 16;
         return;
     case 0x27:
         *(_BYTE*)(a1 + 212) = 0;
@@ -9183,9 +9183,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 440) = 0;
         }
         if ((!*(int*)(a1 + 424) || *(int*)(a1 + 372) >= 0) && (*(int*)(a1 + 424) || *(int*)(a1 + 372) <= 0))
-            *(_WORD*)(a1 + 204) = 26;
+            *(short*)(a1 + 204) = 26;
         else
-            *(_WORD*)(a1 + 204) = 16;
+            *(short*)(a1 + 204) = 16;
         if (*(int*)(a1 + 440))
         {
             if (*(int*)(a1 + 440) + 60 == *(int*)(a1 + 444))
@@ -9250,9 +9250,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         }
         *(_BYTE*)(a1 + 212) = 0;
         if ((!*(int*)(a1 + 424) || *(int*)(a1 + 372) >= 0) && (*(int*)(a1 + 424) || *(int*)(a1 + 372) <= 0))
-            *(_WORD*)(a1 + 204) = 26;
+            *(short*)(a1 + 204) = 26;
         else
-            *(_WORD*)(a1 + 204) = 16;
+            *(short*)(a1 + 204) = 16;
         return;
     case 0x21:
         *(_BYTE*)(a1 + 212) = 0;
@@ -9272,9 +9272,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 360) = 40;
         }
         if ((!*(int*)(a1 + 424) || *(int*)(a1 + 372) >= 0) && (*(int*)(a1 + 424) || *(int*)(a1 + 372) <= 0))
-            *(_WORD*)(a1 + 204) = 26;
+            *(short*)(a1 + 204) = 26;
         else
-            *(_WORD*)(a1 + 204) = 16;
+            *(short*)(a1 + 204) = 16;
         return;
     case 0x28:
         if (*(int*)(a1 + 444) == 1)
@@ -9287,9 +9287,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         }
         *(_BYTE*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) >= 8)
-            *(_WORD*)(a1 + 204) = 17;
+            *(short*)(a1 + 204) = 17;
         else
-            *(_WORD*)(a1 + 204) = 16;
+            *(short*)(a1 + 204) = 16;
         *(int*)(a1 + 348) = 800;
         return;
     case 0x2A:
@@ -9307,19 +9307,19 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             switch (v44)
             {
             case 1:
-                *(_WORD*)(a1 + 204) = 22;
+                *(short*)(a1 + 204) = 22;
                 break;
             case 2:
-                *(_WORD*)(a1 + 204) = 21;
+                *(short*)(a1 + 204) = 21;
                 break;
             case 3:
-                *(_WORD*)(a1 + 204) = 20;
+                *(short*)(a1 + 204) = 20;
                 break;
             }
         }
         else
         {
-            *(_WORD*)(a1 + 204) = 23;
+            *(short*)(a1 + 204) = 23;
         }
         if (*(int*)(a1 + 436))
             *(int*)(a1 + 340) = 120;
@@ -9336,7 +9336,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         return;
     case 0x2C:
         *(_BYTE*)(a1 + 212) = 0;
-        *(_WORD*)(a1 + 204) = 18;
+        *(short*)(a1 + 204) = 18;
         if (*(_BYTE*)(a1 + 470))
             --* (_BYTE*)(a1 + 470);
         if (!*(_BYTE*)(a1 + 470))
@@ -9348,7 +9348,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         return;
     case 0x2D:
         *(_BYTE*)(a1 + 212) = 0;
-        *(_WORD*)(a1 + 204) = 27;
+        *(short*)(a1 + 204) = 27;
         if (*(_BYTE*)(a1 + 470))
             --* (_BYTE*)(a1 + 470);
         if (!*(_BYTE*)(a1 + 470))
@@ -9360,7 +9360,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         return;
     case 0x2E:
         *(_BYTE*)(a1 + 212) = 0;
-        *(_WORD*)(a1 + 204) = 17;
+        *(short*)(a1 + 204) = 17;
         if (*(_BYTE*)(a1 + 470))
             --* (_BYTE*)(a1 + 470);
         if (*(_BYTE*)(a1 + 470))
@@ -9373,7 +9373,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         }
         else
         {
-            if (*(_WORD*)(a1 + 214))
+            if (*(short*)(a1 + 214))
                 *(int*)(a1 + 432) = 48;
             else
                 *(int*)(a1 + 432) = 78;
@@ -9382,7 +9382,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         return;
     case 0x2F:
         *(_BYTE*)(a1 + 212) = 0;
-        *(_WORD*)(a1 + 204) = 28;
+        *(short*)(a1 + 204) = 28;
         if (*(_BYTE*)(a1 + 470))
             --* (_BYTE*)(a1 + 470);
         if (*(_BYTE*)(a1 + 470))
@@ -9395,7 +9395,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         }
         else
         {
-            if (*(_WORD*)(a1 + 214))
+            if (*(short*)(a1 + 214))
                 *(int*)(a1 + 432) = 48;
             else
                 *(int*)(a1 + 432) = 79;
@@ -9421,13 +9421,13 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             if (*(int*)(a1 + 444) >= 4)
             {
                 if (*(int*)(a1 + 444) >= 12)
-                    *(_WORD*)(a1 + 204) = 258;
+                    *(short*)(a1 + 204) = 258;
                 else
-                    *(_WORD*)(a1 + 204) = 259;
+                    *(short*)(a1 + 204) = 259;
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 6;
+                *(short*)(a1 + 204) = 6;
             }
             if (*(int*)(a1 + 444) == 12)
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
@@ -9467,9 +9467,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             }
             *(_BYTE*)(a1 + 212) = 0;
             if (*(int*)(a1 + 444) >= 12)
-                *(_WORD*)(a1 + 204) = 13;
+                *(short*)(a1 + 204) = 13;
             else
-                *(_WORD*)(a1 + 204) = 14;
+                *(short*)(a1 + 204) = 14;
             if (*(int*)(a1 + 444) >= 20
                 || !*(int*)(a1 + 304)
                 || Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 304)) != (struct Concurrency::ISchedulerProxy*)73)
@@ -9481,7 +9481,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             return;
         case '1':
             *(_BYTE*)(a1 + 212) = 0;
-            *(_WORD*)(a1 + 204) = 24;
+            *(short*)(a1 + 204) = 24;
             *(int*)(a1 + 352) = 0;
             *(int*)(a1 + 356) = 0;
             *(int*)(a1 + 340) = 350 * *(int*)(a1 + 436);
@@ -9530,7 +9530,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 *(int*)(a1 + 376) = sub_4260B0(*(int**)(a1 + 312)) - *(int*)(a1 + 332);
             }
             *(_BYTE*)(a1 + 212) = 0;
-            *(_WORD*)(a1 + 204) = 29;
+            *(short*)(a1 + 204) = 29;
             if (*(int*)(a1 + 444) > 1
                 && (!*(int*)(a1 + 312)
                     || Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 312)) != (struct Concurrency::ISchedulerProxy*)82))
@@ -9543,12 +9543,12 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             if (*(_BYTE*)(a1 + 188) == 1)
             {
                 *(_BYTE*)(a1 + 212) = 1;
-                *(_WORD*)(a1 + 204) = 52;
+                *(short*)(a1 + 204) = 52;
             }
             else
             {
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = 29;
+                *(short*)(a1 + 204) = 29;
             }
             if (*(int*)(a1 + 304))
             {
@@ -9573,13 +9573,13 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             if (*(int*)(a1 + 304))
             {
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = 14;
+                *(short*)(a1 + 204) = 14;
                 v40 = sub_426090(*(int**)(a1 + 304));
                 v39 = sub_425D70(*(int**)(a1 + 304));
                 v38 = 1600 * (v39 - (v39 == 0)) + v40;
                 if (sub_425E70(*(_BYTE**)(a1 + 304)) == 1)
                 {
-                    *(_WORD*)(a1 + 204) = 13;
+                    *(short*)(a1 + 204) = 13;
                     v38 = 1200 * (v39 - (v39 == 0)) + v40;
                     v37 = sub_4260D0(*(int**)(a1 + 304));
                     v36 = v37 - 1300;
@@ -9605,9 +9605,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 v33 = 1600 * ((__PAIR64__(v10, v10) - 1) >> 32) + v35;
                 *(_BYTE*)(a1 + 212) = 0;
                 if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 304)) == (struct Concurrency::ISchedulerProxy*)56)
-                    *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 10 % 2 + 34;
+                    *(short*)(a1 + 204) = *(int*)(a1 + 444) / 10 % 2 + 34;
                 else
-                    *(_WORD*)(a1 + 204) = 34;
+                    *(short*)(a1 + 204) = 34;
                 *(int*)(a1 + 424) = v34;
                 if (*(int*)(a1 + 444) > 120)
                 {
@@ -9627,7 +9627,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             {
             case 0x40:
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = 6;
+                *(short*)(a1 + 204) = 6;
                 if (*(int*)(a1 + 444) > 8)
                 {
                     *(int*)(a1 + 432) = *(_BYTE*)(a1 + 237) ? 10 : 3;
@@ -9661,7 +9661,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             case 0x43:
             case 0x44:
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = 29;
+                *(short*)(a1 + 204) = 29;
                 *(int*)(a1 + 288) = 0;
                 *(int*)(a1 + 304) = 0;
                 if (*(int*)(a1 + 444) == 1)
@@ -9675,7 +9675,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             case 0x41:
             case 0x42:
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = 29;
+                *(short*)(a1 + 204) = 29;
                 *(int*)(a1 + 288) = 0;
                 *(int*)(a1 + 304) = 0;
                 if (*(int*)(a1 + 444) == 1)
@@ -9688,7 +9688,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 break;
             case 0x4B:
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 20 % 2 + 59;
+                *(short*)(a1 + 204) = *(int*)(a1 + 444) / 20 % 2 + 59;
                 if (*(int*)(a1 + 444) > 120)
                 {
                     *(int*)(a1 + 432) = 3;
@@ -9709,7 +9709,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     *(int*)(a1 + 304) = 0;
                 }
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = 16;
+                *(short*)(a1 + 204) = 16;
                 break;
             case 0x1A:
                 *(_BYTE*)(a1 + 212) = 0;
@@ -9718,7 +9718,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 if ((*(int*)(a1 + 444) >= 20 || *(int*)(a1 + 440))
                     && (*(int*)(a1 + 444) >= 12 || !*(int*)(a1 + 440)))
                 {
-                    *(_WORD*)(a1 + 204) = 24;
+                    *(short*)(a1 + 204) = 24;
                     *(int*)(a1 + 340) = 0;
                     *(int*)(a1 + 344) = 0;
                 }
@@ -9731,16 +9731,16 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                         if ((*(int*)(a1 + 424) || *(int*)(a1 + 372) >= 0)
                             && (!*(int*)(a1 + 424) || *(int*)(a1 + 372) <= 0))
                         {
-                            *(_WORD*)(a1 + 204) = 77 - *(int*)(a1 + 444) / 4 % 4;
+                            *(short*)(a1 + 204) = 77 - *(int*)(a1 + 444) / 4 % 4;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 74;
+                            *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 74;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 24;
+                        *(short*)(a1 + 204) = 24;
                     }
                 }
                 if (*(int*)(a1 + 444) >= 24 && !*(int*)(a1 + 440) || *(int*)(a1 + 444) >= 14 && *(int*)(a1 + 440))
@@ -9750,9 +9750,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             case 0x4F:
                 *(_BYTE*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 428) == 78)
-                    *(_WORD*)(a1 + 204) = 18 - *(int*)(a1 + 444) / 10 % 2;
+                    *(short*)(a1 + 204) = 18 - *(int*)(a1 + 444) / 10 % 2;
                 else
-                    *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 10 % 2 + 27;
+                    *(short*)(a1 + 204) = *(int*)(a1 + 444) / 10 % 2 + 27;
                 *(_BYTE*)(a1 + 176) = *(int*)(a1 + 444) / 5 % 2;
                 if (*(int*)(a1 + 444) == 3)
                 {
@@ -9778,23 +9778,23 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                             if (*(int*)(a1 + 444) >= 15)
                             {
                                 if (*(int*)(a1 + 444) >= 20)
-                                    *(_WORD*)(a1 + 204) = 60;
+                                    *(short*)(a1 + 204) = 60;
                                 else
-                                    *(_WORD*)(a1 + 204) = 9;
+                                    *(short*)(a1 + 204) = 9;
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 8;
+                                *(short*)(a1 + 204) = 8;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 7;
+                            *(short*)(a1 + 204) = 7;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 6;
+                        *(short*)(a1 + 204) = 6;
                     }
                     if (*(int*)(a1 + 444) == 4)
                     {
@@ -9814,23 +9814,23 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                             if (*(int*)(a1 + 444) >= 12)
                             {
                                 if (*(int*)(a1 + 444) >= 26)
-                                    *(_WORD*)(a1 + 204) = 115;
+                                    *(short*)(a1 + 204) = 115;
                                 else
-                                    *(_WORD*)(a1 + 204) = 19;
+                                    *(short*)(a1 + 204) = 19;
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 18;
+                                *(short*)(a1 + 204) = 18;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 17;
+                            *(short*)(a1 + 204) = 17;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 12;
+                        *(short*)(a1 + 204) = 12;
                     }
                     if (*(int*)(a1 + 444) == 8)
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
@@ -9846,28 +9846,28 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                 if (*(int*)(a1 + 444) >= 22)
                                 {
                                     if (*(int*)(a1 + 444) >= 26)
-                                        *(_WORD*)(a1 + 204) = 115;
+                                        *(short*)(a1 + 204) = 115;
                                     else
-                                        *(_WORD*)(a1 + 204) = 16;
+                                        *(short*)(a1 + 204) = 16;
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 15;
+                                    *(short*)(a1 + 204) = 15;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 14;
+                                *(short*)(a1 + 204) = 14;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 13;
+                            *(short*)(a1 + 204) = 13;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 12;
+                        *(short*)(a1 + 204) = 12;
                     }
                     if (*(int*)(a1 + 444) == 8)
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
@@ -9890,31 +9890,31 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                             if (*(int*)(a1 + 444) >= 25)
                                             {
                                                 *(_BYTE*)(a1 + 212) = 0;
-                                                *(_WORD*)(a1 + 204) = 69;
+                                                *(short*)(a1 + 204) = 69;
                                             }
                                             else
                                             {
-                                                *(_WORD*)(a1 + 204) = 8;
+                                                *(short*)(a1 + 204) = 8;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 7;
+                                            *(short*)(a1 + 204) = 7;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 6;
+                                        *(short*)(a1 + 204) = 6;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 5;
+                                    *(short*)(a1 + 204) = 5;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 4;
+                                *(short*)(a1 + 204) = 4;
                             }
                             if (*(int*)(a1 + 444) == 8)
                                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
@@ -9938,47 +9938,47 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                                         if (*(int*)(a1 + 444) >= 32)
                                                         {
                                                             *(_BYTE*)(a1 + 212) = 0;
-                                                            *(_WORD*)(a1 + 204) = 69;
+                                                            *(short*)(a1 + 204) = 69;
                                                         }
                                                         else
                                                         {
                                                             *(_BYTE*)(a1 + 212) = 0;
-                                                            *(_WORD*)(a1 + 204) = 3;
+                                                            *(short*)(a1 + 204) = 3;
                                                         }
                                                     }
                                                     else
                                                     {
-                                                        *(_WORD*)(a1 + 204) = 11;
+                                                        *(short*)(a1 + 204) = 11;
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    *(_WORD*)(a1 + 204) = 10;
+                                                    *(short*)(a1 + 204) = 10;
                                                 }
                                             }
                                             else
                                             {
-                                                *(_WORD*)(a1 + 204) = 9;
+                                                *(short*)(a1 + 204) = 9;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 8;
+                                            *(short*)(a1 + 204) = 8;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 7;
+                                        *(short*)(a1 + 204) = 7;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 6;
+                                    *(short*)(a1 + 204) = 6;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 5;
+                                *(short*)(a1 + 204) = 5;
                             }
                             if (*(int*)(a1 + 444) == 8)
                                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
@@ -9998,36 +9998,36 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                                 if (*(int*)(a1 + 444) >= 24)
                                                 {
                                                     *(_BYTE*)(a1 + 212) = 0;
-                                                    *(_WORD*)(a1 + 204) = 69;
+                                                    *(short*)(a1 + 204) = 69;
                                                 }
                                                 else
                                                 {
-                                                    *(_WORD*)(a1 + 204) = 5;
+                                                    *(short*)(a1 + 204) = 5;
                                                 }
                                             }
                                             else
                                             {
-                                                *(_WORD*)(a1 + 204) = 3;
+                                                *(short*)(a1 + 204) = 3;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 9;
+                                            *(short*)(a1 + 204) = 9;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 8;
+                                        *(short*)(a1 + 204) = 8;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 7;
+                                    *(short*)(a1 + 204) = 7;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 6;
+                                *(short*)(a1 + 204) = 6;
                             }
                             if (*(int*)(a1 + 444) == 8)
                                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
@@ -10051,46 +10051,46 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                                         if (*(int*)(a1 + 444) >= 38)
                                                         {
                                                             *(_BYTE*)(a1 + 212) = 0;
-                                                            *(_WORD*)(a1 + 204) = 69;
+                                                            *(short*)(a1 + 204) = 69;
                                                         }
                                                         else
                                                         {
-                                                            *(_WORD*)(a1 + 204) = 6;
+                                                            *(short*)(a1 + 204) = 6;
                                                         }
                                                     }
                                                     else
                                                     {
-                                                        *(_WORD*)(a1 + 204) = 7;
+                                                        *(short*)(a1 + 204) = 7;
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    *(_WORD*)(a1 + 204) = 11;
+                                                    *(short*)(a1 + 204) = 11;
                                                 }
                                             }
                                             else
                                             {
-                                                *(_WORD*)(a1 + 204) = 10;
+                                                *(short*)(a1 + 204) = 10;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 9;
+                                            *(short*)(a1 + 204) = 9;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 8;
+                                        *(short*)(a1 + 204) = 8;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 7;
+                                    *(short*)(a1 + 204) = 7;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 6;
+                                *(short*)(a1 + 204) = 6;
                             }
                             if (*(int*)(a1 + 444) == 12)
                                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
@@ -10109,26 +10109,26 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                     if (*(int*)(a1 + 444) >= 25)
                                     {
                                         *(_BYTE*)(a1 + 212) = 0;
-                                        *(_WORD*)(a1 + 204) = 69;
+                                        *(short*)(a1 + 204) = 69;
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 4;
+                                        *(short*)(a1 + 204) = 4;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 6;
+                                    *(short*)(a1 + 204) = 6;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 5;
+                                *(short*)(a1 + 204) = 5;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 4;
+                            *(short*)(a1 + 204) = 4;
                         }
                         if (*(int*)(a1 + 444) == 8)
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
@@ -10144,7 +10144,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                         if (*(int*)(a1 + 444) == 1)
                         {
                             *(_BYTE*)(a1 + 212) = 0;
-                            *(_WORD*)(a1 + 204) = 27;
+                            *(short*)(a1 + 204) = 27;
                             *(_BYTE*)(a1 + 177) = 1;
                             *(_BYTE*)(a1 + 176) = 1;
                             *(_BYTE*)(a1 + 556) = 0;
@@ -10203,9 +10203,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                         if (*(int*)(a1 + 444) == 1)
                             sub_468011((char*)byte_4B9B10, (_BYTE*)a1);
                         if (*(int*)(a1 + 444) / 8 % 3 > 1)
-                            *(_WORD*)(a1 + 204) = 70;
+                            *(short*)(a1 + 204) = 70;
                         else
-                            *(_WORD*)(a1 + 204) = 3;
+                            *(short*)(a1 + 204) = 3;
                         if (*(int*)(a1 + 444) >= 120)
                         {
                             if (*(int*)(a1 + 392))
@@ -10227,42 +10227,42 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                         if (sub_494AA9(*(_BYTE**)(a1 + 480), 0))
                         {
                             if (*(int*)(a1 + 444) / 8 % 3 > 1)
-                                *(_WORD*)(a1 + 204) = 157;
+                                *(short*)(a1 + 204) = 157;
                             else
-                                *(_WORD*)(a1 + 204) = 135;
+                                *(short*)(a1 + 204) = 135;
                         }
                         else if (*(int*)(a1 + 444) / 8 % 3 > 1)
                         {
-                            *(_WORD*)(a1 + 204) = 156;
+                            *(short*)(a1 + 204) = 156;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 0;
+                            *(short*)(a1 + 204) = 0;
                         }
                     }
                     else if (*(_BYTE*)(a1 + 188) == 2)
                     {
                         *(_BYTE*)(a1 + 212) = 1;
                         if (*(int*)(a1 + 444) / 8 % 3 > 1)
-                            *(_WORD*)(a1 + 204) = 117;
+                            *(short*)(a1 + 204) = 117;
                         else
-                            *(_WORD*)(a1 + 204) = 116;
+                            *(short*)(a1 + 204) = 116;
                     }
                     else if (*(_BYTE*)(a1 + 188) == 3)
                     {
                         *(_BYTE*)(a1 + 212) = 1;
                         if (*(int*)(a1 + 444) / 8 % 3 > 1)
-                            *(_WORD*)(a1 + 204) = 119;
+                            *(short*)(a1 + 204) = 119;
                         else
-                            *(_WORD*)(a1 + 204) = 118;
+                            *(short*)(a1 + 204) = 118;
                     }
                     else if (*(int*)(a1 + 444) / 8 % 3 > 1)
                     {
-                        *(_WORD*)(a1 + 204) = 70;
+                        *(short*)(a1 + 204) = 70;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 3;
+                        *(short*)(a1 + 204) = 3;
                     }
                     if (*(int*)(a1 + 444) >= 120)
                     {
@@ -10281,7 +10281,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
     if (sub_41BA53(a1, 0x8Bu, 0) && *(int*)(a1 + 444) == 1 && *(char*)(a1 + 232) > 0)
         *(_BYTE*)(a1 + 608) = *(_BYTE*)(a1 + 204);
     *(_BYTE*)(a1 + 212) = 0;
-    *(_WORD*)(a1 + 204) = 24;
+    *(short*)(a1 + 204) = 24;
     if (*(int*)(a1 + 444) == 1)
     {
         *(_BYTE*)(a1 + 469) = 1;
@@ -10341,7 +10341,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
     }
     if (*(char*)(a1 + 608) > 0)
     {
-        *(_WORD*)(a1 + 204) = *(char*)(a1 + 608);
+        *(short*)(a1 + 204) = *(char*)(a1 + 608);
         *(int*)(a1 + 432) = 3;
         *(int*)(a1 + 444) = 0;
         *(int*)(a1 + 296) = 0;
@@ -10488,7 +10488,7 @@ int sub_412502(int thisx, int a2)
 //减血函数
 //thisx是角色地址
 //a2是将要减少的血量
-void sub_41261C(_WORD* thisx, int a2, int a3, int a4)
+void sub_41261C(short* thisx, int a2, int a3, int a4)
 {
     if ((unsigned __int16)thisx[107] - a2 > 0)
         thisx[107] -= a2;
@@ -10511,7 +10511,7 @@ void sub_41261C(_WORD* thisx, int a2, int a3, int a4)
 //减血函数
 //thisx是角色地址
 //a2是将要减少的血量
-void sub_41261C(_WORD* thisx, int a2, int a3, int a4)
+void sub_41261C(short* thisx, int a2, int a3, int a4)
 {
     // 如果 thisx[107]（角色的生命值）大于 a2（减少的生命值）
     if ((unsigned __int16)thisx[107] - a2 > 0)
@@ -10759,7 +10759,7 @@ Warning();//修正堆栈
     }
     if (*(int*)(thisx + 428) && (unsigned __int8)v108 == 7 && -v103 <= *(int*)(thisx + 336))
         goto LABEL_22;
-    if ((_WORD)v106 && (v87[26] & 1) != 0 && -v103 <= *(int*)(thisx + 336))
+    if ((short)v106 && (v87[26] & 1) != 0 && -v103 <= *(int*)(thisx + 336))
     {
         sub_42455B(thisx, v87);
     }
@@ -11034,7 +11034,7 @@ Warning();//修正堆栈
             if (*(int*)(thisx + 428) == 178 || *(int*)(thisx + 428) == 120)
             {
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A48, -1, 100, 100, 0);
-                sub_41261C((_WORD*)thisx, *(unsigned __int16*)(thisx + 242), *(int*)(thisx + 316), 1); //减血函数
+                sub_41261C((short*)thisx, *(unsigned __int16*)(thisx + 242), *(int*)(thisx + 316), 1); //减血函数
             }
             *(int*)(thisx + 432) = 34;
             *(int*)(thisx + 436) = v57 < 160;
@@ -11065,7 +11065,7 @@ Warning();//修正堆栈
         }
         if (v55 && *(int*)(thisx + 428) == 88)
         {
-            sub_41261C((_WORD*)thisx, *(unsigned __int16*)(thisx + 242), 0, 1); //减血函数
+            sub_41261C((short*)thisx, *(unsigned __int16*)(thisx + 242), 0, 1); //减血函数
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
             *(int*)(thisx + 432) = 34;
             *(int*)(thisx + 436) = v57 < 160;
@@ -11263,7 +11263,7 @@ Warning();//修正堆栈
                 if (*(int*)(thisx + 428) == 178 || *(int*)(thisx + 428) == 120)
                 {
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A48, -1, 100, 100, 0);
-                    sub_41261C((_WORD*)thisx, *(unsigned __int16*)(thisx + 242), *(int*)(thisx + 316), 1); //减血函数
+                    sub_41261C((short*)thisx, *(unsigned __int16*)(thisx + 242), *(int*)(thisx + 316), 1); //减血函数
                 }
                 *(int*)(thisx + 432) = 34;
                 *(int*)(thisx + 436) = *(int*)(thisx + 372) < 0;
@@ -11278,7 +11278,7 @@ Warning();//修正堆栈
             }
             else if ((v109 || v90) && *(int*)(thisx + 428) == 88)
             {
-                sub_41261C((_WORD*)thisx, *(unsigned __int16*)(thisx + 242), 0, 1); //减血函数
+                sub_41261C((short*)thisx, *(unsigned __int16*)(thisx + 242), 0, 1); //减血函数
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
                 *(int*)(thisx + 432) = 34;
                 *(int*)(thisx + 436) = *(int*)(thisx + 372) < 0;
@@ -11363,7 +11363,7 @@ Warning();//修正堆栈
                 sub_4259A4((int*)thisx, a2, a3, a4);
                 return;
             }
-            if ((_WORD)v106)
+            if ((short)v106)
                 sub_42455B(thisx, v87);
             goto LABEL_565;
         }
@@ -11386,7 +11386,7 @@ Warning();//修正堆栈
                 if (*(int*)(thisx + 436) == 1)
                 {
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A20, -1, 100, 100, 0);
-                    sub_41261C((_WORD*)thisx, *(unsigned __int16*)(thisx + 242), *(int*)(thisx + 316), 1); //减血函数
+                    sub_41261C((short*)thisx, *(unsigned __int16*)(thisx + 242), *(int*)(thisx + 316), 1); //减血函数
                 }
             }
             else if (*(int*)(thisx + 428) == 112 || *(int*)(thisx + 428) == 114)
@@ -11396,7 +11396,7 @@ Warning();//修正堆栈
                 if (*(int*)(thisx + 436) == 1)
                 {
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A20, -1, 100, 100, 0);
-                    sub_41261C((_WORD*)thisx, *(unsigned __int16*)(thisx + 242), *(int*)(thisx + 316), 1); //减血函数
+                    sub_41261C((short*)thisx, *(unsigned __int16*)(thisx + 242), *(int*)(thisx + 316), 1); //减血函数
                 }
             }
             else
@@ -11498,7 +11498,7 @@ Warning();//修正堆栈
                 *(int*)(thisx + 372) /= 2;
                 v15 = *(int*)(thisx + 316);
                 v10 = sub_4261B0((short*)thisx);
-                sub_41261C((_WORD*)thisx, v10, v15, 1); //减血函数
+                sub_41261C((short*)thisx, v10, v15, 1); //减血函数
             }
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A14, -1, 100, 100, 0);
             break;
@@ -11524,7 +11524,7 @@ Warning();//修正堆栈
                 *(int*)(thisx + 372) /= 2;
                 v16 = *(int*)(thisx + 316);
                 v11 = sub_4261B0((short*)thisx);
-                sub_41261C((_WORD*)thisx, v11, v16, 1);
+                sub_41261C((short*)thisx, v11, v16, 1);
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A14, -1, 100, 100, 0); //减血函数
             }
             break;
@@ -11705,7 +11705,7 @@ Warning();//修正堆栈
                                     *(int*)(thisx + 348) = -300;
                                     *(int*)(thisx + 360) = 30;
                                     *(int*)(thisx + 336) = -v103;
-                                    sub_41261C((_WORD*)thisx, *(unsigned __int16*)(thisx + 242), *(int*)(thisx + 304), 1); //减血函数
+                                    sub_41261C((short*)thisx, *(unsigned __int16*)(thisx + 242), *(int*)(thisx + 304), 1); //减血函数
                                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
                                 }
                                 break;
@@ -12060,10 +12060,10 @@ int sub_417173(int thisx, unsigned __int8 a2)
             *(int*)(thisx + 432) = 178;
             *(int*)(thisx + 424) = sub_425D70(v10);
             v9 = sub_4175B4(*(int*)(thisx + 304), 1) / 2;
-            sub_41EF8A((_WORD*)thisx, v9);
+            sub_41EF8A((short*)thisx, v9);
             v2 = sub_4175B4(*(int*)(thisx + 304), 1);
             v3 = sub_417924(thisx, 3, 1);
-            sub_41F169((_WORD*)thisx, (v2 + v3) / 2);
+            sub_41F169((short*)thisx, (v2 + v3) / 2);
             memset((void*)(thisx + 453), 0, 8u);
             memset((void*)(thisx + 461), 0, 8u);
             *(_BYTE*)(thisx + a2 + 453) = -1;
@@ -12072,8 +12072,8 @@ int sub_417173(int thisx, unsigned __int8 a2)
         {
             *(int*)(thisx + 432) = 138;
             v8 = sub_4175B4(*(int*)(thisx + 304), 1) / 10;
-            sub_41EF8A((_WORD*)thisx, v8);
-            sub_41F169((_WORD*)thisx, *(unsigned __int16*)(thisx + 242));
+            sub_41EF8A((short*)thisx, v8);
+            sub_41F169((short*)thisx, *(unsigned __int16*)(thisx + 242));
             *(_BYTE*)(thisx + 248) = 2;
             *(int*)(thisx + 436) = a2;
         }
@@ -12162,7 +12162,7 @@ __int16 sub_4175B4(int thisx, int a2)
     int v4; // [esp+8h] [ebp-Ch]
 
 
-    v6 = *(_WORD*)(thisx + 506);
+    v6 = *(short*)(thisx + 506);
     if (a2)
     {
         if (sub_41BA53(thisx, 0x82u, 0))
@@ -12200,7 +12200,7 @@ __int16 sub_4175B4(int thisx, int a2)
             }
         }
         if (sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
-            v6 += *(_WORD*)(thisx + 496) + 15;
+            v6 += *(short*)(thisx + 496) + 15;
     }
     if (sub_425CD0((int*)&byte_4B9B10) == 3 && *(int*)(thisx + 164))
     {
@@ -12215,7 +12215,7 @@ __int16 sub_4175B4(int thisx, int a2)
 }
 
 //游戏对局初始化生命值，this是角色
-int sub_417763(_WORD* thisx)
+int sub_417763(short* thisx)
 {
     int result; // eax
 
@@ -12366,9 +12366,9 @@ __int16 sub_417924(int thisx, int a2, int a3)
     int v5; // [esp+8h] [ebp-Ch]
 
 
-    v7 = *(_WORD*)(thisx + 512);
+    v7 = *(short*)(thisx + 512);
     if (a3 && sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
-        v7 += *(_WORD*)(thisx + 496) + 10;
+        v7 += *(short*)(thisx + 496) + 10;
     if (sub_41BA53(thisx, 0x83u, 0))
     {
         v6 = 100 * *(unsigned __int16*)(thisx + 214) / *(unsigned __int16*)(thisx + 500);
@@ -12451,12 +12451,12 @@ __int16 sub_417924(int thisx, int a2, int a3)
     int v5; // 用于存储中间计算结果（最终可能会调整v7）
 
     // 从内存偏移位置thisx + 512处获取16位无符号整数值，并赋值给v7
-    v7 = *(_WORD*)(thisx + 512);
+    v7 = *(short*)(thisx + 512);
 
     // 如果a3为真，且sub_41BA53返回非零，并且thisx + 609处的字节值等于11
     if (a3 && sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
         // v7增加thisx + 496处的16位无符号整数值再加10
-        v7 += *(_WORD*)(thisx + 496) + 10;
+        v7 += *(short*)(thisx + 496) + 10;
 
     // 如果sub_41BA53返回非零
     if (sub_41BA53(thisx, 0x83u, 0))
@@ -12601,7 +12601,7 @@ void sub_417C15(int thisx, unsigned __int8 a2)
 {
     if (!a2)
         a2 = 1;
-    sub_41261C((_WORD*)thisx, a2, *(int*)(thisx + 304), 1); //减血函数
+    sub_41261C((short*)thisx, a2, *(int*)(thisx + 304), 1); //减血函数
     if (*(int*)(thisx + 428) == 44)
     {
         *(int*)(thisx + 432) = 46;
@@ -13979,7 +13979,7 @@ __int16 __fastcall sub_4181B5(int a1)
             }
             *(int*)(a1 + 12) = v174;
             *(int*)(a1 + 16) = v173;
-            if (*(_BYTE*)(a1 + 141) && *(_WORD*)(a1 + 20))
+            if (*(_BYTE*)(a1 + 141) && *(short*)(a1 + 20))
             {
                 v42 = *(char*)(a1 + 141) <= 0 ? (*(char*)(a1 + 141) >= 0) - 1 : 1;
                 v41 = *(__int16*)(a1 + 20) <= 0 ? (*(__int16*)(a1 + 20) >= 0) - 1 : 1;
@@ -13997,30 +13997,30 @@ __int16 __fastcall sub_4181B5(int a1)
                 }
             }
             if (*(_BYTE*)(a1 + 141)
-                && (!*(_WORD*)(a1 + 20)
+                && (!*(short*)(a1 + 20)
                     || (*(char*)(a1 + 141) <= 0 ? (v38 = (*(char*)(a1 + 141) >= 0) - 1) : (v38 = 1),
                         *(__int16*)(a1 + 20) <= 0 ? (v37 = (*(__int16*)(a1 + 20) >= 0) - 1) : (v37 = 1),
                         v38 == v37)))
             {
-                *(_WORD*)(a1 + 20) += *(char*)(a1 + 141);
+                *(short*)(a1 + 20) += *(char*)(a1 + 141);
             }
             else
             {
-                *(_WORD*)(a1 + 20) = *(char*)(a1 + 141);
+                *(short*)(a1 + 20) = *(char*)(a1 + 141);
             }
             if (*(_BYTE*)(a1 + 142)
-                && (!*(_WORD*)(a1 + 22)
+                && (!*(short*)(a1 + 22)
                     || (*(char*)(a1 + 142) <= 0 ? (v36 = (*(char*)(a1 + 142) >= 0) - 1) : (v36 = 1),
                         *(__int16*)(a1 + 22) <= 0 ? (v35 = (*(__int16*)(a1 + 22) >= 0) - 1) : (v35 = 1),
                         v36 == v35)))
             {
-                LOWORD(v1) = *(char*)(a1 + 142) + *(_WORD*)(a1 + 22);
-                *(_WORD*)(a1 + 22) = (_WORD)v1;
+                LOWORD(v1) = *(char*)(a1 + 142) + *(short*)(a1 + 22);
+                *(short*)(a1 + 22) = (short)v1;
             }
             else
             {
                 LOWORD(v1) = *(char*)(a1 + 142);
-                *(_WORD*)(a1 + 22) = (_WORD)v1;
+                *(short*)(a1 + 22) = (short)v1;
             }
             if (v172 == (struct Concurrency::ISchedulerProxy*)13)
             {
@@ -14191,7 +14191,7 @@ unsigned __int8* sub_41B465(int* thisx)
 //is
 BOOL sub_41B65C(int thisx)
 {
-    if (!*(_WORD*)(thisx + 214))
+    if (!*(short*)(thisx + 214))
         return 0;
     if (*(int*)(thisx + 296))
         return 0;
@@ -14598,11 +14598,11 @@ _BYTE* sub_41BF1D(int thisx)
     *(int*)(thisx + 308) = 0;
     *(int*)(thisx + 480) = 0;
     memset((void*)(thisx + 244), 0, 4u);
-    *(_WORD*)(thisx + 594) = 0;
-    *(_WORD*)(thisx + 600) = 0;
+    *(short*)(thisx + 594) = 0;
+    *(short*)(thisx + 600) = 0;
     *(int*)(thisx + 264) = 83;
-    *(_WORD*)(thisx + 204) = 0;
-    *(_WORD*)(thisx + 596) = 0;
+    *(short*)(thisx + 204) = 0;
+    *(short*)(thisx + 596) = 0;
     sub_409273(thisx, 0);
     *(int*)(thisx + 432) = 0;//人物状态，例如站立状态，技能状态
     *(int*)(thisx + 428) = 0;
@@ -14828,13 +14828,13 @@ unsigned __int16 sub_41CA5F(int thisx, int a2)
 {
     unsigned __int16 v4; // [esp+Ch] [ebp-4h]
 
-    if (!*(_WORD*)(thisx + 514))
-        *(_WORD*)(thisx + 514) = 1;
-    v4 = *(_WORD*)(thisx + 514);
+    if (!*(short*)(thisx + 514))
+        *(short*)(thisx + 514) = 1;
+    v4 = *(short*)(thisx + 514);
     if (a2 && sub_41BA53(thisx, 0x84u, 0))
         v4 = *(int*)(thisx + 448) * (unsigned __int16)(__int64)((double)v4 * 1.25) / 180 + (__int64)((double)v4 * 1.25);
     if (sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
-        v4 += *(_WORD*)(thisx + 496) + 10;
+        v4 += *(short*)(thisx + 496) + 10;
     return v4;
 }
 
@@ -14853,7 +14853,7 @@ __int16 sub_41CB3B(int thisx, int a2)
     int v4; // [esp+8h] [ebp-Ch]
 
 
-    v6 = *(_WORD*)(thisx + 502);
+    v6 = *(short*)(thisx + 502);
     if (a2)
     {
         if (sub_41BA53(thisx, 0x82u, 0))
@@ -14891,7 +14891,7 @@ __int16 sub_41CB3B(int thisx, int a2)
             }
         }
         if (sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
-            v6 += *(_WORD*)(thisx + 496) + 15;
+            v6 += *(short*)(thisx + 496) + 15;
     }
     if (sub_425CD0((int*)&byte_4B9B10) == 3 && *(int*)(thisx + 164))
     {
@@ -14921,7 +14921,7 @@ __int16 sub_41CCEA(int thisx, int a2)
     int v4; // [esp+8h] [ebp-Ch]
 
 
-    v6 = *(_WORD*)(thisx + 504);
+    v6 = *(short*)(thisx + 504);
     if (a2)
     {
         if (sub_41BA53(thisx, 0x82u, 0))
@@ -14959,7 +14959,7 @@ __int16 sub_41CCEA(int thisx, int a2)
             }
         }
         if (sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
-            v6 += *(_WORD*)(thisx + 496) + 15;
+            v6 += *(short*)(thisx + 496) + 15;
     }
     if (sub_425CD0((int*)&byte_4B9B10) == 3 && *(int*)(thisx + 164))
     {
@@ -15020,7 +15020,7 @@ int sub_41CE99(int thisx)
     sub_4097DF((void*)thisx, (int)&v4);
     *(int*)(thisx + 436) = v4 >= 160;
     v1 = rand() % 4;
-    sub_41261C((_WORD*)thisx, v1 + 13, 0, 1); //减血函数
+    sub_41261C((short*)thisx, v1 + 13, 0, 1); //减血函数
     *(int*)(thisx + 444) = 0;
     *(int*)(thisx + 352) = 0;
     *(int*)(thisx + 364) = 0;
@@ -15035,9 +15035,9 @@ _int16 sub_41D067(int thisx, int a2)
 {
     unsigned __int16 v4; // [esp+8h] [ebp-4h]
 
-    if (!*(_WORD*)(thisx + 516))
+    if (!*(short*)(thisx + 516))
         return 1;
-    v4 = *(_WORD*)(thisx + 516);
+    v4 = *(short*)(thisx + 516);
     if (a2)
     {
         if (sub_41BA53(thisx, 0x86u, 0))
@@ -15048,7 +15048,7 @@ _int16 sub_41D067(int thisx, int a2)
     if (sub_41BA53(thisx, 0x8Cu, 0))
     {
         if (*(_BYTE*)(thisx + 609) == 11)
-            v4 += *(_WORD*)(thisx + 496) + 10;
+            v4 += *(short*)(thisx + 496) + 10;
     }
     return v4;
 }
@@ -15202,7 +15202,7 @@ int  sub_41D697(int thisx)
     *(int*)(thisx + 336) = -100 * v6;
     *(int*)(thisx + 328) = 100 * v10;
     *(int*)(thisx + 332) = 100 * v9;
-    return sub_417763((_WORD*)thisx);
+    return sub_417763((short*)thisx);
 }
 
 /*
@@ -15253,7 +15253,7 @@ int sub_41D697(int thisx)
     *(int*)(thisx + 328) = 100 * v10; // 设置位置或坐标
     *(int*)(thisx + 332) = 100 * v9; // 设置位置或坐标
 
-    return sub_417763((_WORD*)thisx); // 调用结束函数，返回结果
+    return sub_417763((short*)thisx); // 调用结束函数，返回结果
 }
 */
 
@@ -15306,30 +15306,30 @@ __int16 sub_41D84A(int thisx)
         v9 = (char*)sub_426590(byte_4B9B10, *(unsigned __int16*)(thisx + 186));
         v1 = sub_4266D0(v9);
         memcpy((void*)(thisx + 484), v1, 11);
-        *(_WORD*)(thisx + 190) = sub_4266F0((short*)v9);
-        *(_WORD*)(thisx + 498) = (unsigned __int8)sub_426550(v9);
+        *(short*)(thisx + 190) = sub_4266F0((short*)v9);
+        *(short*)(thisx + 498) = (unsigned __int8)sub_426550(v9);
         *(_BYTE*)(thisx + 192) = sub_426570(v9);
-        *(_WORD*)(thisx + 500) = sub_426710((short*)v9);//初始化生命值
-        *(_WORD*)(thisx + 502) = sub_426730((short*)v9);//对局初始化拳力量  //sub_426730 return thisx[15]
-        *(_WORD*)(thisx + 504) = sub_426750((short*)v9);//腿
-        *(_WORD*)(thisx + 506) = sub_426770((short*)v9);//投掷
-        *(_WORD*)(thisx + 508) = sub_426790((short*)v9);//武器
-        *(_WORD*)(thisx + 510) = sub_4267B0((short*)v9);//武器投掷
-        *(_WORD*)(thisx + 512) = sub_4267D0((short*)v9);//防御
-        *(_WORD*)(thisx + 514) = sub_4267F0((short*)v9);//速度
-        *(_WORD*)(thisx + 516) = sub_426810((short*)v9);//跳跃
-        *(_WORD*)(thisx + 518) = sub_426830((short*)v9);//反击
+        *(short*)(thisx + 500) = sub_426710((short*)v9);//初始化生命值
+        *(short*)(thisx + 502) = sub_426730((short*)v9);//对局初始化拳力量  //sub_426730 return thisx[15]
+        *(short*)(thisx + 504) = sub_426750((short*)v9);//腿
+        *(short*)(thisx + 506) = sub_426770((short*)v9);//投掷
+        *(short*)(thisx + 508) = sub_426790((short*)v9);//武器
+        *(short*)(thisx + 510) = sub_4267B0((short*)v9);//武器投掷
+        *(short*)(thisx + 512) = sub_4267D0((short*)v9);//防御
+        *(short*)(thisx + 514) = sub_4267F0((short*)v9);//速度
+        *(short*)(thisx + 516) = sub_426810((short*)v9);//跳跃
+        *(short*)(thisx + 518) = sub_426830((short*)v9);//反击
         for (i = 0; i < 3; ++i)
             *(_BYTE*)(i + thisx + 520) = sub_426850(v9, i);//可能是技能吗？？？
     }
     else
     {
-        LOWORD(v2) = *(_WORD*)(thisx + 186);
+        LOWORD(v2) = *(short*)(thisx + 186);
         if ((unsigned __int16)v2 >= (int)Size)
             return v2;
         if (*(_BYTE*)(thisx + 188) == 3 || *(_BYTE*)(thisx + 188) == 4)
         {
-            *(_WORD*)(thisx + 186) = *(unsigned __int8*)(thisx + 188) + 15;
+            *(short*)(thisx + 186) = *(unsigned __int8*)(thisx + 188) + 15;
             if (*(_BYTE*)(thisx + 188) == 3)
                 *(_BYTE*)(thisx + 195) = 2;
             else
@@ -15338,85 +15338,85 @@ __int16 sub_41D84A(int thisx)
         if (*(_BYTE*)(thisx + 188) == 1 || *(_BYTE*)(thisx + 188) == 2)
         {
             wsprintfA((LPSTR)(thisx + 484), byte_4B01A4);//美玲
-            *(_WORD*)(thisx + 498) = 0;
-            *(_WORD*)(thisx + 500) = 100 * *(unsigned __int8*)(thisx + 188) + 200;
-            *(_WORD*)(thisx + 502) = 20 * *(unsigned __int8*)(thisx + 188) + 80;
-            *(_WORD*)(thisx + 504) = 20 * *(unsigned __int8*)(thisx + 188) + 80;
-            *(_WORD*)(thisx + 506) = 10 * *(unsigned __int8*)(thisx + 188) + 10;
-            *(_WORD*)(thisx + 508) = 100;
-            *(_WORD*)(thisx + 510) = 100;
-            *(_WORD*)(thisx + 512) = 10 * *(unsigned __int8*)(thisx + 188) + 90;
-            *(_WORD*)(thisx + 514) = 10 * *(unsigned __int8*)(thisx + 188) + 40;
-            *(_WORD*)(thisx + 516) = 50;
-            *(_WORD*)(thisx + 518) = 10 * *(unsigned __int8*)(thisx + 188) + 40;
+            *(short*)(thisx + 498) = 0;
+            *(short*)(thisx + 500) = 100 * *(unsigned __int8*)(thisx + 188) + 200;
+            *(short*)(thisx + 502) = 20 * *(unsigned __int8*)(thisx + 188) + 80;
+            *(short*)(thisx + 504) = 20 * *(unsigned __int8*)(thisx + 188) + 80;
+            *(short*)(thisx + 506) = 10 * *(unsigned __int8*)(thisx + 188) + 10;
+            *(short*)(thisx + 508) = 100;
+            *(short*)(thisx + 510) = 100;
+            *(short*)(thisx + 512) = 10 * *(unsigned __int8*)(thisx + 188) + 90;
+            *(short*)(thisx + 514) = 10 * *(unsigned __int8*)(thisx + 188) + 40;
+            *(short*)(thisx + 516) = 50;
+            *(short*)(thisx + 518) = 10 * *(unsigned __int8*)(thisx + 188) + 40;
         }
         else
         {
             v3 = unknown_libname_18((char*)(dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186)));
             memcpy((void*)(thisx + 484), v3, 0xBu);
-            *(_WORD*)(thisx + 498) = (unsigned __int8)sub_401710((_BYTE*)(36 * *(unsigned __int16*)(thisx + 186)
+            *(short*)(thisx + 498) = (unsigned __int8)sub_401710((_BYTE*)(36 * *(unsigned __int16*)(thisx + 186)
                 + dword_4B92E0));
             *(_BYTE*)(thisx + 192) = sub_4016F0((_BYTE*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
-            *(_WORD*)(thisx + 500) = (unsigned __int8)sub_4265B0((char*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
-            *(_WORD*)(thisx + 502) = (unsigned __int8)sub_426570((char*)dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186));
-            *(_WORD*)(thisx + 504) = (unsigned __int8)sub_4265D0((char*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
-            *(_WORD*)(thisx + 506) = (unsigned __int8)sub_4265F0((char*)dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186));
-            *(_WORD*)(thisx + 508) = (unsigned __int8)sub_426610((char*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
-            *(_WORD*)(thisx + 510) = (unsigned __int8)sub_426550((char*)dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186));
-            *(_WORD*)(thisx + 512) = (unsigned __int8)sub_426670((char*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
-            *(_WORD*)(thisx + 514) = (unsigned __int8)sub_426630((char*)dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186));
-            *(_WORD*)(thisx + 516) = (unsigned __int8)sub_426650((char*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
-            *(_WORD*)(thisx + 518) = (unsigned __int8)sub_426690((char*)dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186));
+            *(short*)(thisx + 500) = (unsigned __int8)sub_4265B0((char*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
+            *(short*)(thisx + 502) = (unsigned __int8)sub_426570((char*)dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186));
+            *(short*)(thisx + 504) = (unsigned __int8)sub_4265D0((char*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
+            *(short*)(thisx + 506) = (unsigned __int8)sub_4265F0((char*)dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186));
+            *(short*)(thisx + 508) = (unsigned __int8)sub_426610((char*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
+            *(short*)(thisx + 510) = (unsigned __int8)sub_426550((char*)dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186));
+            *(short*)(thisx + 512) = (unsigned __int8)sub_426670((char*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
+            *(short*)(thisx + 514) = (unsigned __int8)sub_426630((char*)dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186));
+            *(short*)(thisx + 516) = (unsigned __int8)sub_426650((char*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
+            *(short*)(thisx + 518) = (unsigned __int8)sub_426690((char*)dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186));
             if (*(_BYTE*)(thisx + 195))
             {
                 switch (*(_BYTE*)(thisx + 195))
                 {
                 case 1:
-                    *(_WORD*)(thisx + 502) += 15;
+                    *(short*)(thisx + 502) += 15;
                     break;
                 case 2:
-                    *(_WORD*)(thisx + 504) += 15;
+                    *(short*)(thisx + 504) += 15;
                     break;
                 case 3:
-                    *(_WORD*)(thisx + 506) += 15;
+                    *(short*)(thisx + 506) += 15;
                     break;
                 }
             }
             else
             {
-                *(_WORD*)(thisx + 502) += 5;
-                *(_WORD*)(thisx + 504) += 5;
-                *(_WORD*)(thisx + 506) += 5;
+                *(short*)(thisx + 502) += 5;
+                *(short*)(thisx + 504) += 5;
+                *(short*)(thisx + 506) += 5;
             }
             if (*(_BYTE*)(thisx + 195) == 4 || *(_BYTE*)(thisx + 188) == 3 || *(_BYTE*)(thisx + 188) == 4)
             {
-                *(_WORD*)(thisx + 502) += 20;
-                *(_WORD*)(thisx + 504) += 20;
-                *(_WORD*)(thisx + 506) += 20;
-                *(_WORD*)(thisx + 512) += 10;
+                *(short*)(thisx + 502) += 20;
+                *(short*)(thisx + 504) += 20;
+                *(short*)(thisx + 506) += 20;
+                *(short*)(thisx + 512) += 10;
             }
         }
         if (!sub_425CD0((int*)byte_4B9B10))
         {
-            *(_WORD*)(thisx + 500) = 8 * *(unsigned __int16*)(thisx + 500) / 10;
-            *(_WORD*)(thisx + 518) = 8 * *(unsigned __int16*)(thisx + 518) / 10;
-            *(_WORD*)(thisx + 500) = (__int64)((double)*(unsigned __int16*)(thisx + 500)
+            *(short*)(thisx + 500) = 8 * *(unsigned __int16*)(thisx + 500) / 10;
+            *(short*)(thisx + 518) = 8 * *(unsigned __int16*)(thisx + 518) / 10;
+            *(short*)(thisx + 500) = (__int64)((double)*(unsigned __int16*)(thisx + 500)
                 + (double)*(unsigned __int16*)(thisx + 496) * 1.2 * 3.0);
-            *(_WORD*)(thisx + 502) = (__int64)((double)*(unsigned __int16*)(thisx + 502)
+            *(short*)(thisx + 502) = (__int64)((double)*(unsigned __int16*)(thisx + 502)
                 + (double)*(unsigned __int16*)(thisx + 496) * 1.2);
-            *(_WORD*)(thisx + 504) = (__int64)((double)*(unsigned __int16*)(thisx + 504)
+            *(short*)(thisx + 504) = (__int64)((double)*(unsigned __int16*)(thisx + 504)
                 + (double)*(unsigned __int16*)(thisx + 496) * 1.2);
-            *(_WORD*)(thisx + 506) = (__int64)((double)*(unsigned __int16*)(thisx + 506)
+            *(short*)(thisx + 506) = (__int64)((double)*(unsigned __int16*)(thisx + 506)
                 + (double)*(unsigned __int16*)(thisx + 496) * 1.2);
-            *(_WORD*)(thisx + 508) = (__int64)((double)*(unsigned __int16*)(thisx + 508)
+            *(short*)(thisx + 508) = (__int64)((double)*(unsigned __int16*)(thisx + 508)
                 + (double)*(unsigned __int16*)(thisx + 496) * 1.2);
-            *(_WORD*)(thisx + 510) = (__int64)((double)*(unsigned __int16*)(thisx + 510)
+            *(short*)(thisx + 510) = (__int64)((double)*(unsigned __int16*)(thisx + 510)
                 + (double)*(unsigned __int16*)(thisx + 496) * 1.2);
-            *(_WORD*)(thisx + 512) = (__int64)((double)*(unsigned __int16*)(thisx + 512)
+            *(short*)(thisx + 512) = (__int64)((double)*(unsigned __int16*)(thisx + 512)
                 + (double)*(unsigned __int16*)(thisx + 496) * 0.9);
-            *(_WORD*)(thisx + 514) += *(unsigned __int16*)(thisx + 496) / 10;
-            *(_WORD*)(thisx + 516) += *(unsigned __int16*)(thisx + 496) / 10;
-            *(_WORD*)(thisx + 518) += *(unsigned __int16*)(thisx + 496) / 10;
+            *(short*)(thisx + 514) += *(unsigned __int16*)(thisx + 496) / 10;
+            *(short*)(thisx + 516) += *(unsigned __int16*)(thisx + 496) / 10;
+            *(short*)(thisx + 518) += *(unsigned __int16*)(thisx + 496) / 10;
             if (*(_BYTE*)(thisx + 188) != 1)
             {
                 if (*(_BYTE*)(thisx + 195))
@@ -15424,33 +15424,33 @@ __int16 sub_41D84A(int thisx)
                     switch (*(_BYTE*)(thisx + 195))
                     {
                     case 1:
-                        *(_WORD*)(thisx + 502) += *(_WORD*)(thisx + 496);
-                        *(_WORD*)(thisx + 518) += *(unsigned __int16*)(thisx + 496) / 20;
+                        *(short*)(thisx + 502) += *(short*)(thisx + 496);
+                        *(short*)(thisx + 518) += *(unsigned __int16*)(thisx + 496) / 20;
                         break;
                     case 2:
-                        *(_WORD*)(thisx + 504) += *(_WORD*)(thisx + 496);
-                        *(_WORD*)(thisx + 514) += *(unsigned __int16*)(thisx + 496) / 20;
+                        *(short*)(thisx + 504) += *(short*)(thisx + 496);
+                        *(short*)(thisx + 514) += *(unsigned __int16*)(thisx + 496) / 20;
                         break;
                     case 3:
-                        *(_WORD*)(thisx + 506) += *(_WORD*)(thisx + 496);
-                        *(_WORD*)(thisx + 512) = (__int64)((double)*(unsigned __int16*)(thisx + 512)
+                        *(short*)(thisx + 506) += *(short*)(thisx + 496);
+                        *(short*)(thisx + 512) = (__int64)((double)*(unsigned __int16*)(thisx + 512)
                             + (double)*(unsigned __int16*)(thisx + 496) * 0.2);
                         break;
                     case 4:
-                        *(_WORD*)(thisx + 502) += *(_WORD*)(thisx + 496);
-                        *(_WORD*)(thisx + 504) += *(_WORD*)(thisx + 496);
-                        *(_WORD*)(thisx + 506) += *(_WORD*)(thisx + 496);
-                        *(_WORD*)(thisx + 508) += *(_WORD*)(thisx + 496);
-                        *(_WORD*)(thisx + 510) += *(_WORD*)(thisx + 496);
-                        *(_WORD*)(thisx + 512) += *(unsigned __int16*)(thisx + 496) / 2;
+                        *(short*)(thisx + 502) += *(short*)(thisx + 496);
+                        *(short*)(thisx + 504) += *(short*)(thisx + 496);
+                        *(short*)(thisx + 506) += *(short*)(thisx + 496);
+                        *(short*)(thisx + 508) += *(short*)(thisx + 496);
+                        *(short*)(thisx + 510) += *(short*)(thisx + 496);
+                        *(short*)(thisx + 512) += *(unsigned __int16*)(thisx + 496) / 2;
                         break;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(thisx + 502) += *(unsigned __int16*)(thisx + 496) / 2;
-                    *(_WORD*)(thisx + 504) += *(unsigned __int16*)(thisx + 496) / 2;
-                    *(_WORD*)(thisx + 506) += *(unsigned __int16*)(thisx + 496) / 2;
+                    *(short*)(thisx + 502) += *(unsigned __int16*)(thisx + 496) / 2;
+                    *(short*)(thisx + 504) += *(unsigned __int16*)(thisx + 496) / 2;
+                    *(short*)(thisx + 506) += *(unsigned __int16*)(thisx + 496) / 2;
                 }
             }
         }
@@ -15480,13 +15480,13 @@ __int16 sub_41D84A(int thisx)
         v6 = sub_426590(byte_4B9B10, *(unsigned __int16*)(thisx + 186));
         if (v6)
         {
-            *(_WORD*)(thisx + 190) = sub_4266F0((short*)v6);
+            *(short*)(thisx + 190) = sub_4266F0((short*)v6);
             *(_BYTE*)(thisx + 192) = sub_426570((char*)v6);
         }
     }
     else
     {
-        *(_WORD*)(thisx + 190) = sub_475CB0((_WORD*)(dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186)));
+        *(short*)(thisx + 190) = sub_475CB0((short*)(dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186)));
         *(_BYTE*)(thisx + 192) = sub_4016F0((_BYTE*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
     }
 
@@ -15494,7 +15494,7 @@ __int16 sub_41D84A(int thisx)
     if (v2 == 4)
     {
         LOWORD(v2) = thisx;
-        *(_WORD*)(thisx + 190) = (*(_BYTE*)(thisx + 184) & 1) + 23;
+        *(short*)(thisx + 190) = (*(_BYTE*)(thisx + 184) & 1) + 23;
         *(_BYTE*)(thisx + 192) = 3;
     }
     return v2;
@@ -15528,31 +15528,31 @@ void sub_41E5C9(int thisx, int* a2)
         switch ((unsigned __int8)v10)
         {
         case 1u:
-            sub_41ED81((_WORD*)thisx, 15 * v5);
+            sub_41ED81((short*)thisx, 15 * v5);
             v11 = 2;
             break;
         case 2u:
-            sub_41EDEC((_WORD*)thisx, 5 * v5);
+            sub_41EDEC((short*)thisx, 5 * v5);
             v11 = 3;
             break;
         case 3u:
-            sub_41ECAB((_WORD*)thisx, 20 * v5);
-            sub_41EDEC((_WORD*)thisx, -5 * v5);
+            sub_41ECAB((short*)thisx, 20 * v5);
+            sub_41EDEC((short*)thisx, -5 * v5);
             v11 = 4;
             break;
         case 4u:
         LABEL_11:
-            sub_41ECAB((_WORD*)thisx, 15 * v5);
+            sub_41ECAB((short*)thisx, 15 * v5);
             v11 = 5;
             break;
         case 5u:
         LABEL_13:
-            sub_41EC40((_WORD*)thisx, 15 * v5);
+            sub_41EC40((short*)thisx, 15 * v5);
             v11 = 6;
             break;
         case 6u:
         LABEL_15:
-            sub_41ED16((_WORD*)thisx, 15 * v5);
+            sub_41ED16((short*)thisx, 15 * v5);
             v11 = 7;
             break;
         case 7u:
@@ -15585,20 +15585,20 @@ void sub_41E5C9(int thisx, int* a2)
                     break;
                 case 0x10u:
                 LABEL_31:
-                    sub_420D47((_WORD*)thisx, 15 * v5);
+                    sub_420D47((short*)thisx, 15 * v5);
                     v11 = 11;
                     break;
                 case 0x11u:
                 LABEL_33:
-                    sub_420DB2((_WORD*)thisx, 15 * v5);
+                    sub_420DB2((short*)thisx, 15 * v5);
                     v11 = 12;
                     break;
                 case 0x12u:
-                    sub_41EC40((_WORD*)thisx, 10 * v5);
-                    sub_41ECAB((_WORD*)thisx, 10 * v5);
-                    sub_41ED16((_WORD*)thisx, 10 * v5);
-                    sub_420D47((_WORD*)thisx, 10 * v5);
-                    sub_420DB2((_WORD*)thisx, 10 * v5);
+                    sub_41EC40((short*)thisx, 10 * v5);
+                    sub_41ECAB((short*)thisx, 10 * v5);
+                    sub_41ED16((short*)thisx, 10 * v5);
+                    sub_420D47((short*)thisx, 10 * v5);
+                    sub_420DB2((short*)thisx, 10 * v5);
                     v11 = 13;
                     break;
                 case 0x13u:
@@ -15618,7 +15618,7 @@ void sub_41E5C9(int thisx, int* a2)
                         goto LABEL_46;
                     }
                 case 0x14u:
-                    sub_420E1D((_WORD*)thisx, 10 * v5);
+                    sub_420E1D((short*)thisx, 10 * v5);
                     v11 = 14;
                     break;
                 case 0x15u:
@@ -15627,28 +15627,28 @@ void sub_41E5C9(int thisx, int* a2)
                 case 0x16u:
                     if (rand() % 2)
                     {
-                        sub_41EC40((_WORD*)thisx, -15 * v5);
-                        sub_41ECAB((_WORD*)thisx, -15 * v5);
-                        sub_41ED16((_WORD*)thisx, -15 * v5);
-                        sub_420D47((_WORD*)thisx, -15 * v5);
-                        sub_420DB2((_WORD*)thisx, -15 * v5);
-                        sub_41ED81((_WORD*)thisx, -15 * v5);
-                        sub_41EDEC((_WORD*)thisx, -10 * v5);
-                        sub_420E1D((_WORD*)thisx, -10 * v5);
-                        sub_420E88((_WORD*)thisx, -10 * v5);
+                        sub_41EC40((short*)thisx, -15 * v5);
+                        sub_41ECAB((short*)thisx, -15 * v5);
+                        sub_41ED16((short*)thisx, -15 * v5);
+                        sub_420D47((short*)thisx, -15 * v5);
+                        sub_420DB2((short*)thisx, -15 * v5);
+                        sub_41ED81((short*)thisx, -15 * v5);
+                        sub_41EDEC((short*)thisx, -10 * v5);
+                        sub_420E1D((short*)thisx, -10 * v5);
+                        sub_420E88((short*)thisx, -10 * v5);
                         v11 = 16;
                     }
                     else
                     {
-                        sub_41EC40((_WORD*)thisx, 15 * v5);
-                        sub_41ECAB((_WORD*)thisx, 15 * v5);
-                        sub_41ED16((_WORD*)thisx, 15 * v5);
-                        sub_420D47((_WORD*)thisx, 15 * v5);
-                        sub_420DB2((_WORD*)thisx, 15 * v5);
-                        sub_41ED81((_WORD*)thisx, 15 * v5);
-                        sub_41EDEC((_WORD*)thisx, 10 * v5);
-                        sub_420E1D((_WORD*)thisx, 10 * v5);
-                        sub_420E88((_WORD*)thisx, 10 * v5);
+                        sub_41EC40((short*)thisx, 15 * v5);
+                        sub_41ECAB((short*)thisx, 15 * v5);
+                        sub_41ED16((short*)thisx, 15 * v5);
+                        sub_420D47((short*)thisx, 15 * v5);
+                        sub_420DB2((short*)thisx, 15 * v5);
+                        sub_41ED81((short*)thisx, 15 * v5);
+                        sub_41EDEC((short*)thisx, 10 * v5);
+                        sub_420E1D((short*)thisx, 10 * v5);
+                        sub_420E88((short*)thisx, 10 * v5);
                         v11 = 15;
                     }
                     break;
@@ -15683,25 +15683,25 @@ __int16 __fastcall sub_41EBBC(int a1, int a2, int a3, int a4)
     {
         if (a4 || *(unsigned __int16*)(a1 + 500) >= 0xFFu || (v4 = a3 + *(unsigned __int16*)(a1 + 500), v4 <= 255))
         {
-            LOWORD(v4) = a3 + *(_WORD*)(a1 + 500);
-            *(_WORD*)(a1 + 500) = v4;
+            LOWORD(v4) = a3 + *(short*)(a1 + 500);
+            *(short*)(a1 + 500) = v4;
         }
         else
         {
-            *(_WORD*)(a1 + 500) = 255;
+            *(short*)(a1 + 500) = 255;
         }
     }
     else
     {
-        *(_WORD*)(a1 + 500) = 1;
+        *(short*)(a1 + 500) = 1;
     }
     return v4;
 }
 
 
-_WORD* sub_41EC40(_WORD* thisx, int a2)
+short* sub_41EC40(short* thisx, int a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     if (a2 + (unsigned __int16)thisx[251] > 0)
@@ -15725,9 +15725,9 @@ _WORD* sub_41EC40(_WORD* thisx, int a2)
 }
 
 
-_WORD* sub_41ECAB(_WORD* thisx, int a2)
+short* sub_41ECAB(short* thisx, int a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     if (a2 + (unsigned __int16)thisx[252] > 0)
@@ -15751,9 +15751,9 @@ _WORD* sub_41ECAB(_WORD* thisx, int a2)
 }
 
 
-_WORD* sub_41ED16(_WORD* thisx, int a2)
+short* sub_41ED16(short* thisx, int a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     if (a2 + (unsigned __int16)thisx[253] > 0)
@@ -15777,9 +15777,9 @@ _WORD* sub_41ED16(_WORD* thisx, int a2)
 }
 
 
-_WORD* sub_41ED81(_WORD* thisx, int a2)
+short* sub_41ED81(short* thisx, int a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     if (a2 + (unsigned __int16)thisx[256] > 0)
@@ -15803,9 +15803,9 @@ _WORD* sub_41ED81(_WORD* thisx, int a2)
 }
 
 
-_WORD* sub_41EDEC(_WORD* thisx, int a2)
+short* sub_41EDEC(short* thisx, int a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     if (a2 + (unsigned __int16)thisx[257] > 0)
@@ -15886,7 +15886,7 @@ int sub_41EEB5(_BYTE* thisx, int* a2, char a3)
 }
 
 
-__int16 sub_41EF8A(_WORD* thisx, int a2)
+__int16 sub_41EF8A(short* thisx, int a2)
 {
 
     Warning();//修正堆栈
@@ -15967,9 +15967,9 @@ void sub_41F0CA(int* thisx, int a2)
 }
 
 
-_WORD* sub_41F169(_WORD* thisx, int a2)
+short* sub_41F169(short* thisx, int a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     if (a2 >= 0)
     {
@@ -16081,7 +16081,7 @@ __int16 sub_41F380(int thisx, int a2)
     int v4; // [esp+8h] [ebp-Ch]
 
 
-    v6 = *(_WORD*)(thisx + 508);
+    v6 = *(short*)(thisx + 508);
     if (a2)
     {
         if (sub_41BA53(thisx, 0x82u, 0))
@@ -16119,7 +16119,7 @@ __int16 sub_41F380(int thisx, int a2)
             }
         }
         if (sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
-            v6 += *(_WORD*)(thisx + 496) + 15;
+            v6 += *(short*)(thisx + 496) + 15;
     }
     if (sub_425CD0((int*)&byte_4B9B10) == 3 && *(int*)(thisx + 164))
     {
@@ -16149,7 +16149,7 @@ __int16 sub_41F52F(int thisx, int a2)
     int v4; // [esp+8h] [ebp-Ch]
 
 
-    v6 = *(_WORD*)(thisx + 510);
+    v6 = *(short*)(thisx + 510);
     if (a2)
     {
         if (sub_41BA53(thisx, 0x82u, 0))
@@ -16187,7 +16187,7 @@ __int16 sub_41F52F(int thisx, int a2)
             }
         }
         if (sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
-            v6 += *(_WORD*)(thisx + 496) + 15;
+            v6 += *(short*)(thisx + 496) + 15;
     }
     if (sub_425CD0((int*)&byte_4B9B10) == 3 && *(int*)(thisx + 164))
     {
@@ -16281,8 +16281,8 @@ int* sub_41F712(int* thisx)
     *thisx = 0;
     thisx[32] = 0;
     thisx[18] = 0;
-    *((_WORD*)thisx + 10) = 0;
-    *((_WORD*)thisx + 11) = 0;
+    *((short*)thisx + 10) = 0;
+    *((short*)thisx + 11) = 0;
     if (sub_41BA53(thisx[31], 0x14u, 0))
     {
         *((_BYTE*)thisx + 89) = 1;
@@ -16923,9 +16923,9 @@ int sub_420CD4()
     return v3;
 }
 
-_WORD* sub_420D47(_WORD* thisx, int a2)
+short* sub_420D47(short* thisx, int a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     if (a2 + (unsigned __int16)thisx[254] > 0)
@@ -16960,9 +16960,9 @@ _WORD* sub_420D47(_WORD* thisx, int a2)
 这个函数的作用是通过a2调整thisx[254]的值，确保其结果保持在一定范围内（1到65535）。如果计算结果超出16位范围，设置为-1；如果结果小于或等于0，设置为1。
 */
 /*
-_WORD* sub_420D47(_WORD* thisx, int a2)
+short* sub_420D47(short* thisx, int a2)
 {
-    _WORD* result; // eax  保存函数返回值，初始设定为thisx指针
+    short* result; // eax  保存函数返回值，初始设定为thisx指针
 
     result = thisx;  // 将result初始化为传入的指针thisx
     // 判断a2 + thisx[254]的值是否大于0
@@ -16991,9 +16991,9 @@ _WORD* sub_420D47(_WORD* thisx, int a2)
 */
 
 //同上
-WORD* sub_420DB2(_WORD* thisx, int a2)
+WORD* sub_420DB2(short* thisx, int a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     if (a2 + (unsigned __int16)thisx[255] > 0)
@@ -17017,9 +17017,9 @@ WORD* sub_420DB2(_WORD* thisx, int a2)
 }
 
 //同上
-_WORD* sub_420E1D(_WORD* thisx, int a2)
+short* sub_420E1D(short* thisx, int a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     if (a2 + (unsigned __int16)thisx[258] > 0)
@@ -17043,9 +17043,9 @@ _WORD* sub_420E1D(_WORD* thisx, int a2)
 }
 
 //同上
-_WORD* sub_420E88(_WORD* thisx, int a2)
+short* sub_420E88(short* thisx, int a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     if (a2 + (unsigned __int16)thisx[259] > 0)
@@ -17094,9 +17094,9 @@ char* sub_420EF3(int thisx, int a2)
 __int16 sub_420F74(int thisx)
 {
     if (*(int*)(thisx + 524))
-        return *(_WORD*)(thisx + 528);
+        return *(short*)(thisx + 528);
     else
-        return *(_WORD*)(thisx + 190);
+        return *(short*)(thisx + 190);
 }
 
 //get
@@ -17332,7 +17332,7 @@ LONG sub_42142F(LONG thisx)
             *(int*)(thisx + 44) = sub_426090(*(int**)(thisx + 124)) / 800;
             *(int*)(thisx + 48) = sub_4260B0(*(int**)(thisx + 124)) / 800;
         }
-        *(_WORD*)(*(int*)(thisx + 52) + 2 * (*(int*)(thisx + 64) * *(int*)(thisx + 48) + *(int*)(thisx + 44))) = 1;
+        *(short*)(*(int*)(thisx + 52) + 2 * (*(int*)(thisx + 64) * *(int*)(thisx + 48) + *(int*)(thisx + 44))) = 1;
         v23 = sub_446465((char*)byte_4B9B10) / 8;
         v21 = sub_426090(*(int**)(thisx + 124)) / 800 - v23;
         if (sub_425CD0((int*)byte_4B9B10) == 3 && (v21 < 0 || v21 >= 40))
@@ -17399,10 +17399,10 @@ LONG sub_42142F(LONG thisx)
                                     && v7 <= v25)
                                 {
                                     v5 = *(int*)(thisx + 64) * v6 + v7;
-                                    if (!*(_WORD*)(*(int*)(thisx + 52) + 2 * v5)
+                                    if (!*(short*)(*(int*)(thisx + 52) + 2 * v5)
                                         && ((unsigned __int8)v10 & *(_BYTE*)(*(int*)(thisx + 56) + v11)) != 0)
                                     {
-                                        *(_WORD*)(*(int*)(thisx + 52) + 2 * v5) = i + 1;
+                                        *(short*)(*(int*)(thisx + 52) + 2 * v5) = i + 1;
                                         if (v7 < xLeft)
                                             xLeft = m % 3 - 1 + k;
                                         if (v7 > xRight)
@@ -17420,9 +17420,9 @@ LONG sub_42142F(LONG thisx)
                             if (*(_BYTE*)(*(int*)(thisx + 60) + 2 * v11 + n))
                             {
                                 v3 = *(char*)(*(int*)(thisx + 60) + 2 * v11 + n) + v11;
-                                if (!*(_WORD*)(*(int*)(thisx + 52) + 2 * v3))
+                                if (!*(short*)(*(int*)(thisx + 52) + 2 * v3))
                                 {
-                                    *(_WORD*)(*(int*)(thisx + 52) + 2 * v3) = i + 1;
+                                    *(short*)(*(int*)(thisx + 52) + 2 * v3) = i + 1;
                                     v4 = *(char*)(*(int*)(thisx + 60) + 2 * v11 + n) + k;
                                     if (v4 < xLeft)
                                         xLeft = *(char*)(*(int*)(thisx + 60) + 2 * v11 + n) + k;
@@ -17915,7 +17915,7 @@ int sub_4227A2(int* thisx)
                 v7 = 1;
                 for (k = 0;
                     k < v4
-                    && (v6 < 0 || v6 >= thisx[16] || v5 < 0 || v5 >= thisx[17] || !*(_WORD*)(thisx[13] + 2 * (thisx[16] * v5 + v6)));
+                    && (v6 < 0 || v6 >= thisx[16] || v5 < 0 || v5 >= thisx[17] || !*(short*)(thisx[13] + 2 * (thisx[16] * v5 + v6)));
                     ++k)
                 {
                     v6 += v8;
@@ -17971,7 +17971,7 @@ int sub_422B5C(int thisx, int a2, int a3, int a4, int a5, __int16 a6, char a7)
     *(int*)(thisx + 348) = a4 - *(int*)(thisx + 336);
     *(int*)(thisx + 424) = a5;
     *(_BYTE*)(thisx + 212) = 0;
-    *(_WORD*)(thisx + 204) = a6;
+    *(short*)(thisx + 204) = a6;
     result = thisx;
     *(_BYTE*)(thisx + 223) = a7;
     return result;
@@ -18015,15 +18015,15 @@ int sub_422C3A(int thisx, HANDLE hFile, int a3)
     ReadFile(hFile, (LPVOID)(thisx + 484), 0xBu, (LPDWORD)&NumberOfBytesRead, 0);
     ReadFile(hFile, (LPVOID)(thisx + 190), 2u, (LPDWORD)&NumberOfBytesRead, 0);
     if (dword_4B936C <= *(unsigned __int16*)(thisx + 190))
-        *(_WORD*)(thisx + 190) = 0;
+        *(short*)(thisx + 190) = 0;
     ReadFile(hFile, (LPVOID)(thisx + 192), 1u, (LPDWORD)&NumberOfBytesRead, 0);
     v3 = ReadFile(hFile, &Buffer, 2u, (LPDWORD)&NumberOfBytesRead, 0);
     LOWORD(v3) = Buffer;
     v10 = sub_47C20C(v3);
     if (v10 < 0)
-        *(_WORD*)(thisx + 498) = 0;
+        *(short*)(thisx + 498) = 0;
     else
-        *(_WORD*)(thisx + 498) = v10;
+        *(short*)(thisx + 498) = v10;
     ReadFile(hFile, (LPVOID)(thisx + 195), 1u, (LPDWORD)&NumberOfBytesRead, 0);
     if (a3 > 2)
     {
@@ -18069,18 +18069,18 @@ int sub_422C3A(int thisx, HANDLE hFile, int a3)
         (InternalContextBase*)thisx,
         (struct VirtualProcessor*)1);
     *(int*)(thisx + 524) = 0;
-    *(_WORD*)(thisx + 528) = *(_WORD*)(thisx + 190);
+    *(short*)(thisx + 528) = *(short*)(thisx + 190);
     *(_BYTE*)(thisx + 536) = *(_BYTE*)(thisx + 192);
-    *(_WORD*)(thisx + 530) = *(_WORD*)(thisx + 498);
-    *(_WORD*)(thisx + 538) = *(_WORD*)(thisx + 502);
-    *(_WORD*)(thisx + 540) = *(_WORD*)(thisx + 504);
-    *(_WORD*)(thisx + 542) = *(_WORD*)(thisx + 506);
-    *(_WORD*)(thisx + 544) = *(_WORD*)(thisx + 508);
-    *(_WORD*)(thisx + 546) = *(_WORD*)(thisx + 510);
-    *(_WORD*)(thisx + 548) = *(_WORD*)(thisx + 512);
-    *(_WORD*)(thisx + 550) = *(_WORD*)(thisx + 514);
-    *(_WORD*)(thisx + 552) = *(_WORD*)(thisx + 516);
-    *(_WORD*)(thisx + 554) = *(_WORD*)(thisx + 518);
+    *(short*)(thisx + 530) = *(short*)(thisx + 498);
+    *(short*)(thisx + 538) = *(short*)(thisx + 502);
+    *(short*)(thisx + 540) = *(short*)(thisx + 504);
+    *(short*)(thisx + 542) = *(short*)(thisx + 506);
+    *(short*)(thisx + 544) = *(short*)(thisx + 508);
+    *(short*)(thisx + 546) = *(short*)(thisx + 510);
+    *(short*)(thisx + 548) = *(short*)(thisx + 512);
+    *(short*)(thisx + 550) = *(short*)(thisx + 514);
+    *(short*)(thisx + 552) = *(short*)(thisx + 516);
+    *(short*)(thisx + 554) = *(short*)(thisx + 518);
     return 1;
 }
 
@@ -18179,7 +18179,7 @@ int sub_4234E6(int thisx, int a2)
         else
             v4 = 1;
         *(_BYTE*)(thisx + 593) += v4;
-        *(_WORD*)(thisx + 594) += a2;
+        *(short*)(thisx + 594) += a2;
         *(int*)(thisx + 584) %= 50;
         *(_BYTE*)(thisx + 592) = 60;
     }
@@ -18191,7 +18191,7 @@ int sub_4234E6(int thisx, int a2)
     if (v3 + 30 > 0xFFFF)
         v7 = -1;
     result = thisx;
-    *(_WORD*)(thisx + 596) = v7;
+    *(short*)(thisx + 596) = v7;
     return result;
 }
 
@@ -18246,19 +18246,19 @@ int sub_42371C(int thisx)
         }
     }
     *(int*)(thisx + 524) = 0;
-    *(_WORD*)(thisx + 528) = *(_WORD*)(thisx + 190);
+    *(short*)(thisx + 528) = *(short*)(thisx + 190);
     *(_BYTE*)(thisx + 536) = *(_BYTE*)(thisx + 192);
-    *(_WORD*)(thisx + 530) = *(_WORD*)(thisx + 498);
-    *(_WORD*)(thisx + 538) = *(_WORD*)(thisx + 502);
-    *(_WORD*)(thisx + 540) = *(_WORD*)(thisx + 504);
-    *(_WORD*)(thisx + 542) = *(_WORD*)(thisx + 506);
-    *(_WORD*)(thisx + 544) = *(_WORD*)(thisx + 508);
-    *(_WORD*)(thisx + 546) = *(_WORD*)(thisx + 510);
-    *(_WORD*)(thisx + 548) = *(_WORD*)(thisx + 512);
-    *(_WORD*)(thisx + 550) = *(_WORD*)(thisx + 514);
-    *(_WORD*)(thisx + 552) = *(_WORD*)(thisx + 516);
+    *(short*)(thisx + 530) = *(short*)(thisx + 498);
+    *(short*)(thisx + 538) = *(short*)(thisx + 502);
+    *(short*)(thisx + 540) = *(short*)(thisx + 504);
+    *(short*)(thisx + 542) = *(short*)(thisx + 506);
+    *(short*)(thisx + 544) = *(short*)(thisx + 508);
+    *(short*)(thisx + 546) = *(short*)(thisx + 510);
+    *(short*)(thisx + 548) = *(short*)(thisx + 512);
+    *(short*)(thisx + 550) = *(short*)(thisx + 514);
+    *(short*)(thisx + 552) = *(short*)(thisx + 516);
     result = thisx;
-    *(_WORD*)(thisx + 554) = *(_WORD*)(thisx + 518);
+    *(short*)(thisx + 554) = *(short*)(thisx + 518);
     return result;
 }
 
@@ -18304,15 +18304,15 @@ int sub_4239D3(int thisx, __int16 a2)
     if (*(_BYTE*)(thisx + 188) == 2 || (result = *(unsigned __int8*)(thisx + 188), result == 3))
     {
         v3 = *(__int16*)(thisx + 600) / 100;
-        *(_WORD*)(thisx + 600) += a2;
+        *(short*)(thisx + 600) += a2;
         if (*(__int16*)(thisx + 600) <= 300)
         {
             if (*(__int16*)(thisx + 600) < 0)
-                *(_WORD*)(thisx + 600) = 0;
+                *(short*)(thisx + 600) = 0;
         }
         else
         {
-            *(_WORD*)(thisx + 600) = 300;
+            *(short*)(thisx + 600) = 300;
         }
         result = *(__int16*)(thisx + 600) / 100;
         if (v3 < result)
@@ -18341,7 +18341,7 @@ __int16 sub_423AC3(int thisx, int a2)
     int v4; // [esp+4h] [ebp-Ch]
 
 
-    v6 = *(_WORD*)(thisx + 518);
+    v6 = *(short*)(thisx + 518);
     if (sub_41BA53(thisx, 0x83u, 0))
     {
         v5 = 100 * *(unsigned __int16*)(thisx + 214) / *(unsigned __int16*)(thisx + 500);
@@ -18411,7 +18411,7 @@ __int16 sub_423AC3(int thisx, int a2)
         }
     }
     if (sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
-        v6 += *(_WORD*)(thisx + 496) + 10;
+        v6 += *(short*)(thisx + 496) + 10;
     if (v6)
         return v6;
     else
@@ -18979,7 +18979,7 @@ void sub_42455B(int thisx, __int16* a2)
         v4 = a2[1];
         v8 = sub_426970((int*)byte_4B9B10) * v4 / a2[2] + v3;
         if (v8 > 0)
-            sub_41261C((_WORD*)thisx, v8, 0, 1); //减血函数
+            sub_41261C((short*)thisx, v8, 0, 1); //减血函数
     }
     sub_4747D2((int*)byte_4B9B10, *((unsigned __int8*)a2 + 6), a2[4]);
     if ((a2[26] & 0xC) != 0)
@@ -19008,7 +19008,7 @@ int __stdcall sub_424B7E(int a1, int a2)
     *(_BYTE*)(a2 + 16) = 11;
     *(int*)(a2 + 40) = 30;
     *(_BYTE*)(a2 + 6) = 0;
-    *(_WORD*)(a2 + 8) = 19;
+    *(short*)(a2 + 8) = 19;
     result = a1;
     switch (a1)
     {
@@ -19229,7 +19229,7 @@ char* sub_42511B(char* thisx, int a2)
         v3 = (v5[a2] + *(&v6 + a2) * *(unsigned __int16*)v4[i] / 100) / (3 * (i >= 5) + 1) + *(unsigned __int16*)v4[i];
         if (v3 > 0xFFFF)
             LOWORD(v3) = -1;
-        *(_WORD*)v4[i] = v3;
+        *(short*)v4[i] = v3;
         result = (char*)(i + 1);
     }
     return result;
@@ -19878,17 +19878,17 @@ int sub_4260D0(int* thisx)
 }
 
 //get thisx[3];
-__int16 sub_4260F0(_WORD* thisx)
+__int16 sub_4260F0(short* thisx)
 {
     return thisx[3];
 }
 //get thisx[5];
-__int16 sub_426110(_WORD* thisx)
+__int16 sub_426110(short* thisx)
 {
     return thisx[5];
 }
 //get thisx[6];
-__int16  sub_426130(_WORD* thisx)
+__int16  sub_426130(short* thisx)
 {
     return thisx[6];
 }
@@ -19905,7 +19905,7 @@ int sub_426170(_BYTE* thisx)
 }
 
 //return thisx[120];
-__int16 sub_4261B0(_WORD* thisx)
+__int16 sub_4261B0(short* thisx)
 {
     return thisx[120];
 }
@@ -20138,72 +20138,72 @@ char* sub_4266D0(char* thisx)
 }
 
 //return thisx[10];
-__int16 sub_4266F0(_WORD* thisx)
+__int16 sub_4266F0(short* thisx)
 {
     return thisx[10];
 }
 
 // return thisx[14];
 //get初始化生命值
-__int16 sub_426710(_WORD* thisx)
+__int16 sub_426710(short* thisx)
 {
     return thisx[14];
 }
 
 //return thisx[15];
 //获取初始化拳头力量
-__int16 sub_426730(_WORD* thisx)
+__int16 sub_426730(short* thisx)
 {
     return thisx[15];
 }
 
 //return thisx[16];
 //获取初始化腿力量
-__int16 sub_426750(_WORD* thisx)
+__int16 sub_426750(short* thisx)
 {
     return thisx[16];
 }
 
 // return thisx[17];
 //获取初始化投掷力量
-__int16 sub_426770(_WORD* thisx)
+__int16 sub_426770(short* thisx)
 {
     return thisx[17];
 }
 
 // sub_426790 return thisx[18];
 //获取初始化腿力量
-__int16 sub_426790(_WORD* thisx)
+__int16 sub_426790(short* thisx)
 {
     return thisx[18];
 }
 
 //return thisx[19];
-__int16 sub_4267B0(_WORD* thisx)
+__int16 sub_4267B0(short* thisx)
 {
     return thisx[19];
 }
 
 //return thisx[20];
-__int16 sub_4267D0(_WORD* thisx)
+__int16 sub_4267D0(short* thisx)
 {
     return thisx[20];
 }
 
 //return thisx[21];
-__int16 sub_4267F0(_WORD* thisx)
+__int16 sub_4267F0(short* thisx)
 {
     return thisx[21];
 }
 
 //return thisx[22];
-__int16 sub_426810(_WORD* thisx)
+__int16 sub_426810(short* thisx)
 {
     return thisx[22];
 }
 
 //return thisx[23];
-__int16 sub_426830(_WORD* thisx)
+__int16 sub_426830(short* thisx)
 {
     return thisx[23];
 }
@@ -20699,14 +20699,14 @@ Warning();//修正堆栈
             if (*(int*)(a1 + 428) == 124)
             {
                 v4 = sub_41CB3B(a1, 1);
-                sub_41F169((_WORD*)a1, v4);
+                sub_41F169((short*)a1, v4);
             }
             else
             {
                 v5 = sub_41CB3B(a1, 1);
                 v6 = sub_41CB3B(a1, 1);
                 v7 = sub_41D067(a1, 1);
-                sub_41F169((_WORD*)a1, v6 * v7 / 200 + v5);
+                sub_41F169((short*)a1, v6 * v7 / 200 + v5);
             }
             *(_BYTE*)(a1 + 248) = 0;
             *(_BYTE*)(a1 + 213) = -1;
@@ -20753,27 +20753,27 @@ Warning();//修正堆栈
                     {
                         if (*(int*)(a1 + 444) >= 16)
                         {
-                            *(_WORD*)(a1 + 204) = 3;
+                            *(short*)(a1 + 204) = 3;
                         }
                         else
                         {
                             *(_BYTE*)(a1 + 257) = 2;
-                            *(_WORD*)(a1 + 204) = 4;
+                            *(short*)(a1 + 204) = 4;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 5;
+                        *(short*)(a1 + 204) = 5;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 4;
+                    *(short*)(a1 + 204) = 4;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 3;
+                *(short*)(a1 + 204) = 3;
             }
             if (*(int*)(a1 + 444) == 4)
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A24, -1, 100, 100, 0);
@@ -20790,21 +20790,21 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 444) >= 14)
                     {
                         *(_BYTE*)(a1 + 257) = 2;
-                        *(_WORD*)(a1 + 204) = 0;
+                        *(short*)(a1 + 204) = 0;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 8;
+                        *(short*)(a1 + 204) = 8;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 7;
+                    *(short*)(a1 + 204) = 7;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 6;
+                *(short*)(a1 + 204) = 6;
             }
             if (*(int*)(a1 + 444) == 4)
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -20833,22 +20833,22 @@ Warning();//修正堆栈
                             if (*(int*)(a1 + 444) >= 12)
                             {
                                 *(_BYTE*)(a1 + 257) = 2;
-                                *(_WORD*)(a1 + 204) = 0;
+                                *(short*)(a1 + 204) = 0;
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 1;
+                                *(short*)(a1 + 204) = 1;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 0;
+                            *(short*)(a1 + 204) = 0;
                         }
                     }
                     else
                     {
                         *(_BYTE*)(a1 + 212) = 0;
-                        *(_WORD*)(a1 + 204) = 4;
+                        *(short*)(a1 + 204) = 4;
                     }
                     if (*(int*)(a1 + 444) == 12)
                         *(int*)(a1 + 404) = 1;
@@ -20871,27 +20871,27 @@ Warning();//修正堆栈
                             {
                                 if (*(int*)(a1 + 444) >= 16)
                                 {
-                                    *(_WORD*)(a1 + 204) = 0;
+                                    *(short*)(a1 + 204) = 0;
                                 }
                                 else
                                 {
                                     *(_BYTE*)(a1 + 257) = 2;
-                                    *(_WORD*)(a1 + 204) = 1;
+                                    *(short*)(a1 + 204) = 1;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 2;
+                                *(short*)(a1 + 204) = 2;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 1;
+                            *(short*)(a1 + 204) = 1;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 0;
+                        *(short*)(a1 + 204) = 0;
                     }
                     if (*(int*)(a1 + 444) == 16)
                         *(int*)(a1 + 404) = 1;
@@ -20914,27 +20914,27 @@ Warning();//修正堆栈
                             {
                                 if (*(int*)(a1 + 444) >= 16)
                                 {
-                                    *(_WORD*)(a1 + 204) = 0;
+                                    *(short*)(a1 + 204) = 0;
                                 }
                                 else
                                 {
                                     *(_BYTE*)(a1 + 257) = 2;
-                                    *(_WORD*)(a1 + 204) = 1;
+                                    *(short*)(a1 + 204) = 1;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 2;
+                                *(short*)(a1 + 204) = 2;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 1;
+                            *(short*)(a1 + 204) = 1;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 0;
+                        *(short*)(a1 + 204) = 0;
                     }
                     if (*(int*)(a1 + 444) == 16)
                         *(int*)(a1 + 404) = 1;
@@ -20955,22 +20955,22 @@ Warning();//修正堆栈
                         {
                             if (*(int*)(a1 + 444) >= 12)
                             {
-                                *(_WORD*)(a1 + 204) = 3;
+                                *(short*)(a1 + 204) = 3;
                             }
                             else
                             {
                                 *(_BYTE*)(a1 + 257) = 2;
-                                *(_WORD*)(a1 + 204) = 2;
+                                *(short*)(a1 + 204) = 2;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 1;
+                            *(short*)(a1 + 204) = 1;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 0;
+                        *(short*)(a1 + 204) = 0;
                     }
                     if (*(int*)(a1 + 444) == 8)
                         *(int*)(a1 + 404) = 1;
@@ -20995,22 +20995,22 @@ Warning();//修正堆栈
                         if (*(int*)(a1 + 444) >= 12)
                         {
                             *(_BYTE*)(a1 + 257) = 2;
-                            *(_WORD*)(a1 + 204) = 2;
+                            *(short*)(a1 + 204) = 2;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 3;
+                            *(short*)(a1 + 204) = 3;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 2;
+                        *(short*)(a1 + 204) = 2;
                     }
                 }
                 else
                 {
                     *(_BYTE*)(a1 + 212) = 0;
-                    *(_WORD*)(a1 + 204) = 4;
+                    *(short*)(a1 + 204) = 4;
                 }
                 if (*(int*)(a1 + 444) == 14)
                     *(int*)(a1 + 404) = 1;
@@ -21038,12 +21038,12 @@ Warning();//修正堆栈
                 v9 = sub_41CCEA(a1, 1);
                 v10 = sub_41CCEA(a1, 1);
                 v11 = sub_41D067(a1, 1);
-                sub_41F169((_WORD*)a1, v10 * v11 / 200 + v9);
+                sub_41F169((short*)a1, v10 * v11 / 200 + v9);
             }
             else
             {
                 v8 = sub_41CCEA(a1, 1);
-                sub_41F169((_WORD*)a1, v8);
+                sub_41F169((short*)a1, v8);
             }
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
@@ -21074,21 +21074,21 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 444) >= 14)
                     {
                         *(_BYTE*)(a1 + 257) = 2;
-                        *(_WORD*)(a1 + 204) = 0;
+                        *(short*)(a1 + 204) = 0;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 11;
+                        *(short*)(a1 + 204) = 11;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 10;
+                    *(short*)(a1 + 204) = 10;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 9;
+                *(short*)(a1 + 204) = 9;
             }
             if (*(int*)(a1 + 444) == 4)
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -21112,16 +21112,16 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 444) >= 10)
                     {
                         *(_BYTE*)(a1 + 257) = 2;
-                        *(_WORD*)(a1 + 204) = 2;
+                        *(short*)(a1 + 204) = 2;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 3;
+                        *(short*)(a1 + 204) = 3;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 2;
+                    *(short*)(a1 + 204) = 2;
                 }
                 if (*(int*)(a1 + 444) == 14)
                     *(int*)(a1 + 404) = 1;
@@ -21142,22 +21142,22 @@ Warning();//修正堆栈
                     {
                         if (*(int*)(a1 + 444) >= 16)
                         {
-                            *(_WORD*)(a1 + 204) = 0;
+                            *(short*)(a1 + 204) = 0;
                         }
                         else
                         {
                             *(_BYTE*)(a1 + 257) = 2;
-                            *(_WORD*)(a1 + 204) = 3;
+                            *(short*)(a1 + 204) = 3;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 4;
+                        *(short*)(a1 + 204) = 4;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 3;
+                    *(short*)(a1 + 204) = 3;
                 }
                 if (*(int*)(a1 + 444) == 12)
                     *(int*)(a1 + 404) = 1;
@@ -21179,24 +21179,24 @@ Warning();//修正堆栈
                         if (*(int*)(a1 + 444) >= 16)
                         {
                             if (*(int*)(a1 + 444) >= 20)
-                                *(_WORD*)(a1 + 204) = 0;
+                                *(short*)(a1 + 204) = 0;
                             else
-                                *(_WORD*)(a1 + 204) = 5;
+                                *(short*)(a1 + 204) = 5;
                         }
                         else
                         {
                             *(_BYTE*)(a1 + 257) = 2;
-                            *(_WORD*)(a1 + 204) = 3;
+                            *(short*)(a1 + 204) = 3;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 4;
+                        *(short*)(a1 + 204) = 4;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 3;
+                    *(short*)(a1 + 204) = 3;
                 }
                 if (*(int*)(a1 + 444) == 20)
                     *(int*)(a1 + 404) = 1;
@@ -21217,22 +21217,22 @@ Warning();//修正堆栈
                     {
                         if (*(int*)(a1 + 444) >= 12)
                         {
-                            *(_WORD*)(a1 + 204) = 3;
+                            *(short*)(a1 + 204) = 3;
                         }
                         else
                         {
                             *(_BYTE*)(a1 + 257) = 2;
-                            *(_WORD*)(a1 + 204) = 4;
+                            *(short*)(a1 + 204) = 4;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 5;
+                        *(short*)(a1 + 204) = 5;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 4;
+                    *(short*)(a1 + 204) = 4;
                 }
                 if (*(int*)(a1 + 444) == 7)
                     *(int*)(a1 + 404) = 1;
@@ -21255,16 +21255,16 @@ Warning();//修正堆栈
                 if (*(int*)(a1 + 444) >= 10)
                 {
                     *(_BYTE*)(a1 + 257) = 2;
-                    *(_WORD*)(a1 + 204) = 0;
+                    *(short*)(a1 + 204) = 0;
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 1;
+                    *(short*)(a1 + 204) = 1;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 0;
+                *(short*)(a1 + 204) = 0;
             }
             if (*(int*)(a1 + 444) == 12)
                 *(int*)(a1 + 404) = 1;
@@ -21296,18 +21296,18 @@ Warning();//修正堆栈
                 if (*(int*)(a1 + 444) >= 10)
                 {
                     if (*(int*)(a1 + 444) >= 15)
-                        *(_WORD*)(a1 + 204) = 9;
+                        *(short*)(a1 + 204) = 9;
                     else
-                        *(_WORD*)(a1 + 204) = 8;
+                        *(short*)(a1 + 204) = 8;
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 7;
+                    *(short*)(a1 + 204) = 7;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 6;
+                *(short*)(a1 + 204) = 6;
             }
             if (*(int*)(a1 + 444) == 4)
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A24, -1, 100, 100, 0);
@@ -21319,7 +21319,7 @@ Warning();//修正堆栈
             if (*(int*)(a1 + 436))
             {
                 v13 = (double)sub_41CCEA(a1, 1) * 1.5;
-                sub_41F169((_WORD*)a1, (__int64)v13);
+                sub_41F169((short*)a1, (__int64)v13);
                 if (*(int*)(a1 + 444) >= 10)
                 {
                     if (*(int*)(a1 + 444) >= 14)
@@ -21329,22 +21329,22 @@ Warning();//修正堆栈
                             if (*(int*)(a1 + 444) < 26)
                             {
                                 *(_BYTE*)(a1 + 257) = 2;
-                                *(_WORD*)(a1 + 204) = 19;
+                                *(short*)(a1 + 204) = 19;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 18;
+                            *(short*)(a1 + 204) = 18;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 17;
+                        *(short*)(a1 + 204) = 17;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 12;
+                    *(short*)(a1 + 204) = 12;
                 }
                 if (*(int*)(a1 + 444) == 10)
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -21354,7 +21354,7 @@ Warning();//修正堆栈
             else
             {
                 v12 = (double)sub_41CB3B(a1, 1) * 1.5;
-                sub_41F169((_WORD*)a1, (__int64)v12);
+                sub_41F169((short*)a1, (__int64)v12);
                 if (*(int*)(a1 + 444) >= 10)
                 {
                     if (*(int*)(a1 + 444) >= 14)
@@ -21363,27 +21363,27 @@ Warning();//修正堆栈
                         {
                             if (*(int*)(a1 + 444) >= 26)
                             {
-                                *(_WORD*)(a1 + 204) = 16;
+                                *(short*)(a1 + 204) = 16;
                             }
                             else
                             {
                                 *(_BYTE*)(a1 + 257) = 2;
-                                *(_WORD*)(a1 + 204) = 15;
+                                *(short*)(a1 + 204) = 15;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 14;
+                            *(short*)(a1 + 204) = 14;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 13;
+                        *(short*)(a1 + 204) = 13;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 12;
+                    *(short*)(a1 + 204) = 12;
                 }
                 if (*(int*)(a1 + 444) == 10)
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -21397,7 +21397,7 @@ Warning();//修正堆栈
             {
                 v407 = (__int64)((double)sub_41CB3B(a1, 1) * 1.5);
                 v14 = sub_43E620((short*)*(int*)(a1 + 480));
-                sub_41F169((_WORD*)a1, (v407 * v14 / 100 + 50) / 2);
+                sub_41F169((short*)a1, (v407 * v14 / 100 + 50) / 2);
             }
             *(_BYTE*)(a1 + 212) = 0;
             if (*(int*)(a1 + 444) >= 4)
@@ -21410,33 +21410,33 @@ Warning();//修正堆栈
                         {
                             if (*(int*)(a1 + 444) >= 24)
                             {
-                                *(_WORD*)(a1 + 204) = 208;
+                                *(short*)(a1 + 204) = 208;
                             }
                             else
                             {
                                 *(_BYTE*)(a1 + 251) = 0;
-                                *(_WORD*)(a1 + 204) = 209;
+                                *(short*)(a1 + 204) = 209;
                             }
                         }
                         else
                         {
                             *(_BYTE*)(a1 + 257) = 2;
-                            *(_WORD*)(a1 + 204) = 211;
+                            *(short*)(a1 + 204) = 211;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 210;
+                        *(short*)(a1 + 204) = 210;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 209;
+                    *(short*)(a1 + 204) = 209;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 208;
+                *(short*)(a1 + 204) = 208;
             }
             if (*(int*)(a1 + 444) >= 28)
                 *(int*)(a1 + 432) = 3;
@@ -21447,7 +21447,7 @@ Warning();//修正堆栈
             {
             case 1:
                 v16 = (double)sub_41CB3B(a1, 1) * 1.5;
-                sub_41F169((_WORD*)a1, (__int64)v16);
+                sub_41F169((short*)a1, (__int64)v16);
                 if (*(int*)(a1 + 444) >= 4)
                 {
                     if (*(int*)(a1 + 444) >= 8)
@@ -21456,34 +21456,34 @@ Warning();//修正堆栈
                         {
                             if (*(int*)(a1 + 444) >= 21)
                             {
-                                *(_WORD*)(a1 + 204) = 29;
+                                *(short*)(a1 + 204) = 29;
                             }
                             else
                             {
                                 *(_BYTE*)(a1 + 257) = 2;
-                                *(_WORD*)(a1 + 204) = 7;
+                                *(short*)(a1 + 204) = 7;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 6;
+                            *(short*)(a1 + 204) = 6;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 5;
+                        *(short*)(a1 + 204) = 5;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 4;
+                    *(short*)(a1 + 204) = 4;
                 }
                 if (*(int*)(a1 + 444) > 24)
                     *(int*)(a1 + 432) = 4;
                 break;
             case 2:
                 v17 = (double)sub_41CCEA(a1, 1) * 1.5;
-                sub_41F169((_WORD*)a1, (__int64)v17);
+                sub_41F169((short*)a1, (__int64)v17);
                 if (*(int*)(a1 + 444) >= 4)
                 {
                     if (*(int*)(a1 + 444) >= 8)
@@ -21500,55 +21500,55 @@ Warning();//修正堆栈
                                         {
                                             if (*(int*)(a1 + 444) >= 32)
                                             {
-                                                *(_WORD*)(a1 + 204) = 0;
+                                                *(short*)(a1 + 204) = 0;
                                             }
                                             else
                                             {
                                                 *(_BYTE*)(a1 + 212) = 0;
-                                                *(_WORD*)(a1 + 204) = 3;
+                                                *(short*)(a1 + 204) = 3;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 11;
+                                            *(short*)(a1 + 204) = 11;
                                         }
                                     }
                                     else
                                     {
                                         *(_BYTE*)(a1 + 257) = 2;
-                                        *(_WORD*)(a1 + 204) = 10;
+                                        *(short*)(a1 + 204) = 10;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 9;
+                                    *(short*)(a1 + 204) = 9;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 8;
+                                *(short*)(a1 + 204) = 8;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 7;
+                            *(short*)(a1 + 204) = 7;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 6;
+                        *(short*)(a1 + 204) = 6;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 5;
+                    *(short*)(a1 + 204) = 5;
                 }
                 if (*(int*)(a1 + 444) >= 36)
                     *(int*)(a1 + 432) = 4;
                 break;
             case 3:
                 v18 = (double)sub_41CCEA(a1, 1) * 1.5;
-                sub_41F169((_WORD*)a1, (__int64)v18);
+                sub_41F169((short*)a1, (__int64)v18);
                 if (*(int*)(a1 + 444) >= 4)
                 {
                     if (*(int*)(a1 + 444) >= 8)
@@ -21560,41 +21560,41 @@ Warning();//修正堆栈
                                 if (*(int*)(a1 + 444) >= 20)
                                 {
                                     if (*(int*)(a1 + 444) >= 24)
-                                        *(_WORD*)(a1 + 204) = 0;
+                                        *(short*)(a1 + 204) = 0;
                                     else
-                                        *(_WORD*)(a1 + 204) = 6;
+                                        *(short*)(a1 + 204) = 6;
                                 }
                                 else
                                 {
                                     *(_BYTE*)(a1 + 257) = 2;
-                                    *(_WORD*)(a1 + 204) = 3;
+                                    *(short*)(a1 + 204) = 3;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 9;
+                                *(short*)(a1 + 204) = 9;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 8;
+                            *(short*)(a1 + 204) = 8;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 7;
+                        *(short*)(a1 + 204) = 7;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 6;
+                    *(short*)(a1 + 204) = 6;
                 }
                 if (*(int*)(a1 + 444) >= 28)
                     *(int*)(a1 + 432) = 4;
                 break;
             case 4:
                 v19 = (double)sub_41CB3B(a1, 1) * 1.5;
-                sub_41F169((_WORD*)a1, (__int64)v19);
+                sub_41F169((short*)a1, (__int64)v19);
                 if (*(int*)(a1 + 444) >= 4)
                 {
                     if (*(int*)(a1 + 444) >= 8)
@@ -21606,34 +21606,34 @@ Warning();//修正堆栈
                                 if (*(int*)(a1 + 444) >= 26)
                                 {
                                     if (*(int*)(a1 + 444) >= 30)
-                                        *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) >= 34 ? 6 : 7;
+                                        *(short*)(a1 + 204) = *(int*)(a1 + 444) >= 34 ? 6 : 7;
                                     else
-                                        *(_WORD*)(a1 + 204) = 11;
+                                        *(short*)(a1 + 204) = 11;
                                 }
                                 else
                                 {
                                     *(_BYTE*)(a1 + 257) = 2;
-                                    *(_WORD*)(a1 + 204) = 10;
+                                    *(short*)(a1 + 204) = 10;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 9;
+                                *(short*)(a1 + 204) = 9;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 8;
+                            *(short*)(a1 + 204) = 8;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 7;
+                        *(short*)(a1 + 204) = 7;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 6;
+                    *(short*)(a1 + 204) = 6;
                 }
                 if (*(int*)(a1 + 444) >= 38)
                     *(int*)(a1 + 432) = 4;
@@ -21643,29 +21643,29 @@ Warning();//修正堆栈
         else
         {
             v15 = (double)sub_41CB3B(a1, 1) * 1.5;
-            sub_41F169((_WORD*)a1, (__int64)v15);
+            sub_41F169((short*)a1, (__int64)v15);
             if (*(int*)(a1 + 444) >= 4)
             {
                 if (*(int*)(a1 + 444) >= 8)
                 {
                     if (*(int*)(a1 + 444) >= 20)
                     {
-                        *(_WORD*)(a1 + 204) = 4;
+                        *(short*)(a1 + 204) = 4;
                     }
                     else
                     {
                         *(_BYTE*)(a1 + 257) = 2;
-                        *(_WORD*)(a1 + 204) = 6;
+                        *(short*)(a1 + 204) = 6;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 5;
+                    *(short*)(a1 + 204) = 5;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 4;
+                *(short*)(a1 + 204) = 4;
             }
             if (*(int*)(a1 + 444) > 24)
                 *(int*)(a1 + 432) = 4;
@@ -21676,7 +21676,7 @@ Warning();//修正堆栈
         v21 = sub_41CCEA(a1, 1);
         v22 = sub_41CA5F(a1, 1) * v21;
         v23 = sub_41D067(a1, 1);
-        sub_41F169((_WORD*)a1, v22 * v23 / 10000 + v20);
+        sub_41F169((short*)a1, v22 * v23 / 10000 + v20);
         *(_BYTE*)(a1 + 248) = 2;
         *(_BYTE*)(a1 + 212) = 1;
         *(_BYTE*)(a1 + 213) = -1;
@@ -21695,29 +21695,29 @@ Warning();//修正堆栈
             *(int*)(a1 + 400) = 0;
         if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
         {
-            *(_WORD*)(a1 + 204) = 20;
+            *(short*)(a1 + 204) = 20;
         }
         else if (*(_BYTE*)(a1 + 195))
         {
             switch (*(_BYTE*)(a1 + 195))
             {
             case 1:
-                *(_WORD*)(a1 + 204) = 3;
+                *(short*)(a1 + 204) = 3;
                 break;
             case 2:
-                *(_WORD*)(a1 + 204) = 16;
+                *(short*)(a1 + 204) = 16;
                 break;
             case 3:
-                *(_WORD*)(a1 + 204) = 31;
+                *(short*)(a1 + 204) = 31;
                 break;
             case 4:
-                *(_WORD*)(a1 + 204) = 12;
+                *(short*)(a1 + 204) = 12;
                 break;
             }
         }
         else
         {
-            *(_WORD*)(a1 + 204) = 7;
+            *(short*)(a1 + 204) = 7;
         }
         if (*(int*)(a1 + 444) == 1)
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -21727,7 +21727,7 @@ Warning();//修正堆栈
         v25 = sub_41CB3B(a1, 1);
         v26 = sub_41CA5F(a1, 1) * v25;
         v27 = sub_41D067(a1, 1);
-        sub_41F169((_WORD*)a1, v26 * v27 / 10000 + v24);
+        sub_41F169((short*)a1, v26 * v27 / 10000 + v24);
         *(_BYTE*)(a1 + 248) = 2;
         *(_BYTE*)(a1 + 212) = 1;
         *(_BYTE*)(a1 + 213) = -1;
@@ -21746,32 +21746,32 @@ Warning();//修正堆栈
             *(int*)(a1 + 400) = 0;
         if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
         {
-            *(_WORD*)(a1 + 204) = 8;
+            *(short*)(a1 + 204) = 8;
         }
         else if (*(_BYTE*)(a1 + 195))
         {
             switch (*(_BYTE*)(a1 + 195))
             {
             case 1:
-                *(_WORD*)(a1 + 204) = 28;
+                *(short*)(a1 + 204) = 28;
                 break;
             case 2:
                 if (*(int*)(a1 + 444) >= 4)
-                    *(_WORD*)(a1 + 204) = 2;
+                    *(short*)(a1 + 204) = 2;
                 else
-                    *(_WORD*)(a1 + 204) = 1;
+                    *(short*)(a1 + 204) = 1;
                 break;
             case 3:
-                *(_WORD*)(a1 + 204) = 2;
+                *(short*)(a1 + 204) = 2;
                 break;
             case 4:
-                *(_WORD*)(a1 + 204) = 1;
+                *(short*)(a1 + 204) = 1;
                 break;
             }
         }
         else
         {
-            *(_WORD*)(a1 + 204) = 8;
+            *(short*)(a1 + 204) = 8;
         }
         if (*(int*)(a1 + 444) == 1)
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -21785,7 +21785,7 @@ Warning();//修正堆栈
             v28 = sub_41CCEA(a1, 1);
             v29 = sub_41CCEA(a1, 1);
             v30 = sub_41CA5F(a1, 1);
-            sub_41F169((_WORD*)a1, v29 * v30 / 200 + v28);
+            sub_41F169((short*)a1, v29 * v30 / 200 + v28);
             *(_BYTE*)(a1 + 248) = 3;
             *(_BYTE*)(a1 + 257) = 1;
             *(_BYTE*)(a1 + 213) = -1;
@@ -21806,21 +21806,21 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 444) >= 14)
                     {
                         *(_BYTE*)(a1 + 257) = 2;
-                        *(_WORD*)(a1 + 204) = 0;
+                        *(short*)(a1 + 204) = 0;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 11;
+                        *(short*)(a1 + 204) = 11;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 10;
+                    *(short*)(a1 + 204) = 10;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 9;
+                *(short*)(a1 + 204) = 9;
             }
             if (*(int*)(a1 + 444) == 4)
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -21834,7 +21834,7 @@ Warning();//修正堆栈
             switch (*(_BYTE*)(a1 + 195))
             {
             case 1:
-                *(_WORD*)(a1 + 204) = 3;
+                *(short*)(a1 + 204) = 3;
                 if (*(int*)(a1 + 444) == 1)
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
                 if (*(int*)(a1 + 444) > 30)
@@ -21842,9 +21842,9 @@ Warning();//修正堆栈
                 break;
             case 2:
                 if (*(int*)(a1 + 444) >= 4)
-                    *(_WORD*)(a1 + 204) = 15;
+                    *(short*)(a1 + 204) = 15;
                 else
-                    *(_WORD*)(a1 + 204) = 14;
+                    *(short*)(a1 + 204) = 14;
                 if (*(int*)(a1 + 444) == 1)
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
                 if (*(int*)(a1 + 444) > 30)
@@ -21870,23 +21870,23 @@ Warning();//修正堆栈
                 if (*(int*)(a1 + 436))
                 {
                     if (*(int*)(a1 + 444) - *(int*)(a1 + 436) >= 8)
-                        *(_WORD*)(a1 + 204) = 35;
+                        *(short*)(a1 + 204) = 35;
                     else
-                        *(_WORD*)(a1 + 204) = 34;
+                        *(short*)(a1 + 204) = 34;
                 }
                 else if (*(int*)(a1 + 444) >= 5)
                 {
                     *(_BYTE*)(a1 + 212) = 1;
-                    *(_WORD*)(a1 + 204) = 33;
+                    *(short*)(a1 + 204) = 33;
                 }
                 else
                 {
                     *(_BYTE*)(a1 + 212) = 1;
-                    *(_WORD*)(a1 + 204) = 32;
+                    *(short*)(a1 + 204) = 32;
                 }
                 break;
             case 4:
-                *(_WORD*)(a1 + 204) = 13;
+                *(short*)(a1 + 204) = 13;
                 if (*(int*)(a1 + 444) == 1)
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
                 if (*(int*)(a1 + 444) > 30)
@@ -21899,7 +21899,7 @@ Warning();//修正堆栈
         }
         else
         {
-            *(_WORD*)(a1 + 204) = 9;
+            *(short*)(a1 + 204) = 9;
             if (*(int*)(a1 + 444) == 1)
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
             if (*(int*)(a1 + 444) > 30)
@@ -21922,14 +21922,14 @@ Warning();//修正堆栈
                 v31 = sub_41CB3B(a1, 1);
                 v32 = sub_41CB3B(a1, 1);
                 v33 = sub_41CA5F(a1, 1);
-                sub_41F169((_WORD*)a1, (v31 + v32 * v33 / 200) / 2);
+                sub_41F169((short*)a1, (v31 + v32 * v33 / 200) / 2);
             }
             else
             {
                 v34 = sub_41CB3B(a1, 1);
                 v35 = sub_41CB3B(a1, 1);
                 v36 = sub_41CA5F(a1, 1);
-                sub_41F169((_WORD*)a1, v35 * v36 / 200 + v34);
+                sub_41F169((short*)a1, v35 * v36 / 200 + v34);
             }
             *(_BYTE*)(a1 + 248) = 3;
             if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
@@ -21945,17 +21945,17 @@ Warning();//修正堆栈
             {
                 if (*(int*)(a1 + 444) >= 38)
                 {
-                    *(_WORD*)(a1 + 204) = 3;
+                    *(short*)(a1 + 204) = 3;
                 }
                 else
                 {
                     *(_BYTE*)(a1 + 257) = 2;
-                    *(_WORD*)(a1 + 204) = 4;
+                    *(short*)(a1 + 204) = 4;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 61;
+                *(short*)(a1 + 204) = 61;
             }
             if (*(int*)(a1 + 444) == 1)
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
@@ -21975,21 +21975,21 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 444) >= 14)
                     {
                         *(_BYTE*)(a1 + 257) = 2;
-                        *(_WORD*)(a1 + 204) = 0;
+                        *(short*)(a1 + 204) = 0;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 8;
+                        *(short*)(a1 + 204) = 8;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 7;
+                    *(short*)(a1 + 204) = 7;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 6;
+                *(short*)(a1 + 204) = 6;
             }
             if (*(int*)(a1 + 444) == 4)
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -22004,9 +22004,9 @@ Warning();//修正堆栈
             {
             case 1:
                 if (*(int*)(a1 + 444) >= 10)
-                    *(_WORD*)(a1 + 204) = 9;
+                    *(short*)(a1 + 204) = 9;
                 else
-                    *(_WORD*)(a1 + 204) = 8;
+                    *(short*)(a1 + 204) = 8;
                 if (*(int*)(a1 + 444) == 1)
                 {
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
@@ -22024,20 +22024,20 @@ Warning();//修正堆栈
                 break;
             case 2:
                 if (*(int*)(a1 + 444) >= 4)
-                    *(_WORD*)(a1 + 204) = 13;
+                    *(short*)(a1 + 204) = 13;
                 else
-                    *(_WORD*)(a1 + 204) = 12;
+                    *(short*)(a1 + 204) = 12;
                 if (*(int*)(a1 + 444) == 1)
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
                 if (*(int*)(a1 + 444) > 30)
                     *(int*)(a1 + 432) = 4;
                 break;
             case 3:
-                *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 5 % 4 + 10;
+                *(short*)(a1 + 204) = *(int*)(a1 + 444) / 5 % 4 + 10;
                 if (*(int*)(a1 + 444) >= 26)
                 {
                     *(_BYTE*)(a1 + 212) = 0;
-                    *(_WORD*)(a1 + 204) = 6;
+                    *(short*)(a1 + 204) = 6;
                 }
                 if (*(int*)(a1 + 444) == 1)
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
@@ -22045,7 +22045,7 @@ Warning();//修正堆栈
                     *(int*)(a1 + 432) = 4;
                 break;
             case 4:
-                *(_WORD*)(a1 + 204) = 13;
+                *(short*)(a1 + 204) = 13;
                 if (*(int*)(a1 + 444) == 1)
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
                 if (*(int*)(a1 + 444) > 30)
@@ -22058,7 +22058,7 @@ Warning();//修正堆栈
         }
         else
         {
-            *(_WORD*)(a1 + 204) = 10;
+            *(short*)(a1 + 204) = 10;
             if (*(int*)(a1 + 444) == 1)
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
             if (*(int*)(a1 + 444) > 30)
@@ -22070,10 +22070,10 @@ Warning();//修正堆栈
         return;
     case 0x83:
         v37 = (double)sub_41CB3B(a1, 1) * 1.5;
-        sub_41F169((_WORD*)a1, (__int64)v37);
+        sub_41F169((short*)a1, (__int64)v37);
         *(_BYTE*)(a1 + 248) = 1;
         *(_BYTE*)(a1 + 212) = 0;
-        *(_WORD*)(a1 + 204) = 54;
+        *(short*)(a1 + 204) = 54;
         *(_BYTE*)(a1 + 213) = -1;
         if (*(int*)(a1 + 444) == 1)
         {
@@ -22094,7 +22094,7 @@ Warning();//修正堆栈
             v284 = (double)sub_41CB3B(a1, 1) * 1.2;
             v38 = sub_41CB3B(a1, 1);
             v39 = (double)(v38 * sub_41D067(a1, 1) / 200) + v284;
-            sub_41F169((_WORD*)a1, (__int64)v39);
+            sub_41F169((short*)a1, (__int64)v39);
             *(_BYTE*)(a1 + 248) = 0;
             *(_BYTE*)(a1 + 213) = -1;
             memset((void*)(a1 + 453), 0, 8u);
@@ -22111,9 +22111,9 @@ Warning();//修正堆栈
         }
         *(_BYTE*)(a1 + 212) = 0;
         if (*(int*)(a1 + 348) >= 0)
-            *(_WORD*)(a1 + 204) = 54;
+            *(short*)(a1 + 204) = 54;
         else
-            *(_WORD*)(a1 + 204) = 25;
+            *(short*)(a1 + 204) = 25;
         return;
     case 0x84:
     case 0x8B:
@@ -22122,7 +22122,7 @@ Warning();//修正堆栈
             v283 = (double)sub_41CCEA(a1, 1) * 1.2;
             v40 = sub_41CCEA(a1, 1);
             v41 = (double)(v40 * sub_41D067(a1, 1) / 200) + v283;
-            sub_41F169((_WORD*)a1, (__int64)v41);
+            sub_41F169((short*)a1, (__int64)v41);
             *(_BYTE*)(a1 + 248) = 0;
             *(_BYTE*)(a1 + 257) = 1;
             *(_BYTE*)(a1 + 213) = -1;
@@ -22139,9 +22139,9 @@ Warning();//修正堆栈
         }
         *(_BYTE*)(a1 + 212) = 0;
         if (*(int*)(a1 + 348) >= 0)
-            *(_WORD*)(a1 + 204) = 55;
+            *(short*)(a1 + 204) = 55;
         else
-            *(_WORD*)(a1 + 204) = 25;
+            *(short*)(a1 + 204) = 25;
         return;
     case 0x8E:
         if (*(int*)(a1 + 480))
@@ -22166,7 +22166,7 @@ Warning();//修正堆栈
                         v405 += v43 * sub_41D067(a1, 1) / 250;
                     }
                     v44 = sub_43E620((short*)*(int*)(a1 + 480));
-                    sub_41F169((_WORD*)a1, (v405 * v44 / 100 + 50) / 2);
+                    sub_41F169((short*)a1, (v405 * v44 / 100 + 50) / 2);
                 }
                 else
                 {
@@ -22182,7 +22182,7 @@ Warning();//修正堆栈
                         v404 += v46 * sub_41D067(a1, 1) / 250;
                     }
                     v47 = sub_43E620((short*)*(int*)(a1 + 480));
-                    sub_41F169((_WORD*)a1, v404 * v47 / 100 + 50);
+                    sub_41F169((short*)a1, v404 * v47 / 100 + 50);
                 }
                 *(_BYTE*)(a1 + 248) = 0;
                 *(_BYTE*)(a1 + 257) = 1;
@@ -22201,21 +22201,21 @@ Warning();//修正堆栈
                         if (*(int*)(a1 + 444) >= 15)
                         {
                             *(_BYTE*)(a1 + 257) = 2;
-                            *(_WORD*)(a1 + 204) = 142;
+                            *(short*)(a1 + 204) = 142;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 141;
+                            *(short*)(a1 + 204) = 141;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 140;
+                        *(short*)(a1 + 204) = 140;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 135;
+                    *(short*)(a1 + 204) = 135;
                 }
                 if (*(int*)(a1 + 444) == 6)
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -22236,21 +22236,21 @@ Warning();//修正堆栈
                         if (*(int*)(a1 + 444) >= 10)
                         {
                             *(_BYTE*)(a1 + 257) = 2;
-                            *(_WORD*)(a1 + 204) = 132;
+                            *(short*)(a1 + 204) = 132;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 131;
+                            *(short*)(a1 + 204) = 131;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 130;
+                        *(short*)(a1 + 204) = 130;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 129;
+                    *(short*)(a1 + 204) = 129;
                 }
                 if (*(int*)(a1 + 444) == 4)
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -22272,27 +22272,27 @@ Warning();//修正堆栈
                         {
                             if (*(int*)(a1 + 444) >= 12)
                             {
-                                *(_WORD*)(a1 + 204) = 194;
+                                *(short*)(a1 + 204) = 194;
                             }
                             else
                             {
                                 *(_BYTE*)(a1 + 257) = 2;
-                                *(_WORD*)(a1 + 204) = 195;
+                                *(short*)(a1 + 204) = 195;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 196;
+                            *(short*)(a1 + 204) = 196;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 195;
+                        *(short*)(a1 + 204) = 195;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 194;
+                    *(short*)(a1 + 204) = 194;
                 }
                 if (*(int*)(a1 + 444) == 4)
                 {
@@ -22319,21 +22319,21 @@ Warning();//修正堆栈
                         if (*(int*)(a1 + 444) >= 13)
                         {
                             *(_BYTE*)(a1 + 257) = 2;
-                            *(_WORD*)(a1 + 204) = 132;
+                            *(short*)(a1 + 204) = 132;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 131;
+                            *(short*)(a1 + 204) = 131;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 130;
+                        *(short*)(a1 + 204) = 130;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 129;
+                    *(short*)(a1 + 204) = 129;
                 }
                 if (*(int*)(a1 + 444) == 5)
                 {
@@ -22388,7 +22388,7 @@ Warning();//修正堆栈
             {
                 *(int*)(a1 + 436) = (unsigned __int8)sub_425CB0(*(_BYTE**)(a1 + 480));
                 v48 = (unsigned __int16)sub_43E620((short*)*(int*)(a1 + 480));
-                *(_WORD*)(a1 + 240) = v48 * sub_41F380(a1, 1) / 100;
+                *(short*)(a1 + 240) = v48 * sub_41F380(a1, 1) / 100;
             }
             *(_BYTE*)(a1 + 248) = 0;
             *(_BYTE*)(a1 + 213) = -1;
@@ -22408,21 +22408,21 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 444) >= 13)
                     {
                         *(_BYTE*)(a1 + 257) = 2;
-                        *(_WORD*)(a1 + 204) = 144;
+                        *(short*)(a1 + 204) = 144;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 143;
+                        *(short*)(a1 + 204) = 143;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 140;
+                    *(short*)(a1 + 204) = 140;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 135;
+                *(short*)(a1 + 204) = 135;
             }
             if (*(int*)(a1 + 444) == 5)
             {
@@ -22520,59 +22520,59 @@ Warning();//修正堆栈
                             *(_BYTE*)(a1 + 257) = 2;
                             if (*(int*)(a1 + 440) == 1)
                             {
-                                *(_WORD*)(a1 + 204) = 231;
+                                *(short*)(a1 + 204) = 231;
                             }
                             else if (*(int*)(a1 + 440) == 3)
                             {
-                                *(_WORD*)(a1 + 204) = 233;
+                                *(short*)(a1 + 204) = 233;
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 227;
+                                *(short*)(a1 + 204) = 227;
                             }
                         }
                         else if (*(int*)(a1 + 440) == 1)
                         {
-                            *(_WORD*)(a1 + 204) = 231;
+                            *(short*)(a1 + 204) = 231;
                         }
                         else if (*(int*)(a1 + 440) == 3)
                         {
-                            *(_WORD*)(a1 + 204) = 233;
+                            *(short*)(a1 + 204) = 233;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 226;
+                            *(short*)(a1 + 204) = 226;
                         }
                     }
                     else if (*(int*)(a1 + 440) == 1)
                     {
-                        *(_WORD*)(a1 + 204) = 230;
+                        *(short*)(a1 + 204) = 230;
                     }
                     else if (*(int*)(a1 + 440) == 3)
                     {
-                        *(_WORD*)(a1 + 204) = 232;
+                        *(short*)(a1 + 204) = 232;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 225;
+                        *(short*)(a1 + 204) = 225;
                     }
                 }
                 else if (*(int*)(a1 + 440) == 1)
                 {
-                    *(_WORD*)(a1 + 204) = 229;
+                    *(short*)(a1 + 204) = 229;
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 224;
+                    *(short*)(a1 + 204) = 224;
                 }
             }
             else if (*(int*)(a1 + 440) == 1)
             {
-                *(_WORD*)(a1 + 204) = 228;
+                *(short*)(a1 + 204) = 228;
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 223;
+                *(short*)(a1 + 204) = 223;
             }
             if (*(int*)(a1 + 444) == 7)
             {
@@ -22616,21 +22616,21 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 444) >= 13)
                     {
                         *(_BYTE*)(a1 + 257) = 2;
-                        *(_WORD*)(a1 + 204) = 134;
+                        *(short*)(a1 + 204) = 134;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 133;
+                        *(short*)(a1 + 204) = 133;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 130;
+                    *(short*)(a1 + 204) = 130;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 129;
+                *(short*)(a1 + 204) = 129;
             }
             if (*(int*)(a1 + 444) == 5)
             {
@@ -22673,7 +22673,7 @@ Warning();//修正堆栈
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
             *(_BYTE*)(a1 + 257) = 1;
-            sub_41F169((_WORD*)a1, 10);
+            sub_41F169((short*)a1, 10);
             *(_BYTE*)(a1 + 248) = 2;
             *(_BYTE*)(a1 + 253) = 1;
         }
@@ -22681,13 +22681,13 @@ Warning();//修正堆栈
         if (*(int*)(a1 + 444) / 10 % 2)
         {
             if (*(int*)(a1 + 428) == 135)
-                *(_WORD*)(a1 + 204) = 37;
+                *(short*)(a1 + 204) = 37;
             else
-                *(_WORD*)(a1 + 204) = 38;
+                *(short*)(a1 + 204) = 38;
         }
         else
         {
-            *(_WORD*)(a1 + 204) = 36;
+            *(short*)(a1 + 204) = 36;
         }
         if (*(int*)(a1 + 444) > 240 && *(int*)(a1 + 428) == 135
             || *(int*)(a1 + 444) > 120 && *(int*)(a1 + 428) == 89)
@@ -22713,7 +22713,7 @@ Warning();//修正堆栈
             *(_BYTE*)(a1 + *(int*)(a1 + 436) + 453) = 0;
         }
         *(_BYTE*)(a1 + 212) = 0;
-        *(_WORD*)(a1 + 204) = 49;
+        *(short*)(a1 + 204) = 49;
         return;
     case 0x88:
     case 0x89:
@@ -22734,17 +22734,17 @@ Warning();//修正堆栈
         if (*(int*)(a1 + 428) == 136)
         {
             if (*(int*)(a1 + 436))
-                *(_WORD*)(a1 + 204) = 17;
+                *(short*)(a1 + 204) = 17;
             else
-                *(_WORD*)(a1 + 204) = 50;
+                *(short*)(a1 + 204) = 50;
         }
         else if (*(int*)(a1 + 436))
         {
-            *(_WORD*)(a1 + 204) = 28;
+            *(short*)(a1 + 204) = 28;
         }
         else
         {
-            *(_WORD*)(a1 + 204) = 51;
+            *(short*)(a1 + 204) = 51;
         }
         return;
     case 0x8C:
@@ -22760,7 +22760,7 @@ Warning();//修正堆栈
             *(int*)(a1 + 376) = 0;
             *(int*)(a1 + 348) = -350;
             *(int*)(a1 + 360) = 30;
-            sub_41F169((_WORD*)a1, 16);
+            sub_41F169((short*)a1, 16);
             *(_BYTE*)(a1 + 248) = 1;
             *(_BYTE*)(a1 + 253) = 1;
             *(_BYTE*)(a1 + 255) = 0;
@@ -22769,7 +22769,7 @@ Warning();//修正堆栈
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A4C, -1, 100, 100, 0);
         }
         *(_BYTE*)(a1 + 212) = 0;
-        *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 234;
+        *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 234;
         return;
     case 0x8D:
         if (*(int*)(a1 + 444) == 1)
@@ -22783,7 +22783,7 @@ Warning();//修正堆栈
             *(int*)(a1 + 356) = 0;
             *(int*)(a1 + 348) = 0;
             *(int*)(a1 + 360) = 0;
-            sub_41F169((_WORD*)a1, 16);
+            sub_41F169((short*)a1, 16);
             *(_BYTE*)(a1 + 248) = 1;
             *(_BYTE*)(a1 + 253) = 1;
             *(_BYTE*)(a1 + 255) = 0;
@@ -22792,7 +22792,7 @@ Warning();//修正堆栈
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A4C, -1, 100, 100, 0);
         }
         *(_BYTE*)(a1 + 212) = 0;
-        *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 234;
+        *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 234;
         if (*(int*)(a1 + 444) == 40)
         {
             *(int*)(a1 + 432) = 12;
@@ -22804,7 +22804,7 @@ Warning();//修正堆栈
         {
         LABEL_897:
             *(_BYTE*)(a1 + 212) = 0;
-            *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 169;
+            *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 169;
             if (!((*(int*)(a1 + 444) - 1) % 6))
                 *(int*)(a1 + 436) = sub_43FFC3((int*)byte_4BDB28, dword_4B9A44, *(int*)(a1 + 436), 100, 100, 0);
             if (*(int*)(a1 + 444) >= 300
@@ -22924,7 +22924,7 @@ Warning();//修正堆栈
             {
             case 1:
                 v55 = sub_41CB3B(a1, 1);
-                sub_41F169((_WORD*)a1, 3 * v55);
+                sub_41F169((short*)a1, 3 * v55);
             LABEL_896:
                 memset((void*)(a1 + 453), 0, 8u);
                 memset((void*)(a1 + 461), 0, 8u);
@@ -22934,11 +22934,11 @@ Warning();//修正堆栈
                 goto LABEL_897;
             case 2:
                 v56 = sub_41CCEA(a1, 1);
-                sub_41F169((_WORD*)a1, 3 * v56);
+                sub_41F169((short*)a1, 3 * v56);
                 goto LABEL_896;
             case 3:
                 v57 = sub_4175B4(a1, 1);
-                sub_41F169((_WORD*)a1, 3 * v57);
+                sub_41F169((short*)a1, 3 * v57);
                 goto LABEL_896;
             }
             if (*(_BYTE*)(a1 + 195) != 4)
@@ -22947,7 +22947,7 @@ Warning();//修正堆栈
         v58 = sub_41CB3B(a1, 1);
         v59 = sub_41CCEA(a1, 1) + v58;
         v60 = sub_4175B4(a1, 1);
-        sub_41F169((_WORD*)a1, v60 + v59);
+        sub_41F169((short*)a1, v60 + v59);
         goto LABEL_896;
     case 0x55:
         if (*(int*)(a1 + 444) == 1)
@@ -22966,9 +22966,9 @@ Warning();//修正堆栈
                 v394 = (v394 + 3) % 6;
             *(_BYTE*)(a1 + 212) = 0;
             if (v394 && v394 != 3)
-                *(_WORD*)(a1 + 204) = 173;
+                *(short*)(a1 + 204) = 173;
             else
-                *(_WORD*)(a1 + 204) = 29;
+                *(short*)(a1 + 204) = 29;
             v270 = v394 == 4 || v394 == 5;
             *(_BYTE*)(a1 + 176) = v270;
             *(int*)(a1 + 372) = 0;
@@ -23047,7 +23047,7 @@ Warning();//修正堆栈
             switch (*(_BYTE*)(a1 + 195))
             {
             case 1:
-                sub_41F169((_WORD*)a1, 3 * v391);
+                sub_41F169((short*)a1, 3 * v391);
             LABEL_1003:
                 memset((void*)(a1 + 453), 0, 8u);
                 memset((void*)(a1 + 461), 0, 8u);
@@ -23071,44 +23071,44 @@ Warning();//修正堆栈
                             {
                             case 1:
                                 if (v394 % 3)
-                                    *(_WORD*)(a1 + 204) = 19;
+                                    *(short*)(a1 + 204) = 19;
                                 else
-                                    *(_WORD*)(a1 + 204) = 18;
+                                    *(short*)(a1 + 204) = 18;
                                 break;
                             case 2:
                                 if (v394 % 3)
-                                    *(_WORD*)(a1 + 204) = 19;
+                                    *(short*)(a1 + 204) = 19;
                                 else
-                                    *(_WORD*)(a1 + 204) = 18;
+                                    *(short*)(a1 + 204) = 18;
                                 break;
                             case 3:
                                 if (v394 % 3)
-                                    *(_WORD*)(a1 + 204) = 21;
+                                    *(short*)(a1 + 204) = 21;
                                 else
-                                    *(_WORD*)(a1 + 204) = 20;
+                                    *(short*)(a1 + 204) = 20;
                                 break;
                             case 4:
                                 if (v394 % 3)
                                 {
                                     if (v394 % 3 == 1)
-                                        *(_WORD*)(a1 + 204) = 15;
+                                        *(short*)(a1 + 204) = 15;
                                     else
-                                        *(_WORD*)(a1 + 204) = 16;
+                                        *(short*)(a1 + 204) = 16;
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 14;
+                                    *(short*)(a1 + 204) = 14;
                                 }
                                 break;
                             }
                         }
                         else if (v394 % 3)
                         {
-                            *(_WORD*)(a1 + 204) = 15;
+                            *(short*)(a1 + 204) = 15;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 14;
+                            *(short*)(a1 + 204) = 14;
                         }
                         if (*(int*)(a1 + 312))
                         {
@@ -23217,16 +23217,16 @@ Warning();//修正堆栈
                 }
                 return;
             case 2:
-                sub_41F169((_WORD*)a1, 3 * v393);
+                sub_41F169((short*)a1, 3 * v393);
                 goto LABEL_1003;
             case 3:
-                sub_41F169((_WORD*)a1, 3 * v392);
+                sub_41F169((short*)a1, 3 * v392);
                 goto LABEL_1003;
             }
             if (*(_BYTE*)(a1 + 195) != 4)
                 goto LABEL_1003;
         }
-        sub_41F169((_WORD*)a1, v392 + v393 + v391);
+        sub_41F169((short*)a1, v392 + v393 + v391);
         goto LABEL_1003;
     }
     if (*(int*)(a1 + 428) != 86)
@@ -23256,7 +23256,7 @@ Warning();//修正堆栈
             {
                 *(int*)(a1 + 304) = 0;
                 *(int*)(a1 + 392) = 1;
-                sub_41F169((_WORD*)a1, *(unsigned __int16*)(a1 + 242));
+                sub_41F169((short*)a1, *(unsigned __int16*)(a1 + 242));
                 *(_BYTE*)(a1 + 248) = 0;
                 *(_BYTE*)(a1 + 253) = 1;
                 *(_BYTE*)(a1 + 254) = 2;
@@ -23266,7 +23266,7 @@ Warning();//修正堆栈
                 memset((void*)(a1 + 461), 0, 8u);
             }
             *(_BYTE*)(a1 + 212) = 0;
-            *(_WORD*)(a1 + 204) = 214;
+            *(short*)(a1 + 204) = 214;
             return;
         case 0x90:
             if (*(int*)(a1 + 444) == 1)
@@ -23276,12 +23276,12 @@ Warning();//修正堆栈
                     v70 = 50 * sub_41CCEA(a1, 1) / 100;
                     v71 = sub_41CCEA(a1, 1);
                     v72 = sub_41D067(a1, 1);
-                    sub_41F169((_WORD*)a1, v71 * v72 / 200 + v70);
+                    sub_41F169((short*)a1, v71 * v72 / 200 + v70);
                 }
                 else
                 {
                     v73 = sub_41CCEA(a1, 1);
-                    sub_41F169((_WORD*)a1, 50 * v73 / 100);
+                    sub_41F169((short*)a1, 50 * v73 / 100);
                 }
                 *(_BYTE*)(a1 + 257) = 1;
                 *(_BYTE*)(a1 + 248) = -1;
@@ -23315,37 +23315,37 @@ Warning();//修正堆栈
                                         if (*(int*)(a1 + 444) >= 24)
                                         {
                                             *(_BYTE*)(a1 + 257) = 2;
-                                            *(_WORD*)(a1 + 204) = 2;
+                                            *(short*)(a1 + 204) = 2;
                                         }
                                         else
                                         {
                                             *(_BYTE*)(a1 + 248) = 0;
-                                            *(_WORD*)(a1 + 204) = 3;
+                                            *(short*)(a1 + 204) = 3;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 2;
+                                        *(short*)(a1 + 204) = 2;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 3;
+                                    *(short*)(a1 + 204) = 3;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 2;
+                                *(short*)(a1 + 204) = 2;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 3;
+                            *(short*)(a1 + 204) = 3;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 2;
+                        *(short*)(a1 + 204) = 2;
                     }
                     if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 12 || *(int*)(a1 + 444) == 20)
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -23376,37 +23376,37 @@ Warning();//修正堆栈
                                         if (*(int*)(a1 + 444) >= 21)
                                         {
                                             *(_BYTE*)(a1 + 257) = 2;
-                                            *(_WORD*)(a1 + 204) = 3;
+                                            *(short*)(a1 + 204) = 3;
                                         }
                                         else
                                         {
                                             *(_BYTE*)(a1 + 248) = 0;
-                                            *(_WORD*)(a1 + 204) = 4;
+                                            *(short*)(a1 + 204) = 4;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 3;
+                                        *(short*)(a1 + 204) = 3;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 4;
+                                    *(short*)(a1 + 204) = 4;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 3;
+                                *(short*)(a1 + 204) = 3;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 4;
+                            *(short*)(a1 + 204) = 4;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 3;
+                        *(short*)(a1 + 204) = 3;
                     }
                     if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 11 || *(int*)(a1 + 444) == 18)
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -23437,37 +23437,37 @@ Warning();//修正堆栈
                                         if (*(int*)(a1 + 444) >= 24)
                                         {
                                             *(_BYTE*)(a1 + 257) = 2;
-                                            *(_WORD*)(a1 + 204) = 3;
+                                            *(short*)(a1 + 204) = 3;
                                         }
                                         else
                                         {
                                             *(_BYTE*)(a1 + 248) = 0;
-                                            *(_WORD*)(a1 + 204) = 4;
+                                            *(short*)(a1 + 204) = 4;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 3;
+                                        *(short*)(a1 + 204) = 3;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 4;
+                                    *(short*)(a1 + 204) = 4;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 3;
+                                *(short*)(a1 + 204) = 3;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 4;
+                            *(short*)(a1 + 204) = 4;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 3;
+                        *(short*)(a1 + 204) = 3;
                     }
                     if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 12 || *(int*)(a1 + 444) == 20)
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -23498,37 +23498,37 @@ Warning();//修正堆栈
                                         if (*(int*)(a1 + 444) >= 17)
                                         {
                                             *(_BYTE*)(a1 + 257) = 2;
-                                            *(_WORD*)(a1 + 204) = 4;
+                                            *(short*)(a1 + 204) = 4;
                                         }
                                         else
                                         {
                                             *(_BYTE*)(a1 + 248) = 0;
-                                            *(_WORD*)(a1 + 204) = 5;
+                                            *(short*)(a1 + 204) = 5;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 4;
+                                        *(short*)(a1 + 204) = 4;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 5;
+                                    *(short*)(a1 + 204) = 5;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 4;
+                                *(short*)(a1 + 204) = 4;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 5;
+                            *(short*)(a1 + 204) = 5;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 4;
+                        *(short*)(a1 + 204) = 4;
                     }
                     if (*(int*)(a1 + 444) == 1 || *(int*)(a1 + 444) == 7 || *(int*)(a1 + 444) == 13)
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -23562,37 +23562,37 @@ Warning();//修正堆栈
                                     if (*(int*)(a1 + 444) >= 24)
                                     {
                                         *(_BYTE*)(a1 + 257) = 2;
-                                        *(_WORD*)(a1 + 204) = 0;
+                                        *(short*)(a1 + 204) = 0;
                                     }
                                     else
                                     {
                                         *(_BYTE*)(a1 + 248) = 0;
-                                        *(_WORD*)(a1 + 204) = 1;
+                                        *(short*)(a1 + 204) = 1;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 0;
+                                    *(short*)(a1 + 204) = 0;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 1;
+                                *(short*)(a1 + 204) = 1;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 0;
+                            *(short*)(a1 + 204) = 0;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 1;
+                        *(short*)(a1 + 204) = 1;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 0;
+                    *(short*)(a1 + 204) = 0;
                 }
                 if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 12 || *(int*)(a1 + 444) == 20)
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -23616,13 +23616,13 @@ Warning();//修正堆栈
                         v75 = v74 * (unsigned __int16)sub_43E620((short*)*(int*)(a1 + 480)) / 200;
                         v76 = sub_41CB3B(a1, 1);
                         v77 = sub_41D067(a1, 1);
-                        sub_41F169((_WORD*)a1, v76 * v77 / 200 + v75);
+                        sub_41F169((short*)a1, v76 * v77 / 200 + v75);
                     }
                     else
                     {
                         v78 = sub_41CB3B(a1, 1);
                         v79 = sub_43E620((short*)*(int*)(a1 + 480));
-                        sub_41F169((_WORD*)a1, v78 * v79 / 200);
+                        sub_41F169((short*)a1, v78 * v79 / 200);
                     }
                 }
                 else if (*(int*)(a1 + 392))
@@ -23630,12 +23630,12 @@ Warning();//修正堆栈
                     v80 = 50 * sub_41CB3B(a1, 1) / 100;
                     v81 = sub_41CB3B(a1, 1);
                     v82 = sub_41D067(a1, 1);
-                    sub_41F169((_WORD*)a1, v81 * v82 / 200 + v80);
+                    sub_41F169((short*)a1, v81 * v82 / 200 + v80);
                 }
                 else
                 {
                     v83 = sub_41CB3B(a1, 1);
-                    sub_41F169((_WORD*)a1, 50 * v83 / 100);
+                    sub_41F169((short*)a1, 50 * v83 / 100);
                 }
                 *(_BYTE*)(a1 + 257) = 1;
                 *(_BYTE*)(a1 + 248) = -1;
@@ -23678,37 +23678,37 @@ Warning();//修正堆栈
                                             if (*(int*)(a1 + 444) >= 21)
                                             {
                                                 *(_BYTE*)(a1 + 257) = 2;
-                                                *(_WORD*)(a1 + 204) = 0;
+                                                *(short*)(a1 + 204) = 0;
                                             }
                                             else
                                             {
                                                 *(_BYTE*)(a1 + 248) = 0;
-                                                *(_WORD*)(a1 + 204) = 1;
+                                                *(short*)(a1 + 204) = 1;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 0;
+                                            *(short*)(a1 + 204) = 0;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 1;
+                                        *(short*)(a1 + 204) = 1;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 0;
+                                    *(short*)(a1 + 204) = 0;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 1;
+                                *(short*)(a1 + 204) = 1;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 0;
+                            *(short*)(a1 + 204) = 0;
                         }
                         if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 11 || *(int*)(a1 + 444) == 18)
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -23739,37 +23739,37 @@ Warning();//修正堆栈
                                             if (*(int*)(a1 + 444) >= 24)
                                             {
                                                 *(_BYTE*)(a1 + 257) = 2;
-                                                *(_WORD*)(a1 + 204) = 1;
+                                                *(short*)(a1 + 204) = 1;
                                             }
                                             else
                                             {
                                                 *(_BYTE*)(a1 + 248) = 0;
-                                                *(_WORD*)(a1 + 204) = 2;
+                                                *(short*)(a1 + 204) = 2;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 1;
+                                            *(short*)(a1 + 204) = 1;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 2;
+                                        *(short*)(a1 + 204) = 2;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 1;
+                                    *(short*)(a1 + 204) = 1;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 2;
+                                *(short*)(a1 + 204) = 2;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 1;
+                            *(short*)(a1 + 204) = 1;
                         }
                         if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 12 || *(int*)(a1 + 444) == 20)
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -23800,37 +23800,37 @@ Warning();//修正堆栈
                                             if (*(int*)(a1 + 444) >= 24)
                                             {
                                                 *(_BYTE*)(a1 + 257) = 2;
-                                                *(_WORD*)(a1 + 204) = 1;
+                                                *(short*)(a1 + 204) = 1;
                                             }
                                             else
                                             {
                                                 *(_BYTE*)(a1 + 248) = 0;
-                                                *(_WORD*)(a1 + 204) = 2;
+                                                *(short*)(a1 + 204) = 2;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 1;
+                                            *(short*)(a1 + 204) = 1;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 2;
+                                        *(short*)(a1 + 204) = 2;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 1;
+                                    *(short*)(a1 + 204) = 1;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 2;
+                                *(short*)(a1 + 204) = 2;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 1;
+                            *(short*)(a1 + 204) = 1;
                         }
                         if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 12 || *(int*)(a1 + 444) == 20)
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -23861,37 +23861,37 @@ Warning();//修正堆栈
                                             if (*(int*)(a1 + 444) >= 19)
                                             {
                                                 *(_BYTE*)(a1 + 257) = 2;
-                                                *(_WORD*)(a1 + 204) = 2;
+                                                *(short*)(a1 + 204) = 2;
                                             }
                                             else
                                             {
                                                 *(_BYTE*)(a1 + 248) = 0;
-                                                *(_WORD*)(a1 + 204) = 1;
+                                                *(short*)(a1 + 204) = 1;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 2;
+                                            *(short*)(a1 + 204) = 2;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 1;
+                                        *(short*)(a1 + 204) = 1;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 2;
+                                    *(short*)(a1 + 204) = 2;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 1;
+                                *(short*)(a1 + 204) = 1;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 2;
+                            *(short*)(a1 + 204) = 2;
                         }
                         if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 10 || *(int*)(a1 + 444) == 16)
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -23925,37 +23925,37 @@ Warning();//修正堆栈
                                         if (*(int*)(a1 + 444) >= 24)
                                         {
                                             *(_BYTE*)(a1 + 257) = 2;
-                                            *(_WORD*)(a1 + 204) = 2;
+                                            *(short*)(a1 + 204) = 2;
                                         }
                                         else
                                         {
                                             *(_BYTE*)(a1 + 248) = 0;
-                                            *(_WORD*)(a1 + 204) = 3;
+                                            *(short*)(a1 + 204) = 3;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 2;
+                                        *(short*)(a1 + 204) = 2;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 3;
+                                    *(short*)(a1 + 204) = 3;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 2;
+                                *(short*)(a1 + 204) = 2;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 3;
+                            *(short*)(a1 + 204) = 3;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 2;
+                        *(short*)(a1 + 204) = 2;
                     }
                     if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 12 || *(int*)(a1 + 444) == 20)
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -23991,48 +23991,48 @@ Warning();//修正堆栈
                                     {
                                         if (*(int*)(a1 + 444) >= 22)
                                         {
-                                            *(_WORD*)(a1 + 204) = 194;
+                                            *(short*)(a1 + 204) = 194;
                                         }
                                         else
                                         {
                                             *(_BYTE*)(a1 + 257) = 2;
-                                            *(_WORD*)(a1 + 204) = 195;
+                                            *(short*)(a1 + 204) = 195;
                                         }
                                     }
                                     else
                                     {
                                         *(_BYTE*)(a1 + 248) = 0;
-                                        *(_WORD*)(a1 + 204) = 196;
+                                        *(short*)(a1 + 204) = 196;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 195;
+                                    *(short*)(a1 + 204) = 195;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 196;
+                                *(short*)(a1 + 204) = 196;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 195;
+                            *(short*)(a1 + 204) = 195;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 196;
+                        *(short*)(a1 + 204) = 196;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 195;
+                    *(short*)(a1 + 204) = 195;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 194;
+                *(short*)(a1 + 204) = 194;
             }
             if (*(int*)(a1 + 444) >= 19 || (*(int*)(a1 + 444) - 2) % 6)
             {
@@ -24052,10 +24052,10 @@ Warning();//修正堆栈
             case 0x92:
                 v84 = sub_41CCEA(a1, 1);
                 v85 = sub_41CCEA(a1, 1);
-                sub_41F169((_WORD*)a1, v85 / 10 + v84);
+                sub_41F169((short*)a1, v85 / 10 + v84);
                 *(_BYTE*)(a1 + 248) = 1;
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = 62;
+                *(short*)(a1 + 204) = 62;
                 *(_BYTE*)(a1 + 213) = -1;
                 if (*(int*)(a1 + 444) == 1)
                 {
@@ -24073,10 +24073,10 @@ Warning();//修正堆栈
                 return;
             case 0x93:
                 v86 = sub_41CB3B(a1, 1);
-                sub_41F169((_WORD*)a1, v86);
+                sub_41F169((short*)a1, v86);
                 *(_BYTE*)(a1 + 248) = 1;
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 6 % 4 + 63;
+                *(short*)(a1 + 204) = *(int*)(a1 + 444) / 6 % 4 + 63;
                 *(_BYTE*)(a1 + 213) = -1;
                 if (*(int*)(a1 + 444) == 1)
                 {
@@ -24089,7 +24089,7 @@ Warning();//修正堆栈
                     *(int*)(a1 + 352) = 0;
                     *(int*)(a1 + 348) = -300;
                     *(int*)(a1 + 360) = 20;
-                    *(_WORD*)(a1 + 244) = -60;
+                    *(short*)(a1 + 244) = -60;
                     *(_BYTE*)(a1 + 452) = 12;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
                 }
@@ -24107,7 +24107,7 @@ Warning();//修正堆栈
                     memset((void*)(a1 + 461), 0, 8u);
                     *(_BYTE*)(a1 + 257) = 1;
                     v87 = sub_41CCEA(a1, 1);
-                    sub_41F169((_WORD*)a1, v87);
+                    sub_41F169((short*)a1, v87);
                     *(_BYTE*)(a1 + 248) = -1;
                     *(_BYTE*)(a1 + 213) = -1;
                     *(_BYTE*)(a1 + 212) = 0;
@@ -24115,7 +24115,7 @@ Warning();//修正堆栈
                 }
                 if (*(int*)(a1 + 444) == 5)
                     *(int*)(a1 + 400) = 0;
-                *(_WORD*)(a1 + 204) = 6 * (*(int*)(a1 + 444) / 4 % 2) + 55;
+                *(short*)(a1 + 204) = 6 * (*(int*)(a1 + 444) / 4 % 2) + 55;
                 if (!(*(int*)(a1 + 444) % 8))
                 {
                     memset((void*)(a1 + 453), 0, 8u);
@@ -24130,10 +24130,10 @@ Warning();//修正堆栈
                 v88 = sub_41CB3B(a1, 1);
                 v89 = sub_41CB3B(a1, 1);
                 v90 = sub_41D067(a1, 1);
-                sub_41F169((_WORD*)a1, (v363 + 75) * (v89 * v90 / 100 + v88) / 100);
+                sub_41F169((short*)a1, (v363 + 75) * (v89 * v90 / 100 + v88) / 100);
                 *(_BYTE*)(a1 + 248) = 1;
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 6 % 4 + 63;
+                *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 6 % 4 + 63;
                 *(_BYTE*)(a1 + 213) = -1;
                 if (!((*(int*)(a1 + 444) - 1) % 12))
                 {
@@ -24159,7 +24159,7 @@ Warning();//修正堆栈
                     v91 = (int)sub_41CCEA(a1, 1) >> 1;
                     v92 = sub_41CCEA(a1, 1);
                     v93 = sub_41D067(a1, 1);
-                    sub_41F169((_WORD*)a1, v92 * v93 / 200 + v91);
+                    sub_41F169((short*)a1, v92 * v93 / 200 + v91);
                     *(int*)(a1 + 436) = 0;
                     *(int*)(a1 + 348) -= 700;
                     *(int*)(a1 + 360) = 70;
@@ -24172,11 +24172,11 @@ Warning();//修正堆栈
                     v94 = 9 * sub_41CCEA(a1, 1) / 10;
                     v95 = sub_41CCEA(a1, 1);
                     v96 = sub_41D067(a1, 1);
-                    sub_41F169((_WORD*)a1, v95 * v96 / 200 + v94);
+                    sub_41F169((short*)a1, v95 * v96 / 200 + v94);
                     *(int*)(a1 + 372) = 700 * (*(int*)(a1 + 424) - (*(int*)(a1 + 424) == 0));
                     *(int*)(a1 + 348) = 800;
                     *(int*)(a1 + 360) = 0;
-                    *(_WORD*)(a1 + 244) = 30;
+                    *(short*)(a1 + 244) = 30;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
                 }
@@ -24188,22 +24188,22 @@ Warning();//修正堆栈
                         switch (*(_BYTE*)(a1 + 195))
                         {
                         case 1:
-                            *(_WORD*)(a1 + 204) = 3;
+                            *(short*)(a1 + 204) = 3;
                             break;
                         case 2:
-                            *(_WORD*)(a1 + 204) = 16;
+                            *(short*)(a1 + 204) = 16;
                             break;
                         case 3:
-                            *(_WORD*)(a1 + 204) = 4;
+                            *(short*)(a1 + 204) = 4;
                             break;
                         case 4:
-                            *(_WORD*)(a1 + 204) = 12;
+                            *(short*)(a1 + 204) = 12;
                             break;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 7;
+                        *(short*)(a1 + 204) = 7;
                     }
                 }
                 else
@@ -24214,14 +24214,14 @@ Warning();//修正堆栈
                         memset((void*)(a1 + 461), 0, 8u);
                     }
                     *(_BYTE*)(a1 + 212) = 0;
-                    *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 3 % 4 + 63;
+                    *(short*)(a1 + 204) = *(int*)(a1 + 444) / 3 % 4 + 63;
                 }
                 return;
             case 0x97:
                 v97 = sub_41CCEA(a1, 1);
                 v98 = sub_41CCEA(a1, 1);
                 v99 = sub_41D067(a1, 1);
-                sub_41F169((_WORD*)a1, v98 * v99 / 200 + v97);
+                sub_41F169((short*)a1, v98 * v99 / 200 + v97);
                 *(_BYTE*)(a1 + 248) = 1;
                 *(_BYTE*)(a1 + 213) = -1;
                 if (*(int*)(a1 + 444) == 1)
@@ -24231,17 +24231,17 @@ Warning();//修正堆栈
                     *(_BYTE*)(a1 + 257) = 1;
                     *(_BYTE*)(a1 + 250) = 10;
                     *(int*)(a1 + 436) = 0;
-                    *(_WORD*)(a1 + 244) = 30;
+                    *(short*)(a1 + 244) = 30;
                 }
                 *(_BYTE*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 436))
                 {
                     *(_BYTE*)(a1 + 257) = 2;
-                    *(_WORD*)(a1 + 204) = 6;
+                    *(short*)(a1 + 204) = 6;
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 67;
+                    *(short*)(a1 + 204) = 67;
                 }
                 return;
             case 0x98:
@@ -24249,7 +24249,7 @@ Warning();//修正堆栈
                 v101 = sub_41CB3B(a1, 1);
                 v102 = v101 * sub_41D067(a1, 1) / 100 + v100;
                 v103 = sub_41CB3B(a1, 1);
-                sub_41F169((_WORD*)a1, v103 / 5 + v102);
+                sub_41F169((short*)a1, v103 / 5 + v102);
                 *(_BYTE*)(a1 + 248) = 17;
                 *(_BYTE*)(a1 + 213) = -1;
                 if (*(int*)(a1 + 444) == 1)
@@ -24258,17 +24258,17 @@ Warning();//修正堆栈
                     memset((void*)(a1 + 461), 0, 8u);
                     *(_BYTE*)(a1 + 257) = 1;
                     *(int*)(a1 + 436) = 0;
-                    *(_WORD*)(a1 + 244) = 90;
+                    *(short*)(a1 + 244) = 90;
                 }
                 *(_BYTE*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 436))
                 {
                     *(_BYTE*)(a1 + 257) = 2;
-                    *(_WORD*)(a1 + 204) = 6;
+                    *(short*)(a1 + 204) = 6;
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 54;
+                    *(short*)(a1 + 204) = 54;
                 }
                 return;
             case 0x9A:
@@ -24291,7 +24291,7 @@ Warning();//修正堆栈
                     v255 = (double)sub_41CCEA(a1, 1) * 1.25;
                     v104 = sub_41CCEA(a1, 1);
                     v105 = (double)(v104 * sub_41D067(a1, 1) / 200) + v255;
-                    sub_41F169((_WORD*)a1, (__int64)v105);
+                    sub_41F169((short*)a1, (__int64)v105);
                     *(_BYTE*)(a1 + 213) = -1;
                     if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
                     {
@@ -24301,7 +24301,7 @@ Warning();//修正堆栈
                         v254 = (double)sub_41CCEA(a1, 1) * 1.25;
                         v106 = sub_41CCEA(a1, 1);
                         v107 = ((double)(v106 * sub_41D067(a1, 1) / 200) + v254) / 3.0;
-                        sub_41F169((_WORD*)a1, (__int64)v107);
+                        sub_41F169((short*)a1, (__int64)v107);
                     }
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A38, -1, 100, 100, 0);
                     if (*(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
@@ -24316,22 +24316,22 @@ Warning();//修正堆栈
                     {
                         *(_BYTE*)(a1 + 257) = 2;
                         *(int*)(a1 + 360) = 30;
-                        *(_WORD*)(a1 + 204) = 4;
+                        *(short*)(a1 + 204) = 4;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 68;
+                        *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 68;
                     }
                 }
                 else if (*(int*)(a1 + 444) >= 40)
                 {
                     *(_BYTE*)(a1 + 257) = 2;
                     *(int*)(a1 + 360) = 30;
-                    *(_WORD*)(a1 + 204) = 5;
+                    *(short*)(a1 + 204) = 5;
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 78;
+                    *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 78;
                 }
                 return;
             case 0x9B:
@@ -24342,7 +24342,7 @@ Warning();//修正堆栈
                     v253 = (double)sub_41CCEA(a1, 1) * 1.5;
                     v108 = sub_41CCEA(a1, 1);
                     v109 = (double)(v108 * sub_41D067(a1, 1) / 200) + v253;
-                    sub_41F169((_WORD*)a1, (__int64)v109);
+                    sub_41F169((short*)a1, (__int64)v109);
                     *(_BYTE*)(a1 + 213) = -1;
                     *(int*)(a1 + 380) = 0;
                     *(int*)(a1 + 372) = 0;
@@ -24361,7 +24361,7 @@ Warning();//修正堆栈
                         v252 = (double)sub_41CCEA(a1, 1) * 1.5;
                         v110 = sub_41CCEA(a1, 1);
                         v111 = ((double)(v110 * sub_41D067(a1, 1) / 200) + v252) / 2.0;
-                        sub_41F169((_WORD*)a1, (__int64)v111);
+                        sub_41F169((short*)a1, (__int64)v111);
                         *(int*)(a1 + 340) *= 2;
                         *(int*)(a1 + 352) = -*(int*)(a1 + 340) / 20;
                         *(_BYTE*)(a1 + 212) = 1;
@@ -24379,22 +24379,22 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 444) >= 3)
                     {
                         if (*(int*)(a1 + 444) >= 21)
-                            *(_WORD*)(a1 + 204) = 4;
+                            *(short*)(a1 + 204) = 4;
                         else
-                            *(_WORD*)(a1 + 204) = 73;
+                            *(short*)(a1 + 204) = 73;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 72;
+                        *(short*)(a1 + 204) = 72;
                     }
                 }
                 else if (*(int*)(a1 + 444) >= 5)
                 {
-                    *(_WORD*)(a1 + 204) = 83;
+                    *(short*)(a1 + 204) = 83;
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 82;
+                    *(short*)(a1 + 204) = 82;
                 }
                 return;
             case 0x9C:
@@ -24417,7 +24417,7 @@ Warning();//修正堆栈
                     v251 = (double)sub_41CB3B(a1, 1) * 1.5;
                     v112 = sub_41CB3B(a1, 1);
                     v113 = (double)(v112 * sub_41D067(a1, 1) / 200) + v251;
-                    sub_41F169((_WORD*)a1, (__int64)v113);
+                    sub_41F169((short*)a1, (__int64)v113);
                     *(_BYTE*)(a1 + 213) = -1;
                     if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
                     {
@@ -24446,43 +24446,43 @@ Warning();//修正堆栈
                                             if (*(int*)(a1 + 444) >= 25)
                                             {
                                                 if (*(int*)(a1 + 444) >= 28)
-                                                    *(_WORD*)(a1 + 204) = 4;
+                                                    *(short*)(a1 + 204) = 4;
                                                 else
-                                                    *(_WORD*)(a1 + 204) = 105;
+                                                    *(short*)(a1 + 204) = 105;
                                             }
                                             else
                                             {
-                                                *(_WORD*)(a1 + 204) = 100;
+                                                *(short*)(a1 + 204) = 100;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 99;
+                                            *(short*)(a1 + 204) = 99;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 104;
+                                        *(short*)(a1 + 204) = 104;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 102;
+                                    *(short*)(a1 + 204) = 102;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 89;
+                                *(short*)(a1 + 204) = 89;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 88;
+                            *(short*)(a1 + 204) = 88;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 87;
+                        *(short*)(a1 + 204) = 87;
                     }
                     if (*(int*)(a1 + 444) == 16)
                     {
@@ -24494,13 +24494,13 @@ Warning();//修正堆栈
                 else if (*(int*)(a1 + 444) >= 5)
                 {
                     if (*(int*)(a1 + 444) >= 9)
-                        *(_WORD*)(a1 + 204) = 86;
+                        *(short*)(a1 + 204) = 86;
                     else
-                        *(_WORD*)(a1 + 204) = 85;
+                        *(short*)(a1 + 204) = 85;
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 84;
+                    *(short*)(a1 + 204) = 84;
                 }
                 return;
             case 0x9D:
@@ -24514,13 +24514,13 @@ Warning();//修正堆栈
                     v114 = (int)sub_41CCEA(a1, 1) >> 1;
                     v115 = sub_41CCEA(a1, 1);
                     v116 = sub_41D067(a1, 1);
-                    sub_41F169((_WORD*)a1, v115 * v116 / 200 + v114);
+                    sub_41F169((short*)a1, v115 * v116 / 200 + v114);
                     if (*(_BYTE*)(a1 + 236) == 3)
                     {
                         v117 = (unsigned __int16)sub_4261B0((short*)a1);
                         v118 = sub_41CCEA(a1, 1);
                         v119 = sub_41CA5F(a1, 1);
-                        sub_41F169((_WORD*)a1, v118 * v119 / 200 + v117);
+                        sub_41F169((short*)a1, v118 * v119 / 200 + v117);
                     }
                     *(_BYTE*)(a1 + 213) = -1;
                     if (*(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
@@ -24535,20 +24535,20 @@ Warning();//修正堆栈
                     switch ((unsigned __int8)v362)
                     {
                     case 1u:
-                        *(_WORD*)(a1 + 204) = 87;
+                        *(short*)(a1 + 204) = 87;
                         break;
                     case 2u:
-                        *(_WORD*)(a1 + 204) = 88;
+                        *(short*)(a1 + 204) = 88;
                         break;
                     case 3u:
-                        *(_WORD*)(a1 + 204) = 80;
+                        *(short*)(a1 + 204) = 80;
                         break;
                     }
                 }
                 else
                 {
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A24, -1, 100, 100, 0);
-                    *(_WORD*)(a1 + 204) = 0;
+                    *(short*)(a1 + 204) = 0;
                 }
                 if (!((*(int*)(a1 + 444) - 1) % 3))
                 {
@@ -24585,14 +24585,14 @@ Warning();//修正堆栈
                         v124 = (unsigned __int16)sub_43E620((short*)*(int*)(a1 + 480));
                         v361 += v124 * sub_41F380(a1, 1) / 250;
                     }
-                    sub_41F169((_WORD*)a1, v361);
+                    sub_41F169((short*)a1, v361);
                     *(_BYTE*)(a1 + 213) = -1;
                 }
                 *(_BYTE*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 444) >= 6)
-                    *(_WORD*)(a1 + 204) = 89;
+                    *(short*)(a1 + 204) = 89;
                 else
-                    *(_WORD*)(a1 + 204) = 6;
+                    *(short*)(a1 + 204) = 6;
                 return;
             case 0x5A:
                 *(_BYTE*)(a1 + 212) = 0;
@@ -24635,7 +24635,7 @@ Warning();//修正堆栈
                     if (!v359)
                         v359 = 1;
                     if (*(int*)(a1 + 304))
-                        sub_41EF8A(*(_WORD**)(a1 + 304), v359);
+                        sub_41EF8A(*(short**)(a1 + 304), v359);
                     *(int*)(a1 + 372) = 0;
                     *(int*)(a1 + 376) = 0;
                     *(int*)(a1 + 340) = 0;
@@ -24650,14 +24650,14 @@ Warning();//修正堆栈
                 }
                 if (*(int*)(a1 + 436))
                 {
-                    *(_WORD*)(a1 + 204) = 25;
+                    *(short*)(a1 + 204) = 25;
                     *(int*)(a1 + 304) = 0;
                 }
                 else if (*(int*)(a1 + 444) <= 1
                     || !*(int*)(a1 + 304)
                     || Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 304)) == (struct Concurrency::ISchedulerProxy*)110)
                 {
-                    *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 5 + 90;
+                    *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 5 + 90;
                 }
                 else
                 {
@@ -24668,7 +24668,7 @@ Warning();//修正堆栈
                 return;
             case 0x6E:
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = 33;
+                *(short*)(a1 + 204) = 33;
                 if (*(int*)(a1 + 444) == 1)
                 {
                     *(int*)(a1 + 372) = 0;
@@ -24687,7 +24687,7 @@ Warning();//修正堆栈
                 {
                     if (*(int*)(a1 + 436))
                     {
-                        *(_WORD*)(a1 + 204) = 17;
+                        *(short*)(a1 + 204) = 17;
                     }
                     else
                     {
@@ -24748,13 +24748,13 @@ Warning();//修正堆栈
                     v250 = (double)sub_41CB3B(a1, 1) * 1.7;
                     v125 = sub_41CB3B(a1, 1);
                     v126 = (double)(v125 * sub_41D067(a1, 1) / 100) + v250;
-                    sub_41F169((_WORD*)a1, (__int64)v126);
+                    sub_41F169((short*)a1, (__int64)v126);
                     if (*(_BYTE*)(a1 + 236) == 3)
                     {
                         v127 = (unsigned __int16)sub_4261B0((short*)a1);
                         v128 = sub_41CB3B(a1, 1);
                         v129 = sub_41CA5F(a1, 1);
-                        sub_41F169((_WORD*)a1, v128 * v129 / 100 + v127);
+                        sub_41F169((short*)a1, v128 * v129 / 100 + v127);
                         *(_BYTE*)(a1 + 248) = 3;
                     }
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A3C, -1, 100, 100, 0);
@@ -24766,9 +24766,9 @@ Warning();//修正堆栈
                 if (*(int*)(a1 + 444) == 5)
                     *(int*)(a1 + 400) = 0;
                 if (*(int*)(a1 + 444) >= 9)
-                    *(_WORD*)(a1 + 204) = 96;
+                    *(short*)(a1 + 204) = 96;
                 else
-                    *(_WORD*)(a1 + 204) = 95;
+                    *(short*)(a1 + 204) = 95;
                 return;
             case 0xA0:
                 if (*(int*)(a1 + 444) == 1)
@@ -24776,10 +24776,10 @@ Warning();//修正堆栈
                     *(_BYTE*)(a1 + 248) = -1;
                     *(_BYTE*)(a1 + 257) = 1;
                     v130 = sub_41CB3B(a1, 1);
-                    sub_41F169((_WORD*)a1, v130 / 3);
+                    sub_41F169((short*)a1, v130 / 3);
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_WORD*)(a1 + 244) = -120;
+                    *(short*)(a1 + 244) = -120;
                     *(_BYTE*)(a1 + 213) = 24;
                     if (!*(int*)(a1 + 392) || *(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
                     {
@@ -24794,7 +24794,7 @@ Warning();//修正堆栈
                     *(int*)(a1 + 408) = 0;
                 }
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 2 % 2 + 97;
+                *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 2 % 2 + 97;
                 if ((*(int*)(a1 + 444) - 1) % 4)
                 {
                     if ((*(int*)(a1 + 444) - 1) % 4 == 3)
@@ -24823,11 +24823,11 @@ Warning();//修正堆栈
                     v249 = (double)sub_41CB3B(a1, 1) * 1.5;
                     v131 = sub_41CB3B(a1, 1);
                     v132 = (double)(v131 * sub_41D067(a1, 1) / 100) + v249;
-                    sub_41F169((_WORD*)a1, (__int64)v132);
+                    sub_41F169((short*)a1, (__int64)v132);
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A3C, -1, 100, 100, 0);
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_WORD*)(a1 + 244) = 120;
+                    *(short*)(a1 + 244) = 120;
                     *(_BYTE*)(a1 + 213) = 24;
                     if (*(unsigned __int8*)(a1 + 238) <= 1u)
                     {
@@ -24838,9 +24838,9 @@ Warning();//修正堆栈
                 if (*(int*)(a1 + 444) == 5)
                     *(int*)(a1 + 400) = 0;
                 if (*(int*)(a1 + 444) >= 7)
-                    *(_WORD*)(a1 + 204) = 98;
+                    *(short*)(a1 + 204) = 98;
                 else
-                    *(_WORD*)(a1 + 204) = 97;
+                    *(short*)(a1 + 204) = 97;
                 return;
             case 0x5B:
                 *(_BYTE*)(a1 + 212) = 0;
@@ -24856,25 +24856,25 @@ Warning();//修正堆栈
                 }
                 if (*(int*)(a1 + 444) == 5)
                     *(int*)(a1 + 400) = 0;
-                *(_WORD*)(a1 + 204) = 99;
+                *(short*)(a1 + 204) = 99;
                 switch (*(int*)(a1 + 444))
                 {
                 case '%':
                     *(_BYTE*)(a1 + 248) = 2;
                     v133 = sub_41CB3B(a1, 1);
-                    sub_41F169((_WORD*)a1, v133);
+                    sub_41F169((short*)a1, v133);
                     break;
                 case 'K':
                     *(_BYTE*)(a1 + 248) = 3;
                     *(_BYTE*)(a1 + 250) = 7;
                     v134 = sub_41CB3B(a1, 1);
-                    sub_41F169((_WORD*)a1, 2 * v134);
+                    sub_41F169((short*)a1, 2 * v134);
                     break;
                 case 'q':
                     *(_BYTE*)(a1 + 248) = 1;
                     *(_BYTE*)(a1 + 250) = 10;
                     v135 = (double)sub_41CB3B(a1, 1) * 2.5;
-                    sub_41F169((_WORD*)a1, (__int64)v135);
+                    sub_41F169((short*)a1, (__int64)v135);
                     break;
                 }
                 v355 = *(int*)(a1 + 444) % 38;
@@ -24939,7 +24939,7 @@ Warning();//修正堆栈
                 *(int*)(a1 + 412) = 1;
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_WORD*)(a1 + 244) = -120;
+                    *(short*)(a1 + 244) = -120;
                     *(_BYTE*)(a1 + 257) = 1;
                     if (*(_BYTE*)(a1 + 248) == 1)
                         *(_BYTE*)(a1 + 249) = 1;
@@ -24955,27 +24955,27 @@ Warning();//修正堆栈
                             {
                                 if (*(int*)(a1 + 444) >= 21)
                                 {
-                                    *(_WORD*)(a1 + 204) = 8;
+                                    *(short*)(a1 + 204) = 8;
                                 }
                                 else
                                 {
                                     *(_BYTE*)(a1 + 257) = 2;
-                                    *(_WORD*)(a1 + 204) = 7;
+                                    *(short*)(a1 + 204) = 7;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 6;
+                                *(short*)(a1 + 204) = 6;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 5;
+                            *(short*)(a1 + 204) = 5;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 4;
+                        *(short*)(a1 + 204) = 4;
                     }
                     if (*(int*)(a1 + 444) > 24)
                         *(int*)(a1 + 432) = 4;
@@ -24992,21 +24992,21 @@ Warning();//修正堆栈
                             if (*(int*)(a1 + 444) >= 24)
                             {
                                 *(_BYTE*)(a1 + 257) = 2;
-                                *(_WORD*)(a1 + 204) = 103;
+                                *(short*)(a1 + 204) = 103;
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 167;
+                                *(short*)(a1 + 204) = 167;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 166;
+                            *(short*)(a1 + 204) = 166;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 100;
+                        *(short*)(a1 + 204) = 100;
                     }
                     if (*(int*)(a1 + 444) == 4)
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -25025,7 +25025,7 @@ Warning();//修正堆栈
                 if (*(int*)(a1 + 444) == 5)
                     *(int*)(a1 + 400) = 0;
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = 100;
+                *(short*)(a1 + 204) = 100;
                 if (*(unsigned __int8*)(a1 + 476) < 5u && *(int*)(a1 + 444) >= 31 && !((*(int*)(a1 + 444) - 1) % 30))
                     ++* (_BYTE*)(a1 + 476);
                 if (*(unsigned __int8*)(a1 + 476) < 5u && !((*(int*)(a1 + 444) - 1) % 5))
@@ -25133,12 +25133,12 @@ Warning();//修正堆栈
                     *(_BYTE*)(a1 + 250) = 10;
                     v136 = sub_41CB3B(a1, 1);
                     sub_41F169(
-                        (_WORD*)a1,
+                        (short*)a1,
                         (6 * *(unsigned __int8*)(a1 + 476) + 10) * v136 / 10 + 2 * *(unsigned __int8*)(a1 + 476));
                     if (*(_BYTE*)(a1 + 476) == 5)
                         *(_BYTE*)(a1 + 255) = 0;
                     *(_BYTE*)(a1 + 476) = 0;
-                    *(_WORD*)(a1 + 244) = 60;
+                    *(short*)(a1 + 244) = 60;
                     *(int*)(a1 + 412) = 1;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
@@ -25150,16 +25150,16 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 444) >= 25)
                     {
                         *(_BYTE*)(a1 + 257) = 2;
-                        *(_WORD*)(a1 + 204) = 103;
+                        *(short*)(a1 + 204) = 103;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 102;
+                        *(short*)(a1 + 204) = 102;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 101;
+                    *(short*)(a1 + 204) = 101;
                 }
                 if (*(int*)(a1 + 444) >= 33)
                 {
@@ -25178,13 +25178,13 @@ Warning();//修正堆栈
                     v137 = sub_41CB3B(a1, 1);
                     v138 = sub_41CCEA(a1, 1) + v137;
                     v139 = sub_417924(a1, 3, 1);
-                    sub_41F169((_WORD*)a1, 3 * (v139 + v138) / 5);
+                    sub_41F169((short*)a1, 3 * (v139 + v138) / 5);
                     if (*(int*)(a1 + 392))
                     {
                         v140 = (unsigned __int16)sub_4261B0((short*)a1);
                         v141 = (unsigned __int16)sub_4261B0((short*)a1);
                         v142 = sub_41D067(a1, 1);
-                        sub_41F169((_WORD*)a1, v141 * v142 / 200 + v140);
+                        sub_41F169((short*)a1, v141 * v142 / 200 + v140);
                     }
                     if (*(_BYTE*)(a1 + 237) || *(_BYTE*)(a1 + 236) == 3 && *(int*)(a1 + 392))
                     {
@@ -25192,7 +25192,7 @@ Warning();//修正堆栈
                         v143 = (unsigned __int16)sub_4261B0((short*)a1);
                         v144 = (unsigned __int16)sub_4261B0((short*)a1);
                         v145 = sub_41CA5F(a1, 1);
-                        sub_41F169((_WORD*)a1, v144 * v145 / 200 + v143);
+                        sub_41F169((short*)a1, v144 * v145 / 200 + v143);
                     }
                     *(_BYTE*)(a1 + 213) = -1;
                     memset((void*)(a1 + 453), 0, 8u);
@@ -25206,13 +25206,13 @@ Warning();//修正堆栈
                 if (*(int*)(a1 + 444) >= 4)
                 {
                     if (*(int*)(a1 + 444) >= 8)
-                        *(_WORD*)(a1 + 204) = 106;
+                        *(short*)(a1 + 204) = 106;
                     else
-                        *(_WORD*)(a1 + 204) = 105;
+                        *(short*)(a1 + 204) = 105;
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 104;
+                    *(short*)(a1 + 204) = 104;
                 }
                 if (*(int*)(a1 + 444) == 8)
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -25237,13 +25237,13 @@ Warning();//修正堆栈
                     v248 = (double)sub_41CB3B(a1, 1) * 1.4;
                     v146 = sub_41CB3B(a1, 1);
                     v147 = (double)(v146 * sub_41CA5F(a1, 1) / 200) + v248;
-                    sub_41F169((_WORD*)a1, (__int64)v147);
+                    sub_41F169((short*)a1, (__int64)v147);
                     if (*(int*)(a1 + 392))
                     {
                         v148 = (unsigned __int16)sub_4261B0((short*)a1);
                         v149 = sub_41CB3B(a1, 1);
                         v150 = sub_41D067(a1, 1);
-                        sub_41F169((_WORD*)a1, v149 * v150 / 100 + v148);
+                        sub_41F169((short*)a1, v149 * v150 / 100 + v148);
                     }
                     *(_BYTE*)(a1 + 213) = -1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A60, -1, 100, 100, 0);
@@ -25262,33 +25262,33 @@ Warning();//修正堆栈
                                     if (*(int*)(a1 + 444) >= 25)
                                     {
                                         if (*(int*)(a1 + 444) >= 31)
-                                            *(_WORD*)(a1 + 204) = 17;
+                                            *(short*)(a1 + 204) = 17;
                                         else
-                                            *(_WORD*)(a1 + 204) = 18;
+                                            *(short*)(a1 + 204) = 18;
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 17;
+                                        *(short*)(a1 + 204) = 17;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 19;
+                                    *(short*)(a1 + 204) = 19;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 17;
+                                *(short*)(a1 + 204) = 17;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 18;
+                            *(short*)(a1 + 204) = 18;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 17;
+                        *(short*)(a1 + 204) = 17;
                     }
                 }
                 else if (*(int*)(a1 + 444) >= 5)
@@ -25302,33 +25302,33 @@ Warning();//修正堆栈
                                 if (*(int*)(a1 + 444) >= 25)
                                 {
                                     if (*(int*)(a1 + 444) >= 31)
-                                        *(_WORD*)(a1 + 204) = 107;
+                                        *(short*)(a1 + 204) = 107;
                                     else
-                                        *(_WORD*)(a1 + 204) = 108;
+                                        *(short*)(a1 + 204) = 108;
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 107;
+                                    *(short*)(a1 + 204) = 107;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 109;
+                                *(short*)(a1 + 204) = 109;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 107;
+                            *(short*)(a1 + 204) = 107;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 108;
+                        *(short*)(a1 + 204) = 108;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 107;
+                    *(short*)(a1 + 204) = 107;
                 }
                 if ((*(int*)(a1 + 444) - 1) % 10 == 6)
                     *(int*)(a1 + 424) = *(int*)(a1 + 424) == 0;
@@ -25351,12 +25351,12 @@ Warning();//修正堆栈
                     v151 = sub_41CB3B(a1, 1) / 3;
                     v152 = sub_41CB3B(a1, 1);
                     v153 = sub_41CA5F(a1, 1);
-                    sub_41F169((_WORD*)a1, v152 * v153 / 200 + v151);
+                    sub_41F169((short*)a1, v152 * v153 / 200 + v151);
                     *(_BYTE*)(a1 + 213) = 26;
                     *(int*)(a1 + 400) = 1;
                 }
                 v340 = (*(int*)(a1 + 444) - 1) / 2 % 7;
-                *(_WORD*)(a1 + 204) = v340 + 110;
+                *(short*)(a1 + 204) = v340 + 110;
                 if (*(int*)(a1 + 444) == 2
                     || *(int*)(a1 + 444) == 8
                     || *(int*)(a1 + 444) == 16
@@ -25388,7 +25388,7 @@ Warning();//修正堆栈
                     v339 = *(unsigned __int16*)(a1 + 496) + sub_41CA5F(a1, 1) / 3 + v154;
                     if (v339 <= 0)
                         v339 = 1;
-                    sub_41F169((_WORD*)a1, v339);
+                    sub_41F169((short*)a1, v339);
                     *(_BYTE*)(a1 + 213) = -1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A68, -1, 100, 100, 0);
                     if (*(int*)(a1 + 308))
@@ -25427,16 +25427,16 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 444) >= 26)
                     {
                         *(_BYTE*)(a1 + 257) = 2;
-                        *(_WORD*)(a1 + 204) = 82;
+                        *(short*)(a1 + 204) = 82;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 117;
+                        *(short*)(a1 + 204) = 117;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 168;
+                    *(short*)(a1 + 204) = 168;
                 }
                 if (*(int*)(a1 + 444) == 30)
                     *(int*)(a1 + 432) = 4;
@@ -25449,11 +25449,11 @@ Warning();//修正堆栈
                     memset((void*)(a1 + 461), 0, 8u);
                     *(_BYTE*)(a1 + 257) = 1;
                     *(_BYTE*)(a1 + 248) = -1;
-                    sub_41F169((_WORD*)a1, 1);
+                    sub_41F169((short*)a1, 1);
                     *(_BYTE*)(a1 + 213) = -1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A6C, -1, 100, 100, 0);
                 }
-                *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 4 % 3 + 118;
+                *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 4 % 3 + 118;
                 if (*(int*)(a1 + 444) == 12)
                     *(int*)(a1 + 424) = *(int*)(a1 + 424) == 0;
                 if (!((*(int*)(a1 + 444) - 1) % 4))
@@ -25512,7 +25512,7 @@ Warning();//修正堆栈
                     if (!v335)
                         v335 = 1;
                     if (*(int*)(a1 + 304))
-                        sub_41EF8A(*(_WORD**)(a1 + 304), v335);
+                        sub_41EF8A(*(short**)(a1 + 304), v335);
                 }
                 if (*(int*)(a1 + 444) > 1
                     && *(int*)(a1 + 304)
@@ -25535,43 +25535,43 @@ Warning();//修正堆栈
                                         if (*(int*)(a1 + 444) >= 44)
                                         {
                                             if (*(int*)(a1 + 444) >= 48)
-                                                *(_WORD*)(a1 + 204) = 25;
+                                                *(short*)(a1 + 204) = 25;
                                             else
-                                                *(_WORD*)(a1 + 204) = 20;
+                                                *(short*)(a1 + 204) = 20;
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 23;
+                                            *(short*)(a1 + 204) = 23;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 122;
+                                        *(short*)(a1 + 204) = 122;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 121;
+                                    *(short*)(a1 + 204) = 121;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 25;
+                                *(short*)(a1 + 204) = 25;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 6;
+                            *(short*)(a1 + 204) = 6;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 121;
+                        *(short*)(a1 + 204) = 121;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 31;
+                    *(short*)(a1 + 204) = 31;
                 }
                 if (*(int*)(a1 + 444) == 16)
                 {
@@ -25611,7 +25611,7 @@ Warning();//修正堆栈
                 }
                 if (*(int*)(a1 + 444) >= 6)
                 {
-                    *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) - 6) / 4 % 4 + 20;
+                    *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 6) / 4 % 4 + 20;
                     if (*(int*)(a1 + 304))
                     {
                         if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 304)) == (struct Concurrency::ISchedulerProxy*)93
@@ -25633,7 +25633,7 @@ Warning();//修正堆栈
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 16;
+                    *(short*)(a1 + 204) = 16;
                 }
                 if (*(int*)(a1 + 444) == 6)
                 {
@@ -25652,7 +25652,7 @@ Warning();//修正堆栈
                     *(_BYTE*)(a1 + 257) = 1;
                     *(_BYTE*)(a1 + 253) = 1;
                     *(_BYTE*)(a1 + 213) = 5;
-                    sub_41F169((_WORD*)a1, *(unsigned __int16*)(a1 + 242));
+                    sub_41F169((short*)a1, *(unsigned __int16*)(a1 + 242));
                     *(_BYTE*)(a1 + 254) = 1;
                     *(_BYTE*)(a1 + 250) = 10;
                     *(int*)(a1 + 424) = 0;
@@ -25684,14 +25684,14 @@ Warning();//修正堆栈
                 if (*(int*)(a1 + 436))
                 {
                     if (*(int*)(a1 + 436) == 1)
-                        *(_WORD*)(a1 + 204) = 17;
+                        *(short*)(a1 + 204) = 17;
                 }
                 else
                 {
                     if (!(*(int*)(a1 + 444) % 3))
-                        ++* (_WORD*)(a1 + 242);
-                    sub_41F169((_WORD*)a1, *(unsigned __int16*)(a1 + 240) + 1);
-                    *(_WORD*)(a1 + 204) = 123;
+                        ++* (short*)(a1 + 242);
+                    sub_41F169((short*)a1, *(unsigned __int16*)(a1 + 240) + 1);
+                    *(short*)(a1 + 204) = 123;
                 }
                 return;
             case 0xAA:
@@ -25713,7 +25713,7 @@ Warning();//修正堆栈
                         v333 += v156 * sub_41D067(a1, 1) / 250;
                     }
                     v157 = sub_43E620((short*)*(int*)(a1 + 480));
-                    sub_41F169((_WORD*)a1, (v333 * v157 / 100 + 50) / 2);
+                    sub_41F169((short*)a1, (v333 * v157 / 100 + 50) / 2);
                     *(_BYTE*)(a1 + 248) = -1;
                     *(_BYTE*)(a1 + 257) = 1;
                     *(_BYTE*)(a1 + 213) = -1;
@@ -25724,16 +25724,16 @@ Warning();//修正堆栈
                     *(int*)(a1 + 400) = 0;
                 v332 = (*(int*)(a1 + 444) - 1) / 3 % 2;
                 if (sub_494AA9(*(_BYTE**)(a1 + 480), 0))
-                    *(_WORD*)(a1 + 204) = v332 + 140;
+                    *(short*)(a1 + 204) = v332 + 140;
                 else
-                    *(_WORD*)(a1 + 204) = v332 + 130;
+                    *(short*)(a1 + 204) = v332 + 130;
                 if (*(int*)(a1 + 444) >= 18)
                 {
                     *(_BYTE*)(a1 + 257) = 2;
                     if (sub_494AA9(*(_BYTE**)(a1 + 480), 0))
-                        *(_WORD*)(a1 + 204) = 142;
+                        *(short*)(a1 + 204) = 142;
                     else
-                        *(_WORD*)(a1 + 204) = 132;
+                        *(short*)(a1 + 204) = 132;
                 }
                 if (*(int*)(a1 + 444) < 18 && !((*(int*)(a1 + 444) - 1) % 6))
                 {
@@ -25770,7 +25770,7 @@ Warning();//修正堆栈
                         v330 += v159 * sub_41D067(a1, 1) / 250;
                     }
                     v160 = sub_43E620((short*)*(int*)(a1 + 480));
-                    sub_41F169((_WORD*)a1, v330 * v160 / 100 + 50);
+                    sub_41F169((short*)a1, v330 * v160 / 100 + 50);
                     *(_BYTE*)(a1 + 248) = 0;
                     *(_BYTE*)(a1 + 257) = 1;
                     *(_BYTE*)(a1 + 213) = -1;
@@ -25785,14 +25785,14 @@ Warning();//修正堆栈
                 {
                 case 0:
                 case 3:
-                    *(_WORD*)(a1 + 204) = 145;
+                    *(short*)(a1 + 204) = 145;
                     break;
                 case 1:
                 case 2:
-                    *(_WORD*)(a1 + 204) = 146;
+                    *(short*)(a1 + 204) = 146;
                     break;
                 default:
-                    *(_WORD*)(a1 + 204) = 147;
+                    *(short*)(a1 + 204) = 147;
                     break;
                 }
                 if (*(int*)(a1 + 444) > 1 && !((*(int*)(a1 + 444) + 1) % 6))
@@ -25823,7 +25823,7 @@ Warning();//修正堆栈
                         v329 += v162 * sub_41D067(a1, 1) / 250;
                     }
                     v163 = sub_43E620((short*)*(int*)(a1 + 480));
-                    sub_41F169((_WORD*)a1, (v329 * v163 / 100 + 50) / 3);
+                    sub_41F169((short*)a1, (v329 * v163 / 100 + 50) / 3);
                     *(_BYTE*)(a1 + 248) = 0;
                     *(_BYTE*)(a1 + 257) = 1;
                     *(_BYTE*)(a1 + 213) = -1;
@@ -25833,7 +25833,7 @@ Warning();//修正堆栈
                 }
                 if (*(int*)(a1 + 444) == 5)
                     *(int*)(a1 + 400) = 0;
-                *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 2 % 6 + 148;
+                *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 2 % 6 + 148;
                 if (!((*(int*)(a1 + 444) - 1) % 5))
                 {
                     memset((void*)(a1 + 453), 0, 8u);
@@ -25849,7 +25849,7 @@ Warning();//修正堆栈
                 return;
             case 0x5E:
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) % 2 + 154;
+                *(short*)(a1 + 204) = *(int*)(a1 + 444) % 2 + 154;
                 if (*(int*)(a1 + 444) == 1)
                 {
                     sub_464C06((char*)byte_4B9B10, 0, a1);
@@ -25868,18 +25868,18 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 444) >= 9)
                     {
                         if (*(int*)(a1 + 444) >= 13)
-                            *(_WORD*)(a1 + 204) = 134;
+                            *(short*)(a1 + 204) = 134;
                         else
-                            *(_WORD*)(a1 + 204) = 133;
+                            *(short*)(a1 + 204) = 133;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 130;
+                        *(short*)(a1 + 204) = 130;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 129;
+                    *(short*)(a1 + 204) = 129;
                 }
                 if (*(int*)(a1 + 444) > 21)
                 {
@@ -25908,15 +25908,15 @@ Warning();//修正堆栈
                         v165 = sub_417924(a1, 3, 1);
                         v327 += v165 * sub_41D067(a1, 1) / 300;
                     }
-                    sub_41F169((_WORD*)a1, v327);
+                    sub_41F169((short*)a1, v327);
                     *(_BYTE*)(a1 + 213) = -1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9AA0, -1, 100, 100, 0);
                 }
                 v328 = (*(int*)(a1 + 444) - 1) / 2 % 6;
                 if (v328 >= 3)
-                    *(_WORD*)(a1 + 204) = 161 - (v328 - 3);
+                    *(short*)(a1 + 204) = 161 - (v328 - 3);
                 else
-                    *(_WORD*)(a1 + 204) = v328 + 159;
+                    *(short*)(a1 + 204) = v328 + 159;
                 if (!((*(int*)(a1 + 444) - 1) % 6))
                     *(int*)(a1 + 424) = *(int*)(a1 + 424) == 0;
                 if (!((*(int*)(a1 + 444) - 1) % 6))
@@ -25944,7 +25944,7 @@ Warning();//修正堆栈
                 }
                 if (!*(int*)(a1 + 392))
                     *(int*)(a1 + 340) = 4 * (*(int*)(a1 + 424) - (*(int*)(a1 + 424) == 0));
-                *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 4 % 2 + 162;
+                *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 4 % 2 + 162;
                 if (*(int*)(a1 + 444) > 8 && !(*(int*)(a1 + 444) % 8))
                 {
                     memset((void*)(a1 + 453), 0, 8u);
@@ -25958,7 +25958,7 @@ Warning();//修正堆栈
                     *(_BYTE*)(a1 + 257) = 1;
                     *(_BYTE*)(a1 + 248) = -1;
                     v166 = sub_417924(a1, 3, 1);
-                    sub_41F169((_WORD*)a1, v166);
+                    sub_41F169((short*)a1, v166);
                     *(_BYTE*)(a1 + 213) = -1;
                 }
                 if (!*(int*)(a1 + 392))
@@ -25971,7 +25971,7 @@ Warning();//修正堆栈
                     if (v246 != v245)
                         *(int*)(a1 + 372) = 9 * *(int*)(a1 + 372) / 10;
                 }
-                *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 4 % 2 + 164;
+                *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 4 % 2 + 164;
                 if (*(int*)(a1 + 444) > 8 && !(*(int*)(a1 + 444) % 8))
                 {
                     memset((void*)(a1 + 453), 0, 8u);
@@ -25989,54 +25989,54 @@ Warning();//修正堆栈
                     {
                         if (sub_4264F0(*(_BYTE**)(a1 + 524)) == 4)
                         {
-                            LOWORD(v326) = sub_43E600(*(_WORD**)(a1 + 524));
+                            LOWORD(v326) = sub_43E600(*(short**)(a1 + 524));
                             if (Concurrency::details::SchedulerProxy::GetNumBorrowedCores(*(Concurrency::details::SchedulerProxy**)(a1 + 524)))
                             {
                                 v325 = sub_426590(byte_4B9B10, (unsigned __int16)v326);
                                 if (v325)
                                 {
-                                    *(_WORD*)(a1 + 190) = sub_4266F0((short*)v325);
+                                    *(short*)(a1 + 190) = sub_4266F0((short*)v325);
                                     *(_BYTE*)(a1 + 192) = sub_426570((char*)v325);
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 190) = sub_475CB0((_WORD*)(36 * (unsigned __int16)v326 + dword_4B92E0));
+                                *(short*)(a1 + 190) = sub_475CB0((short*)(36 * (unsigned __int16)v326 + dword_4B92E0));
                                 *(_BYTE*)(a1 + 192) = sub_4016F0((_BYTE*)(36 * (unsigned __int16)v326 + dword_4B92E0));
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 190) = sub_420F74(*(int*)(a1 + 524));
+                            *(short*)(a1 + 190) = sub_420F74(*(int*)(a1 + 524));
                             *(_BYTE*)(a1 + 192) = sub_422BE5(*(int*)(a1 + 524));
                         }
-                        *(_WORD*)(a1 + 498) = sub_43E5A0((short*)*(int*)(a1 + 524));
+                        *(short*)(a1 + 498) = sub_43E5A0((short*)*(int*)(a1 + 524));
                         *(int*)(a1 + 200) = sub_43E5C0((int*)*(int*)(a1 + 524));
-                        *(_WORD*)(a1 + 502) = sub_41CB3B(*(int*)(a1 + 524), 1);
-                        *(_WORD*)(a1 + 504) = sub_41CCEA(*(int*)(a1 + 524), 1);
-                        *(_WORD*)(a1 + 506) = sub_4175B4(*(int*)(a1 + 524), 1);
-                        *(_WORD*)(a1 + 508) = sub_41F380(*(int*)(a1 + 524), 1);
-                        *(_WORD*)(a1 + 510) = sub_41F52F(*(int*)(a1 + 524), 1);
-                        *(_WORD*)(a1 + 512) = sub_417924(*(int*)(a1 + 524), 3, 1);
-                        *(_WORD*)(a1 + 514) = sub_41CA5F(*(int*)(a1 + 524), 0);
-                        *(_WORD*)(a1 + 516) = sub_41D067(*(int*)(a1 + 524), 0);
-                        *(_WORD*)(a1 + 518) = sub_423AC3(*(int*)(a1 + 524), 0);
+                        *(short*)(a1 + 502) = sub_41CB3B(*(int*)(a1 + 524), 1);
+                        *(short*)(a1 + 504) = sub_41CCEA(*(int*)(a1 + 524), 1);
+                        *(short*)(a1 + 506) = sub_4175B4(*(int*)(a1 + 524), 1);
+                        *(short*)(a1 + 508) = sub_41F380(*(int*)(a1 + 524), 1);
+                        *(short*)(a1 + 510) = sub_41F52F(*(int*)(a1 + 524), 1);
+                        *(short*)(a1 + 512) = sub_417924(*(int*)(a1 + 524), 3, 1);
+                        *(short*)(a1 + 514) = sub_41CA5F(*(int*)(a1 + 524), 0);
+                        *(short*)(a1 + 516) = sub_41D067(*(int*)(a1 + 524), 0);
+                        *(short*)(a1 + 518) = sub_423AC3(*(int*)(a1 + 524), 0);
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 190) = *(_WORD*)(a1 + 528);
+                        *(short*)(a1 + 190) = *(short*)(a1 + 528);
                         *(_BYTE*)(a1 + 192) = *(_BYTE*)(a1 + 536);
-                        *(_WORD*)(a1 + 498) = *(_WORD*)(a1 + 530);
+                        *(short*)(a1 + 498) = *(short*)(a1 + 530);
                         *(int*)(a1 + 200) = *(int*)(a1 + 532);
-                        *(_WORD*)(a1 + 502) = *(_WORD*)(a1 + 538);
-                        *(_WORD*)(a1 + 504) = *(_WORD*)(a1 + 540);
-                        *(_WORD*)(a1 + 506) = *(_WORD*)(a1 + 542);
-                        *(_WORD*)(a1 + 508) = *(_WORD*)(a1 + 544);
-                        *(_WORD*)(a1 + 510) = *(_WORD*)(a1 + 546);
-                        *(_WORD*)(a1 + 512) = *(_WORD*)(a1 + 548);
-                        *(_WORD*)(a1 + 514) = *(_WORD*)(a1 + 550);
-                        *(_WORD*)(a1 + 516) = *(_WORD*)(a1 + 552);
-                        *(_WORD*)(a1 + 518) = *(_WORD*)(a1 + 554);
+                        *(short*)(a1 + 502) = *(short*)(a1 + 538);
+                        *(short*)(a1 + 504) = *(short*)(a1 + 540);
+                        *(short*)(a1 + 506) = *(short*)(a1 + 542);
+                        *(short*)(a1 + 508) = *(short*)(a1 + 544);
+                        *(short*)(a1 + 510) = *(short*)(a1 + 546);
+                        *(short*)(a1 + 512) = *(short*)(a1 + 548);
+                        *(short*)(a1 + 514) = *(short*)(a1 + 550);
+                        *(short*)(a1 + 516) = *(short*)(a1 + 552);
+                        *(short*)(a1 + 518) = *(short*)(a1 + 554);
                     }
                     sub_41F712((int*)(a1 + 8));
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9AA4, -1, 100, 100, 0);
@@ -26067,7 +26067,7 @@ Warning();//修正堆栈
                 if (*(int*)(a1 + 444) == 60)
                 {
                     v167 = sub_41D61F(a1);
-                    sub_41F169((_WORD*)a1, 7 * v167 / 20);
+                    sub_41F169((short*)a1, 7 * v167 / 20);
                     *(_BYTE*)(a1 + 248) = 2;
                     *(_BYTE*)(a1 + 249) = 1;
                     *(_BYTE*)(a1 + 253) = 1;
@@ -26090,7 +26090,7 @@ Warning();//修正堆栈
                     *(_BYTE*)(a1 + 213) = 5;
                     *(_BYTE*)(a1 + 257) = 0;
                     *(_BYTE*)(a1 + 249) = 0;
-                    *(_WORD*)(a1 + 244) = 0;
+                    *(short*)(a1 + 244) = 0;
                     *(_BYTE*)(a1 + 255) = 0;
                     *(_BYTE*)(a1 + 256) = 0;
                     *(int*)(a1 + 264) = 112;
@@ -26100,7 +26100,7 @@ Warning();//修正堆栈
                         v169 = sub_41CB3B(a1, 1);
                         v170 = sub_41CA5F(a1, 1) * v169;
                         v171 = sub_41D067(a1, 1);
-                        sub_41F169((_WORD*)a1, v170 * v171 / 10000 + v168);
+                        sub_41F169((short*)a1, v170 * v171 / 10000 + v168);
                         *(_BYTE*)(a1 + 248) = 2;
                     }
                     else
@@ -26108,7 +26108,7 @@ Warning();//修正堆栈
                         v172 = sub_41CB3B(a1, 1);
                         v173 = sub_41CB3B(a1, 1);
                         v174 = sub_41CA5F(a1, 1);
-                        sub_41F169((_WORD*)a1, v173 * v174 / 200 + v172);
+                        sub_41F169((short*)a1, v173 * v174 / 200 + v172);
                         *(_BYTE*)(a1 + 248) = 3;
                     }
                     memset((void*)(a1 + 453), 0, 8u);
@@ -26126,12 +26126,12 @@ Warning();//修正堆栈
                     case 1:
                         if (*(int*)(a1 + 444) >= 4)
                         {
-                            *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) >= 8 && *(int*)(a1 + 444) < 12;
+                            *(short*)(a1 + 204) = *(int*)(a1 + 444) >= 8 && *(int*)(a1 + 444) < 12;
                         }
                         else
                         {
                             *(_BYTE*)(a1 + 212) = 0;
-                            *(_WORD*)(a1 + 204) = 4;
+                            *(short*)(a1 + 204) = 4;
                         }
                         if (*(int*)(a1 + 444) == 7)
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -26144,18 +26144,18 @@ Warning();//修正堆栈
                             if (*(int*)(a1 + 444) >= 8)
                             {
                                 if (*(int*)(a1 + 444) >= 12)
-                                    *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) < 16;
+                                    *(short*)(a1 + 204) = *(int*)(a1 + 444) < 16;
                                 else
-                                    *(_WORD*)(a1 + 204) = 2;
+                                    *(short*)(a1 + 204) = 2;
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 1;
+                                *(short*)(a1 + 204) = 1;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 0;
+                            *(short*)(a1 + 204) = 0;
                         }
                         if (*(int*)(a1 + 444) == 7)
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -26168,18 +26168,18 @@ Warning();//修正堆栈
                             if (*(int*)(a1 + 444) >= 8)
                             {
                                 if (*(int*)(a1 + 444) >= 12)
-                                    *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) < 16;
+                                    *(short*)(a1 + 204) = *(int*)(a1 + 444) < 16;
                                 else
-                                    *(_WORD*)(a1 + 204) = 2;
+                                    *(short*)(a1 + 204) = 2;
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 1;
+                                *(short*)(a1 + 204) = 1;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 0;
+                            *(short*)(a1 + 204) = 0;
                         }
                         if (*(int*)(a1 + 444) == 7)
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -26192,18 +26192,18 @@ Warning();//修正堆栈
                             if (*(int*)(a1 + 444) >= 8)
                             {
                                 if (*(int*)(a1 + 444) >= 12)
-                                    *(_WORD*)(a1 + 204) = 3;
+                                    *(short*)(a1 + 204) = 3;
                                 else
-                                    *(_WORD*)(a1 + 204) = 2;
+                                    *(short*)(a1 + 204) = 2;
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 1;
+                                *(short*)(a1 + 204) = 1;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 0;
+                            *(short*)(a1 + 204) = 0;
                         }
                         if (*(int*)(a1 + 444) == 2)
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -26219,19 +26219,19 @@ Warning();//修正堆栈
                         if (*(int*)(a1 + 444) >= 8)
                         {
                             if (*(int*)(a1 + 444) >= 12)
-                                *(_WORD*)(a1 + 204) = 2;
+                                *(short*)(a1 + 204) = 2;
                             else
-                                *(_WORD*)(a1 + 204) = 3;
+                                *(short*)(a1 + 204) = 3;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 2;
+                            *(short*)(a1 + 204) = 2;
                         }
                     }
                     else
                     {
                         *(_BYTE*)(a1 + 212) = 0;
-                        *(_WORD*)(a1 + 204) = 4;
+                        *(short*)(a1 + 204) = 4;
                     }
                     if (*(int*)(a1 + 444) == 7)
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
@@ -26248,19 +26248,19 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 444) >= 8)
                     {
                         if (*(int*)(a1 + 444) >= 12)
-                            *(_WORD*)(a1 + 204) = 134;
+                            *(short*)(a1 + 204) = 134;
                         else
-                            *(_WORD*)(a1 + 204) = 133;
+                            *(short*)(a1 + 204) = 133;
                     }
                     else
                     {
                         *(int*)(a1 + 304) = 0;
-                        *(_WORD*)(a1 + 204) = 130;
+                        *(short*)(a1 + 204) = 130;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 129;
+                    *(short*)(a1 + 204) = 129;
                 }
                 if (*(int*)(a1 + 444) > 24 && !*(int*)(a1 + 392))
                     *(int*)(a1 + 432) = 4;
@@ -26293,11 +26293,11 @@ Warning();//修正堆栈
                     *(_BYTE*)(a1 + 213) = -1;
                     *(_BYTE*)(a1 + 257) = 0;
                     *(_BYTE*)(a1 + 249) = 0;
-                    *(_WORD*)(a1 + 244) = 0;
+                    *(short*)(a1 + 244) = 0;
                     *(_BYTE*)(a1 + 254) = 1;
                     *(_BYTE*)(a1 + 255) = 0;
                     *(_BYTE*)(a1 + 177) = 1;
-                    sub_41F169((_WORD*)a1, *(unsigned __int16*)(a1 + 242));
+                    sub_41F169((short*)a1, *(unsigned __int16*)(a1 + 242));
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
                     *(_BYTE*)(a1 + *(int*)(a1 + 440) + 453) = -1;
@@ -26334,32 +26334,32 @@ Warning();//修正堆栈
                     if ((*(int*)(a1 + 372) <= 0 || !*(int*)(a1 + 424))
                         && (*(int*)(a1 + 372) >= 0 || *(int*)(a1 + 424)))
                     {
-                        *(_WORD*)(a1 + 204) = 17;
+                        *(short*)(a1 + 204) = 17;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 28;
+                        *(short*)(a1 + 204) = 28;
                     }
                 }
                 else if (*(int*)(a1 + 444) >= 3)
                 {
                     if (*(int*)(a1 + 444) >= 6)
                     {
-                        *(_WORD*)(a1 + 204) = 49;
+                        *(short*)(a1 + 204) = 49;
                     }
                     else if ((*(int*)(a1 + 372) <= 0 || !*(int*)(a1 + 424))
                         && (*(int*)(a1 + 372) >= 0 || *(int*)(a1 + 424)))
                     {
-                        *(_WORD*)(a1 + 204) = 17;
+                        *(short*)(a1 + 204) = 17;
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 28;
+                        *(short*)(a1 + 204) = 28;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 13;
+                    *(short*)(a1 + 204) = 13;
                 }
                 return;
             case 0x63:
@@ -26397,7 +26397,7 @@ Warning();//修正堆栈
                                                 if (*(int*)(a1 + 392))
                                                 {
                                                     *(int*)(a1 + 360) = 30;
-                                                    *(_WORD*)(a1 + 204) = 4;
+                                                    *(short*)(a1 + 204) = 4;
                                                 }
                                                 else
                                                 {
@@ -26406,12 +26406,12 @@ Warning();//修正堆栈
                                             }
                                             else
                                             {
-                                                *(_WORD*)(a1 + 204) = 28;
+                                                *(short*)(a1 + 204) = 28;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 31;
+                                            *(short*)(a1 + 204) = 31;
                                         }
                                     }
                                     else
@@ -26419,35 +26419,35 @@ Warning();//修正堆栈
                                         *(int*)(a1 + 372) = 50 * (*(int*)(a1 + 424) - (*(int*)(a1 + 424) == 0));
                                         *(int*)(a1 + 376) = 0;
                                         *(int*)(a1 + 348) = 0;
-                                        *(_WORD*)(a1 + 204) = 79;
+                                        *(short*)(a1 + 204) = 79;
                                     }
                                 }
                                 else
                                 {
                                     v319 = -1600;
                                     v320 = -100;
-                                    *(_WORD*)(a1 + 204) = 77;
+                                    *(short*)(a1 + 204) = 77;
                                 }
                             }
                             else
                             {
                                 v319 = -1200;
                                 v320 = -2400;
-                                *(_WORD*)(a1 + 204) = 76;
+                                *(short*)(a1 + 204) = 76;
                             }
                         }
                         else
                         {
                             v319 = 0;
                             v320 = -3000;
-                            *(_WORD*)(a1 + 204) = 75;
+                            *(short*)(a1 + 204) = 75;
                         }
                     }
                     else
                     {
                         v319 = 1200;
                         v320 = -2400;
-                        *(_WORD*)(a1 + 204) = 74;
+                        *(short*)(a1 + 204) = 74;
                     }
                     if (*(int*)(a1 + 444) < 28)
                     {
@@ -26502,7 +26502,7 @@ Warning();//修正堆栈
                                                 if (*(int*)(a1 + 392))
                                                 {
                                                     *(int*)(a1 + 360) = 30;
-                                                    *(_WORD*)(a1 + 204) = 25;
+                                                    *(short*)(a1 + 204) = 25;
                                                 }
                                                 else
                                                 {
@@ -26511,12 +26511,12 @@ Warning();//修正堆栈
                                             }
                                             else
                                             {
-                                                *(_WORD*)(a1 + 204) = 20;
+                                                *(short*)(a1 + 204) = 20;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 23;
+                                            *(short*)(a1 + 204) = 23;
                                         }
                                     }
                                     else
@@ -26524,35 +26524,35 @@ Warning();//修正堆栈
                                         *(int*)(a1 + 372) = 50 * (*(int*)(a1 + 424) - (*(int*)(a1 + 424) == 0));
                                         *(int*)(a1 + 376) = 0;
                                         *(int*)(a1 + 348) = 0;
-                                        *(_WORD*)(a1 + 204) = 122;
+                                        *(short*)(a1 + 204) = 122;
                                     }
                                 }
                                 else
                                 {
                                     v319 = -1600;
                                     v320 = -100;
-                                    *(_WORD*)(a1 + 204) = 184;
+                                    *(short*)(a1 + 204) = 184;
                                 }
                             }
                             else
                             {
                                 v319 = -1200;
                                 v320 = -2400;
-                                *(_WORD*)(a1 + 204) = 183;
+                                *(short*)(a1 + 204) = 183;
                             }
                         }
                         else
                         {
                             v319 = 0;
                             v320 = -3000;
-                            *(_WORD*)(a1 + 204) = 182;
+                            *(short*)(a1 + 204) = 182;
                         }
                     }
                     else
                     {
                         v319 = 1200;
                         v320 = -2400;
-                        *(_WORD*)(a1 + 204) = 181;
+                        *(short*)(a1 + 204) = 181;
                     }
                     if (*(int*)(a1 + 444) < 36)
                     {
@@ -26610,8 +26610,8 @@ Warning();//修正堆栈
                 else if (*(int*)(a1 + 444) == 2 && *(int*)(a1 + 304))
                 {
                     v175 = sub_4175B4(*(int*)(a1 + 304), 1);
-                    sub_41EF8A((_WORD*)a1, 60 * v175 / 100);
-                    sub_41F169((_WORD*)a1, *(unsigned __int16*)(a1 + 242));
+                    sub_41EF8A((short*)a1, 60 * v175 / 100);
+                    sub_41F169((short*)a1, *(unsigned __int16*)(a1 + 242));
                     *(_BYTE*)(a1 + (unsigned __int8)sub_425EF0(*(_BYTE**)(a1 + 304)) + 453) = -1;
                 }
                 *(_BYTE*)(a1 + 212) = 0;
@@ -26622,16 +26622,16 @@ Warning();//修正堆栈
                         if (*(int*)(a1 + 444) >= 18)
                         {
                             if (*(int*)(a1 + 444) < 20)
-                                *(_WORD*)(a1 + 204) = 19;
+                                *(short*)(a1 + 204) = 19;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 13;
+                            *(short*)(a1 + 204) = 13;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 15;
+                        *(short*)(a1 + 204) = 15;
                     }
                     *(int*)(a1 + 348) = 0;
                     if (*(int*)(a1 + 444) == 18)
@@ -26659,16 +26659,16 @@ Warning();//修正堆栈
                         if (*(int*)(a1 + 444) >= 25)
                         {
                             if (*(int*)(a1 + 444) < 29)
-                                *(_WORD*)(a1 + 204) = 19;
+                                *(short*)(a1 + 204) = 19;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 13;
+                            *(short*)(a1 + 204) = 13;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 15;
+                        *(short*)(a1 + 204) = 15;
                     }
                     *(int*)(a1 + 348) = 0;
                     if (*(int*)(a1 + 444) == 25)
@@ -26719,13 +26719,13 @@ Warning();//修正堆栈
                         --* (_BYTE*)(a1 + 469);
                 }
                 *(_BYTE*)(a1 + 212) = 0;
-                *(_WORD*)(a1 + 204) = 49;
+                *(short*)(a1 + 204) = 49;
                 return;
             case 0x64:
                 if (*(int*)(a1 + 304))
                 {
                     *(_BYTE*)(a1 + 212) = 0;
-                    *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 2 % 3 + 187;
+                    *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 2 % 3 + 187;
                     if ((*(int*)(a1 + 444) - 1) % 6)
                     {
                         if ((*(int*)(a1 + 444) - 1) % 6 == 5)
@@ -26744,7 +26744,7 @@ Warning();//修正堆栈
                     else
                     {
                         v177 = sub_41CB3B(a1, 1);
-                        sub_41EF8A((_WORD*)a1, v177 / 60);
+                        sub_41EF8A((short*)a1, v177 / 60);
                         sub_417C15(*(int*)(a1 + 304), *(_BYTE*)(a1 + 242));
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9AB8, -1, 100, 100, 0);
                     }
@@ -26771,7 +26771,7 @@ Warning();//修正堆栈
                     }
                     if (!v316)
                         v316 = 1;
-                    sub_41EF8A(*(_WORD**)(a1 + 304), v316);
+                    sub_41EF8A(*(short**)(a1 + 304), v316);
                 }
                 if ((*(int*)(a1 + 444) > 41 || *(int*)(a1 + 304))
                     && (*(int*)(a1 + 444) < 2
@@ -26789,32 +26789,32 @@ Warning();//修正堆栈
                                 if (*(int*)(a1 + 444) >= 45)
                                 {
                                     if (*(int*)(a1 + 444) >= 57)
-                                        *(_WORD*)(a1 + 204) = 207;
+                                        *(short*)(a1 + 204) = 207;
                                     else
-                                        *(_WORD*)(a1 + 204) = 206;
+                                        *(short*)(a1 + 204) = 206;
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 205;
+                                    *(short*)(a1 + 204) = 205;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 204;
+                                *(short*)(a1 + 204) = 204;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 203;
+                            *(short*)(a1 + 204) = 203;
                         }
                     }
                     else
                     {
                         v315 = (*(int*)(a1 + 444) - 1) / 4 % 4;
                         if (v315 >= 3)
-                            *(_WORD*)(a1 + 204) = 201;
+                            *(short*)(a1 + 204) = 201;
                         else
-                            *(_WORD*)(a1 + 204) = v315 + 200;
+                            *(short*)(a1 + 204) = v315 + 200;
                     }
                     switch (*(int*)(a1 + 444))
                     {
@@ -26830,7 +26830,7 @@ Warning();//修正堆栈
                         }
                         if (!v314)
                             v314 = 1;
-                        sub_41EF8A(*(_WORD**)(a1 + 304), v314);
+                        sub_41EF8A(*(short**)(a1 + 304), v314);
                         break;
                     case ')':
                         *(int*)(a1 + 304) = 0;
@@ -26872,9 +26872,9 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 444) >= 33)
                     {
                         if (*(int*)(a1 + 444) >= 43)
-                            *(_WORD*)(a1 + 204) = 13;
+                            *(short*)(a1 + 204) = 13;
                         else
-                            *(_WORD*)(a1 + 204) = 15;
+                            *(short*)(a1 + 204) = 15;
                     }
                     else
                     {
@@ -26889,26 +26889,26 @@ Warning();//修正堆栈
                         v313 = (*(int*)(a1 + 444) - 1) / 4 % 4;
                         if (v313 == 2)
                         {
-                            *(_WORD*)(a1 + 204) = 13;
+                            *(short*)(a1 + 204) = 13;
                         }
                         else if (v313 == 3)
                         {
-                            *(_WORD*)(a1 + 204) = 14;
+                            *(short*)(a1 + 204) = 14;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 15;
+                            *(short*)(a1 + 204) = 15;
                         }
                         if ((*(int*)(a1 + 444) - 1) % 16 == 8)
                         {
-                            sub_41261C((_WORD*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
+                            sub_41261C((short*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A0C, -1, 100, 100, 0);
                         }
                     }
                     if (*(int*)(a1 + 444) == 41)
                     {
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
-                        sub_41261C((_WORD*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
+                        sub_41261C((short*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
                         *(int*)(a1 + 392) = 1;
                         *(int*)(a1 + 340) = 70 * ((*(int*)(a1 + 424) == 0) - *(int*)(a1 + 424));
                         *(int*)(a1 + 348) = -650;
@@ -26944,12 +26944,12 @@ Warning();//修正堆栈
                         v178 = 75 * sub_41CCEA(a1, 1) / 100;
                         v179 = sub_41CCEA(a1, 1);
                         v180 = sub_41D067(a1, 1);
-                        sub_41F169((_WORD*)a1, v179 * v180 / 200 + v178);
+                        sub_41F169((short*)a1, v179 * v180 / 200 + v178);
                     }
                     else
                     {
                         v181 = sub_41CCEA(a1, 1);
-                        sub_41F169((_WORD*)a1, 75 * v181 / 100);
+                        sub_41F169((short*)a1, 75 * v181 / 100);
                     }
                     *(_BYTE*)(a1 + 257) = 1;
                     *(_BYTE*)(a1 + 248) = -1;
@@ -26985,49 +26985,49 @@ Warning();//修正堆栈
                                                 if (*(int*)(a1 + 444) >= 28)
                                                 {
                                                     *(_BYTE*)(a1 + 257) = 2;
-                                                    *(_WORD*)(a1 + 204) = 23;
+                                                    *(short*)(a1 + 204) = 23;
                                                 }
                                                 else
                                                 {
                                                     *(_BYTE*)(a1 + 248) = 0;
-                                                    *(_WORD*)(a1 + 204) = 22;
+                                                    *(short*)(a1 + 204) = 22;
                                                 }
                                             }
                                             else
                                             {
-                                                *(_WORD*)(a1 + 204) = 21;
+                                                *(short*)(a1 + 204) = 21;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 20;
+                                            *(short*)(a1 + 204) = 20;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 3;
+                                        *(short*)(a1 + 204) = 3;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 2;
+                                    *(short*)(a1 + 204) = 2;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 3;
+                                *(short*)(a1 + 204) = 3;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 2;
+                            *(short*)(a1 + 204) = 2;
                         }
                         if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 12 || *(int*)(a1 + 444) == 24)
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
                         if (*(int*)(a1 + 444) == 24)
                         {
                             v183 = sub_41CCEA(a1, 1);
-                            sub_41F169((_WORD*)a1, 85 * v183 / 100);
+                            sub_41F169((short*)a1, 85 * v183 / 100);
                         }
                         if (*(int*)(a1 + 444) > 36)
                         {
@@ -27058,49 +27058,49 @@ Warning();//修正堆栈
                                                 if (*(int*)(a1 + 444) >= 26)
                                                 {
                                                     *(_BYTE*)(a1 + 257) = 2;
-                                                    *(_WORD*)(a1 + 204) = 23;
+                                                    *(short*)(a1 + 204) = 23;
                                                 }
                                                 else
                                                 {
                                                     *(_BYTE*)(a1 + 248) = 0;
-                                                    *(_WORD*)(a1 + 204) = 22;
+                                                    *(short*)(a1 + 204) = 22;
                                                 }
                                             }
                                             else
                                             {
-                                                *(_WORD*)(a1 + 204) = 21;
+                                                *(short*)(a1 + 204) = 21;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 20;
+                                            *(short*)(a1 + 204) = 20;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 4;
+                                        *(short*)(a1 + 204) = 4;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 3;
+                                    *(short*)(a1 + 204) = 3;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 4;
+                                *(short*)(a1 + 204) = 4;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 3;
+                            *(short*)(a1 + 204) = 3;
                         }
                         if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 11 || *(int*)(a1 + 444) == 22)
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
                         if (*(int*)(a1 + 444) == 22)
                         {
                             v184 = sub_41CCEA(a1, 1);
-                            sub_41F169((_WORD*)a1, 85 * v184 / 100);
+                            sub_41F169((short*)a1, 85 * v184 / 100);
                         }
                         if (*(int*)(a1 + 444) > 30)
                         {
@@ -27133,50 +27133,50 @@ Warning();//修正堆栈
                                                     if (*(int*)(a1 + 444) < 36)
                                                     {
                                                         *(_BYTE*)(a1 + 257) = 2;
-                                                        *(_WORD*)(a1 + 204) = 26;
+                                                        *(short*)(a1 + 204) = 26;
                                                     }
                                                 }
                                                 else
                                                 {
                                                     *(_BYTE*)(a1 + 248) = 0;
-                                                    *(_WORD*)(a1 + 204) = 25;
+                                                    *(short*)(a1 + 204) = 25;
                                                 }
                                             }
                                             else
                                             {
-                                                *(_WORD*)(a1 + 204) = 24;
+                                                *(short*)(a1 + 204) = 24;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 23;
+                                            *(short*)(a1 + 204) = 23;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 4;
+                                        *(short*)(a1 + 204) = 4;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 3;
+                                    *(short*)(a1 + 204) = 3;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 4;
+                                *(short*)(a1 + 204) = 4;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 3;
+                            *(short*)(a1 + 204) = 3;
                         }
                         if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 12 || *(int*)(a1 + 444) == 25)
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
                         if (*(int*)(a1 + 444) == 25)
                         {
                             v185 = sub_41CCEA(a1, 1);
-                            sub_41F169((_WORD*)a1, 85 * v185 / 100);
+                            sub_41F169((short*)a1, 85 * v185 / 100);
                         }
                         if (*(int*)(a1 + 444) >= 36)
                         {
@@ -27210,49 +27210,49 @@ Warning();//修正堆栈
                                             if (*(int*)(a1 + 444) >= 28)
                                             {
                                                 *(_BYTE*)(a1 + 257) = 2;
-                                                *(_WORD*)(a1 + 204) = 19;
+                                                *(short*)(a1 + 204) = 19;
                                             }
                                             else
                                             {
-                                                *(_WORD*)(a1 + 204) = 18;
+                                                *(short*)(a1 + 204) = 18;
                                             }
                                         }
                                         else
                                         {
                                             *(_BYTE*)(a1 + 248) = 0;
-                                            *(_WORD*)(a1 + 204) = 17;
+                                            *(short*)(a1 + 204) = 17;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 16;
+                                        *(short*)(a1 + 204) = 16;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 1;
+                                    *(short*)(a1 + 204) = 1;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 0;
+                                *(short*)(a1 + 204) = 0;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 1;
+                            *(short*)(a1 + 204) = 1;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 0;
+                        *(short*)(a1 + 204) = 0;
                     }
                     if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 12 || *(int*)(a1 + 444) == 24)
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
                     if (*(int*)(a1 + 444) == 24)
                     {
                         v182 = sub_41CCEA(a1, 1);
-                        sub_41F169((_WORD*)a1, 85 * v182 / 100);
+                        sub_41F169((short*)a1, 85 * v182 / 100);
                     }
                     if (*(int*)(a1 + 444) >= 33)
                     {
@@ -27272,22 +27272,22 @@ Warning();//修正堆栈
                     {
                         *(_BYTE*)(a1 + 212) = 0;
                         v198 = sub_41CCEA(a1, 1);
-                        sub_41EF8A((_WORD*)a1, v198 / 25);
+                        sub_41EF8A((short*)a1, v198 / 25);
                     }
                     if (*(int*)(a1 + 444) >= 5)
                     {
                         v312 = (*(int*)(a1 + 444) - 5) / 3 % 2;
-                        *(_WORD*)(a1 + 204) = v312 + 212;
+                        *(short*)(a1 + 204) = v312 + 212;
                         if ((*(int*)(a1 + 444) - 5) % 6 == 3)
                         {
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
                             if (*(int*)(a1 + 304))
-                                sub_41261C(*(_WORD**)(a1 + 304), *(unsigned __int16*)(a1 + 242), a1, 1); //减血函数
+                                sub_41261C(*(short**)(a1 + 304), *(unsigned __int16*)(a1 + 242), a1, 1); //减血函数
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 6;
+                        *(short*)(a1 + 204) = 6;
                     }
                     if (*(int*)(a1 + 444) >= 28
                         || !*(int*)(a1 + 304)
@@ -27309,9 +27309,9 @@ Warning();//修正堆栈
                         {
                             v308 = (*(int*)(a1 + 444) - 5) / 3 % 2;
                             if (*(int*)(a1 + 436))
-                                *(_WORD*)(a1 + 204) = v308 + 27;
+                                *(short*)(a1 + 204) = v308 + 27;
                             else
-                                *(_WORD*)(a1 + 204) = 18 - v308;
+                                *(short*)(a1 + 204) = 18 - v308;
                         }
                         v310 = sub_426090(*(int**)(a1 + 304));
                         v309 = sub_4260B0(*(int**)(a1 + 304));
@@ -27354,7 +27354,7 @@ Warning();//修正堆栈
                         v200 = sub_41CA5F(a1, 1) * v199;
                         v242 = (double)(v200 * sub_41D067(a1, 1) / 10000) + v243;
                         v201 = (double)(*(int*)(a1 + 436) * sub_41CB3B(a1, 1) / 180) + v242;
-                        sub_41F169((_WORD*)a1, (__int64)v201);
+                        sub_41F169((short*)a1, (__int64)v201);
                         *(_BYTE*)(a1 + 257) = 1;
                         *(_BYTE*)(a1 + 248) = 2;
                         *(_BYTE*)(a1 + 212) = 0;
@@ -27381,7 +27381,7 @@ Warning();//修正堆栈
                     }
                     if (!(*(int*)(a1 + 444) % 4))
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
-                    *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 6 + 239;
+                    *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 6 + 239;
                     return;
                 }
                 if (*(int*)(a1 + 428) == 188)
@@ -27397,7 +27397,7 @@ Warning();//修正堆栈
                         *(int*)(a1 + 352) = (__int64)((double)*(int*)(a1 + 352) * 1.5);
                         v202 = sub_417924(a1, 3, 1);
                         v203 = sub_41CA5F(a1, 1);
-                        sub_41F169((_WORD*)a1, (v202 + v203 / 2) / 2);
+                        sub_41F169((short*)a1, (v202 + v203 / 2) / 2);
                         memset((void*)(a1 + 453), 0, 8u);
                         memset((void*)(a1 + 461), 0, 8u);
                     }
@@ -27406,7 +27406,7 @@ Warning();//修正堆栈
                         memset((void*)(a1 + 453), 0, 8u);
                         memset((void*)(a1 + 461), 0, 8u);
                     }
-                    *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 245;
+                    *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 245;
                     if (*(int*)(a1 + 372) <= 0)
                         v238 = -*(int*)(a1 + 372);
                     else
@@ -27464,7 +27464,7 @@ Warning();//修正堆栈
                         if (!v302)
                             v302 = 1;
                         if (*(int*)(a1 + 304))
-                            sub_41EF8A(*(_WORD**)(a1 + 304), v302);
+                            sub_41EF8A(*(short**)(a1 + 304), v302);
                     }
                     v303 = 0;
                     v304 = 0;
@@ -27480,11 +27480,11 @@ Warning();//修正堆栈
                                 if (*(int*)(a1 + 444) >= 16)
                                 {
                                     if (*(int*)(a1 + 444) < 20)
-                                        *(_WORD*)(a1 + 204) = 6;
+                                        *(short*)(a1 + 204) = 6;
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 252;
+                                    *(short*)(a1 + 204) = 252;
                                     v303 = 1100;
                                     v304 = -1200;
                                     v307 = *(int*)(a1 + 424);
@@ -27494,7 +27494,7 @@ Warning();//修正堆栈
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 251;
+                                *(short*)(a1 + 204) = 251;
                                 v303 = 1100;
                                 v304 = -1200;
                                 v307 = *(int*)(a1 + 424);
@@ -27504,7 +27504,7 @@ Warning();//修正堆栈
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 250;
+                            *(short*)(a1 + 204) = 250;
                             v303 = -1400;
                             v304 = -900;
                             v307 = *(int*)(a1 + 424) == 0;
@@ -27514,7 +27514,7 @@ Warning();//修正堆栈
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 249;
+                        *(short*)(a1 + 204) = 249;
                         v303 = -1300;
                         v304 = -800;
                         v307 = *(int*)(a1 + 424) == 0;
@@ -27562,7 +27562,7 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 444) == 16 && *(int*)(a1 + 304))
                     {
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
-                        sub_41261C((_WORD*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
+                        sub_41261C((short*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
                         *(int*)(a1 + 304) = 0;
                         *(int*)(a1 + 340) = 150 * ((*(int*)(a1 + 424) == 0) - *(int*)(a1 + 424));
                         *(int*)(a1 + 348) = -300;
@@ -27623,8 +27623,8 @@ Warning();//修正堆栈
                             v205 = (unsigned __int16)sub_43E520((short*)a1) + v204;
                             v206 = sub_417924(*(int*)(a1 + 304), 3, 1) + v205;
                             v207 = sub_43E520((short*)*(int*)(a1 + 304));
-                            sub_41F169(*(_WORD**)(a1 + 304), v207 + v206);
-                            sub_41EF8A(*(_WORD**)(a1 + 304), v301);
+                            sub_41F169(*(short**)(a1 + 304), v207 + v206);
+                            sub_41EF8A(*(short**)(a1 + 304), v301);
                         }
                     }
                     if (*(int*)(a1 + 444) > 2
@@ -27643,7 +27643,7 @@ Warning();//修正堆栈
                         v298 = *(int*)(a1 + 444) / 5 % 4;
                         *(int*)(a1 + 340) = 300 * (*(int*)(a1 + 424) - (*(int*)(a1 + 424) == 0));
                         *(int*)(a1 + 380) = *(int*)(a1 + 340);
-                        *(_WORD*)(a1 + 204) = v298 + 253;
+                        *(short*)(a1 + 204) = v298 + 253;
                         v236 = !v298 || v298 == 3;
                         v235 = v298 == 1 || v298 == 2;
                         v296 = 400 * v235 - 400 * v236;
@@ -27671,11 +27671,11 @@ Warning();//修正堆栈
                         *(int*)(a1 + 348) = -400;
                         *(int*)(a1 + 360) = 30;
                         *(int*)(a1 + 392) = 1;
-                        *(_WORD*)(a1 + 204) = 6;
+                        *(short*)(a1 + 204) = 6;
                     }
                     else if (*(int*)(a1 + 444) == 65)
                     {
-                        *(_WORD*)(a1 + 204) = 25;
+                        *(short*)(a1 + 204) = 25;
                     }
                     return;
                 }
@@ -27705,7 +27705,7 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 444) >= 61 && *(int*)(a1 + 444) == 61)
                     {
                         *(_BYTE*)(a1 + 257) = 0;
-                        sub_41261C((_WORD*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
+                        sub_41261C((short*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
                         *(int*)(a1 + 304) = 0;
                         *(int*)(a1 + 372) = 0;
                         *(int*)(a1 + 352) = 0;
@@ -27713,7 +27713,7 @@ Warning();//修正堆栈
                         *(int*)(a1 + 348) = -400;
                         *(int*)(a1 + 360) = 30;
                         *(int*)(a1 + 392) = 1;
-                        *(_WORD*)(a1 + 204) = 17;
+                        *(short*)(a1 + 204) = 17;
                     }
                     return;
                 }
@@ -27754,7 +27754,7 @@ Warning();//修正堆栈
                         if (!v295)
                             v295 = 1;
                         if (*(int*)(a1 + 304))
-                            sub_41EF8A(*(_WORD**)(a1 + 304), v295);
+                            sub_41EF8A(*(short**)(a1 + 304), v295);
                     }
                     if (*(int*)(a1 + 444) > 2
                         && *(int*)(a1 + 444) < 58
@@ -27775,33 +27775,33 @@ Warning();//修正堆栈
                                     if (*(int*)(a1 + 444) >= 56)
                                     {
                                         if (*(int*)(a1 + 444) >= 60)
-                                            *(_WORD*)(a1 + 204) = 211;
+                                            *(short*)(a1 + 204) = 211;
                                         else
-                                            *(_WORD*)(a1 + 204) = 210;
+                                            *(short*)(a1 + 204) = 210;
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 209;
+                                        *(short*)(a1 + 204) = 209;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 208;
+                                    *(short*)(a1 + 204) = 208;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 4;
+                                *(short*)(a1 + 204) = 4;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 121;
+                            *(short*)(a1 + 204) = 121;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 31;
+                        *(short*)(a1 + 204) = 31;
                     }
                     if (*(int*)(a1 + 444) != 6)
                     {
@@ -27838,23 +27838,23 @@ Warning();//修正堆栈
                         {
                             if (*(int*)(a1 + 444) < 57 || *(int*)(a1 + 436) == 5)
                             {
-                                *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) - 6) / 5 % 4 + 20;
+                                *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 6) / 5 % 4 + 20;
                             }
                             else if (*(int*)(a1 + 444) >= 80)
                             {
                                 if (*(int*)(a1 + 444) >= 90)
-                                    *(_WORD*)(a1 + 204) = 19;
+                                    *(short*)(a1 + 204) = 19;
                                 else
-                                    *(_WORD*)(a1 + 204) = 17;
+                                    *(short*)(a1 + 204) = 17;
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 16;
+                                *(short*)(a1 + 204) = 16;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 16;
+                            *(short*)(a1 + 204) = 16;
                         }
                         if (*(int*)(a1 + 444) > 2
                             && *(int*)(a1 + 444) < 58
@@ -27878,7 +27878,7 @@ Warning();//修正堆栈
                         else if (*(int*)(a1 + 444) == 57 && *(int*)(a1 + 304) && !*(int*)(a1 + 436))
                         {
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
-                            sub_41261C((_WORD*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
+                            sub_41261C((short*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
                             *(int*)(a1 + 424) = sub_425D70(*(int**)(a1 + 304)) == 0;
                             *(int*)(a1 + 316) = *(int*)(a1 + 304);
                             *(int*)(a1 + 304) = 0;
@@ -27954,8 +27954,8 @@ Warning();//修正堆栈
                                 v209 = sub_4175B4(a1, 1);
                                 v210 = sub_417924(*(int*)(a1 + 304), 3, 1) + v209;
                                 v211 = sub_43E520((short*)*(int*)(a1 + 304));
-                                sub_41F169(*(_WORD**)(a1 + 304), v211 + v210);
-                                sub_41EF8A(*(_WORD**)(a1 + 304), v289);
+                                sub_41F169(*(short**)(a1 + 304), v211 + v210);
+                                sub_41EF8A(*(short**)(a1 + 304), v289);
                             }
                         }
                         if (*(int*)(a1 + 444) > 1
@@ -27971,18 +27971,18 @@ Warning();//修正堆栈
                             if (*(int*)(a1 + 444) >= 54)
                             {
                                 if (*(int*)(a1 + 444) >= 58)
-                                    *(_WORD*)(a1 + 204) = 211;
+                                    *(short*)(a1 + 204) = 211;
                                 else
-                                    *(_WORD*)(a1 + 204) = 210;
+                                    *(short*)(a1 + 204) = 210;
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 209;
+                                *(short*)(a1 + 204) = 209;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 13 * ((*(int*)(a1 + 444) - 1) / 5 % 2) + 30;
+                            *(short*)(a1 + 204) = 13 * ((*(int*)(a1 + 444) - 1) / 5 % 2) + 30;
                             *(int*)(a1 + 340) = 200 * (*(int*)(a1 + 424) - (*(int*)(a1 + 424) == 0));
                             *(int*)(a1 + 380) = *(int*)(a1 + 340);
                         }
@@ -28052,12 +28052,12 @@ Warning();//修正堆栈
                             {
                                 *(int*)(a1 + 340) = 400 * (*(int*)(a1 + 424) - (*(int*)(a1 + 424) == 0));
                                 *(int*)(a1 + 380) = *(int*)(a1 + 340);
-                                *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 3 % 4 + 234;
+                                *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 3 % 4 + 234;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 5 % 4 + 234;
+                            *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 5 % 4 + 234;
                         }
                         return;
                     }
@@ -28101,7 +28101,7 @@ Warning();//修正堆栈
                             }
                             if (!v288)
                                 v288 = 1;
-                            sub_41EF8A((_WORD*)a1, v288);
+                            sub_41EF8A((short*)a1, v288);
                         }
                         if (*(int*)(a1 + 444) > 1
                             && *(int*)(a1 + 444) < 86
@@ -28134,23 +28134,23 @@ Warning();//修正堆栈
                                 if (*(int*)(a1 + 444) >= 86)
                                 {
                                     if (*(int*)(a1 + 444) >= 96)
-                                        *(_WORD*)(a1 + 204) = 25;
+                                        *(short*)(a1 + 204) = 25;
                                     else
-                                        *(_WORD*)(a1 + 204) = 258;
+                                        *(short*)(a1 + 204) = 258;
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 259;
+                                    *(short*)(a1 + 204) = 259;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) - 6) / 10 % 2 + 258;
+                                *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 6) / 10 % 2 + 258;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 257;
+                            *(short*)(a1 + 204) = 257;
                         }
                         if (*(int*)(a1 + 304))
                         {
@@ -28159,7 +28159,7 @@ Warning();//修正堆栈
                                 if (*(int*)(a1 + 444) == 86)
                                 {
                                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
-                                    sub_41261C(*(_WORD**)(a1 + 304), *(unsigned __int16*)(a1 + 242), a1, 1); //减血函数
+                                    sub_41261C(*(short**)(a1 + 304), *(unsigned __int16*)(a1 + 242), a1, 1); //减血函数
                                     *(int*)(a1 + 304) = 0;
                                     sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
                                 }
@@ -28170,7 +28170,7 @@ Warning();//修正堆栈
                                 v287 = *(unsigned __int16*)(a1 + 242) / 6;
                                 if (!v287)
                                     v287 = 1;
-                                sub_41261C(*(_WORD**)(a1 + 304), v287, a1, 1); //减血函数
+                                sub_41261C(*(short**)(a1 + 304), v287, a1, 1); //减血函数
                             }
                         }
                         if (*(int*)(a1 + 444) == 96)
@@ -28225,31 +28225,31 @@ Warning();//修正堆栈
                                         if (*(int*)(a1 + 444) >= 100)
                                         {
                                             if (*(int*)(a1 + 444) < 104)
-                                                *(_WORD*)(a1 + 204) = 17;
+                                                *(short*)(a1 + 204) = 17;
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 16;
+                                            *(short*)(a1 + 204) = 16;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 13;
+                                        *(short*)(a1 + 204) = 13;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 15;
+                                    *(short*)(a1 + 204) = 15;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) - 6) / 10 % 2 + 13;
+                                *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 6) / 10 % 2 + 13;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 15;
+                            *(short*)(a1 + 204) = 15;
                         }
                         if (*(int*)(a1 + 444) >= 108)
                         {
@@ -28291,7 +28291,7 @@ Warning();//修正堆栈
                             if (!v286)
                                 v286 = 1;
                             if (*(int*)(a1 + 304))
-                                sub_41EF8A(*(_WORD**)(a1 + 304), v286);
+                                sub_41EF8A(*(short**)(a1 + 304), v286);
                         }
                         if (*(int*)(a1 + 444) > 1
                             && *(int*)(a1 + 304)
@@ -28318,53 +28318,53 @@ Warning();//修正堆栈
                                                         if (*(int*)(a1 + 444) >= 46)
                                                         {
                                                             if (*(int*)(a1 + 444) >= 50)
-                                                                *(_WORD*)(a1 + 204) = 25;
+                                                                *(short*)(a1 + 204) = 25;
                                                             else
-                                                                *(_WORD*)(a1 + 204) = 272;
+                                                                *(short*)(a1 + 204) = 272;
                                                         }
                                                         else
                                                         {
-                                                            *(_WORD*)(a1 + 204) = 271;
+                                                            *(short*)(a1 + 204) = 271;
                                                         }
                                                     }
                                                     else
                                                     {
-                                                        *(_WORD*)(a1 + 204) = 270;
+                                                        *(short*)(a1 + 204) = 270;
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    *(_WORD*)(a1 + 204) = 269;
+                                                    *(short*)(a1 + 204) = 269;
                                                 }
                                             }
                                             else
                                             {
-                                                *(_WORD*)(a1 + 204) = 268;
+                                                *(short*)(a1 + 204) = 268;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 267;
+                                            *(short*)(a1 + 204) = 267;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 25;
+                                        *(short*)(a1 + 204) = 25;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 6;
+                                    *(short*)(a1 + 204) = 6;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 121;
+                                *(short*)(a1 + 204) = 121;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 31;
+                            *(short*)(a1 + 204) = 31;
                         }
                         switch (*(int*)(a1 + 444))
                         {
@@ -28414,7 +28414,7 @@ Warning();//修正堆栈
                         }
                         if (*(int*)(a1 + 444) >= 6)
                         {
-                            *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) - 6) / 4 % 4 + 20;
+                            *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 6) / 4 % 4 + 20;
                             if (*(int*)(a1 + 304))
                             {
                                 if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 304)) == (struct Concurrency::ISchedulerProxy*)108
@@ -28436,7 +28436,7 @@ Warning();//修正堆栈
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 16;
+                            *(short*)(a1 + 204) = 16;
                         }
                         if (*(int*)(a1 + 444) == 6)
                         {
@@ -28464,7 +28464,7 @@ Warning();//修正堆栈
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9AE8, -1, 100, 100, 0);
                         }
                         *(_BYTE*)(a1 + 212) = 0;
-                        *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 2 + 273;
+                        *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 2 + 273;
                         if (*(int*)(a1 + 444) == 16)
                         {
                             sub_42526D((int*)a1, *(int*)(a1 + 436));
@@ -28485,7 +28485,7 @@ Warning();//修正堆栈
                             v232 = (double)sub_41CCEA(a1, 1) * 1.5;
                             v212 = sub_41CCEA(a1, 1);
                             v213 = (double)(v212 * sub_41D067(a1, 1) / 200) + v232;
-                            sub_41F169((_WORD*)a1, (__int64)v213);
+                            sub_41F169((short*)a1, (__int64)v213);
                             *(_BYTE*)(a1 + 213) = -1;
                             memset((void*)(a1 + 453), 0, 8u);
                             memset((void*)(a1 + 461), 0, 8u);
@@ -28532,24 +28532,24 @@ Warning();//修正堆栈
                         if (*(int*)(a1 + 436) && *(int*)(a1 + 436) != 2)
                         {
                             if (*(int*)(a1 + 444) >= 21)
-                                *(_WORD*)(a1 + 204) = 4;
+                                *(short*)(a1 + 204) = 4;
                             else
-                                *(_WORD*)(a1 + 204) = 91;
+                                *(short*)(a1 + 204) = 91;
                         }
                         else if (*(int*)(a1 + 444) == 1)
                         {
-                            *(_WORD*)(a1 + 204) = 72;
+                            *(short*)(a1 + 204) = 72;
                         }
                         else if (*(int*)(a1 + 444) >= 21)
                         {
-                            *(_WORD*)(a1 + 204) = 4;
+                            *(short*)(a1 + 204) = 4;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 90;
+                            *(short*)(a1 + 204) = 90;
                         }
                         if (*(int*)(a1 + 444) % 4 > 1 && *(int*)(a1 + 444) < 20)
-                            *(_WORD*)(a1 + 204) = 92;
+                            *(short*)(a1 + 204) = 92;
                         return;
                     }
                     if (*(int*)(a1 + 428) == 205)
@@ -28575,7 +28575,7 @@ Warning();//修正堆栈
                             v231 = (double)sub_41CCEA(a1, 1) * 1.25;
                             v214 = sub_41CCEA(a1, 1);
                             v215 = (double)(v214 * sub_41D067(a1, 1) / 200) + v231;
-                            sub_41F169((_WORD*)a1, (__int64)v215);
+                            sub_41F169((short*)a1, (__int64)v215);
                             *(_BYTE*)(a1 + 213) = -1;
                             *(_BYTE*)(a1 + 452) = 8;
                             *(_BYTE*)(a1 + 248) = 12;
@@ -28595,13 +28595,13 @@ Warning();//修正堆栈
                         {
                             *(_BYTE*)(a1 + 257) = 2;
                             *(int*)(a1 + 360) = 30;
-                            *(_WORD*)(a1 + 204) = 4;
+                            *(short*)(a1 + 204) = 4;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 68;
+                            *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 68;
                             if (*(int*)(a1 + 444) % 6 > 2)
-                                *(_WORD*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 93;
+                                *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 93;
                         }
                         return;
                     }
@@ -28628,7 +28628,7 @@ Warning();//修正堆栈
                             v230 = (double)sub_41CB3B(a1, 1) * 1.25;
                             v216 = sub_41CB3B(a1, 1);
                             v217 = (double)(v216 * sub_41D067(a1, 1) / 200) + v230;
-                            sub_41F169((_WORD*)a1, (__int64)v217);
+                            sub_41F169((short*)a1, (__int64)v217);
                             *(_BYTE*)(a1 + 213) = -1;
                         }
                         *(_BYTE*)(a1 + 212) = 1;
@@ -28647,43 +28647,43 @@ Warning();//修正堆栈
                                                 if (*(int*)(a1 + 444) >= 38)
                                                 {
                                                     if (*(int*)(a1 + 444) >= 40)
-                                                        *(_WORD*)(a1 + 204) = 105;
+                                                        *(short*)(a1 + 204) = 105;
                                                     else
-                                                        *(_WORD*)(a1 + 204) = 101;
+                                                        *(short*)(a1 + 204) = 101;
                                                 }
                                                 else
                                                 {
-                                                    *(_WORD*)(a1 + 204) = 100;
+                                                    *(short*)(a1 + 204) = 100;
                                                 }
                                             }
                                             else
                                             {
-                                                *(_WORD*)(a1 + 204) = 99;
+                                                *(short*)(a1 + 204) = 99;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 104;
+                                            *(short*)(a1 + 204) = 104;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 103;
+                                        *(short*)(a1 + 204) = 103;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 114;
+                                    *(short*)(a1 + 204) = 114;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 113;
+                                *(short*)(a1 + 204) = 113;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 112;
+                            *(short*)(a1 + 204) = 112;
                         }
                         if (*(int*)(a1 + 444) != 4)
                         {
@@ -28731,7 +28731,7 @@ Warning();//修正堆栈
                                     v228 = (double)sub_41CCEA(a1, 1) * 1.25;
                                     v220 = sub_41CCEA(a1, 1);
                                     v221 = (double)(v220 * sub_41D067(a1, 1) / 200) + v228;
-                                    sub_41F169((_WORD*)a1, (__int64)v221);
+                                    sub_41F169((short*)a1, (__int64)v221);
                                     *(_BYTE*)(a1 + 213) = -1;
                                     if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
                                     {
@@ -28753,13 +28753,13 @@ Warning();//修正堆栈
                                     *(int*)(a1 + 304) = 0;
                                     *(_BYTE*)(a1 + 257) = 2;
                                     *(int*)(a1 + 360) = 30;
-                                    *(_WORD*)(a1 + 204) = 4;
+                                    *(short*)(a1 + 204) = 4;
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = (*(int*)(a1 + 444) / 4 + 2 * *(int*)(a1 + 436)) % 4 + 68;
+                                    *(short*)(a1 + 204) = (*(int*)(a1 + 444) / 4 + 2 * *(int*)(a1 + 436)) % 4 + 68;
                                 }
-                                if (*(_WORD*)(a1 + 204) == 69 || *(_WORD*)(a1 + 204) == 70)
+                                if (*(short*)(a1 + 204) == 69 || *(short*)(a1 + 204) == 70)
                                     *(_BYTE*)(a1 + 223) = 127;
                                 else
                                     *(_BYTE*)(a1 + 223) = 0x80;
@@ -28788,13 +28788,13 @@ Warning();//修正堆栈
                             v229 = (double)sub_41CB3B(a1, 1) * 2.5;
                             v218 = sub_41CB3B(a1, 1);
                             v219 = (double)(v218 * sub_41D067(a1, 1) / 100) + v229;
-                            sub_41F169((_WORD*)a1, (__int64)v219);
+                            sub_41F169((short*)a1, (__int64)v219);
                             *(_BYTE*)(a1 + 213) = -1;
                         }
                         *(_BYTE*)(a1 + 212) = 1;
                         if (*(int*)(a1 + 444) == 1)
                         {
-                            *(_WORD*)(a1 + 204) = 113;
+                            *(short*)(a1 + 204) = 113;
                         }
                         else if (*(int*)(a1 + 444) >= 4)
                         {
@@ -28805,29 +28805,29 @@ Warning();//修正堆栈
                                     if (*(int*)(a1 + 444) >= 32)
                                     {
                                         if (*(int*)(a1 + 444) >= 36)
-                                            *(_WORD*)(a1 + 204) = 111;
+                                            *(short*)(a1 + 204) = 111;
                                         else
-                                            *(_WORD*)(a1 + 204) = 110;
+                                            *(short*)(a1 + 204) = 110;
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 109;
+                                        *(short*)(a1 + 204) = 109;
                                     }
                                 }
                                 else
                                 {
                                     *(_BYTE*)(a1 + 251) = 1;
-                                    *(_WORD*)(a1 + 204) = 108;
+                                    *(short*)(a1 + 204) = 108;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 107;
+                                *(short*)(a1 + 204) = 107;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 106;
+                            *(short*)(a1 + 204) = 106;
                         }
                         if (*(int*)(a1 + 444) != 4)
                         {
@@ -28860,19 +28860,19 @@ Warning();//修正堆栈
                 {
                     v186 = sub_41CB3B(a1, 1);
                     v187 = sub_43E620((short*)*(int*)(a1 + 480));
-                    sub_41F169((_WORD*)a1, v186 * v187 / 200);
+                    sub_41F169((short*)a1, v186 * v187 / 200);
                 }
                 else
                 {
                     v188 = sub_41CB3B(a1, 1);
-                    sub_41F169((_WORD*)a1, 75 * v188 / 100);
+                    sub_41F169((short*)a1, 75 * v188 / 100);
                 }
                 if (*(int*)(a1 + 392))
                 {
                     v189 = (unsigned __int16)sub_4261B0((short*)a1);
                     v190 = (unsigned __int16)sub_4261B0((short*)a1);
                     v191 = sub_41D067(a1, 1);
-                    sub_41F169((_WORD*)a1, v190 * v191 / 200 + v189);
+                    sub_41F169((short*)a1, v190 * v191 / 200 + v189);
                 }
                 *(_BYTE*)(a1 + 257) = 1;
                 *(_BYTE*)(a1 + 248) = -1;
@@ -28917,49 +28917,49 @@ Warning();//修正堆栈
                                                 if (*(int*)(a1 + 444) >= 26)
                                                 {
                                                     *(_BYTE*)(a1 + 257) = 2;
-                                                    *(_WORD*)(a1 + 204) = 27;
+                                                    *(short*)(a1 + 204) = 27;
                                                 }
                                                 else
                                                 {
-                                                    *(_WORD*)(a1 + 204) = 26;
+                                                    *(short*)(a1 + 204) = 26;
                                                 }
                                             }
                                             else
                                             {
                                                 *(_BYTE*)(a1 + 248) = 0;
-                                                *(_WORD*)(a1 + 204) = 25;
+                                                *(short*)(a1 + 204) = 25;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 24;
+                                            *(short*)(a1 + 204) = 24;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 1;
+                                        *(short*)(a1 + 204) = 1;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 0;
+                                    *(short*)(a1 + 204) = 0;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 1;
+                                *(short*)(a1 + 204) = 1;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 0;
+                            *(short*)(a1 + 204) = 0;
                         }
                         if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 11 || *(int*)(a1 + 444) == 20)
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
                         if (*(int*)(a1 + 444) == 20)
                         {
                             v195 = sub_41CB3B(a1, 1);
-                            sub_41F169((_WORD*)a1, 85 * v195 / 100);
+                            sub_41F169((short*)a1, 85 * v195 / 100);
                         }
                         else if (*(int*)(a1 + 444) == 28)
                         {
@@ -28994,49 +28994,49 @@ Warning();//修正堆栈
                                                 if (*(int*)(a1 + 444) >= 31)
                                                 {
                                                     *(_BYTE*)(a1 + 257) = 2;
-                                                    *(_WORD*)(a1 + 204) = 27;
+                                                    *(short*)(a1 + 204) = 27;
                                                 }
                                                 else
                                                 {
-                                                    *(_WORD*)(a1 + 204) = 26;
+                                                    *(short*)(a1 + 204) = 26;
                                                 }
                                             }
                                             else
                                             {
                                                 *(_BYTE*)(a1 + 248) = 0;
-                                                *(_WORD*)(a1 + 204) = 25;
+                                                *(short*)(a1 + 204) = 25;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 24;
+                                            *(short*)(a1 + 204) = 24;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 2;
+                                        *(short*)(a1 + 204) = 2;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 1;
+                                    *(short*)(a1 + 204) = 1;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 2;
+                                *(short*)(a1 + 204) = 2;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 1;
+                            *(short*)(a1 + 204) = 1;
                         }
                         if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 12 || *(int*)(a1 + 444) == 23)
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
                         if (*(int*)(a1 + 444) == 23)
                         {
                             v196 = sub_41CB3B(a1, 1);
-                            sub_41F169((_WORD*)a1, 85 * v196 / 100);
+                            sub_41F169((short*)a1, 85 * v196 / 100);
                         }
                         else if (*(int*)(a1 + 444) == 33)
                         {
@@ -29071,49 +29071,49 @@ Warning();//修正堆栈
                                                 if (*(int*)(a1 + 444) >= 31)
                                                 {
                                                     *(_BYTE*)(a1 + 257) = 2;
-                                                    *(_WORD*)(a1 + 204) = 30;
+                                                    *(short*)(a1 + 204) = 30;
                                                 }
                                                 else
                                                 {
-                                                    *(_WORD*)(a1 + 204) = 29;
+                                                    *(short*)(a1 + 204) = 29;
                                                 }
                                             }
                                             else
                                             {
                                                 *(_BYTE*)(a1 + 248) = 0;
-                                                *(_WORD*)(a1 + 204) = 28;
+                                                *(short*)(a1 + 204) = 28;
                                             }
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 27;
+                                            *(short*)(a1 + 204) = 27;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 2;
+                                        *(short*)(a1 + 204) = 2;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 1;
+                                    *(short*)(a1 + 204) = 1;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 2;
+                                *(short*)(a1 + 204) = 2;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 1;
+                            *(short*)(a1 + 204) = 1;
                         }
                         if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 12 || *(int*)(a1 + 444) == 23)
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
                         if (*(int*)(a1 + 444) == 23)
                         {
                             v197 = sub_41CB3B(a1, 1);
-                            sub_41F169((_WORD*)a1, 85 * v197 / 100);
+                            sub_41F169((short*)a1, 85 * v197 / 100);
                         }
                         else if (*(int*)(a1 + 444) == 33)
                         {
@@ -29151,49 +29151,49 @@ Warning();//修正堆栈
                                             if (*(int*)(a1 + 444) >= 28)
                                             {
                                                 *(_BYTE*)(a1 + 257) = 2;
-                                                *(_WORD*)(a1 + 204) = 23;
+                                                *(short*)(a1 + 204) = 23;
                                             }
                                             else
                                             {
-                                                *(_WORD*)(a1 + 204) = 22;
+                                                *(short*)(a1 + 204) = 22;
                                             }
                                         }
                                         else
                                         {
                                             *(_BYTE*)(a1 + 248) = 0;
-                                            *(_WORD*)(a1 + 204) = 21;
+                                            *(short*)(a1 + 204) = 21;
                                         }
                                     }
                                     else
                                     {
-                                        *(_WORD*)(a1 + 204) = 20;
+                                        *(short*)(a1 + 204) = 20;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 3;
+                                    *(short*)(a1 + 204) = 3;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 2;
+                                *(short*)(a1 + 204) = 2;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 3;
+                            *(short*)(a1 + 204) = 3;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 2;
+                        *(short*)(a1 + 204) = 2;
                     }
                     if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 12 || *(int*)(a1 + 444) == 20)
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
                     if (*(int*)(a1 + 444) == 20)
                     {
                         v194 = sub_41CB3B(a1, 1);
-                        sub_41F169((_WORD*)a1, 85 * v194 / 100);
+                        sub_41F169((short*)a1, 85 * v194 / 100);
                     }
                     else if (*(int*)(a1 + 444) == 30)
                     {
@@ -29232,53 +29232,53 @@ Warning();//修正堆栈
                                         if (*(int*)(a1 + 444) >= 24)
                                         {
                                             *(_BYTE*)(a1 + 257) = 2;
-                                            *(_WORD*)(a1 + 204) = 211;
+                                            *(short*)(a1 + 204) = 211;
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 204) = 210;
+                                            *(short*)(a1 + 204) = 210;
                                         }
                                     }
                                     else
                                     {
                                         *(_BYTE*)(a1 + 248) = 0;
-                                        *(_WORD*)(a1 + 204) = 209;
+                                        *(short*)(a1 + 204) = 209;
                                     }
                                 }
                                 else
                                 {
-                                    *(_WORD*)(a1 + 204) = 208;
+                                    *(short*)(a1 + 204) = 208;
                                 }
                             }
                             else
                             {
-                                *(_WORD*)(a1 + 204) = 196;
+                                *(short*)(a1 + 204) = 196;
                             }
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 204) = 195;
+                            *(short*)(a1 + 204) = 195;
                         }
                     }
                     else
                     {
-                        *(_WORD*)(a1 + 204) = 196;
+                        *(short*)(a1 + 204) = 196;
                     }
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 204) = 195;
+                    *(short*)(a1 + 204) = 195;
                 }
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 194;
+                *(short*)(a1 + 204) = 194;
             }
             if (*(int*)(a1 + 444) == 17)
             {
                 v192 = sub_41CB3B(a1, 1);
                 v193 = sub_43E620((short*)*(int*)(a1 + 480));
-                sub_41F169((_WORD*)a1, v192 * v193 / 150);
+                sub_41F169((short*)a1, v192 * v193 / 150);
             }
             else if (*(int*)(a1 + 444) == 26)
             {
@@ -29305,7 +29305,7 @@ Warning();//修正堆栈
         if (*(int*)(a1 + 304))
         {
             v64 = sub_4175B4(a1, 1);
-            sub_41EF8A(*(_WORD**)(a1 + 304), v64);
+            sub_41EF8A(*(short**)(a1 + 304), v64);
             sub_423CF2(*(_BYTE**)(a1 + 304), 0, 0, 0, 0, 0, 0);
         }
         v386 = (char*)sub_464AC9((char*)byte_4B9B10, (_BYTE*)a1, *(unsigned __int8**)(a1 + 304), 0);
@@ -29368,13 +29368,13 @@ Warning();//修正堆栈
             if (*(int*)(a1 + 444) >= 20)
             {
                 if (*(int*)(a1 + 444) >= 24)
-                    *(_WORD*)(a1 + 204) = 65;
+                    *(short*)(a1 + 204) = 65;
                 else
-                    *(_WORD*)(a1 + 204) = 64;
+                    *(short*)(a1 + 204) = 64;
             }
             else
             {
-                *(_WORD*)(a1 + 204) = 63;
+                *(short*)(a1 + 204) = 63;
                 v376 = 800;
                 v377 = -2500;
                 if (*(int*)(a1 + 424))
@@ -29391,7 +29391,7 @@ Warning();//修正堆栈
         }
         else
         {
-            *(_WORD*)(a1 + 204) = 62;
+            *(short*)(a1 + 204) = 62;
             v378 = 2400;
             v379 = -1300;
             if (*(int*)(a1 + 424))
@@ -29471,7 +29471,7 @@ Warning();//修正堆栈
 
 
 //return thisx[248];
-__int16 sub_43E520(_WORD* thisx)
+__int16 sub_43E520(short* thisx)
 {
     return thisx[248];
 }
@@ -29507,7 +29507,7 @@ int* sub_43E580(int* thisx, int a2)
 }
 
 // return thisx[265];
-__int16 sub_43E5A0(_WORD* thisx)
+__int16 sub_43E5A0(short* thisx)
 {
     return thisx[265];
 }
@@ -29519,13 +29519,13 @@ int sub_43E5C0(int* thisx)
 }
 
 //return thisx[93];
-__int16 sub_43E600(_WORD* thisx)
+__int16 sub_43E600(short* thisx)
 {
     return thisx[93];
 }
 
 //return thisx[95];
-__int16 sub_43E620(_WORD* thisx)
+__int16 sub_43E620(short* thisx)
 {
     return thisx[95];
 }
@@ -29536,7 +29536,7 @@ void sub_43E640(void* thisx)
     check_stack c(__FILE__, __LINE__);
     *(int*)thisx = off_4AC2B8;
     memset((char*)thisx + 4, 0, 0xBu);
-    *((_WORD*)thisx + 8) = 0;
+    *((short*)thisx + 8) = 0;
     memset((char*)thisx + 18, 0, 0xAu);
     memset((char*)thisx + 40, 0, 0x10u);
     memset((char*)thisx + 56, 0, 0x14u);
@@ -29664,7 +29664,7 @@ int sub_43E7AA(int thisx, int a2, int a3)
                                                         }
                                                         else if (v9 == 2)
                                                         {
-                                                            *(_WORD*)(thisx + 16) = sub_48307F(String1);
+                                                            *(short*)(thisx + 16) = sub_48307F(String1);
                                                         }
                                                         break;
                                                     case 2:
@@ -29697,7 +29697,7 @@ int sub_43E7AA(int thisx, int a2, int a3)
                                                     default:
                                                         if (v8 >= 5 && v8 <= 8 && v9 == 1)
                                                         {
-                                                            *(_WORD*)(thisx + 2 * v8 + 66) = sub_485ED0(a3, 256, String1, -1);
+                                                            *(short*)(thisx + 2 * v8 + 66) = sub_485ED0(a3, 256, String1, -1);
                                                         }
                                                         else if (v8 == 9 && v9 < 4)
                                                         {
@@ -29978,7 +29978,7 @@ void sub_43F130(void* thisx)
 {
     check_stack c(__FILE__, __LINE__);
     *(int*)thisx = off_4AC2C0;
-    *((_WORD*)thisx + 2) = 0;
+    *((short*)thisx + 2) = 0;
     *((int*)thisx + 2) = 0;
     *((int*)thisx + 3) = 0;
 }
@@ -29995,7 +29995,7 @@ int sub_43F178(int thisx, __int16 a2, int a3)
     check_stack c(__FILE__, __LINE__);
     int result; // eax
 
-    *(_WORD*)(thisx + 4) = a2;
+    *(short*)(thisx + 4) = a2;
     result = a3;
     *(int*)(thisx + 12) = a3;
     *(int*)(thisx + 8) = 0;
@@ -30014,7 +30014,7 @@ int* sub_43F1A3(int thisx)
         if ((int)++ * (int*)(thisx + 8) > 24)
         {
             *(int*)(thisx + 12) = 0;
-            *(_WORD*)(thisx + 4) = 0;
+            *(short*)(thisx + 4) = 0;
             *(int*)(thisx + 8) = 0;
             return sub_4532B9((int*)&byte_4B9B10);
         }
@@ -30082,7 +30082,7 @@ int sub_43F308(int thisx)
     int result; // eax
 
     result = thisx;
-    *(_WORD*)(thisx + 4) = 0;
+    *(short*)(thisx + 4) = 0;
     *(int*)(thisx + 8) = 0;
     *(int*)(thisx + 12) = 0;
     return result;
@@ -30906,7 +30906,7 @@ int sub_44076B(int thisx, int a2)
                     }
                     else
                     {
-                        v3 = -(*(_WORD*)(*(int*)(thisx + 268) + 14) != 8);
+                        v3 = -(*(short*)(*(int*)(thisx + 268) + 14) != 8);
                         LOBYTE(v3) = v3 & 0x80;
                         memset(v11, v3 + 128, Size);
                         Size = 0;
@@ -33000,11 +33000,11 @@ int sub_44508E(int a1, double a2, double a3, double a4)
     memset(byte_4B999B, 0, sizeof(byte_4B999B));
     memset(byte_4B99A3, 0, 8u);
     for (i = 0; i < (int)dword_4B93A0; ++i)
-        *((_WORD*)dword_4B9394 + i) = -1;
+        *((short*)dword_4B9394 + i) = -1;
     for (j = 0; j < (int)dword_4B93A0; ++j)
     {
         for (k = 0; k < 4; ++k)
-            *((_WORD*)*(&dword_4B9370 + k) + j) = -1;
+            *((short*)*(&dword_4B9370 + k) + j) = -1;
     }
     for (m = 0; m < dword_4B9368; ++m)
     {
@@ -33046,7 +33046,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
             v58 = (_BYTE*)(a1 + 612 * v57 + 2628);
             v25 = (_BYTE*)(a1 + (unsigned __int8)sub_426070(v58) + 2546);
             ++* v25;
-            *(_WORD*)(a1 + 2 * jj + 2564) = sub_43E600((short*)v58);
+            *(short*)(a1 + 2 * jj + 2564) = sub_43E600((short*)v58);
             sub_41BF1D((int)v58);
             sub_475030(v58, v57);
         }
@@ -33076,7 +33076,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
                 if (!v5)
                     break;
             }
-            *(_WORD*)(a1 + 2 * kk + 2564) = mm;
+            *(short*)(a1 + 2 * kk + 2564) = mm;
             *(_BYTE*)(kk + a1 + 2588) = 1;
             *(_BYTE*)(kk + a1 + 2580) = MarkedForDetachment((_BYTE*)(36 * mm + dword_4B92E0));//call return thisxx[20]; 
         }
@@ -33119,7 +33119,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
             (struct Concurrency::details::VirtualProcessor*)1);
         if (!dword_4B9974)
         {
-            sub_475010((short*)v54, *(_WORD*)(a1 + 2 * nn + 2564));
+            sub_475010((short*)v54, *(short*)(a1 + 2 * nn + 2564));
             if (*(int*)(a1 + 116) || nn >= 2)
                 sub_474FB0((int*)v54, 0);
             else
@@ -33160,7 +33160,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
                         }
                         if (*(_BYTE*)(a1 + 11690) == 19)
                             v52 = 75 * v52 / 100;
-                        sub_474F90((short*)v54, *(_WORD*)(a1 + 11814) + v52);
+                        sub_474F90((short*)v54, *(short*)(a1 + 11814) + v52);
                     }
                     else
                     {
@@ -33303,7 +33303,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
                 for (i6 = 0; i6 < (int)dword_4B93A0; ++i6)
                 {
                     if (*((__int16*)dword_4B9394 + i6) >= 0)
-                        *((_WORD*)*(&dword_4B9370 + i5) + i6) = v40++;
+                        *((short*)*(&dword_4B9370 + i5) + i6) = v40++;
                 }
             }
         }
@@ -33316,8 +33316,8 @@ int sub_44508E(int a1, double a2, double a3, double a4)
             v32 = (unsigned __int16)sub_474F50((short*)v33);
             v34 = sub_4264F0(v33);
             if (v34 < 4u)
-                *((_WORD*)*(&dword_4B9370 + v34) + v32) = 1;
-            *((_WORD*)dword_4B9394 + v32) = 1;
+                *((short*)*(&dword_4B9370 + v34) + v32) = 1;
+            *((short*)dword_4B9394 + v32) = 1;
         }
         for (i8 = 0; i8 < 4; ++i8)
         {
@@ -33327,7 +33327,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
                 for (i9 = 0; i9 < (int)dword_4B93A0; ++i9)
                 {
                     if (*((__int16*)dword_4B9394 + i9) >= 0)
-                        *((_WORD*)*(&dword_4B9370 + i8) + i9) = v37++;
+                        *((short*)*(&dword_4B9370 + i8) + i9) = v37++;
                 }
             }
         }
@@ -33335,7 +33335,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
         for (i10 = 0; i10 < (int)dword_4B93A0; ++i10)
         {
             if (*((__int16*)dword_4B9394 + i10) != -1)
-                *((_WORD*)dword_4B9394 + i10) = v38++;
+                *((short*)dword_4B9394 + i10) = v38++;
         }
     }
     sub_466A41();
@@ -34049,7 +34049,7 @@ int sub_447651(int thisx)
                             if (!v9)
                                 break;
                         }
-                        *(_WORD*)(thisx + 2 * k + 2564) = n;
+                        *(short*)(thisx + 2 * k + 2564) = n;
                         if (*(_BYTE*)(thisx + 98))
                             *(_BYTE*)(k + thisx + 2580) = rand() % 4;
                         else
@@ -34077,7 +34077,7 @@ int sub_447651(int thisx)
                         if (!v8)
                             break;
                     }
-                    *(_WORD*)(thisx + 2 * k + 2564) = ii;
+                    *(short*)(thisx + 2 * k + 2564) = ii;
                     *(_BYTE*)(k + thisx + 2580) = MarkedForDetachment((_BYTE*)(36 * ii + dword_4B92E0));//call return thisxx[20]; 
                     v34 = 1;
                     v7 = sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
@@ -34316,7 +34316,7 @@ int sub_447651(int thisx)
                 {
                     for (i1 = rand() % (int)Size; sub_44E484((_BYTE*)thisx, nn, i1); i1 = (int)(i1 + Size + 1) % (int)Size)
                         ;
-                    *(_WORD*)(thisx + 2 * nn + 2564) = i1;
+                    *(short*)(thisx + 2 * nn + 2564) = i1;
                     if (*(_BYTE*)(thisx + 98))
                         *(_BYTE*)(nn + thisx + 2580) = rand() % 4;
                     else
@@ -34372,7 +34372,7 @@ int sub_448750(int thisx)
     for (i = 0; i < (unsigned __int8)byte_4B9986; ++i)
     {
         v4 = sub_4576F0(i);
-        *(_WORD*)(thisx + 2 * v4 + 2564) = 0;
+        *(short*)(thisx + 2 * v4 + 2564) = 0;
         *(_BYTE*)(v4 + thisx + 2580) = MarkedForDetachment((_BYTE*)dword_4B92E0);//call return thisxx[20]; 
         if (v4 < 0)
             *(_BYTE*)(i + thisx + 2554) = -1;
@@ -34388,7 +34388,7 @@ int sub_448750(int thisx)
     for (j = (unsigned __int8)byte_4B9986; j < (unsigned __int8)byte_4B9985; ++j)
     {
         v3 = sub_4576F0(j);
-        *(_WORD*)(thisx + 2 * v3 + 2564) = v5;
+        *(short*)(thisx + 2 * v3 + 2564) = v5;
         *(_BYTE*)(v3 + thisx + 2580) = MarkedForDetachment((_BYTE*)(36 * v5 + dword_4B92E0));//call return thisxx[20]; 
         v5 += 4;
         if (v5 >= 0x10u)
@@ -34700,7 +34700,7 @@ LABEL_4:
                                     {
                                         v10 = (unsigned __int16)v102;
                                         LOWORD(v102) = v10 * (unsigned __int16)sub_475450((short*)v104) / 100;
-                                        if (!(_WORD)v102)
+                                        if (!(short)v102)
                                             LOWORD(v102) = 1;
                                         v98 = 4 * v98 / (unsigned __int16)v102;
                                         if (v98 <= 0)
@@ -34867,7 +34867,7 @@ LABEL_4:
                                 LOBYTE(v71) = sub_475290((char*)a1 + 612 * i + 2628);
                                 if ((unsigned __int8)v71 == 1)
                                     LOWORD(v72) = (unsigned __int16)v72 / 2;
-                                if (!(_WORD)v72)
+                                if (!(short)v72)
                                     LOWORD(v72) = 1;
                                 v88 = 4 * (unsigned __int16)v89 / (unsigned __int16)v72;
                                 if ((unsigned __int8)v71 == 2)
@@ -34994,7 +34994,7 @@ LABEL_4:
                                     v22 = sub_425D70((int*)(a1 + 612 * n + 2628));
                                     if (v65 == v22)
                                         LOWORD(v51) = 85 * (unsigned __int16)v51 / 100;
-                                    if (!(_WORD)v51)
+                                    if (!(short)v51)
                                         LOWORD(v51) = 1;
                                     v63 = 4 * (unsigned __int16)v64 / (unsigned __int16)v51;
                                 }
@@ -35186,7 +35186,7 @@ LABEL_4:
                     }
                     for (i = 0; i < (unsigned __int8)byte_4B9985; ++i)
                     {
-                        if (*(__int16*)(a1 + 2 * i + 11404) > 0 && !-- * (_WORD*)(a1 + 2 * i + 11404))
+                        if (*(__int16*)(a1 + 2 * i + 11404) > 0 && !-- * (short*)(a1 + 2 * i + 11404))
                             sub_456879((int*)a1, i);
                     }
                     if (dword_4B99F0)
@@ -35495,23 +35495,23 @@ int  sub_44B63F(int thisx, double a2, double a3, double a4)
                         v15 = *(_BYTE*)(v18 + i % (*(int*)(thisx + 2368) + 1) + 240);
                         v16 = 28 * v15 + v18;
                         v19 = sub_474E70((int*)v17);
-                        *(_WORD*)(v16 + 6) += v19;
+                        *(short*)(v16 + 6) += v19;
                         if (*(__int16*)(v16 + 22) < v19)
-                            *(_WORD*)(v16 + 22) = v19;
+                            *(short*)(v16 + 22) = v19;
                         if (*(__int16*)(v16 + 24) > v19)
-                            *(_WORD*)(v16 + 24) = v19;
+                            *(short*)(v16 + 24) = v19;
                         *(_BYTE*)(v16 + 26) += sub_475610((char*)v17);
                         ++* (_BYTE*)(v16 + 20);
                         if (Concurrency::details::SchedulerBase::GetSchedulerProxy(v17) == (struct Concurrency::ISchedulerProxy*)80)
                         {
                             if ((unsigned __int16)sub_474EB0((short*)v17))
-                                *(_WORD*)(v16 + 8) = (unsigned __int16)sub_474EB0((short*)v17) / 2;
+                                *(short*)(v16 + 8) = (unsigned __int16)sub_474EB0((short*)v17) / 2;
                             else
-                                *(_WORD*)(v16 + 8) = 16;
+                                *(short*)(v16 + 8) = 16;
                         }
                         else
                         {
-                            *(_WORD*)(v16 + 8) = sub_474EB0((short*)v17);
+                            *(short*)(v16 + 8) = sub_474EB0((short*)v17);
                         }
                         *(int*)(v18 + 168) += *(__int16*)(v16 + 6);
                         if (!sub_425FF0((int*)v17)
@@ -35748,7 +35748,7 @@ int sub_44C3D6(int thisx)
     *(_BYTE*)(thisx + 11372) = 2;
     byte_4B999A = *(_BYTE*)(thisx + 30);
     for (i = 0; i < 14; ++i)
-        word_4B99AC[i] = *(_WORD*)(thisx + 2 * i + 48);
+        word_4B99AC[i] = *(short*)(thisx + 2 * i + 48);
     byte_4B99C8 = *(_BYTE*)(thisx + 76);
     byte_4B99C9 = *(_BYTE*)(thisx + 77);
     byte_4B99CA = *(_BYTE*)(thisx + 78);
@@ -36125,7 +36125,7 @@ unsigned __int8  sub_44C60C(int thisx)
             if (v39 == 2)
             {
                 for (m = 0; m < (unsigned __int8)byte_4B9986; ++m)
-                    *(_WORD*)(thisx + 2 * m + 2564) = (unsigned __int8)sub_4575B4((unsigned __int8*)thisx, m, 0);
+                    *(short*)(thisx + 2 * m + 2564) = (unsigned __int8)sub_4575B4((unsigned __int8*)thisx, m, 0);
                 *(_BYTE*)(thisx + 2562) = 3;
                 (*(void(**)(int, int))(*(int*)(thisx + 15716) + 4))(thisx + 15716, 1);
                 *(int*)(thisx + 15640) = thisx + 15716;
@@ -36161,7 +36161,7 @@ unsigned __int8  sub_44C60C(int thisx)
         if (v39 == 1)
         {
             for (kk = 0; kk < 8; ++kk)
-                *(_WORD*)(thisx + 2 * kk + 2564) = (unsigned __int8)sub_475710((_BYTE*)(thisx + 15896), kk);
+                *(short*)(thisx + 2 * kk + 2564) = (unsigned __int8)sub_475710((_BYTE*)(thisx + 15896), kk);
             v28 = 0;
             v25 = 0;
             for (mm = 0; mm < (unsigned __int8)byte_4B9990; ++mm)
@@ -36246,8 +36246,8 @@ unsigned __int8  sub_44C60C(int thisx)
                 v38 = 1;
                 v36 = 1;
                 sub_463F05(thisx + 11436);
-                sub_475730((_WORD*)(thisx + 11816), 0);
-                sub_475730((_WORD*)(thisx + 11892), 0);
+                sub_475730((short*)(thisx + 11816), 0);
+                sub_475730((short*)(thisx + 11892), 0);
                 sub_480054(thisx + 15752, (int)&byte_4B0C5C);
                 sub_4756B0((_BYTE*)(thisx + 15752), 26, 8);
                 (*(void(**)(int, int))(*(int*)(thisx + 15752) + 4))(thisx + 15752, 1);
@@ -36411,7 +36411,7 @@ unsigned __int8  sub_44C60C(int thisx)
         if (v39 == 1)
         {
             for (i9 = 0; i9 < 8; ++i9)
-                *(_WORD*)(thisx + 2 * i9 + 2564) = (unsigned __int8)sub_475710((_BYTE*)(thisx + 15896), i9);
+                *(short*)(thisx + 2 * i9 + 2564) = (unsigned __int8)sub_475710((_BYTE*)(thisx + 15896), i9);
             v11 = 0;
             v8 = 0;
             for (i10 = 0; i10 < (unsigned __int8)byte_4B9990; ++i10)
@@ -36696,19 +36696,19 @@ int sub_44E835(int thisx)
             *(int*)(thisx + 2528) += v4;
             v3 = *(int*)(thisx + 2528) - *(unsigned __int16*)(thisx + 2564);
             if (v3 < 0 || v3 >= 7)
-                *(_WORD*)(thisx + 2564) += v4;
+                *(short*)(thisx + 2564) += v4;
             if (*(int*)(thisx + 2528) >= 0)
             {
                 if (*(int*)(thisx + 2528) >= 10)
                 {
                     *(int*)(thisx + 2528) = 0;
-                    *(_WORD*)(thisx + 2564) = 0;
+                    *(short*)(thisx + 2564) = 0;
                 }
             }
             else
             {
                 *(int*)(thisx + 2528) = 9;
-                *(_WORD*)(thisx + 2564) = 3;
+                *(short*)(thisx + 2564) = 3;
             }
             sub_4557D1(thisx, -2);
         }
@@ -36745,7 +36745,7 @@ int sub_44E835(int thisx)
     sub_49AB05((int)byte_4BDC60, v10);
     if (dword_4B93B0 / 5u % 2)
     {
-        if (*(_WORD*)(thisx + 2564))
+        if (*(short*)(thisx + 2564))
             sub_47B91A(160, 44, byte_4B0CA0, 0, -1);
         if (*(unsigned __int16*)(thisx + 2564) < 3u)
             sub_47B91A(160, 168, byte_4B0CA4, 0, -1);
@@ -36862,7 +36862,7 @@ UINT sub_44ED4D(UINT thisx)
                         sub_47652C((int*)&player_list[108 * *(int*)(thisx + 2528)], *(int*)(thisx + 2536));
                         *(_BYTE*)(thisx + 2562) = 2;
                         *(_BYTE*)(thisx + *(int*)(thisx + 2528) + 2588) = 2;
-                        *(_WORD*)(thisx + 2 * *(int*)(thisx + 2528) + 2564) = 0;
+                        *(short*)(thisx + 2 * *(int*)(thisx + 2528) + 2564) = 0;
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
                         for (j = 0; j < 256; ++j)
                             byte_4B9874[j] = 2;
@@ -37088,7 +37088,7 @@ UINT sub_44ED4D(UINT thisx)
                         {
                             *(_BYTE*)(thisx + 11 * i + 11264 + *(unsigned __int16*)(thisx + 2 * i + 2564)) = v16;
                             sub_47690D((char*)&player_list[108 * i], *(_BYTE*)(thisx + 2 * i + 2564), v16);
-                            ++* (_WORD*)(thisx + 2 * i + 2564);
+                            ++* (short*)(thisx + 2 * i + 2564);
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
                         }
                     }
@@ -37118,7 +37118,7 @@ UINT sub_44ED4D(UINT thisx)
                             if (v18)
                             {
                                 sub_4768A2((int*)&player_list[108 * i], *(_BYTE*)(thisx + 2 * i + 2564), ii);
-                                *(_BYTE*)(thisx + 11 * i + 11176 + (unsigned __int16)(*(_WORD*)(thisx + 2 * i + 2564))++) = ii;
+                                *(_BYTE*)(thisx + 11 * i + 11176 + (unsigned __int16)(*(short*)(thisx + 2 * i + 2564))++) = ii;
                                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
                                 break;
                             }
@@ -37454,7 +37454,7 @@ UINT sub_450FF8(int thisx, LPCSTR lpFileName)
         wsprintfA(KeyName, "%02d", nDefault);
         PrivateProfileIntA = GetPrivateProfileIntA(AppName, KeyName, 10, lpFileName); //KeyName = nDefault ，AppName =  "WeaponRate"
         //PrivateProfileIntA    int类型
-        *(_WORD*)(thisx + 2 * nDefault + 48) = PrivateProfileIntA;//先乘除后加减，*2表示2字节
+        *(short*)(thisx + 2 * nDefault + 48) = PrivateProfileIntA;//先乘除后加减，*2表示2字节
         result = nDefault + 1;
     }
     //暂时不用手柄，不看
@@ -37645,7 +37645,7 @@ int sub_451AF1(int thisx)
         v12 = -1;
         wsprintfA(FileName, "Stage\\Stage%02d_Select.bmp", i + 1);
         sub_49DA45((int*)byte_4BDC60, FileName, (int)&v12);
-        sub_475770((_WORD*)(20 * i + *(int*)(thisx + 13392)), v12);
+        sub_475770((short*)(20 * i + *(int*)(thisx + 13392)), v12);
         if (v12 <= 0)
         {
             v4 = sub_49CB92((int)byte_4BDC60, -1, 32, 32, 0, 0);
@@ -37678,7 +37678,7 @@ int sub_451AF1(int thisx)
                         v8 = 256;
                         v9 = 256;
                         sub_49CC5B((short*)byte_4BDC60, v4, &v5);
-                        sub_475770((_WORD*)(20 * i + *(int*)(thisx + 13392)), v4);
+                        sub_475770((short*)(20 * i + *(int*)(thisx + 13392)), v4);
                         sub_49DA8A((int*)byte_4BDC60, v12);
                     }
                 }
@@ -38551,14 +38551,14 @@ int sub_452D16(int thisx, double a2, double a3, double a4)
     *(int*)(thisx + 11376) = 0;
     sub_456617(thisx);
     for (i = 0; i < 8; ++i)
-        *(_WORD*)(thisx + 2 * i + 11404) = 0;
+        *(short*)(thisx + 2 * i + 11404) = 0;
     for (j = 0; j < (unsigned __int8)byte_4B9985; ++j)
     {
         sub_41BF1D(thisx + 612 * j + 2628);
         sub_41D84A(thisx + 612 * j + 2628);
         sub_42371C(thisx + 612 * j + 2628);
         sub_452E9A(thisx);
-        sub_417763((_WORD*)(thisx + 612 * j + 2628));
+        sub_417763((short*)(thisx + 612 * j + 2628));
         if (sub_41BEA6((int*)(thisx + 612 * j + 2628)))
         {
             v6 = sub_41F0A9((int*)(thisx + 612 * j + 2628));
@@ -38602,7 +38602,7 @@ int sub_452D16(int thisx, double a2, double a3, double a4)
 
     // 将 thisx 偏移量为 11404 的连续 16 位数据初始化为 0
     for (i = 0; i < 8; ++i)
-        *(_WORD*)(thisx + 2 * i + 11404) = 0;
+        *(short*)(thisx + 2 * i + 11404) = 0;
 
     // 遍历并处理多个数据
     for (j = 0; j < (unsigned __int8)byte_4B9985; ++j)
@@ -38612,7 +38612,7 @@ int sub_452D16(int thisx, double a2, double a3, double a4)
         sub_41D84A(thisx + 612 * j + 2628);
         sub_42371C(thisx + 612 * j + 2628);
         sub_452E9A(thisx);
-        sub_417763((_WORD*)(thisx + 612 * j + 2628));
+        sub_417763((short*)(thisx + 612 * j + 2628));
 
         // 检查条件并处理相关数据
         if (sub_41BEA6((int*)(thisx + 612 * j + 2628)))
@@ -39798,7 +39798,7 @@ int sub_455782(int thisx)
     *(_BYTE*)(thisx + 2516) = 1;
     *(int*)(thisx + 2512) = 0;
     *(int*)(thisx + 2528) = 0;
-    *(_WORD*)(thisx + 2564) = 0;
+    *(short*)(thisx + 2564) = 0;
     return sub_4557D1(thisx, -1);
 }
 
@@ -39873,7 +39873,7 @@ unsigned __int16 sub_4557D1(int thisx, int a2)
         result = sub_452045((_BYTE*)thisx, 10, 5, 20, 18);
         for (i = 0; i < 7; ++i)
         {
-            result = *(_WORD*)(thisx + 2564);
+            result = *(short*)(thisx + 2564);
             v4 = result + i;
             v5 = 16 * i + 60;
             if (v4)
@@ -40155,18 +40155,18 @@ __int16 sub_456738(int thisx, unsigned __int8 a2)
 {
     int v2; // eax
 
-    *(_WORD*)(thisx + 2 * a2 + 11404) = 60 * (*(int*)(thisx + 11376) + 10) / 20;
+    *(short*)(thisx + 2 * a2 + 11404) = 60 * (*(int*)(thisx + 11376) + 10) / 20;
     if (*(_BYTE*)(thisx + 11372))
     {
         if (*(_BYTE*)(thisx + 11372) == 1)
         {
             v2 = 15 * *(__int16*)(thisx + 2 * a2 + 11404) / 10;
-            *(_WORD*)(thisx + 2 * a2 + 11404) = v2;
+            *(short*)(thisx + 2 * a2 + 11404) = v2;
         }
         else if (*(_BYTE*)(thisx + 11372) == 3)
         {
             v2 = 75 * *(__int16*)(thisx + 2 * a2 + 11404) / 100;
-            *(_WORD*)(thisx + 2 * a2 + 11404) = v2;
+            *(short*)(thisx + 2 * a2 + 11404) = v2;
         }
         else
         {
@@ -40174,14 +40174,14 @@ __int16 sub_456738(int thisx, unsigned __int8 a2)
             if (v2 == 4)
             {
                 LOWORD(v2) = *(__int16*)(thisx + 2 * a2 + 11404) / 2;
-                *(_WORD*)(thisx + 2 * a2 + 11404) = v2;
+                *(short*)(thisx + 2 * a2 + 11404) = v2;
             }
         }
     }
     else
     {
-        LOWORD(v2) = 2 * *(_WORD*)(thisx + 2 * a2 + 11404);
-        *(_WORD*)(thisx + 2 * a2 + 11404) = v2;
+        LOWORD(v2) = 2 * *(short*)(thisx + 2 * a2 + 11404);
+        *(short*)(thisx + 2 * a2 + 11404) = v2;
     }
     return v2;
 }
@@ -40522,7 +40522,7 @@ void sub_4571BB(int thisx)
                 ++* (_BYTE*)(thisx + 11806);
             *(_BYTE*)(thisx + 11690) = 0;
             v1 = (unsigned __int16)sub_4750D0((void*)(thisx + 11816));
-            *(_WORD*)(thisx + 11814) = (v1 + (unsigned __int16)sub_4750D0((void*)(thisx + 11892)) / 2);
+            *(short*)(thisx + 11814) = (v1 + (unsigned __int16)sub_4750D0((void*)(thisx + 11892)) / 2);
             *(int*)(thisx + 124) = 5;
             *(int*)(thisx + 112) = 1;
             *(int*)(thisx + 108) = 20;
@@ -40850,16 +40850,16 @@ int sub_457930(int thisx)
     *(_BYTE*)(thisx + 2516) = 1;
     *(int*)(thisx + 2528) = 0;
     *(int*)(thisx + 2532) = 0;
-    *(_WORD*)(thisx + 2564) = 0;
-    *(_WORD*)(thisx + 2566) = 4;
-    *(_WORD*)(thisx + 2570) = 0;
+    *(short*)(thisx + 2564) = 0;
+    *(short*)(thisx + 2566) = 4;
+    *(short*)(thisx + 2570) = 0;
     if (*(int*)(thisx + 112) == 14)
     {
         sub_45938D((_BYTE*)(thisx + 76 * *(unsigned __int16*)(thisx + 2568) + 11816));
     }
     else
     {
-        *(_WORD*)(thisx + 2568) = 0;
+        *(short*)(thisx + 2568) = 0;
         sub_45938D((_BYTE*)(thisx + 11816));
         sub_45938D((_BYTE*)(thisx + 11892));
     }
@@ -40957,7 +40957,7 @@ int sub_4579E8(int thisx, int a2)
         sub_47B91A(v9 + 164, v8 - 5, byte_4B24D4, 0, dword_4B9248);
         sub_47B91A(v9 + 182, v8 - 3, byte_4B24D8, 0, dword_4B9248);
         sub_47B91A(v9 + 168, v8 + 16, byte_4B24DC, 0, dword_4B9248);
-        if (*(_WORD*)(thisx + 2564))
+        if (*(short*)(thisx + 2564))
             sub_47B91A(v9 + 168, v8 + 32, byte_4B24EC, 0, dword_4B9248);
         else
             sub_47B91A(v9 + 168, v8 + 32, byte_4B24E0, 0, dword_4B9248);
@@ -41142,12 +41142,12 @@ int sub_457F11(int thisx)
                     case 1u:
                         if (++ * (int*)(thisx + 2528) == 2)
                         {
-                            ++* (_WORD*)(thisx + 2566);
+                            ++* (short*)(thisx + 2566);
                             sub_4579E8(thisx, 2);
                         }
                         break;
                     case 2u:
-                        ++ * (_WORD*)(thisx + 2566);
+                        ++ * (short*)(thisx + 2566);
                         *(int*)(thisx + 2528) = 0;
                         sub_4579E8(thisx, 2);
                         break;
@@ -41159,12 +41159,12 @@ int sub_457F11(int thisx)
                             *(_BYTE*)(thisx + 2516) = 2;
                             *(_BYTE*)(thisx + 2562) = 0;
                             result = thisx;
-                            *(_WORD*)(thisx + 2566) = 0;
+                            *(short*)(thisx + 2566) = 0;
                             return result;
                         }
                         if (*(int*)(thisx + 2528) == 1)
                         {
-                            --* (_WORD*)(thisx + 2566);
+                            --* (short*)(thisx + 2566);
                             *(int*)(thisx + 2528) = 0;
                             sub_4579E8(thisx, -1);
                         }
@@ -41183,7 +41183,7 @@ int sub_457F11(int thisx)
                         }
                         else
                         {
-                            *(_WORD*)(thisx + 2566) = 0;
+                            *(short*)(thisx + 2566) = 0;
                             sub_4579E8(thisx, -1);
                         }
                         break;
@@ -41192,7 +41192,7 @@ int sub_457F11(int thisx)
                 else
                 {
                     v30 = sub_4266D0((char*)(thisx + 76 * (unsigned __int8)v44 + 11816));
-                    LOBYTE(v31) = 2 * *(_WORD*)(thisx + 2570);
+                    LOBYTE(v31) = 2 * *(short*)(thisx + 2570);
                     if (*(int*)(thisx + 2528) >= 10 || *(int*)(thisx + 2532) >= 6)
                     {
                         if (*(int*)(thisx + 2528) < 10 || *(int*)(thisx + 2532))
@@ -41200,23 +41200,23 @@ int sub_457F11(int thisx)
                             if (*(int*)(thisx + 2528) == 10 && *(int*)(thisx + 2532) == 1)
                             {
                                 memcpy(&v30[(unsigned __int8)v31], &byte_4B265C, 2u);
-                                if (++ * (_WORD*)(thisx + 2570) == 5)
-                                    *(_WORD*)(thisx + 2570) = 4;
+                                if (++ * (short*)(thisx + 2570) == 5)
+                                    *(short*)(thisx + 2570) = 4;
                             }
                             else if (*(int*)(thisx + 2528) == 10 && *(int*)(thisx + 2532) == 2)
                             {
-                                *(_WORD*)(thisx + 2564) = *(_WORD*)(thisx + 2564) == 0;
+                                *(short*)(thisx + 2564) = *(short*)(thisx + 2564) == 0;
                                 sub_4579E8(thisx, 0);
                             }
                             else if (*(int*)(thisx + 2528) == 10 && *(int*)(thisx + 2532) == 3)
                             {
                                 if (*(unsigned __int16*)(thisx + 2570) < 4u)
-                                    ++* (_WORD*)(thisx + 2570);
+                                    ++* (short*)(thisx + 2570);
                             }
                             else if (*(int*)(thisx + 2528) == 10 && *(int*)(thisx + 2532) == 4)
                             {
-                                if (*(_WORD*)(thisx + 2570))
-                                    --* (_WORD*)(thisx + 2570);
+                                if (*(short*)(thisx + 2570))
+                                    --* (short*)(thisx + 2570);
                             }
                             else if (*(int*)(thisx + 2528) == 10 && *(int*)(thisx + 2532) == 5)
                             {
@@ -41225,7 +41225,7 @@ int sub_457F11(int thisx)
                                     ;
                                 if (j < 5)
                                 {
-                                    ++* (_WORD*)(thisx + 2566);
+                                    ++* (short*)(thisx + 2566);
                                     *(int*)(thisx + 2528) = 0;
                                     sub_4579E8(thisx, 2);
                                 }
@@ -41252,10 +41252,10 @@ int sub_457F11(int thisx)
                                 if (k < 81)
                                 {
                                     memcpy(&v30[(unsigned __int8)v31], &byte_4B443C[3 * k], 2u);
-                                    if ((unsigned __int8)v31 / 2 == *(_WORD*)(thisx + 2570))
-                                        ++* (_WORD*)(thisx + 2570);
-                                    if (*(_WORD*)(thisx + 2570) == 5)
-                                        *(_WORD*)(thisx + 2570) = 4;
+                                    if ((unsigned __int8)v31 / 2 == *(short*)(thisx + 2570))
+                                        ++* (short*)(thisx + 2570);
+                                    if (*(short*)(thisx + 2570) == 5)
+                                        *(short*)(thisx + 2570) = 4;
                                 }
                             }
                             else if (v29)
@@ -41265,10 +41265,10 @@ int sub_457F11(int thisx)
                                 if (m < 10)
                                 {
                                     memcpy(&v30[(unsigned __int8)v31], &byte_4B4624[3 * m], 2u);
-                                    if ((unsigned __int8)v31 / 2 == *(_WORD*)(thisx + 2570))
-                                        ++* (_WORD*)(thisx + 2570);
-                                    if (*(_WORD*)(thisx + 2570) == 5)
-                                        *(_WORD*)(thisx + 2570) = 4;
+                                    if ((unsigned __int8)v31 / 2 == *(short*)(thisx + 2570))
+                                        ++* (short*)(thisx + 2570);
+                                    if (*(short*)(thisx + 2570) == 5)
+                                        *(short*)(thisx + 2570) = 4;
                                 }
                             }
                         }
@@ -41281,8 +41281,8 @@ int sub_457F11(int thisx)
                             + 30 * *(int*)(thisx + 2532)
                             + 3 * *(int*)(thisx + 2528)],
                             2u);
-                        if (++ * (_WORD*)(thisx + 2570) == 5)
-                            *(_WORD*)(thisx + 2570) = 4;
+                        if (++ * (short*)(thisx + 2570) == 5)
+                            *(short*)(thisx + 2570) = 4;
                     }
                 }
             }
@@ -41304,32 +41304,32 @@ int sub_457F11(int thisx)
                             }
                             else
                             {
-                                *(_WORD*)(thisx + 2566) = 0;
-                                *(_WORD*)(thisx + 2570) = 0;
+                                *(short*)(thisx + 2566) = 0;
+                                *(short*)(thisx + 2570) = 0;
                                 *(int*)(thisx + 2528) = 0;
                                 *(int*)(thisx + 2532) = 0;
                                 sub_4579E8(thisx, -1);
                             }
                             break;
                         case 2u:
-                            -- * (_WORD*)(thisx + 2566);
+                            -- * (short*)(thisx + 2566);
                             *(int*)(thisx + 2528) = 1;
                             sub_4579E8(thisx, -1);
                             break;
                         case 3u:
-                            -- * (_WORD*)(thisx + 2566);
+                            -- * (short*)(thisx + 2566);
                             *(int*)(thisx + 2528) = 0;
                             sub_4579E8(thisx, -1);
                             break;
                         }
                     }
-                    else if (*(_WORD*)(thisx + 2570))
+                    else if (*(short*)(thisx + 2570))
                     {
-                        --* (_WORD*)(thisx + 2570);
+                        --* (short*)(thisx + 2570);
                     }
                     else
                     {
-                        *(_WORD*)(thisx + 2566) = 4;
+                        *(short*)(thisx + 2566) = 4;
                         *(int*)(thisx + 2528) = 0;
                         *(int*)(thisx + 2532) = 0;
                         sub_4579E8(thisx, -1);
@@ -41599,11 +41599,11 @@ int __fastcall sub_45948C(int a1)
         *(_BYTE*)(a1 + 2 * i + 3) = 0;
     }
     HIWORD(v1) = HIWORD(a1);
-    *(_WORD*)a1 = 1;
-    *(_WORD*)(a1 + 24) = 0;
-    LOWORD(v1) = *(_WORD*)(a1 + 24);
+    *(short*)a1 = 1;
+    *(short*)(a1 + 24) = 0;
+    LOWORD(v1) = *(short*)(a1 + 24);
     *(_BYTE*)(a1 + 26) = sub_47C20C(v1);
-    *(_WORD*)(a1 + 18) = 0;
+    *(short*)(a1 + 18) = 0;
     *(_BYTE*)(a1 + 22) = 0;
     if (lstrcmpiA((LPCSTR)(a1 + 2), byte_4B2730))
     {
@@ -41617,16 +41617,16 @@ int __fastcall sub_45948C(int a1)
         }
         if (v8 < 0)
             v8 = -v8;
-        *(_WORD*)(a1 + 28) = v8 % 40 + 168;
-        *(_WORD*)(a1 + 30) = v8 % 10 + 25;
-        *(_WORD*)(a1 + 32) = v8 / 2 % 10 + 25;
-        *(_WORD*)(a1 + 34) = v8 / 3 % 10 + 25;
-        *(_WORD*)(a1 + 36) = v8 / 18 % 10 + 35;
-        *(_WORD*)(a1 + 38) = v8 / 19 % 10 + 35;
-        *(_WORD*)(a1 + 40) = v8 / 4 % 15 + 35;
-        *(_WORD*)(a1 + 42) = v8 / 5 % 10 + 80;
-        *(_WORD*)(a1 + 44) = v8 / 6 % 18 + 50;
-        *(_WORD*)(a1 + 46) = v8 / 7 % 50 + 30;
+        *(short*)(a1 + 28) = v8 % 40 + 168;
+        *(short*)(a1 + 30) = v8 % 10 + 25;
+        *(short*)(a1 + 32) = v8 / 2 % 10 + 25;
+        *(short*)(a1 + 34) = v8 / 3 % 10 + 25;
+        *(short*)(a1 + 36) = v8 / 18 % 10 + 35;
+        *(short*)(a1 + 38) = v8 / 19 % 10 + 35;
+        *(short*)(a1 + 40) = v8 / 4 % 15 + 35;
+        *(short*)(a1 + 42) = v8 / 5 % 10 + 80;
+        *(short*)(a1 + 44) = v8 / 6 % 18 + 50;
+        *(short*)(a1 + 46) = v8 / 7 % 50 + 30;
         *(_BYTE*)(a1 + 48) = v8 / 8 % 6 + 10;
         *(_BYTE*)(a1 + 49) = v8 / 9 % 6 + 10;
         *(_BYTE*)(a1 + 50) = v8 / 10 % 6 + 10;
@@ -41643,17 +41643,17 @@ int __fastcall sub_45948C(int a1)
             switch (*(_BYTE*)(a1 + 16))
             {
             case 1:
-                *(_WORD*)(a1 + 30) += 30;
+                *(short*)(a1 + 30) += 30;
                 *(_BYTE*)(a1 + 49) += 10;
                 *(_BYTE*)(a1 + 57) += 2;
                 break;
             case 2:
-                *(_WORD*)(a1 + 32) += 30;
+                *(short*)(a1 + 32) += 30;
                 *(_BYTE*)(a1 + 50) += 10;
                 *(_BYTE*)(a1 + 55) += 2;
                 break;
             case 3:
-                *(_WORD*)(a1 + 34) += 30;
+                *(short*)(a1 + 34) += 30;
                 *(_BYTE*)(a1 + 51) += 10;
                 *(_BYTE*)(a1 + 54) += 2;
                 break;
@@ -41661,15 +41661,15 @@ int __fastcall sub_45948C(int a1)
         }
         else
         {
-            *(_WORD*)(a1 + 30) += 10;
-            *(_WORD*)(a1 + 32) += 10;
-            *(_WORD*)(a1 + 34) += 10;
+            *(short*)(a1 + 30) += 10;
+            *(short*)(a1 + 32) += 10;
+            *(short*)(a1 + 34) += 10;
             *(_BYTE*)(a1 + 49) += 5;
             *(_BYTE*)(a1 + 50) += 5;
             *(_BYTE*)(a1 + 51) += 5;
         }
-        *(_WORD*)(a1 + 20) = v8 / 17 % 4 + 19;
-        if (*(_WORD*)(a1 + 20) == 22)
+        *(short*)(a1 + 20) = v8 / 17 % 4 + 19;
+        if (*(short*)(a1 + 20) == 22)
             *(_BYTE*)(a1 + 22) = 1;
         v16 = *(unsigned __int8*)(a1 + 13) / 10 + *(_BYTE*)(a1 + 15) + 1;
         v17 = *(unsigned __int8*)(a1 + 13) % 10 + *(_BYTE*)(a1 + 15) + 1;
@@ -41698,15 +41698,15 @@ int __fastcall sub_45948C(int a1)
             v7 = 10;
             if (v11 == 2)
                 v7 = 5;
-            *(_WORD*)(a1 + 28) += v7;
-            *(_WORD*)(a1 + 30) += v7;
-            *(_WORD*)(a1 + 32) += v7;
-            *(_WORD*)(a1 + 34) += v7;
-            *(_WORD*)(a1 + 40) += v7;
-            *(_WORD*)(a1 + 42) += v7 / 2;
-            *(_WORD*)(a1 + 44) += v7 / 2;
+            *(short*)(a1 + 28) += v7;
+            *(short*)(a1 + 30) += v7;
+            *(short*)(a1 + 32) += v7;
+            *(short*)(a1 + 34) += v7;
+            *(short*)(a1 + 40) += v7;
+            *(short*)(a1 + 42) += v7 / 2;
+            *(short*)(a1 + 44) += v7 / 2;
             result = a1;
-            *(_WORD*)(a1 + 46) += v7 / 2;
+            *(short*)(a1 + 46) += v7 / 2;
         }
         for (k = 0; k < v11; ++k)
         {
@@ -41758,17 +41758,17 @@ int __fastcall sub_45948C(int a1)
     }
     else
     {
-        *(_WORD*)a1 = 19;
-        *(_WORD*)(a1 + 28) = 255;
-        *(_WORD*)(a1 + 30) = 99;
-        *(_WORD*)(a1 + 32) = 99;
-        *(_WORD*)(a1 + 34) = 99;
-        *(_WORD*)(a1 + 36) = 99;
-        *(_WORD*)(a1 + 38) = 99;
-        *(_WORD*)(a1 + 40) = 99;
-        *(_WORD*)(a1 + 42) = 99;
-        *(_WORD*)(a1 + 44) = 99;
-        *(_WORD*)(a1 + 46) = 99;
+        *(short*)a1 = 19;
+        *(short*)(a1 + 28) = 255;
+        *(short*)(a1 + 30) = 99;
+        *(short*)(a1 + 32) = 99;
+        *(short*)(a1 + 34) = 99;
+        *(short*)(a1 + 36) = 99;
+        *(short*)(a1 + 38) = 99;
+        *(short*)(a1 + 40) = 99;
+        *(short*)(a1 + 42) = 99;
+        *(short*)(a1 + 44) = 99;
+        *(short*)(a1 + 46) = 99;
         *(_BYTE*)(a1 + 48) = 15;
         *(_BYTE*)(a1 + 49) = 15;
         *(_BYTE*)(a1 + 50) = 15;
@@ -41780,7 +41780,7 @@ int __fastcall sub_45948C(int a1)
         *(_BYTE*)(a1 + 56) = 13;
         *(_BYTE*)(a1 + 57) = 13;
         *(_BYTE*)(a1 + 16) = 0;
-        *(_WORD*)(a1 + 20) = 19;
+        *(short*)(a1 + 20) = 19;
         *(_BYTE*)(a1 + 68) = 1;
         *(_BYTE*)(a1 + 69) = 3;
         result = a1;
@@ -41797,10 +41797,10 @@ int sub_459DE1(int thisx)
     *(int*)(thisx + 104) = 14;
     *(_BYTE*)(thisx + 2516) = 1;
     sub_47C25B(0);
-    *(_WORD*)(thisx + 2564) = 0;
-    *(_WORD*)(thisx + 2566) = 0;
+    *(short*)(thisx + 2564) = 0;
+    *(short*)(thisx + 2566) = 0;
     if ((*(_BYTE*)(thisx + 2562) == 1 || *(_BYTE*)(thisx + 2562) == 3) && (unsigned __int16)sub_475850((short*)thisx + 11816) == 1)
-        *(_WORD*)(thisx + 2564) = 1;
+        *(short*)(thisx + 2564) = 1;
     sub_459E91(thisx, -1);
     result = thisx;
     if (*(_BYTE*)(thisx + 2562) == 2)
@@ -41929,13 +41929,13 @@ void sub_459E91(int thisx, int a2)
                 if (*(_BYTE*)(thisx + 2562) == 3)
                 {
                     sub_45B346(
-                        (_WORD*)(thisx + 76 * v23 + 11816),
+                        (short*)(thisx + 76 * v23 + 11816),
                         (char*)(36 * *(unsigned __int16*)(thisx + 2564) + dword_4B92E0));
                     v22 = (Concurrency::details::_UnrealizedChore*)(thisx + 76 * v23 + 11816);
                 }
                 else
                 {
-                    sub_45B346((_WORD*)(thisx + 11892), (char*)(36 * *(unsigned __int16*)(thisx + 2564) + dword_4B92E0));
+                    sub_45B346((short*)(thisx + 11892), (char*)(36 * *(unsigned __int16*)(thisx + 2564) + dword_4B92E0));
                     v22 = (Concurrency::details::_UnrealizedChore*)(thisx + 11892);
                 }
             }
@@ -42061,9 +42061,9 @@ void sub_459E91(int thisx, int a2)
             switch (*(_BYTE*)(thisx + 2562))
             {
             case 1:
-                if (*(_WORD*)(thisx + 2566))
+                if (*(short*)(thisx + 2566))
                 {
-                    if (*(_WORD*)(thisx + 2566) == 1)
+                    if (*(short*)(thisx + 2566) == 1)
                     {
                         sub_47B91A(16, 208, byte_4B2858, 0, dword_4B9248);
                         sub_47B91A(80, 224, byte_4B2878, 0, dword_4B9248);
@@ -42080,9 +42080,9 @@ void sub_459E91(int thisx, int a2)
                 sub_47B91A(16, 208, v14, 0, dword_4B9248);
                 break;
             case 3:
-                if (*(_WORD*)(thisx + 2566))
+                if (*(short*)(thisx + 2566))
                 {
-                    if (*(_WORD*)(thisx + 2566) == 1)
+                    if (*(short*)(thisx + 2566) == 1)
                     {
                         sub_47B91A(16, 208, byte_4B28D4, 0, dword_4B9248);
                         sub_47B91A(80, 224, byte_4B28F4, 0, dword_4B9248);
@@ -42150,7 +42150,7 @@ int  sub_45AB5E(int thisx)
                 LOBYTE(v21) = 0;
                 v8 = *(unsigned __int8*)(thisx + 2562);
                 if (v8 == 3)
-                    v21 = *(_WORD*)(thisx + 2568);
+                    v21 = *(short*)(thisx + 2568);
                 LOBYTE(v8) = v21;
                 sub_477F0C(v8);
                 LOBYTE(v9) = v21;
@@ -42164,15 +42164,15 @@ int  sub_45AB5E(int thisx)
                     if (sub_476DC7(v12, 0))
                     {
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-                        if (*(_WORD*)(thisx + 2566))
+                        if (*(short*)(thisx + 2566))
                         {
-                            if (*(_WORD*)(thisx + 2566) == 1)
+                            if (*(short*)(thisx + 2566) == 1)
                             {
                                 if (*(int*)(thisx + 2528))
                                 {
                                     if (*(int*)(thisx + 2528) == 1)
                                     {
-                                        *(_WORD*)(thisx + 2566) = 0;
+                                        *(short*)(thisx + 2566) = 0;
                                         sub_459E91(thisx, 2);
                                     }
                                 }
@@ -42180,7 +42180,7 @@ int  sub_45AB5E(int thisx)
                                 {
                                     if (*(_BYTE*)(thisx + 2562) == 1)
                                     {
-                                        sub_475730((_WORD*)(thisx + 11892), *(_WORD*)(thisx + 2564) + 1);
+                                        sub_475730((short*)(thisx + 11892), *(short*)(thisx + 2564) + 1);
                                         result = sub_45B65A(thisx);
                                         *(int*)(thisx + 108) = 15;
                                         *(_BYTE*)(thisx + 2516) = 2;
@@ -42189,11 +42189,11 @@ int  sub_45AB5E(int thisx)
                                     if (*(_BYTE*)(thisx + 2562) == 3)
                                     {
                                         sub_475730(
-                                            (_WORD*)(thisx + 76 * *(unsigned __int16*)(thisx + 2568) + 11816),
-                                            *(_WORD*)(thisx + 2564) + 1);
+                                            (short*)(thisx + 76 * *(unsigned __int16*)(thisx + 2568) + 11816),
+                                            *(short*)(thisx + 2564) + 1);
                                         if (*(unsigned __int16*)(thisx + 2568) + 1 < *(unsigned __int8*)(thisx + 11968))
                                         {
-                                            ++* (_WORD*)(thisx + 2568);
+                                            ++* (short*)(thisx + 2568);
                                             result = thisx;
                                             *(int*)(thisx + 108) = 13;
                                             *(_BYTE*)(thisx + 2516) = 2;
@@ -42202,10 +42202,10 @@ int  sub_45AB5E(int thisx)
                                         if (*(_BYTE*)(thisx + 11968) == 1)
                                         {
                                             *(_BYTE*)(thisx + 2562) = 1;
-                                            *(_WORD*)(thisx + 2564) = 0;
+                                            *(short*)(thisx + 2564) = 0;
                                             if ((unsigned __int16)sub_475850((short*)thisx + 11816) == 1)
-                                                *(_WORD*)(thisx + 2564) = 1;
-                                            *(_WORD*)(thisx + 2566) = 0;
+                                                *(short*)(thisx + 2564) = 1;
+                                            *(short*)(thisx + 2566) = 0;
                                             sub_459E91(thisx, -1);
                                         }
                                         else if (*(_BYTE*)(thisx + 11968) == 2)
@@ -42222,16 +42222,16 @@ int  sub_45AB5E(int thisx)
                         else
                         {
                             *(int*)(thisx + 2528) = 0;
-                            *(_WORD*)(thisx + 2566) = 1;
+                            *(short*)(thisx + 2566) = 1;
                             sub_459E91(thisx, 2);
                         }
                     }
                     else
                     {
                         LOBYTE(v13) = v21;
-                        if (sub_476DC7(v13, 1) && *(_WORD*)(thisx + 2566) == 1)
+                        if (sub_476DC7(v13, 1) && *(short*)(thisx + 2566) == 1)
                         {
-                            *(_WORD*)(thisx + 2566) = 0;
+                            *(short*)(thisx + 2566) = 0;
                             sub_459E91(thisx, 2);
                         }
                     }
@@ -42239,9 +42239,9 @@ int  sub_45AB5E(int thisx)
                 else
                 {
                     sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
-                    if (*(_WORD*)(thisx + 2566))
+                    if (*(short*)(thisx + 2566))
                     {
-                        if (*(_WORD*)(thisx + 2566) == 1)
+                        if (*(short*)(thisx + 2566) == 1)
                             *(int*)(thisx + 2528) = *(int*)(thisx + 2528) == 0;
                     }
                     else
@@ -42251,10 +42251,10 @@ int  sub_45AB5E(int thisx)
                             do
                             {
                                 v19 = (int)(Size + v20 + *(unsigned __int16*)(thisx + 2564)) % (int)Size;
-                                *(_WORD*)(thisx + 2564) = v19;
+                                *(short*)(thisx + 2564) = v19;
                             } while (v19 >= 16 && v19 <= 21);
                         } while ((unsigned __int16)sub_475850((short*)thisx + 11816) && (unsigned __int16)sub_475850((short*)thisx + 11816) - 1 == v19);
-                        *(_WORD*)(thisx + 2564) = v19;
+                        *(short*)(thisx + 2564) = v19;
                         sub_459E91(thisx, 0);
                         sub_459E91(thisx, 1);
                     }
@@ -42274,9 +42274,9 @@ int  sub_45AB5E(int thisx)
                     if (sub_476DC7(v15, 0))
                     {
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-                        if (*(_WORD*)(thisx + 2564))
+                        if (*(short*)(thisx + 2564))
                         {
-                            if (*(_WORD*)(thisx + 2564) == 1)
+                            if (*(short*)(thisx + 2564) == 1)
                             {
                                 *(int*)(thisx + 108) = 19;
                                 *(_BYTE*)(thisx + 2516) = 2;
@@ -42284,7 +42284,7 @@ int  sub_45AB5E(int thisx)
                         }
                         else
                         {
-                            ++* (_WORD*)(thisx + 2564);
+                            ++* (short*)(thisx + 2564);
                             sub_459E91(thisx, -1);
                         }
                     }
@@ -42294,9 +42294,9 @@ int  sub_45AB5E(int thisx)
                         if (sub_476DC7(v16, 1))
                         {
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-                            if (*(_WORD*)(thisx + 2564))
+                            if (*(short*)(thisx + 2564))
                             {
-                                --* (_WORD*)(thisx + 2564);
+                                --* (short*)(thisx + 2564);
                                 sub_459E91(thisx, -1);
                             }
                             else
@@ -42312,7 +42312,7 @@ int  sub_45AB5E(int thisx)
         else
         {
             v23 = *(unsigned __int16*)(thisx + 2568);
-            LOBYTE(v1) = *(_WORD*)(thisx + 2568);
+            LOBYTE(v1) = *(short*)(thisx + 2568);
             sub_477F0C(v1);
             LOBYTE(v2) = v23;
             v3 = sub_476D78(v2);
@@ -42338,13 +42338,13 @@ int  sub_45AB5E(int thisx)
                         *(int*)(thisx + 108) = 13;
                         *(_BYTE*)(thisx + 2516) = 2;
                         result = thisx;
-                        ++* (_WORD*)(thisx + 2568);
+                        ++* (short*)(thisx + 2568);
                         return result;
                     }
                     if (*(_BYTE*)(thisx + 11968) == 1)
                     {
                         *(_BYTE*)(thisx + 2562) = 1;
-                        *(_WORD*)(thisx + 2564) = 0;
+                        *(short*)(thisx + 2564) = 0;
                         sub_459E91(thisx, -1);
                     }
                     else
@@ -42380,16 +42380,16 @@ int  sub_45AB5E(int thisx)
     sub_49AB05((int)byte_4BDC60, v24);
     if (!*(_BYTE*)(thisx + 2562))
         return sub_47B91A(56 * *(int*)(thisx + 2528) + 108, 224, asc_4B2918, 0, -1);
-    if (*(_BYTE*)(thisx + 2562) == 1 && *(_WORD*)(thisx + 2566) == 1)
+    if (*(_BYTE*)(thisx + 2562) == 1 && *(short*)(thisx + 2566) == 1)
         return sub_47B91A(56 * *(int*)(thisx + 2528) + 68, 224, asc_4B291C, 0, -1);
     result = *(unsigned __int8*)(thisx + 2562);
-    if (result == 3 && *(_WORD*)(thisx + 2566) == 1)
+    if (result == 3 && *(short*)(thisx + 2566) == 1)
         return sub_47B91A(72 * *(int*)(thisx + 2528) + 68, 224, asc_4B2920, 0, -1);
     return result;
 }
 
 
-void sub_45B346(_WORD* thisx, _BYTE* a2)
+void sub_45B346(short* thisx, _BYTE* a2)
 {
     const void* v2; // eax
     int i; // [esp+4h] [ebp-4h]
@@ -42482,10 +42482,10 @@ int sub_45B65A(int thisx)
 
     v10 = *(_BYTE*)(thisx + 11688);
     for (i = 0; i < v10; ++i)
-        *(_WORD*)(thisx + 2 * i + 11692) = 0;
+        *(short*)(thisx + 2 * i + 11692) = 0;
     *(_BYTE*)(thisx + 11691) = 0;
-    *(_WORD*)(thisx + 11724) = 0;
-    *(_WORD*)(thisx + 11726) = 1;
+    *(short*)(thisx + 11724) = 0;
+    *(short*)(thisx + 11726) = 1;
     v13 = 1;
     if (!*(_BYTE*)(thisx + 11807))
         v13 = sub_4631F8((unsigned char*)thisx) + 1;
@@ -42529,7 +42529,7 @@ int sub_45B65A(int thisx)
                 if (v6)
                     break;
             }
-            *(_WORD*)(thisx + 4 * j + 11724 + 2 * k) = m + 2;
+            *(short*)(thisx + 4 * j + 11724 + 2 * k) = m + 2;
         }
     }
     *(_BYTE*)(thisx + 11690) = 1;
@@ -42548,8 +42548,8 @@ int sub_45B8F5(int thisx)
     }
     *(int*)(thisx + 104) = 15;
     *(_BYTE*)(thisx + 2516) = 1;
-    *(_WORD*)(thisx + 2564) = 0;
-    *(_WORD*)(thisx + 2566) = *(unsigned __int8*)(thisx + 12969);
+    *(short*)(thisx + 2564) = 0;
+    *(short*)(thisx + 2566) = *(unsigned __int8*)(thisx + 12969);
     sub_45B98A(thisx, -1);
     return sub_456D33((const CHAR*)thisx, aMenuWav_1, 1, 0);
 }
@@ -42612,7 +42612,7 @@ int sub_45B98A(int thisx, int a2)
                 for (k = 0; k < 2; ++k)
                 {
                     v4 = dword_4B9248;
-                    v2 = (const CHAR*)unknown_libname_18(36 * (unsigned __int16)(*(_WORD*)(thisx + 4 * v9 + 11724 + 2 * k) - 2) + (char*)dword_4B92E0);
+                    v2 = (const CHAR*)unknown_libname_18(36 * (unsigned __int16)(*(short*)(thisx + 4 * v9 + 11724 + 2 * k) - 2) + (char*)dword_4B92E0);
                     sub_47B91A(48 * k + v8, v7, v2, 0, v4);
                 }
                 sub_47B91A(112 * (j % 2) + 96, v7, (LPCSTR)&byte_4B2654, 0, dword_4B9248);//＆
@@ -42663,7 +42663,7 @@ int sub_45BDE8(int thisx)
         v8 = 3;
     if (!(dword_4B93B0 / 5u % 2))
     {
-        if (*(_WORD*)(thisx + 2564))
+        if (*(short*)(thisx + 2564))
             sub_47B91A(156, 48, byte_4B29C0, 0, -1);
         if (v8 + *(unsigned __int16*)(thisx + 2564) < *(unsigned __int16*)(thisx + 2566))
             sub_47B91A(156, 172, byte_4B29C4, 0, -1);
@@ -42682,7 +42682,7 @@ int sub_45BDE8(int thisx)
                 v5 = *(unsigned __int16*)(thisx + 2566) - v8;
             if (v5 < 0)
                 LOWORD(v5) = 0;
-            *(_WORD*)(thisx + 2564) = v5;
+            *(short*)(thisx + 2564) = v5;
             sub_45B98A(thisx, -1);
         }
         result = sub_476DC7(0, 0);
@@ -42733,9 +42733,9 @@ int sub_45C064(int thisx)
         *(_BYTE*)(k + thisx + 2546) = 2;
     for (m = 0; m < (unsigned __int8)byte_4B9985; ++m)
         byte_4B9988[m] = m;
-    *(_WORD*)(thisx + 2564) = 0;
+    *(short*)(thisx + 2564) = 0;
     *(_BYTE*)(thisx + 2580) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11816));
-    *(_WORD*)(thisx + 2566) = 1;
+    *(short*)(thisx + 2566) = 1;
     *(_BYTE*)(thisx + 2581) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11892));
     *(_BYTE*)(thisx + 2612) = *(_BYTE*)(thisx + 11788);
     *(_BYTE*)(thisx + 2613) = *(_BYTE*)(thisx + 2612);
@@ -42745,7 +42745,7 @@ int sub_45C064(int thisx)
         v5 = *(_BYTE*)(thisx + n + 4 * v7 + 12970);
         for (ii = 0; ii < 2; ++ii)
         {
-            *(_WORD*)(thisx + 2 * v12 + 2564) = *(_WORD*)(thisx + 4 * v5 + 11724 + 2 * ii) - 2;
+            *(short*)(thisx + 2 * v12 + 2564) = *(short*)(thisx + 4 * v5 + 11724 + 2 * ii) - 2;
             *(_BYTE*)(v12 + thisx + 2612) = *(_BYTE*)(thisx + v5 + 11788);
             *(_BYTE*)(v12 + thisx + 2580) = MarkedForDetachment(36 * *(unsigned __int16*)(thisx + 2 * v12 + 2564) + (char*)dword_4B92E0);//call return thisxx[20]; 
             ++v12;
@@ -42830,7 +42830,7 @@ int sub_45C3AF(int thisx)
             if (*(_BYTE*)(thisx + 13044) == 2)
                 *(_BYTE*)(thisx + 13044) = 4;
             sub_46287E((char*)thisx);
-            if (*(_WORD*)(thisx + 2566) || *(_WORD*)(thisx + 2568))
+            if (*(short*)(thisx + 2566) || *(short*)(thisx + 2568))
             {
                 return sub_45CF7B(thisx);
             }
@@ -42859,7 +42859,7 @@ int sub_45C3AF(int thisx)
         }
         v11 = k;
         memset((void*)(thisx + 2564), 0, 0x10u);
-        *(_WORD*)(thisx + 2574) = (unsigned __int8)k;
+        *(short*)(thisx + 2574) = (unsigned __int8)k;
         v10 = 0;
         for (n = 0; n < *(unsigned __int8*)(thisx + v11 + 13002); ++n)
         {
@@ -42868,7 +42868,7 @@ int sub_45C3AF(int thisx)
                 if (*(unsigned __int8*)(ii + thisx + 13044) == n + 1)
                 {
                     *(_BYTE*)(thisx + v10 + 4 * v11 + 13010) = *(_BYTE*)(thisx + ii + 4 * v11 + 12970);
-                    *(_WORD*)(thisx + 2 * v10++ + 2566) = n;
+                    *(short*)(thisx + 2 * v10++ + 2566) = n;
                 }
                 if (v10 >= 4)
                     break;
@@ -42896,7 +42896,7 @@ int sub_45C3AF(int thisx)
                 }
             }
         }
-        *(_WORD*)(thisx + 2564) = 0;
+        *(short*)(thisx + 2564) = 0;
         sub_464C88(thisx);
         return sub_456D33((const CHAR*)thisx, aMenuWav_2, 1, 0);
     }
@@ -42940,7 +42940,7 @@ int sub_45C809(int thisx)
     }
     if (!(dword_4B93B0 / 5u % 2))
     {
-        if (*(_WORD*)(thisx + 2564))
+        if (*(short*)(thisx + 2564))
             sub_47B91A(24, 108, asc_4B29D8, 0, -1);
         if (*(unsigned __int16*)(thisx + 2564) + 2 < *(unsigned __int8*)(thisx + 12969))
             sub_47B91A(288, 108, asc_4B29DC, 0, -1);
@@ -42958,7 +42958,7 @@ int sub_45C809(int thisx)
                 v10 = *(unsigned __int8*)(thisx + 12969) - 2;
             if (v10 < 0)
                 LOWORD(v10) = 0;
-            *(_WORD*)(thisx + 2564) = v10;
+            *(short*)(thisx + 2564) = v10;
             sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
             sub_464C88(thisx);
         }
@@ -42971,13 +42971,13 @@ int sub_45C809(int thisx)
                 {
                     v6 = k;
                     if (*(unsigned __int16*)(thisx + 2574) == j)
-                        v6 = *(_WORD*)(thisx + 2 * k + 2566);
+                        v6 = *(short*)(thisx + 2 * k + 2566);
                     v7 = *(_BYTE*)(thisx + k + 4 * j + 13010);
                     if (*(_BYTE*)(j + thisx + 13002) == 2)
-                        v4 = 4 - 2 * v6 + *(_WORD*)(thisx + 2 * v7 + 11692);
+                        v4 = 4 - 2 * v6 + *(short*)(thisx + 2 * v7 + 11692);
                     else
-                        v4 = 4 - v6 + *(_WORD*)(thisx + 2 * v7 + 11692);
-                    *(_WORD*)(thisx + 2 * v7 + 11692) = v4;
+                        v4 = 4 - v6 + *(short*)(thisx + 2 * v7 + 11692);
+                    *(short*)(thisx + 2 * v7 + 11692) = v4;
                 }
             }
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
@@ -43005,8 +43005,8 @@ int sub_45CBC2(int thisx)
     *(int*)(thisx + 104) = 17;
     *(_BYTE*)(thisx + 2516) = 1;
     sub_45FF40((unsigned char*)thisx);
-    *(_WORD*)(thisx + 2564) = 0;
-    *(_WORD*)(thisx + 2566) = ((*(_BYTE*)(thisx + 11688) & 3) != 0) + *(unsigned __int8*)(thisx + 11688) / 4;
+    *(short*)(thisx + 2564) = 0;
+    *(short*)(thisx + 2566) = ((*(_BYTE*)(thisx + 11688) & 3) != 0) + *(unsigned __int8*)(thisx + 11688) / 4;
     sub_465102(thisx);
     return sub_456D33((const CHAR*)thisx, aMenuWav_3, 1, 0);
 }
@@ -43042,7 +43042,7 @@ int sub_45CC4E(int thisx)
     }
     if (!(dword_4B93B0 / 5u % 2))
     {
-        if (*(_WORD*)(thisx + 2564))
+        if (*(short*)(thisx + 2564))
             sub_47B91A(24, 108, asc_4B29F0, 0, -1);
         if (*(unsigned __int16*)(thisx + 2564) + 2 < *(unsigned __int16*)(thisx + 2566))
             sub_47B91A(288, 108, asc_4B29F4, 0, -1);
@@ -43060,7 +43060,7 @@ int sub_45CC4E(int thisx)
                 v5 = *(unsigned __int16*)(thisx + 2566) - 2;
             if (v5 < 0)
                 LOWORD(v5) = 0;
-            *(_WORD*)(thisx + 2564) = v5;
+            *(short*)(thisx + 2564) = v5;
             sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
             sub_465102(thisx);
         }
@@ -43080,7 +43080,7 @@ int sub_45CC4E(int thisx)
             else
             {
                 sub_46287E((char*)thisx);
-                if (*(_WORD*)(thisx + 2566) || *(_WORD*)(thisx + 2568))
+                if (*(short*)(thisx + 2566) || *(short*)(thisx + 2568))
                 {
                     result = thisx;
                     *(int*)(thisx + 108) = 18;
@@ -43375,7 +43375,7 @@ int sub_45D7AB(int thisx)
 }
 
 
-_WORD* sub_45D835(_WORD* thisx, int a2)
+short* sub_45D835(short* thisx, int a2)
 {
 
     Warning();//修正堆栈
@@ -43391,7 +43391,7 @@ _WORD* sub_45D835(_WORD* thisx, int a2)
     int v5; // [esp+10h] [ebp-24h]
     int v4; // [esp+Ch] [ebp-28h]
     int v3; // [esp+8h] [ebp-2Ch]
-    _WORD* result; // eax
+    short* result; // eax
 
 
     if (a2)
@@ -43519,17 +43519,17 @@ int sub_45DC7E(int thisxx)
     *(int*)(thisxx + 2528) = 0;
     *(int*)(thisxx + 2532) = 0;
     *(_BYTE*)(thisxx + 13101) = 0;
-    *(_WORD*)(thisxx + 2564) = 0;
-    *(_WORD*)(thisxx + 2566) = 1;
-    *(_WORD*)(thisxx + 2568) = 1;
-    *(_WORD*)(thisxx + 2570) = 0;
+    *(short*)(thisxx + 2564) = 0;
+    *(short*)(thisxx + 2566) = 1;
+    *(short*)(thisxx + 2568) = 1;
+    *(short*)(thisxx + 2570) = 0;
     if (*(_BYTE*)(thisxx + 11690) == 17 && *(unsigned __int8*)(thisxx + 13060) > 1u)
     {
-        *(_WORD*)(thisxx + 2566) = 0;
+        *(short*)(thisxx + 2566) = 0;
         *(int*)(thisxx + 2528) = 1;
     }
     if (*(unsigned __int8*)(thisxx + 11690) >= 0x11u)
-        *(_WORD*)(thisxx + 2568) = 0;
+        *(short*)(thisxx + 2568) = 0;
     if (!*(_BYTE*)(thisxx + 13100))
     {
         for (i = 0; i < dword_4B9368; ++i)
@@ -43590,9 +43590,9 @@ int sub_45DC7E(int thisxx)
             }
         }
         if (*(_BYTE*)(thisxx + 13101))
-            *(_WORD*)(thisxx + 2564) = 1;
+            *(short*)(thisxx + 2564) = 1;
         else
-            *(_WORD*)(thisxx + 2564) = 0;
+            *(short*)(thisxx + 2564) = 0;
     }
     *(int*)(thisxx + 2540) = 0;
     sub_45E15F(thisxx, -1);
@@ -43657,7 +43657,7 @@ void sub_45E15F(int thisx, int a2)
             switch (*(_BYTE*)(thisx + 13101))
             {
             case 1:
-                switch (*(_WORD*)(thisx + 2564))
+                switch (*(short*)(thisx + 2564))
                 {
                 case 1:
                     sub_47B91A(16, 208, byte_4B2B9C, 0, dword_4B9248);
@@ -43672,21 +43672,21 @@ void sub_45E15F(int thisx, int a2)
                 }
                 break;
             case 2:
-                if (*(_WORD*)(thisx + 2564) == 1)
+                if (*(short*)(thisx + 2564) == 1)
                 {
                     sub_47B91A(16, 208, byte_4B2C44, 0, dword_4B9248);
                 }
-                else if (*(_WORD*)(thisx + 2564) == 2)
+                else if (*(short*)(thisx + 2564) == 2)
                 {
                     sub_47B91A(16, 208, byte_4B2C7C, 0, dword_4B9248);
                 }
                 break;
             case 3:
-                if (*(_WORD*)(thisx + 2564) == 1)
+                if (*(short*)(thisx + 2564) == 1)
                 {
                     sub_47B91A(16, 208, byte_4B2CA8, 0, dword_4B9248);
                 }
-                else if (*(_WORD*)(thisx + 2564) == 2)
+                else if (*(short*)(thisx + 2564) == 2)
                 {
                     sub_47B91A(16, 208, byte_4B2CE8, 0, dword_4B9248);
                 }
@@ -43703,7 +43703,7 @@ void sub_45E15F(int thisx, int a2)
                 }
                 break;
             }
-            if (!*(_WORD*)(thisx + 2564))
+            if (!*(short*)(thisx + 2564))
             {
                 if (*(int*)(thisx + 2528))
                 {
@@ -43772,7 +43772,7 @@ void sub_45E15F(int thisx, int a2)
         v27 = 0;
         for (i = 0; i < 4; ++i)
         {
-            if ((i || *(_WORD*)(thisx + 2566)) && (i != 2 || *(_WORD*)(thisx + 2568)))
+            if ((i || *(short*)(thisx + 2566)) && (i != 2 || *(short*)(thisx + 2568)))
                 sub_47B91A(72 * (i % 2) + 96, 16 * (i / 2) + 152, &v9[13 * i], 0, dword_4B9248);
         }
     }
@@ -43850,7 +43850,7 @@ int sub_45E773(int thisx)
         v45 = v1 - sub_476D29(0);
         v2 = sub_476CDA(0);
         v44 = v2 - sub_476C8B(0);
-        if (!*(_WORD*)(thisx + 2564))
+        if (!*(short*)(thisx + 2564))
         {
             if (v45)
             {
@@ -43863,9 +43863,9 @@ int sub_45E773(int thisx)
                 *(int*)(thisx + 2528) = (*(int*)(thisx + 2528) + 2 * v44 + 4) % 4;
                 sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
             }
-            if (*(int*)(thisx + 2528) == 2 && !*(_WORD*)(thisx + 2568))
+            if (*(int*)(thisx + 2528) == 2 && !*(short*)(thisx + 2568))
                 *(int*)(thisx + 2528) = 0;
-            if (!*(int*)(thisx + 2528) && !*(_WORD*)(thisx + 2566))
+            if (!*(int*)(thisx + 2528) && !*(short*)(thisx + 2566))
                 *(int*)(thisx + 2528) = 1;
             if (v45 || v44)
                 sub_45E15F(thisx, 1);
@@ -43873,29 +43873,29 @@ int sub_45E773(int thisx)
         if (sub_476DC7(0, 0))
         {
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-            if (*(_WORD*)(thisx + 2564))
+            if (*(short*)(thisx + 2564))
             {
-                if (++ * (_WORD*)(thisx + 2564) == 4 && *(_BYTE*)(thisx + 13101) == 1)
+                if (++ * (short*)(thisx + 2564) == 4 && *(_BYTE*)(thisx + 13101) == 1)
                 {
-                    *(_WORD*)(thisx + 2564) = 0;
+                    *(short*)(thisx + 2564) = 0;
                 }
-                else if (*(_WORD*)(thisx + 2564) == 3
+                else if (*(short*)(thisx + 2564) == 3
                     && (*(_BYTE*)(thisx + 13101) == 2 || *(_BYTE*)(thisx + 13101) == 3 || *(_BYTE*)(thisx + 13101) == 4))
                 {
-                    *(_WORD*)(thisx + 2564) = 0;
+                    *(short*)(thisx + 2564) = 0;
                 }
                 sub_45E15F(thisx, 1);
             }
-            else if (!*(_WORD*)(thisx + 2566) || *(int*)(thisx + 2528))
+            else if (!*(short*)(thisx + 2566) || *(int*)(thisx + 2528))
             {
                 if (*(int*)(thisx + 2528) == 1)
                 {
                     *(int*)(thisx + 108) = 14;
                     *(_BYTE*)(thisx + 2562) = 2;
                     *(_BYTE*)(thisx + 2516) = 2;
-                    *(_WORD*)(thisx + 2564) = 0;
+                    *(short*)(thisx + 2564) = 0;
                 }
-                else if (*(_WORD*)(thisx + 2568) && *(int*)(thisx + 2528) == 2)
+                else if (*(short*)(thisx + 2568) && *(int*)(thisx + 2528) == 2)
                 {
                     *(int*)(thisx + 108) = 17;
                     *(_BYTE*)(thisx + 2562) = 1;
@@ -43954,7 +43954,7 @@ int sub_45E773(int thisx)
     v46[2] = 0;
     v46[0] = dword_4B9248;
     sub_49AB05((int)byte_4BDC60, v46);
-    if (*(_WORD*)(thisx + 2564))
+    if (*(short*)(thisx + 2564))
     {
         if (!(dword_4B93B0 / 5u % 2))
             sub_47B91A(156, 232, byte_4B2E2C, 0, -1);
@@ -44548,10 +44548,10 @@ int sub_460813(int thisx, HANDLE hFile, int a3)
         *(_BYTE*)(thisx + 22) = *(unsigned __int16*)(thisx + 20) == 22;
     v3 = (unsigned __int8)a3;
     if ((unsigned __int8)a3 < 3u)
-        *(_WORD*)(thisx + 24) = 0;
+        *(short*)(thisx + 24) = 0;
     else
         ReadFile(hFile, (LPVOID)(thisx + 24), 2u, (LPDWORD)&NumberOfBytesRead, 0);
-    LOWORD(v3) = *(_WORD*)(thisx + 24);
+    LOWORD(v3) = *(short*)(thisx + 24);
     *(_BYTE*)(thisx + 26) = sub_47C20C(v3);
     ReadFile(hFile, (LPVOID)(thisx + 16), 1u, (LPDWORD)&NumberOfBytesRead, 0);
     ReadFile(hFile, (LPVOID)(thisx + 18), 2u, (LPDWORD)&NumberOfBytesRead, 0);
@@ -44612,11 +44612,11 @@ int sub_460813(int thisx, HANDLE hFile, int a3)
     ReadFile(hFile, (LPVOID)(thisx + 68), 3u, (LPDWORD)&NumberOfBytesRead, 0);
     if ((unsigned __int8)a3 == 1)
     {
-        *(_WORD*)(thisx + 36) = (*(unsigned __int16*)(thisx + 34)
+        *(short*)(thisx + 36) = (*(unsigned __int16*)(thisx + 34)
             + *(unsigned __int16*)(thisx + 30)
             + *(unsigned __int16*)(thisx + 32))
             / 3;
-        *(_WORD*)(thisx + 38) = (*(unsigned __int16*)(thisx + 34)
+        *(short*)(thisx + 38) = (*(unsigned __int16*)(thisx + 34)
             + *(unsigned __int16*)(thisx + 30)
             + *(unsigned __int16*)(thisx + 32))
             / 3;
@@ -44658,7 +44658,7 @@ int sub_460D5F(void* thisx, HANDLE hFile, int a3, int a4, int a5)
     ReadFile(hFile, (LPVOID)(a4 + 370), 1u, (LPDWORD)&NumberOfBytesRead, 0);
     ReadFile(hFile, (LPVOID)(a4 + 369), 1u, (LPDWORD)&NumberOfBytesRead, 0);
     if ((unsigned __int8)a3 < 5u)
-        *(_WORD*)(a4 + 378) = 30 * *(unsigned __int8*)(a4 + 370);
+        *(short*)(a4 + 378) = 30 * *(unsigned __int8*)(a4 + 370);
     else
         ReadFile(hFile, (LPVOID)(a4 + 378), 2u, (LPDWORD)&NumberOfBytesRead, 0);
     ReadFile(hFile, (LPVOID)(a4 + 228), 1u, (LPDWORD)&NumberOfBytesRead, 0);
@@ -44835,7 +44835,7 @@ int sub_461335(int thisx)
         sub_47B7ED(v10 + 16, v9 + 8, String, 0, dword_4B9248);
         if (sub_4611A8((_BYTE*)thisx, i, (int)v12))
         {
-            *(_WORD*)(thisx + 2 * i + 2564) = 1;
+            *(short*)(thisx + 2 * i + 2564) = 1;
             v6 = dword_4B9248;
             v1 = sub_4266D0(v12);
             sub_47B91A(v10 + 48, v9 + 8, v1, 0, v6);
@@ -44871,7 +44871,7 @@ int sub_461335(int thisx)
         }
         else
         {
-            *(_WORD*)(thisx + 2 * i + 2564) = 0;
+            *(short*)(thisx + 2 * i + 2564) = 0;
             sub_47B91A(v10 + 48, v9 + 8, (LPCSTR)&byte_4B0C10, 0, dword_4B9248);
         }
     }
@@ -44927,7 +44927,7 @@ int sub_4617E5(int thisx)
         if (sub_476DC7(0, 0))
         {
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-            if (*(_BYTE*)(thisx + 2562) || !*(_WORD*)(thisx + 2 * *(int*)(thisx + 2528) + 2564))
+            if (*(_BYTE*)(thisx + 2562) || !*(short*)(thisx + 2 * *(int*)(thisx + 2528) + 2564))
             {
                 switch (*(_BYTE*)(thisx + 2562))
                 {
@@ -45303,10 +45303,10 @@ int sub_46259F(_BYTE* thisx)
         for (m = 0; m < 4; ++m)
         {
             for (n = 0; n < (int)dword_4B93A0; ++n)
-                *((_WORD*)*(&dword_4B9370 + m) + n) = -1;
+                *((short*)*(&dword_4B9370 + m) + n) = -1;
         }
         v2 = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((Concurrency::details::_UnrealizedChore*)&thisx[76 * k + 11816]);//获取运行时拥有的生存期
-        *((_WORD*)*(&dword_4B9370 + v2) + (unsigned __int8)sub_426550(&thisx[76 * k + 11816])) = 0;
+        *((short*)*(&dword_4B9370 + v2) + (unsigned __int8)sub_426550(&thisx[76 * k + 11816])) = 0;
         v3 = sub_426550(&thisx[76 * k + 11816]);
         sub_475AE0((short*)&thisx[612 * k + 2628], v3);
         sub_41C48F((int)&thisx[612 * k + 2628], -1);
@@ -45391,7 +45391,7 @@ void sub_46287E(_BYTE* thisx)
             v8 += 10;
             break;
         }
-        *(_WORD*)&thisx[2 * i + 2566] = sub_45CF31((unsigned char*)&thisx[76 * i + 11816], v8);
+        *(short*)&thisx[2 * i + 2566] = sub_45CF31((unsigned char*)&thisx[76 * i + 11816], v8);
         if (Concurrency::details::SchedulerBase::GetSchedulerProxy(v6) != (struct Concurrency::ISchedulerProxy*)80)
         {
             v3 = sub_475B00((int*)v6);
@@ -45457,13 +45457,13 @@ void sub_462BA9(int thisx, int a2)
         byte_4B9990 = 2;
         for (j = 0; j < 2; ++j)
             *(_BYTE*)(j + thisx + 2546) = 2;
-        *(_WORD*)(thisx + 2564) = 0;
+        *(short*)(thisx + 2564) = 0;
         *(_BYTE*)(thisx + 2580) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11816));
-        *(_WORD*)(thisx + 2566) = 1;
+        *(short*)(thisx + 2566) = 1;
         *(_BYTE*)(thisx + 2581) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11892));
-        *(_WORD*)(thisx + 2568) = 16;
+        *(short*)(thisx + 2568) = 16;
         *(_BYTE*)(thisx + 2582) = 4;
-        *(_WORD*)(thisx + 2570) = 17;
+        *(short*)(thisx + 2570) = 17;
         *(_BYTE*)(thisx + 2583) = 4;
         *(_BYTE*)(thisx + 29) = 8;
         break;
@@ -45474,17 +45474,17 @@ void sub_462BA9(int thisx, int a2)
         byte_4B9990 = 2;
         *(_BYTE*)(thisx + 2546) = 2;
         *(_BYTE*)(thisx + 2547) = 4;
-        *(_WORD*)(thisx + 2564) = 0;
+        *(short*)(thisx + 2564) = 0;
         *(_BYTE*)(thisx + 2580) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11816));
-        *(_WORD*)(thisx + 2566) = 1;
+        *(short*)(thisx + 2566) = 1;
         *(_BYTE*)(thisx + 2581) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11892));
-        *(_WORD*)(thisx + 2568) = 18;
+        *(short*)(thisx + 2568) = 18;
         *(_BYTE*)(thisx + 2582) = 2;
-        *(_WORD*)(thisx + 2570) = 19;
+        *(short*)(thisx + 2570) = 19;
         *(_BYTE*)(thisx + 2583) = 1;
-        *(_WORD*)(thisx + 2572) = 20;
+        *(short*)(thisx + 2572) = 20;
         *(_BYTE*)(thisx + 2584) = 0;
-        *(_WORD*)(thisx + 2574) = 21;
+        *(short*)(thisx + 2574) = 21;
         *(_BYTE*)(thisx + 2585) = 3;
         for (k = 2; k < 6; ++k)
             *(_BYTE*)(k + thisx + 2612) = 2;
@@ -45499,15 +45499,15 @@ void sub_462BA9(int thisx, int a2)
         *(_BYTE*)(thisx + 2547) = 1;
         for (m = 0; m < 8; ++m)
             byte_4B9988[m] = m;
-        *(_WORD*)(thisx + 2564) = 0;
+        *(short*)(thisx + 2564) = 0;
         *(_BYTE*)(thisx + 2580) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11816));
-        *(_WORD*)(thisx + 2566) = 1;
+        *(short*)(thisx + 2566) = 1;
         *(_BYTE*)(thisx + 2581) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11892));
         if (*(unsigned __int8*)(thisx + 11691) > 3u)
             *(_BYTE*)(thisx + 2622) = 1;
         else
             *(_BYTE*)(thisx + 2622) = 2;
-        *(_WORD*)(thisx + 2568) = 0;
+        *(short*)(thisx + 2568) = 0;
         *(_BYTE*)(thisx + 2582) = 0;
         *(_BYTE*)(thisx + 29) = 8;
         break;
@@ -45520,15 +45520,15 @@ void sub_462BA9(int thisx, int a2)
         *(_BYTE*)(thisx + 2547) = 2;
         for (n = 0; n < 8; ++n)
             byte_4B9988[n] = n;
-        *(_WORD*)(thisx + 2564) = 0;
+        *(short*)(thisx + 2564) = 0;
         *(_BYTE*)(thisx + 2580) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11816));
-        *(_WORD*)(thisx + 2566) = 1;
+        *(short*)(thisx + 2566) = 1;
         *(_BYTE*)(thisx + 2581) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11892));
         *(_BYTE*)(thisx + 2622) = 3;
-        *(_WORD*)(thisx + 2568) = 0;
+        *(short*)(thisx + 2568) = 0;
         *(_BYTE*)(thisx + 2582) = 0;
         *(_BYTE*)(thisx + 2623) = 4;
-        *(_WORD*)(thisx + 2570) = 0;
+        *(short*)(thisx + 2570) = 0;
         *(_BYTE*)(thisx + 2583) = 0;
         *(_BYTE*)(thisx + 29) = 8;
         break;
@@ -45803,7 +45803,7 @@ int  sub_4631F8(unsigned __int8* thisx)
                                             *(&v21 + m) = 1;
                                         }
                                         if (!*(&v21 + m) && v13 >= 0 && v14 < 2)
-                                            *(_WORD*)&thisx[4 * i + 11728 + 2 * v14++] = v13 + 2;
+                                            *(short*)&thisx[4 * i + 11728 + 2 * v14++] = v13 + 2;
                                     }
                                     v17 = -1;
                                     v18 = -1;
@@ -45837,7 +45837,7 @@ int  sub_4631F8(unsigned __int8* thisx)
                                     else
                                     {
                                         for (jj = 0; jj < 2; ++jj)
-                                            *(_WORD*)&thisx[4 * i + 11728 + 2 * jj] = *(&v17 + jj) + 2;
+                                            *(short*)&thisx[4 * i + 11728 + 2 * jj] = *(&v17 + jj) + 2;
                                         if (v36[v20])
                                             thisx[i + 11789] = v36[v20] - 1;
                                         else
@@ -45900,7 +45900,7 @@ int sub_463E60(int thisx)
     sub_402080(thisx, 76, 2, (void(*)(int))sub_463EF0);
     *(_BYTE*)(thisx + 228) = 0;
     *(_BYTE*)(thisx + 370) = 0;
-    *(_WORD*)(thisx + 378) = 0;
+    *(short*)(thisx + 378) = 0;
     *(_BYTE*)(thisx + 369) = 2;
     *(_BYTE*)(thisx + 371) = 0;
     *(_BYTE*)(thisx + 178) = 4;
@@ -45928,7 +45928,7 @@ int sub_463F05(int thisx)
     result = thisx;
     *(_BYTE*)(thisx + 370) = 0;
     *(_BYTE*)(thisx + 255) = 0;
-    *(_WORD*)(thisx + 378) = 0;
+    *(short*)(thisx + 378) = 0;
     for (i = 0; i < 2; ++i)
     {
         *(_BYTE*)(i + thisx + 372) = 0;
@@ -46236,7 +46236,7 @@ int sub_4647F2(int thisx, double a2, double a3, double a4)
     *(int*)(thisx + 11376) = 0;
     sub_456617(thisx);
     for (i = 0; i < 8; ++i)
-        *(_WORD*)(thisx + 2 * i + 11404) = 0;
+        *(short*)(thisx + 2 * i + 11404) = 0;
     *(_BYTE*)(thisx + 13042) = byte_4B9990 + 1;
     *(_BYTE*)(thisx + 13043) = byte_4B9985 + 1;
     for (i = 0; i < 8; ++i)
@@ -46396,7 +46396,7 @@ int sub_464C88(int thisx)
     for (i = 0; i < v15; ++i)
     {
         sub_452045((_BYTE*)thisx, 18 * i + 3, 5, 16, 18);
-        v13 = i + *(_WORD*)(thisx + 2564);
+        v13 = i + *(short*)(thisx + 2564);
         v14 = 128 / *(unsigned __int8*)(thisx + v13 + 13002);
         for (j = 0; j < *(unsigned __int8*)(thisx + v13 + 13002); ++j)
         {
@@ -46419,7 +46419,7 @@ int sub_464C88(int thisx)
                 for (k = 0; k < 2; ++k)
                 {
                     v5 = dword_4B9248;
-                    v2 = (const CHAR*)unknown_libname_18((char*)(36 * (unsigned __int8)(*(_WORD*)(thisx + 4 * v11 + 11724 + 2 * k) - 2) + dword_4B92E0));
+                    v2 = (const CHAR*)unknown_libname_18((char*)(36 * (unsigned __int8)(*(short*)(thisx + 4 * v11 + 11724 + 2 * k) - 2) + dword_4B92E0));
                     sub_47B91A(v8 + 48 * k + 24, v7, v2, 0, v5);
                 }
                 sub_47B91A(144 * i + 96, v7, (LPCSTR)&byte_4B2654, 0, dword_4B9248);
@@ -46486,7 +46486,7 @@ int sub_465102(int thisx)
             for (k = 0; k < 2; ++k)
             {
                 v5 = dword_4B9248;
-                v2 = (const CHAR*)unknown_libname_18((char*)(36 * (unsigned __int16)(*(_WORD*)(thisx + 4 * v10 + 11724 + 2 * k) - 2) + dword_4B92E0));
+                v2 = (const CHAR*)unknown_libname_18((char*)(36 * (unsigned __int16)(*(short*)(thisx + 4 * v10 + 11724 + 2 * k) - 2) + dword_4B92E0));
                 sub_47B91A(v8 + 48 * k + 24, v7, v2, 0, v5);
             }
             sub_47B91A(v8 + 64, v7, (LPCSTR)&byte_4B2654, 0, dword_4B9248);
@@ -47253,12 +47253,12 @@ void* sub_466901(int* thisx)
         if (result)
         {
             LOWORD(result) = v5;
-            *((_WORD*)Src + m) = v5++;
+            *((short*)Src + m) = v5++;
         }
         else
         {
             result = (void*)Src;
-            *((_WORD*)Src + m) = -1;
+            *((short*)Src + m) = -1;
         }
     }
     return result;
@@ -47440,15 +47440,15 @@ void sub_466E2D(int thisx)
     *(_BYTE*)(thisx + 2562) = 0;
     *(int*)(thisx + 2528) = 0;
     *(int*)(thisx + 2532) = 0;
-    *(_WORD*)(thisx + 2564) = 0;
-    *(_WORD*)(thisx + 2566) = 140;
+    *(short*)(thisx + 2564) = 0;
+    *(short*)(thisx + 2566) = 140;
     for (i = 0; i < 14; ++i)
-        *(_WORD*)(thisx + 2566) -= *(_WORD*)(thisx + 2 * i + 48);
+        *(short*)(thisx + 2566) -= *(short*)(thisx + 2 * i + 48);
     if (*(unsigned __int16*)(thisx + 2566) > 0x8Cu)
     {
         for (j = 0; j < 14; ++j)
-            *(_WORD*)(thisx + 2 * j + 48) = 10;
-        *(_WORD*)(thisx + 2566) = 0;
+            *(short*)(thisx + 2 * j + 48) = 10;
+        *(short*)(thisx + 2566) = 0;
     }
     sub_466F20(thisx, -1);
 }
@@ -47508,7 +47508,7 @@ void sub_466F20(int thisx, int a2)
             else
             {
                 sub_47B91A(16, 208, byte_4B329C, 0, dword_4B9248);
-                if (*(_WORD*)(thisx + 2566))
+                if (*(short*)(thisx + 2566))
                     sub_47B91A(16, 224, byte_4B32F8, 0, dword_4B9248);
                 else
                     sub_47B91A(16, 224, byte_4B32C4, 0, dword_4B9248);
@@ -47623,8 +47623,8 @@ unsigned int sub_46753B(int thisx)
                     v6 = *(unsigned __int16*)(thisx + 2566);
                 if (v6 < 0 && -v6 > *(unsigned __int16*)(thisx + 2 * v5 + 48))
                     v6 = -*(unsigned __int16*)(thisx + 2 * v5 + 48);
-                *(_WORD*)(thisx + 2 * v5 + 48) += v6;
-                *(_WORD*)(thisx + 2566) -= v6;
+                *(short*)(thisx + 2 * v5 + 48) += v6;
+                *(short*)(thisx + 2566) -= v6;
             }
         }
         else
@@ -47641,7 +47641,7 @@ unsigned int sub_46753B(int thisx)
                 *(int*)(thisx + 2532) = v7;
                 v8 = *(int*)(thisx + 2532) - v12;
                 if (v8 < 0 || v8 > 3)
-                    *(_WORD*)(thisx + 2564) += v10;
+                    *(short*)(thisx + 2564) += v10;
             }
             if (*(int*)(thisx + 2528) + 2 * *(int*)(thisx + 2532) >= 14)
             {
@@ -47685,17 +47685,17 @@ unsigned int sub_46753B(int thisx)
         sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
         v16 = 1;
         v17 = 1;
-        if (*(_WORD*)(thisx + 2566))
+        if (*(short*)(thisx + 2566))
         {
-            *(_WORD*)(thisx + 2566) = 0;
+            *(short*)(thisx + 2566) = 0;
             for (k = 0; k < 14; ++k)
-                *(_WORD*)(thisx + 2 * k + 48) = 10;
+                *(short*)(thisx + 2 * k + 48) = 10;
         }
         else
         {
-            *(_WORD*)(thisx + 2566) = 140;
+            *(short*)(thisx + 2566) = 140;
             for (m = 0; m < 14; ++m)
-                *(_WORD*)(thisx + 2 * m + 48) = 0;
+                *(short*)(thisx + 2 * m + 48) = 0;
         }
     }
     if (v16)
@@ -48234,9 +48234,9 @@ void sub_4686AA(int thisx)
     memset((void*)(thisx + 13092), 0, 8u);
     for (i = 0; i < 4; ++i)
     {
-        *(_WORD*)(thisx + 2 * i + 2572) = (unsigned __int8)byte_4B9988[(*(int*)(thisx + 2368) + 1) * i] + 1;
+        *(short*)(thisx + 2 * i + 2572) = (unsigned __int8)byte_4B9988[(*(int*)(thisx + 2368) + 1) * i] + 1;
         if (*(unsigned __int16*)(thisx + 2 * i + 2572) > (int)(unsigned __int8)byte_4B9986)
-            *(_WORD*)(thisx + 2 * i + 2572) = 0;
+            *(short*)(thisx + 2 * i + 2572) = 0;
     }
     sub_46B8AE((_BYTE*)thisx, -1);
 }
@@ -48402,13 +48402,13 @@ unsigned __int16* sub_46881A(int thisx)
         v126 = 0;
         v125 = 0;
         v119 = 0;
-        v1 = *(_WORD*)(thisx + 2 * i + 2572);
+        v1 = *(short*)(thisx + 2 * i + 2572);
         v124 = v1;
         if (!v1)
             continue;
         if (v124 >= 100)
         {
-            *(_WORD*)(thisx + 2 * i + 2572) -= 100;
+            *(short*)(thisx + 2 * i + 2572) -= 100;
             continue;
         }
         v2 = --v124;
@@ -48487,7 +48487,7 @@ unsigned __int16* sub_46881A(int thisx)
                             if (v104[j] <= v105 && v104[j] >= 0)
                                 ++v105;
                         }
-                        *(_WORD*)(thisx + 2 * i + 2564) = v105;
+                        *(short*)(thisx + 2 * i + 2564) = v105;
                         sub_476E46(*(unsigned __int16*)(thisx + 2 * i + 2564), (void*)(8 * i + word_4B9250));//ddd 4B9250
                         sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
                         v122 = 1;
@@ -48500,7 +48500,7 @@ unsigned __int16* sub_46881A(int thisx)
                     }
                     else if (v120)
                     {
-                        *(_WORD*)(thisx + 2 * i + 2564) = (word_4B99E4 + v120 + *(unsigned __int16*)(thisx + 2 * i + 2564))
+                        *(short*)(thisx + 2 * i + 2564) = (word_4B99E4 + v120 + *(unsigned __int16*)(thisx + 2 * i + 2564))
                             % word_4B99E4;
                         sub_476E46(*(unsigned __int16*)(thisx + 2 * i + 2564), (void*)(8 * i + word_4B9250));//ddd 4B9250
                         sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
@@ -48510,16 +48510,16 @@ unsigned __int16* sub_46881A(int thisx)
                     {
                         if (!sub_46D56B((__int16*)(thisx + 1392), *(unsigned __int16*)(thisx + 2 * i + 2564), -1))
                         {
-                            *(_WORD*)(thisx + 244 * i + 1630) = *(_WORD*)(thisx + 2 * i + 2564);
+                            *(short*)(thisx + 244 * i + 1630) = *(short*)(thisx + 2 * i + 2564);
                             *(_BYTE*)(i + thisx + 2584) = 3;
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
                             v129 = 1;
                             for (m = 0; m < 4; ++m)
                             {
-                                if (!*(_BYTE*)(m + thisx + 2584) && !*(_WORD*)(thisx + 2 * m + 2572))
+                                if (!*(_BYTE*)(m + thisx + 2584) && !*(short*)(thisx + 2 * m + 2572))
                                 {
-                                    *(_WORD*)(thisx + 2 * i + 2572) = 0;
-                                    *(_WORD*)(thisx + 2 * m + 2572) = v124 + 101;
+                                    *(short*)(thisx + 2 * i + 2572) = 0;
+                                    *(short*)(thisx + 2 * m + 2572) = v124 + 101;
                                     *(_BYTE*)(m + thisx + 2554) = i + 1;
                                     goto LABEL_139;
                                 }
@@ -48528,8 +48528,8 @@ unsigned __int16* sub_46881A(int thisx)
                     }
                     else if (v126)
                     {
-                        *(_WORD*)(thisx + 2 * i + 2564) = *(_WORD*)(thisx + 244 * i + 1628);
-                        *(_WORD*)(thisx + 244 * i + 1628) = -1;
+                        *(short*)(thisx + 2 * i + 2564) = *(short*)(thisx + 244 * i + 1628);
+                        *(short*)(thisx + 244 * i + 1628) = -1;
                         *(_BYTE*)(i + thisx + 2600) = 6;
                         *(_BYTE*)(i + thisx + 2584) = 1;
                         v122 = 1;
@@ -48539,8 +48539,8 @@ unsigned __int16* sub_46881A(int thisx)
                 else if (v123 == 3 && v126)
                 {
                     *(_BYTE*)(i + thisx + 2584) = 2;
-                    *(_WORD*)(thisx + 2 * i + 2564) = *(_WORD*)(thisx + 244 * i + 1630);
-                    *(_WORD*)(thisx + 244 * i + 1630) = -1;
+                    *(short*)(thisx + 2 * i + 2564) = *(short*)(thisx + 244 * i + 1630);
+                    *(short*)(thisx + 244 * i + 1630) = -1;
                     v129 = 1;
                 }
                 goto LABEL_139;
@@ -48552,7 +48552,7 @@ unsigned __int16* sub_46881A(int thisx)
                 {
                     if (*(_BYTE*)(thisx + 81))
                     {
-                        *(_WORD*)(thisx + 2 * i + 2564) = rand() % dword_4B92D8;
+                        *(short*)(thisx + 2 * i + 2564) = rand() % dword_4B92D8;
                     }
                     else
                     {
@@ -48583,13 +48583,13 @@ unsigned __int16* sub_46881A(int thisx)
                             if (v113[n] <= v115 && v113[n] >= 0)
                                 ++v115;
                         }
-                        *(_WORD*)(thisx + 2 * i + 2564) = v115;
+                        *(short*)(thisx + 2 * i + 2564) = v115;
                     }
                 }
                 else
                 {
                     v15 = sub_46D5C0((char*)thisx);
-                    *(_WORD*)(thisx + 2 * i + 2564) = v15;
+                    *(short*)(thisx + 2 * i + 2564) = v15;
                     if (*(_BYTE*)(thisx + 98))
                     {
                         *(_BYTE*)(i + thisx + 2580) = rand() % 4;
@@ -48607,12 +48607,12 @@ unsigned __int16* sub_46881A(int thisx)
             {
                 if (v116 >= 6)
                 {
-                    *(_WORD*)(thisx + 2 * i + 2564) = (dword_4B92D8 + v121 + *(unsigned __int16*)(thisx + 2 * i + 2564))
+                    *(short*)(thisx + 2 * i + 2564) = (dword_4B92D8 + v121 + *(unsigned __int16*)(thisx + 2 * i + 2564))
                         % dword_4B92D8;
                 }
                 else
                 {
-                    *(_WORD*)(thisx + 2 * i + 2564) = (int)(Size + v121 + *(unsigned __int16*)(thisx + 2 * i + 2564)) % (int)Size;
+                    *(short*)(thisx + 2 * i + 2564) = (int)(Size + v121 + *(unsigned __int16*)(thisx + 2 * i + 2564)) % (int)Size;
                     v17 = MarkedForDetachment((_BYTE*)(dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 2 * i + 2564)));//call return thisxx[20]; 
                     *(_BYTE*)(i + thisx + 2580) = v17;
                     *(_BYTE*)(i + thisx + 13092) = 0;
@@ -48631,17 +48631,17 @@ unsigned __int16* sub_46881A(int thisx)
                                 && (*(_BYTE*)(thisx + 81) || !sub_46D516((__int16*)(thisx + 1392), v108, -1)))
                             {
                                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-                                *(_WORD*)(thisx + 244 * i + 1628) = *(_WORD*)(thisx + 2 * i + 2564);
+                                *(short*)(thisx + 244 * i + 1628) = *(short*)(thisx + 2 * i + 2564);
                                 *(_BYTE*)(i + thisx + 2600) = 0;
                                 *(_BYTE*)(i + thisx + 2584) = 2;
                                 if (*(__int16*)(thisx + 244 * i + 1630) < 0)
                                 {
-                                    *(_WORD*)(thisx + 2 * i + 2564) = i;
+                                    *(short*)(thisx + 2 * i + 2564) = i;
                                 }
                                 else
                                 {
-                                    *(_WORD*)(thisx + 2 * i + 2564) = *(_WORD*)(thisx + 244 * i + 1630);
-                                    *(_WORD*)(thisx + 244 * i + 1630) = -1;
+                                    *(short*)(thisx + 2 * i + 2564) = *(short*)(thisx + 244 * i + 1630);
+                                    *(short*)(thisx + 244 * i + 1630) = -1;
                                 }
                                 sub_476E46(*(unsigned __int16*)(thisx + 2 * i + 2564), (void*)(8 * i + word_4B9250));//ddd 4B9250
                             }
@@ -48654,12 +48654,12 @@ unsigned __int16* sub_46881A(int thisx)
                             *(_BYTE*)(thisx + 244 * i + 1392 + 28 * v116 + 4) = *(_BYTE*)(i + thisx + 2580);
                             if (++ * (_BYTE*)(i + thisx + 2600) == 6)
                             {
-                                *(_WORD*)(thisx + 2 * i + 2564) = 0;
+                                *(short*)(thisx + 2 * i + 2564) = 0;
                                 if (*(__int16*)(thisx + 244 * i + 1628) >= 0)
                                 {
                                     *(_BYTE*)(i + thisx + 2600) = 0;
                                     *(_BYTE*)(i + thisx + 2584) = 2;
-                                    *(_WORD*)(thisx + 2 * i + 2564) = i;
+                                    *(short*)(thisx + 2 * i + 2564) = i;
                                 }
                             }
                         }
@@ -48671,11 +48671,11 @@ unsigned __int16* sub_46881A(int thisx)
                         if (--v116 < 0)
                         {
                             *(_BYTE*)(i + thisx + 2584) = 0;
-                            *(_WORD*)(thisx + 2 * i + 2564) = 0;
+                            *(short*)(thisx + 2 * i + 2564) = 0;
                         }
                         else
                         {
-                            *(_WORD*)(thisx + 2 * i + 2564) = *(_WORD*)(thisx + 244 * i + 1392 + 28 * v116);
+                            *(short*)(thisx + 2 * i + 2564) = *(short*)(thisx + 244 * i + 1392 + 28 * v116);
                             *((_BYTE*)dword_4B92DC + *(unsigned __int16*)(thisx + 2 * i + 2564)) = 0;
                             *(_BYTE*)(i + thisx + 2580) = *(_BYTE*)(thisx + 244 * i + 1392 + 28 * v116 + 4);
                             *(int*)(thisx + 244 * i + 1392 + 28 * v116) = -1;
@@ -48705,25 +48705,25 @@ unsigned __int16* sub_46881A(int thisx)
         {
             if (*(_BYTE*)(i + thisx + 2604) == 1)
             {
-                *(_WORD*)(thisx + 2 * i + 2564) = rand() % 2;
+                *(short*)(thisx + 2 * i + 2564) = rand() % 2;
                 sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
             }
             if (v120)
             {
-                *(_WORD*)(thisx + 2 * i + 2564) = *(_WORD*)(thisx + 2 * i + 2564) == 0;
+                *(short*)(thisx + 2 * i + 2564) = *(short*)(thisx + 2 * i + 2564) == 0;
                 sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
             }
             else if (v118)
             {
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
                 *(_BYTE*)(i + thisx + 13092) = 0;
-                if (*(_WORD*)(thisx + 2 * i + 2564))
+                if (*(short*)(thisx + 2 * i + 2564))
                 {
                     *(_BYTE*)(i + thisx + 2584) = 4;
                     v123 = 4;
                     v118 = 0;
                     v120 = *(int*)(thisx + 15636);
-                    *(_WORD*)(thisx + 2 * i + 2564) = 0;
+                    *(short*)(thisx + 2 * i + 2564) = 0;
                     v122 = 1;
                 }
                 else
@@ -48739,11 +48739,11 @@ unsigned __int16* sub_46881A(int thisx)
             {
                 v117 = *(unsigned __int8*)(i + thisx + 2554) - 1;
                 *(_BYTE*)(i + thisx + 2554) = 0;
-                *(_WORD*)(thisx + 2 * i + 2572) = 100;
+                *(short*)(thisx + 2 * i + 2572) = 100;
                 *(_BYTE*)(v117 + thisx + 2584) = 2;
-                *(_WORD*)(thisx + 2 * v117 + 2564) = *(_WORD*)(thisx + 244 * v117 + 1630);
-                *(_WORD*)(thisx + 244 * v117 + 1630) = -1;
-                *(_WORD*)(thisx + 2 * v117 + 2572) = v124 + 101;
+                *(short*)(thisx + 2 * v117 + 2564) = *(short*)(thisx + 244 * v117 + 1630);
+                *(short*)(thisx + 244 * v117 + 1630) = -1;
+                *(short*)(thisx + 2 * v117 + 2572) = v124 + 101;
                 *(_BYTE*)(v117 + thisx + 2600) = 0;
                 v129 = 1;
             }
@@ -48786,7 +48786,7 @@ unsigned __int16* sub_46881A(int thisx)
                         v99 = 0;
                     }
                 }
-                *(_WORD*)(thisx + 2 * i + 2564) = v99;
+                *(short*)(thisx + 2 * i + 2564) = v99;
                 v121 = 0;
                 v120 = 2 * *(int*)(thisx + 15636);
             }
@@ -48813,13 +48813,13 @@ unsigned __int16* sub_46881A(int thisx)
                 }
                 v90 = *(__int16*)(v94 + 236);
                 if (v90 >= 0 && (byte_4B99CD || !sub_46D516((__int16*)(thisx + 1392), v90, -1)))
-                    *(_WORD*)(v92 + 236) = v90;
+                    *(short*)(v92 + 236) = v90;
                 v93 = *(__int16*)(v94 + 238);
                 if (v93 < 0 || sub_46D56B((__int16*)(thisx + 1392), v93, -1))
-                    *(_WORD*)(v92 + 238) = -1;
+                    *(short*)(v92 + 238) = -1;
                 else
-                    *(_WORD*)(v92 + 238) = v93;
-                *(_WORD*)(thisx + 2 * i + 2564) = 0;
+                    *(short*)(v92 + 238) = v93;
+                *(short*)(thisx + 2 * i + 2564) = 0;
                 *(_BYTE*)(i + thisx + 2580) = 0;
                 *(_BYTE*)(i + thisx + 2596) = 0;
                 if (v88 >= 6)
@@ -48833,7 +48833,7 @@ unsigned __int16* sub_46881A(int thisx)
                     {
                         *(_BYTE*)(i + thisx + 2600) = 0;
                         *(_BYTE*)(i + thisx + 2584) = 2;
-                        *(_WORD*)(thisx + 2 * i + 2564) = i;
+                        *(short*)(thisx + 2 * i + 2564) = i;
                         sub_476E46(*(unsigned __int16*)(thisx + 2 * i + 2564), (void*)(8 * i + word_4B9250));//ddd 4B9250
                     }
                     else
@@ -48841,10 +48841,10 @@ unsigned __int16* sub_46881A(int thisx)
                         *(_BYTE*)(i + thisx + 2584) = 3;
                         for (mm = 0; mm < 4; ++mm)
                         {
-                            if (!*(_BYTE*)(mm + thisx + 2584) && !*(_WORD*)(thisx + 2 * mm + 2572))
+                            if (!*(_BYTE*)(mm + thisx + 2584) && !*(short*)(thisx + 2 * mm + 2572))
                             {
-                                *(_WORD*)(thisx + 2 * i + 2572) = 0;
-                                *(_WORD*)(thisx + 2 * mm + 2572) = v124 + 101;
+                                *(short*)(thisx + 2 * i + 2572) = 0;
+                                *(short*)(thisx + 2 * mm + 2572) = v124 + 101;
                                 *(_BYTE*)(mm + thisx + 2554) = i + 1;
                                 break;
                             }
@@ -48867,7 +48867,7 @@ unsigned __int16* sub_46881A(int thisx)
             {
                 if (v120 != *(int*)(thisx + 15636))
                     sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
-                *(_WORD*)(thisx + 2 * i + 2564) = (*(int*)(thisx + 15636) + v120 + *(unsigned __int16*)(thisx + 2 * i + 2564))
+                *(short*)(thisx + 2 * i + 2564) = (*(int*)(thisx + 15636) + v120 + *(unsigned __int16*)(thisx + 2 * i + 2564))
                     % *(int*)(thisx + 15636);
                 *(_BYTE*)(i + thisx + 2600) = 7;
                 v82 = *(unsigned __int16*)(thisx + 2 * i + 2564);
@@ -48883,17 +48883,17 @@ unsigned __int16* sub_46881A(int thisx)
                     *(_BYTE*)(v83 + 28 * nn + 4) = *(_BYTE*)(v85 + 28 * nn + 4);
                 }
                 if (*(__int16*)(v85 + 236) < 0)
-                    *(_WORD*)(v83 + 236) = -1;
+                    *(short*)(v83 + 236) = -1;
                 else
-                    *(_WORD*)(v83 + 236) = -(__int16)(*(_WORD*)(v85 + 236) + 2);
+                    *(short*)(v83 + 236) = -(__int16)(*(short*)(v85 + 236) + 2);
                 if (*(__int16*)(v85 + 238) < 0)
                 {
-                    *(_WORD*)(v83 + 238) = i;
+                    *(short*)(v83 + 238) = i;
                     sub_476E46(i, (void*)(8 * i + word_4B9250));//ddd 4B9250 ?????? 原来是4952656
                 }
                 else
                 {
-                    *(_WORD*)(v83 + 238) = -(__int16)(*(_WORD*)(v85 + 238) + 2);
+                    *(short*)(v83 + 238) = -(__int16)(*(short*)(v85 + 238) + 2);
                     sub_476E46(*(__int16*)(v85 + 238), (void*)(8 * i + word_4B9250));//ddd 4B9250 ?????
                 }
                 v122 = 1;
@@ -48903,7 +48903,7 @@ unsigned __int16* sub_46881A(int thisx)
                 sub_46D2DE(thisx + 244 * i + 1392);
                 *(_BYTE*)(i + thisx + 2584) = 0;
                 *(_BYTE*)(i + thisx + 2600) = 0;
-                *(_WORD*)(thisx + 2 * i + 2564) = 0;
+                *(short*)(thisx + 2 * i + 2564) = 0;
                 v122 = 1;
             }
             else if (v125)
@@ -48992,14 +48992,14 @@ unsigned __int16* sub_46881A(int thisx)
                     }
                     v71 = *(__int16*)(v74 + 236);
                     if (v71 >= 0 && (byte_4B99CD || !sub_46D516((__int16*)(thisx + 1392), v71, -1)))
-                        *(_WORD*)(v80 + 236) = v71;
+                        *(short*)(v80 + 236) = v71;
                     v73 = *(__int16*)(v74 + 238);
                     if (v73 >= 0)
                     {
                         if (sub_46D56B((__int16*)(thisx + 1392), v73, i))
-                            *(_WORD*)(v80 + 238) = -1;
+                            *(short*)(v80 + 238) = -1;
                         else
-                            *(_WORD*)(v80 + 238) = v73;
+                            *(short*)(v80 + 238) = v73;
                     }
                     if (v69 < 6)
                     {
@@ -49031,7 +49031,7 @@ unsigned __int16* sub_46881A(int thisx)
             {
                 if (*(_BYTE*)(thisx + 81))
                 {
-                    *(_WORD*)(thisx + 2 * i + 2564) = rand() % dword_4B92D8;
+                    *(short*)(thisx + 2 * i + 2564) = rand() % dword_4B92D8;
                 }
                 else
                 {
@@ -49062,9 +49062,9 @@ unsigned __int16* sub_46881A(int thisx)
                         if (v62[i4] <= v64 && v62[i4] >= 0)
                             ++v64;
                     }
-                    *(_WORD*)(thisx + 2 * i + 2564) = v64;
+                    *(short*)(thisx + 2 * i + 2564) = v64;
                 }
-                *(_WORD*)(v80 + 236) = *(_WORD*)(thisx + 2 * i + 2564);
+                *(short*)(v80 + 236) = *(short*)(thisx + 2 * i + 2564);
             }
             if (*(__int16*)(v80 + 238) < 0)
             {
@@ -49095,7 +49095,7 @@ unsigned __int16* sub_46881A(int thisx)
                     if (v54[i6] <= v55 && v54[i6] >= 0)
                         ++v55;
                 }
-                *(_WORD*)(v80 + 238) = v55;
+                *(short*)(v80 + 238) = v55;
             }
             *(_BYTE*)(i + thisx + 2584) = 3;
         }
@@ -49119,7 +49119,7 @@ unsigned __int16* sub_46881A(int thisx)
             v27 = -8;
             v26 = -8;
             result = (unsigned __int16*)thisx;
-            v24 = *(_WORD*)(thisx + 2 * i + 2572);
+            v24 = *(short*)(thisx + 2 * i + 2572);
             if (v24 && v24 < 0x64u)
             {
                 wsprintfA(String, "%d>", v24);
@@ -49378,7 +49378,7 @@ void sub_46B8AE(_BYTE* thisx, int a2)
     char tc_63[4]; //8
     int v26; // [esp+14h] [ebp-210h]
     int v25; // [esp+10h] [ebp-214h]
-    _WORD* v24; // [esp+Ch] [ebp-218h]
+    short* v24; // [esp+Ch] [ebp-218h]
     int v23; // [esp+8h] [ebp-21Ch]
     char tc_33[8]; //12
     int v21; // [esp-4h] [ebp-228h]
@@ -49761,7 +49761,7 @@ void sub_46B8AE(_BYTE* thisx, int a2)
             v98 = -(v98 + 2);
         if (v98 >= 0)
         {
-            v24 = (_WORD*)(84 * v98 + dword_4B92D4);
+            v24 = (short*)(84 * v98 + dword_4B92D4);
             v26 = xLeft + 132;
             v25 = yTop + 1;
             SetRect(&rc, xLeft + 132, yTop + 1, xLeft + 151, yTop + 18);
@@ -49805,15 +49805,15 @@ _BYTE* sub_46D26F(_BYTE* thisx)
     thisx[10] = 0;
     thisx[4] = 0;
     *(int*)thisx = -1;
-    *((_WORD*)thisx + 4) = 0;
-    *((_WORD*)thisx + 3) = 0;
+    *((short*)thisx + 4) = 0;
+    *((short*)thisx + 3) = 0;
     *((int*)thisx + 3) = 0;
     *((int*)thisx + 4) = 0;
     thisx[20] = 0;
     result = thisx;
     thisx[26] = 0;
-    *((_WORD*)thisx + 11) = 0;
-    *((_WORD*)thisx + 12) = 0;
+    *((short*)thisx + 11) = 0;
+    *((short*)thisx + 12) = 0;
     return result;
 }
 
@@ -49832,8 +49832,8 @@ int sub_46D2DE(int thisx)
     *(_BYTE*)(thisx + 240) = -1;
     *(_BYTE*)(thisx + 241) = -1;
     *(int*)(thisx + 168) = 0;
-    *(_WORD*)(thisx + 236) = -1;
-    *(_WORD*)(thisx + 238) = -1;
+    *(short*)(thisx + 236) = -1;
+    *(short*)(thisx + 238) = -1;
     result = thisx;
     *(_BYTE*)(thisx + 242) = 0;
     *(_BYTE*)(thisx + 243) = 0;
@@ -50083,9 +50083,9 @@ void sub_46D747(int thisx)
                 switch ((unsigned __int8)v11)
                 {
                 case 1u:
-                    *(_WORD*)(v7 + 238) = sub_48307F(String1) - 1;
+                    *(short*)(v7 + 238) = sub_48307F(String1) - 1;
                     if (word_4B99E4 <= *(__int16*)(v7 + 238))
-                        *(_WORD*)(v7 + 238) = -1;
+                        *(short*)(v7 + 238) = -1;
                     break;
                 case 2u:
                     for (i = 0; i < dword_4B92D8; ++i)
@@ -50096,7 +50096,7 @@ void sub_46D747(int thisx)
                     }
                     if (i == dword_4B92D8)
                         LOWORD(i) = -1;
-                    *(_WORD*)(v7 + 236) = i;
+                    *(short*)(v7 + 236) = i;
                     break;
                 case 3u:
                     if (lstrlenA(String1) >= 64)
@@ -50328,7 +50328,7 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
     int v30; // [esp+4Ch] [ebp-8Ch]
     int v29; // [esp+48h] [ebp-90h]
     unsigned int v28; // [esp+44h] [ebp-94h]
-    _WORD* v27; // [esp+40h] [ebp-98h]
+    short* v27; // [esp+40h] [ebp-98h]
     int v26; // [esp+3Ch] [ebp-9Ch]
     int v25; // [esp+38h] [ebp-A0h]
     int v24; // [esp+34h] [ebp-A4h]
@@ -50434,7 +50434,7 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
                 && *(unsigned __int8*)(j + thisx + 2612) <= *(int*)(thisx + 2368))
             {
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-                *(_WORD*)(thisx + 2 * (*(unsigned __int8*)(j + thisx + 2612) + 2 * j) + 2564) = *(_WORD*)(thisx
+                *(short*)(thisx + 2 * (*(unsigned __int8*)(j + thisx + 2612) + 2 * j) + 2564) = *(short*)(thisx
                     + 244 * j
                     + 1392
                     + 28
@@ -50499,7 +50499,7 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
                 }
                 sub_4A1307(8 * (m + 2 * j) + (int)word_4B9290, (Concurrency::details::HardwareAffinity*)(8 * j + (int)word_4B9250)); // ddd word_4B9290   4B9250
                 sub_485E5A((int)dword_4B93A4 + 24 * v25, (unsigned __int16*)(8 * (m + 2 * j) + word_4B9290));// ddd 4B9290
-                v27 = (_WORD*)(thisx + 612 * (j + 4 * m) + 2628);//
+                v27 = (short*)(thisx + 612 * (j + 4 * m) + 2628);//
                 sub_475010(v27, v26);
                 sub_474FF0((char*)v27, v23);
                 sub_475050((char*)v27, m + 2 * j);
@@ -50602,8 +50602,8 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
                     *(_BYTE*)(v17 + jj % (*(int*)(thisx + 2368) + 1) + 240) = v19;
                     v18 = *(int*)v16;
                     *(int*)(v16 + 16) = 1;
-                    *(_WORD*)(thisx + 2 * jj + 2564) = v18;
-                    word_4B99CE[jj] = *(_WORD*)(v16 + 8);
+                    *(short*)(thisx + 2 * jj + 2564) = v18;
+                    word_4B99CE[jj] = *(short*)(v16 + 8);
                     *(_BYTE*)(jj + thisx + 2580) = *(_BYTE*)(v16 + 4);
                     *(_BYTE*)(jj + thisx + 2403) = *(_BYTE*)(v16 + 10);
                     *(_BYTE*)(jj + thisx + 2411) = *(_BYTE*)(v16 + 11);
@@ -50657,7 +50657,7 @@ void sub_46F18C(int thisx, int a2)
     int xLeft; // [esp+E4h] [ebp-148h]
     int* v81; // [esp+E0h] [ebp-14Ch]
     int yTop; // [esp+DCh] [ebp-150h]
-    _WORD* v79; // [esp+D8h] [ebp-154h]
+    short* v79; // [esp+D8h] [ebp-154h]
     int v78; // [esp+D4h] [ebp-158h]
     char v77; // [esp+D0h] [ebp-15Ch]
     int v76; // [esp+CCh] [ebp-160h]
@@ -50806,7 +50806,7 @@ void sub_46F18C(int thisx, int a2)
             {
                 if (v88 == 6)
                 {
-                    v79 = (_WORD*)(84 * *(__int16*)(v84 + 236) + dword_4B92D4);
+                    v79 = (short*)(84 * *(__int16*)(v84 + 236) + dword_4B92D4);
                     v94 = v98;
                     v95 = v89;
                     v96 = 1;
@@ -51083,7 +51083,7 @@ __int16 sub_4705D7(int thisx, int a2, int a3)
         if (a2)
         {
             result = sub_47075A((int*)thisx);
-            *(_WORD*)(thisx + 8) = result;
+            *(short*)(thisx + 8) = result;
         }
         else if (!*(int*)(thisx + 16))
         {
@@ -51159,18 +51159,18 @@ __int16 sub_4707C7(int thisx, int a2)
         v2 = a2 + *(__int16*)(thisx + 8);
         if (v2 >= 0)
         {
-            LOWORD(v2) = a2 + *(_WORD*)(thisx + 8);
-            *(_WORD*)(thisx + 8) = v2;
+            LOWORD(v2) = a2 + *(short*)(thisx + 8);
+            *(short*)(thisx + 8) = v2;
         }
         else
         {
-            *(_WORD*)(thisx + 8) = 0;
+            *(short*)(thisx + 8) = 0;
         }
     }
     else
     {
         LOWORD(v2) = thisx;
-        *(_WORD*)(thisx + 8) = v5;
+        *(short*)(thisx + 8) = v5;
     }
     return v2;
 }
@@ -51193,8 +51193,8 @@ int sub_47082B(int thisx)
     dword_4B91E0 = 0;
     *(int*)(thisx + 2540) = 0;
     *(_BYTE*)(thisx + 2562) = 0;
-    *(_WORD*)(thisx + 2564) = 0;
-    *(_WORD*)(thisx + 2566) = 0;
+    *(short*)(thisx + 2564) = 0;
+    *(short*)(thisx + 2566) = 0;
     v4 = 4;
     for (i = 1; i < 5; ++i)
     {
@@ -51320,14 +51320,14 @@ int* sub_470C48(int thisx)
         {
             if (*(unsigned __int16*)(thisx + 2564) + 1 == *(unsigned __int8*)(j + thisx + 13044))
             {
-                *(_WORD*)(thisx + 2566) = j + 1;
+                *(short*)(thisx + 2566) = j + 1;
                 break;
             }
         }
         if (j != 4)
             break;
-        ++* (_WORD*)(thisx + 2564);
-        *(_WORD*)(thisx + 2566) = 0;
+        ++* (short*)(thisx + 2564);
+        *(short*)(thisx + 2566) = 0;
     }
     *(int*)(thisx + 2540) = 0;
     if ((unsigned __int8)++ * (_BYTE*)(thisx + 2562) < 5u)
@@ -51534,7 +51534,7 @@ int sub_4710B5(int thisx)
                 {
                     if (*((_BYTE*)&v26[6 * jj + 14] + 6 * i + mm) == 1 && --v7 == -1)
                     {
-                        *(_WORD*)(thisx + 2 * jj + 2564) = mm + 10 * i;
+                        *(short*)(thisx + 2 * jj + 2564) = mm + 10 * i;
                         break;
                     }
                 }
@@ -51544,7 +51544,7 @@ int sub_4710B5(int thisx)
         }
         else
         {
-            *(_WORD*)(thisx + 2 * jj + 2564) = 100;
+            *(short*)(thisx + 2 * jj + 2564) = 100;
         }
     }
     return sub_47F958((int*)(thisx + 736));
@@ -51786,9 +51786,9 @@ void sub_471F33(int thisx)
     v24 = sub_489927((void*)(thisx + 128), (int)v19, (int)v20, 256, &v22);
     if (v24 >= 0)
     {
-        *(_WORD*)(thisx + 11404) = sub_485ED0((int)v20, v22, a1st_0, -1);
-        *(_WORD*)(thisx + 11406) = sub_485ED0((int)v20, v22, a2nd_0, -1);
-        *(_WORD*)(thisx + 11408) = sub_485ED0((int)v20, v22, a3rd_0, -1);
+        *(short*)(thisx + 11404) = sub_485ED0((int)v20, v22, a1st_0, -1);
+        *(short*)(thisx + 11406) = sub_485ED0((int)v20, v22, a2nd_0, -1);
+        *(short*)(thisx + 11408) = sub_485ED0((int)v20, v22, a3rd_0, -1);
     }
     sub_482C42(v19);
     sub_4898D3((int*)(thisx + 128));
@@ -51840,10 +51840,10 @@ int* sub_4724BD(int thisx)
     int v41; // [esp+178h] [ebp-8h]
     int v40; // [esp+174h] [ebp-Ch]
     int v39; // [esp+170h] [ebp-10h]
-    _WORD* v38; // [esp+16Ch] [ebp-14h]
+    short* v38; // [esp+16Ch] [ebp-14h]
     int v37; // [esp+168h] [ebp-18h]
     int i; // [esp+164h] [ebp-1Ch]
-    _WORD* v35; // [esp+160h] [ebp-20h]
+    short* v35; // [esp+160h] [ebp-20h]
     //
     CHAR v34[256]; // [esp+60h] [ebp-120h] BYREF
     int v33; // [esp+5Ch] [ebp-124h]
@@ -51899,12 +51899,12 @@ int* sub_4724BD(int thisx)
         else
         {
             v41 = 4 - (*(unsigned __int8*)(thisx + 2562) - 1);
-            v38 = (_WORD*)(thisx + 2564);
+            v38 = (short*)(thisx + 2564);
             v39 = *(unsigned __int8*)(v41 + thisx + 13047);
             v42 = v39 - *(unsigned __int16*)(thisx + 2564);
             if (*(int*)(thisx + 2540) == 1)
             {
-                v35 = (_WORD*)(thisx + 2574);
+                v35 = (short*)(thisx + 2574);
                 while (1)
                 {
                     *v38 = *(unsigned __int8*)(v41 + thisx + 13047);
@@ -51917,7 +51917,7 @@ int* sub_4724BD(int thisx)
                 for (i = 0; i < 4; ++i)
                 {
                     if (*(unsigned __int8*)(i + thisx + 13044) == v41)
-                        *(_WORD*)(thisx + 2 * v37++ + 2566) = i;
+                        *(short*)(thisx + 2 * v37++ + 2566) = i;
                 }
                 sub_47FBA3(thisx + 736);
                 if (*v35)
@@ -51970,7 +51970,7 @@ int* sub_4724BD(int thisx)
                     v33 = thisx + 244 * v32 + 1392;
                     if (!v42)
                     {
-                        *(_WORD*)String = word_4B3B98;
+                        *(short*)String = word_4B3B98;
                         v8 = byte_4B3B9A;
                         v9 = word_4B3B9C;
                         v10 = byte_4B3B9E;
@@ -52196,7 +52196,7 @@ void sub_472FC4(int thisx)
         v11 = -1;
         wsprintfA(FileName, "Stage\\Stage%02d_Select.bmp", i + 1);
         sub_49DA45((int*)byte_4BDC60, FileName, (int)&v11);
-        sub_475770((_WORD*)(*(int*)(thisx + 13392) + 20 * i), v11);
+        sub_475770((short*)(*(int*)(thisx + 13392) + 20 * i), v11);
         if (v11 <= 0)
         {
             v3 = sub_49CB92((int)byte_4BDC60, -1, 32, 32, 0, 0);
@@ -52229,7 +52229,7 @@ void sub_472FC4(int thisx)
                         v7 = 256;
                         v8 = 256;
                         sub_49CC5B((short*)byte_4BDC60, v3, &v4);
-                        sub_475770((_WORD*)(20 * i + *(int*)(thisx + 13392)), v3);
+                        sub_475770((short*)(20 * i + *(int*)(thisx + 13392)), v3);
                         sub_49DA8A((int*)byte_4BDC60, v11);
                     }
                 }
@@ -53029,7 +53029,7 @@ int sub_474E10(unsigned __int8* thisx)
 }
 
 //get
-__int16 sub_474E30(_WORD* thisx)
+__int16 sub_474E30(short* thisx)
 {
     return thisx[300];
 }
@@ -53053,15 +53053,15 @@ char sub_474E90(_BYTE* thisx)
 }
 
 //get
-__int16 sub_474EB0(_WORD* thisx)
+__int16 sub_474EB0(short* thisx)
 {
     return thisx[107];
 }
 
 //set
-_WORD* sub_474ED0(_WORD* thisx, __int16 a2)
+short* sub_474ED0(short* thisx, __int16 a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     thisx[107] = a2;
@@ -53095,15 +53095,15 @@ _BYTE* sub_474F30(_BYTE* thisx, char a2)
 }
 
 //get
-__int16 sub_474F50(_WORD* thisx)
+__int16 sub_474F50(short* thisx)
 {
     return thisx[249];
 }
 
 //set
-_WORD* sub_474F70(_WORD* thisx, __int16 a2)
+short* sub_474F70(short* thisx, __int16 a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     thisx[95] = a2;
@@ -53111,9 +53111,9 @@ _WORD* sub_474F70(_WORD* thisx, __int16 a2)
 }
 
 //set
-_WORD* sub_474F90(_WORD* thisx, __int16 a2)
+short* sub_474F90(short* thisx, __int16 a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     thisx[248] = a2;
@@ -53151,9 +53151,9 @@ _BYTE* sub_474FF0(_BYTE* thisx, char a2)
 }
 
 //set
-_WORD* sub_475010(_WORD* thisx, __int16 a2)
+short* sub_475010(short* thisx, __int16 a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     thisx[93] = a2;
@@ -53195,7 +53195,7 @@ int sub_4750B0(int* thisx)
 //get
 __int16 sub_4750D0(void* thisx)
 {
-    return *(_WORD*)thisx;
+    return *(short*)thisx;
 }
 
 //get
@@ -53349,7 +53349,7 @@ char* sub_475430(char* thisx)
 }
 
 //get
-__int16 sub_475450(_WORD* thisx)
+__int16 sub_475450(short* thisx)
 {
     return thisx[172];
 }
@@ -53390,7 +53390,7 @@ char sub_475550(_BYTE* thisx)
 }
 
 //get
-__int16 sub_475570(_WORD* thisx)
+__int16 sub_475570(short* thisx)
 {
     return thisx[96];
 }
@@ -53470,9 +53470,9 @@ char sub_475710(_BYTE* thisx, unsigned __int8 a2)
 }
 
 //set
-_WORD* sub_475730(_WORD* thisx, __int16 a2)
+short* sub_475730(short* thisx, __int16 a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     thisx[9] = a2;
@@ -53486,9 +53486,9 @@ int sub_475750(int* thisx)
 }
 
 //set
-_WORD* sub_475770(_WORD* thisx, __int16 a2)
+short* sub_475770(short* thisx, __int16 a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     thisx[8] = a2;
@@ -53533,7 +53533,7 @@ _BYTE* sub_475830(_BYTE* thisx, char a2)
 }
 
 //set
-__int16 sub_475850(_WORD* thisx)
+__int16 sub_475850(short* thisx)
 {
     return thisx[9];
 }
@@ -53637,9 +53637,9 @@ int sub_475AC0(int* thisx)
     return thisx[49];
 }
 
-_WORD* sub_475AE0(_WORD* thisx, __int16 a2)
+short* sub_475AE0(short* thisx, __int16 a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     thisx[249] = a2;
@@ -53701,7 +53701,7 @@ char* sub_475C40(char* thisx, char a2)
     }
 }
 
-__int16 sub_475CB0(_WORD* thisx)
+__int16 sub_475CB0(short* thisx)
 {
     return thisx[8];
 }
@@ -54564,7 +54564,7 @@ void sub_476F0D()
                     {
                         sub_482FAA(v3);
                         v1 = 0;
-                        *((_WORD*)*(dword_4B9310 + i) + v0) = v2;
+                        *((short*)*(dword_4B9310 + i) + v0) = v2;
                         continue;
                     }
                 }
@@ -55106,7 +55106,7 @@ int __cdecl sub_478607(int* a1, unsigned __int8 a2, int a3, int a4, int a5)
     result = a2;
     if (a2)
     {
-        v6 = (unsigned __int16)sub_475CB0((_WORD*)(dword_4B92D4 + 84 * a3));
+        v6 = (unsigned __int16)sub_475CB0((short*)(dword_4B92D4 + 84 * a3));
         *a1 = a4;
         a1[9] = a5;
         SetRect(&rc, 32 * (a2 - 1), 16 * v6, 32, 16);
@@ -55489,24 +55489,24 @@ int __cdecl sub_478C4C(int* a1, int a2)
 
 char __cdecl sub_47900E(int* a1, unsigned __int8 a2, int a3, int a4)
 {
-    //    _WORD* v5; // [esp+0h] [ebp-8h]
+    //    short* v5; // [esp+0h] [ebp-8h]
     //    int v6; // [esp+4h] [ebp-4h]
 
 
     Warning();//修正堆栈
     check_stack c(__FILE__, __LINE__);
     int v6; // [esp+4h] [ebp-4h]
-    _WORD* v5; // [esp+0h] [ebp-8h]
+    short* v5; // [esp+0h] [ebp-8h]
 
 
     if (a3 < 0)
     {
-        v5 = (_WORD*)sub_426590(byte_4B9B10, -a3 - 1);
+        v5 = (short*)sub_426590(byte_4B9B10, -a3 - 1);
         v6 = (unsigned __int16)sub_4266F0(v5);
     }
     else
     {
-        v6 = (unsigned __int16)sub_475CB0((_WORD*)(36 * a3 + dword_4B92E0));
+        v6 = (unsigned __int16)sub_475CB0((short*)(36 * a3 + dword_4B92E0));
     }
     return sub_478682(a1, a2, v6, 0, a4, -1);
 }
@@ -55685,7 +55685,7 @@ int sub_4790CD()
             if (String1[0] == 110)
                 goto LABEL_78;
             v0 = atoi(String1);
-            sub_4017EE((_WORD*)(36 * i + dword_4B92E0), v0);
+            sub_4017EE((short*)(36 * i + dword_4B92E0), v0);
             if (!sub_482D44(v26, String1))
                 goto LABEL_78;
             if (String1[0] == 110)
@@ -55996,7 +55996,7 @@ int sub_479E2A()
             for (i = 0; i < dword_4B92D8; ++i)
             {
                 for (j = 0; j < 4; ++j)
-                    sub_47ECA0((_WORD*)(84 * i + dword_4B92D4), j, v11[j]);
+                    sub_47ECA0((short*)(84 * i + dword_4B92D4), j, v11[j]);
                 sub_43E7AA(84 * i + dword_4B92D4, (int)v6, (int)v7);
             }
             LOBYTE(v15) = 0;
@@ -56618,12 +56618,12 @@ int sub_47AC9D()
     {
         if (unknown_libname_17((int*)dword_4B93A4 + 6 * i))
         {
-            *((_WORD*)Src + i) = v10++;
+            *((short*)Src + i) = v10++;
             ++dword_4B9398;
         }
         else
         {
-            *((_WORD*)Src + i) = -1;
+            *((short*)Src + i) = -1;
         }
     }
     for (i = 0; i < 4; ++i)
@@ -56636,8 +56636,8 @@ int sub_47AC9D()
             return 0;
         for (k = 0; k < (int)dword_4B93A0; ++k)
         {
-            *((_WORD*)dword_4B9380[i] + k) = -1;//要区别反编译的是变量还是数组
-            *((_WORD*)dword_4B9370[i] + k) = -1;
+            *((short*)dword_4B9380[i] + k) = -1;//要区别反编译的是变量还是数组
+            *((short*)dword_4B9370[i] + k) = -1;
         }
     }
     for (m = 0; m < (int)Size; ++m)
@@ -56646,7 +56646,7 @@ int sub_47AC9D()
         v2 = (unsigned __int8)sub_401710(v4);
         v3 = (unsigned __int8)MarkedForDetachment(v4);//call return thisxx[20]; 
         if (v2 < (int)dword_4B93A0 && v3 < 4)
-            *((_WORD*)*(&dword_4B9380 + v3) + v2) = 1;
+            *((short*)*(&dword_4B9380 + v3) + v2) = 1;
     }
     v10 = 0;
     for (i = 0; i < 4; ++i)
@@ -56654,8 +56654,8 @@ int sub_47AC9D()
         v10 = 0;
         for (n = 0; n < (int)dword_4B93A0; ++n)
         {
-            if (*((_WORD*)*(&dword_4B9380 + i) + n) == 1)
-                *((_WORD*)*(&dword_4B9380 + i) + n) = v10++;
+            if (*((short*)*(&dword_4B9380 + i) + n) == 1)
+                *((short*)*(&dword_4B9380 + i) + n) = v10++;
         }
     }
     if (!sub_47818A())
@@ -58926,7 +58926,7 @@ char* sub_47EC30(char* thisx, char a2)
     }
 }
 
-int sub_47ECA0(_WORD* thisx, int a2, __int16 a3)
+int sub_47ECA0(short* thisx, int a2, __int16 a3)
 {
     int result; // eax
 
@@ -59962,7 +59962,7 @@ int  sub_47FEB2(int thisx, LPCSTR lpString, void* Src, int a4)
     v8 = 0;
     for (j = 0; j < i; ++j)
     {
-        *(_WORD*)(*(int*)(thisx + 12) + 2 * j) = v8;
+        *(short*)(*(int*)(thisx + 12) + 2 * j) = v8;
         v8 += lstrlenA((LPCSTR)Src + v8) + 1;
     }
     *(int*)(thisx + 4) = 1;
@@ -60685,13 +60685,13 @@ void sub_48142C(void* thisx)
     *((_BYTE*)thisx + 4) = 0;
     *((_BYTE*)thisx + 8) = 0;
     *((_BYTE*)thisx + 9) = 0;
-    *((_WORD*)thisx + 5) = 0;
-    *((_WORD*)thisx + 6) = 0;
+    *((short*)thisx + 5) = 0;
+    *((short*)thisx + 6) = 0;
     *((_BYTE*)thisx + 14) = 0;
     *((_BYTE*)thisx + 15) = 2;
     *((_BYTE*)thisx + 16) = 50;
     *((_BYTE*)thisx + 17) = 100;
-    *((_WORD*)thisx + 3) = 0;
+    *((short*)thisx + 3) = 0;
 }
 
 //初始化
@@ -60711,7 +60711,7 @@ int* sub_4814A3(int* thisx)
     *((_BYTE*)thisx + 12) = 0;
     *((_BYTE*)thisx + 14) = 0;
     thisx[4] = 0;
-    *((_WORD*)thisx + 10) = 0;
+    *((short*)thisx + 10) = 0;
     return thisx;
 }
 
@@ -60937,7 +60937,7 @@ int sub_481B9F(int thisx, HANDLE hFile)
         if (i >= v16)
             break;
         LOWORD(v3) = v13;
-        v3 = sub_481F98((_WORD*)(20 * i + *(int*)(thisx + 4)), hFile, v3);
+        v3 = sub_481F98((short*)(20 * i + *(int*)(thisx + 4)), hFile, v3);
     }
     if ((unsigned __int16)v13 < 2u)
     {
@@ -60961,7 +60961,7 @@ int sub_481B9F(int thisx, HANDLE hFile)
 }
 
 //初始化
-int sub_481F98(_WORD* thisx, HANDLE hFile, int a3)
+int sub_481F98(short* thisx, HANDLE hFile, int a3)
 {
 
     Warning();//修正堆栈
@@ -60976,7 +60976,7 @@ int sub_481F98(_WORD* thisx, HANDLE hFile, int a3)
     ReadFile(hFile, thisx + 2, 1u, (LPDWORD)&NumberOfBytesRead, 0);
     ReadFile(hFile, thisx + 4, 1u, (LPDWORD)&NumberOfBytesRead, 0);
     ReadFile(hFile, (char*)thisx + 9, 1u, (LPDWORD)&NumberOfBytesRead, 0);
-    if ((_WORD)a3)
+    if ((short)a3)
     {
         ReadFile(hFile, thisx + 5, 2u, (LPDWORD)&NumberOfBytesRead, 0);
         ReadFile(hFile, thisx + 6, 2u, (LPDWORD)&NumberOfBytesRead, 0);
@@ -61114,14 +61114,14 @@ int sub_4822EC(int thisx, unsigned __int16 a2)
             v3 = 0;
         }
         *(int*)(thisx + 16) = (int)v3;
-        *(_WORD*)(thisx + 20) = a2;
+        *(short*)(thisx + 20) = a2;
         if (*(int*)(thisx + 16))
         {
             return 1;
         }
         else
         {
-            *(_WORD*)(thisx + 20) = 0;
+            *(short*)(thisx + 20) = 0;
             return 0;
         }
     }
@@ -61136,7 +61136,7 @@ int sub_4823E9(int thisx)
     if (*(int*)(thisx + 16))
         delete2(*(void**)(thisx + 16));
     *(int*)(thisx + 16) = 0;
-    *(_WORD*)(thisx + 20) = 0;
+    *(short*)(thisx + 20) = 0;
     return result;
 }
 
@@ -61159,11 +61159,11 @@ int sub_482427(void* thisx)
     v2 = sub_4828CD((int)thisx, 0);
     *(_BYTE*)(v2 + 10) = 2;
     *(_BYTE*)(v2 + 6) = 0;
-    *(_WORD*)(v2 + 8) = 19;
+    *(short*)(v2 + 8) = 19;
     *(_BYTE*)(v2 + 52) = 2;
-    *(_WORD*)v2 = 14;
-    *(_WORD*)(v2 + 2) = 0;
-    *(_WORD*)(v2 + 4) = 1;
+    *(short*)v2 = 14;
+    *(short*)(v2 + 2) = 0;
+    *(short*)(v2 + 4) = 1;
     *(_BYTE*)(v2 + 11) = 21;
     *(int*)(v2 + 20) = 300;
     *(_BYTE*)(v2 + 12) = 0;
@@ -61181,11 +61181,11 @@ int sub_482427(void* thisx)
     v3 = sub_4828CD((int)thisx, 1);
     *(_BYTE*)(v3 + 10) = 1;
     *(_BYTE*)(v3 + 6) = 0;
-    *(_WORD*)(v3 + 8) = 14;
+    *(short*)(v3 + 8) = 14;
     *(_BYTE*)(v3 + 52) = 5;
-    *(_WORD*)v3 = 40;
-    *(_WORD*)(v3 + 2) = 0;
-    *(_WORD*)(v3 + 4) = 1;
+    *(short*)v3 = 40;
+    *(short*)(v3 + 2) = 0;
+    *(short*)(v3 + 4) = 1;
     *(_BYTE*)(v3 + 11) = 42;
     *(int*)(v3 + 20) = 100;
     *(_BYTE*)(v3 + 12) = 0;
@@ -61203,11 +61203,11 @@ int sub_482427(void* thisx)
     v4 = sub_4828CD((int)thisx, 2);
     *(_BYTE*)(v4 + 10) = 1;
     *(_BYTE*)(v4 + 6) = 0;
-    *(_WORD*)(v4 + 8) = 14;
+    *(short*)(v4 + 8) = 14;
     *(_BYTE*)(v4 + 52) = 9;
-    *(_WORD*)v4 = 40;
-    *(_WORD*)(v4 + 2) = 0;
-    *(_WORD*)(v4 + 4) = 1;
+    *(short*)v4 = 40;
+    *(short*)(v4 + 2) = 0;
+    *(short*)(v4 + 4) = 1;
     *(_BYTE*)(v4 + 11) = 42;
     *(int*)(v4 + 20) = 100;
     *(_BYTE*)(v4 + 12) = 0;
@@ -61225,11 +61225,11 @@ int sub_482427(void* thisx)
     v5 = sub_4828CD((int)thisx, 3);
     *(_BYTE*)(v5 + 10) = 1;
     *(_BYTE*)(v5 + 6) = 0;
-    *(_WORD*)(v5 + 8) = 19;
+    *(short*)(v5 + 8) = 19;
     *(_BYTE*)(v5 + 52) = 3;
-    *(_WORD*)v5 = 9;
-    *(_WORD*)(v5 + 2) = 0;
-    *(_WORD*)(v5 + 4) = 1;
+    *(short*)v5 = 9;
+    *(short*)(v5 + 2) = 0;
+    *(short*)(v5 + 4) = 1;
     *(_BYTE*)(v5 + 11) = 21;
     *(int*)(v5 + 20) = 400;
     *(_BYTE*)(v5 + 12) = 0;
@@ -61247,11 +61247,11 @@ int sub_482427(void* thisx)
     v8 = sub_4828CD((int)thisx, 4);
     *(_BYTE*)(v8 + 10) = 1;
     *(_BYTE*)(v8 + 6) = 0;
-    *(_WORD*)(v8 + 8) = 19;
+    *(short*)(v8 + 8) = 19;
     *(_BYTE*)(v8 + 52) = 3;
-    *(_WORD*)v8 = 9;
-    *(_WORD*)(v8 + 2) = 0;
-    *(_WORD*)(v8 + 4) = 1;
+    *(short*)v8 = 9;
+    *(short*)(v8 + 2) = 0;
+    *(short*)(v8 + 4) = 1;
     *(_BYTE*)(v8 + 11) = 0;
     *(int*)(v8 + 20) = 0;
     *(_BYTE*)(v8 + 12) = 11;
@@ -61269,11 +61269,11 @@ int sub_482427(void* thisx)
     v6 = sub_4828CD((int)thisx, 5);
     *(_BYTE*)(v6 + 10) = 1;
     *(_BYTE*)(v6 + 6) = 0;
-    *(_WORD*)(v6 + 8) = 19;
+    *(short*)(v6 + 8) = 19;
     *(_BYTE*)(v6 + 52) = 3;
-    *(_WORD*)v6 = 9;
-    *(_WORD*)(v6 + 2) = 0;
-    *(_WORD*)(v6 + 4) = 1;
+    *(short*)v6 = 9;
+    *(short*)(v6 + 2) = 0;
+    *(short*)(v6 + 4) = 1;
     *(_BYTE*)(v6 + 11) = 21;
     *(int*)(v6 + 20) = 200;
     *(_BYTE*)(v6 + 12) = 0;
@@ -63262,7 +63262,7 @@ void sub_485B30(void* thisx)
     *((int*)thisx + 4) = 0;
     *((int*)thisx + 5) = 0;
     *((int*)thisx + 1) = 0;
-    *((_WORD*)thisx + 6) = 0;
+    *((short*)thisx + 6) = 0;
     *((int*)thisx + 2) = 0;
 }
 
@@ -63328,8 +63328,8 @@ int sub_485BCA(int thisx, int* a2)
             break;
         case 1:
             // 第二个字段：数据项数量（count），存入 thisx + 12（2字节）
-            *(_WORD*)(thisx + 12) = atoi(String);
-            if (*(_WORD*)(thisx + 12))
+            *(short*)(thisx + 12) = atoi(String);
+            if (*(short*)(thisx + 12))
             {
                 *(int*)(thisx + 16) = (int)new2(*(unsigned __int16*)(thisx + 12));
                 *(int*)(thisx + 20) = (int)new2(4 * *(unsigned __int16*)(thisx + 12));
@@ -63516,7 +63516,7 @@ int sub_486189(int thisx, int a2, char* Source)
     int v4; // esi
 
 
-    *(_WORD*)(thisx + 300) = a2;
+    *(short*)(thisx + 300) = a2;
     *(int*)(thisx + 340) = 100;
     *(int*)(thisx + 344) = 0;
     if (Source)
@@ -64061,7 +64061,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
     struct Concurrency::details::SchedulingNode* v44; // [esp+D8h] [ebp-26C4h]
     int v43; // [esp+D4h] [ebp-26C8h]
     unsigned int v42; // [esp+D0h] [ebp-26CCh]
-    _WORD* v41; // [esp+CCh] [ebp-26D0h]
+    short* v41; // [esp+CCh] [ebp-26D0h]
     char tc_53[4]; //8，系统填充
     int v40; // [esp+C4h] [ebp-26D8h]
     //int v39; // [esp+C4h] [ebp-26D8h]
@@ -64176,7 +64176,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
     struct Concurrency::details::SchedulingNode* v44; // [esp+D8h] [ebp-26C4h]
     int v43; // [esp+D4h] [ebp-26C8h]
     unsigned int v42; // [esp+D0h] [ebp-26CCh]
-    _WORD* v41; // [esp+CCh] [ebp-26D0h]
+    short* v41; // [esp+CCh] [ebp-26D0h]
     char tc_53[4]; //8，系统填充
     int v40; // [esp+C4h] [ebp-26D8h]
     //int v39; // [esp+C4h] [ebp-26D8h]
@@ -64760,7 +64760,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                             ++v90;
                         }
                     }
-                    v41 = (_WORD*)(50 * v90 + dword_4CA1D8);
+                    v41 = (short*)(50 * v90 + dword_4CA1D8);
                     *(_BYTE*)v41 = atoi(String1);
                     v42 = 0;
                     while (sub_482D44(v80, String1) && *String1 != 110)
@@ -65113,7 +65113,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
     struct Concurrency::details::SchedulingNode* v44; // [esp+D8h] [ebp-26C4h]
     int v43; // [esp+D4h] [ebp-26C8h]
     unsigned __int8 v42; // [esp+D0h] [ebp-26CCh]
-    _WORD* v41; // [esp+CCh] [ebp-26D0h]
+    short* v41; // [esp+CCh] [ebp-26D0h]
     char tc_53[4]; //8，系统填充
     __int16 v40; // [esp+C4h] [ebp-26D8h]
     __int16 v39; // [esp+C4h] [ebp-26D8h]
@@ -65607,7 +65607,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                             ++v90;
                         }
                     }
-                    v41 = (_WORD*)(50 * v90 + dword_4CA1D8);
+                    v41 = (short*)(50 * v90 + dword_4CA1D8);
                     *(_BYTE*)v41 = atoi(&String1);
                     v42 = 0;
                     while (sub_482D44(v80, &String1) && String1 != 110)
@@ -65944,7 +65944,7 @@ struct tagRECT* sub_488A07(int* thisx, struct tagRECT* a2, unsigned __int8 a3, u
     __int16 v14; // [esp+1Ch] [ebp-18h]
     __int16 v13; // [esp+1Ch] [ebp-18h]
     int i; // [esp+18h] [ebp-1Ch]
-    _WORD* v11; // [esp+14h] [ebp-20h]
+    short* v11; // [esp+14h] [ebp-20h]
     LONG v10; // [esp+10h] [ebp-24h]
     int v9; // [esp+Ch] [ebp-28h]
     int v8; // [esp+Ch] [ebp-28h]
@@ -65957,7 +65957,7 @@ struct tagRECT* sub_488A07(int* thisx, struct tagRECT* a2, unsigned __int8 a3, u
     v15 = 0;
     while (1)
     {
-        v11 = (_WORD*)sub_4816F5((int)(thisx + 1), v10, a4);
+        v11 = (short*)sub_4816F5((int)(thisx + 1), v10, a4);
         if (!v11)
             break;
         v13 = sub_4260F0(v11);
@@ -65979,7 +65979,7 @@ struct tagRECT* sub_488A07(int* thisx, struct tagRECT* a2, unsigned __int8 a3, u
         do
         {
             sub_489F40(v11, 0);
-            v11 = (_WORD*)sub_4816F5((int)(thisx + 1), ++v10, a4);
+            v11 = (short*)sub_4816F5((int)(thisx + 1), ++v10, a4);
             if (!v11)
                 break;
             v14 = sub_4260F0(v11);
@@ -66826,9 +66826,9 @@ char* sub_489EC0(char* thisx, char a2)
 }
 
 //set
-_WORD* sub_489F40(_WORD* thisx, __int16 a2)
+short* sub_489F40(short* thisx, __int16 a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     thisx[3] = a2;
@@ -66876,9 +66876,9 @@ _BYTE* sub_489FC0(_BYTE* thisx, char a2)
 }
 
 //set
-_WORD* sub_489FE0(_WORD* thisx, __int16 a2)
+short* sub_489FE0(short* thisx, __int16 a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     thisx[5] = a2;
@@ -66886,9 +66886,9 @@ _WORD* sub_489FE0(_WORD* thisx, __int16 a2)
 }
 
 //set
-_WORD* sub_48A000(_WORD* thisx, __int16 a2)
+short* sub_48A000(short* thisx, __int16 a2)
 {
-    _WORD* result; // eax
+    short* result; // eax
 
     result = thisx;
     thisx[6] = a2;
@@ -66938,7 +66938,7 @@ void sub_48A100(void* thisx)
     *(int*)thisx = off_4AC368;//下标0
     *((int*)thisx + 3) = 0;//下标3
     *((int*)thisx + 2) = 0;//下标2
-    *((_WORD*)thisx + 8) = -1;//下标4，最后一个
+    *((short*)thisx + 8) = -1;//下标4，最后一个
     //下标1呢？？？
 }
 
@@ -67169,7 +67169,7 @@ LPSTR sub_48A46C(CHAR* thisx, LPCSTR lpString2)
 }
 
 
-char sub_48A49F(_WORD* thisx, unsigned __int8 a2, __int16 a3, char a4)
+char sub_48A49F(short* thisx, unsigned __int8 a2, __int16 a3, char a4)
 {
     char result; // al
 
@@ -67200,7 +67200,7 @@ _BYTE* sub_48A54F(_BYTE* thisx)
     *thisx = 0;
     for (i = 0; i < 16; ++i)
     {
-        *(_WORD*)&thisx[2 * i + 2] = 0;
+        *(short*)&thisx[2 * i + 2] = 0;
         thisx[i + 34] = 0;
     }
     return thisx;
@@ -67216,7 +67216,7 @@ _BYTE* sub_48A596(_BYTE* thisx)
     for (i = 0; i < 16; ++i)
     {
         result = thisx;
-        *(_WORD*)&thisx[2 * i + 2] = 0;
+        *(short*)&thisx[2 * i + 2] = 0;
         thisx[i + 34] = 0;
     }
     return result;
@@ -67262,7 +67262,7 @@ int sub_48A5DA(int thisx, char a2, int a3, int a4, int a5, int a6, int a7, int a
 int sub_48A700(int thisx)
 {
     *(_BYTE*)(thisx + 12) = 1;
-    *(_WORD*)(thisx + 10) = -1;
+    *(short*)(thisx + 10) = -1;
     *(int*)(thisx + 44) = -1;
     *(int*)(thisx + 40) = *(int*)(thisx + 16);
     *(int*)(thisx + 104) = *(int*)(thisx + 20);
@@ -67294,8 +67294,8 @@ int sub_48A700(int thisx)
     *(int*)(thisx + 136) = 0;
     *(int*)(thisx + 64) = 0;
     *(int*)(thisx + 68) = 0;
-    *(_WORD*)(thisx + 72) = 100;
-    *(_WORD*)(thisx + 74) = 100;
+    *(short*)(thisx + 72) = 100;
+    *(short*)(thisx + 74) = 100;
     *(_BYTE*)(thisx + 224) = 0;
     memset((void*)(thisx + 228), 0, 56);
     memset((void*)(thisx + 284), 0, 52);
@@ -67750,7 +67750,7 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
         {
         case 1u:
             *(int*)(thisx + 44) = sub_48A4E3(v144, 0);
-            *(_WORD*)(thisx + 10) = sub_48A4E3(v144, 1u);
+            *(short*)(thisx + 10) = sub_48A4E3(v144, 1u);
             v143 = 0;
             break;
         case 2u:
@@ -67935,7 +67935,7 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
             }
             if (sub_48A4E3(v144, 1u) > 0)
             {
-                *(_WORD*)(thisx + 10) = sub_48A4E3(v144, 1u);
+                *(short*)(thisx + 10) = sub_48A4E3(v144, 1u);
                 v143 = 0;
             }
             break;
@@ -68251,9 +68251,9 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
             break;
         case 0x24u:
             if (sub_48A4E3(v144, 0))
-                *(_WORD*)(thisx + 72) = sub_48A4E3(v144, 1u);
+                *(short*)(thisx + 72) = sub_48A4E3(v144, 1u);
             if (sub_48A4E3(v144, 2u))
-                *(_WORD*)(thisx + 74) = sub_48A4E3(v144, 3u);
+                *(short*)(thisx + 74) = sub_48A4E3(v144, 3u);
             break;
         case 0x25u:
             *(_BYTE*)(thisx + 84) = sub_48A4E3(v144, 0);
@@ -68404,10 +68404,10 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
                     *(_BYTE*)(thisx + 224) = sub_48A4E3(v144, 1u);
                     *(_BYTE*)(thisx + 238) = sub_48A4E3(v144, 2u);
                     *(int*)(thisx + 304) = sub_48A4E3(v144, 3u);
-                    *(_WORD*)(thisx + 344) = sub_48A4E3(v144, 4u);
+                    *(short*)(thisx + 344) = sub_48A4E3(v144, 4u);
                     *(_BYTE*)(thisx + 313) = sub_48A4E3(v144, 5u);
                     *(_BYTE*)(thisx + 234) = sub_48A4E3(v144, 6u);
-                    *(_WORD*)(thisx + 236) = sub_48A4E3(v144, 7u);
+                    *(short*)(thisx + 236) = sub_48A4E3(v144, 7u);
                     break;
                 case 2:
                     for (ii = 0; ii < 6; ++ii)
@@ -68468,14 +68468,14 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
                         {
                             *(_BYTE*)(v44 + 10) = sub_48A4E3(v144, 2u);
                             *(_BYTE*)(v44 + 6) = sub_48A4E3(v144, 3u);
-                            *(_WORD*)(v44 + 8) = sub_48A4E3(v144, 4u);
+                            *(short*)(v44 + 8) = sub_48A4E3(v144, 4u);
                             *(_BYTE*)(v44 + 52) = sub_48A4E3(v144, 5u);
                         }
                         else if (v43 == 3)
                         {
-                            *(_WORD*)v44 = sub_48A4E3(v144, 2u);
-                            *(_WORD*)(v44 + 2) = sub_48A4E3(v144, 3u);
-                            *(_WORD*)(v44 + 4) = sub_48A4E3(v144, 4u);
+                            *(short*)v44 = sub_48A4E3(v144, 2u);
+                            *(short*)(v44 + 2) = sub_48A4E3(v144, 3u);
+                            *(short*)(v44 + 4) = sub_48A4E3(v144, 4u);
                         }
                     }
                     else
@@ -68693,13 +68693,13 @@ void sub_48CD23(int thisx)
                 *(int*)(thisx + 40) = *(int*)(thisx + 156) + 1;
                 v12 = 1;
             }
-            if (!v12 && *(_WORD*)(thisx + 10))
+            if (!v12 && *(short*)(thisx + 10))
             {
                 if (*(__int16*)(thisx + 10) > 0)
-                    --* (_WORD*)(thisx + 10);
+                    --* (short*)(thisx + 10);
                 if (*(__int16*)(thisx + 10) <= 0)
                 {
-                    if (!*(_WORD*)(thisx + 10))
+                    if (!*(short*)(thisx + 10))
                         ++* (int*)(thisx + 40);
                     if (*(int*)(thisx + 40) >= dword_4CA1D4)
                         *(int*)(thisx + 40) = *(int*)(thisx + 16);
@@ -68890,13 +68890,13 @@ void sub_48CD23(int thisx)
                 *(int*)(thisx + 40) = *(int*)(thisx + 156) + 1;
                 v12 = 1;
             }
-            if (!v12 && *(_WORD*)(thisx + 10))
+            if (!v12 && *(short*)(thisx + 10))
             {
                 if (*(__int16*)(thisx + 10) > 0)
-                    --* (_WORD*)(thisx + 10);
+                    --* (short*)(thisx + 10);
                 if (*(__int16*)(thisx + 10) <= 0)
                 {
-                    if (!*(_WORD*)(thisx + 10))
+                    if (!*(short*)(thisx + 10))
                         ++* (int*)(thisx + 40);
                     if (*(int*)(thisx + 40) >= dword_4CA1D4)
                         *(int*)(thisx + 40) = *(int*)(thisx + 16);
@@ -69438,7 +69438,7 @@ __int16 sub_48E110(char* thisx, int a2)
 }
 
 //return thisx[4];
-__int16 sub_48E130(_WORD* thisx)
+__int16 sub_48E130(short* thisx)
 {
     return thisx[4];
 }
@@ -70093,7 +70093,7 @@ int __fastcall sub_48FB00(int a1, int a2, int a3, void* Src, int yTop)
                     }
                     for (j = 0; j < *(unsigned __int8*)(a1 + 6); ++j)
                     {
-                        v7 = *(_WORD*)(*(int*)(a1 + 8) + 2 * (*(unsigned __int8*)(a1 + 6) * i + j));
+                        v7 = *(short*)(*(int*)(a1 + 8) + 2 * (*(unsigned __int8*)(a1 + 6) * i + j));
                         if (v7)
                             sub_4A00C6(a3, v15, v7 - 1, (int*)&rc);
                         v15[1] += v14;
@@ -70160,7 +70160,7 @@ MMRESULT __cdecl sub_48FD80(LPSTR pszFileName, int a2, int a3, LPMMCKINFO pmmcki
                         {
                             if (pch[0] == 1)
                             {
-                                *(_WORD*)v6 = 0;
+                                *(short*)v6 = 0;
                             }
                             else if (mmioRead(hmmio, v6, 2) != 2)
                             {
@@ -70171,8 +70171,8 @@ MMRESULT __cdecl sub_48FD80(LPSTR pszFileName, int a2, int a3, LPMMCKINFO pmmcki
                             if (*(int*)a3)
                             {
                                 memcpy(*(void**)a3, pch, 0x10u);
-                                *(_WORD*)(*(int*)a3 + 16) = *(_WORD*)v6;
-                                if (!*(_WORD*)v6
+                                *(short*)(*(int*)a3 + 16) = *(short*)v6;
+                                if (!*(short*)v6
                                     || (v4 = mmioRead(hmmio, (HPSTR)(*(int*)a3 + 18), *(unsigned __int16*)v6),
                                         v4 == *(unsigned __int16*)v6))
                                 {
@@ -70387,7 +70387,7 @@ MMRESULT __cdecl sub_4901FC(LPSTR pszFileName, int a2, char* pch, LPMMCKINFO a4,
         Chunk = mmioCreateChunk(*(HMMIO*)a2, a4, 0);
         if (!Chunk)
         {
-            if (*(_WORD*)pch == 1)
+            if (*(short*)pch == 1)
             {
                 if (mmioWrite(*(HMMIO*)a2, pch, 16) != 16)
                     return 57604;
@@ -70668,7 +70668,7 @@ void sub_490BDC(int a1, double a2, double a3, double a4, int a5)
     if (*(int*)(a5 + 24))
         sub_4950AF(a1);
     else
-        *(_WORD*)(a1 + 190) = *(_WORD*)(a5 + 20);
+        *(short*)(a1 + 190) = *(short*)(a5 + 20);
     *(int*)(a1 + 4) = 1;
     memset((void*)(a1 + 181), 0, 8u);
     *(int*)(a1 + 116) = 0;
@@ -70986,7 +70986,7 @@ int sub_491639(int thisx, int a2)
     *(int*)(thisx + 144) = 0;
     *(int*)(thisx + 148) = 0;
     *(int*)(thisx + 152) = 0;
-    return sub_4995EB((_WORD*)thisx);
+    return sub_4995EB((short*)thisx);
 }
 
 struct tagRECT* sub_491709(int thisx, struct tagRECT* a2, int a3)
@@ -71234,7 +71234,7 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
     v125 = v123 * v124 / 100 + 50;
     if (v125 > 0xFFFF)
         LOWORD(v125) = -1;
-    *(_WORD*)(a1 + 192) = v125;
+    *(short*)(a1 + 192) = v125;
     *(_BYTE*)(a1 + 195) = 5;
     *(_BYTE*)(a1 + 194) = 0;
     *(_BYTE*)(a1 + 69) = 1;
@@ -72007,7 +72007,7 @@ int sub_494257(int thisx, int a2, int a3, int a4)
 
 
     sub_49951D((int*)thisx);
-    sub_4995EB((_WORD*)thisx);
+    sub_4995EB((short*)thisx);
     result = thisx;
     if (*(int*)(thisx + 12) == 8)
     {
@@ -72051,7 +72051,7 @@ int sub_494257(int thisx, int a2, int a3, int a4)
         if (!*(int*)(a3 + 12))
             *(int*)(thisx + 120) = -*(int*)(thisx + 120);
         *(int*)(thisx + 124) = 0;
-        *(_WORD*)(thisx + 192) = *(unsigned __int16*)(thisx + 190) / 5 + *(int*)a3;
+        *(short*)(thisx + 192) = *(unsigned __int16*)(thisx + 190) / 5 + *(int*)a3;
         *(_BYTE*)(thisx + 194) = 0;
         *(_BYTE*)(thisx + 69) = 1;
         if (*(_BYTE*)(thisx + 72) == 10)
@@ -72099,10 +72099,10 @@ int sub_494257(int thisx, int a2, int a3, int a4)
             result = thisx;
             if (*(int*)(thisx + 8) != 190)
             {
-                *(_WORD*)(thisx + 192) = *(unsigned __int16*)(thisx + 192) / 2;
+                *(short*)(thisx + 192) = *(unsigned __int16*)(thisx + 192) / 2;
                 result = thisx;
-                if (!*(_WORD*)(thisx + 192))
-                    *(_WORD*)(thisx + 192) = 1;
+                if (!*(short*)(thisx + 192))
+                    *(short*)(thisx + 192) = 1;
             }
         }
         else if (a4)
@@ -72345,7 +72345,7 @@ int sub_494AC9(int thisx)
     *(int*)(thisx + 8) = 3;
     *(_BYTE*)(thisx + 70) = -1;
     for (j = 0; j < 2; ++j)
-        *(_WORD*)(thisx + 16 * j + 24) = -2;
+        *(short*)(thisx + 16 * j + 24) = -2;
     *(int*)(thisx + 156) = 0;
     *(int*)(thisx + 64) = 0;
     *(int*)(thisx + 152) = 0;
@@ -72373,10 +72373,10 @@ int sub_494AC9(int thisx)
     *(int*)(thisx + 12) = 0;
     *(int*)(thisx + 56) = 0;
     *(int*)(thisx + 60) = 0;
-    *(_WORD*)(thisx + 190) = 0;
+    *(short*)(thisx + 190) = 0;
     result = thisx;
-    *(_WORD*)(thisx + 20) = 0;
-    *(_WORD*)(thisx + 192) = 0;
+    *(short*)(thisx + 20) = 0;
+    *(short*)(thisx + 192) = 0;
     return result;
 }
 
@@ -72418,7 +72418,7 @@ int __fastcall sub_494D01(int a1, int a2, unsigned __int8 a3, _BYTE* a4, int a5)
                         v7 /= (int)(unsigned __int8)byte_4B999A >> 2;
                     if (v7 > 0xFFFF)
                         LOWORD(v7) = -1;
-                    *(_WORD*)(a1 + 192) = v7;
+                    *(short*)(a1 + 192) = v7;
                     *(_BYTE*)(a1 + 194) = 0;
                     *(_BYTE*)(a1 + 195) = 5;
                     *(int*)(a1 + 156) = 0;
@@ -72520,59 +72520,59 @@ int sub_4950AF(int thisx)
     case 0:
         v2 = 10 * (rand() % 5) + 175;
         result = thisx;
-        *(_WORD*)(thisx + 190) = v2;
+        *(short*)(thisx + 190) = v2;
         break;
     case 1:
         v3 = 10 * (rand() % 10) + 155;
         result = thisx;
-        *(_WORD*)(thisx + 190) = v3;
+        *(short*)(thisx + 190) = v3;
         break;
     case 2:
     case 0xB:
         v4 = 10 * (rand() % 5) + 195;
         result = thisx;
-        *(_WORD*)(thisx + 190) = v4;
+        *(short*)(thisx + 190) = v4;
         break;
     case 3:
         v5 = 10 * (rand() % 3) + 225;
         result = thisx;
-        *(_WORD*)(thisx + 190) = v5;
+        *(short*)(thisx + 190) = v5;
         break;
     case 4:
         v6 = 10 * (rand() % 5) + 200;
         result = thisx;
-        *(_WORD*)(thisx + 190) = v6;
+        *(short*)(thisx + 190) = v6;
         break;
     case 5:
         v7 = 10 * (rand() % 5) + 185;
         result = thisx;
-        *(_WORD*)(thisx + 190) = v7;
+        *(short*)(thisx + 190) = v7;
         break;
     case 6:
         v8 = 10 * (rand() % 5) + 190;
         result = thisx;
-        *(_WORD*)(thisx + 190) = v8;
+        *(short*)(thisx + 190) = v8;
         break;
     case 7:
         v9 = 5 * (rand() % 5) + 150;
         result = thisx;
-        *(_WORD*)(thisx + 190) = v9;
+        *(short*)(thisx + 190) = v9;
         break;
     case 8:
     case 9:
     case 0xD:
         v11 = 5 * (rand() % 7) + 225;
         result = thisx;
-        *(_WORD*)(thisx + 190) = v11;
+        *(short*)(thisx + 190) = v11;
         break;
     case 0xA:
         result = 10 * (rand() % 4) + 225;
-        *(_WORD*)(thisx + 190) = result;
+        *(short*)(thisx + 190) = result;
         break;
     case 0xC:
         v10 = 5 * (rand() % 5) + 125;
         result = thisx;
-        *(_WORD*)(thisx + 190) = v10;
+        *(short*)(thisx + 190) = v10;
         break;
     default:
         return result;
@@ -72883,7 +72883,7 @@ LABEL_65:
             break;
         }
         *(int*)(a1 + 8) = 83;
-        sub_4995EB((_WORD*)a1);
+        sub_4995EB((short*)a1);
         sub_49951D((int*)a1);
         if ((*(_BYTE*)(a1 + 72) == 11 || *(_BYTE*)(a1 + 72) == 13) && *(int*)(a1 + 12) != 8)
         {
@@ -73145,8 +73145,8 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                 if ((int)v4)
                 {
                     v7 = 44 * *(unsigned __int8*)(a1 + 72);
-                    LOWORD(v4) = *(_WORD*)&dword_4B7180[4 * (unsigned __int8)sub_425B70(v59) + v7];
-                    *(_WORD*)(a1 + 20) = v4;
+                    LOWORD(v4) = *(short*)&dword_4B7180[4 * (unsigned __int8)sub_425B70(v59) + v7];
+                    *(short*)(a1 + 20) = v4;
                 }
                 break;
             case 2:
@@ -73232,7 +73232,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                     }
                     break;
                 case 0xBD:
-                    *(_WORD*)(a1 + 192) += *(_WORD*)(a1 + 88);
+                    *(short*)(a1 + 192) += *(short*)(a1 + 88);
                     if (++ * (int*)(a1 + 160) == 30)
                         *(int*)(a1 + 128) = 0;
                     break;
@@ -73304,7 +73304,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                         v51 = 2 * v12;
                     for (i = 0; i < 2; ++i)
                     {
-                        *(_WORD*)(a1 + 16 * i + 24) = -1;
+                        *(short*)(a1 + 16 * i + 24) = -1;
                         *(int*)(a1 + 16 * i + 28) = 0;
                         *(int*)(a1 + 16 * i + 32) = 0;
                         *(int*)(a1 + 16 * i + 36) = i * v51 - (i == 0) * v51;
@@ -73452,14 +73452,14 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                     {
                     case 1:
                         LOWORD(v4) = a1;
-                        *(_WORD*)(a1 + 20) = 16;
+                        *(short*)(a1 + 20) = 16;
                         break;
                     case 2:
                     case 0xD:
                         if (*(_BYTE*)(a1 + 72) == 2)
-                            *(_WORD*)(a1 + 20) = 20;
+                            *(short*)(a1 + 20) = 20;
                         else
-                            *(_WORD*)(a1 + 20) = 184;
+                            *(short*)(a1 + 20) = 184;
                         if (!*(int*)(a1 + 76))
                             *(int*)(a1 + 156) = 1;
                         if (*(int*)(a1 + 76) == 1 && *(int*)(a1 + 156) > 160 && !v58)
@@ -73499,7 +73499,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                             *(int*)(a1 + 80) = (__int64)((double)*(int*)(a1 + 80) + (double)v28 * 1.5);
                             if (*(int*)(a1 + 80) >= 4000)
                                 *(int*)(a1 + 80) = 0;
-                            *(_WORD*)(a1 + 20) = *(int*)(a1 + 80) / 1000 + 27;
+                            *(short*)(a1 + 20) = *(int*)(a1 + 80) / 1000 + 27;
                         }
                         if (*(int*)(a1 + 76) == 1 && *(int*)(a1 + 156) > 160 && !v58)
                         {
@@ -73532,7 +73532,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                             v46 = 3;
                         }
                         v13 = *(int*)(a1 + 156) / v46 % 4;
-                        *(_WORD*)(a1 + 20) = v13 >= 3 ? 32 : v13 + 31;
+                        *(short*)(a1 + 20) = v13 >= 3 ? 32 : v13 + 31;
                         if (*(int*)(a1 + 156) > 212)
                         {
                             *(int*)(a1 + 120) = 0;
@@ -73562,7 +73562,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                         break;
                     case 4:
                         LOWORD(v4) = *(int*)(a1 + 156) / 2 % 8 + 40;
-                        *(_WORD*)(a1 + 20) = v4;
+                        *(short*)(a1 + 20) = v4;
                         if (*(int*)(a1 + 156) == 40)
                         {
                             LOWORD(v4) = a1;
@@ -73572,10 +73572,10 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                         break;
                     case 5:
                         LOWORD(v4) = a1;
-                        *(_WORD*)(a1 + 20) = *(int*)(a1 + 156) / 4 % 3 + 54;
+                        *(short*)(a1 + 20) = *(int*)(a1 + 156) / 4 % 3 + 54;
                         break;
                     case 6:
-                        *(_WORD*)(a1 + 20) = ((*(int*)(a1 + 156) - 1) / 4 % 8 + 1) / 2 % 2 + 63;
+                        *(short*)(a1 + 20) = ((*(int*)(a1 + 156) - 1) / 4 % 8 + 1) / 2 % 2 + 63;
                         LODWORD(v4) = (*(int*)(a1 + 156) - 1) % 8;
                         if (!(int)v4)
                         {
@@ -73585,11 +73585,11 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                         break;
                     case 7:
                         LOWORD(v4) = a1;
-                        *(_WORD*)(a1 + 20) = 68;
+                        *(short*)(a1 + 20) = 68;
                         break;
                     case 8:
                         LOWORD(v4) = a1;
-                        *(_WORD*)(a1 + 20) = *(int*)(a1 + 156) / 8 % 6 + 74;
+                        *(short*)(a1 + 20) = *(int*)(a1 + 156) / 8 % 6 + 74;
                         if (!*(int*)(a1 + 172))
                         {
                             *(int*)(a1 + 120) = 95 * *(int*)(a1 + 120) / 100;
@@ -73627,7 +73627,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                         }
                         break;
                     case 9:
-                        *(_WORD*)(a1 + 20) = 92;
+                        *(short*)(a1 + 20) = 92;
                         *(_BYTE*)(a1 + 22) = *(int*)(a1 + 156) / 10 % 4;
                         LOWORD(v4) = a1;
                         if (!*(int*)(a1 + 172))
@@ -73667,7 +73667,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                         }
                         break;
                     case 0xA:
-                        *(_WORD*)(a1 + 20) = 107;
+                        *(short*)(a1 + 20) = 107;
                         *(_BYTE*)(a1 + 22) = *(int*)(a1 + 156) / 4 % 4;
                         LOWORD(v4) = a1;
                         if (!*(int*)(a1 + 172))
@@ -73708,7 +73708,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                         break;
                     case 0xB:
                         LOWORD(v4) = 6 * (*(int*)(a1 + 156) / 4 % 4) + 129;
-                        *(_WORD*)(a1 + 20) = v4;
+                        *(short*)(a1 + 20) = v4;
                         break;
                     default:
                         LODWORD(v4) = *(unsigned __int8*)(a1 + 72);
@@ -73722,7 +73722,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                             {
                                 if (*(int*)(a1 + 8) == 173)
                                 {
-                                    *(_WORD*)(a1 + 20) = 174;
+                                    *(short*)(a1 + 20) = 174;
                                 }
                                 else
                                 {
@@ -73733,19 +73733,19 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                                         {
                                             LOWORD(v4) = a1;
                                             if (*(int*)(a1 + 156) >= 4)
-                                                *(_WORD*)(a1 + 20) = 175;
+                                                *(short*)(a1 + 20) = 175;
                                             else
-                                                *(_WORD*)(a1 + 20) = 177;
+                                                *(short*)(a1 + 20) = 177;
                                         }
                                         else
                                         {
-                                            *(_WORD*)(a1 + 20) = 176;
+                                            *(short*)(a1 + 20) = 176;
                                         }
                                     }
                                     else if (*(int*)(a1 + 8) == 185)
                                     {
                                         LOWORD(v4) = *(int*)(a1 + 156) / 5 % 2 + 178;
-                                        *(_WORD*)(a1 + 20) = v4;
+                                        *(short*)(a1 + 20) = v4;
                                     }
                                     else
                                     {
@@ -73753,7 +73753,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                                         switch (*(int*)(a1 + 8))
                                         {
                                         case 0xBA:
-                                            *(_WORD*)(a1 + 20) = 178;
+                                            *(short*)(a1 + 20) = 178;
                                             break;
                                         case 0xC1:
                                             LOWORD(v4) = a1;
@@ -73764,23 +73764,23 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                                                 {
                                                     if (v14 >= 14)
                                                     {
-                                                        *(_WORD*)(a1 + 20) = 185;
+                                                        *(short*)(a1 + 20) = 185;
                                                     }
                                                     else
                                                     {
                                                         LOWORD(v4) = a1;
-                                                        *(_WORD*)(a1 + 20) = 175;
+                                                        *(short*)(a1 + 20) = 175;
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    *(_WORD*)(a1 + 20) = 185;
+                                                    *(short*)(a1 + 20) = 185;
                                                 }
                                             }
                                             else
                                             {
                                                 LOWORD(v4) = *(int*)(a1 + 156) / 4 % 8 + 165;
-                                                *(_WORD*)(a1 + 20) = v4;
+                                                *(short*)(a1 + 20) = v4;
                                             }
                                             break;
                                         case 0xC5:
@@ -73792,16 +73792,16 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                                                 if (v45 == 1)
                                                 {
                                                     LOWORD(v4) = a1;
-                                                    *(_WORD*)(a1 + 20) = 165;
+                                                    *(short*)(a1 + 20) = 165;
                                                 }
                                                 else if (v45 == 2)
                                                 {
-                                                    *(_WORD*)(a1 + 20) = 177;
+                                                    *(short*)(a1 + 20) = 177;
                                                 }
                                             }
                                             else
                                             {
-                                                *(_WORD*)(a1 + 20) = 175;
+                                                *(short*)(a1 + 20) = 175;
                                             }
                                             break;
                                         case 0xC6:
@@ -73817,35 +73817,35 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                                                     switch (v44)
                                                     {
                                                     case 1:
-                                                        *(_WORD*)(a1 + 20) = 174;
+                                                        *(short*)(a1 + 20) = 174;
                                                         break;
                                                     case 2:
                                                         LOWORD(v4) = a1;
-                                                        *(_WORD*)(a1 + 20) = 175;
+                                                        *(short*)(a1 + 20) = 175;
                                                         break;
                                                     case 3:
                                                         LOWORD(v4) = *(int*)(a1 + 156) / 4 % 2 + 176;
-                                                        *(_WORD*)(a1 + 20) = v4;
+                                                        *(short*)(a1 + 20) = v4;
                                                         break;
                                                     case 4:
                                                         LOWORD(v4) = *(int*)(a1 + 156) / 4 % 2 + 178;
-                                                        *(_WORD*)(a1 + 20) = v4;
+                                                        *(short*)(a1 + 20) = v4;
                                                         break;
                                                     case 5:
-                                                        *(_WORD*)(a1 + 20) = 185;
+                                                        *(short*)(a1 + 20) = 185;
                                                         break;
                                                     }
                                                 }
                                                 else
                                                 {
                                                     LOWORD(v4) = *(int*)(a1 + 156) / 4 % 8 + 165;
-                                                    *(_WORD*)(a1 + 20) = v4;
+                                                    *(short*)(a1 + 20) = v4;
                                                 }
                                             }
                                             break;
                                         default:
                                             LOWORD(v4) = *(int*)(a1 + 156) / 4 % 8 + 165;
-                                            *(_WORD*)(a1 + 20) = v4;
+                                            *(short*)(a1 + 20) = v4;
                                             break;
                                         }
                                     }
@@ -73860,7 +73860,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                                 *(int*)(a1 + 80) = (__int64)((double)*(int*)(a1 + 80) + (double)v21 * 1.5);
                                 if (*(int*)(a1 + 80) >= 4000)
                                     *(int*)(a1 + 80) = 0;
-                                *(_WORD*)(a1 + 20) = *(int*)(a1 + 80) / 500 + 165;
+                                *(short*)(a1 + 20) = *(int*)(a1 + 80) / 500 + 165;
                                 LOWORD(v4) = v58;
                                 if (!v58)
                                 {
@@ -73880,7 +73880,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                 }
                 else
                 {
-                    *(_WORD*)(a1 + 20) = ((*(int*)(a1 + 156) - 1) / 4 % 8 + 1) / 2 % 2 + 14;
+                    *(short*)(a1 + 20) = ((*(int*)(a1 + 156) - 1) / 4 % 8 + 1) / 2 % 2 + 14;
                     LODWORD(v4) = (*(int*)(a1 + 156) - 1) % 8;
                     if (!(int)v4)
                     {
@@ -73924,7 +73924,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                 *(int*)(a1 + 104) += *(int*)(a1 + 128);
                 *(int*)(a1 + 172) = 1;
                 ++* (int*)(a1 + 156);
-                *(_WORD*)(a1 + 20) = dword_4B719C[11 * *(unsigned __int8*)(a1 + 72)];
+                *(short*)(a1 + 20) = dword_4B719C[11 * *(unsigned __int8*)(a1 + 72)];
                 if (*(int*)(a1 + 56)
                     && (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 56)) == (struct Concurrency::ISchedulerProxy*)94
                         || Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 56)) == (struct Concurrency::ISchedulerProxy*)176))
@@ -73966,7 +73966,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                     if (*(int*)(a1 + 156) >= SHIDWORD(v4))
                     {
                         *(int*)(a1 + 56) = 0;
-                        sub_4995EB((_WORD*)a1);
+                        sub_4995EB((short*)a1);
                         *(_BYTE*)(a1 + 72) = sub_477148();
                         *(int*)(a1 + 152) = 30;
                         *(_BYTE*)(a1 + 180) = 0;
@@ -74045,21 +74045,21 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                     LOWORD(v4) = a1;
                     if (*(_BYTE*)(a1 + 72) == 8)
                     {
-                        *(_WORD*)(a1 + 20) = 73;
+                        *(short*)(a1 + 20) = 73;
                     }
                     else
                     {
                         LOWORD(v4) = a1;
                         if (*(_BYTE*)(a1 + 72) == 9)
                         {
-                            *(_WORD*)(a1 + 20) = 88;
+                            *(short*)(a1 + 20) = 88;
                         }
                         else
                         {
                             LOWORD(v4) = a1;
                             if (*(_BYTE*)(a1 + 72) == 10)
                             {
-                                *(_WORD*)(a1 + 20) = 103;
+                                *(short*)(a1 + 20) = 103;
                                 LOWORD(v4) = a1;
                                 if (!(*(int*)(a1 + 156) % 4))
                                 {
@@ -74073,7 +74073,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                 case 8:
                     if (*(int*)(a1 + 156) >= 12)
                     {
-                        *(_WORD*)(a1 + 20) = 0;
+                        *(short*)(a1 + 20) = 0;
                         *(int*)(a1 + 176) = 1;
                         *(int*)(a1 + 168) = 0;
                         *(int*)(a1 + 96) = -32000;
@@ -74091,7 +74091,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                             *(int*)(a1 + 56) = 0;
                             if (*(int*)(a1 + 80) < 300)
                                 *(int*)(a1 + 80) = 300;
-                            *(_WORD*)(a1 + 192) = (*(int*)(a1 + 80) - 300) / 10 + *(unsigned __int16*)(a1 + 190) / 8;
+                            *(short*)(a1 + 192) = (*(int*)(a1 + 80) - 300) / 10 + *(unsigned __int16*)(a1 + 190) / 8;
                             *(_BYTE*)(a1 + 195) = 16;
                             if (*(_BYTE*)(a1 + 72) == 13)
                                 *(_BYTE*)(a1 + 195) += 8;
@@ -74111,19 +74111,19 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                         if (*(int*)(a1 + 156) >= 8)
                         {
                             if (*(int*)(a1 + 156) >= 10)
-                                *(_WORD*)(a1 + 20) = 154;
+                                *(short*)(a1 + 20) = 154;
                             else
-                                *(_WORD*)(a1 + 20) = 155;
+                                *(short*)(a1 + 20) = 155;
                         }
                         else
                         {
-                            *(_WORD*)(a1 + 20) = *(int*)(a1 + 156) / 2 % 4 + 153;
+                            *(short*)(a1 + 20) = *(int*)(a1 + 156) / 2 % 4 + 153;
                         }
                         if (*(_BYTE*)(a1 + 72) == 13)
                         {
                             for (j = 0; j < 2; ++j)
                             {
-                                *(_WORD*)(a1 + 16 * j + 24) = *(int*)(a1 + 156) % 4 + 153;
+                                *(short*)(a1 + 16 * j + 24) = *(int*)(a1 + 156) % 4 + 153;
                                 *(int*)(a1 + 16 * j + 32) = 0;
                                 if (*(int*)(a1 + 156) >= 4)
                                 {
@@ -74160,7 +74160,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
             *(_BYTE*)(a1 + 68) = 0;
             *(_BYTE*)(a1 + 71) = 0;
             LOWORD(v4) = dword_4B719C[11 * *(unsigned __int8*)(a1 + 72)];
-            *(_WORD*)(a1 + 20) = v4;
+            *(short*)(a1 + 20) = v4;
             *(int*)(a1 + 172) = 0;
             if (*(int*)(a1 + 96) < 0 || (LOWORD(v4) = a1, *(int*)(a1 + 100) < 0))
             {
@@ -74222,8 +74222,8 @@ __int16 __fastcall sub_498F3D(int a1)
         if (v1)
         {
             v4 = 44 * *(unsigned __int8*)(a1 + 72);
-            LOWORD(v1) = *(_WORD*)&dword_4B7180[4 * (unsigned __int8)sub_425B70(v7) + v4];
-            *(_WORD*)(a1 + 20) = v1;
+            LOWORD(v1) = *(short*)&dword_4B7180[4 * (unsigned __int8)sub_425B70(v7) + v4];
+            *(short*)(a1 + 20) = v1;
         }
     }
     return v1;
@@ -74248,7 +74248,7 @@ int* sub_49951D(int* thisx)
 
 
 //
-int sub_4995EB(_WORD* thisx)
+int sub_4995EB(short* thisx)
 {
     int result; // eax
     int i; // [esp+4h] [ebp-4h]
@@ -74399,9 +74399,9 @@ int sub_4998E0(int thisx, int a2)
 
 
     *(int*)(thisx + 50500) = *(int*)a2;//窗口句柄
-    *(_WORD*)(thisx + 50448) = *(_WORD*)(a2 + 4);//[1]宽度
-    *(_WORD*)(thisx + 50450) = *(_WORD*)(a2 + 8);//[2]高度
-    *(_WORD*)(thisx + 50446) = *(_WORD*)(a2 + 12);//[3]初始化256
+    *(short*)(thisx + 50448) = *(short*)(a2 + 4);//[1]宽度
+    *(short*)(thisx + 50450) = *(short*)(a2 + 8);//[2]高度
+    *(short*)(thisx + 50446) = *(short*)(a2 + 12);//[3]初始化256
     *(_BYTE*)(thisx + 50442) = *(_BYTE*)(a2 + 16);//[4]是否全屏变量
     if (*(_BYTE*)(thisx + 50442))
     {
@@ -74491,7 +74491,7 @@ int sub_4998E0(int thisx, int a2)
             0,
             0))
         {
-            *(_WORD*)(thisx + 50446) *= 2;
+            *(short*)(thisx + 50446) *= 2;
             if ((*(int(__stdcall**)(int, int, int, int, int, int))(**(int**)(thisx + 50508) + 84))(
                 *(int*)(thisx + 50508),
                 (*(__int16*)(thisx + 50446) * *(__int16*)(thisx + 50448)) >> 8,
@@ -74866,7 +74866,7 @@ int sub_49A518(int thisx)
         }
 
         hdc = GetDC(*(HWND*)(thisx + 50500));
-        if (*(_WORD*)(thisx + 50446) == 256)
+        if (*(short*)(thisx + 50446) == 256)
         {
             //除了最开始的初始化，全局唯一绘图函数,9个参数
             BitBlt(hdc, 0, 0, *(int*)(thisx + 50492), *(int*)(thisx + 50496), hdcSrc, 0, 0, 13369376/*0xCC0020u*/);
@@ -74889,7 +74889,7 @@ int sub_49A518(int thisx)
     {
         if (*(_BYTE*)(thisx + 50444))//不会进入这里
         {
-            if (*(_WORD*)(thisx + 50446) == 256)
+            if (*(short*)(thisx + 50446) == 256)
             {
                 //如果强制进入这里，会出现null指针错误
                 IDirectDrawSurface7* IDDS_50516 = (IDirectDrawSurface7*)*(int*)(thisx + 50516);
@@ -74908,7 +74908,7 @@ int sub_49A518(int thisx)
         }
         else//默认进入这里
         {
-            if (*(_WORD*)(thisx + 50446) == 256)//也不会进入这里，如果强制进入之类，画的图形比例会不对
+            if (*(short*)(thisx + 50446) == 256)//也不会进入这里，如果强制进入之类，画的图形比例会不对
             {
                 IDirectDrawSurface7* IDDS_50512 = (IDirectDrawSurface7*)*(int*)(thisx + 50512);
                 result = IDDS_50512->BltFast((DWORD)Point.x, (DWORD)Point.y, (LPDIRECTDRAWSURFACE7) * (int*)(thisx + 50520), 0, 0);
@@ -75263,9 +75263,9 @@ int sub_49B578(int* thisx, int a2, int a3, int a4, char a5)
             v8[26] = v6;
         }
         v8[3] = a3;
-        *((_WORD*)thisx + 3) = a3;
+        *((short*)thisx + 3) = a3;
         v8[2] = a4;
-        *((_WORD*)thisx + 4) = a4;
+        *((short*)thisx + 4) = a4;
         if (*thisx)
         {
             (*(void(**)(int, int))(*(int*)*thisx + 8))(*thisx, *thisx);
@@ -75364,7 +75364,7 @@ int sub_49B9E0(int* thisx, LPCSTR lpFileName)
     thisx[12609] = (int)v3;//[50436]
     if (thisx[12609])//12609
     {
-        if (sub_4A14C0((_WORD*)thisx[12609], lpFileName))//把文件内的数据读取到*thisx[12609]的内存，Block = (intint*)new2(1356);
+        if (sub_4A14C0((short*)thisx[12609], lpFileName))//把文件内的数据读取到*thisx[12609]的内存，Block = (intint*)new2(1356);
         {
             return 1;
         }
@@ -75400,9 +75400,9 @@ int sub_49C15E(int thisx)
     *(_BYTE*)(thisx + 44) = 0;
     *(int*)(thisx + 32) = 1;
     *(_BYTE*)(thisx + 45) = 0;
-    *(_WORD*)(thisx + 50) = 0;
-    *(_WORD*)(thisx + 48) = 0;
-    *(_WORD*)(thisx + 46) = 0;
+    *(short*)(thisx + 50) = 0;
+    *(short*)(thisx + 48) = 0;
+    *(short*)(thisx + 46) = 0;
     *(int*)(thisx + 52) = 0;
     return thisx;
 }
@@ -75707,7 +75707,7 @@ int  sub_49CB92(int thisx, int a2, int a3, int a4, int a5, COLORREF color)
     return a2;
 }
 
-void  sub_49CC5B(_WORD* thisx, int a2, int* a3)
+void  sub_49CC5B(short* thisx, int a2, int* a3)
 {
 
     //修正堆栈
@@ -75865,8 +75865,8 @@ int  sub_49D0B7(int* thisx, int a2, int a3, int cy, void* Src)
             *(int*)pbmi = 40;
             *(int*)&pbmi[4] = a3;
             *(int*)&pbmi[8] = cy;
-            *(_WORD*)&pbmi[12] = 1;
-            *(_WORD*)&pbmi[14] = 8;
+            *(short*)&pbmi[12] = 1;
+            *(short*)&pbmi[14] = 8;
             *(int*)&pbmi[16] = 0;
             *(int*)&pbmi[32] = 256;
             *(int*)&pbmi[36] = 0;
@@ -76839,7 +76839,7 @@ int  sub_49DDFD(unsigned __int16* thisx, int a2, int a3)
                 v7 = v27;
                 v18 = v26 / 2;
                 v9 = v15;
-                LOWORD(v24) = *(_WORD*)(a3 + 40);
+                LOWORD(v24) = *(short*)(a3 + 40);
                 v28[0] = (int)&v33;
                 v28[1] = (int)&v20;
                 v28[2] = v10;
@@ -76862,7 +76862,7 @@ int  sub_49DDFD(unsigned __int16* thisx, int a2, int a3)
 }
 
 
-int sub_49E288(_BYTE* thisx, _WORD* a2)
+int sub_49E288(_BYTE* thisx, short* a2)
 {
 
 
@@ -76881,7 +76881,7 @@ int sub_49E288(_BYTE* thisx, _WORD* a2)
     __int16 v14; // [esp+4Ch] [ebp-30h]
     char tc_89[8]; //12
     int v13; // [esp+40h] [ebp-3Ch]
-    _WORD* v12; // [esp+3Ch] [ebp-40h]
+    short* v12; // [esp+3Ch] [ebp-40h]
     char tc_91[4]; //8
     int v11; // [esp+34h] [ebp-48h]
     int v10; // [esp+30h] [ebp-4Ch]
@@ -76889,11 +76889,11 @@ int sub_49E288(_BYTE* thisx, _WORD* a2)
     __int16 v8; // [esp+28h] [ebp-54h]
     int v7; // [esp+24h] [ebp-58h]
     char tc_77[8]; //12
-    _WORD* v6; // [esp+18h] [ebp-64h]
+    short* v6; // [esp+18h] [ebp-64h]
     char tc_14[4]; //8
-    _WORD* v5; // [esp+10h] [ebp-6Ch]
+    short* v5; // [esp+10h] [ebp-6Ch]
     int j; // [esp+Ch] [ebp-70h]
-    _WORD* v3; // [esp+8h] [ebp-74h]
+    short* v3; // [esp+8h] [ebp-74h]
     int result; // eax
 
 
@@ -76905,8 +76905,8 @@ int sub_49E288(_BYTE* thisx, _WORD* a2)
     v9 = byte_4CA211;
     v7 = *(int*)(*(int*)a2 + 12) - *(int*)(*(int*)a2 + 4);
     v19 = *(int*)(*(int*)a2 + 8) - **(int**)a2;
-    v12 = (_WORD*)*((int*)a2 + 2);
-    v6 = (_WORD*)*((int*)a2 + 3);
+    v12 = (short*)*((int*)a2 + 2);
+    v6 = (short*)*((int*)a2 + 3);
     v8 = a2[14];
     v10 = *((int*)a2 + 8);
     v13 = *((int*)a2 + 4);
@@ -76944,22 +76944,22 @@ int sub_49E561(_BYTE* thisx, int a2)
     int i; // [esp+2Ch] [ebp-8h]
     int v12; // [esp+28h] [ebp-Ch]
     int v11; // [esp+24h] [ebp-10h]
-    _WORD* v10; // [esp+20h] [ebp-14h]
+    short* v10; // [esp+20h] [ebp-14h]
     int v9; // [esp+1Ch] [ebp-18h]
     __int16 v8; // [esp+18h] [ebp-1Ch]
     int v7; // [esp+14h] [ebp-20h]
-    _WORD* v6; // [esp+10h] [ebp-24h]
-    _WORD* v5; // [esp+Ch] [ebp-28h]
+    short* v6; // [esp+10h] [ebp-24h]
+    short* v5; // [esp+Ch] [ebp-28h]
     int j; // [esp+8h] [ebp-2Ch]
-    _WORD* v3; // [esp+4h] [ebp-30h]
+    short* v3; // [esp+4h] [ebp-30h]
     int result; // eax
 
 
     v7 = *(int*)(*(int*)a2 + 12) - *(int*)(*(int*)a2 + 4);
     v14 = *(int*)(*(int*)a2 + 8) - **(int**)a2;
-    v10 = *(_WORD**)(a2 + 8);
-    v6 = *(_WORD**)(a2 + 12);
-    v8 = *(_WORD*)(a2 + 28);
+    v10 = *(short**)(a2 + 8);
+    v6 = *(short**)(a2 + 12);
+    v8 = *(short*)(a2 + 28);
     v11 = *(int*)(a2 + 16);
     v9 = *(int*)(a2 + 20);
     result = *(int*)(a2 + 24);
@@ -77017,7 +77017,7 @@ int sub_49E6A3(int* thisx, int a2, int a3)
     char tc_8[56]; //60，系统填充
     __int16 v28; // [esp+190h] [ebp-11Ch]
     char tc_56[24]; //28
-    _WORD* v27; // [esp+174h] [ebp-138h]
+    short* v27; // [esp+174h] [ebp-138h]
     char tc_46[16]; //20
     int v26; // [esp+160h] [ebp-14Ch]
     int v25[4]; // [esp+150h] [ebp-15Ch] BYREF
@@ -77026,7 +77026,7 @@ int sub_49E6A3(int* thisx, int a2, int a3)
     int v22; // [esp+144h] [ebp-168h]
     int v21; // [esp+140h] [ebp-16Ch]
     int v20; // [esp+13Ch] [ebp-170h]
-    _WORD* v19; // [esp+138h] [ebp-174h]
+    short* v19; // [esp+138h] [ebp-174h]
     char v18; // [esp+134h] [ebp-178h]
     int v17; // [esp+130h] [ebp-17Ch]
     int v16; // [esp+12Ch] [ebp-180h]
@@ -77035,13 +77035,13 @@ int sub_49E6A3(int* thisx, int a2, int a3)
     unsigned int v13; // [esp+120h] [ebp-18Ch]
     unsigned int v12; // [esp+11Ch] [ebp-190h]
     int v11; // [esp+118h] [ebp-194h]
-    _WORD* v10; // [esp+114h] [ebp-198h]
+    short* v10; // [esp+114h] [ebp-198h]
     int v9; // [esp+110h] [ebp-19Ch]
     //
     CHAR Text[256]; // [esp+10h] [ebp-29Ch] BYREF
-    _WORD* v7; // [esp+Ch] [ebp-2A0h]
+    short* v7; // [esp+Ch] [ebp-2A0h]
     int j; // [esp+8h] [ebp-2A4h]
-    _WORD* v5; // [esp+4h] [ebp-2A8h]
+    short* v5; // [esp+4h] [ebp-2A8h]
     int result; // eax
 
 
@@ -77118,7 +77118,7 @@ int sub_49E6A3(int* thisx, int a2, int a3)
                     v19 += v26 * (v49 - v47 - 1) / 2;
                 v20 = (*(int*)(a3 + 24) == 0) - *(int*)(a3 + 24);
                 v17 = v26 * ((*(int*)(a3 + 28) == 0) - *(int*)(a3 + 28)) / 2;
-                v10 = (_WORD*)v39[9];
+                v10 = (short*)v39[9];
                 v38 = v39[4] / 2;
                 LOWORD(v16) = v28;
                 v43 = v48 - v46;
@@ -77287,7 +77287,7 @@ int sub_49EF70(
     int v31; // [esp+100h] [ebp-18h]
     int v30; // [esp+FCh] [ebp-1Ch]
     char tc_v29[84]; //124
-    _WORD* v29; // [esp+A4h] [ebp-74h] 40
+    short* v29; // [esp+A4h] [ebp-74h] 40
     int v28[9]; // [esp+80h] [ebp-98h] BYREF 36
 
     int v27; // [esp+7Ch] [ebp-9Ch]
@@ -77305,10 +77305,10 @@ int sub_49EF70(
     int v18; // [esp+50h] [ebp-C8h]
     char tc_72[4]; //8
     int v17; // [esp+48h] [ebp-D0h]
-    _WORD* v16; // [esp+44h] [ebp-D4h]
+    short* v16; // [esp+44h] [ebp-D4h]
     unsigned __int16 v15; // [esp+40h] [ebp-D8h]
     int k; // [esp+3Ch] [ebp-DCh]
-    _WORD* v13; // [esp+38h] [ebp-E0h]
+    short* v13; // [esp+38h] [ebp-E0h]
     int m; // [esp+34h] [ebp-E4h]
     char tc_v11[24];
     int v11; // [esp+18h] [ebp-100h]
@@ -77328,7 +77328,7 @@ int sub_49EF70(
     int v31; // [esp+100h] [ebp-18h]
     int v30; // [esp+FCh] [ebp-1Ch]
     char tc_v29[84]; //124
-    _WORD* v29; // [esp+A4h] [ebp-74h] 40
+    short* v29; // [esp+A4h] [ebp-74h] 40
     int v28[9]; // [esp+80h] [ebp-98h] BYREF 36
 
     int v27; // [esp+7Ch] [ebp-9Ch]
@@ -77346,10 +77346,10 @@ int sub_49EF70(
     int v18; // [esp+50h] [ebp-C8h]
     char tc_72[4]; //8
     int v17; // [esp+48h] [ebp-D0h]
-    _WORD* v16; // [esp+44h] [ebp-D4h]
+    short* v16; // [esp+44h] [ebp-D4h]
     unsigned __int16 v15; // [esp+40h] [ebp-D8h]
     int k; // [esp+3Ch] [ebp-DCh]
-    _WORD* v13; // [esp+38h] [ebp-E0h]
+    short* v13; // [esp+38h] [ebp-E0h]
     int m; // [esp+34h] [ebp-E4h]
     char tc_v11[24];
     int v11; // [esp+18h] [ebp-100h]
@@ -77517,7 +77517,7 @@ int sub_49F638(int* thisx, int a2, int a3, int* a4)
     char tc_49[56]; //60，系统填充
     __int16 v33; // [esp+2A0h] [ebp-138h]
     char tc_24[24]; //28
-    _WORD* v32; // [esp+284h] [ebp-154h]
+    short* v32; // [esp+284h] [ebp-154h]
     char tc_6[16]; //20
     int v31; // [esp+270h] [ebp-168h]
     int v30[4]; // [esp+260h] [ebp-178h] BYREF
@@ -77526,7 +77526,7 @@ int sub_49F638(int* thisx, int a2, int a3, int* a4)
     int v27; // [esp+254h] [ebp-184h]
     char tc_7[4]; //8
     int v26; // [esp+24Ch] [ebp-18Ch]
-    _WORD* v25; // [esp+248h] [ebp-190h]
+    short* v25; // [esp+248h] [ebp-190h]
     __int16 v24; // [esp+244h] [ebp-194h]
     __int16 v23; // [esp+240h] [ebp-198h]
     char v22; // [esp+23Ch] [ebp-19Ch]
@@ -77538,7 +77538,7 @@ int sub_49F638(int* thisx, int a2, int a3, int* a4)
     int v16; // [esp+224h] [ebp-1B4h]
     int v15; // [esp+220h] [ebp-1B8h]
     int v14; // [esp+21Ch] [ebp-1BCh]
-    _WORD* v13; // [esp+218h] [ebp-1C0h]
+    short* v13; // [esp+218h] [ebp-1C0h]
     int v12; // [esp+214h] [ebp-1C4h]
     int v11; // [esp+210h] [ebp-1C8h]
     int v10; // [esp+20Ch] [ebp-1CCh]
@@ -77546,8 +77546,8 @@ int sub_49F638(int* thisx, int a2, int a3, int* a4)
     CHAR Text[256]; // [esp+10Ch] [ebp-2CCh] BYREF
     //
     CHAR v8[256]; // [esp+Ch] [ebp-3CCh] BYREF
-    _WORD* v7; // [esp+8h] [ebp-3D0h]
-    _WORD* v6; // [esp+4h] [ebp-3D4h]
+    short* v7; // [esp+8h] [ebp-3D0h]
+    short* v6; // [esp+4h] [ebp-3D4h]
     int result; // eax
 
 
@@ -77639,7 +77639,7 @@ int sub_49F638(int* thisx, int a2, int a3, int* a4)
                     v25 += v31 * (v56 - v54 - 1) / 2;
                 v26 = (*(int*)(a3 + 24) == 0) - *(int*)(a3 + 24);
                 v21 = v31 * ((*(int*)(a3 + 28) == 0) - *(int*)(a3 + 28)) / 2;
-                v13 = (_WORD*)v45[9];
+                v13 = (short*)v45[9];
                 v43 = v45[4] / 2;
                 LOWORD(v20) = v33;
                 v49 = v55 - v53;
@@ -77654,9 +77654,9 @@ int sub_49F638(int* thisx, int a2, int a3, int* a4)
                 LOWORD(v35) = (int)(unsigned __int16)word_4CA1F2 >> byte_4CA211;
                 LOWORD(v15) = (int)(unsigned __int16)word_4CA1F4 >> byte_4CA212;
                 v37 = *(_BYTE*)(a3 + 45);
-                v23 = *(_WORD*)(a3 + 46);
-                v64 = *(_WORD*)(a3 + 48);
-                v24 = *(_WORD*)(a3 + 50);
+                v23 = *(short*)(a3 + 46);
+                v64 = *(short*)(a3 + 48);
+                v24 = *(short*)(a3 + 50);
                 if ((v37 == 1 || v37 == 3 || v37 == 4) && byte_4CA210[0] == 11)
                     v64 = 2 * v64 + 1;
                 v44 = (v24 << v34) | (v64 << v22) | (v23 << v62);
@@ -77821,7 +77821,7 @@ int sub_4A00C6(int thisx, int* a2, int a3, int* a4)
             {
                 if (a2[9] >= 2048)
                     return result;
-                v7 = (unsigned __int16)sub_48E130((_WORD*)(thisx + 24 * a2[9]));
+                v7 = (unsigned __int16)sub_48E130((short*)(thisx + 24 * a2[9]));
                 v5 = sub_4260F0((short*)thisx + 24 * a2[9]);
                 SetRect(&rc, 0, 0, v5, v7);
                 a2[3] = (int)&rc;
@@ -77832,7 +77832,7 @@ int sub_4A00C6(int thisx, int* a2, int a3, int* a4)
             }
             LOWORD(v12) = sub_4260F0((short*)thisx + 24 * *a2);
             v12 = (unsigned __int16)v12;
-            v9 = (unsigned __int16)sub_48E130((_WORD*)(thisx + 24 * *a2));
+            v9 = (unsigned __int16)sub_48E130((short*)(thisx + 24 * *a2));
             result = a3;
             if (a3 < v9 * (v12 / 8) / 8)
             {
@@ -77934,7 +77934,7 @@ int v5[25]; // [esp+4h] [ebp-64h] BYREF
 
 //this = byte_4BDC60 a3 = DDSf对象下标
 
-void sub_4A03B3(_WORD* thisx, int a2, int* a3, int* a4)
+void sub_4A03B3(short* thisx, int a2, int* a3, int* a4)
 {
 
 
@@ -77984,7 +77984,7 @@ void sub_4A03B3(_WORD* thisx, int a2, int* a3, int* a4)
 void sub_4A0A0D(void* thisx)
 {
     *(int*)thisx = 0;
-    *((_WORD*)thisx + 2) = 0;
+    *((short*)thisx + 2) = 0;
 }
 
 
@@ -78003,7 +78003,7 @@ int sub_4A0A40(int thisx)
     if (*(int*)thisx)
         delete2(*(void**)thisx);
     *(int*)thisx = 0;
-    *(_WORD*)(thisx + 4) = 0;
+    *(short*)(thisx + 4) = 0;
     return result;
 }
 
@@ -78014,7 +78014,7 @@ int sub_4A0A7B(int thisx, unsigned __int16 a2)
     *(int*)thisx = (int)new2(2 * a2);
     if (!*(int*)thisx)
         return 0;
-    *(_WORD*)(thisx + 4) = a2;
+    *(short*)(thisx + 4) = a2;
     memset(*(void**)thisx, 0, 2 * a2);
     return 1;
 }
@@ -78057,7 +78057,7 @@ unsigned __int16* sub_4A0B26(
                 v9[i] *= 2;
         }
         result = *(unsigned __int16**)thisx;
-        *(_WORD*)(*(int*)thisx + 2 * a2) = (((unsigned int)a5 / v9[2]) << byte_4CA212) | (((unsigned int)a4 / v9[1]) << byte_4CA211) | (((unsigned int)a3 / v9[0]) << (int)byte_4CA210);
+        *(short*)(*(int*)thisx + 2 * a2) = (((unsigned int)a5 / v9[2]) << byte_4CA212) | (((unsigned int)a4 / v9[1]) << byte_4CA211) | (((unsigned int)a3 / v9[0]) << (int)byte_4CA210);
     }
     return result;
 }
@@ -78104,7 +78104,7 @@ int sub_4A0CA2(int thisx, int a2, int a3, struct tagRECT* p_rc)
     int v12; // [esp+20h] [ebp-F0h]
     int v11; // [esp+1Ch] [ebp-F4h]
     int v10; // [esp+18h] [ebp-F8h]
-    _WORD* v9; // [esp+14h] [ebp-FCh]
+    short* v9; // [esp+14h] [ebp-FCh]
     LONG j; // [esp+10h] [ebp-100h]
     unsigned __int8* v7; // [esp+Ch] [ebp-104h],改改改
     int v6; // [esp+8h] [ebp-108h],改改改
@@ -78134,7 +78134,7 @@ int sub_4A0CA2(int thisx, int a2, int a3, struct tagRECT* p_rc)
     int v12; // [esp+20h] [ebp-F0h]
     int v11; // [esp+1Ch] [ebp-F4h]
     int v10; // [esp+18h] [ebp-F8h]
-    _WORD* v9; // [esp+14h] [ebp-FCh]
+    short* v9; // [esp+14h] [ebp-FCh]
     LONG j; // [esp+10h] [ebp-100h]
     unsigned __int8* v7; // [esp+Ch] [ebp-104h]
     unsigned __int8 v6; // [esp+8h] [ebp-108h]
@@ -78227,7 +78227,7 @@ int sub_4A0CA2(int thisx, int a2, int a3, struct tagRECT* p_rc)
         {
             v17 = v28[9];
             v25 = v28[4] / 2;
-            v27 = *(_WORD*)(a3 + 40);
+            v27 = *(short*)(a3 + 40);
             v18 = *(unsigned __int16*)(thisx + 6) * ((bottom - 1) * *(int*)(a3 + 28) + top)
                 + (right - 1) * *(int*)(a3 + 24)
                 + left
@@ -78240,12 +78240,12 @@ int sub_4A0CA2(int thisx, int a2, int a3, struct tagRECT* p_rc)
             for (i = 0; i < bottom; ++i)
             {
                 v7 = (unsigned __int8*)v18;
-                v9 = (_WORD*)v17;
+                v9 = (short*)v17;
                 for (j = 0; j < right; ++j)
                 {
                     v6 = *v7;
                     if (!*(_BYTE*)(thisx + 5) || v6)
-                        *v9 = *(_WORD*)(v19 + 2 * v6);
+                        *v9 = *(short*)(v19 + 2 * v6);
                     v7 += v24;
                     ++v9;
                 }
@@ -78266,8 +78266,8 @@ int sub_4A1216(int thisx, int a2, int a3, int a4)
         delete2(*(void**)(thisx + 12));
     *(int*)(thisx + 12) = (int)new2(a3 * a2);
     *(int*)(thisx + 16) = a4;
-    *(_WORD*)(thisx + 6) = a2;
-    *(_WORD*)(thisx + 8) = a3;
+    *(short*)(thisx + 6) = a2;
+    *(short*)(thisx + 8) = a3;
     return 1;
 }
 
@@ -78365,7 +78365,7 @@ void sub_4A148B(void** thisx)
 //thisx =  *byte_4BDC60[12609]    lpFileName = aGraphicSystem的路径
 //把文件内的数据读取到内存
 ////加载文件函数3
-int sub_4A14C0(_WORD* thisx, LPCSTR lpFileName)
+int sub_4A14C0(short* thisx, LPCSTR lpFileName)
 {
 
     //修正堆栈
@@ -79786,7 +79786,7 @@ int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5)
         goto LABEL_6;
     if (v7 == 0x7FFF)
     {
-        *(_WORD*)v5 = 1;
+        *(short*)v5 = 1;
         if ((v8 != 0x80000000 || (int)a1) && (v8 & 0x40000000) == 0)
         {
             strcpy((char*)(v5 + 4), "1#SNAN");
@@ -79812,18 +79812,18 @@ int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5)
         strcpy((char*)(v5 + 4), "1#QNAN");
         goto LABEL_22;
     }
-    *(_WORD*)v24 = 0;
-    *(_WORD*)&v24[10] = v7;
+    *(short*)v24 = 0;
+    *(short*)&v24[10] = v7;
     v9 = (77 * (HIBYTE(v7) + 2 * HIBYTE(HIDWORD(a1))) + 19728 * v7 - 323162868) >> 16;
     *(_QWORD*)&v24[2] = a1;
     __multtenpow12((short*)v24, -(__int16)v9, 1);
-    if (*(_WORD*)&v24[10] >= 0x3FFFu)
+    if (*(short*)&v24[10] >= 0x3FFFu)
     {
         LOWORD(v9) = v9 + 1;
         __ld12mul((int)v24, (int)v23);
     }
     v10 = (a4 & 1) == 0;
-    *(_WORD*)v5 = v9;
+    *(short*)v5 = v9;
     if (v10)
     {
         v11 = a3;
@@ -79836,7 +79836,7 @@ int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5)
         if (v11 > 21)
             v11 = 21;
         v12 = *(unsigned __int16*)&v24[10] - 16382;
-        *(_WORD*)&v24[10] = 0;
+        *(short*)&v24[10] = 0;
         a5 = 8;
         do
         {
@@ -79886,7 +79886,7 @@ int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5)
                 }
                 --v18;
             }
-            *(_WORD*)v5 = 0;
+            *(short*)v5 = 0;
             *(_BYTE*)(v5 + 2) = 32;
             *(_BYTE*)(v5 + 3) = 1;
             *v20 = 48;
@@ -79903,7 +79903,7 @@ int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5)
             *v18-- = 48;
         }
         ++v18;
-        ++* (_WORD*)v5;
+        ++* (short*)v5;
     LABEL_46:
         ++* v18;
     LABEL_47:
@@ -79913,7 +79913,7 @@ int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5)
         return v25;
     }
 LABEL_6:
-    *(_WORD*)v5 = 0;
+    *(short*)v5 = 0;
     *(_BYTE*)(v5 + 2) = 32;
     *(_BYTE*)(v5 + 3) = 1;
     *(_BYTE*)(v5 + 4) = 48;
@@ -80814,14 +80814,14 @@ int __dtold(unsigned int a1, int a2, int* a3)
     int v4; // ecx
 
 
-    LOWORD(a1) = *((_WORD*)a3 + 3);
+    LOWORD(a1) = *((short*)a3 + 3);
     v4 = (a1 >> 4) & 0x7FF;
     v14 = a1 & 0x8000;
     v5 = a3[1];
     v6 = *a3;
     v7 = v5 & 0xFFFFF;
     v13 = 0x80000000;
-    if ((_WORD)v4)
+    if ((short)v4)
     {
         if ((unsigned __int16)v4 == 2047)
             v8 = 0x7FFF;
@@ -80835,7 +80835,7 @@ int __dtold(unsigned int a1, int a2, int* a3)
             result = a2;
             *(int*)(a2 + 4) = 0;
             *(int*)a2 = 0;
-            *(_WORD*)(a2 + 8) = 0;
+            *(short*)(a2 + 8) = 0;
             return result;
         }
         v8 = v4 + 15361;
@@ -80853,7 +80853,7 @@ int __dtold(unsigned int a1, int a2, int* a3)
         --v8;
         v11 = HIDWORD(v12);
     }
-    *(_WORD*)(a2 + 8) = v8 | v14;
+    *(short*)(a2 + 8) = v8 | v14;
     return result;
 }
 
@@ -80885,10 +80885,10 @@ int __cdecl __ld12mul(int a1, int a2)
     __int16 v4; // cx
 
 
-    v4 = *(_WORD*)(a2 + 10);
+    v4 = *(short*)(a2 + 10);
     v15 = 0;
     memset(v13, 0, sizeof(v13));
-    v5 = *(_WORD*)(a1 + 10);
+    v5 = *(short*)(a1 + 10);
     v6 = v5 ^ v4;
     result = v5 & 0x7FFF;
     v8 = v4 & 0x7FFF;
@@ -80906,7 +80906,7 @@ int __cdecl __ld12mul(int a1, int a2)
             *(int*)a1 = 0;
             return result;
         }
-        if ((_WORD)result || (++v20, (*(int*)(a1 + 8) & 0x7FFFFFFF) != 0))
+        if ((short)result || (++v20, (*(int*)(a1 + 8) & 0x7FFFFFFF) != 0))
         {
             result = 0;
         }
@@ -80916,7 +80916,7 @@ int __cdecl __ld12mul(int a1, int a2)
             if (!*(int*)(a1 + 4) && !*(int*)a1)
                 goto LABEL_45;
         }
-        if (!(_WORD)v8)
+        if (!(short)v8)
         {
             ++v20;
             if ((*(int*)(a2 + 8) & 0x7FFFFFFF) == 0 && !*(int*)(a2 + 4) && !*(int*)a2)
@@ -80932,7 +80932,7 @@ int __cdecl __ld12mul(int a1, int a2)
             do
             {
                 if (__addl(*(v19 - 1), *v17 * *v18, (unsigned int*)v19 - 1))
-                    ++* (_WORD*)v19;
+                    ++* (short*)v19;
                 ++v18;
                 --v17;
                 --v14;
@@ -81002,22 +81002,22 @@ int __cdecl __ld12mul(int a1, int a2)
         if ((unsigned __int16)v21 < 0x7FFFu)
         {
             result = v9 | v21;
-            *(_WORD*)a1 = HIWORD(v13[0]);
+            *(short*)a1 = HIWORD(v13[0]);
             *(int*)(a1 + 2) = v13[1];
             *(int*)(a1 + 6) = v13[2];
         LABEL_45:
-            *(_WORD*)(a1 + 10) = result;
+            *(short*)(a1 + 10) = result;
             return result;
         }
     }
     *(int*)(a1 + 4) = 0;
     *(int*)a1 = 0;
-    *(int*)(a1 + 8) = (_WORD)v9 != 0 ? -32768 : 2147450880;
+    *(int*)(a1 + 8) = (short)v9 != 0 ? -32768 : 2147450880;
     return result;
 }
 
 
-void __cdecl __multtenpow12(_WORD* a1, int a2, int a3)
+void __cdecl __multtenpow12(short* a1, int a2, int a3)
 {
 
 
@@ -81052,7 +81052,7 @@ void __cdecl __multtenpow12(_WORD* a1, int a2, int a3)
             if (v5)
             {
                 v6 = &v3[12 * v5];
-                if (*(_WORD*)v6 >= 0x8000u)
+                if (*(short*)v6 >= 0x8000u)
                 {
                     LODWORD(v8) = *(int*)v6;
                     v7 = (int*)v6 + 4;
@@ -81253,7 +81253,7 @@ char* sub_4428D0(char* thisx)
         thisx[i + 2620] = 0;
     }
     for (i = 0; i < 14; ++i)
-        *(_WORD*)&thisx[2 * i + 48] = 10;
+        *(short*)&thisx[2 * i + 48] = 10;
     *((int*)(thisx + 16404)) = 0;
     return thisx;
 }
@@ -81813,7 +81813,7 @@ int __cdecl __strgtold12(int a1, char** a2, char* a3, int a4, int a5, int a6, in
     char tc_1[6]; //6，???,系统不会把这里弄成8吗，需要计算
     int v36; // [esp+32h] [ebp-36h]
     unsigned int v35; // [esp+2Eh] [ebp-3Ah]
-    _WORD v34[3]; // [esp+28h] [ebp-40h] BYREF
+    short v34[3]; // [esp+28h] [ebp-40h] BYREF
     char tc_47[1]; //5,系统填充，也可能不会???，需要计算
     char v33; // [esp+23h] [ebp-45h]
     //
@@ -82182,9 +82182,9 @@ int __cdecl __strgtold12(int a1, char** a2, char* a3, int a4, int a5, int a6, in
             v28 = v39 | v26;
             *(int*)(a1 + 6) = v25;
             *(int*)(a1 + 2) = (int)v24;
-            *(_WORD*)(a1 + 10) = v28;
+            *(short*)(a1 + 10) = v28;
             result = v44;
-            *(_WORD*)a1 = v27;
+            *(short*)a1 = v27;
             return result;
         default:
             goto LABEL_91;
@@ -82487,7 +82487,7 @@ __int16 __cdecl __mtold12(char* a1, int a2, int a3)
         v11 += 0xFFFF;
     }
     result = v11;
-    *(_WORD*)(a3 + 10) = v11;
+    *(short*)(a3 + 10) = v11;
     return result;
 }
 
