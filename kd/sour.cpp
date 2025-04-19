@@ -27,7 +27,7 @@ const char* types[] = {
     "WORD", "_STARTUPINFOA", "CPPEH_RECORD", "int", "void", "bool",
     "BOOL", "ISchedulerProxy", "IUMSCompletionList", "UMSThreadScheduler",
     "_MMIOINFO", "MMRESULT", "streambuf", "HANDLE",
-    "_BYTE",
+    "char",
     "LONG",
     "UINT",
     "HINSTANCE",
@@ -946,7 +946,7 @@ unsigned int Id(Concurrency::details::SchedulerBase* thisxx)
 }
 
 //return thisxx[20]; fun
-char MarkedForDetachment(_BYTE* thisxx)
+char MarkedForDetachment(char* thisxx)
 {
     return thisxx[20];
 }
@@ -1174,7 +1174,7 @@ int __cdecl __sbh_alloc_new_group(int* a1)
     v6[7172] = 516 * v3 + v1 + 828;
     *(int*)(v1 + 4 * v3 + 68) = 0;
     *(int*)(v1 + 4 * v3 + 196) = 1;
-    if ((*(_BYTE*)(v1 + 67))++ == 0)
+    if ((*(char*)(v1 + 67))++ == 0)
         a1[1] |= 1u;
     a1[2] &= ~(0x80000000 >> v3);
     return v3;
@@ -1246,7 +1246,7 @@ int __cdecl __sbh_alloc_new_group(int* a1)
     *(int*)(v1 + 4 * v3 + 196) = 1;
 
     // 更新状态标志
-    if ((*(_BYTE*)(v1 + 67))++ == 0)
+    if ((*(char*)(v1 + 67))++ == 0)
         a1[1] |= 1u;
 
     a1[2] &= ~(0x80000000 >> v3); // 更新标志位
@@ -1392,9 +1392,9 @@ int* __cdecl __sbh_alloc_block(int a1)
     char v23; // cl
     int* v22; // ecx
     int v21; // ebx
-    _BYTE* v20; // edi
+    char* v20; // edi
     unsigned int v19; // ebx
-    _BYTE* v18; // edi
+    char* v18; // edi
     unsigned int v17; // ebx
     int v16; // esi
     int v15; // ecx
@@ -1582,17 +1582,17 @@ LABEL_47:
         *(int*)(v14[1] + 8) = (int)v14;
         if (v14[1] == v14[2])
         {
-            v23 = *((_BYTE*)v8 + v16 + 4);
+            v23 = *((char*)v8 + v16 + 4);
             if (v16 >= 32)
             {
-                *((_BYTE*)v8 + v16 + 4) = v23 + 1;
+                *((char*)v8 + v16 + 4) = v23 + 1;
                 if (!v23)
                     *((int*)i + 1) |= 0x80000000 >> (v16 - 32);
                 v8[v33 + 49] |= 0x80000000 >> (v16 - 32);
             }
             else
             {
-                *((_BYTE*)v8 + v16 + 4) = v23 + 1;
+                *((char*)v8 + v16 + 4) = v23 + 1;
                 if (!v23)
                     *(int*)i |= 0x80000000 >> v16;
                 v8[v33 + 17] |= 0x80000000 >> v16;
@@ -2131,7 +2131,7 @@ int setSBCS()
     int result; // eax
 
     memset(&byte_4CB580, 0, 0x100u);
-    *((_BYTE*)&byte_4CB580 + 256) = 0;
+    *((char*)&byte_4CB580 + 256) = 0;
     result = 0;
     dword_4CB458 = 0;
     dword_4CB46C = 0;
@@ -2155,7 +2155,7 @@ int setSBCS()
 
     // 将 `byte_4CB580` 的第 256 字节设置为 0
     // 这可能是为了确保在 `byte_4CB580` 的末尾部分也被初始化
-    *((_BYTE*)&byte_4CB580 + 256) = 0;
+    *((char*)&byte_4CB580 + 256) = 0;
 
     result = 0; // 将函数返回值设置为 0
 
@@ -2587,7 +2587,7 @@ char* __cdecl strcat(char* Destination, const char* Source)
 
         // 检查包含 '\0' 字符的 4 字节块的最后部分
         v5 = *((int*)v2 - 1); // 获取最后一个 4 字节块的值
-        if (!(_BYTE)v5) // 检查最低字节是否为 '\0'
+        if (!(char)v5) // 检查最低字节是否为 '\0'
             break; // 退出循环
         if (!BYTE1(v5)) // 检查第二个字节是否为 '\0'
         {
@@ -2613,7 +2613,7 @@ copy_start:
     while (1) // 如果 Source 不是 4 字节对齐，逐字符拷贝
     {
         LOBYTE(v8) = *v7++; // 获取 Source 字符串的下一个字符
-        if (!(_BYTE)v8) // 如果字符是 '\0'，结束拷贝
+        if (!(char)v8) // 如果字符是 '\0'，结束拷贝
             break;
         *v6++ = v8; // 将字符拷贝到 Destination
         if (((unsigned __int8)v7 & 3) == 0) // 如果 Source 字符串对齐，进入 4 字节对齐拷贝
@@ -2627,7 +2627,7 @@ copy_start:
                 v7 += 4; // 移动到下一个 4 字节块
                 if ((v9 & 0x81010100) != 0) // 如果当前块中包含 '\0'
                 {
-                    if (!(_BYTE)v8) // 检查最低字节是否为 '\0'
+                    if (!(char)v8) // 检查最低字节是否为 '\0'
                         goto _byte_0; // 如果是 '\0'，跳转到处理字节 0
                     if (!BYTE1(v8)) // 检查第二个字节是否为 '\0'
                     {
@@ -2684,7 +2684,7 @@ int __cdecl strcmp(const char* Str1, const char* Str2)
             v5 = (unsigned __int8)*(int*)v2 < (unsigned int)*v3; // 比较低 8 位
             if ((unsigned __int8)*(int*)v2 != *v3) // 如果不相等，跳出循环
                 break;
-            if (!(_BYTE)v4) // 如果块的最低字节为 '\0'，字符串相等
+            if (!(char)v4) // 如果块的最低字节为 '\0'，字符串相等
                 return 0;
             v5 = BYTE1(v4) < (unsigned int)v3[1]; // 比较第二个字节
             if (BYTE1(v4) != v3[1]) // 如果不相等，跳出循环
@@ -2693,9 +2693,9 @@ int __cdecl strcmp(const char* Str1, const char* Str2)
                 return 0;
             v6 = HIWORD(v4); // 读取块的高 16 位
             v5 = (unsigned __int8)v6 < (unsigned int)v3[2]; // 比较第三个字节
-            if ((_BYTE)v6 != v3[2]) // 如果不相等，跳出循环
+            if ((char)v6 != v3[2]) // 如果不相等，跳出循环
                 break;
-            if (!(_BYTE)v6) // 如果第三个字节为 '\0'，字符串相等
+            if (!(char)v6) // 如果第三个字节为 '\0'，字符串相等
                 return 0;
             v5 = BYTE1(v6) < (unsigned int)v3[3]; // 比较第四个字节
             if (BYTE1(v6) != v3[3]) // 如果不相等，跳出循环
@@ -2726,9 +2726,9 @@ int __cdecl strcmp(const char* Str1, const char* Str2)
     v8 = *(short*)v2; // 读取 Str1 当前的 2 字节块
     v2 += 2; // 移动到下一个字符
     v5 = (unsigned __int8)v8 < (unsigned int)*v3; // 比较低字节
-    if ((_BYTE)v8 != *v3) // 如果不相等，返回结果
+    if ((char)v8 != *v3) // 如果不相等，返回结果
         return -2 * v5 + 1;
-    if (!(_BYTE)v8) // 如果低字节为 '\0'，字符串相等
+    if (!(char)v8) // 如果低字节为 '\0'，字符串相等
         return 0;
     v5 = HIBYTE(v8) < (unsigned int)v3[1]; // 比较高字节
     if (HIBYTE(v8) == v3[1]) // 如果高字节相等
@@ -2781,7 +2781,7 @@ size_t __cdecl strlen(const char* Str)
 
         // 检查包含 '\0' 字符的 4 字节块的最后部分
         v4 = *((int*)v1 - 1); // 获取最后一个 4 字节块的值
-        if (!(_BYTE)v4) // 检查最低字节是否为 '\0'
+        if (!(char)v4) // 检查最低字节是否为 '\0'
             break; // 结束循环，返回结果
 
         if (!BYTE1(v4)) // 检查第二个字节是否为 '\0'
@@ -2799,9 +2799,9 @@ size_t __cdecl strlen(const char* Str)
 }
 */
 
-_BYTE* __cdecl strncnt(_BYTE* a1, int a2)
+char* __cdecl strncnt(char* a1, int a2)
 {
-    _BYTE* v2; // eax
+    char* v2; // eax
     int v3; // ecx
 
     v2 = a1;
@@ -2816,16 +2816,16 @@ _BYTE* __cdecl strncnt(_BYTE* a1, int a2)
         } while (v3--);
     }
     if (*v2)
-        return (_BYTE*)a2;
+        return (char*)a2;
     else
-        return (_BYTE*)(v2 - a1);
+        return (char*)(v2 - a1);
 }
 /*
 //ai注释
 //strncnt 函数用于计算字符串中非 '\0' 字符的数量，最多计算指定的字符数 (a2)。如果在计算过程中遇到 '\0'，则停止计算。函数返回计算的字符数量，如果 '\0' 在 a2 字符范围内未遇到，则返回 a2。
-_BYTE* __cdecl strncnt(_BYTE* a1, int a2)
+char* __cdecl strncnt(char* a1, int a2)
 {
-    _BYTE* v2; // v2: 指向输入字符串的当前处理位置的指针
+    char* v2; // v2: 指向输入字符串的当前处理位置的指针
     int v3; // v3: 剩余要处理的字符数
 
     v2 = a1; // 初始化 v2 为输入字符串的起始位置
@@ -2843,9 +2843,9 @@ _BYTE* __cdecl strncnt(_BYTE* a1, int a2)
 
     // 检查是否遇到 '\0'
     if (*v2) // 如果当前字符不是 '\0'
-        return (_BYTE*)a2; // 返回 a2，表示未遇到 '\0'
+        return (char*)a2; // 返回 a2，表示未遇到 '\0'
     else
-        return (_BYTE*)(v2 - a1); // 返回从字符串开始到当前位置的字符数
+        return (char*)(v2 - a1); // 返回从字符串开始到当前位置的字符数
 }
 */
 
@@ -2939,7 +2939,7 @@ char* __cdecl strncpy(char* Destination, const char* Source, size_t Count)
         v5 += 4; // 移动到下一个 DWORD
         if ((v11 & 0x81010100) == 0) // 检查 DWORD 数据是否包含 '\0'
             goto main_loop_1; // 如果没有 '\0'，继续处理下一个 DWORD
-        if (!(_BYTE)v12) // 如果遇到字符串结束符 '\0'
+        if (!(char)v12) // 如果遇到字符串结束符 '\0'
             break; // 退出循环
         if (!BYTE1(v12)) // 检查下一个字符是否为 '\0'
         {
@@ -2988,7 +2988,7 @@ fill_with_EOSints:
 
 
 //this = B10 + 15956 //程序初始化
-_BYTE* sub_401000(_BYTE* thisx)
+char* sub_401000(char* thisx)
 {
     sub_47FC70(thisx);
     *(int*)thisx = (int)off_4AC230;//指针指向的内容等于另一个指针的地址，不是指针指向的内容等于另一个指针指向的内容,用(int)off_4AC230就会把该地址的地址给它了，要知道强制转换类型但是数值是不会变的
@@ -3076,7 +3076,7 @@ void sub_401390(void* thisx)
     *((int*)thisx + 4) = 0;
     *((int*)thisx + 5) = 0;
     *((int*)thisx + 6) = 0;
-    *((_BYTE*)thisx + 28) = 0;
+    *((char*)thisx + 28) = 0;
 }
 
 //初始化
@@ -3173,7 +3173,7 @@ void sub_4015C7(int thisx, int a2, int a3, int a4, int a5)
     Warning();//修正堆栈
     check_stack c(__FILE__, __LINE__);
     int v9[9]; // [esp+10h] [ebp-24h] BYREF
-    _BYTE* v8; // [esp+Ch] [ebp-28h]
+    char* v8; // [esp+Ch] [ebp-28h]
     unsigned __int16 v7; // [esp+8h] [ebp-2Ch]
     unsigned __int8 v6; // [esp+4h] [ebp-30h]
 
@@ -3194,13 +3194,13 @@ void sub_4015C7(int thisx, int a2, int a3, int a4, int a5)
         memset(v9, 0, sizeof(v9));
         v9[0] = 152 * a3 + *(int*)(thisx + 8);
         v9[1] = *(int*)(thisx + 16);
-        BYTE1(v9[6]) = *(_BYTE*)(thisx + 28);
+        BYTE1(v9[6]) = *(char*)(thisx + 28);
         v9[4] = a4;
         v9[7] = a5;
         v9[2] = *(int*)(thisx + 24);
-        if (!*(_BYTE*)(thisx + 28))
+        if (!*(char*)(thisx + 28))
         {
-            v8 = (_BYTE*)(36 * a5 + dword_4B92E0);
+            v8 = (char*)(36 * a5 + dword_4B92E0);
             v6 = sub_4016F0(v8);
             v7 = (unsigned __int8)sub_401710(v8);
             LOWORD(v9[8]) = sub_475CB0((short*)v8);
@@ -3222,13 +3222,13 @@ void* sub_4016C0(void* thisx, char a2)
 }
 
 //get thisx[18];
-char sub_4016F0(_BYTE* thisx)
+char sub_4016F0(char* thisx)
 {
     return thisx[18];
 }
 
 //get thisx[19];
-char sub_401710(_BYTE* thisx)
+char sub_401710(char* thisx)
 {
     return thisx[19];
 }
@@ -3237,7 +3237,7 @@ char sub_401710(_BYTE* thisx)
 void sub_401730(void* thisx)
 {
     *(int*)thisx = (int)off_4AC248;
-    *((_BYTE*)thisx + 18) = 0;
+    *((char*)thisx + 18) = 0;
 }
 
 //初始化
@@ -3253,7 +3253,7 @@ LPSTR sub_401762(CHAR* thisx, LPCSTR lpString2)
 }
 
 //is
-BOOL sub_401782(_BYTE* thisx, int a2)
+BOOL sub_401782(char* thisx, int a2)
 {
     int i; // [esp+4h] [ebp-4h]
 
@@ -3304,18 +3304,18 @@ void sub_401870(void* thisx)
 
     sub_401E17((int*)thisx + 36);
     *(int*)thisx = (int)off_4AC24C;
-    *((_BYTE*)thisx + 4) = 0;
-    *((_BYTE*)thisx + 5) = 0;
-    *((_BYTE*)thisx + 6) = 0;
-    *((_BYTE*)thisx + 7) = 0;
-    *((_BYTE*)thisx + 8) = 0;
-    *((_BYTE*)thisx + 9) = 0;
-    *((_BYTE*)thisx + 10) = 0;
-    *((_BYTE*)thisx + 15) = 0;
+    *((char*)thisx + 4) = 0;
+    *((char*)thisx + 5) = 0;
+    *((char*)thisx + 6) = 0;
+    *((char*)thisx + 7) = 0;
+    *((char*)thisx + 8) = 0;
+    *((char*)thisx + 9) = 0;
+    *((char*)thisx + 10) = 0;
+    *((char*)thisx + 15) = 0;
     for (i = 0; i < 2; ++i)
     {
-        *((_BYTE*)thisx + i + 11) = 0;
-        *((_BYTE*)thisx + i + 13) = 0;
+        *((char*)thisx + i + 11) = 0;
+        *((char*)thisx + i + 13) = 0;
     }
     SetRect((LPRECT)thisx + 1, 0, 0, 0, 0);
     SetRect((LPRECT)thisx + 5, 0, 0, 0, 0);
@@ -3330,7 +3330,7 @@ void sub_401927(void* thisx)
 }
 
 //读取文件
-int sub_40197E(_BYTE* thisx, HANDLE hFile, int a3, int a4)
+int sub_40197E(char* thisx, HANDLE hFile, int a3, int a4)
 {
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
@@ -3366,18 +3366,18 @@ int sub_40197E(_BYTE* thisx, HANDLE hFile, int a3, int a4)
 //fun初始化
 void** sub_401B16(int thisx)
 {
-    *(_BYTE*)(thisx + 4) = 0;
-    *(_BYTE*)(thisx + 5) = 0;
-    *(_BYTE*)(thisx + 6) = 0;
-    *(_BYTE*)(thisx + 7) = 0;
-    *(_BYTE*)(thisx + 8) = 0;
+    *(char*)(thisx + 4) = 0;
+    *(char*)(thisx + 5) = 0;
+    *(char*)(thisx + 6) = 0;
+    *(char*)(thisx + 7) = 0;
+    *(char*)(thisx + 8) = 0;
     SetRect((LPRECT)(thisx + 16), 0, 0, 0, 0);
     SetRect((LPRECT)(thisx + 80), 0, 0, 0, 0);
     return sub_401E48((void**)(thisx + 144));
 }
 
 //fun初始化
-_BYTE* sub_401B7C(_BYTE* thisx)
+char* sub_401B7C(char* thisx)
 {
 
     int i; // [esp+4h] [ebp-4h]
@@ -3423,7 +3423,7 @@ char __stdcall sub_401C1E(int* thisx, char a2, int a3)
 
     v3 = sub_401BD0(thisx, a2);
     if (v3 && a2 >= 0 && a2 <= 1)
-        return *(_BYTE*)(a2 + v3 + 2);
+        return *(char*)(a2 + v3 + 2);
     else
         return 0;
 }
@@ -3436,7 +3436,7 @@ char __stdcall sub_401C5B(int* thisx, char a2, int a3)
 
     v3 = sub_401BD0(thisx, a2);
     if (v3 && a2 >= 0 && a2 <= 1)
-        return *(_BYTE*)(a2 + v3 + 4);
+        return *(char*)(a2 + v3 + 4);
     else
         return 0;
 }
@@ -3454,7 +3454,7 @@ char __stdcall sub_401C5B(int* thisx, char a2, int a3)
     // 检查 v3 是否非零，并且 a2 的值在 0 到 1 之间
     if (v3 && a2 >= 0 && a2 <= 1)
         // 返回 (a2 + v3 + 4) 地址处的字节值
-        return *(_BYTE*)(a2 + v3 + 4);
+        return *(char*)(a2 + v3 + 4);
     else
         // 如果条件不满足，则返回 0
         return 0;
@@ -3471,7 +3471,7 @@ char __stdcall sub_401C98(int* thisx, char a2)
 
     v2 = sub_401BD0(thisx, a2);
     if (v2)
-        return *(_BYTE*)(v2 + 6);
+        return *(char*)(v2 + 6);
     else
         return 0;
 }
@@ -3483,7 +3483,7 @@ char __stdcall sub_401CC6(int* thisx, char a2)
 
     v2 = sub_401BD0(thisx, a2);
     if (v2)
-        return *(_BYTE*)(v2 + 7);
+        return *(char*)(v2 + 7);
     else
         return 0;
 }
@@ -3495,7 +3495,7 @@ int __stdcall sub_401D24(int* thisx, char a2, char a3, int a4)
 
     result = sub_401BD0(thisx, a2);
     if (result && a3 >= 0 && a3 <= 1)
-        *(_BYTE*)(a3 + result + 2) = a2;
+        *(char*)(a3 + result + 2) = a2;
     return result;
 }
 
@@ -3506,7 +3506,7 @@ int __stdcall sub_401D62(int* thisx, char a2, char a3, int a4)
 
     result = sub_401BD0(thisx, a2);
     if (result && a3 >= 0 && a3 <= 1)
-        *(_BYTE*)(a3 + result + 4) = a2;
+        *(char*)(a3 + result + 4) = a2;
     return result;
 }
 
@@ -3519,7 +3519,7 @@ int sub_401DFE(char* thisx)
 //fun初始化
 int* sub_401E17(int* thisx)
 {
-    *(_BYTE*)thisx = 0;
+    *(char*)thisx = 0;
     thisx[1] = 0;
     return thisx;
 }
@@ -3538,7 +3538,7 @@ void** sub_401E48(void** thisx)
     result = thisx;
     if (thisx[1])
         delete2(thisx[1]);
-    *(_BYTE*)thisx = 0;
+    *(char*)thisx = 0;
     thisx[1] = 0;
     return result;
 }
@@ -3554,7 +3554,7 @@ int sub_401E83(int* thisx, unsigned __int8 a2)
 
 
 //读取文件
-int sub_401ED9(_BYTE* thisx, HANDLE hFile, int a3)
+int sub_401ED9(char* thisx, HANDLE hFile, int a3)
 {
 
     //修正堆栈
@@ -3653,14 +3653,14 @@ int* sub_4020B0(int* thisx)
     thisx[9] = 3;
     *thisx = 0;
     thisx[3] = 0;
-    *((_BYTE*)thisx + 4) = 0;
+    *((char*)thisx + 4) = 0;
     thisx[2] = 0;
-    *((_BYTE*)thisx + 17) = -1;
-    *((_BYTE*)thisx + 40) = 0;
+    *((char*)thisx + 17) = -1;
+    *((char*)thisx + 40) = 0;
     thisx[8] = 0;
     thisx[11] = 0;
     thisx[12] = 83;
-    *((_BYTE*)thisx + 30) = 0;
+    *((char*)thisx + 30) = 0;
     return thisx;
 }
 
@@ -3677,27 +3677,27 @@ void sub_40211F(void* thisx)
     *((int*)thisx + 84) = 0;
     *((int*)thisx + 106) = 1;
     *((short*)thisx + 102) = 0;
-    *((_BYTE*)thisx + 212) = 0;
-    *((_BYTE*)thisx + 195) = 3;
+    *((char*)thisx + 212) = 0;
+    *((char*)thisx + 195) = 3;
     *((int*)thisx + 107) = 3;
     *((int*)thisx + 111) = 0;
-    *((_BYTE*)thisx + 184) = 0;
+    *((char*)thisx + 184) = 0;
     *((int*)thisx + 99) = 1;
     *((int*)thisx + 101) = 1;
     *((int*)thisx + 41) = 0;
-    *((_BYTE*)thisx + 248) = 0;
+    *((char*)thisx + 248) = 0;
     *((int*)thisx + 98) = 0;
     *((int*)thisx + 72) = 0;
     *((int*)thisx + 73) = 0;
-    *((_BYTE*)thisx + 470) = 0;
-    *((_BYTE*)thisx + 223) = 128;
+    *((char*)thisx + 470) = 0;
+    *((char*)thisx + 223) = 128;
     memset((char*)thisx + 230, 0, 3u);
     memset((char*)thisx + 453, 0, 8u);
     memset((char*)thisx + 461, 0, 8u);
-    sub_423CF2((_BYTE*)thisx, 0, 0, 0, 0, 0, 0);
+    sub_423CF2((char*)thisx, 0, 0, 0, 0, 0, 0);
     *((int*)thisx + 33) = (int)thisx;
-    *((_BYTE*)thisx + 176) = 0;
-    *((_BYTE*)thisx + 177) = 0;
+    *((char*)thisx + 176) = 0;
+    *((char*)thisx + 177) = 0;
     *((int*)thisx + 45) = 0;
 }
 
@@ -3727,10 +3727,10 @@ void __fastcall sub_40230C(int a1)
     int v38; // [esp+94h] [ebp-34h]     u52
     int Src; // [esp+90h] [ebp-38h] BYREF   u56
 
-    _BYTE* v36; // [esp+8Ch] [ebp-3Ch]
+    char* v36; // [esp+8Ch] [ebp-3Ch]
     char v35; // [esp+88h] [ebp-40h]
     int v34; // [esp+84h] [ebp-44h]
-    _BYTE* v33; // [esp+80h] [ebp-48h]
+    char* v33; // [esp+80h] [ebp-48h]
     int v32; // [esp+7Ch] [ebp-4Ch]
     int i; // [esp+78h] [ebp-50h]
     int v30; // [esp+74h] [ebp-54h]
@@ -3807,12 +3807,12 @@ void __fastcall sub_40230C(int a1)
     if (*(int*)(a1 + 428) != 80)
     {
         v22 = *(int*)(a1 + 328);
-        if (*(_BYTE*)(a1 + 474) && *(_BYTE*)(a1 + 475) && (*(_BYTE*)(a1 + 474) & 1) == 0)
+        if (*(char*)(a1 + 474) && *(char*)(a1 + 475) && (*(char*)(a1 + 474) & 1) == 0)
             *(int*)(a1 + 328) += 100 * (*(int*)(a1 + 424) - (*(int*)(a1 + 424) == 0));
         sub_446442((int*)byte_4B9B10, a1, (int)v23);
         v26 = v23[0];
         v24 = v23[1];
-        v36 = (_BYTE*)sub_4741F8((int)byte_4B9B10, v22 / 800, *(int*)(a1 + 332) / 800);
+        v36 = (char*)sub_4741F8((int)byte_4B9B10, v22 / 800, *(int*)(a1 + 332) / 800);
         v32 = sub_446497((int*)byte_4B9B10, v22 / 100, *(int*)(a1 + 332) / 100);
         if (v36 && sub_425C50(v36))
             v32 = 4 * (unsigned __int8)unknown_libname_6(v36);
@@ -3828,7 +3828,7 @@ void __fastcall sub_40230C(int a1)
         }
         v35 = sub_4464F6((int*)byte_4B9B10, v22 / 800, *(int*)(a1 + 332) / 800);
         sub_49C15E((int)&Src);
-        if ((_BYTE)v28 && (*(int*)(a1 + 392) || v29))
+        if ((char)v28 && (*(int*)(a1 + 392) || v29))
         {
             v38 = v26 - 8;
             v1 = *(int*)(a1 + 332) / 100 - v32;
@@ -3838,7 +3838,7 @@ void __fastcall sub_40230C(int a1)
             Src = dword_4B9214;
             if ((unsigned __int8)v28 == 2)
             {
-                if (dword_4B93B0 % 2u == (*(_BYTE*)(a1 + 184) & 1))
+                if (dword_4B93B0 % 2u == (*(char*)(a1 + 184) & 1))
                     sub_49AB05((int)byte_4BDC60, &Src);
             }
             else if ((unsigned __int8)v28 == 1)
@@ -3846,7 +3846,7 @@ void __fastcall sub_40230C(int a1)
                 sub_49AB05((int)byte_4BDC60, &Src);
             }
         }
-        if (!*(_BYTE*)(a1 + 176))
+        if (!*(char*)(a1 + 176))
         {
             v38 = v26;
             v39 = v24;
@@ -3863,7 +3863,7 @@ void __fastcall sub_40230C(int a1)
             else
             {
                 Src = *(unsigned __int8*)(a1 + 195) < 4u
-                    && (sub_41BA53(a1, 0x26u, 0) || *(int*)(a1 + 524) || sub_425CD0((int*)byte_4B9B10) == 3 && *(_BYTE*)(a1 + 184)) ? *((__int16*)*(dword_4B9370 + *(unsigned __int8*)(a1 + 195)) + *(unsigned __int16*)(a1 + 498)) + *(int*)(a1 + 196) : *(int*)(a1 + 196);
+                    && (sub_41BA53(a1, 0x26u, 0) || *(int*)(a1 + 524) || sub_425CD0((int*)byte_4B9B10) == 3 && *(char*)(a1 + 184)) ? *((__int16*)*(dword_4B9370 + *(unsigned __int8*)(a1 + 195)) + *(unsigned __int16*)(a1 + 498)) + *(int*)(a1 + 196) : *(int*)(a1 + 196);
             }
             sub_41CA3D((void*)a1, (int*)&v21);
             if (v21)
@@ -3884,7 +3884,7 @@ void __fastcall sub_40230C(int a1)
                             v3 = sub_475EB0(v21);
                             if (v3 == i)
                             {
-                                if (*(int*)(a1 + 428) == 142 && sub_425CB0(*(_BYTE**)(a1 + 480)) == 1)
+                                if (*(int*)(a1 + 428) == 142 && sub_425CB0(*(char**)(a1 + 480)) == 1)
                                     v19 = 0;
                                 sub_498F3D(*(int*)(a1 + 480));
                                 sub_490D23(*(int*)(a1 + 480));
@@ -3893,7 +3893,7 @@ void __fastcall sub_40230C(int a1)
                     }
                     if (i != v34)
                     {
-                        v33 = (_BYTE*)sub_41EEB5((_BYTE*)a1, (int*)v21, i);
+                        v33 = (char*)sub_41EEB5((char*)a1, (int*)v21, i);
                         v4 = sub_401C1E((int*)v21, i, *(int*)(a1 + 424));
                         v38 = v4 + v25;
                         v5 = sub_401C5B((int*)v21, i, 0);
@@ -3970,7 +3970,7 @@ void __fastcall sub_40230C(int a1)
                         }
                     }
                 }
-                if (*(_BYTE*)(a1 + 474) && *(_BYTE*)(a1 + 475) && (*(_BYTE*)(a1 + 474) & 1) == 0)
+                if (*(char*)(a1 + 474) && *(char*)(a1 + 475) && (*(char*)(a1 + 474) & 1) == 0)
                     *(int*)(a1 + 328) = v22;
             }
         }
@@ -3984,7 +3984,7 @@ int sub_402C05(int thisx)
     Warning();//修正堆栈
     check_stack c(__FILE__, __LINE__);
     int* v68; // [esp+110h] [ebp-4h]
-    _BYTE* v67; // [esp+10Ch] [ebp-8h]
+    char* v67; // [esp+10Ch] [ebp-8h]
     char* v66; // [esp+108h] [ebp-Ch]
     int v65; // [esp+104h] [ebp-10h]
     BOOL v64; // [esp+100h] [ebp-14h]
@@ -4131,19 +4131,19 @@ int sub_402C05(int thisx)
     v53 = 0;
     v48 = 0;
     v65 = 0;
-    *(_BYTE*)(thisx + 272) = 0;
+    *(char*)(thisx + 272) = 0;
     *(int*)(thisx + 276) = 0;
     *(int*)(thisx + 280) = 0;
     *(int*)(thisx + 268) = 0;
     *(int*)(thisx + 588) = 0;
-    v67 = (_BYTE*)sub_425DF0((int)byte_4B9B10, *(unsigned __int8*)(thisx + 184));
-    if (*(_BYTE*)(thisx + 474))
+    v67 = (char*)sub_425DF0((int)byte_4B9B10, *(unsigned __int8*)(thisx + 184));
+    if (*(char*)(thisx + 474))
     {
-        --* (_BYTE*)(thisx + 474);
+        --* (char*)(thisx + 474);
         result = thisx;
-        if (*(_BYTE*)(thisx + 474))
+        if (*(char*)(thisx + 474))
             return result;
-        *(_BYTE*)(thisx + 475) = 0;
+        *(char*)(thisx + 475) = 0;
     }
     *(int*)(thisx + 340) = 0;
     *(int*)(thisx + 344) = 0;
@@ -4154,14 +4154,14 @@ int sub_402C05(int thisx)
     }
     else
     {
-        *(_BYTE*)(thisx + 238) = 0;
+        *(char*)(thisx + 238) = 0;
     }
     if (*(int*)(thisx + 288) && (!*(int*)(thisx + 304) || sub_425D30(*(int**)(thisx + 304))))
     {
         *(int*)(thisx + 304) = 0;
         *(int*)(thisx + 288) = 0;
     }
-    if (*(_BYTE*)(thisx + 178))
+    if (*(char*)(thisx + 178))
     {
         if (*(int*)(thisx + 164))
         {
@@ -4175,21 +4175,21 @@ int sub_402C05(int thisx)
             v65 = *(char*)(thisx + 154);
             for (i = 0; i < 3; ++i)
             {
-                if (*(_BYTE*)(i + thisx + 151))
+                if (*(char*)(i + thisx + 151))
                 {
                     if (*(char*)(i + thisx + 230) < 0)
-                        *(_BYTE*)(i + thisx + 230) = 0;
-                    if (++ * (_BYTE*)(i + thisx + 230) == 6)
-                        *(_BYTE*)(i + thisx + 230) = 5;
+                        *(char*)(i + thisx + 230) = 0;
+                    if (++ * (char*)(i + thisx + 230) == 6)
+                        *(char*)(i + thisx + 230) = 5;
                 }
                 else if (*(char*)(i + thisx + 230) <= 0)
                 {
-                    if ((char)-- * (_BYTE*)(i + thisx + 230) == -6)
-                        *(_BYTE*)(i + thisx + 230) = -5;
+                    if ((char)-- * (char*)(i + thisx + 230) == -6)
+                        *(char*)(i + thisx + 230) = -5;
                 }
                 else
                 {
-                    *(_BYTE*)(i + thisx + 230) = 0;
+                    *(char*)(i + thisx + 230) = 0;
                 }
             }
         }
@@ -4230,33 +4230,33 @@ int sub_402C05(int thisx)
                 if (v45)
                 {
                     if (*(char*)(j + thisx + 230) < 0)
-                        *(_BYTE*)(j + thisx + 230) = 0;
-                    if (++ * (_BYTE*)(j + thisx + 230) == 6)
-                        *(_BYTE*)(j + thisx + 230) = 5;
+                        *(char*)(j + thisx + 230) = 0;
+                    if (++ * (char*)(j + thisx + 230) == 6)
+                        *(char*)(j + thisx + 230) = 5;
                 }
                 else if (*(char*)(j + thisx + 230) <= 0)
                 {
-                    if ((char)-- * (_BYTE*)(j + thisx + 230) == -6)
-                        *(_BYTE*)(j + thisx + 230) = -5;
+                    if ((char)-- * (char*)(j + thisx + 230) == -6)
+                        *(char*)(j + thisx + 230) = -5;
                 }
                 else
                 {
-                    *(_BYTE*)(j + thisx + 230) = 0;
+                    *(char*)(j + thisx + 230) = 0;
                 }
             }
             if (*(char*)(thisx + 233) > 0)
             {
-                *(_BYTE*)(thisx + 230) = *(_BYTE*)(thisx + 233);
-                *(_BYTE*)(thisx + 231) = *(_BYTE*)(thisx + 233);
+                *(char*)(thisx + 230) = *(char*)(thisx + 233);
+                *(char*)(thisx + 231) = *(char*)(thisx + 233);
             }
             if (*(char*)(thisx + 234) > 0)
             {
-                *(_BYTE*)(thisx + 230) = *(_BYTE*)(thisx + 234);
-                *(_BYTE*)(thisx + 232) = *(_BYTE*)(thisx + 234);
+                *(char*)(thisx + 230) = *(char*)(thisx + 234);
+                *(char*)(thisx + 232) = *(char*)(thisx + 234);
             }
             for (k = 0; k < 3; ++k)
-                *(_BYTE*)(k + thisx + 226) = *(char*)(k + thisx + 230) > 0;
-            *(_BYTE*)(thisx + 229) = *(char*)(thisx + 235) > 0;
+                *(char*)(k + thisx + 226) = *(char*)(k + thisx + 230) > 0;
+            *(char*)(thisx + 229) = *(char*)(thisx + 235) > 0;
             v26 = *(char*)(thisx + 230) > 0 && *(char*)(thisx + 230) < 5;
             v59 = v26;
             v25 = *(char*)(thisx + 231) > 0 && *(char*)(thisx + 231) < 5;
@@ -4274,7 +4274,7 @@ int sub_402C05(int thisx)
         if (*(int*)(thisx + 428) == 82)
             v55 = 1;
         for (m = 0; m < 3; ++m)
-            *(_BYTE*)(m + thisx + 230) = 0;
+            *(char*)(m + thisx + 230) = 0;
     }
     if (*(char*)(thisx + 224) <= 0)
         v23 = (*(char*)(thisx + 224) >= 0) - 1;
@@ -4291,11 +4291,11 @@ int sub_402C05(int thisx)
         else
             v21 = *(char*)(thisx + 224);
         if (v21 < 5)
-            *(_BYTE*)(thisx + 224) += v61;
+            *(char*)(thisx + 224) += v61;
     }
     else
     {
-        *(_BYTE*)(thisx + 224) = v61;
+        *(char*)(thisx + 224) = v61;
     }
     if (*(char*)(thisx + 225) <= 0)
         v20 = (*(char*)(thisx + 225) >= 0) - 1;
@@ -4312,37 +4312,37 @@ int sub_402C05(int thisx)
         else
             v18 = *(char*)(thisx + 225);
         if (v18 < 5)
-            *(_BYTE*)(thisx + 225) += v58;
+            *(char*)(thisx + 225) += v58;
     }
     else
     {
-        *(_BYTE*)(thisx + 225) = v58;
+        *(char*)(thisx + 225) = v58;
     }
-    if (byte_4B99C8 && v65 && (v59 || v55 || v53) && !*(_BYTE*)(thisx + 556))
+    if (byte_4B99C8 && v65 && (v59 || v55 || v53) && !*(char*)(thisx + 556))
     {
         if (v59)
         {
-            *(_BYTE*)(thisx + 556) = 1;
+            *(char*)(thisx + 556) = 1;
         }
         else if (v55)
         {
-            *(_BYTE*)(thisx + 556) = 2;
+            *(char*)(thisx + 556) = 2;
         }
         else
         {
-            *(_BYTE*)(thisx + 556) = 3;
+            *(char*)(thisx + 556) = 3;
         }
         if (v59)
-            *(_BYTE*)(thisx + 230) = 5;
+            *(char*)(thisx + 230) = 5;
         if (v55)
-            *(_BYTE*)(thisx + 231) = 5;
+            *(char*)(thisx + 231) = 5;
         if (v59 && v55)
-            *(_BYTE*)(thisx + 233) = 5;
+            *(char*)(thisx + 233) = 5;
         if (v59 && v48)
-            *(_BYTE*)(thisx + 234) = 5;
-        *(_BYTE*)(thisx + 557) = 60;
+            *(char*)(thisx + 234) = 5;
+        *(char*)(thisx + 557) = 60;
         sub_43FFC3((int*)byte_4BDB28, dword_4B9AB4, -1, 100, 100, 0);
-        v42 = (char*)sub_46622B((char*)byte_4B9B10, (char*)thisx, *(_BYTE*)(thisx + 556));
+        v42 = (char*)sub_46622B((char*)byte_4B9B10, (char*)thisx, *(char*)(thisx + 556));
         if (v42 && sub_41BEA6((int*)thisx))
         {
             if (v59)
@@ -4361,28 +4361,28 @@ int sub_402C05(int thisx)
     {
         if ((int)-- * (int*)(thisx + 172) <= 0)
         {
-            *(_BYTE*)(thisx + 177) = 0;
-            *(_BYTE*)(thisx + 176) = 0;
+            *(char*)(thisx + 177) = 0;
+            *(char*)(thisx + 176) = 0;
         }
         else
         {
-            *(_BYTE*)(thisx + 177) = 1;
+            *(char*)(thisx + 177) = 1;
             v41 = 6;
             if (*(int*)(thisx + 172) < 300)
                 v41 = *(int*)(thisx + 172) / 60 + 1;
-            *(_BYTE*)(thisx + 176) = *(int*)(thisx + 172) / v41 % 2;
+            *(char*)(thisx + 176) = *(int*)(thisx + 172) / v41 % 2;
         }
     }
-    if (*(_BYTE*)(thisx + 470))
+    if (*(char*)(thisx + 470))
     {
         if (*(int*)(thisx + 164))
         {
             if (!(*(int*)(thisx + 444) % 3))
-                --* (_BYTE*)(thisx + 470);
+                --* (char*)(thisx + 470);
         }
         else if (v59 || v55)
         {
-            --* (_BYTE*)(thisx + 470);
+            --* (char*)(thisx + 470);
         }
     }
     if (*(int*)(thisx + 412))
@@ -4399,19 +4399,19 @@ int sub_402C05(int thisx)
     }
     if (v61)
     {
-        *(_BYTE*)(thisx + 418) = 0;
+        *(char*)(thisx + 418) = 0;
         if (*(char*)(thisx + 417) <= 0)
             v17 = (*(char*)(thisx + 417) >= 0) - 1;
         else
             v17 = 1;
         if (v17 == v61)
         {
-            *(_BYTE*)(thisx + 417) += v61;
+            *(char*)(thisx + 417) += v61;
         }
         else
         {
-            *(_BYTE*)(thisx + 416) = 0;
-            *(_BYTE*)(thisx + 417) = v61;
+            *(char*)(thisx + 416) = 0;
+            *(char*)(thisx + 417) = v61;
         }
         if (*(char*)(thisx + 417) <= 0)
             v16 = -*(char*)(thisx + 417);
@@ -4419,16 +4419,16 @@ int sub_402C05(int thisx)
             v16 = *(char*)(thisx + 417);
         if (v16 >= 10)
         {
-            *(_BYTE*)(thisx + 416) = 0;
+            *(char*)(thisx + 416) = 0;
         }
-        else if (*(_BYTE*)(thisx + 416) == 2)
+        else if (*(char*)(thisx + 416) == 2)
         {
-            *(_BYTE*)(thisx + 416) = -1;
+            *(char*)(thisx + 416) = -1;
         }
         else
         {
-            *(_BYTE*)(thisx + 416) = 1;
-            *(_BYTE*)(thisx + 418) = 0;
+            *(char*)(thisx + 416) = 1;
+            *(char*)(thisx + 418) = 0;
         }
     }
     else
@@ -4437,50 +4437,50 @@ int sub_402C05(int thisx)
             v15 = (*(char*)(thisx + 417) >= 0) - 1;
         else
             v15 = 1;
-        *(_BYTE*)(thisx + 417) = v15;
-        if ((char)++ * (_BYTE*)(thisx + 418) <= 10)
+        *(char*)(thisx + 417) = v15;
+        if ((char)++ * (char*)(thisx + 418) <= 10)
         {
-            if (*(_BYTE*)(thisx + 416) == 1)
-                *(_BYTE*)(thisx + 416) = 2;
+            if (*(char*)(thisx + 416) == 1)
+                *(char*)(thisx + 416) = 2;
         }
         else
         {
-            *(_BYTE*)(thisx + 416) = 0;
+            *(char*)(thisx + 416) = 0;
         }
     }
     if (v58 <= 0)
     {
         if (v58)
         {
-            *(_BYTE*)(thisx + 419) = 0;
+            *(char*)(thisx + 419) = 0;
         }
         else
         {
-            *(_BYTE*)(thisx + 421) = 0;
-            if ((char)++ * (_BYTE*)(thisx + 422) < 20 && *(_BYTE*)(thisx + 419) == 1)
+            *(char*)(thisx + 421) = 0;
+            if ((char)++ * (char*)(thisx + 422) < 20 && *(char*)(thisx + 419) == 1)
             {
-                *(_BYTE*)(thisx + 419) = 2;
+                *(char*)(thisx + 419) = 2;
             }
             else if (*(char*)(thisx + 422) >= 20)
             {
-                *(_BYTE*)(thisx + 419) = 0;
+                *(char*)(thisx + 419) = 0;
             }
         }
     }
     else
     {
-        *(_BYTE*)(thisx + 422) = 0;
-        if ((char)++ * (_BYTE*)(thisx + 421) >= 10)
+        *(char*)(thisx + 422) = 0;
+        if ((char)++ * (char*)(thisx + 421) >= 10)
         {
-            *(_BYTE*)(thisx + 419) = 0;
+            *(char*)(thisx + 419) = 0;
         }
-        else if (*(_BYTE*)(thisx + 419) == 2)
+        else if (*(char*)(thisx + 419) == 2)
         {
-            *(_BYTE*)(thisx + 419) = -1;
+            *(char*)(thisx + 419) = -1;
         }
         else
         {
-            *(_BYTE*)(thisx + 419) = 1;
+            *(char*)(thisx + 419) = 1;
         }
     }
     v54 = 0;
@@ -4505,35 +4505,35 @@ int sub_402C05(int thisx)
     {
         if (v58)
         {
-            *(_BYTE*)(thisx + 420) = 0;
+            *(char*)(thisx + 420) = 0;
         }
         else
         {
-            *(_BYTE*)(thisx + 421) = 0;
-            if ((char)++ * (_BYTE*)(thisx + 422) < 20 && *(_BYTE*)(thisx + 420) == 1)
+            *(char*)(thisx + 421) = 0;
+            if ((char)++ * (char*)(thisx + 422) < 20 && *(char*)(thisx + 420) == 1)
             {
-                *(_BYTE*)(thisx + 420) = 2;
+                *(char*)(thisx + 420) = 2;
             }
             else if (*(char*)(thisx + 422) >= 20)
             {
-                *(_BYTE*)(thisx + 420) = 0;
+                *(char*)(thisx + 420) = 0;
             }
         }
     }
     else
     {
-        *(_BYTE*)(thisx + 422) = 0;
-        if ((char)++ * (_BYTE*)(thisx + 421) >= 10)
+        *(char*)(thisx + 422) = 0;
+        if ((char)++ * (char*)(thisx + 421) >= 10)
         {
-            *(_BYTE*)(thisx + 420) = 0;
+            *(char*)(thisx + 420) = 0;
         }
-        else if (*(_BYTE*)(thisx + 420) == 2)
+        else if (*(char*)(thisx + 420) == 2)
         {
-            *(_BYTE*)(thisx + 420) = -1;
+            *(char*)(thisx + 420) = -1;
         }
         else
         {
-            *(_BYTE*)(thisx + 420) = 1;
+            *(char*)(thisx + 420) = 1;
         }
     }
     v66 = 0;
@@ -4560,20 +4560,20 @@ int sub_402C05(int thisx)
             *(int*)(thisx + 432) = 4;
         *(int*)(thisx + 444) = 0;
     }
-    if (!*(_BYTE*)(thisx + 188)
+    if (!*(char*)(thisx + 188)
         && !*(int*)(thisx + 304)
         && !*(int*)(thisx + 480)
         && (v59 || v55)
         && *(int*)(thisx + 428) > 2
         && *(int*)(thisx + 428) < 9)
     {
-        *(_BYTE*)(thisx + 222) = 3;
+        *(char*)(thisx + 222) = 3;
         if (sub_41BA53(thisx, 0x85u, 0))
-            *(_BYTE*)(thisx + 222) += 3;
+            *(char*)(thisx + 222) += 3;
     }
     v56 = 0;
     v52 = 0;
-    if (*(_BYTE*)(thisx + 188) != 1
+    if (*(char*)(thisx + 188) != 1
         && ((v59 || v55) && *(int*)(thisx + 428) != 10 || v48 && *(int*)(thisx + 428) == 10)
         && (*(int*)(thisx + 396)
             || *(int*)(thisx + 428) == 10
@@ -4584,7 +4584,7 @@ int sub_402C05(int thisx)
     {
         if (!*(int*)(thisx + 392))
             v56 = (int*)sub_456B0D((unsigned char*)byte_4B9B10, (int*)thisx, 1);
-        if (!*(_BYTE*)(thisx + 188) && !v56 && (*(int*)(thisx + 428) != 7 || *(int*)(thisx + 444) > 5))
+        if (!*(char*)(thisx + 188) && !v56 && (*(int*)(thisx + 428) != 7 || *(int*)(thisx + 444) > 5))
             v52 = (Concurrency::details::SchedulerProxy*)sub_464229((char*)byte_4B9B10, (Concurrency::details::SchedulerBase*)thisx);
     }
     v68 = 0;
@@ -4608,7 +4608,7 @@ int sub_402C05(int thisx)
     {
         if (*(int*)(thisx + 480))
         {
-            LOBYTE(v4) = sub_425CB0(*(_BYTE**)(thisx + 480));
+            LOBYTE(v4) = sub_425CB0(*(char**)(thisx + 480));
             if (sub_4771C5(3, v4))
                 v64 = 0;
         }
@@ -4617,7 +4617,7 @@ int sub_402C05(int thisx)
     {
         if (v49)
         {
-            v13 = !v64 && !v68 && !*(_BYTE*)(thisx + 177) && *(int*)(thisx + 404) && !*(int*)(thisx + 288);
+            v13 = !v64 && !v68 && !*(char*)(thisx + 177) && *(int*)(thisx + 404) && !*(int*)(thisx + 288);
             v50 = v13;
         }
         else
@@ -4627,11 +4627,11 @@ int sub_402C05(int thisx)
     }
     else
     {
-        v14 = !v64 && !v68 && !*(_BYTE*)(thisx + 177) && *(int*)(thisx + 396) && !*(int*)(thisx + 288);
+        v14 = !v64 && !v68 && !*(char*)(thisx + 177) && *(int*)(thisx + 396) && !*(int*)(thisx + 288);
         v50 = v14;
     }
     v51 = 0;
-    if (!*(_BYTE*)(thisx + 188) && v48 && *(int*)(thisx + 428) == 10)
+    if (!*(char*)(thisx + 188) && v48 && *(int*)(thisx + 428) == 10)
         v51 = (int*)sub_446814((int*)byte_4B9B10, (int*)thisx);
     v60 = 83;
     v63 = 0;
@@ -4639,7 +4639,7 @@ int sub_402C05(int thisx)
         v63 = *(int*)(thisx + 16);
     if (v63 && *(int*)(thisx + 404))
     {
-        if (*(_BYTE*)(thisx + 188) == 2)
+        if (*(char*)(thisx + 188) == 2)
         {
             if (v63 == 1)
             {
@@ -4653,7 +4653,7 @@ int sub_402C05(int thisx)
                     v60 = 205;
             }
         }
-        else if (*(_BYTE*)(thisx + 188) == 3)
+        else if (*(char*)(thisx + 188) == 3)
         {
             if (v63 == 1)
             {
@@ -4718,7 +4718,7 @@ int sub_402C05(int thisx)
         *(int*)(thisx + 396) = 0;
         *(int*)(thisx + 404) = 0;
         *(int*)(thisx + 400) = 0;
-        if (*(_BYTE*)(thisx + 237) && *(int*)(thisx + 392)
+        if (*(char*)(thisx + 237) && *(int*)(thisx + 392)
             || v62 == 10
             || v62 == 125
             || v62 == 8
@@ -4730,7 +4730,7 @@ int sub_402C05(int thisx)
             *(int*)(thisx + 432) = 8;
             *(int*)(thisx + 348) = -(3 * sub_41D067(thisx, 0) / 2 + 405);
             *(int*)(thisx + 344) = 50 * v58;
-            *(_BYTE*)(thisx + 236) = 3;
+            *(char*)(thisx + 236) = 3;
         }
         else
         {
@@ -4742,9 +4742,9 @@ int sub_402C05(int thisx)
                 *(int*)(thisx + 344) = 50 * v58;
             }
             if (v61)
-                *(_BYTE*)(thisx + 236) = 2;
+                *(char*)(thisx + 236) = 2;
             else
-                *(_BYTE*)(thisx + 236) = 1;
+                *(char*)(thisx + 236) = 1;
         }
         if (!*(int*)(thisx + 392))
         {
@@ -4763,10 +4763,10 @@ int sub_402C05(int thisx)
         }
         goto LABEL_921;
     }
-    if (*(_BYTE*)(thisx + 188) != 1 && byte_4B99CA && (v59 || v55) && v50 && sub_463F66((char*)byte_4B9B10, (_BYTE*)thisx))
+    if (*(char*)(thisx + 188) != 1 && byte_4B99CA && (v59 || v55) && v50 && sub_463F66((char*)byte_4B9B10, (char*)thisx))
     {
         *(int*)(thisx + 432) = 77;
-        *(_BYTE*)(thisx + 221) = 0;
+        *(char*)(thisx + 221) = 0;
         *(int*)(thisx + 444) = 0;
         goto LABEL_921;
     }
@@ -4782,13 +4782,13 @@ int sub_402C05(int thisx)
         {
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A1C, -1, 100, 100, 0);
             if (v59)
-                *(_BYTE*)(thisx + 230) = 5;
+                *(char*)(thisx + 230) = 5;
             if (v55)
-                *(_BYTE*)(thisx + 231) = 5;
+                *(char*)(thisx + 231) = 5;
             if (v59 && v55)
-                *(_BYTE*)(thisx + 233) = 5;
+                *(char*)(thisx + 233) = 5;
             if (v59 && v48)
-                *(_BYTE*)(thisx + 234) = 5;
+                *(char*)(thisx + 234) = 5;
         }
         else
         {
@@ -4807,7 +4807,7 @@ int sub_402C05(int thisx)
         else
             *(int*)(thisx + 432) = 57;
         sub_41B6CF(*(int**)(thisx + 304), thisx, 1);
-        *(_BYTE*)(thisx + 258) = 2;
+        *(char*)(thisx + 258) = 2;
         goto LABEL_921;
     }
     if (*(int*)(thisx + 428) == 15 && *(unsigned __int8*)(thisx + 420) == 255 && sub_41BA53(thisx, 0x27u, 0))
@@ -4852,7 +4852,7 @@ int sub_402C05(int thisx)
     }
     if (!*(int*)(thisx + 480)
         && !*(int*)(thisx + 288)
-        && *(_BYTE*)(thisx + 225) == 1
+        && *(char*)(thisx + 225) == 1
         && *(int*)(thisx + 428) == 8
         && sub_41BA53(thisx, 7u, 0))
     {
@@ -4863,7 +4863,7 @@ int sub_402C05(int thisx)
         && !*(int*)(thisx + 288)
         && *(char*)(thisx + 231) <= -2
         && *(char*)(thisx + 232) <= -2
-        && *(_BYTE*)(thisx + 230) == 5
+        && *(char*)(thisx + 230) == 5
         && *(int*)(thisx + 404)
         && (!*(int*)(thisx + 304) || *(int*)(thisx + 428) == 4 || *(int*)(thisx + 428) == 5)
         && !*(int*)(thisx + 480))
@@ -4875,7 +4875,7 @@ int sub_402C05(int thisx)
         && !*(int*)(thisx + 288)
         && *(char*)(thisx + 231) <= -2
         && *(char*)(thisx + 232) <= -2
-        && *(_BYTE*)(thisx + 230) == 5
+        && *(char*)(thisx + 230) == 5
         && *(int*)(thisx + 404)
         && (!*(int*)(thisx + 304)
             || *(int*)(thisx + 428) == 3
@@ -4900,7 +4900,7 @@ int sub_402C05(int thisx)
         && v59
         && v12
         && sub_41BA53(thisx, 0xFu, 0)
-        && (!*(int*)(thisx + 480) || sub_494AA9(*(_BYTE**)(thisx + 480), 2)))
+        && (!*(int*)(thisx + 480) || sub_494AA9(*(char**)(thisx + 480), 2)))
     {
         *(int*)(thisx + 432) = 158;
         goto LABEL_921;
@@ -4926,14 +4926,14 @@ int sub_402C05(int thisx)
     {
         v39 = 0;
         v38 = 0;
-        if (!*(_BYTE*)(thisx + 188) && !v68)
+        if (!*(char*)(thisx + 188) && !v68)
             v39 = (int*)sub_446814((int*)byte_4B9B10, (int*)thisx);
-        if (!*(_BYTE*)(thisx + 188) && !v68 && !v39)
+        if (!*(char*)(thisx + 188) && !v68 && !v39)
             v38 = (int*)sub_446A62((int*)byte_4B9B10, (int*)thisx, 0);
         if (*(int*)(thisx + 428) == 52)
         {
             *(int*)(thisx + 432) = 57;
-            *(_BYTE*)(thisx + 258) = 0;
+            *(char*)(thisx + 258) = 0;
             if (!*(int*)(thisx + 304))
             {
             LABEL_517:
@@ -4941,7 +4941,7 @@ int sub_402C05(int thisx)
             LABEL_608:
                 if (*(int*)(thisx + 432) == 124 || *(int*)(thisx + 432) == 128)
                 {
-                    if (*(_BYTE*)(thisx + 476))
+                    if (*(char*)(thisx + 476))
                     {
                         *(int*)(thisx + 432) = 163;
                     }
@@ -4977,7 +4977,7 @@ int sub_402C05(int thisx)
                     else
                     {
                         *(int*)(thisx + 432) = 57;
-                        *(_BYTE*)(thisx + 258) = 0;
+                        *(char*)(thisx + 258) = 0;
                         *(int*)(thisx + 304) = *(int*)(thisx + 312);
                         sub_421051(*(int**)(thisx + 304));
                         sub_41B6F5(thisx);
@@ -4990,25 +4990,25 @@ int sub_402C05(int thisx)
                 }
                 else if (*(int*)(thisx + 480))
                 {
-                    if (!*(_BYTE*)(thisx + 473))
+                    if (!*(char*)(thisx + 473))
                     {
-                        if (sub_425CB0(*(_BYTE**)(thisx + 480)) == 12)
+                        if (sub_425CB0(*(char**)(thisx + 480)) == 12)
                         {
                             *(int*)(thisx + 432) = 143;
                         }
-                        else if (sub_41BA53(thisx, 0x20u, 0) && sub_494AA9(*(_BYTE**)(thisx + 480), 1))
+                        else if (sub_41BA53(thisx, 0x20u, 0) && sub_494AA9(*(char**)(thisx + 480), 1))
                         {
                             *(int*)(thisx + 432) = 174;
                         }
-                        else if (sub_41BA53(thisx, 0x21u, 0) && sub_494AA9(*(_BYTE**)(thisx + 480), 1))
+                        else if (sub_41BA53(thisx, 0x21u, 0) && sub_494AA9(*(char**)(thisx + 480), 1))
                         {
                             *(int*)(thisx + 432) = 175;
                         }
-                        else if (sub_41BA53(thisx, 2u, 0) && sub_425CB0(*(_BYTE**)(thisx + 480)) == 1)
+                        else if (sub_41BA53(thisx, 2u, 0) && sub_425CB0(*(char**)(thisx + 480)) == 1)
                         {
                             *(int*)(thisx + 432) = 145;
                         }
-                        else if (sub_41BA53(thisx, 0x2Fu, 0) && sub_425CB0(*(_BYTE**)(thisx + 480)) == 1)
+                        else if (sub_41BA53(thisx, 0x2Fu, 0) && sub_425CB0(*(char**)(thisx + 480)) == 1)
                         {
                             *(int*)(thisx + 432) = 182;
                         }
@@ -5016,7 +5016,7 @@ int sub_402C05(int thisx)
                         {
                             *(int*)(thisx + 432) = 170;
                         }
-                        else if (sub_425CB0(*(_BYTE**)(thisx + 480)) == 1
+                        else if (sub_425CB0(*(char**)(thisx + 480)) == 1
                             && sub_474032((char*)byte_4B9B10, (Concurrency::details::SchedulerBase*)thisx)
                             && !*(int*)(thisx + 392))
                         {
@@ -5038,7 +5038,7 @@ int sub_402C05(int thisx)
                         || (*(int*)(thisx + 304) = sub_465804((int*)byte_4B9B10, (int*)thisx)) != 0
                         && sub_425D50((int*)*(int*)(thisx + 304)))
                     {
-                        sub_41745B(*(int**)(thisx + 304), *(_BYTE*)(thisx + 184));
+                        sub_41745B(*(int**)(thisx + 304), *(char*)(thisx + 184));
                     }
                     else
                     {
@@ -5049,7 +5049,7 @@ int sub_402C05(int thisx)
                 {
                     *(int*)(thisx + 280) = 1;
                     *(int*)(thisx + 432) = 57;
-                    *(_BYTE*)(thisx + 258) = 1;
+                    *(char*)(thisx + 258) = 1;
                     *(int*)(thisx + 304) = (int)v68;
                     sub_41B6CF(v68, thisx, 1);
                 }
@@ -5083,12 +5083,12 @@ int sub_402C05(int thisx)
                     {
                         *(int*)(thisx + 432) = 152;
                     }
-                    else if ((*(int*)(thisx + 428) == 7 && *(_BYTE*)(thisx + 236) == 2 || *(int*)(thisx + 428) == 8)
+                    else if ((*(int*)(thisx + 428) == 7 && *(char*)(thisx + 236) == 2 || *(int*)(thisx + 428) == 8)
                         && sub_41BA53(thisx, 0x11u, 0))
                     {
                         *(int*)(thisx + 432) = 159;
                     }
-                    else if (*(int*)(thisx + 428) == 7 && *(_BYTE*)(thisx + 236) == 1 && sub_41BA53(thisx, 0x13u, 0))
+                    else if (*(int*)(thisx + 428) == 7 && *(char*)(thisx + 236) == 1 && sub_41BA53(thisx, 0x13u, 0))
                     {
                         *(int*)(thisx + 432) = 161;
                     }
@@ -5134,7 +5134,7 @@ int sub_402C05(int thisx)
                 goto LABEL_608;
             }
             *(int*)(thisx + 432) = 58;
-            *(_BYTE*)(thisx + 258) = 0;
+            *(char*)(thisx + 258) = 0;
             if (!*(int*)(thisx + 304))
                 goto LABEL_517;
         }
@@ -5165,13 +5165,13 @@ int sub_402C05(int thisx)
             *(int*)(thisx + 288) = 1;
             *(int*)(thisx + 304) = (int)v51;
         }
-        else if (*(_BYTE*)(thisx + 188) == 1 || !v53 || !v50 || *(_BYTE*)(thisx + 608))
+        else if (*(char*)(thisx + 188) == 1 || !v53 || !v50 || *(char*)(thisx + 608))
         {
             if ((*(int*)(thisx + 424) && v61 < 0 || !*(int*)(thisx + 424) && v61 > 0) && *(int*)(thisx + 428) == 10)
             {
                 *(int*)(thisx + 432) = 11;
                 *(int*)(thisx + 444) = 0;
-                *(_BYTE*)(thisx + 237) = 0;
+                *(char*)(thisx + 237) = 0;
             }
             else if (*(int*)(thisx + 428) != 11 && *(int*)(thisx + 428) != 188)
             {
@@ -5210,9 +5210,9 @@ int sub_402C05(int thisx)
                     *(int*)(thisx + 352) = -10 * v61;
                     *(int*)(thisx + 356) = -3 * v58;
                     *(int*)(thisx + 396) = 0;
-                    *(_BYTE*)(thisx + 237) = 1;
+                    *(char*)(thisx + 237) = 1;
                 }
-                else if ((!*(_BYTE*)(thisx + 178) || v59) && *(int*)(thisx + 428) == 94 && *(int*)(thisx + 444) > 60)
+                else if ((!*(char*)(thisx + 178) || v59) && *(int*)(thisx + 428) == 94 && *(int*)(thisx + 444) > 60)
                 {
                     *(int*)(thisx + 432) = 176;
                 }
@@ -5265,11 +5265,11 @@ int sub_402C05(int thisx)
                         if (v61 && !*(int*)(thisx + 480))
                         {
                             v30 = 0;
-                            if (!*(_BYTE*)(thisx + 188))
+                            if (!*(char*)(thisx + 188))
                                 v30 = (char*)sub_465E7E((char*)byte_4B9B10, (int*)thisx);
                             if (v30)
                             {
-                                *(_BYTE*)(thisx + 272) = 2;
+                                *(char*)(thisx + 272) = 2;
                                 *(int*)(thisx + 312) = (int)v30;
                                 sub_425D10((int*)v30, thisx);
                             }
@@ -5284,14 +5284,14 @@ int sub_402C05(int thisx)
                                     0);
                                 if (v29 >= 0)
                                 {
-                                    *(_BYTE*)(thisx + 272) = 1;
+                                    *(char*)(thisx + 272) = 1;
                                     *(int*)(thisx + 304) = sub_446714(byte_4B9B10, v29);
                                 }
                             }
                         }
-                        if (!*(_BYTE*)(thisx + 188)
+                        if (!*(char*)(thisx + 188)
                             && v58 > 0
-                            && !*(_BYTE*)(thisx + 272)
+                            && !*(char*)(thisx + 272)
                             && !*(int*)(thisx + 288)
                             && !*(int*)(thisx + 292)
                             && !*(int*)(thisx + 480))
@@ -5337,10 +5337,10 @@ int sub_402C05(int thisx)
                         v32 = sub_424268((int*)(thisx + 8));//改了括号
                         v9 = v32 >= 2 && v32 <= 4;
                         v8 = v32 >= 6 && v32 <= 8;
-                        *(_BYTE*)(thisx + 224) = v9 - v8;
+                        *(char*)(thisx + 224) = v9 - v8;
                         v7 = v32 >= 4 && v32 <= 6;
                         v6 = v32 == 1 || v32 == 2 || v32 == 8;
-                        *(_BYTE*)(thisx + 225) = v7 - v6;
+                        *(char*)(thisx + 225) = v7 - v6;
                         v61 = *(char*)(thisx + 224);
                         v58 = *(char*)(thisx + 225);
                     }
@@ -5354,14 +5354,14 @@ int sub_402C05(int thisx)
         else
         {
             *(int*)(thisx + 432) = 77;
-            *(_BYTE*)(thisx + 221) = 0;
+            *(char*)(thisx + 221) = 0;
             *(int*)(thisx + 444) = 0;
         }
         goto LABEL_921;
     }
     v37 = 0;
     v36 = 0;
-    if (!*(_BYTE*)(thisx + 188) && !v68)
+    if (!*(char*)(thisx + 188) && !v68)
     {
         if (sub_41BA53(thisx, 0x30u, 0))
             v37 = (int*)sub_446A62((int*)byte_4B9B10, (int*)thisx, 1);
@@ -5381,8 +5381,8 @@ int sub_402C05(int thisx)
         if (*(int*)(thisx + 312))
             sub_421051(*(int**)(thisx + 312));
         sub_421051((int*)thisx);
-        *(_BYTE*)(thisx + 231) = 5;
-        *(_BYTE*)(thisx + 233) = 5;
+        *(char*)(thisx + 231) = 5;
+        *(char*)(thisx + 233) = 5;
         break;
     case 'E':
         if (sub_41BA53(thisx, 0x2Au, 0))
@@ -5393,81 +5393,81 @@ int sub_402C05(int thisx)
     default:
         if (*(int*)(thisx + 480))
         {
-            if (!*(_BYTE*)(thisx + 473))
+            if (!*(char*)(thisx + 473))
             {
-                if (!*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x1Du, 0))
+                if (!*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x1Du, 0))
                 {
                     *(int*)(thisx + 432) = 171;
                 }
-                else if (*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x1Eu, 0))
+                else if (*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x1Eu, 0))
                 {
                     *(int*)(thisx + 432) = 172;
                 }
-                else if (!*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x1Fu, 0))
+                else if (!*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x1Fu, 0))
                 {
                     *(int*)(thisx + 432) = 173;
                 }
-                else if (!*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x2Cu, 0))
+                else if (!*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x2Cu, 0))
                 {
                     *(int*)(thisx + 432) = 180;
                 }
-                else if (!*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x31u, 0))
+                else if (!*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x31u, 0))
                 {
                     *(int*)(thisx + 432) = 183;
                 }
-                else if (*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x32u, 0))
+                else if (*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x32u, 0))
                 {
                     *(int*)(thisx + 432) = 184;
                 }
-                else if (!*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x33u, 0))
+                else if (!*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x33u, 0))
                 {
                     *(int*)(thisx + 432) = 185;
                 }
-                else if (*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x34u, 0))
+                else if (*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x34u, 0))
                 {
                     *(int*)(thisx + 432) = 186;
                 }
-                else if (*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x3Cu, 0))
+                else if (*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x3Cu, 0))
                 {
                     *(int*)(thisx + 432) = 189;
                 }
-                else if (!*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x3Du, 0))
+                else if (!*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x3Du, 0))
                 {
                     *(int*)(thisx + 432) = 190;
                 }
-                else if (*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x3Eu, 0))
+                else if (*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x3Eu, 0))
                 {
                     *(int*)(thisx + 432) = 191;
                 }
-                else if (!*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x3Fu, 0))
+                else if (!*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x3Fu, 0))
                 {
                     *(int*)(thisx + 432) = 192;
                 }
-                else if (*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x40u, 0))
+                else if (*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x40u, 0))
                 {
                     *(int*)(thisx + 432) = 193;
                 }
-                else if (!*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x41u, 0))
+                else if (!*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x41u, 0))
                 {
                     *(int*)(thisx + 432) = 194;
                 }
-                else if (*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x42u, 0))
+                else if (*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x42u, 0))
                 {
                     *(int*)(thisx + 432) = 195;
                 }
-                else if (!*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x43u, 0))
+                else if (!*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x43u, 0))
                 {
                     *(int*)(thisx + 432) = 196;
                 }
-                else if (*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x44u, 0))
+                else if (*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x44u, 0))
                 {
                     *(int*)(thisx + 432) = 197;
                 }
-                else if (*(int*)(thisx + 392) && *(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x45u, 0))
+                else if (*(int*)(thisx + 392) && *(char*)(thisx + 237) && sub_41BA53(thisx, 0x45u, 0))
                 {
                     *(int*)(thisx + 432) = 198;
                 }
-                else if (*(_BYTE*)(thisx + 237) && sub_41BA53(thisx, 0x46u, 0))
+                else if (*(char*)(thisx + 237) && sub_41BA53(thisx, 0x46u, 0))
                 {
                     switch (rand() % 18)
                     {
@@ -5545,7 +5545,7 @@ int sub_402C05(int thisx)
                 || (*(int*)(thisx + 304) = sub_465804((int*)byte_4B9B10, (int*)thisx)) != 0
                 && sub_425D50((int*)*(int*)(thisx + 304)))
             {
-                sub_417173(*(int*)(thisx + 304), *(_BYTE*)(thisx + 184));
+                sub_417173(*(int*)(thisx + 304), *(char*)(thisx + 184));
             }
             else
             {
@@ -5639,56 +5639,56 @@ LABEL_803:
     *(int*)(thisx + 396) = 0;
     *(int*)(thisx + 404) = 0;
 LABEL_921:
-    if (*(_BYTE*)(thisx + 220))
+    if (*(char*)(thisx + 220))
     {
-        if (!-- * (_BYTE*)(thisx + 220))
+        if (!-- * (char*)(thisx + 220))
         {
             *(int*)(thisx + 216) = 0;
             if (sub_41BA53(thisx, 0x80u, 0))
             {
-                *(_BYTE*)(thisx + 558) = 5;
+                *(char*)(thisx + 558) = 5;
                 *(int*)(thisx + 560) = 30;
             }
             else if (sub_41BA53(thisx, 0x81u, 0))
             {
-                *(_BYTE*)(thisx + 558) = 8;
+                *(char*)(thisx + 558) = 8;
                 *(int*)(thisx + 560) = 50;
             }
         }
     }
-    if (*(_BYTE*)(thisx + 473))
-        --* (_BYTE*)(thisx + 473);
-    if (*(_BYTE*)(thisx + 222))
-        --* (_BYTE*)(thisx + 222);
+    if (*(char*)(thisx + 473))
+        --* (char*)(thisx + 473);
+    if (*(char*)(thisx + 222))
+        --* (char*)(thisx + 222);
     for (n = 0; n < 8; ++n)
     {
-        if (*(_BYTE*)(n + thisx + 453) && *(unsigned __int8*)(n + thisx + 453) != 255)
-            --* (_BYTE*)(n + thisx + 453);
+        if (*(char*)(n + thisx + 453) && *(unsigned __int8*)(n + thisx + 453) != 255)
+            --* (char*)(n + thisx + 453);
     }
-    if (*(_BYTE*)(thisx + 557))
+    if (*(char*)(thisx + 557))
     {
-        if (!-- * (_BYTE*)(thisx + 557))
-            *(_BYTE*)(thisx + 556) = 0;
+        if (!-- * (char*)(thisx + 557))
+            *(char*)(thisx + 556) = 0;
     }
-    if (*(_BYTE*)(thisx + 592))
-        --* (_BYTE*)(thisx + 592);
+    if (*(char*)(thisx + 592))
+        --* (char*)(thisx + 592);
     if (*(short*)(thisx + 596))
     {
         if (!-- * (short*)(thisx + 596))
         {
-            *(_BYTE*)(thisx + 593) = 0;
+            *(char*)(thisx + 593) = 0;
             *(short*)(thisx + 594) = 0;
         }
     }
     result = thisx;
     if (*(int*)(thisx + 428) > 83 && *(int*)(thisx + 444) == 1)
     {
-        if (*(_BYTE*)(thisx + 237))
+        if (*(char*)(thisx + 237))
             v5 = *(int*)(thisx + 572) + 1;
         else
             v5 = *(int*)(thisx + 572) - 1;
         *(int*)(thisx + 572) = v5;
-        if (*(int*)(thisx + 392) && *(_BYTE*)(thisx + 236))
+        if (*(int*)(thisx + 392) && *(char*)(thisx + 236))
         {
             result = thisx;
             ++* (int*)(thisx + 576);
@@ -5699,11 +5699,11 @@ LABEL_921:
             --* (int*)(thisx + 576);
         }
     }
-    if (!*(_BYTE*)(thisx + 188))
+    if (!*(char*)(thisx + 188))
     {
         result = thisx;
         if (*(int*)(thisx + 304) || *(int*)(thisx + 480))
-            *(_BYTE*)(thisx + 222) = 0;
+            *(char*)(thisx + 222) = 0;
     }
     return result;
 }
@@ -5773,23 +5773,23 @@ int sub_407756(int thisx, int a2, int a3, int a4)
     else
         ++* (int*)(thisx + 564);
     v25 = *(int*)a3;
-    LOBYTE(v27) = *(_BYTE*)(a3 + 4);
+    LOBYTE(v27) = *(char*)(a3 + 4);
     if (a2)
     {
-        if (*(_BYTE*)(thisx + 558))
-            --* (_BYTE*)(thisx + 558);
+        if (*(char*)(thisx + 558))
+            --* (char*)(thisx + 558);
         if (*(int*)(thisx + 560) > 0)
             *(int*)(thisx + 560) -= v25;
-        if (!*(_BYTE*)(thisx + 558) || *(int*)(thisx + 560) <= 0)
+        if (!*(char*)(thisx + 558) || *(int*)(thisx + 560) <= 0)
         {
-            *(_BYTE*)(thisx + 558) = 0;
+            *(char*)(thisx + 558) = 0;
             *(int*)(thisx + 560) = 0;
         }
         v24 = 0;
         if (*(char*)(thisx + 608) > 0 && *(char*)(thisx + 232) > 0)
         {
             *(int*)(thisx + 432) = 77;
-            *(_BYTE*)(thisx + 608) = 0;
+            *(char*)(thisx + 608) = 0;
         }
         if (*(int*)(a3 + 20) && (unsigned __int8)v27 != 4 && *(int*)(thisx + 432) == 77)
         {
@@ -5802,15 +5802,15 @@ int sub_407756(int thisx, int a2, int a3, int a4)
             {
                 if (*(unsigned __int8*)(thisx + 221) != 255)
                 {
-                    ++* (_BYTE*)(thisx + 221);
+                    ++* (char*)(thisx + 221);
                     v23 = sub_417924(thisx, 3, 1) / 8 + 5;
                     if (sub_41BA53(thisx, 0xAu, 0))
                         v23 += 5;
                     if (*(unsigned __int8*)(thisx + 221) > v23)
                     {
                         v24 = 0;
-                        *(_BYTE*)(thisx + 474) = 6;
-                        *(_BYTE*)(thisx + 475) = 1;
+                        *(char*)(thisx + 474) = 6;
+                        *(char*)(thisx + 475) = 1;
                     }
                 }
             }
@@ -5862,7 +5862,7 @@ int sub_407756(int thisx, int a2, int a3, int a4)
         else
         {
             sub_41261C((short*)thisx, v25, *(int*)(a3 + 32), 1); //减血函数
-            if (!*(_BYTE*)(thisx + 558) && !*(int*)(thisx + 560))
+            if (!*(char*)(thisx + 558) && !*(int*)(thisx + 560))
             {
                 if (v25 >= 3)
                     v4 = v25 + *(int*)(thisx + 216);
@@ -5870,8 +5870,8 @@ int sub_407756(int thisx, int a2, int a3, int a4)
                     v4 = *(int*)(thisx + 216) + 3;
                 *(int*)(thisx + 216) = v4;
             }
-            if (!*(_BYTE*)(thisx + 220))
-                *(_BYTE*)(thisx + 220) = -76;
+            if (!*(char*)(thisx + 220))
+                *(char*)(thisx + 220) = -76;
         }
         *(int*)(thisx + 268) = 1;
         switch (*(int*)(thisx + 428))
@@ -5905,10 +5905,10 @@ int sub_407756(int thisx, int a2, int a3, int a4)
             {
                 *(int*)(thisx + 304) = 0;
             }
-            sub_423CF2((_BYTE*)thisx, 0, 0, 0, 0, 0, 0);
+            sub_423CF2((char*)thisx, 0, 0, 0, 0, 0, 0);
             v19 = 1;
             v21 = -1;
-            LOBYTE(v20) = *(_BYTE*)(a3 + 30);
+            LOBYTE(v20) = *(char*)(a3 + 30);
             if ((unsigned __int8)v20 != 3
                 && (*(int*)(thisx + 428) == 44 || *(int*)(thisx + 428) == 46 || *(int*)(thisx + 428) == 78))
             {
@@ -5919,7 +5919,7 @@ int sub_407756(int thisx, int a2, int a3, int a4)
             {
                 v22 = 47;
             }
-            else if ((_BYTE)v27 && (unsigned __int8)v27 != 255)
+            else if ((char)v27 && (unsigned __int8)v27 != 255)
             {
                 switch ((unsigned __int8)v27)
                 {
@@ -6015,7 +6015,7 @@ int sub_407756(int thisx, int a2, int a3, int a4)
                     v22 = 36;
                 }
             }
-            if (*(_BYTE*)(thisx + 558) || *(int*)(thisx + 560) > 0)
+            if (*(char*)(thisx + 558) || *(int*)(thisx + 560) > 0)
                 v19 = 0;
             if ((unsigned __int8)v27 == 12)
             {
@@ -6033,7 +6033,7 @@ int sub_407756(int thisx, int a2, int a3, int a4)
             }
             else if (*(int*)(thisx + 428) > 31
                 && *(int*)(thisx + 428) < 43
-                && (!(_BYTE)v20 && *(int*)(thisx + 428) >= v22
+                && (!(char)v20 && *(int*)(thisx + 428) >= v22
                     || (unsigned __int8)v20 == 1 && *(int*)(thisx + 428) > v22
                     || (unsigned __int8)v20 == 3))
             {
@@ -6046,7 +6046,7 @@ int sub_407756(int thisx, int a2, int a3, int a4)
                 if (*(int*)(a3 + 48) == 112)
                 {
                     *(int*)(thisx + 304) = *(int*)(a3 + 32);
-                    *(int*)(thisx + 440) = (unsigned __int8)sub_425EF0(*(_BYTE**)(a3 + 32));
+                    *(int*)(thisx + 440) = (unsigned __int8)sub_425EF0(*(char**)(a3 + 32));
                 }
             }
             if (v19)
@@ -6089,7 +6089,7 @@ int sub_407756(int thisx, int a2, int a3, int a4)
                         v16 = -v16;
                     if (*(char*)(a3 + 17) >= 0)
                     {
-                        v13 = *(_BYTE*)(a3 + 16);
+                        v13 = *(char*)(a3 + 16);
                         v14 = *(char*)(a3 + 17);
                     }
                     sub_42455B(thisx, v12);
@@ -6098,7 +6098,7 @@ int sub_407756(int thisx, int a2, int a3, int a4)
                 *(int*)(thisx + 396) = 0;
                 *(int*)(thisx + 404) = 0;
             }
-            if (!*(_BYTE*)(thisx + 558) && !*(int*)(thisx + 560))
+            if (!*(char*)(thisx + 558) && !*(int*)(thisx + 560))
             {
                 if (*(int*)(thisx + 480) && *(int*)(thisx + 432) != 14)
                     sub_41F6DE((int*)thisx);
@@ -6116,14 +6116,14 @@ int sub_407756(int thisx, int a2, int a3, int a4)
                 && *(int*)(thisx + 432) != 24
                 && *(int*)(thisx + 432) != 25)
             {
-                if (*(_BYTE*)(a3 + 16))
+                if (*(char*)(a3 + 16))
                 {
                     sub_4747D2((int*)byte_4B9B10, *(char*)(a3 + 16), *(char*)(a3 + 17));
                 }
                 else
                 {
                     if (*(char*)(a3 + 17) != -1)
-                        v21 = *(_BYTE*)(a3 + 17);
+                        v21 = *(char*)(a3 + 17);
                     if (v21 == -1)
                     {
                         if ((unsigned __int8)v27 == 1)
@@ -6181,18 +6181,18 @@ int sub_407756(int thisx, int a2, int a3, int a4)
     }
     if (a4)
     {
-        *(_BYTE*)(thisx + *(unsigned __int8*)(a3 + 40) + 461) = 10;
+        *(char*)(thisx + *(unsigned __int8*)(a3 + 40) + 461) = 10;
     }
     else
     {
-        *(_BYTE*)(thisx + *(unsigned __int8*)(a3 + 40) + 453) = *(_BYTE*)(thisx + 452);
+        *(char*)(thisx + *(unsigned __int8*)(a3 + 40) + 453) = *(char*)(thisx + 452);
         if (!*(int*)(thisx + 480)
             && !*(int*)(thisx + 392)
-            && !*(_BYTE*)(thisx + 272)
-            && !*(_BYTE*)(thisx + 248)
+            && !*(char*)(thisx + 272)
+            && !*(char*)(thisx + 248)
             && (*(int*)(thisx + 424) && *(char*)(thisx + 224) > 0 || !*(int*)(thisx + 424) && *(char*)(thisx + 224) < 0))
         {
-            *(_BYTE*)(thisx + 272) = 1;
+            *(char*)(thisx + 272) = 1;
             *(int*)(thisx + 304) = *(int*)(a3 + 44);
         }
         if (*(int*)(thisx + 428) == 135)
@@ -6205,7 +6205,7 @@ int sub_407756(int thisx, int a2, int a3, int a4)
         }
         else if (!*(int*)(thisx + 268))
         {
-            if (*(_BYTE*)(thisx + 195) == 3 && *(int*)(thisx + 428) == 125 && !*(int*)(thisx + 436))
+            if (*(char*)(thisx + 195) == 3 && *(int*)(thisx + 428) == 125 && !*(int*)(thisx + 436))
             {
                 *(int*)(thisx + 436) = *(int*)(thisx + 444);
                 *(int*)(thisx + 372) /= -2;
@@ -6216,7 +6216,7 @@ int sub_407756(int thisx, int a2, int a3, int a4)
                 if (*(int*)(thisx + 428) != 147 || *(int*)(thisx + 436))
                 {
                     if (*(int*)(thisx + 428) == 129
-                        && (!*(int*)(thisx + 164) && (*(_BYTE*)(thisx + 224) || *(char*)(thisx + 225) < 0)
+                        && (!*(int*)(thisx + 164) && (*(char*)(thisx + 224) || *(char*)(thisx + 225) < 0)
                             || *(int*)(thisx + 164) && !(rand() % 2))
                         && sub_41BA53(thisx, 6u, 0))
                     {
@@ -6264,7 +6264,7 @@ int sub_407756(int thisx, int a2, int a3, int a4)
                             }
                             else if (*(int*)(thisx + 428) == 85 && *(int*)(thisx + 320))
                             {
-                                *(int*)(thisx + 312) = sub_466127((char*)byte_4B9B10, (_BYTE*)thisx, thisx + 453);
+                                *(int*)(thisx + 312) = sub_466127((char*)byte_4B9B10, (char*)thisx, thisx + 453);
                             }
                             else if (*(int*)(thisx + 428) == 206 && *(int*)(thisx + 444) < 10)
                             {
@@ -6293,7 +6293,7 @@ int sub_407756(int thisx, int a2, int a3, int a4)
                                 *(int*)(thisx + 432) = 99;
                                 *(int*)(thisx + 304) = *(int*)(a3 + 44);
                                 *(int*)(thisx + 280) = 1;
-                                *(_BYTE*)(a3 + 28) = 0;
+                                *(char*)(a3 + 28) = 0;
                             }
                         }
                     }
@@ -6304,7 +6304,7 @@ int sub_407756(int thisx, int a2, int a3, int a4)
                         *(int*)(thisx + 432) = 98;
                         *(int*)(thisx + 304) = *(int*)(a3 + 44);
                         for (i = 0; i < 8; ++i)
-                            *(_BYTE*)(i + thisx + 453) = -1;
+                            *(char*)(i + thisx + 453) = -1;
                     }
                 }
                 else
@@ -6372,45 +6372,45 @@ LABEL_352:
             result == 206)
         && (result = sub_425ED0(*(int**)(a3 + 32)), result < 10))
     {
-        *(_BYTE*)(thisx + 474) = 10;
+        *(char*)(thisx + 474) = 10;
         result = a3;
-        *(_BYTE*)(a3 + 28) = 10;
+        *(char*)(a3 + 28) = 10;
     }
     if (v26 || byte_4B99C9 && (unsigned __int8)v27 != 255)
     {
         if (v26)
         {
             result = thisx;
-            if (*(_BYTE*)(thisx + 188) == 1 && a2)
+            if (*(char*)(thisx + 188) == 1 && a2)
             {
                 if ((unsigned __int8)v27 == 255)
                 {
                     result = thisx;
-                    *(_BYTE*)(thisx + 474) = 7;
+                    *(char*)(thisx + 474) = 7;
                 }
                 else
                 {
-                    *(_BYTE*)(thisx + 474) = 11;
+                    *(char*)(thisx + 474) = 11;
                 }
             }
             else
             {
-                *(_BYTE*)(thisx + 474) = 7;
+                *(char*)(thisx + 474) = 7;
             }
         }
         else
         {
             result = thisx;
-            *(_BYTE*)(thisx + 474) = *(_BYTE*)(a3 + 28);
+            *(char*)(thisx + 474) = *(char*)(a3 + 28);
         }
         if (a2)
         {
             result = thisx;
-            *(_BYTE*)(thisx + 475) = 1;
+            *(char*)(thisx + 475) = 1;
         }
         else if (!*(int*)(thisx + 268))
         {
-            *(_BYTE*)(thisx + 475) = 0;
+            *(char*)(thisx + 475) = 0;
         }
     }
     return result;
@@ -6421,7 +6421,7 @@ void sub_408F50(int thisx, double a2, double a3, double a4, int a5)
 {
     if (*(int*)(thisx + 432) == *(int*)(thisx + 428))
     {
-        if (!*(_BYTE*)(thisx + 474))
+        if (!*(char*)(thisx + 474))
         {
             *(int*)(thisx + 284) = 0;
             ++* (int*)(thisx + 444);
@@ -6447,7 +6447,7 @@ void sub_408F50(int thisx, double a2, double a3, double a4, int a5)
             *(int*)(thisx + 444) = 1;
             sub_4097FE(thisx, a2, a3, a4);
             if (*(int*)(thisx + 428) != 3 && *(char*)(thisx + 608) > 0)
-                *(_BYTE*)(thisx + 608) = 0;
+                *(char*)(thisx + 608) = 0;
         }
     }
 }
@@ -6460,7 +6460,7 @@ void sub_408F50(int thisx, double a2, double a3, double a4, int a5)
     if (*(int*)(thisx + 432) == *(int*)(thisx + 428))
     {
         // 如果 `thisx + 474` 的值为 0
-        if (!*(_BYTE*)(thisx + 474))
+        if (!*(char*)(thisx + 474))
         {
             // 将 `thisx + 284` 的值设置为 0
             *(int*)(thisx + 284) = 0;
@@ -6510,7 +6510,7 @@ void sub_408F50(int thisx, double a2, double a3, double a4, int a5)
             // 如果 `thisx + 428` 的值不是 3，且 `thisx + 608` 的值大于 0
             if (*(int*)(thisx + 428) != 3 && *(char*)(thisx + 608) > 0)
                 // 将 `thisx + 608` 的值设置为 0
-                *(_BYTE*)(thisx + 608) = 0;
+                *(char*)(thisx + 608) = 0;
         }
     }
 }*/
@@ -6532,10 +6532,10 @@ unsigned __int8 sub_409096(int thisx)
     int v21; // [esp+30h] [ebp-38h] BYREF
 
 
-    _BYTE* v20; // [esp+2Ch] [ebp-3Ch]
+    char* v20; // [esp+2Ch] [ebp-3Ch]
     int v19; // [esp+28h] [ebp-40h]
     int v18; // [esp+24h] [ebp-44h]
-    _BYTE* v17; // [esp+20h] [ebp-48h] BYREF
+    char* v17; // [esp+20h] [ebp-48h] BYREF
     int v16; // [esp+1Ch] [ebp-4Ch]
     int v15; // [esp+18h] [ebp-50h]
     int v14; // [esp+14h] [ebp-54h]
@@ -6556,7 +6556,7 @@ unsigned __int8 sub_409096(int thisx)
     v15 = v13[0];
     v14 = v13[1];
     sub_41CA3D((void*)thisx, (int*)&v17);
-    v20 = (_BYTE*)sub_41EEB5((_BYTE*)thisx, (int*)v17, 0);
+    v20 = (char*)sub_41EEB5((char*)thisx, (int*)v17, 0);
     sub_49C15E((int)&v21);
     v24 = *(int*)(thisx + 424);
     v1 = sub_425F90(v17);
@@ -6614,10 +6614,10 @@ unsigned __int8 sub_409096(int thisx)
     int v22; // 局部整数变量
     int v21; // 局部整数变量，可能是指针或值
 
-    _BYTE* v20; // 局部指针变量
+    char* v20; // 局部指针变量
     int v19; // 局部整数变量
     int v18; // 局部整数变量
-    _BYTE* v17; // 局部指针变量
+    char* v17; // 局部指针变量
     int v16; // 局部整数变量
     int v15; // 局部整数变量
     int v14; // 局部整数变量
@@ -6640,7 +6640,7 @@ unsigned __int8 sub_409096(int thisx)
 
     // 获取与 thisx 相关的数据
     sub_41CA3D((void*)thisx, (int*)&v17);
-    v20 = (_BYTE*)sub_41EEB5((_BYTE*)thisx, (int*)v17, 0);
+    v20 = (char*)sub_41EEB5((char*)thisx, (int*)v17, 0);
 
     // 调用另一个子函数
     sub_49C15E((int)&v21);
@@ -6700,22 +6700,22 @@ int sub_409273(int thisx, int a2)
     int v4; // [esp+8h] [ebp-4h]
 
     *(int*)(thisx + 428) = a2;
-    if (!*(_BYTE*)(thisx + 470) && *(_BYTE*)(thisx + 471) == 1 && (a2 == 44 || a2 == 45 || a2 == 46 || a2 == 47))
+    if (!*(char*)(thisx + 470) && *(char*)(thisx + 471) == 1 && (a2 == 44 || a2 == 45 || a2 == 46 || a2 == 47))
     {
         v4 = *(__int16*)(thisx + 246) + 150 - sub_423AC3(thisx, 1);
         if (v4 >= 30)
         {
             if (v4 <= 255)
-                *(_BYTE*)(thisx + 470) = v4;
+                *(char*)(thisx + 470) = v4;
             else
-                *(_BYTE*)(thisx + 470) = -1;
+                *(char*)(thisx + 470) = -1;
         }
         else
         {
-            *(_BYTE*)(thisx + 470) = 30;
+            *(char*)(thisx + 470) = 30;
         }
-        *(_BYTE*)(thisx + 471) = 0;
-        *(_BYTE*)(thisx + 472) = 0;
+        *(char*)(thisx + 471) = 0;
+        *(char*)(thisx + 472) = 0;
         *(short*)(thisx + 246) = 0;
     }
     switch (a2)
@@ -7020,20 +7020,20 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
     }
     if (*(int*)(a1 + 444) == 1)
     {
-        *(_BYTE*)(a1 + 253) = 0;
-        *(_BYTE*)(a1 + 213) = -1;
-        *(_BYTE*)(a1 + 257) = 0;
-        *(_BYTE*)(a1 + 249) = 0;
+        *(char*)(a1 + 253) = 0;
+        *(char*)(a1 + 213) = -1;
+        *(char*)(a1 + 257) = 0;
+        *(char*)(a1 + 249) = 0;
         *(short*)(a1 + 244) = 0;
-        *(_BYTE*)(a1 + 254) = 0;
-        *(_BYTE*)(a1 + 255) = 1;
-        *(_BYTE*)(a1 + 256) = 6;
-        *(_BYTE*)(a1 + 250) = 5;
-        *(_BYTE*)(a1 + 251) = 1;
-        *(_BYTE*)(a1 + 252) = 1;
-        *(_BYTE*)(a1 + 452) = -1;
-        *(_BYTE*)(a1 + 259) = 0;
-        *(_BYTE*)(a1 + 260) = 0;
+        *(char*)(a1 + 254) = 0;
+        *(char*)(a1 + 255) = 1;
+        *(char*)(a1 + 256) = 6;
+        *(char*)(a1 + 250) = 5;
+        *(char*)(a1 + 251) = 1;
+        *(char*)(a1 + 252) = 1;
+        *(char*)(a1 + 452) = -1;
+        *(char*)(a1 + 259) = 0;
+        *(char*)(a1 + 260) = 0;
         *(int*)(a1 + 264) = 83;
         if (*(int*)(a1 + 428) > 83)
             sub_4239D3(a1, 5);
@@ -7058,18 +7058,18 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
     switch (*(int*)(a1 + 428))
     {
     case 3:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 288))
             *(short*)(a1 + 204) = 44;
         else
             *(short*)(a1 + 204) = 0;
         if (*(int*)(a1 + 480))
         {
-            if (sub_494AA9(*(_BYTE**)(a1 + 480), 0))
+            if (sub_494AA9(*(char**)(a1 + 480), 0))
             {
                 *(short*)(a1 + 204) = 135;
             }
-            else if (sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
+            else if (sub_425CB0(*(char**)(a1 + 480)) == 12)
             {
                 *(short*)(a1 + 204) = 215;
             }
@@ -7082,10 +7082,10 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         *(int*)(a1 + 404) = 1;
         *(int*)(a1 + 412) = 1;
         *(int*)(a1 + 400) = 1;
-        *(_BYTE*)(a1 + 237) = 0;
+        *(char*)(a1 + 237) = 0;
         return;
     case 0x4D:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         *(int*)(a1 + 408) = *(int*)(a1 + 444) < 4 && !*(int*)(a1 + 392);
         if (*(int*)(a1 + 392))
         {
@@ -7102,16 +7102,16 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         return;
     case 4:
     case 5:
-        *(_BYTE*)(a1 + 237) = 0;
+        *(char*)(a1 + 237) = 0;
         *(int*)(a1 + 448) = 0;
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 480))
         {
-            if (sub_494AA9(*(_BYTE**)(a1 + 480), 0))
+            if (sub_494AA9(*(char**)(a1 + 480), 0))
             {
                 *(short*)(a1 + 204) = 135;
             }
-            else if (sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
+            else if (sub_425CB0(*(char**)(a1 + 480)) == 12)
             {
                 *(short*)(a1 + 204) = 215;
             }
@@ -7138,19 +7138,19 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             v69 = 45;
         if (*(int*)(a1 + 480))
         {
-            if (sub_494AA9(*(_BYTE**)(a1 + 480), 0))
+            if (sub_494AA9(*(char**)(a1 + 480), 0))
             {
                 v69 = 135;
             }
-            else if (sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
+            else if (sub_425CB0(*(char**)(a1 + 480)) == 12)
             {
                 v69 = 215;
             }
         }
-        *(_BYTE*)(a1 + 212) = 0;
-        if (*(_BYTE*)(a1 + 188) == 1)
+        *(char*)(a1 + 212) = 0;
+        if (*(char*)(a1 + 188) == 1)
         {
-            *(_BYTE*)(a1 + 212) = 1;
+            *(char*)(a1 + 212) = 1;
             if (*(int*)(a1 + 444) >= 10)
             {
                 if (*(int*)(a1 + 444) >= 20)
@@ -7200,7 +7200,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         }
         return;
     case 0x38:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) == 20)
             *(int*)(a1 + 444) = 0;
         if (*(int*)(a1 + 444) >= 10)
@@ -7225,16 +7225,16 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         {
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A04, -1, 100, 100, 0);
             *(int*)(a1 + 436) = 0;
-            ++* (_BYTE*)(a1 + 238);
+            ++* (char*)(a1 + 238);
         }
-        if (*(int*)(a1 + 444) == 8 && *(_BYTE*)(a1 + 238) == 1 && sub_41BA53(a1, 0x86u, 0))
+        if (*(int*)(a1 + 444) == 8 && *(char*)(a1 + 238) == 1 && sub_41BA53(a1, 0x86u, 0))
             *(int*)(a1 + 400) = 1;
         if (!*(int*)(a1 + 436) && *(int*)(a1 + 444) < 8 && (*(char*)(a1 + 230) <= 0 || *(char*)(a1 + 231) <= 0))
         {
             *(int*)(a1 + 436) = 1;
             *(int*)(a1 + 348) /= 2;
         }
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 288))
         {
             if (*(int*)(a1 + 348) >= 0)
@@ -7242,14 +7242,14 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             else
                 *(short*)(a1 + 204) = 52;
         }
-        else if (*(int*)(a1 + 480) && sub_494AA9(*(_BYTE**)(a1 + 480), 0))
+        else if (*(int*)(a1 + 480) && sub_494AA9(*(char**)(a1 + 480), 0))
         {
             if (*(int*)(a1 + 444) >= 8)
                 *(short*)(a1 + 204) = 139;
             else
                 *(short*)(a1 + 204) = 6;
         }
-        else if (*(int*)(a1 + 480) && sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
+        else if (*(int*)(a1 + 480) && sub_425CB0(*(char**)(a1 + 480)) == 12)
         {
             if (*(int*)(a1 + 444) >= 8)
                 *(short*)(a1 + 204) = 221;
@@ -7268,15 +7268,15 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 404) = 1;
         return;
     case 8:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) == 1)
         {
             *(int*)(a1 + 436) = 0;
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A04, -1, 100, 100, 0);
-            ++* (_BYTE*)(a1 + 238);
+            ++* (char*)(a1 + 238);
             if (sub_41BA53(a1, 0x2Bu, 0))
             {
-                *(_BYTE*)(a1 + 248) = 0;
+                *(char*)(a1 + 248) = 0;
                 v4 = sub_417924(a1, 3, 1);
                 v5 = sub_41D067(a1, 1) / 2 + v4;
                 v6 = sub_41CA5F(a1, 1);
@@ -7285,7 +7285,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 memset((void*)(a1 + 461), 0, 8u);
             }
         }
-        if (*(int*)(a1 + 444) == 8 && *(_BYTE*)(a1 + 238) == 1 && sub_41BA53(a1, 0x86u, 0))
+        if (*(int*)(a1 + 444) == 8 && *(char*)(a1 + 238) == 1 && sub_41BA53(a1, 0x86u, 0))
             *(int*)(a1 + 400) = 1;
         if (!*(int*)(a1 + 436) && *(int*)(a1 + 444) < 8 && (*(char*)(a1 + 230) <= 0 || *(char*)(a1 + 231) <= 0))
         {
@@ -7299,14 +7299,14 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             else
                 *(short*)(a1 + 204) = 52;
         }
-        else if (*(int*)(a1 + 480) && sub_494AA9(*(_BYTE**)(a1 + 480), 0))
+        else if (*(int*)(a1 + 480) && sub_494AA9(*(char**)(a1 + 480), 0))
         {
             if (*(int*)(a1 + 444) >= 8)
                 *(short*)(a1 + 204) = 139;
             else
                 *(short*)(a1 + 204) = 6;
         }
-        else if (*(int*)(a1 + 480) && sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
+        else if (*(int*)(a1 + 480) && sub_425CB0(*(char**)(a1 + 480)) == 12)
         {
             if (*(int*)(a1 + 444) >= 8)
                 *(short*)(a1 + 204) = 221;
@@ -7334,13 +7334,13 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         return;
     case 0xC:
     case 0xD:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         *(int*)(a1 + 448) = 0;
         if (*(int*)(a1 + 288))
         {
             *(short*)(a1 + 204) = 45;
         }
-        else if (*(int*)(a1 + 480) && sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
+        else if (*(int*)(a1 + 480) && sub_425CB0(*(char**)(a1 + 480)) == 12)
         {
             *(short*)(a1 + 204) = 222;
         }
@@ -7353,21 +7353,21 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         return;
     case 0x1B:
     case 0x1C:
-        *(_BYTE*)(a1 + 212) = 0;
-        if (*(int*)(a1 + 480) && sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
+        *(char*)(a1 + 212) = 0;
+        if (*(int*)(a1 + 480) && sub_425CB0(*(char**)(a1 + 480)) == 12)
             *(short*)(a1 + 204) = 222;
         else
             *(short*)(a1 + 204) = 6;
         if (*(int*)(a1 + 444) >= 12)
         {
-            if (*(_BYTE*)(a1 + 237))
+            if (*(char*)(a1 + 237))
                 *(int*)(a1 + 432) = 10;
             else
                 *(int*)(a1 + 432) = 3;
         }
         return;
     case 0xA:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) == 1)
             *(int*)(a1 + 448) = 0;
         ++* (int*)(a1 + 448);
@@ -7375,17 +7375,17 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         {
             *(short*)(a1 + 204) = 2 * (*(int*)(a1 + 444) / 10 % 2) + 46;
         }
-        else if (*(int*)(a1 + 480) && sub_494AA9(*(_BYTE**)(a1 + 480), 0))
+        else if (*(int*)(a1 + 480) && sub_494AA9(*(char**)(a1 + 480), 0))
         {
             *(short*)(a1 + 204) = 3 * (*(int*)(a1 + 444) / 5 % 2) + 135;
         }
-        else if (*(int*)(a1 + 480) && sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
+        else if (*(int*)(a1 + 480) && sub_425CB0(*(char**)(a1 + 480)) == 12)
         {
             *(short*)(a1 + 204) = *(int*)(a1 + 444) / 5 % 3 + 218;
         }
-        else if (*(_BYTE*)(a1 + 188) == 1)
+        else if (*(char*)(a1 + 188) == 1)
         {
-            *(_BYTE*)(a1 + 212) = 1;
+            *(char*)(a1 + 212) = 1;
             if (*(int*)(a1 + 444) >= 7)
             {
                 if (*(int*)(a1 + 444) >= 14)
@@ -7414,9 +7414,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             if (!(*(int*)(a1 + 444) % 10))
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9AC8, -1, 100, 100, 0);
         }
-        else if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+        else if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
         {
-            *(_BYTE*)(a1 + 212) = 1;
+            *(char*)(a1 + 212) = 1;
             *(short*)(a1 + 204) = 3 * (*(int*)(a1 + 444) / 5 % 2);
         }
         else
@@ -7425,9 +7425,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         }
         return;
     case 0xB:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         *(int*)(a1 + 448) = 0;
-        if (*(int*)(a1 + 444) == 1 && (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3))
+        if (*(int*)(a1 + 444) == 1 && (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3))
         {
             *(int*)(a1 + 352) *= 2;
             *(int*)(a1 + 356) *= 2;
@@ -7436,9 +7436,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(short*)(a1 + 204) = 45;
         else
             *(short*)(a1 + 204) = 4;
-        if (*(int*)(a1 + 480) && sub_494AA9(*(_BYTE**)(a1 + 480), 0))
+        if (*(int*)(a1 + 480) && sub_494AA9(*(char**)(a1 + 480), 0))
             *(short*)(a1 + 204) = 135;
-        if (*(int*)(a1 + 480) && sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
+        if (*(int*)(a1 + 480) && sub_425CB0(*(char**)(a1 + 480)) == 12)
         {
             *(short*)(a1 + 204) = 215;
         }
@@ -7460,7 +7460,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         *(int*)(a1 + 360) = 30;
         if (*(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
             *(int*)(a1 + 400) = 1;
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 288))
         {
             if (*(int*)(a1 + 444) >= 6)
@@ -7468,14 +7468,14 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             else
                 *(short*)(a1 + 204) = 52;
         }
-        else if (*(int*)(a1 + 480) && sub_494AA9(*(_BYTE**)(a1 + 480), 0))
+        else if (*(int*)(a1 + 480) && sub_494AA9(*(char**)(a1 + 480), 0))
         {
             if (*(int*)(a1 + 444) >= 6)
                 *(short*)(a1 + 204) = 139;
             else
                 *(short*)(a1 + 204) = 6;
         }
-        if (*(int*)(a1 + 480) && sub_425CB0(*(_BYTE**)(a1 + 480)) == 12)
+        if (*(int*)(a1 + 480) && sub_425CB0(*(char**)(a1 + 480)) == 12)
         {
             if (*(int*)(a1 + 444) >= 6)
                 *(short*)(a1 + 204) = 221;
@@ -7499,7 +7499,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
     case 0x45:
         if (*(int*)(a1 + 304))
         {
-            *(_BYTE*)(a1 + 212) = 0;
+            *(char*)(a1 + 212) = 0;
             *(short*)(a1 + 204) = 56;
             SchedulerProxy = Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 304));
             if (SchedulerProxy == (struct Concurrency::ISchedulerProxy*)71)
@@ -7526,8 +7526,8 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
     case 0x46:
         if (*(int*)(a1 + 304))
         {
-            *(_BYTE*)(a1 + 212) = 0;
-            *(_BYTE*)(a1 + 213) = -1;
+            *(char*)(a1 + 212) = 0;
+            *(char*)(a1 + 213) = -1;
             if (*(int*)(a1 + 444) >= 8)
             {
                 if (*(int*)(a1 + 444) < 10)
@@ -7541,7 +7541,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             {
                 v7 = sub_41CB3B(a1, 1);
                 sub_41EF8A((short*)a1, v7 / 15);
-                sub_417C15(*(int*)(a1 + 304), *(_BYTE*)(a1 + 242));
+                sub_417C15(*(int*)(a1 + 304), *(char*)(a1 + 242));
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A0C, -1, 100, 100, 0);
             }
             if (*(int*)(a1 + 444) >= 20)
@@ -7571,10 +7571,10 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
     case 0x47:
         if (*(int*)(a1 + 304))
         {
-            *(_BYTE*)(a1 + 212) = 0;
+            *(char*)(a1 + 212) = 0;
             if (*(int*)(a1 + 444) == 1)
             {
-                *(_BYTE*)(a1 + 223) = 0x80;
+                *(char*)(a1 + 223) = 0x80;
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A1C, -1, 100, 100, 0);
             }
             if (*(int*)(a1 + 444) >= 3)
@@ -7632,14 +7632,14 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         {
             if (*(int*)(a1 + 444) == 1)
             {
-                *(_BYTE*)(a1 + 223) = 127;
+                *(char*)(a1 + 223) = 127;
                 if (*(int*)(a1 + 304))
                 {
                     v8 = sub_425D70((int*)a1);
                     *(int*)(a1 + 436) = v8 == sub_425D70(*(int**)(a1 + 304));
                 }
             }
-            *(_BYTE*)(a1 + 212) = 0;
+            *(char*)(a1 + 212) = 0;
             if (*(int*)(a1 + 436))
             {
                 if (*(int*)(a1 + 444) >= 9)
@@ -7701,7 +7701,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 sub_426050(*(int**)(a1 + 304), 135);
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A24, -1, 100, 100, 0);
             }
-            *(_BYTE*)(a1 + 212) = 0;
+            *(char*)(a1 + 212) = 0;
             if (*(int*)(a1 + 444) >= 8)
             {
                 if (*(int*)(a1 + 444) >= 21)
@@ -7726,7 +7726,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         {
             if (*(int*)(a1 + 444) == 1)
                 sub_426050(*(int**)(a1 + 304), 89);
-            *(_BYTE*)(a1 + 212) = 0;
+            *(char*)(a1 + 212) = 0;
             if (*(int*)(a1 + 444) >= 8)
             {
                 if (*(int*)(a1 + 444) >= 18)
@@ -7750,9 +7750,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         if (*(int*)(a1 + 304) && *(int*)(a1 + 444) == 1)
         {
             v65 = 0;
-            if (*(_BYTE*)(a1 + 195))
+            if (*(char*)(a1 + 195))
             {
-                switch (*(_BYTE*)(a1 + 195))
+                switch (*(char*)(a1 + 195))
                 {
                 case 1:
                     v65 = 27 * sub_4175B4(a1, 1) / 100;
@@ -7769,11 +7769,11 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             {
                 v65 = 28 * sub_4175B4(a1, 1) / 100;
             }
-            if (*(_BYTE*)(a1 + 258) == 1)
+            if (*(char*)(a1 + 258) == 1)
             {
                 v65 = 12 * v65 / 10;
             }
-            else if (*(_BYTE*)(a1 + 258) == 2)
+            else if (*(char*)(a1 + 258) == 2)
             {
                 v65 = 7 * v65 / 10;
             }
@@ -7785,11 +7785,11 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 352) = 0;
             *(int*)(a1 + 356) = 0;
         }
-        if (*(_BYTE*)(a1 + 188) == 1)
+        if (*(char*)(a1 + 188) == 1)
         {
             if (*(int*)(a1 + 444) == 1 && *(int*)(a1 + 304))
-                sub_423CF2(*(_BYTE**)(a1 + 304), 0, 0, 0, 0, 0, 0);
-            *(_BYTE*)(a1 + 212) = 1;
+                sub_423CF2(*(char**)(a1 + 304), 0, 0, 0, 0, 0, 0);
+            *(char*)(a1 + 212) = 1;
             if (*(int*)(a1 + 444) >= 46)
             {
                 if (*(int*)(a1 + 444) >= 50)
@@ -7818,7 +7818,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             }
             return;
         }
-        switch (*(_BYTE*)(a1 + 195))
+        switch (*(char*)(a1 + 195))
         {
         case 0:
             if (*(int*)(a1 + 304))
@@ -7828,19 +7828,19 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     switch (*(int*)(a1 + 444))
                     {
                     case 5:
-                        sub_423CF2(*(_BYTE**)(a1 + 304), 1, -8, 1, 0, 1, -4);
+                        sub_423CF2(*(char**)(a1 + 304), 1, -8, 1, 0, 1, -4);
                         goto LABEL_407;
                     case 9:
-                        sub_423CF2(*(_BYTE**)(a1 + 304), 1, 8, 1, 0, 1, -8);
+                        sub_423CF2(*(char**)(a1 + 304), 1, 8, 1, 0, 1, -8);
                         goto LABEL_407;
                     case 0x29:
-                        sub_423CF2(*(_BYTE**)(a1 + 304), 1, -10, 1, 0, 1, -16);
+                        sub_423CF2(*(char**)(a1 + 304), 1, -10, 1, 0, 1, -16);
                         goto LABEL_407;
                     }
                     if (*(int*)(a1 + 444) != 49)
                         goto LABEL_407;
                 }
-                sub_423CF2(*(_BYTE**)(a1 + 304), 1, -16, 1, 0, 1, 0);
+                sub_423CF2(*(char**)(a1 + 304), 1, -16, 1, 0, 1, 0);
             }
         LABEL_407:
             if (*(int*)(a1 + 444) >= 5)
@@ -7855,25 +7855,25 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                             {
                                 if (*(int*)(a1 + 444) < 57)
                                 {
-                                    *(_BYTE*)(a1 + 212) = 0;
+                                    *(char*)(a1 + 212) = 0;
                                     *(short*)(a1 + 204) = 30;
                                 }
                             }
                             else
                             {
-                                *(_BYTE*)(a1 + 212) = 0;
+                                *(char*)(a1 + 212) = 0;
                                 *(short*)(a1 + 204) = 31;
                             }
                         }
                         else
                         {
-                            *(_BYTE*)(a1 + 212) = 0;
+                            *(char*)(a1 + 212) = 0;
                             *(short*)(a1 + 204) = 30;
                         }
                     }
                     else
                     {
-                        *(_BYTE*)(a1 + 212) = 1;
+                        *(char*)(a1 + 212) = 1;
                         *(short*)(a1 + 204) = 11;
                     }
                 }
@@ -7884,7 +7884,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             }
             else
             {
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = 31;
             }
             if (*(int*)(a1 + 444) >= 81)
@@ -7896,8 +7896,8 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             return;
         case 1:
             if (*(int*)(a1 + 304) && *(int*)(a1 + 444) == 1)
-                sub_423CF2(*(_BYTE**)(a1 + 304), 1, -16, 1, 0, 1, 0);
-            *(_BYTE*)(a1 + 212) = 1;
+                sub_423CF2(*(char**)(a1 + 304), 1, -16, 1, 0, 1, 0);
+            *(char*)(a1 + 212) = 1;
             if (*(int*)(a1 + 444) >= 5)
             {
                 if (*(int*)(a1 + 444) >= 10)
@@ -7910,7 +7910,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                             {
                                 if (*(int*)(a1 + 444) >= 50)
                                 {
-                                    *(_BYTE*)(a1 + 212) = 0;
+                                    *(char*)(a1 + 212) = 0;
                                     *(short*)(a1 + 204) = 6;
                                 }
                                 else
@@ -7942,7 +7942,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             }
             else
             {
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = 31;
             }
             if (*(int*)(a1 + 444) == 15)
@@ -7966,14 +7966,14 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             {
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    sub_423CF2(*(_BYTE**)(a1 + 304), 1, -16, 1, 0, 1, 0);
+                    sub_423CF2(*(char**)(a1 + 304), 1, -16, 1, 0, 1, 0);
                 }
                 else if (*(int*)(a1 + 444) == 8)
                 {
-                    sub_423CF2(*(_BYTE**)(a1 + 304), 1, -8, 1, 0, 1, -8);
+                    sub_423CF2(*(char**)(a1 + 304), 1, -8, 1, 0, 1, -8);
                 }
             }
-            *(_BYTE*)(a1 + 212) = 1;
+            *(char*)(a1 + 212) = 1;
             if (*(int*)(a1 + 444) == 1)
             {
                 *(int*)(a1 + 436) = 0;
@@ -7984,7 +7984,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             {
                 if (*(int*)(a1 + 444) == 8)
                 {
-                    *(_BYTE*)(a1 + 212) = 1;
+                    *(char*)(a1 + 212) = 1;
                     *(short*)(a1 + 204) = 17;
                     *(int*)(a1 + 392) = 1;
                     *(int*)(a1 + 348) = -380;
@@ -8002,7 +8002,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             }
             else
             {
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = 31;
             }
             break;
@@ -8012,16 +8012,16 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 switch (*(int*)(a1 + 444))
                 {
                 case 1:
-                    sub_423CF2(*(_BYTE**)(a1 + 304), 1, 16, 1, 0, 0, 0);
+                    sub_423CF2(*(char**)(a1 + 304), 1, 16, 1, 0, 0, 0);
                     break;
                 case 8:
-                    sub_423CF2(*(_BYTE**)(a1 + 304), 1, -4, 1, 0, 1, -16);
+                    sub_423CF2(*(char**)(a1 + 304), 1, -4, 1, 0, 1, -16);
                     break;
                 case 0xC:
-                    sub_423CF2(*(_BYTE**)(a1 + 304), 1, -14, 1, 0, 1, -8);
+                    sub_423CF2(*(char**)(a1 + 304), 1, -14, 1, 0, 1, -8);
                     break;
                 case 0xE:
-                    sub_423CF2(*(_BYTE**)(a1 + 304), 1, -16, 1, 0, 1, -4);
+                    sub_423CF2(*(char**)(a1 + 304), 1, -16, 1, 0, 1, -4);
                     break;
                 }
             }
@@ -8043,7 +8043,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                     }
                                     else
                                     {
-                                        *(_BYTE*)(a1 + 212) = 0;
+                                        *(char*)(a1 + 212) = 0;
                                         *(short*)(a1 + 204) = 2;
                                     }
                                 }
@@ -8074,7 +8074,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             }
             else
             {
-                *(_BYTE*)(a1 + 212) = 1;
+                *(char*)(a1 + 212) = 1;
                 *(short*)(a1 + 204) = 14;
             }
             if (*(int*)(a1 + 444) == 1)
@@ -8090,7 +8090,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
     case 0x3B:
         if (*(int*)(a1 + 304) && *(int*)(a1 + 444) == 1)
         {
-            *(_BYTE*)(a1 + 324) = sub_4264F0(*(_BYTE**)(a1 + 304));
+            *(char*)(a1 + 324) = sub_4264F0(*(char**)(a1 + 304));
             *(int*)(a1 + 372) = 0;
             *(int*)(a1 + 376) = 0;
             *(int*)(a1 + 340) = 0;
@@ -8100,12 +8100,12 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         }
         if (*(int*)(a1 + 304))
         {
-            if (sub_425E70(*(_BYTE**)(a1 + 304)) == 1)
+            if (sub_425E70(*(char**)(a1 + 304)) == 1)
             {
                 v63 = sub_426090(*(int**)(a1 + 304));
                 v62 = sub_4260B0(*(int**)(a1 + 304));
                 v64 = sub_4260D0(*(int**)(a1 + 304));
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 v60 = *(int*)(a1 + 328);
                 v59 = v62;
                 v61 = *(int*)(a1 + 336);
@@ -8127,7 +8127,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     {
                         v60 = 200 * ((*(int*)(a1 + 424) == 0) - *(int*)(a1 + 424)) + v63;
                         v61 = v64 - 1300;
-                        *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) + 1;
+                        *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) + 1;
                         *(short*)(a1 + 204) = 199;
                     }
                 }
@@ -8135,7 +8135,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 {
                     v60 = 1200 * ((*(int*)(a1 + 424) == 0) - *(int*)(a1 + 424)) + v63;
                     v61 = v64 - 1300;
-                    *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) - 1;
+                    *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) - 1;
                     *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 5 % 3;
                     if (*(short*)(a1 + 204))
                         *(short*)(a1 + 204) = 197;
@@ -8166,15 +8166,15 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     *(int*)(a1 + 360) = 30;
                 }
             }
-            else if (*(_BYTE*)(a1 + 324))
+            else if (*(char*)(a1 + 324))
             {
-                switch (*(_BYTE*)(a1 + 324))
+                switch (*(char*)(a1 + 324))
                 {
                 case 1:
-                    *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) - 1;
+                    *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) - 1;
                     *(int*)(a1 + 360) = 0;
                     *(int*)(a1 + 348) = 0;
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     if (*(int*)(a1 + 444) >= 5)
                     {
                         if (*(int*)(a1 + 444) >= 20)
@@ -8188,7 +8188,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     }
                     if (*(int*)(a1 + 444) == 28)
                     {
-                        sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                        sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                         *(int*)(a1 + 432) = 44;
                         *(int*)(a1 + 304) = 0;
                     }
@@ -8209,7 +8209,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     }
                     break;
                 case 2:
-                    *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) - 1;
+                    *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) - 1;
                     if (*(int*)(a1 + 444) >= 8)
                     {
                         if (*(int*)(a1 + 436))
@@ -8238,7 +8238,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                         else
                         {
                             *(int*)(a1 + 392) = 1;
-                            *(_BYTE*)(a1 + 212) = 0;
+                            *(char*)(a1 + 212) = 0;
                             *(int*)(a1 + 424) = sub_425D70(*(int**)(a1 + 304));
                             if (*(int*)(a1 + 444) >= 24)
                                 *(short*)(a1 + 204) = 33;
@@ -8246,21 +8246,21 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                 *(short*)(a1 + 204) = 22;
                             if (sub_426010(*(int**)(a1 + 304)) == 1)
                             {
-                                sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                                sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                                 *(int*)(a1 + 436) = 1;
                             }
                         }
                     }
                     else
                     {
-                        *(_BYTE*)(a1 + 212) = 0;
+                        *(char*)(a1 + 212) = 0;
                         *(short*)(a1 + 204) = 14;
                         *(int*)(a1 + 436) = 0;
                     }
                     break;
                 case 3:
-                    *(_BYTE*)(a1 + 212) = 0;
-                    *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) - 1;
+                    *(char*)(a1 + 212) = 0;
+                    *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) - 1;
                     if (*(int*)(a1 + 444) >= 8)
                     {
                         if (*(int*)(a1 + 444) >= 12)
@@ -8285,7 +8285,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     }
                     else if (*(int*)(a1 + 444) == 16)
                     {
-                        sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                        sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                         *(int*)(a1 + 392) = 0;
                         *(int*)(a1 + 336) = -100
                             * sub_446497(
@@ -8305,8 +8305,8 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             }
             else
             {
-                *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) - 1;
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) - 1;
+                *(char*)(a1 + 212) = 0;
                 v58 = sub_426090(*(int**)(a1 + 304));
                 v57 = sub_4260D0(*(int**)(a1 + 304));
                 *(int*)(a1 + 392) = 1;
@@ -8326,7 +8326,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                     {
                                         if (*(int*)(a1 + 444) == 56)
                                         {
-                                            sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                                            sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                                             *(int*)(a1 + 340) = 100;
                                             if (*(int*)(a1 + 424))
                                                 *(int*)(a1 + 340) = -*(int*)(a1 + 340);
@@ -8385,9 +8385,9 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         if (*(int*)(a1 + 304) && *(int*)(a1 + 444) == 1)
         {
             v51 = 0;
-            if (*(_BYTE*)(a1 + 195))
+            if (*(char*)(a1 + 195))
             {
-                switch (*(_BYTE*)(a1 + 195))
+                switch (*(char*)(a1 + 195))
                 {
                 case 1:
                     v51 = 35 * sub_4175B4(a1, 1) / 100;
@@ -8404,11 +8404,11 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             {
                 v51 = 38 * sub_4175B4(a1, 1) / 100;
             }
-            if (*(_BYTE*)(a1 + 258) == 1)
+            if (*(char*)(a1 + 258) == 1)
             {
                 v51 = 12 * v51 / 10;
             }
-            else if (*(_BYTE*)(a1 + 258) == 2)
+            else if (*(char*)(a1 + 258) == 2)
             {
                 v51 = 7 * v51 / 10;
             }
@@ -8422,30 +8422,30 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 352) = 0;
             *(int*)(a1 + 356) = 0;
         }
-        if (*(_BYTE*)(a1 + 195))
+        if (*(char*)(a1 + 195))
         {
-            switch (*(_BYTE*)(a1 + 195))
+            switch (*(char*)(a1 + 195))
             {
             case 1:
                 if (*(int*)(a1 + 304))
                 {
                     if (*(int*)(a1 + 444) == 1)
                     {
-                        sub_423CF2(*(_BYTE**)(a1 + 304), 1, 0, 1, 0, 1, -24);
+                        sub_423CF2(*(char**)(a1 + 304), 1, 0, 1, 0, 1, -24);
                     }
                     else if (*(int*)(a1 + 444) == 10)
                     {
-                        sub_423CF2(*(_BYTE**)(a1 + 304), 1, 0, 1, 0, 0, 0);
+                        sub_423CF2(*(char**)(a1 + 304), 1, 0, 1, 0, 0, 0);
                     }
                 }
-                *(_BYTE*)(a1 + 212) = 1;
+                *(char*)(a1 + 212) = 1;
                 if (*(int*)(a1 + 444) >= 8)
                 {
                     if (*(int*)(a1 + 444) >= 24)
                     {
                         if (*(int*)(a1 + 444) >= 40)
                         {
-                            *(_BYTE*)(a1 + 212) = 0;
+                            *(char*)(a1 + 212) = 0;
                             *(short*)(a1 + 204) = 6;
                         }
                         else
@@ -8473,14 +8473,14 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 {
                     if (*(int*)(a1 + 444) == 1)
                     {
-                        sub_423CF2(*(_BYTE**)(a1 + 304), 1, 0, 1, 0, 1, -24);
+                        sub_423CF2(*(char**)(a1 + 304), 1, 0, 1, 0, 1, -24);
                     }
                     else if (*(int*)(a1 + 444) == 20)
                     {
-                        sub_423CF2(*(_BYTE**)(a1 + 304), 1, 0, 1, 0, 1, 0);
+                        sub_423CF2(*(char**)(a1 + 304), 1, 0, 1, 0, 1, 0);
                     }
                 }
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 444) == 1)
                 {
                     *(int*)(a1 + 436) = 0;
@@ -8511,11 +8511,11 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 {
                     if (*(int*)(a1 + 444) == 1)
                     {
-                        sub_423CF2(*(_BYTE**)(a1 + 304), 1, -16, 1, 0, 0, 0);
+                        sub_423CF2(*(char**)(a1 + 304), 1, -16, 1, 0, 0, 0);
                     }
                     else if (*(int*)(a1 + 444) == 12)
                     {
-                        sub_423CF2(*(_BYTE**)(a1 + 304), 1, 0, 1, 0, 1, -16);
+                        sub_423CF2(*(char**)(a1 + 304), 1, 0, 1, 0, 1, -16);
                     }
                 }
                 if (*(int*)(a1 + 444) >= 4)
@@ -8532,7 +8532,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                     {
                                         if (*(int*)(a1 + 444) >= 36)
                                         {
-                                            *(_BYTE*)(a1 + 212) = 0;
+                                            *(char*)(a1 + 212) = 0;
                                             *(short*)(a1 + 204) = 20;
                                         }
                                         else
@@ -8547,7 +8547,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                 }
                                 else
                                 {
-                                    *(_BYTE*)(a1 + 212) = 1;
+                                    *(char*)(a1 + 212) = 1;
                                     *(short*)(a1 + 204) = 18;
                                 }
                             }
@@ -8568,7 +8568,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 }
                 else
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     *(short*)(a1 + 204) = 31;
                 }
                 if (*(int*)(a1 + 444) == 16)
@@ -8588,13 +8588,13 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 switch (*(int*)(a1 + 444))
                 {
                 case 1:
-                    sub_423CF2(*(_BYTE**)(a1 + 304), 1, -16, 1, 0, 1, 0);
+                    sub_423CF2(*(char**)(a1 + 304), 1, -16, 1, 0, 1, 0);
                     break;
                 case 0xC:
-                    sub_423CF2(*(_BYTE**)(a1 + 304), 1, 4, 1, 0, 1, -12);
+                    sub_423CF2(*(char**)(a1 + 304), 1, 4, 1, 0, 1, -12);
                     break;
                 case 0x18:
-                    sub_423CF2(*(_BYTE**)(a1 + 304), 1, 20, 1, 0, 1, 0);
+                    sub_423CF2(*(char**)(a1 + 304), 1, 20, 1, 0, 1, 0);
                     break;
                 }
             }
@@ -8608,36 +8608,36 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                         {
                             if (*(int*)(a1 + 444) >= 54)
                             {
-                                *(_BYTE*)(a1 + 212) = 0;
+                                *(char*)(a1 + 212) = 0;
                                 *(short*)(a1 + 204) = 6;
                             }
                             else
                             {
-                                *(_BYTE*)(a1 + 212) = 1;
+                                *(char*)(a1 + 212) = 1;
                                 *(short*)(a1 + 204) = 13;
                             }
                         }
                         else
                         {
-                            *(_BYTE*)(a1 + 212) = 1;
+                            *(char*)(a1 + 212) = 1;
                             *(short*)(a1 + 204) = 12;
                         }
                     }
                     else
                     {
-                        *(_BYTE*)(a1 + 212) = 1;
+                        *(char*)(a1 + 212) = 1;
                         *(short*)(a1 + 204) = 11;
                     }
                 }
                 else
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     *(short*)(a1 + 204) = 30;
                 }
             }
             else
             {
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = 31;
             }
             if (*(int*)(a1 + 444) >= 64)
@@ -8652,7 +8652,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         if (*(int*)(a1 + 304) && *(int*)(a1 + 444) == 1)
         {
             *(int*)(a1 + 424) = sub_425D70(*(int**)(a1 + 304));
-            *(_BYTE*)(a1 + 324) = sub_4264F0(*(_BYTE**)(a1 + 304));
+            *(char*)(a1 + 324) = sub_4264F0(*(char**)(a1 + 304));
             *(int*)(a1 + 372) = 0;
             *(int*)(a1 + 376) = 0;
             *(int*)(a1 + 340) = 0;
@@ -8662,13 +8662,13 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         }
         if (*(int*)(a1 + 304))
         {
-            if (*(_BYTE*)(a1 + 324))
+            if (*(char*)(a1 + 324))
             {
-                switch (*(_BYTE*)(a1 + 324))
+                switch (*(char*)(a1 + 324))
                 {
                 case 1:
-                    *(_BYTE*)(a1 + 212) = 0;
-                    *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) + 1;
+                    *(char*)(a1 + 212) = 0;
+                    *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) + 1;
                     *(int*)(a1 + 392) = 1;
                     if (*(int*)(a1 + 444) >= 10)
                     {
@@ -8692,7 +8692,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                 {
                                     *(int*)(a1 + 348) = -16;
                                     *(int*)(a1 + 360) = 16;
-                                    sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                                    sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                                 }
                                 else
                                 {
@@ -8712,7 +8712,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     }
                     break;
                 case 2:
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     *(short*)(a1 + 204) = 18;
                     if (*(int*)(a1 + 444) == 1)
                     {
@@ -8730,7 +8730,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                             }
                             else
                             {
-                                sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                                sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                                 sub_41261C((short*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
                                 *(int*)(a1 + 436) = 1;
                                 *(short*)(a1 + 204) = 17;
@@ -8743,12 +8743,12 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                         }
                         else
                         {
-                            *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) - 1;
+                            *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) - 1;
                         }
                     }
                     else
                     {
-                        *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) + 1;
+                        *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) + 1;
                     }
                     if (*(int*)(a1 + 444) > 34)
                     {
@@ -8760,8 +8760,8 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 case 3:
                     if (*(int*)(a1 + 444) == 1)
                     {
-                        *(_BYTE*)(a1 + 212) = 0;
-                        *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) - 1;
+                        *(char*)(a1 + 212) = 0;
+                        *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) - 1;
                         *(int*)(a1 + 436) = 0;
                     }
                     if (!*(int*)(a1 + 436))
@@ -8785,7 +8785,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                         }
                         if (*(int*)(a1 + 444) == 16)
                         {
-                            sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                            sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                             *(int*)(a1 + 340) = 600;
                             if (sub_425D70(*(int**)(a1 + 304)))
                                 *(int*)(a1 + 340) = -*(int*)(a1 + 340);
@@ -8799,8 +8799,8 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             }
             else
             {
-                *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) - 1;
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) - 1;
+                *(char*)(a1 + 212) = 0;
                 v50[5] = sub_426090(*(int**)(a1 + 304));
                 v50[4] = sub_4260D0(*(int**)(a1 + 304));
                 *(int*)(a1 + 392) = 1;
@@ -8829,7 +8829,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 }
                 else if (*(int*)(a1 + 444) >= 54)
                 {
-                    sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                    sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                     *(int*)(a1 + 392) = 0;
                     *(int*)(a1 + 432) = 44;
                     *(int*)(a1 + 304) = 0;
@@ -8847,16 +8847,16 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         {
             *(int*)(a1 + 436) = 0;
             *(short*)(a1 + 204) = 49;
-            *(_BYTE*)(a1 + 248) = 2;
-            *(_BYTE*)(a1 + 253) = 1;
+            *(char*)(a1 + 248) = 2;
+            *(char*)(a1 + 253) = 1;
             sub_41F169((short*)a1, 2 * *(unsigned __int16*)(a1 + 242));
-            *(_BYTE*)(a1 + 213) = 5;
+            *(char*)(a1 + 213) = 5;
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
-            *(_BYTE*)(a1 + 257) = 1;
+            *(char*)(a1 + 257) = 1;
             if (*(int*)(a1 + 304))
             {
-                *(_BYTE*)(a1 + (unsigned __int8)sub_425EF0(*(_BYTE**)(a1 + 304)) + 453) = -1;
+                *(char*)(a1 + (unsigned __int8)sub_425EF0(*(char**)(a1 + 304)) + 453) = -1;
                 *(int*)(a1 + 316) = *(int*)(a1 + 304);
                 *(int*)(a1 + 304) = 0;
             }
@@ -8865,7 +8865,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         {
             *(int*)(a1 + 444) = 2;
             *(int*)(a1 + 436) = 2;
-            *(_BYTE*)(a1 + 257) = 2;
+            *(char*)(a1 + 257) = 2;
             *(int*)(a1 + 340) = -*(int*)(a1 + 372) / 2;
             *(short*)(a1 + 204) = 28;
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
@@ -8883,7 +8883,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         }
         return;
     case 0xE:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (sub_425FF0((int*)a1))
             *(short*)(a1 + 204) = 158;
         else
@@ -8907,7 +8907,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         }
         return;
     case 0xF:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) == 1)
         {
             *(int*)(a1 + 360) = 0;
@@ -8927,7 +8927,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 432) = 3;
         return;
     case 0x10:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) >= 5)
             *(short*)(a1 + 204) = 16;
         else
@@ -8951,30 +8951,30 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
     case 0x17:
     case 0x18:
     case 0x19:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         switch (*(int*)(a1 + 428))
         {
         case 0x17:
-            *(_BYTE*)(a1 + 248) = 14;
+            *(char*)(a1 + 248) = 14;
             *(short*)(a1 + 204) = *(int*)(a1 + 444) / 8 % 2 + 174;
             break;
         case 0x18:
-            *(_BYTE*)(a1 + 248) = 15;
+            *(char*)(a1 + 248) = 15;
             *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 2 + 176;
             break;
         case 0x19:
-            *(_BYTE*)(a1 + 248) = 16;
+            *(char*)(a1 + 248) = 16;
             *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 3 + 178;
             break;
         case 0x11:
-            *(_BYTE*)(a1 + 248) = 4;
+            *(char*)(a1 + 248) = 4;
             *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 2 + 72;
             break;
         }
-        *(_BYTE*)(a1 + 255) = 0;
-        *(_BYTE*)(a1 + 253) = 1;
+        *(char*)(a1 + 255) = 0;
+        *(char*)(a1 + 253) = 1;
         sub_41F169((short*)a1, 30);
-        *(_BYTE*)(a1 + 213) = -1;
+        *(char*)(a1 + 213) = -1;
         if (*(int*)(a1 + 444) <= 1)
         {
             memset((void*)(a1 + 453), 0, 8u);
@@ -8987,11 +8987,11 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
     case 0x16:
         if (*(int*)(a1 + 444) <= 1)
         {
-            *(_BYTE*)(a1 + 251) = 0;
+            *(char*)(a1 + 251) = 0;
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
         }
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         switch (*(int*)(a1 + 428))
         {
         case 0x12:
@@ -9016,14 +9016,14 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         }
         if (!((*(int*)(a1 + 444) - 1) % 4))
             *(int*)(a1 + 424) = *(int*)(a1 + 424) == 0;
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 348) >= 0)
             *(short*)(a1 + 204) = 19;
         else
             *(short*)(a1 + 204) = 16;
         return;
     case 0x25:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) <= 1)
         {
             *(int*)(a1 + 372) = 0;
@@ -9067,7 +9067,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         }
         return;
     case 0x22:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) <= 1)
         {
             *(int*)(a1 + 380) = 0;
@@ -9108,7 +9108,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 348) = -300;
             *(int*)(a1 + 360) = 30;
         }
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if ((!*(int*)(a1 + 424) || *(int*)(a1 + 372) >= 0) && (*(int*)(a1 + 424) || *(int*)(a1 + 372) <= 0))
             *(short*)(a1 + 204) = 26;
         else
@@ -9121,11 +9121,11 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 352) = 0;
             *(int*)(a1 + 356) = 0;
         }
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         *(short*)(a1 + 204) = 16;
         return;
     case 0x23:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) <= 1)
         {
             *(int*)(a1 + 380) = 0;
@@ -9155,18 +9155,18 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 356) = 0;
         }
         *(int*)(a1 + 380) = 0;
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if ((!*(int*)(a1 + 424) || *(int*)(a1 + 372) >= 0) && (*(int*)(a1 + 424) || *(int*)(a1 + 372) <= 0))
             *(short*)(a1 + 204) = 26;
         else
             *(short*)(a1 + 204) = 16;
         return;
     case 0x27:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) <= 1)
         {
             *(int*)(a1 + 180) = 1;
-            *(_BYTE*)(a1 + 177) = 1;
+            *(char*)(a1 + 177) = 1;
             *(int*)(a1 + 372) = 0;
             *(int*)(a1 + 380) = 0;
             if (*(int*)(a1 + 436))
@@ -9222,7 +9222,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 *(int*)(a1 + 348) = 0;
                 *(int*)(a1 + 360) = 30;
                 *(int*)(a1 + 180) = 0;
-                *(_BYTE*)(a1 + 177) = 0;
+                *(char*)(a1 + 177) = 0;
             }
         }
         else
@@ -9248,14 +9248,14 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             *(int*)(a1 + 348) = -150;
             *(int*)(a1 + 360) = 30;
         }
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if ((!*(int*)(a1 + 424) || *(int*)(a1 + 372) >= 0) && (*(int*)(a1 + 424) || *(int*)(a1 + 372) <= 0))
             *(short*)(a1 + 204) = 26;
         else
             *(short*)(a1 + 204) = 16;
         return;
     case 0x21:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) <= 1)
         {
             *(int*)(a1 + 380) = 0;
@@ -9285,7 +9285,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         {
             *(int*)(a1 + 436) = 1;
         }
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) >= 8)
             *(short*)(a1 + 204) = 17;
         else
@@ -9293,7 +9293,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         *(int*)(a1 + 348) = 800;
         return;
     case 0x2A:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) <= 1)
         {
             if (*(int*)(a1 + 436))
@@ -9335,35 +9335,35 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         }
         return;
     case 0x2C:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         *(short*)(a1 + 204) = 18;
-        if (*(_BYTE*)(a1 + 470))
-            --* (_BYTE*)(a1 + 470);
-        if (!*(_BYTE*)(a1 + 470))
+        if (*(char*)(a1 + 470))
+            --* (char*)(a1 + 470);
+        if (!*(char*)(a1 + 470))
         {
-            *(_BYTE*)(a1 + 608) = 0;
+            *(char*)(a1 + 608) = 0;
             *(int*)(a1 + 432) = 48;
             *(int*)(a1 + 444) = 0;
         }
         return;
     case 0x2D:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         *(short*)(a1 + 204) = 27;
-        if (*(_BYTE*)(a1 + 470))
-            --* (_BYTE*)(a1 + 470);
-        if (!*(_BYTE*)(a1 + 470))
+        if (*(char*)(a1 + 470))
+            --* (char*)(a1 + 470);
+        if (!*(char*)(a1 + 470))
         {
-            *(_BYTE*)(a1 + 608) = 0;
+            *(char*)(a1 + 608) = 0;
             *(int*)(a1 + 432) = 48;
             *(int*)(a1 + 444) = 0;
         }
         return;
     case 0x2E:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         *(short*)(a1 + 204) = 17;
-        if (*(_BYTE*)(a1 + 470))
-            --* (_BYTE*)(a1 + 470);
-        if (*(_BYTE*)(a1 + 470))
+        if (*(char*)(a1 + 470))
+            --* (char*)(a1 + 470);
+        if (*(char*)(a1 + 470))
         {
             if (*(int*)(a1 + 444) > 12)
             {
@@ -9381,11 +9381,11 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         }
         return;
     case 0x2F:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         *(short*)(a1 + 204) = 28;
-        if (*(_BYTE*)(a1 + 470))
-            --* (_BYTE*)(a1 + 470);
-        if (*(_BYTE*)(a1 + 470))
+        if (*(char*)(a1 + 470))
+            --* (char*)(a1 + 470);
+        if (*(char*)(a1 + 470))
         {
             if (*(int*)(a1 + 444) > 12)
             {
@@ -9414,10 +9414,10 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             {
                 *(int*)(a1 + 292) = 0;
                 *(int*)(a1 + 392) = 1;
-                *(_BYTE*)(a1 + 252) = 0;
-                sub_423CF2((_BYTE*)a1, 1, 0, 1, 0, 1, -20);
+                *(char*)(a1 + 252) = 0;
+                sub_423CF2((char*)a1, 1, 0, 1, 0, 1, -20);
             }
-            *(_BYTE*)(a1 + 212) = 0;
+            *(char*)(a1 + 212) = 0;
             if (*(int*)(a1 + 444) >= 4)
             {
                 if (*(int*)(a1 + 444) >= 12)
@@ -9436,7 +9436,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 && (!*(int*)(a1 + 304)
                     || Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 304)) != (struct Concurrency::ISchedulerProxy*)74))
             {
-                sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                 *(int*)(a1 + 432) = 50;
                 *(int*)(a1 + 360) = 30;
                 *(int*)(a1 + 304) = 0;
@@ -9450,7 +9450,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 304)) == (struct Concurrency::ISchedulerProxy*)73)
                     {
                         *(int*)(a1 + 288) = 0;
-                        *(_BYTE*)(a1 + 252) = 0;
+                        *(char*)(a1 + 252) = 0;
                         if (*(int*)(a1 + 392))
                         {
                             *(int*)(a1 + 372) = 0;
@@ -9465,7 +9465,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     }
                 }
             }
-            *(_BYTE*)(a1 + 212) = 0;
+            *(char*)(a1 + 212) = 0;
             if (*(int*)(a1 + 444) >= 12)
                 *(short*)(a1 + 204) = 13;
             else
@@ -9480,7 +9480,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             }
             return;
         case '1':
-            *(_BYTE*)(a1 + 212) = 0;
+            *(char*)(a1 + 212) = 0;
             *(short*)(a1 + 204) = 24;
             *(int*)(a1 + 352) = 0;
             *(int*)(a1 + 356) = 0;
@@ -9493,8 +9493,8 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 *(int*)(a1 + 432) = 3;
                 *(int*)(a1 + 444) = 0;
                 *(int*)(a1 + 216) = 0;
-                *(_BYTE*)(a1 + 220) = 1;
-                *(_BYTE*)(a1 + 471) = 1;
+                *(char*)(a1 + 220) = 1;
+                *(char*)(a1 + 471) = 1;
                 *(int*)(a1 + 296) = 0;
             }
             return;
@@ -9529,7 +9529,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     - *(int*)(a1 + 328);
                 *(int*)(a1 + 376) = sub_4260B0(*(int**)(a1 + 312)) - *(int*)(a1 + 332);
             }
-            *(_BYTE*)(a1 + 212) = 0;
+            *(char*)(a1 + 212) = 0;
             *(short*)(a1 + 204) = 29;
             if (*(int*)(a1 + 444) > 1
                 && (!*(int*)(a1 + 312)
@@ -9540,21 +9540,21 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             return;
         case '4':
         case '5':
-            if (*(_BYTE*)(a1 + 188) == 1)
+            if (*(char*)(a1 + 188) == 1)
             {
-                *(_BYTE*)(a1 + 212) = 1;
+                *(char*)(a1 + 212) = 1;
                 *(short*)(a1 + 204) = 52;
             }
             else
             {
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = 29;
             }
             if (*(int*)(a1 + 304))
             {
                 v41 = sub_425F30((int*)*(int*)(a1 + 304));
                 if ((*(int*)(a1 + 428) != 52 || v41 == 54) && (*(int*)(a1 + 428) != 53 || v41 == 55))
-                    sub_423CF2(*(_BYTE**)(a1 + 304), 1, -16, 1, 0, 0, 0);
+                    sub_423CF2(*(char**)(a1 + 304), 1, -16, 1, 0, 0, 0);
                 else
                     *(int*)(a1 + 444) = 121;
             }
@@ -9572,12 +9572,12 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         case '6':
             if (*(int*)(a1 + 304))
             {
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = 14;
                 v40 = sub_426090(*(int**)(a1 + 304));
                 v39 = sub_425D70(*(int**)(a1 + 304));
                 v38 = 1600 * (v39 - (v39 == 0)) + v40;
-                if (sub_425E70(*(_BYTE**)(a1 + 304)) == 1)
+                if (sub_425E70(*(char**)(a1 + 304)) == 1)
                 {
                     *(short*)(a1 + 204) = 13;
                     v38 = 1200 * (v39 - (v39 == 0)) + v40;
@@ -9603,7 +9603,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 v10 = sub_425D70(*(int**)(a1 + 304));
                 v34 = v10;
                 v33 = 1600 * ((__PAIR64__(v10, v10) - 1) >> 32) + v35;
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 304)) == (struct Concurrency::ISchedulerProxy*)56)
                     *(short*)(a1 + 204) = *(int*)(a1 + 444) / 10 % 2 + 34;
                 else
@@ -9617,7 +9617,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     *(int*)(a1 + 372) = 0;
                     *(int*)(a1 + 376) = 0;
                     *(int*)(a1 + 348) = 0;
-                    sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                    sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                 }
                 return;
             }
@@ -9626,11 +9626,11 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             switch (*(int*)(a1 + 428))
             {
             case 0x40:
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = 6;
                 if (*(int*)(a1 + 444) > 8)
                 {
-                    *(int*)(a1 + 432) = *(_BYTE*)(a1 + 237) ? 10 : 3;
+                    *(int*)(a1 + 432) = *(char*)(a1 + 237) ? 10 : 3;
                     *(int*)(a1 + 444) = 0;
                     if (*(int*)(a1 + 304))
                     {
@@ -9660,7 +9660,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 break;
             case 0x43:
             case 0x44:
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = 29;
                 *(int*)(a1 + 288) = 0;
                 *(int*)(a1 + 304) = 0;
@@ -9674,7 +9674,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 break;
             case 0x41:
             case 0x42:
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = 29;
                 *(int*)(a1 + 288) = 0;
                 *(int*)(a1 + 304) = 0;
@@ -9687,7 +9687,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 }
                 break;
             case 0x4B:
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = *(int*)(a1 + 444) / 20 % 2 + 59;
                 if (*(int*)(a1 + 444) > 120)
                 {
@@ -9708,11 +9708,11 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     *(int*)(a1 + 360) = 30;
                     *(int*)(a1 + 304) = 0;
                 }
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = 16;
                 break;
             case 0x1A:
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 444) == 1)
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
                 if ((*(int*)(a1 + 444) >= 20 || *(int*)(a1 + 440))
@@ -9748,29 +9748,29 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                 break;
             case 0x4E:
             case 0x4F:
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 428) == 78)
                     *(short*)(a1 + 204) = 18 - *(int*)(a1 + 444) / 10 % 2;
                 else
                     *(short*)(a1 + 204) = *(int*)(a1 + 444) / 10 % 2 + 27;
-                *(_BYTE*)(a1 + 176) = *(int*)(a1 + 444) / 5 % 2;
+                *(char*)(a1 + 176) = *(int*)(a1 + 444) / 5 % 2;
                 if (*(int*)(a1 + 444) == 3)
                 {
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A30, -1, 100, 100, 0);
-                    *(_BYTE*)(a1 + 177) = 1;
+                    *(char*)(a1 + 177) = 1;
                 }
                 if (*(int*)(a1 + 444) >= 80)
                 {
                     *(int*)(a1 + 432) = 80;
-                    *(_BYTE*)(a1 + 176) = 1;
-                    *(_BYTE*)(a1 + 178) = 0;
+                    *(char*)(a1 + 176) = 1;
+                    *(char*)(a1 + 178) = 0;
                 }
                 break;
             case 0x51:
-                switch (*(_BYTE*)(a1 + 188))
+                switch (*(char*)(a1 + 188))
                 {
                 case 1:
-                    *(_BYTE*)(a1 + 212) = 1;
+                    *(char*)(a1 + 212) = 1;
                     if (*(int*)(a1 + 444) >= 5)
                     {
                         if (*(int*)(a1 + 444) >= 10)
@@ -9806,7 +9806,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     }
                     break;
                 case 2:
-                    *(_BYTE*)(a1 + 212) = 1;
+                    *(char*)(a1 + 212) = 1;
                     if (*(int*)(a1 + 444) >= 4)
                     {
                         if (*(int*)(a1 + 444) >= 8)
@@ -9836,7 +9836,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
                     break;
                 case 3:
-                    *(_BYTE*)(a1 + 212) = 1;
+                    *(char*)(a1 + 212) = 1;
                     if (*(int*)(a1 + 444) >= 4)
                     {
                         if (*(int*)(a1 + 444) >= 8)
@@ -9873,12 +9873,12 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
                     break;
                 default:
-                    if (*(_BYTE*)(a1 + 195))
+                    if (*(char*)(a1 + 195))
                     {
-                        switch (*(_BYTE*)(a1 + 195))
+                        switch (*(char*)(a1 + 195))
                         {
                         case 1:
-                            *(_BYTE*)(a1 + 212) = 1;
+                            *(char*)(a1 + 212) = 1;
                             if (*(int*)(a1 + 444) >= 4)
                             {
                                 if (*(int*)(a1 + 444) >= 8)
@@ -9889,7 +9889,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                         {
                                             if (*(int*)(a1 + 444) >= 25)
                                             {
-                                                *(_BYTE*)(a1 + 212) = 0;
+                                                *(char*)(a1 + 212) = 0;
                                                 *(short*)(a1 + 204) = 69;
                                             }
                                             else
@@ -9920,7 +9920,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
                             break;
                         case 2:
-                            *(_BYTE*)(a1 + 212) = 1;
+                            *(char*)(a1 + 212) = 1;
                             if (*(int*)(a1 + 444) >= 4)
                             {
                                 if (*(int*)(a1 + 444) >= 8)
@@ -9937,12 +9937,12 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                                     {
                                                         if (*(int*)(a1 + 444) >= 32)
                                                         {
-                                                            *(_BYTE*)(a1 + 212) = 0;
+                                                            *(char*)(a1 + 212) = 0;
                                                             *(short*)(a1 + 204) = 69;
                                                         }
                                                         else
                                                         {
-                                                            *(_BYTE*)(a1 + 212) = 0;
+                                                            *(char*)(a1 + 212) = 0;
                                                             *(short*)(a1 + 204) = 3;
                                                         }
                                                     }
@@ -9984,7 +9984,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
                             break;
                         case 3:
-                            *(_BYTE*)(a1 + 212) = 1;
+                            *(char*)(a1 + 212) = 1;
                             if (*(int*)(a1 + 444) >= 4)
                             {
                                 if (*(int*)(a1 + 444) >= 8)
@@ -9997,7 +9997,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                             {
                                                 if (*(int*)(a1 + 444) >= 24)
                                                 {
-                                                    *(_BYTE*)(a1 + 212) = 0;
+                                                    *(char*)(a1 + 212) = 0;
                                                     *(short*)(a1 + 204) = 69;
                                                 }
                                                 else
@@ -10033,7 +10033,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
                             break;
                         case 4:
-                            *(_BYTE*)(a1 + 212) = 1;
+                            *(char*)(a1 + 212) = 1;
                             if (*(int*)(a1 + 444) >= 4)
                             {
                                 if (*(int*)(a1 + 444) >= 8)
@@ -10050,7 +10050,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                                     {
                                                         if (*(int*)(a1 + 444) >= 38)
                                                         {
-                                                            *(_BYTE*)(a1 + 212) = 0;
+                                                            *(char*)(a1 + 212) = 0;
                                                             *(short*)(a1 + 204) = 69;
                                                         }
                                                         else
@@ -10099,7 +10099,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     }
                     else
                     {
-                        *(_BYTE*)(a1 + 212) = 1;
+                        *(char*)(a1 + 212) = 1;
                         if (*(int*)(a1 + 444) >= 4)
                         {
                             if (*(int*)(a1 + 444) >= 8)
@@ -10108,7 +10108,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                 {
                                     if (*(int*)(a1 + 444) >= 25)
                                     {
-                                        *(_BYTE*)(a1 + 212) = 0;
+                                        *(char*)(a1 + 212) = 0;
                                         *(short*)(a1 + 204) = 69;
                                     }
                                     else
@@ -10143,14 +10143,14 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     {
                         if (*(int*)(a1 + 444) == 1)
                         {
-                            *(_BYTE*)(a1 + 212) = 0;
+                            *(char*)(a1 + 212) = 0;
                             *(short*)(a1 + 204) = 27;
-                            *(_BYTE*)(a1 + 177) = 1;
-                            *(_BYTE*)(a1 + 176) = 1;
-                            *(_BYTE*)(a1 + 556) = 0;
-                            *(_BYTE*)(a1 + 557) = 0;
+                            *(char*)(a1 + 177) = 1;
+                            *(char*)(a1 + 176) = 1;
+                            *(char*)(a1 + 556) = 0;
+                            *(char*)(a1 + 557) = 0;
                             *(int*)(a1 + 172) = 0;
-                            sub_467E7D((int)byte_4B9B10, (_BYTE*)a1);
+                            sub_467E7D((int)byte_4B9B10, (char*)a1);
                             v30 = sub_425CD0((int*)byte_4B9B10);
                             if ((v30 == 1 || !v30 || v30 == 4) && byte_4B99CB && !*(int*)(a1 + 392))
                             {
@@ -10197,11 +10197,11 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     }
                     else if (*(int*)(a1 + 428) == 1)
                     {
-                        *(_BYTE*)(a1 + 212) = 0;
-                        *(_BYTE*)(a1 + 178) = 0;
-                        *(_BYTE*)(a1 + 176) = *(int*)(a1 + 444) / 2 % 2;
+                        *(char*)(a1 + 212) = 0;
+                        *(char*)(a1 + 178) = 0;
+                        *(char*)(a1 + 176) = *(int*)(a1 + 444) / 2 % 2;
                         if (*(int*)(a1 + 444) == 1)
-                            sub_468011((char*)byte_4B9B10, (_BYTE*)a1);
+                            sub_468011((char*)byte_4B9B10, (char*)a1);
                         if (*(int*)(a1 + 444) / 8 % 3 > 1)
                             *(short*)(a1 + 204) = 70;
                         else
@@ -10212,19 +10212,19 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                                 *(int*)(a1 + 432) = 51;
                             else
                                 *(int*)(a1 + 432) = 4;
-                            *(_BYTE*)(a1 + 178) = 1;
-                            *(_BYTE*)(a1 + 177) = 0;
-                            *(_BYTE*)(a1 + 176) = 0;
+                            *(char*)(a1 + 178) = 1;
+                            *(char*)(a1 + 177) = 0;
+                            *(char*)(a1 + 176) = 0;
                         }
                     }
                 }
                 else
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
-                    *(_BYTE*)(a1 + 178) = 0;
+                    *(char*)(a1 + 212) = 0;
+                    *(char*)(a1 + 178) = 0;
                     if (sub_425FF0((int*)a1))
                     {
-                        if (sub_494AA9(*(_BYTE**)(a1 + 480), 0))
+                        if (sub_494AA9(*(char**)(a1 + 480), 0))
                         {
                             if (*(int*)(a1 + 444) / 8 % 3 > 1)
                                 *(short*)(a1 + 204) = 157;
@@ -10240,17 +10240,17 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                             *(short*)(a1 + 204) = 0;
                         }
                     }
-                    else if (*(_BYTE*)(a1 + 188) == 2)
+                    else if (*(char*)(a1 + 188) == 2)
                     {
-                        *(_BYTE*)(a1 + 212) = 1;
+                        *(char*)(a1 + 212) = 1;
                         if (*(int*)(a1 + 444) / 8 % 3 > 1)
                             *(short*)(a1 + 204) = 117;
                         else
                             *(short*)(a1 + 204) = 116;
                     }
-                    else if (*(_BYTE*)(a1 + 188) == 3)
+                    else if (*(char*)(a1 + 188) == 3)
                     {
-                        *(_BYTE*)(a1 + 212) = 1;
+                        *(char*)(a1 + 212) = 1;
                         if (*(int*)(a1 + 444) / 8 % 3 > 1)
                             *(short*)(a1 + 204) = 119;
                         else
@@ -10267,7 +10267,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
                     if (*(int*)(a1 + 444) >= 120)
                     {
                         *(int*)(a1 + 432) = 4;
-                        *(_BYTE*)(a1 + 178) = 1;
+                        *(char*)(a1 + 178) = 1;
                     }
                 }
                 break;
@@ -10277,17 +10277,17 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         sub_417FC1(a1);
         return;
     }
-    *(_BYTE*)(a1 + 608) = 0;
+    *(char*)(a1 + 608) = 0;
     if (sub_41BA53(a1, 0x8Bu, 0) && *(int*)(a1 + 444) == 1 && *(char*)(a1 + 232) > 0)
-        *(_BYTE*)(a1 + 608) = *(_BYTE*)(a1 + 204);
-    *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 608) = *(char*)(a1 + 204);
+    *(char*)(a1 + 212) = 0;
     *(short*)(a1 + 204) = 24;
     if (*(int*)(a1 + 444) == 1)
     {
-        *(_BYTE*)(a1 + 469) = 1;
+        *(char*)(a1 + 469) = 1;
         *(int*)(a1 + 216) = 0;
-        *(_BYTE*)(a1 + 220) = 1;
-        *(_BYTE*)(a1 + 471) = 1;
+        *(char*)(a1 + 220) = 1;
+        *(char*)(a1 + 471) = 1;
         if (sub_41BA53(a1, 0x8Bu, 0) && *(int*)(a1 + 296))
         {
             *(int*)(a1 + 432) = 71;
@@ -10299,7 +10299,7 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
         if (*(int*)(a1 + 292) && *(int*)(a1 + 304))
         {
             v9 = *(unsigned __int8*)(a1 + 193);
-            if (v9 != (unsigned __int8)sub_426070(*(_BYTE**)(a1 + 304)))
+            if (v9 != (unsigned __int8)sub_426070(*(char**)(a1 + 304)))
             {
                 *(int*)(a1 + 432) = 73;
                 sub_426050(*(int**)(a1 + 304), 74);
@@ -10313,13 +10313,13 @@ void sub_4097FE(int a1, double a2, double a3, double a4)
             v43 = sub_423D47((int*)a1 + 8);
             v16 = v43 >= 2 && v43 <= 4;
             v15 = v43 >= 6 && v43 <= 8;
-            *(_BYTE*)(a1 + 224) = v16 - v15;
+            *(char*)(a1 + 224) = v16 - v15;
             v14 = v43 >= 4 && v43 <= 6;
             v13 = v43 == 1 || v43 == 2 || v43 == 8;
-            *(_BYTE*)(a1 + 225) = v14 - v13;
+            *(char*)(a1 + 225) = v14 - v13;
         }
     }
-    if (*(int*)(a1 + 444) == 1 && (*(_BYTE*)(a1 + 224) || *(_BYTE*)(a1 + 225)))
+    if (*(int*)(a1 + 444) == 1 && (*(char*)(a1 + 224) || *(char*)(a1 + 225)))
     {
         *(int*)(a1 + 432) = 49;
         if (*(char*)(a1 + 224) <= 0)
@@ -10364,9 +10364,9 @@ int sub_41242D(int thisx)
                 *(int*)(thisx + 432) = 53;
             else
                 *(int*)(thisx + 432) = 52;
-            if (*(_BYTE*)(thisx + 188) == 1)
+            if (*(char*)(thisx + 188) == 1)
                 *(int*)(thisx + 432) = 52;
-            *(_BYTE*)(thisx + 223) = 0x80;
+            *(char*)(thisx + 223) = 0x80;
             sub_412502(*(int*)(thisx + 304), (int)thisx);
             result = sub_43FFC3((int*)byte_4BDB28, dword_4B9A1C, -1, 100, 100, 0);
             *(int*)(thisx + 444) = 0;
@@ -10398,10 +10398,10 @@ int sub_41242D(int thisx)
                 *(int*)(thisx + 432) = 52; // 否则设置 thisx + 432 处的值为 52
 
             // 如果 thisx + 188 处的值等于 1
-            if (*(_BYTE*)(thisx + 188) == 1)
+            if (*(char*)(thisx + 188) == 1)
                 *(int*)(thisx + 432) = 52; // 将 thisx + 432 处的值设置为 52
 
-            *(_BYTE*)(thisx + 223) = 0x80; // 将 thisx + 223 处的值设置为 128（0x80）
+            *(char*)(thisx + 223) = 0x80; // 将 thisx + 223 处的值设置为 128（0x80）
 
             sub_412502(*(int*)(thisx + 304), (int)thisx); // 调用 sub_412502 函数
 
@@ -10440,10 +10440,10 @@ int sub_412502(int thisx, int a2)
             - *(int*)(thisx + 328);
     }
     *(int*)(thisx + 304) = a2;
-    *(_BYTE*)(thisx + 272) = 0;
+    *(char*)(thisx + 272) = 0;
     *(int*)(thisx + 332) = sub_4260B0((int*)a2);
     result = (unsigned __int8)sub_426030((char*)a2) - 1;
-    *(_BYTE*)(thisx + 223) = result;
+    *(char*)(thisx + 223) = result;
     return result;
 }
 /*
@@ -10475,11 +10475,11 @@ int sub_412502(int thisx, int a2)
     }
 
     *(int*)(thisx + 304) = a2; // 将 a2 的值设置为 thisx + 304 处的值
-    *(_BYTE*)(thisx + 272) = 0;   // 将 thisx + 272 处的值设置为 0
+    *(char*)(thisx + 272) = 0;   // 将 thisx + 272 处的值设置为 0
     *(int*)(thisx + 332) = sub_4260B0((int*)a2); // 更新 thisx + 332 处的值
 
     result = (unsigned __int8)sub_426030((char*)a2) - 1; // 调用 sub_426030 函数并计算 result
-    *(_BYTE*)(thisx + 223) = result; // 将 result 的值设置为 thisx + 223 处的值
+    *(char*)(thisx + 223) = result; // 将 result 的值设置为 thisx + 223 处的值
 
     return result; // 返回 result 的值
 }*/
@@ -10664,7 +10664,7 @@ Warning();//修正堆栈
     int v4; // eax
 
 
-    if (*(_BYTE*)(thisx + 474))
+    if (*(char*)(thisx + 474))
         return;
     if (*(int*)(thisx + 292))
     {
@@ -10771,7 +10771,7 @@ Warning();//修正堆栈
         v99 = *(int*)(thisx + 328) / 100;
         v92 = *(int*)(thisx + 332) / 100;
     }
-    else if ((_BYTE)v76 && (unsigned __int8)v108 == 13 && !*(int*)(thisx + 392))
+    else if ((char)v76 && (unsigned __int8)v108 == 13 && !*(int*)(thisx + 392))
     {
         LOBYTE(v75) = ((unsigned __int8)v76 + 1) / 2;
         switch ((unsigned __int8)v75)
@@ -10819,7 +10819,7 @@ Warning();//修正堆栈
     }
     if (*(int*)(thisx + 304))
     {
-        if ((*(_BYTE*)(thisx + 602) & 1) != 0)
+        if ((*(char*)(thisx + 602) & 1) != 0)
         {
             v73 = sub_426090(*(int**)(thisx + 304));
             v4 = sub_425D70(*(int**)(thisx + 304));
@@ -10829,7 +10829,7 @@ Warning();//修正堆栈
             *(int*)(thisx + 352) = 0;
             *(int*)(thisx + 364) = 0;
         }
-        if ((*(_BYTE*)(thisx + 604) & 1) != 0)
+        if ((*(char*)(thisx + 604) & 1) != 0)
         {
             v72 = sub_4260B0(*(int**)(thisx + 304));
             *(int*)(thisx + 376) = 100 * *(char*)(thisx + 605) + v72 - *(int*)(thisx + 332);
@@ -10837,7 +10837,7 @@ Warning();//修正堆栈
             *(int*)(thisx + 356) = 0;
             *(int*)(thisx + 368) = 0;
         }
-        if ((*(_BYTE*)(thisx + 606) & 1) != 0)
+        if ((*(char*)(thisx + 606) & 1) != 0)
         {
             v71 = sub_4260D0(*(int**)(thisx + 304));
             *(int*)(thisx + 348) = 100 * *(char*)(thisx + 607) + v71 - *(int*)(thisx + 336);
@@ -10946,7 +10946,7 @@ Warning();//修正堆栈
     }
     v105 = *(int*)(thisx + 372);
     v100 = *(int*)(thisx + 376);
-    if (*(_BYTE*)(thisx + 178))
+    if (*(char*)(thisx + 178))
     {
         v105 += *(int*)(thisx + 364);
         v100 += *(int*)(thisx + 368);
@@ -11100,10 +11100,10 @@ Warning();//修正堆栈
     LOBYTE(v95) = sub_4464D3((int)byte_4B9B10, v98 / 8, *(int*)(thisx + 332) / 800);
     v113 = 100 * sub_446497((int*)byte_4B9B10, v99, v92);
     v103 = 100 * sub_446497((int*)byte_4B9B10, v98, v92);
-    if (!*(int*)(thisx + 392) && ((_BYTE)v93 || (_BYTE)v95))
+    if (!*(int*)(thisx + 392) && ((char)v93 || (char)v95))
     {
         LOBYTE(v54) = v93;
-        if (!(_BYTE)v93)
+        if (!(char)v93)
             LOBYTE(v54) = v95;
         v102 = 800;
     }
@@ -11116,7 +11116,7 @@ Warning();//修正堆栈
         {
             if (v109)
             {
-                if ((_BYTE)v93 || (_BYTE)v95)
+                if ((char)v93 || (char)v95)
                 {
                     *(int*)(thisx + 328) = 100 * v97;
                 }
@@ -11136,7 +11136,7 @@ Warning();//修正堆栈
             }
             break;
         }
-        if (((_BYTE)v93 || (_BYTE)v95) && (v52 <= 0 ? (v27 = -v52) : (v27 = v52), v27 <= 800 && v103 - v113 <= 400))
+        if (((char)v93 || (char)v95) && (v52 <= 0 ? (v27 = -v52) : (v27 = v52), v27 <= 800 && v103 - v113 <= 400))
         {
             *(int*)(thisx + 336) = -v103;
         }
@@ -11145,7 +11145,7 @@ Warning();//修正堆栈
             v109 = 1;
             LOBYTE(v110) = v53;
             LOWORD(v106) = sub_4744A9((int*)byte_4B9B10, v97 / 8, v92 / 8);
-            if ((_BYTE)v93 || (_BYTE)v95)
+            if ((char)v93 || (char)v95)
             {
                 if (v105 <= 0)
                     v26 = (v105 >= 0) - 1;
@@ -11177,7 +11177,7 @@ Warning();//修正堆栈
             {
                 if (v109)
                 {
-                    if ((_BYTE)v93 || (_BYTE)v95)
+                    if ((char)v93 || (char)v95)
                     {
                         *(int*)(thisx + 328) = 100 * v97;
                     }
@@ -11193,7 +11193,7 @@ Warning();//修正堆栈
                 }
                 break;
             }
-            if (((_BYTE)v93 || (_BYTE)v95) && (v91 <= 0 ? (v24 = -v91) : (v24 = v91), v24 <= 800 && v103 - v113 <= 400))
+            if (((char)v93 || (char)v95) && (v91 <= 0 ? (v24 = -v91) : (v24 = v91), v24 <= 800 && v103 - v113 <= 400))
             {
                 *(int*)(thisx + 336) = -v103;
             }
@@ -11202,7 +11202,7 @@ Warning();//修正堆栈
                 v109 = 1;
                 LOBYTE(v110) = v51;
                 LOWORD(v106) = sub_4744A9((int*)byte_4B9B10, v97 / 8, v84 / 8);
-                if ((_BYTE)v93 || (_BYTE)v95)
+                if ((char)v93 || (char)v95)
                 {
                     if (v105 <= 0)
                         v23 = (v105 >= 0) - 1;
@@ -11311,7 +11311,7 @@ Warning();//修正堆栈
     *(int*)(thisx + 388) += 100 * (*(int*)(thisx + 328) / 100) - 100 * (v86 / 100);
     if (v96 && *(int*)(thisx + 364) + *(int*)(thisx + 372))
         *(int*)(thisx + 388) += *(int*)(thisx + 364) + *(int*)(thisx + 372);
-    *(_BYTE*)(thisx + 609) = sub_4464F6((int*)byte_4B9B10, *(int*)(thisx + 328) / 800, *(int*)(thisx + 332) / 800);
+    *(char*)(thisx + 609) = sub_4464F6((int*)byte_4B9B10, *(int*)(thisx + 328) / 800, *(int*)(thisx + 332) / 800);
     if (*(int*)(thisx + 428) == 54 || *(int*)(thisx + 428) == 141 || *(int*)(thisx + 292))
         goto LABEL_654;
     v103 = 100 * sub_446497((int*)byte_4B9B10, *(int*)(thisx + 328) / 100, *(int*)(thisx + 332) / 100);
@@ -11325,9 +11325,9 @@ Warning();//修正堆栈
         else
             *(int*)(thisx + 336) = v48;
     }
-    if ((_BYTE)v49 || (_BYTE)v93)
+    if ((char)v49 || (char)v93)
     {
-        if (!(_BYTE)v49)
+        if (!(char)v49)
             LOBYTE(v49) = v93;
         if (*(int*)(thisx + 388) <= 0)
             v21 = (*(int*)(thisx + 388) >= 0) - 1;
@@ -11367,7 +11367,7 @@ Warning();//修正堆栈
                 sub_42455B(thisx, v87);
             goto LABEL_565;
         }
-        *(_BYTE*)(thisx + 236) = 0;
+        *(char*)(thisx + 236) = 0;
         if (*(int*)(thisx + 428) == 37
             || *(int*)(thisx + 428) == 169
             || *(int*)(thisx + 428) == 112
@@ -11582,7 +11582,7 @@ Warning();//修正堆栈
             }
             break;
         default:
-            if (*(int*)(thisx + 304) && !sub_4264F0(*(_BYTE**)(thisx + 304)) && *(int*)(thisx + 428) == 59)
+            if (*(int*)(thisx + 304) && !sub_4264F0(*(char**)(thisx + 304)) && *(int*)(thisx + 428) == 59)
             {
                 *(int*)(thisx + 336) = -v103;
                 if (!sub_426170((char*)thisx))
@@ -11597,7 +11597,7 @@ Warning();//修正堆栈
                 }
                 break;
             }
-            if (*(int*)(thisx + 428) == 57 && *(_BYTE*)(thisx + 195) == 1)
+            if (*(int*)(thisx + 428) == 57 && *(char*)(thisx + 195) == 1)
             {
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
                 *(int*)(thisx + 392) = 0;
@@ -11606,7 +11606,7 @@ Warning();//修正堆栈
                 *(int*)(thisx + 360) = 0;
                 *(int*)(thisx + 336) = -v103;
             }
-            else if (*(int*)(thisx + 304) && *(_BYTE*)(thisx + 324) == 1 && *(int*)(thisx + 428) == 60)
+            else if (*(int*)(thisx + 304) && *(char*)(thisx + 324) == 1 && *(int*)(thisx + 428) == 60)
             {
                 *(int*)(thisx + 432) = 44;
                 *(int*)(thisx + 304) = 0;
@@ -11614,7 +11614,7 @@ Warning();//修正堆栈
                 *(int*)(thisx + 348) = 0;
                 *(int*)(thisx + 360) = 0;
             }
-            else if (*(int*)(thisx + 428) == 57 && *(_BYTE*)(thisx + 195) == 2 && !*(int*)(thisx + 436))
+            else if (*(int*)(thisx + 428) == 57 && *(char*)(thisx + 195) == 2 && !*(int*)(thisx + 436))
             {
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
                 *(int*)(thisx + 436) = 1;
@@ -11622,7 +11622,7 @@ Warning();//修正堆栈
                 *(int*)(thisx + 336) = -v103;
             }
             else if (*(int*)(thisx + 304)
-                && *(_BYTE*)(thisx + 324) == 2
+                && *(char*)(thisx + 324) == 2
                 && *(int*)(thisx + 428) == 59
                 && *(int*)(thisx + 436) == 3)
             {
@@ -11634,11 +11634,11 @@ Warning();//修正堆栈
             }
             else
             {
-                if (*(int*)(thisx + 428) != 58 || *(_BYTE*)(thisx + 195) != 2)
+                if (*(int*)(thisx + 428) != 58 || *(char*)(thisx + 195) != 2)
                 {
-                    if (!*(int*)(thisx + 304) || *(_BYTE*)(thisx + 324) != 2 || *(int*)(thisx + 428) != 60)
+                    if (!*(int*)(thisx + 304) || *(char*)(thisx + 324) != 2 || *(int*)(thisx + 428) != 60)
                     {
-                        if (*(int*)(thisx + 304) && *(_BYTE*)(thisx + 324) == 3 && *(int*)(thisx + 428) == 59)
+                        if (*(int*)(thisx + 304) && *(char*)(thisx + 324) == 3 && *(int*)(thisx + 428) == 59)
                         {
                             *(int*)(thisx + 336) = -v103;
                             *(int*)(thisx + 392) = 0;
@@ -11676,7 +11676,7 @@ Warning();//修正堆栈
                                     *(int*)(thisx + 348) = -300;
                                     *(int*)(thisx + 360) = 30;
                                     *(int*)(thisx + 336) = -v103;
-                                    *(_BYTE*)(thisx + 177) = 0;
+                                    *(char*)(thisx + 177) = 0;
                                 }
                                 break;
                             case 'n':
@@ -11698,7 +11698,7 @@ Warning();//修正堆栈
                                 {
                                     ++* (int*)(thisx + 436);
                                     *(int*)(thisx + 180) = 0;
-                                    *(_BYTE*)(thisx + 177) = 0;
+                                    *(char*)(thisx + 177) = 0;
                                     if (*(int*)(thisx + 304))
                                         *(int*)(thisx + 424) = sub_425D70(*(int**)(thisx + 304));
                                     *(int*)(thisx + 372) = 150 * (*(int*)(thisx + 424) - (*(int*)(thisx + 424) == 0));
@@ -11712,7 +11712,7 @@ Warning();//修正堆栈
                             default:
                                 if (*(int*)(thisx + 428) == 132
                                     || *(int*)(thisx + 428) == 133
-                                    || *(_BYTE*)(thisx + 195) == 2 && *(int*)(thisx + 428) == 57
+                                    || *(char*)(thisx + 195) == 2 && *(int*)(thisx + 428) == 57
                                     || *(int*)(thisx + 428) == 51)
                                 {
                                     *(int*)(thisx + 432) = 12;
@@ -12066,7 +12066,7 @@ int sub_417173(int thisx, unsigned __int8 a2)
             sub_41F169((short*)thisx, (v2 + v3) / 2);
             memset((void*)(thisx + 453), 0, 8u);
             memset((void*)(thisx + 461), 0, 8u);
-            *(_BYTE*)(thisx + a2 + 453) = -1;
+            *(char*)(thisx + a2 + 453) = -1;
         }
         else
         {
@@ -12074,11 +12074,11 @@ int sub_417173(int thisx, unsigned __int8 a2)
             v8 = sub_4175B4(*(int*)(thisx + 304), 1) / 10;
             sub_41EF8A((short*)thisx, v8);
             sub_41F169((short*)thisx, *(unsigned __int16*)(thisx + 242));
-            *(_BYTE*)(thisx + 248) = 2;
+            *(char*)(thisx + 248) = 2;
             *(int*)(thisx + 436) = a2;
         }
     }
-    else if (v10 && sub_426070((char*)v10) == *(_BYTE*)(thisx + 193) && sub_420FA1(v10))
+    else if (v10 && sub_426070((char*)v10) == *(char*)(thisx + 193) && sub_420FA1(v10))
     {
         sub_426230((char*)v10);
         *(int*)(thisx + 432) = 84;
@@ -12129,7 +12129,7 @@ int* sub_41745B(int* thisx, unsigned __int8 a2)
         thisx[108] = 137;
     }
     thisx[73] = 0;
-    *((_BYTE*)thisx + a2 + 453) = -1;
+    *((char*)thisx + a2 + 453) = -1;
     thisx[76] = sub_446714(byte_4B9B10, a2);
     thisx[79] = thisx[76];
     if (thisx[76])
@@ -12140,7 +12140,7 @@ int* sub_41745B(int* thisx, unsigned __int8 a2)
         v3 = sub_425D70((int*)thisx[76]);
         thisx[93] = 500 * ((__PAIR64__(v3, sub_425D70((int*)thisx[76])) - 1) >> 32);
     }
-    *((_BYTE*)thisx + 248) = 2;
+    *((char*)thisx + 248) = 2;
     result = thisx;
     thisx[87] = 400;
     thisx[90] = 30;
@@ -12199,7 +12199,7 @@ __int16 sub_4175B4(int thisx, int a2)
                 v6 = 150 * v6 / 100;
             }
         }
-        if (sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
+        if (sub_41BA53(thisx, 0x8Cu, 0) && *(char*)(thisx + 609) == 11)
             v6 += *(short*)(thisx + 496) + 15;
     }
     if (sub_425CD0((int*)&byte_4B9B10) == 3 && *(int*)(thisx + 164))
@@ -12256,7 +12256,7 @@ int sub_417780(int thisx)
         {
             *(int*)(thisx + 328) = sub_426090(*(int**)(thisx + 304));
             *(int*)(thisx + 332) = sub_4260B0(*(int**)(thisx + 304));
-            *(_BYTE*)(thisx + 223) = sub_426030(*(char**)(thisx + 304)) + 1;
+            *(char*)(thisx + 223) = sub_426030(*(char**)(thisx + 304)) + 1;
             result = sub_4260D0(*(int**)(thisx + 304));
             *(int*)(thisx + 336) = result;
         }
@@ -12319,7 +12319,7 @@ int sub_417780(int thisx)
             // 更新偏移 332 处的值，调用函数 sub_4260B0
             *(int*)(thisx + 332) = sub_4260B0(*(int**)(thisx + 304));
             // 调用 sub_426030 函数，结果加 1 后存储在偏移 223 处
-            *(_BYTE*)(thisx + 223) = sub_426030(*(char**)(thisx + 304)) + 1;
+            *(char*)(thisx + 223) = sub_426030(*(char**)(thisx + 304)) + 1;
             // 调用 sub_4260D0 函数，结果存储在偏移 336 处
             result = sub_4260D0(*(int**)(thisx + 304));
             *(int*)(thisx + 336) = result;
@@ -12367,7 +12367,7 @@ __int16 sub_417924(int thisx, int a2, int a3)
 
 
     v7 = *(short*)(thisx + 512);
-    if (a3 && sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
+    if (a3 && sub_41BA53(thisx, 0x8Cu, 0) && *(char*)(thisx + 609) == 11)
         v7 += *(short*)(thisx + 496) + 10;
     if (sub_41BA53(thisx, 0x83u, 0))
     {
@@ -12454,7 +12454,7 @@ __int16 sub_417924(int thisx, int a2, int a3)
     v7 = *(short*)(thisx + 512);
 
     // 如果a3为真，且sub_41BA53返回非零，并且thisx + 609处的字节值等于11
-    if (a3 && sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
+    if (a3 && sub_41BA53(thisx, 0x8Cu, 0) && *(char*)(thisx + 609) == 11)
         // v7增加thisx + 496处的16位无符号整数值再加10
         v7 += *(short*)(thisx + 496) + 10;
 
@@ -12613,11 +12613,11 @@ void sub_417C15(int thisx, unsigned __int8 a2)
 }
 
 //init
-_BYTE* sub_417C83(int thisx)
+char* sub_417C83(int thisx)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
-    result = (_BYTE*)thisx;
+    result = (char*)thisx;
     if (*(int*)(thisx + 428) != 78 && *(int*)(thisx + 428) != 79)
     {
         if (*(int*)(thisx + 432) == 59
@@ -12646,18 +12646,18 @@ _BYTE* sub_417C83(int thisx)
         *(int*)(thisx + 356) = 0;
         *(int*)(thisx + 360) = 0;
         *(int*)(thisx + 444) = 0;
-        return sub_423CF2((_BYTE*)thisx, 0, 0, 0, 0, 0, 0);
+        return sub_423CF2((char*)thisx, 0, 0, 0, 0, 0, 0);
     }
     return result;
 }
 
 //重置对象状态并调用清理函数: 该函数主要用于重置对象的某些状态，并调用另一个函数 
-_BYTE* sub_417DCC(int thisx)
+char* sub_417DCC(int thisx)
 {
     if (*(int*)(thisx + 432) == 57 || *(int*)(thisx + 432) == 58)
         *(int*)(thisx + 432) = 4;
     *(int*)(thisx + 304) = 0;
-    return sub_423CF2((_BYTE*)thisx, 0, 0, 0, 0, 0, 0);
+    return sub_423CF2((char*)thisx, 0, 0, 0, 0, 0, 0);
 }
 
 //init
@@ -12680,8 +12680,8 @@ int sub_417E42(int thisx)
     *(int*)(thisx + 304) = 0;
     *(int*)(thisx + 432) = 50;
     result = thisx;
-    *(_BYTE*)(thisx + 470) = 0;
-    *(_BYTE*)(thisx + 471) = 1;
+    *(char*)(thisx + 470) = 0;
+    *(char*)(thisx + 471) = 1;
     return result;
 }
 
@@ -12718,7 +12718,7 @@ int  sub_417EE0(int thisx)
     *(int*)(thisx + 304) = 0;
     if (*(int*)(thisx + 432) == 52 || *(int*)(thisx + 432) == 53)
         *(int*)(thisx + 432) = 4;
-    sub_423CF2((_BYTE*)thisx, 0, 0, 0, 0, 0, 0);
+    sub_423CF2((char*)thisx, 0, 0, 0, 0, 0, 0);
     *(int*)(thisx + 372) = 0;
     *(int*)(thisx + 376) = 0;
     *(int*)(thisx + 340) = 0;
@@ -12755,7 +12755,7 @@ int  sub_417FC1(int thisx)
     *(int*)(thisx + 360) = 0;
     *(int*)(thisx + 372) = 0;
     *(int*)(thisx + 376) = 0;
-    sub_423CF2((_BYTE*)thisx, 0, 0, 0, 0, 0, 0);
+    sub_423CF2((char*)thisx, 0, 0, 0, 0, 0, 0);
     result = thisx;
     if (*(int*)(thisx + 432) == 54 || *(int*)(thisx + 432) == 55)
         *(int*)(thisx + 432) = 75;
@@ -12770,13 +12770,13 @@ int* sub_41807A(int* thisx)
     thisx[13] = 0;
     thisx[14] = 0;
     thisx[15] = 0;
-    *((_BYTE*)thisx + 140) = 100;
-    *((_BYTE*)thisx + 141) = 0;
-    *((_BYTE*)thisx + 142) = 0;
-    *((_BYTE*)thisx + 145) = 0;
-    *((_BYTE*)thisx + 144) = 0;
-    *((_BYTE*)thisx + 143) = 0;
-    *((_BYTE*)thisx + 147) = 0;
+    *((char*)thisx + 140) = 100;
+    *((char*)thisx + 141) = 0;
+    *((char*)thisx + 142) = 0;
+    *((char*)thisx + 145) = 0;
+    *((char*)thisx + 144) = 0;
+    *((char*)thisx + 143) = 0;
+    *((char*)thisx + 147) = 0;
     thisx[33] = 0;
     thisx[34] = 0;
     *thisx = 0;
@@ -12822,12 +12822,12 @@ __int16 __fastcall sub_4181B5(int a1)
     int v163; // [esp+23Ch] [ebp-30h]
     int v162; // [esp+238h] [ebp-34h]
     int v161; // [esp+234h] [ebp-38h]
-    _BYTE* v160; // [esp+230h] [ebp-3Ch]
+    char* v160; // [esp+230h] [ebp-3Ch]
     int j; // [esp+22Ch] [ebp-40h]
     struct Concurrency::ISchedulerProxy* v158; // [esp+228h] [ebp-44h]
     Concurrency::details::SchedulerBase* v157; // [esp+224h] [ebp-48h]
     int* v156; // [esp+220h] [ebp-4Ch]
-    _BYTE* v155; // [esp+21Ch] [ebp-50h]
+    char* v155; // [esp+21Ch] [ebp-50h]
     int* v154; // [esp+218h] [ebp-54h]
     int v153; // [esp+214h] [ebp-58h]
     int v152; // [esp+210h] [ebp-5Ch]
@@ -12846,7 +12846,7 @@ __int16 __fastcall sub_4181B5(int a1)
     int v140; // [esp+1DCh] [ebp-90h]
     int v139[2]; // [esp+1D4h] [ebp-98h] BYREF
     int v138; // [esp+1D0h] [ebp-9Ch]
-    _BYTE* v137; // [esp+1CCh] [ebp-A0h]
+    char* v137; // [esp+1CCh] [ebp-A0h]
     int v136; // [esp+1C8h] [ebp-A4h]
     int v135; // [esp+1C4h] [ebp-A8h]
     int v134; // [esp+1C4h] [ebp-A8h]
@@ -12989,44 +12989,44 @@ __int16 __fastcall sub_4181B5(int a1)
     struct Concurrency::ISchedulerProxy* v1; // eax
 
 
-    *(_BYTE*)(a1 + 141) = 0;
-    *(_BYTE*)(a1 + 142) = 0;
+    *(char*)(a1 + 141) = 0;
+    *(char*)(a1 + 142) = 0;
     *(int*)(a1 + 8) = 0;
     for (i = 0; i < 4; ++i)
     {
         if (*(char*)(i + a1 + 143) > 0)
-            --* (_BYTE*)(i + a1 + 143);
+            --* (char*)(i + a1 + 143);
     }
     LOWORD(v1) = a1;
     if (*(int*)(a1 + 124))
     {
-        LOBYTE(v161) = sub_425E70(*(_BYTE**)(a1 + 124));
+        LOBYTE(v161) = sub_425E70(*(char**)(a1 + 124));
         SchedulerProxy = Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 124));
         if (SchedulerProxy == (struct Concurrency::ISchedulerProxy*)44
             || SchedulerProxy == (struct Concurrency::ISchedulerProxy*)45
             || SchedulerProxy == (struct Concurrency::ISchedulerProxy*)48)
         {
-            *(_BYTE*)(a1 + 141) = rand() % 3 - 1;
+            *(char*)(a1 + 141) = rand() % 3 - 1;
             v2 = rand() % 3 - 1;
             LOWORD(v1) = a1;
-            *(_BYTE*)(a1 + 142) = v2;
+            *(char*)(a1 + 142) = v2;
             return (__int16)v1;
         }
         if (sub_425D50(*(int**)(a1 + 124)))
         {
-            v160 = (_BYTE*)sub_426430(*(int**)(a1 + 124));
+            v160 = (char*)sub_426430(*(int**)(a1 + 124));
             if (!v160
-                || (v3 = (unsigned __int8)sub_426070(v160), v3 != (unsigned __int8)sub_426070(*(_BYTE**)(a1 + 124)))
+                || (v3 = (unsigned __int8)sub_426070(v160), v3 != (unsigned __int8)sub_426070(*(char**)(a1 + 124)))
                 || !byte_4B99C8)
             {
-                *(_BYTE*)(a1 + 147) = 2;
-                *(_BYTE*)(a1 + 144) = 1;
-                *(_BYTE*)(a1 + 143) = 1;
-                *(_BYTE*)(a1 + 148) = 0;
-                *(_BYTE*)(a1 + 141) = rand() % 3 - 1;
+                *(char*)(a1 + 147) = 2;
+                *(char*)(a1 + 144) = 1;
+                *(char*)(a1 + 143) = 1;
+                *(char*)(a1 + 148) = 0;
+                *(char*)(a1 + 141) = rand() % 3 - 1;
                 v4 = rand() % 3 - 1;
                 LOWORD(v1) = a1;
-                *(_BYTE*)(a1 + 142) = v4;
+                *(char*)(a1 + 142) = v4;
                 return (__int16)v1;
             }
         }
@@ -13070,18 +13070,18 @@ __int16 __fastcall sub_4181B5(int a1)
             }
             if (sub_426410(*(int**)(a1 + 124)))
             {
-                v155 = (_BYTE*)sub_426430(*(int**)(a1 + 124));
+                v155 = (char*)sub_426430(*(int**)(a1 + 124));
                 if (v155)
                 {
                     if (rand() % 100 < 5)
                     {
                         v5 = (unsigned __int8)sub_426070(v155);
-                        if (v5 == (unsigned __int8)sub_426070(*(_BYTE**)(a1 + 124)))
+                        if (v5 == (unsigned __int8)sub_426070(*(char**)(a1 + 124)))
                         {
                             v1 = (struct Concurrency::ISchedulerProxy*)sub_420FA1(*(int**)(a1 + 124));
                             if (v1)
                             {
-                                *(_BYTE*)(a1 + 143) = 1;
+                                *(char*)(a1 + 143) = 1;
                                 return (__int16)v1;
                             }
                         }
@@ -13102,7 +13102,7 @@ __int16 __fastcall sub_4181B5(int a1)
                                 v1 = (struct Concurrency::ISchedulerProxy*)sub_420FA1(*(int**)(a1 + 124));
                                 if (v1)
                                 {
-                                    *(_BYTE*)(a1 + 143) = 1;
+                                    *(char*)(a1 + 143) = 1;
                                     return (__int16)v1;
                                 }
                             }
@@ -13111,7 +13111,7 @@ __int16 __fastcall sub_4181B5(int a1)
                 }
             }
         }
-        if ((!(_BYTE)v161 || (unsigned __int8)v161 == 2 || (unsigned __int8)v161 == 3)
+        if ((!(char)v161 || (unsigned __int8)v161 == 2 || (unsigned __int8)v161 == 3)
             && !sub_426430(*(int**)(a1 + 124))
             && (sub_4263B0(*(int**)(a1 + 124))
                 || Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 124)) == (struct Concurrency::ISchedulerProxy*)10)
@@ -13123,11 +13123,11 @@ __int16 __fastcall sub_4181B5(int a1)
                 if (v1 == (struct Concurrency::ISchedulerProxy*)10)
                 {
                     LOWORD(v1) = a1;
-                    *(_BYTE*)(a1 + 145) = 1;
+                    *(char*)(a1 + 145) = 1;
                 }
                 else
                 {
-                    *(_BYTE*)(a1 + 143) = 1;
+                    *(char*)(a1 + 143) = 1;
                 }
                 return (__int16)v1;
             }
@@ -13204,17 +13204,17 @@ __int16 __fastcall sub_4181B5(int a1)
                 && (unsigned __int8)v161 != 3
                 && byte_4B99C8
                 && rand() % 100 < 10
-                && sub_4666C5((char*)byte_4B9B10, *(_BYTE**)(a1 + 124)) > 0
+                && sub_4666C5((char*)byte_4B9B10, *(char**)(a1 + 124)) > 0
                 && !sub_425FF0(*(int**)(a1 + 124))
                 && !sub_426410(*(int**)(a1 + 124))
                 && !sub_425D50(*(int**)(a1 + 124))
                 && !sub_426430(*(int**)(a1 + 124)))
             {
-                *(_BYTE*)(a1 + 146) = 1;
-                *(_BYTE*)(a1 + rand() % 2 + 143) = 1;
+                *(char*)(a1 + 146) = 1;
+                *(char*)(a1 + rand() % 2 + 143) = 1;
             }
             *(int*)(a1 + 72) = 0;
-            if (!(_BYTE)v161 && !sub_425FF0(*(int**)(a1 + 124)) && rand() % 100 < *(unsigned __int8*)(a1 + 86))
+            if (!(char)v161 && !sub_425FF0(*(int**)(a1 + 124)) && rand() % 100 < *(unsigned __int8*)(a1 + 86))
             {
                 *(int*)a1 = 3;
                 *(int*)(a1 + 72) = (int)sub_41FE85(a1);
@@ -13246,7 +13246,7 @@ __int16 __fastcall sub_4181B5(int a1)
             *(int*)(a1 + 128) = (int)v148;
             if (!*(int*)(a1 + 72))
             {
-                if ((_BYTE)v161
+                if ((char)v161
                     || sub_4263D0(*(unsigned char**)(a1 + 124))
                     || !sub_4263D0(*(unsigned char**)(a1 + 128)) && rand() % 100 >= 20)
                 {
@@ -13280,10 +13280,10 @@ __int16 __fastcall sub_4181B5(int a1)
         else
         {
             ++* (int*)(a1 + 136);
-            *(_BYTE*)(a1 + 145) = 1;
+            *(char*)(a1 + 145) = 1;
         }
         if (*(int*)(a1 + 136) >= 120)
-            *(_BYTE*)(a1 + 141) = rand() % 3 - 1;
+            *(char*)(a1 + 141) = rand() % 3 - 1;
         if (*(int*)a1 == 2)
         {
             sub_422573((int*)a1);
@@ -13304,7 +13304,7 @@ __int16 __fastcall sub_4181B5(int a1)
             && sub_41BEA6(*(int**)(a1 + 128))
             && Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 128)) == (struct Concurrency::ISchedulerProxy*)200
             || v172 != (struct Concurrency::ISchedulerProxy*)13
-            || !*(_BYTE*)(a1 + 94))
+            || !*(char*)(a1 + 94))
         {
             goto LABEL_197;
         }
@@ -13349,16 +13349,16 @@ __int16 __fastcall sub_4181B5(int a1)
                 v110 = (v144 >= 0) - 1;
             else
                 v110 = 1;
-            *(_BYTE*)(a1 + 141) = v110;
+            *(char*)(a1 + 141) = v110;
             if (v141 <= 0)
                 v109 = (v141 >= 0) - 1;
             else
                 v109 = 1;
-            *(_BYTE*)(a1 + 142) = v109;
+            *(char*)(a1 + 142) = v109;
             LOWORD(v1) = a1;
-            *(_BYTE*)(a1 + 143) = 1;
-            *(_BYTE*)(a1 + 144) = 0;
-            *(_BYTE*)(a1 + 145) = 0;
+            *(char*)(a1 + 143) = 1;
+            *(char*)(a1 + 144) = 0;
+            *(char*)(a1 + 145) = 0;
             return (__int16)v1;
         }
         if (v140 >= v143 || v140 >= v139[0])
@@ -13371,14 +13371,14 @@ __int16 __fastcall sub_4181B5(int a1)
             if (v106 > 12800 || (v170 <= 0 ? (v105 = -v170) : (v105 = v170), v105 > 4400))
             {
                 if (!sub_425D30(*(int**)(a1 + 124))
-                    && *(_BYTE*)(a1 + 94)
+                    && *(char*)(a1 + 94)
                     && Concurrency::details::SchedulerBase::GetNumberOfBoundContexts(*(Concurrency::details::SchedulerBase**)(a1 + 124))
                     && !(rand() % 10))
                 {
-                    *(_BYTE*)(a1 + 147) = 1;
-                    *(_BYTE*)(a1 + 144) = 1;
-                    *(_BYTE*)(a1 + 143) = 1;
-                    *(_BYTE*)(a1 + 148) = 0;
+                    *(char*)(a1 + 147) = 1;
+                    *(char*)(a1 + 144) = 1;
+                    *(char*)(a1 + 143) = 1;
+                    *(char*)(a1 + 148) = 0;
                 }
             }
             if (!*(int*)(a1 + 4) || *(int*)a1 == 6 || *(int*)a1 == 7 || *(int*)a1 == 8)
@@ -13407,14 +13407,14 @@ __int16 __fastcall sub_4181B5(int a1)
             v167 = v103 + v104;
             if (sub_426410(*(int**)(a1 + 124)))
             {
-                v137 = (_BYTE*)sub_426430(*(int**)(a1 + 124));
+                v137 = (char*)sub_426430(*(int**)(a1 + 124));
                 if (!v137
-                    || (v13 = (unsigned __int8)sub_426070(v137), v13 != (unsigned __int8)sub_426070(*(_BYTE**)(a1 + 124))))
+                    || (v13 = (unsigned __int8)sub_426070(v137), v13 != (unsigned __int8)sub_426070(*(char**)(a1 + 124))))
                 {
                     if (sub_41BA53(*(int*)(a1 + 124), 0x24u, 0))
-                        *(_BYTE*)(a1 + 144) = 1;
+                        *(char*)(a1 + 144) = 1;
                     else
-                        *(_BYTE*)(a1 + rand() % 2 + 143) = 1;
+                        *(char*)(a1 + rand() % 2 + 143) = 1;
                 }
             }
             if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 124)) == (struct Concurrency::ISchedulerProxy*)52
@@ -13422,9 +13422,9 @@ __int16 __fastcall sub_4181B5(int a1)
                 || Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 124)) == (struct Concurrency::ISchedulerProxy*)69)
             {
                 if ((unsigned __int8)v161 == 2 || (unsigned __int8)v161 == 3)
-                    *(_BYTE*)(a1 + 143) = 1;
+                    *(char*)(a1 + 143) = 1;
                 else
-                    *(_BYTE*)(a1 + rand() % 2 + 143) = 1;
+                    *(char*)(a1 + rand() % 2 + 143) = 1;
             }
             if (*(int*)a1 != 2 && *(int*)a1 != 6 && *(int*)a1 != 7 && *(int*)a1 != 8)
                 sub_420119(a1);
@@ -13432,26 +13432,26 @@ __int16 __fastcall sub_4181B5(int a1)
             {
                 if (sub_425D30(*(int**)(a1 + 124)))
                 {
-                    if (*(_BYTE*)(a1 + 147))
+                    if (*(char*)(a1 + 147))
                     {
-                        ++* (_BYTE*)(a1 + 148);
-                        if (*(_BYTE*)(a1 + 147) == 1 && *(unsigned __int8*)(a1 + 148) < 3u
-                            || *(_BYTE*)(a1 + 147) == 2 && *(unsigned __int8*)(a1 + 148) < 8u)
+                        ++* (char*)(a1 + 148);
+                        if (*(char*)(a1 + 147) == 1 && *(unsigned __int8*)(a1 + 148) < 3u
+                            || *(char*)(a1 + 147) == 2 && *(unsigned __int8*)(a1 + 148) < 8u)
                         {
-                            *(_BYTE*)(a1 + 144) = 1;
-                            *(_BYTE*)(a1 + 143) = 1;
+                            *(char*)(a1 + 144) = 1;
+                            *(char*)(a1 + 143) = 1;
                         }
                         else
                         {
-                            *(_BYTE*)(a1 + 147) = 0;
+                            *(char*)(a1 + 147) = 0;
                         }
                     }
                     if (*(int*)(a1 + 4))
                     {
                         if (sub_425D70(*(int**)(a1 + 124)))
-                            *(_BYTE*)(a1 + 141) = 1;
+                            *(char*)(a1 + 141) = 1;
                         else
-                            *(_BYTE*)(a1 + 141) = -1;
+                            *(char*)(a1 + 141) = -1;
                     }
                     else if (*(int*)a1 != 2
                         && *(int*)a1 != 3
@@ -13470,11 +13470,11 @@ __int16 __fastcall sub_4181B5(int a1)
                                 {
                                     if (v165 < 0 && sub_425D70(*(int**)(a1 + 124)))
                                     {
-                                        *(_BYTE*)(a1 + 141) = -1;
+                                        *(char*)(a1 + 141) = -1;
                                     }
                                     else if (v165 > 0 && !sub_425D70(*(int**)(a1 + 124)))
                                     {
-                                        *(_BYTE*)(a1 + 141) = 1;
+                                        *(char*)(a1 + 141) = 1;
                                     }
                                 }
                             }
@@ -13496,7 +13496,7 @@ __int16 __fastcall sub_4181B5(int a1)
                         if (v101 < 4000 && sub_426350(*(unsigned __int8**)(a1 + 124)))
                         {
                             v14 = sub_425D70(*(int**)(a1 + 124)) == 0;
-                            *(_BYTE*)(a1 + 141) = v14 - sub_425D70(*(int**)(a1 + 124));
+                            *(char*)(a1 + 141) = v14 - sub_425D70(*(int**)(a1 + 124));
                         }
                         else
                         {
@@ -13510,7 +13510,7 @@ __int16 __fastcall sub_4181B5(int a1)
                                     v99 = (v165 >= 0) - 1;
                                 else
                                     v99 = 1;
-                                *(_BYTE*)(a1 + 141) = v99;
+                                *(char*)(a1 + 141) = v99;
                             }
                             else
                             {
@@ -13526,11 +13526,11 @@ __int16 __fastcall sub_4181B5(int a1)
                                             v97 = (v165 >= 0) - 1;
                                         else
                                             v97 = 1;
-                                        *(_BYTE*)(a1 + 141) = -v97;
+                                        *(char*)(a1 + 141) = -v97;
                                     }
                                     else
                                     {
-                                        *(_BYTE*)(a1 + 141) = 2 * (rand() % 2) - 1;
+                                        *(char*)(a1 + 141) = 2 * (rand() % 2) - 1;
                                     }
                                 }
                                 else
@@ -13539,14 +13539,14 @@ __int16 __fastcall sub_4181B5(int a1)
                                         v96 = (v165 >= 0) - 1;
                                     else
                                         v96 = 1;
-                                    *(_BYTE*)(a1 + 141) = v96;
+                                    *(char*)(a1 + 141) = v96;
                                 }
                             }
                         }
                     }
                     else
                     {
-                        *(_BYTE*)(a1 + 84) = 1;
+                        *(char*)(a1 + 84) = 1;
                     }
                     if (v170 <= 0)
                         v95 = -v170;
@@ -13558,7 +13558,7 @@ __int16 __fastcall sub_4181B5(int a1)
                             v94 = (v170 >= 0) - 1;
                         else
                             v94 = 1;
-                        *(_BYTE*)(a1 + 142) = v94;
+                        *(char*)(a1 + 142) = v94;
                     }
                     if (*(int*)a1 == 6
                         && !sub_425D50(*(int**)(a1 + 124))
@@ -13581,17 +13581,17 @@ __int16 __fastcall sub_4181B5(int a1)
                                 else
                                     v91 = v165;
                                 if (v91 < 400)
-                                    *(_BYTE*)(a1 + 141) = 0;
+                                    *(char*)(a1 + 141) = 0;
                                 if (v170 <= 0)
                                     v90 = -v170;
                                 else
                                     v90 = v170;
                                 if (v90 < 500)
-                                    *(_BYTE*)(a1 + 142) = 0;
-                                *(_BYTE*)(a1 + 147) = 2;
-                                *(_BYTE*)(a1 + 144) = 1;
-                                *(_BYTE*)(a1 + 143) = 1;
-                                *(_BYTE*)(a1 + 148) = 0;
+                                    *(char*)(a1 + 142) = 0;
+                                *(char*)(a1 + 147) = 2;
+                                *(char*)(a1 + 144) = 1;
+                                *(char*)(a1 + 143) = 1;
+                                *(char*)(a1 + 148) = 0;
                             }
                         }
                     }
@@ -13611,10 +13611,10 @@ __int16 __fastcall sub_4181B5(int a1)
                             - *(unsigned __int16*)(*(int*)(a1 + 52)
                                 + 2 * (*(int*)(a1 + 64) * (sub_4260B0(*(int**)(a1 + 124)) / 800) + v132)) == 1)
                         {
-                            *(_BYTE*)(a1 + 147) = 2;
-                            *(_BYTE*)(a1 + 144) = 1;
-                            *(_BYTE*)(a1 + 143) = 1;
-                            *(_BYTE*)(a1 + 148) = 0;
+                            *(char*)(a1 + 147) = 2;
+                            *(char*)(a1 + 144) = 1;
+                            *(char*)(a1 + 143) = 1;
+                            *(char*)(a1 + 148) = 0;
                         }
                     }
                     else if (*(int*)a1 == 3
@@ -13624,7 +13624,7 @@ __int16 __fastcall sub_4181B5(int a1)
                                 v87 <= 500 && (v164 <= 0 ? (v86 = -v164) : (v86 = v164), v86 <= 300))))
                     {
                         if (sub_4263B0(*(int**)(a1 + 124)))
-                            *(_BYTE*)(a1 + 143) = 1;
+                            *(char*)(a1 + 143) = 1;
                     }
                     else if (*(int*)a1 == 3
                         || (v170 <= 0 ? (v85 = -v170) : (v85 = v170),
@@ -13651,7 +13651,7 @@ __int16 __fastcall sub_4181B5(int a1)
                                                 v76 = (v165 >= 0) - 1;
                                             else
                                                 v76 = 1;
-                                            *(_BYTE*)(a1 + 141) = v76;
+                                            *(char*)(a1 + 141) = v76;
                                         }
                                     }
                                 }
@@ -13663,9 +13663,9 @@ __int16 __fastcall sub_4181B5(int a1)
                                 v80 = (v165 >= 0) - 1;
                             else
                                 v80 = 1;
-                            *(_BYTE*)(a1 + 141) = v80;
-                            *(_BYTE*)(a1 + 143) = 1;
-                            *(_BYTE*)(a1 + 145) = 1;
+                            *(char*)(a1 + 141) = v80;
+                            *(char*)(a1 + 143) = 1;
+                            *(char*)(a1 + 145) = 1;
                         }
                     }
                     else if (v165)
@@ -13674,13 +13674,13 @@ __int16 __fastcall sub_4181B5(int a1)
                             v83 = (v165 >= 0) - 1;
                         else
                             v83 = 1;
-                        *(_BYTE*)(a1 + 141) = -v83;
+                        *(char*)(a1 + 141) = -v83;
                     }
                     else
                     {
-                        *(_BYTE*)(a1 + 141) = 2 * (rand() % 2) - 1;
+                        *(char*)(a1 + 141) = 2 * (rand() % 2) - 1;
                     }
-                    if (!*(_BYTE*)(a1 + 141) && !*(_BYTE*)(a1 + 142))
+                    if (!*(char*)(a1 + 141) && !*(char*)(a1 + 142))
                     {
                         v17 = 18 * (3 * sub_41CA5F(*(int*)(a1 + 124), 0) + 20);
                         v129 = v17 * (unsigned __int8)sub_47421B((char*)byte_4B9B10) / 50;
@@ -13700,7 +13700,7 @@ __int16 __fastcall sub_4181B5(int a1)
                                     v72 = (v165 >= 0) - 1;
                                 else
                                     v72 = 1;
-                                *(_BYTE*)(a1 + 141) = -v72;
+                                *(char*)(a1 + 141) = -v72;
                             }
                             else if (*(int*)a1 == 3
                                 && (v165 <= 0 ? (v71 = -v165) : (v71 = v165),
@@ -13710,7 +13710,7 @@ __int16 __fastcall sub_4181B5(int a1)
                                     v69 = (v165 >= 0) - 1;
                                 else
                                     v69 = 1;
-                                *(_BYTE*)(a1 + 141) = v69;
+                                *(char*)(a1 + 141) = v69;
                             }
                             else if (*(int*)(a1 + 4) || (v165 <= 0 ? (v68 = -v165) : (v68 = v165), v68 > 2400 || v164 < -800))
                             {
@@ -13718,12 +13718,12 @@ __int16 __fastcall sub_4181B5(int a1)
                                     v67 = (v165 >= 0) - 1;
                                 else
                                     v67 = 1;
-                                *(_BYTE*)(a1 + 141) = v67;
+                                *(char*)(a1 + 141) = v67;
                             }
                         }
                         else
                         {
-                            *(_BYTE*)(a1 + 84) = 1;
+                            *(char*)(a1 + 84) = 1;
                         }
                         if (*(int*)a1 == 3
                             && (v170 <= 0 ? (v66 = -v170) : (v66 = v170),
@@ -13733,7 +13733,7 @@ __int16 __fastcall sub_4181B5(int a1)
                                 v64 = (v170 >= 0) - 1;
                             else
                                 v64 = 1;
-                            *(_BYTE*)(a1 + 142) = v64;
+                            *(char*)(a1 + 142) = v64;
                         }
                         else if (*(int*)(a1 + 4) || (v170 <= 0 ? (v63 = -v170) : (v63 = v170), v63 > 500))
                         {
@@ -13741,14 +13741,14 @@ __int16 __fastcall sub_4181B5(int a1)
                                 v62 = (v170 >= 0) - 1;
                             else
                                 v62 = 1;
-                            *(_BYTE*)(a1 + 142) = v62;
+                            *(char*)(a1 + 142) = v62;
                         }
                         v18 = sub_41D067(*(int*)(a1 + 124), 0);
                         v131 = (int)(12 * v168 * ((3 * v18 / 2 + 405) / 15)) / 10;
                         v19 = sub_41D067(*(int*)(a1 + 124), 0);
                         v130 = 12 * v166 * ((3 * v19 / 2 + 405) / 15) / 10;
                         if (!*(int*)(a1 + 4)
-                            && !(_BYTE)v161
+                            && !(char)v161
                             && Concurrency::details::SchedulerBase::GetNumberOfBoundContexts(*(Concurrency::details::SchedulerBase**)(a1 + 124)))
                         {
                             v61 = v130 <= 0 ? (v130 >= 0) - 1 : 1;
@@ -13762,12 +13762,12 @@ __int16 __fastcall sub_4181B5(int a1)
                                     if (v58 < 8000 && (rand() % 100 < 3 || v164 >= 3200 || sub_425D50(*(int**)(a1 + 124))))
                                     {
                                         if (v164 < 3200 && rand() % 2)
-                                            *(_BYTE*)(a1 + 147) = 1;
+                                            *(char*)(a1 + 147) = 1;
                                         else
-                                            *(_BYTE*)(a1 + 147) = 2;
-                                        *(_BYTE*)(a1 + 144) = 1;
-                                        *(_BYTE*)(a1 + 143) = 1;
-                                        *(_BYTE*)(a1 + 148) = 0;
+                                            *(char*)(a1 + 147) = 2;
+                                        *(char*)(a1 + 144) = 1;
+                                        *(char*)(a1 + 143) = 1;
+                                        *(char*)(a1 + 148) = 0;
                                     }
                                 }
                             }
@@ -13795,44 +13795,44 @@ __int16 __fastcall sub_4181B5(int a1)
                         || v125 == 14
                         || v125 == 15)
                     {
-                        *(_BYTE*)(a1 + 147) = 2;
-                        *(_BYTE*)(a1 + 144) = 1;
-                        *(_BYTE*)(a1 + 143) = 1;
-                        *(_BYTE*)(a1 + 148) = 0;
+                        *(char*)(a1 + 147) = 2;
+                        *(char*)(a1 + 144) = 1;
+                        *(char*)(a1 + 143) = 1;
+                        *(char*)(a1 + 148) = 0;
                     }
                 }
             }
             if (Concurrency::details::SchedulerBase::GetNumberOfBoundContexts(*(Concurrency::details::SchedulerBase**)(a1 + 124)))
             {
-                if (*(_BYTE*)(a1 + 143) == 1 && *(_BYTE*)(a1 + 144) == 1)
+                if (*(char*)(a1 + 143) == 1 && *(char*)(a1 + 144) == 1)
                 {
                     v22 = sub_41D067(*(int*)(a1 + 124), 0);
                     v123 = (int)(12 * v168 * ((3 * v22 / 2 + 405) / 15)) / 10;
                     v23 = sub_41D067(*(int*)(a1 + 124), 0);
                     if (!sub_4244B5((int*)a1, (int)v123, 12 * v166 * ((3 * v23 / 2 + 405) / 15) / 10))
                     {
-                        *(_BYTE*)(a1 + 144) = 0;
-                        *(_BYTE*)(a1 + 143) = 0;
+                        *(char*)(a1 + 144) = 0;
+                        *(char*)(a1 + 143) = 0;
                     }
                 }
             }
             if (*(int*)(a1 + 128))
             {
-                if (!sub_425E70(*(_BYTE**)(a1 + 124))
-                    && !*(_BYTE*)(a1 + 85)
+                if (!sub_425E70(*(char**)(a1 + 124))
+                    && !*(char*)(a1 + 85)
                     && Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 128)) == (struct Concurrency::ISchedulerProxy*)91)
                 {
-                    v24 = (unsigned __int8)sub_426070(*(_BYTE**)(a1 + 124));
-                    if (v24 != (unsigned __int8)sub_426070(*(_BYTE**)(a1 + 128)))
+                    v24 = (unsigned __int8)sub_426070(*(char**)(a1 + 124));
+                    if (v24 != (unsigned __int8)sub_426070(*(char**)(a1 + 128)))
                     {
-                        if (*(_BYTE*)(a1 + 84))
+                        if (*(char*)(a1 + 84))
                         {
                             if (v165 <= 0)
                                 v54 = (v165 >= 0) - 1;
                             else
                                 v54 = 1;
-                            *(_BYTE*)(a1 + 141) = v54;
-                            *(_BYTE*)(a1 + 84) = 0;
+                            *(char*)(a1 + 141) = v54;
+                            *(char*)(a1 + 84) = 0;
                         }
                         if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 124)) == (struct Concurrency::ISchedulerProxy*)10)
                         {
@@ -13841,18 +13841,18 @@ __int16 __fastcall sub_4181B5(int a1)
                                 - 1;
                             else
                                 v53 = 1;
-                            *(_BYTE*)(a1 + 141) = -v53;
+                            *(char*)(a1 + 141) = -v53;
                         }
                         if (v165 <= 0)
                             v52 = -v165;
                         else
                             v52 = v165;
                         if (v52 > 3200)
-                            *(_BYTE*)(a1 + 142) = 0;
+                            *(char*)(a1 + 142) = 0;
                     }
                 }
             }
-            if (*(_BYTE*)(a1 + 84))
+            if (*(char*)(a1 + 84))
             {
                 if (v165 <= 0)
                     v51 = (v165 >= 0) - 1;
@@ -13872,9 +13872,9 @@ __int16 __fastcall sub_4181B5(int a1)
                 v26 = 18 * (3 * sub_41CA5F(*(int*)(a1 + 124), 0) + 20);
                 v27 = sub_47421B((char*)byte_4B9B10);
                 if (!sub_423F94((int*)a1, 800 * v51 + v51 * (v26 * v27 / 50), v34))
-                    *(_BYTE*)(a1 + 84) = 0;
+                    *(char*)(a1 + 84) = 0;
             }
-            if (*(_BYTE*)(a1 + 84))
+            if (*(char*)(a1 + 84))
             {
                 if (v165 <= 0)
                     v49 = (v165 >= 0) - 1;
@@ -13884,32 +13884,32 @@ __int16 __fastcall sub_4181B5(int a1)
                 v28 = sub_4260B0(*(int**)(a1 + 124));
                 if (sub_446497((int*)byte_4B9B10, v121, v28 / 100) >= 1020)
                 {
-                    *(_BYTE*)(a1 + 84) = 0;
+                    *(char*)(a1 + 84) = 0;
                 }
                 else
                 {
                     if (!v165)
-                        *(_BYTE*)(a1 + 84) = 0;
+                        *(char*)(a1 + 84) = 0;
                     if (v165 <= 0)
                         v48 = (v165 >= 0) - 1;
                     else
                         v48 = 1;
-                    *(_BYTE*)(a1 + 141) = dword_4B93AC % 2u * v48;
+                    *(char*)(a1 + 141) = dword_4B93AC % 2u * v48;
                     if ((unsigned __int8)sub_4263F0(*(char**)(a1 + 124)) == 2)
-                        *(_BYTE*)(a1 + 84) = 0;
+                        *(char*)(a1 + 84) = 0;
                 }
             }
-            if (*(_BYTE*)(a1 + 85) == 1)
+            if (*(char*)(a1 + 85) == 1)
             {
-                *(_BYTE*)(a1 + 142) = -(dword_4B93AC % 2u);
+                *(char*)(a1 + 142) = -(dword_4B93AC % 2u);
                 if ((unsigned __int8)sub_426310(*(char**)(a1 + 124)) == 2)
-                    *(_BYTE*)(a1 + 85) = 0;
+                    *(char*)(a1 + 85) = 0;
             }
-            else if (*(_BYTE*)(a1 + 85) == 2)
+            else if (*(char*)(a1 + 85) == 2)
             {
-                *(_BYTE*)(a1 + 142) = dword_4B93AC % 2u;
+                *(char*)(a1 + 142) = dword_4B93AC % 2u;
                 if ((unsigned __int8)sub_4262F0(*(char**)(a1 + 124)) == 2)
-                    *(_BYTE*)(a1 + 85) = 0;
+                    *(char*)(a1 + 85) = 0;
             }
             if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 124)) == (struct Concurrency::ISchedulerProxy*)10)
             {
@@ -13936,24 +13936,24 @@ __int16 __fastcall sub_4181B5(int a1)
                     {
                         v30 = sub_47421B((char*)byte_4B9B10);
                         if (!sub_423F94((int*)a1, 0, v46 * (6 * (3 * v118 + 20) * v30 / 50)))
-                            *(_BYTE*)(a1 + 141) = v47;
+                            *(char*)(a1 + 141) = v47;
                     }
                 }
                 v31 = sub_47421B((char*)byte_4B9B10);
                 if (!sub_423F94((int*)a1, 800 * v47 + v47 * (18 * (3 * v118 + 20) * v31 / 50), 0))
                 {
                     v117 = 1;
-                    *(_BYTE*)(a1 + 84) = 0;
+                    *(char*)(a1 + 84) = 0;
                 }
                 if (v46 && !sub_423F94((int*)a1, 0, 800 * v46))
-                    *(_BYTE*)(a1 + 142) = 0;
+                    *(char*)(a1 + 142) = 0;
                 if (v46)
                 {
                     v32 = sub_47421B((char*)byte_4B9B10);
                     if (!sub_423F94((int*)a1, 0, v46 * (6 * (3 * v118 + 20) * v32 / 50)))
                     {
-                        *(_BYTE*)(a1 + 143) = 0;
-                        *(_BYTE*)(a1 + 144) = 0;
+                        *(char*)(a1 + 143) = 0;
+                        *(char*)(a1 + 144) = 0;
                     }
                 }
                 if (v117)
@@ -13963,7 +13963,7 @@ __int16 __fastcall sub_4181B5(int a1)
                         - 1;
                     else
                         v45 = 1;
-                    *(_BYTE*)(a1 + 141) = -v45;
+                    *(char*)(a1 + 141) = -v45;
                 }
             }
             v174 = sub_426090(*(int**)(a1 + 124)) / 100;
@@ -13979,7 +13979,7 @@ __int16 __fastcall sub_4181B5(int a1)
             }
             *(int*)(a1 + 12) = v174;
             *(int*)(a1 + 16) = v173;
-            if (*(_BYTE*)(a1 + 141) && *(short*)(a1 + 20))
+            if (*(char*)(a1 + 141) && *(short*)(a1 + 20))
             {
                 v42 = *(char*)(a1 + 141) <= 0 ? (*(char*)(a1 + 141) >= 0) - 1 : 1;
                 v41 = *(__int16*)(a1 + 20) <= 0 ? (*(__int16*)(a1 + 20) >= 0) - 1 : 1;
@@ -13992,11 +13992,11 @@ __int16 __fastcall sub_4181B5(int a1)
                             v39 = (*(__int16*)(a1 + 20) >= 0) - 1;
                         else
                             v39 = 1;
-                        *(_BYTE*)(a1 + 141) = v39;
+                        *(char*)(a1 + 141) = v39;
                     }
                 }
             }
-            if (*(_BYTE*)(a1 + 141)
+            if (*(char*)(a1 + 141)
                 && (!*(short*)(a1 + 20)
                     || (*(char*)(a1 + 141) <= 0 ? (v38 = (*(char*)(a1 + 141) >= 0) - 1) : (v38 = 1),
                         *(__int16*)(a1 + 20) <= 0 ? (v37 = (*(__int16*)(a1 + 20) >= 0) - 1) : (v37 = 1),
@@ -14008,7 +14008,7 @@ __int16 __fastcall sub_4181B5(int a1)
             {
                 *(short*)(a1 + 20) = *(char*)(a1 + 141);
             }
-            if (*(_BYTE*)(a1 + 142)
+            if (*(char*)(a1 + 142)
                 && (!*(short*)(a1 + 22)
                     || (*(char*)(a1 + 142) <= 0 ? (v36 = (*(char*)(a1 + 142) >= 0) - 1) : (v36 = 1),
                         *(__int16*)(a1 + 22) <= 0 ? (v35 = (*(__int16*)(a1 + 22) >= 0) - 1) : (v35 = 1),
@@ -14025,10 +14025,10 @@ __int16 __fastcall sub_4181B5(int a1)
             if (v172 == (struct Concurrency::ISchedulerProxy*)13)
             {
                 LOWORD(v1) = *(unsigned __int8*)(a1 + 94);
-                if (*(_BYTE*)(a1 + 94))
+                if (*(char*)(a1 + 94))
                 {
-                    *(_BYTE*)(a1 + 143) = 0;
-                    *(_BYTE*)(a1 + 144) = 0;
+                    *(char*)(a1 + 143) = 0;
+                    *(char*)(a1 + 144) = 0;
                 }
             }
         }
@@ -14038,16 +14038,16 @@ __int16 __fastcall sub_4181B5(int a1)
                 v108 = (v145 >= 0) - 1;
             else
                 v108 = 1;
-            *(_BYTE*)(a1 + 141) = v108;
+            *(char*)(a1 + 141) = v108;
             if (v142 <= 0)
                 v107 = (v142 >= 0) - 1;
             else
                 v107 = 1;
-            *(_BYTE*)(a1 + 142) = v107;
-            *(_BYTE*)(a1 + 143) = 0;
+            *(char*)(a1 + 142) = v107;
+            *(char*)(a1 + 143) = 0;
             LOWORD(v1) = a1;
-            *(_BYTE*)(a1 + 144) = 1;
-            *(_BYTE*)(a1 + 145) = 0;
+            *(char*)(a1 + 144) = 1;
+            *(char*)(a1 + 145) = 0;
         }
     }
     return (__int16)v1;
@@ -14079,7 +14079,7 @@ unsigned __int8* sub_41B465(int* thisx)
 
 
     sub_425EF0((char*)thisx[31]);
-    v8 = sub_426070((_BYTE*)thisx[31]);
+    v8 = sub_426070((char*)thisx[31]);
     v9 = sub_4630A4((unsigned char*)byte_4B9B10) - 1;
     if (v9 <= 0)
         return 0;
@@ -14133,7 +14133,7 @@ unsigned __int8* sub_41B465(int* thisx)
     sub_425EF0((char*)thisx[31]);
 
     // 获取某个值用于排除选项
-    v8 = sub_426070((_BYTE*)thisx[31]);
+    v8 = sub_426070((char*)thisx[31]);
 
     // 计算某个范围的上限并减去 1
     v9 = sub_4630A4((unsigned char*)byte_4B9B10) - 1;
@@ -14199,7 +14199,7 @@ BOOL sub_41B65C(int thisx)
         return 0;
     if (*(int*)(thisx + 292))
         return 0;
-    return *(_BYTE*)(thisx + 177) == 0;
+    return *(char*)(thisx + 177) == 0;
 }
 
 //set
@@ -14223,14 +14223,14 @@ int sub_41B6F5(int thisx)
     if (*(int*)(thisx + 304))
     {
         v3 = 207;
-        if (*(_BYTE*)(thisx + 188) == 1)
+        if (*(char*)(thisx + 188) == 1)
         {
             if (rand() % 2)
                 *(int*)(thisx + 432) = 86;
             else
                 *(int*)(thisx + 432) = 57;
         }
-        else if ((*(_BYTE*)(thisx + 188) == 2 || *(_BYTE*)(thisx + 188) == 3)
+        else if ((*(char*)(thisx + 188) == 2 || *(char*)(thisx + 188) == 3)
             && (*(int*)(thisx + 432) == 57 || *(int*)(thisx + 432) == 58))
         {
             *(int*)(thisx + 432) = 99;
@@ -14319,8 +14319,8 @@ int sub_41B990(int thisx, int a2, int a3)
     *(int*)(thisx + 352) = 0;
     if (a3 != 113)
     {
-        *(_BYTE*)(thisx + 474) = 0;
-        *(_BYTE*)(thisx + 475) = 0;
+        *(char*)(thisx + 474) = 0;
+        *(char*)(thisx + 475) = 0;
     }
     if (a3 == 116)
         *(int*)(thisx + 436) = *(int*)(thisx + 428) != 44;
@@ -14334,7 +14334,7 @@ int sub_41BA53(int thisx, unsigned __int8 a2, int a3)
 
     if (!*(int*)(thisx + 524) || a3)
     {
-        if (*(_BYTE*)(thisx + 195) == 4)
+        if (*(char*)(thisx + 195) == 4)
         {
             return a2 <= 0xAu || a2 == 16 || a2 == 23;
         }
@@ -14402,8 +14402,8 @@ int sub_41BB24(int* thisx)
     v22 = sub_4260B0((int*)thisx[31]);
     v24 = sub_4260D0((int*)thisx[31]);
     sub_425D70((int*)thisx[31]);
-    v27 = sub_425EF0((_BYTE*)thisx[31]);
-    v28 = sub_426070((_BYTE*)thisx[31]);
+    v27 = sub_425EF0((char*)thisx[31]);
+    v28 = sub_426070((char*)thisx[31]);
     for (i = 0; i < 8; ++i)
     {
         if (i == v27)
@@ -14488,7 +14488,7 @@ int sub_41BEBA(int thisx)
 {
     if (*(int*)(thisx + 428) == 81)
         return 1;
-    *(_BYTE*)(thisx + 178) = 0;
+    *(char*)(thisx + 178) = 0;
     if (*(int*)(thisx + 392) || !*(int*)(thisx + 396))
         return 0;
     *(int*)(thisx + 432) = 81;
@@ -14497,7 +14497,7 @@ int sub_41BEBA(int thisx)
 }
 
 
-_BYTE* sub_41BF1D(int thisx)
+char* sub_41BF1D(int thisx)
 {
     *(int*)(thisx + 424) = 0;
     *(int*)(thisx + 392) = 0;
@@ -14514,54 +14514,54 @@ _BYTE* sub_41BF1D(int thisx)
     *(int*)(thisx + 280) = 0;
     *(int*)(thisx + 296) = 0;
     *(int*)(thisx + 300) = 0;
-    *(_BYTE*)(thisx + 592) = 0;
-    *(_BYTE*)(thisx + 472) = 0;
-    *(_BYTE*)(thisx + 558) = 0;
-    *(_BYTE*)(thisx + 250) = 0;
-    *(_BYTE*)(thisx + 257) = 0;
-    *(_BYTE*)(thisx + 253) = 0;
-    *(_BYTE*)(thisx + 248) = 0;
-    *(_BYTE*)(thisx + 222) = 0;
-    *(_BYTE*)(thisx + 212) = 0;
-    *(_BYTE*)(thisx + 220) = 1;
-    *(_BYTE*)(thisx + 416) = 0;
-    *(_BYTE*)(thisx + 254) = 0;
-    *(_BYTE*)(thisx + 223) = 0x80;
-    *(_BYTE*)(thisx + 419) = 0;
-    *(_BYTE*)(thisx + 260) = 0;
-    *(_BYTE*)(thisx + 598) = 0;
-    *(_BYTE*)(thisx + 259) = 0;
-    *(_BYTE*)(thisx + 474) = 0;
-    *(_BYTE*)(thisx + 256) = 0;
+    *(char*)(thisx + 592) = 0;
+    *(char*)(thisx + 472) = 0;
+    *(char*)(thisx + 558) = 0;
+    *(char*)(thisx + 250) = 0;
+    *(char*)(thisx + 257) = 0;
+    *(char*)(thisx + 253) = 0;
+    *(char*)(thisx + 248) = 0;
+    *(char*)(thisx + 222) = 0;
+    *(char*)(thisx + 212) = 0;
+    *(char*)(thisx + 220) = 1;
+    *(char*)(thisx + 416) = 0;
+    *(char*)(thisx + 254) = 0;
+    *(char*)(thisx + 223) = 0x80;
+    *(char*)(thisx + 419) = 0;
+    *(char*)(thisx + 260) = 0;
+    *(char*)(thisx + 598) = 0;
+    *(char*)(thisx + 259) = 0;
+    *(char*)(thisx + 474) = 0;
+    *(char*)(thisx + 256) = 0;
     memset((void*)(thisx + 453), 0, 8u);
-    *(_BYTE*)(thisx + 249) = 0;
-    *(_BYTE*)(thisx + 255) = 0;
-    *(_BYTE*)(thisx + 178) = 0;
-    *(_BYTE*)(thisx + 475) = 0;
-    *(_BYTE*)(thisx + 237) = 0;
-    *(_BYTE*)(thisx + 177) = 0;
-    *(_BYTE*)(thisx + 471) = 1;
-    *(_BYTE*)(thisx + 469) = 1;
-    *(_BYTE*)(thisx + 176) = 0;
-    *(_BYTE*)(thisx + 251) = 0;
-    *(_BYTE*)(thisx + 252) = 0;
-    *(_BYTE*)(thisx + 238) = 0;
-    *(_BYTE*)(thisx + 236) = 0;
-    *(_BYTE*)(thisx + 272) = 0;
-    *(_BYTE*)(thisx + 324) = 0;
-    *(_BYTE*)(thisx + 258) = 0;
-    *(_BYTE*)(thisx + 221) = 0;
-    *(_BYTE*)(thisx + 557) = 0;
-    *(_BYTE*)(thisx + 556) = 0;
-    *(_BYTE*)(thisx + 470) = 0;
-    *(_BYTE*)(thisx + 452) = 0;
-    *(_BYTE*)(thisx + 476) = 0;
-    *(_BYTE*)(thisx + 325) = 0;
-    *(_BYTE*)(thisx + 473) = 0;
+    *(char*)(thisx + 249) = 0;
+    *(char*)(thisx + 255) = 0;
+    *(char*)(thisx + 178) = 0;
+    *(char*)(thisx + 475) = 0;
+    *(char*)(thisx + 237) = 0;
+    *(char*)(thisx + 177) = 0;
+    *(char*)(thisx + 471) = 1;
+    *(char*)(thisx + 469) = 1;
+    *(char*)(thisx + 176) = 0;
+    *(char*)(thisx + 251) = 0;
+    *(char*)(thisx + 252) = 0;
+    *(char*)(thisx + 238) = 0;
+    *(char*)(thisx + 236) = 0;
+    *(char*)(thisx + 272) = 0;
+    *(char*)(thisx + 324) = 0;
+    *(char*)(thisx + 258) = 0;
+    *(char*)(thisx + 221) = 0;
+    *(char*)(thisx + 557) = 0;
+    *(char*)(thisx + 556) = 0;
+    *(char*)(thisx + 470) = 0;
+    *(char*)(thisx + 452) = 0;
+    *(char*)(thisx + 476) = 0;
+    *(char*)(thisx + 325) = 0;
+    *(char*)(thisx + 473) = 0;
     memset((void*)(thisx + 461), 0, 8u);
-    *(_BYTE*)(thisx + 420) = 0;
-    *(_BYTE*)(thisx + 608) = 0;
-    *(_BYTE*)(thisx + 593) = 0;
+    *(char*)(thisx + 420) = 0;
+    *(char*)(thisx + 608) = 0;
+    *(char*)(thisx + 593) = 0;
     *(int*)(thisx + 588) = 0;
     *(int*)(thisx + 372) = 0;
     *(int*)(thisx + 376) = 0;
@@ -14606,7 +14606,7 @@ _BYTE* sub_41BF1D(int thisx)
     sub_409273(thisx, 0);
     *(int*)(thisx + 432) = 0;//人物状态，例如站立状态，技能状态
     *(int*)(thisx + 428) = 0;
-    return sub_423CF2((_BYTE*)thisx, 0, 0, 0, 0, 0, 0);
+    return sub_423CF2((char*)thisx, 0, 0, 0, 0, 0, 0);
 }
 
 
@@ -14649,7 +14649,7 @@ int sub_41C48F(int thisx, int a2)
     int v6; // [esp+Ch] [ebp-964h]
 
     int v5; // [esp+8h] [ebp-968h]
-    _BYTE* v4; // [esp+4h] [ebp-96Ch]
+    char* v4; // [esp+4h] [ebp-96Ch]
 
     const char* var = R"(
     int v18; // [esp+96Ch] [ebp-4h]
@@ -14672,7 +14672,7 @@ int sub_41C48F(int thisx, int a2)
     int v6; // [esp+Ch] [ebp-964h]
 
     int v5; // [esp+8h] [ebp-968h]
-    _BYTE* v4; // [esp+4h] [ebp-96Ch]
+    char* v4; // [esp+4h] [ebp-96Ch]
     )";
     if (!check_stack_fun2({
         TO(c)
@@ -14696,22 +14696,22 @@ int sub_41C48F(int thisx, int a2)
         __asm int 3
     }
 
-    if (*(_BYTE*)(thisx + 188))
+    if (*(char*)(thisx + 188))
         return sub_421238(thisx);
     memset(v10, 0, sizeof(v10));
     sub_49DB90(v15);
-    if (*(_BYTE*)(thisx + 195) == 4)
+    if (*(char*)(thisx + 195) == 4)
     {
-        *(_BYTE*)(thisx + 194) = 1;
+        *(char*)(thisx + 194) = 1;
     }
     else if (a2 < 0)
     {
         if (a2 == -1)
-            *(_BYTE*)(thisx + 194) = *(_BYTE*)(thisx + 193) + 1;
+            *(char*)(thisx + 194) = *(char*)(thisx + 193) + 1;
     }
     else
     {
-        *(_BYTE*)(thisx + 194) = a2;
+        *(char*)(thisx + 194) = a2;
     }
     wsprintfA(FileName, "Graphic\\%02dpPalette.bin", *(unsigned __int8*)(thisx + 194));
     hFile = CreateFileA(FileName, 0x80000000, 0, 0, 3u, 0x80u, 0);
@@ -14754,7 +14754,7 @@ int sub_41C48F(int thisx, int a2)
         }
     }
     *(int*)(*((int*)dword_4B9360 + *(unsigned __int8*)(thisx + 192)) + 4 * *(unsigned __int16*)(thisx + 498)) = 1;
-    if (*(_BYTE*)(thisx + 195) == 4)
+    if (*(char*)(thisx + 195) == 4)
     {
         if (*(int*)(thisx + 168))
         {
@@ -14764,7 +14764,7 @@ int sub_41C48F(int thisx, int a2)
         }
         else
         {
-            v4 = (_BYTE*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0);
+            v4 = (char*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0);
             v6 = sub_4016F0(v4);
             v7 = (unsigned __int8)sub_401710(v4);
         }
@@ -14784,17 +14784,17 @@ int sub_41C915(int thisx)
     int v2; // [esp+4h] [ebp-8h]
 
 
-    if (*(_BYTE*)(thisx + 188))
+    if (*(char*)(thisx + 188))
     {
-        if (*(_BYTE*)(thisx + 188) == 1)
+        if (*(char*)(thisx + 188) == 1)
         {
             v2 = 0;
         }
-        else if (*(_BYTE*)(thisx + 188) == 2 || *(_BYTE*)(thisx + 188) == 3)
+        else if (*(char*)(thisx + 188) == 2 || *(char*)(thisx + 188) == 3)
         {
             v2 = 1;
         }
-        if (*(_BYTE*)(thisx + 212))
+        if (*(char*)(thisx + 212))
         {
             if (*(unsigned __int16*)(thisx + 204) >= (int)(unsigned __int16)word_4B92F8[v2])
                 return 0;
@@ -14806,7 +14806,7 @@ int sub_41C915(int thisx)
         }
         return 152 * v3 + dword_4B92FC[v2];
     }
-    else if (*(_BYTE*)(thisx + 212))
+    else if (*(char*)(thisx + 212))
     {
         return 152 * *(unsigned __int16*)(thisx + 204) + dword_4B9328[*(unsigned __int8*)(thisx + 195)];
     }
@@ -14833,7 +14833,7 @@ unsigned __int16 sub_41CA5F(int thisx, int a2)
     v4 = *(short*)(thisx + 514);
     if (a2 && sub_41BA53(thisx, 0x84u, 0))
         v4 = *(int*)(thisx + 448) * (unsigned __int16)(__int64)((double)v4 * 1.25) / 180 + (__int64)((double)v4 * 1.25);
-    if (sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
+    if (sub_41BA53(thisx, 0x8Cu, 0) && *(char*)(thisx + 609) == 11)
         v4 += *(short*)(thisx + 496) + 10;
     return v4;
 }
@@ -14890,7 +14890,7 @@ __int16 sub_41CB3B(int thisx, int a2)
                 v6 = 150 * v6 / 100;
             }
         }
-        if (sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
+        if (sub_41BA53(thisx, 0x8Cu, 0) && *(char*)(thisx + 609) == 11)
             v6 += *(short*)(thisx + 496) + 15;
     }
     if (sub_425CD0((int*)&byte_4B9B10) == 3 && *(int*)(thisx + 164))
@@ -14958,7 +14958,7 @@ __int16 sub_41CCEA(int thisx, int a2)
                 v6 = 150 * v6 / 100;
             }
         }
-        if (sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
+        if (sub_41BA53(thisx, 0x8Cu, 0) && *(char*)(thisx + 609) == 11)
             v6 += *(short*)(thisx + 496) + 15;
     }
     if (sub_425CD0((int*)&byte_4B9B10) == 3 && *(int*)(thisx + 164))
@@ -15013,7 +15013,7 @@ int sub_41CE99(int thisx)
         {
             sub_417DCC((int)*(int*)(thisx + 304));
             *(int*)(thisx + 304) = 0;
-            sub_423CF2((_BYTE*)thisx, 0, 0, 0, 0, 0, 0);
+            sub_423CF2((char*)thisx, 0, 0, 0, 0, 0, 0);
         }
     }
     *(int*)(thisx + 432) = 17;
@@ -15024,9 +15024,9 @@ int sub_41CE99(int thisx)
     *(int*)(thisx + 444) = 0;
     *(int*)(thisx + 352) = 0;
     *(int*)(thisx + 364) = 0;
-    *(_BYTE*)(thisx + 176) = 0;
-    *(_BYTE*)(thisx + 177) = 0;
-    *(_BYTE*)(thisx + 178) = 1;
+    *(char*)(thisx + 176) = 0;
+    *(char*)(thisx + 177) = 0;
+    *(char*)(thisx + 178) = 1;
     return sub_43FFC3((int*)byte_4BDB28, dword_4B9A48, -1, 100, 100, 0);
 }
 
@@ -15047,7 +15047,7 @@ _int16 sub_41D067(int thisx, int a2)
     }
     if (sub_41BA53(thisx, 0x8Cu, 0))
     {
-        if (*(_BYTE*)(thisx + 609) == 11)
+        if (*(char*)(thisx + 609) == 11)
             v4 += *(short*)(thisx + 496) + 10;
     }
     return v4;
@@ -15109,9 +15109,9 @@ unsigned __int8* sub_41D3D7(int thisx)
         *(int*)(thisx + 332) = 100 * *((int*)v3 + 1);
         *(int*)(thisx + 336) = 100 * *((int*)v3 + 2);
         *(int*)(thisx + 424) = v3[12] == 1;
-        *(_BYTE*)(thisx + 176) = 0;
-        *(_BYTE*)(thisx + 177) = 0;
-        *(_BYTE*)(thisx + 178) = 1;
+        *(char*)(thisx + 176) = 0;
+        *(char*)(thisx + 177) = 0;
+        *(char*)(thisx + 178) = 1;
         *(int*)(thisx + 372) = 0;
         *(int*)(thisx + 376) = 0;
         *(int*)(thisx + 364) = 0;
@@ -15179,8 +15179,8 @@ int  sub_41D697(int thisx)
     *(int*)(thisx + 432) = 1;
     *(int*)(thisx + 428) = 1;
     *(int*)(thisx + 444) = 0;
-    *(_BYTE*)(thisx + 177) = 1;
-    *(_BYTE*)(thisx + 178) = 0;
+    *(char*)(thisx + 177) = 1;
+    *(char*)(thisx + 178) = 0;
     v7 = sub_426210((char*)byte_4B9B10);
     sub_4897D0(v7);
     v8 = 8 * sub_4261D0(v7);
@@ -15226,8 +15226,8 @@ int sub_41D697(int thisx)
     *(int*)(thisx + 432) = 1; // 设置状态变量
     *(int*)(thisx + 428) = 1; // 设置状态变量
     *(int*)(thisx + 444) = 0; // 初始化某个值
-    *(_BYTE*)(thisx + 177) = 1; // 设置标志
-    *(_BYTE*)(thisx + 178) = 0; // 清除标志
+    *(char*)(thisx + 177) = 1; // 设置标志
+    *(char*)(thisx + 178) = 0; // 清除标志
     v7 = sub_426210((char*)byte_4B9B10); // 获取字符串或路径信息
     sub_4897D0(v7); // 处理字符串或路径信息
     v8 = 8 * sub_4261D0(v7); // 计算大小或范围
@@ -15308,7 +15308,7 @@ __int16 sub_41D84A(int thisx)
         memcpy((void*)(thisx + 484), v1, 11);
         *(short*)(thisx + 190) = sub_4266F0((short*)v9);
         *(short*)(thisx + 498) = (unsigned __int8)sub_426550(v9);
-        *(_BYTE*)(thisx + 192) = sub_426570(v9);
+        *(char*)(thisx + 192) = sub_426570(v9);
         *(short*)(thisx + 500) = sub_426710((short*)v9);//初始化生命值
         *(short*)(thisx + 502) = sub_426730((short*)v9);//对局初始化拳力量  //sub_426730 return thisx[15]
         *(short*)(thisx + 504) = sub_426750((short*)v9);//腿
@@ -15320,22 +15320,22 @@ __int16 sub_41D84A(int thisx)
         *(short*)(thisx + 516) = sub_426810((short*)v9);//跳跃
         *(short*)(thisx + 518) = sub_426830((short*)v9);//反击
         for (i = 0; i < 3; ++i)
-            *(_BYTE*)(i + thisx + 520) = sub_426850(v9, i);//可能是技能吗？？？
+            *(char*)(i + thisx + 520) = sub_426850(v9, i);//可能是技能吗？？？
     }
     else
     {
         LOWORD(v2) = *(short*)(thisx + 186);
         if ((unsigned __int16)v2 >= (int)Size)
             return v2;
-        if (*(_BYTE*)(thisx + 188) == 3 || *(_BYTE*)(thisx + 188) == 4)
+        if (*(char*)(thisx + 188) == 3 || *(char*)(thisx + 188) == 4)
         {
             *(short*)(thisx + 186) = *(unsigned __int8*)(thisx + 188) + 15;
-            if (*(_BYTE*)(thisx + 188) == 3)
-                *(_BYTE*)(thisx + 195) = 2;
+            if (*(char*)(thisx + 188) == 3)
+                *(char*)(thisx + 195) = 2;
             else
-                *(_BYTE*)(thisx + 195) = 1;
+                *(char*)(thisx + 195) = 1;
         }
-        if (*(_BYTE*)(thisx + 188) == 1 || *(_BYTE*)(thisx + 188) == 2)
+        if (*(char*)(thisx + 188) == 1 || *(char*)(thisx + 188) == 2)
         {
             wsprintfA((LPSTR)(thisx + 484), byte_4B01A4);//美玲
             *(short*)(thisx + 498) = 0;
@@ -15354,9 +15354,9 @@ __int16 sub_41D84A(int thisx)
         {
             v3 = unknown_libname_18((char*)(dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186)));
             memcpy((void*)(thisx + 484), v3, 0xBu);
-            *(short*)(thisx + 498) = (unsigned __int8)sub_401710((_BYTE*)(36 * *(unsigned __int16*)(thisx + 186)
+            *(short*)(thisx + 498) = (unsigned __int8)sub_401710((char*)(36 * *(unsigned __int16*)(thisx + 186)
                 + dword_4B92E0));
-            *(_BYTE*)(thisx + 192) = sub_4016F0((_BYTE*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
+            *(char*)(thisx + 192) = sub_4016F0((char*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
             *(short*)(thisx + 500) = (unsigned __int8)sub_4265B0((char*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
             *(short*)(thisx + 502) = (unsigned __int8)sub_426570((char*)dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186));
             *(short*)(thisx + 504) = (unsigned __int8)sub_4265D0((char*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
@@ -15367,9 +15367,9 @@ __int16 sub_41D84A(int thisx)
             *(short*)(thisx + 514) = (unsigned __int8)sub_426630((char*)dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186));
             *(short*)(thisx + 516) = (unsigned __int8)sub_426650((char*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
             *(short*)(thisx + 518) = (unsigned __int8)sub_426690((char*)dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186));
-            if (*(_BYTE*)(thisx + 195))
+            if (*(char*)(thisx + 195))
             {
-                switch (*(_BYTE*)(thisx + 195))
+                switch (*(char*)(thisx + 195))
                 {
                 case 1:
                     *(short*)(thisx + 502) += 15;
@@ -15388,7 +15388,7 @@ __int16 sub_41D84A(int thisx)
                 *(short*)(thisx + 504) += 5;
                 *(short*)(thisx + 506) += 5;
             }
-            if (*(_BYTE*)(thisx + 195) == 4 || *(_BYTE*)(thisx + 188) == 3 || *(_BYTE*)(thisx + 188) == 4)
+            if (*(char*)(thisx + 195) == 4 || *(char*)(thisx + 188) == 3 || *(char*)(thisx + 188) == 4)
             {
                 *(short*)(thisx + 502) += 20;
                 *(short*)(thisx + 504) += 20;
@@ -15417,11 +15417,11 @@ __int16 sub_41D84A(int thisx)
             *(short*)(thisx + 514) += *(unsigned __int16*)(thisx + 496) / 10;
             *(short*)(thisx + 516) += *(unsigned __int16*)(thisx + 496) / 10;
             *(short*)(thisx + 518) += *(unsigned __int16*)(thisx + 496) / 10;
-            if (*(_BYTE*)(thisx + 188) != 1)
+            if (*(char*)(thisx + 188) != 1)
             {
-                if (*(_BYTE*)(thisx + 195))
+                if (*(char*)(thisx + 195))
                 {
-                    switch (*(_BYTE*)(thisx + 195))
+                    switch (*(char*)(thisx + 195))
                     {
                     case 1:
                         *(short*)(thisx + 502) += *(short*)(thisx + 496);
@@ -15454,25 +15454,25 @@ __int16 sub_41D84A(int thisx)
                 }
             }
         }
-        if (*(_BYTE*)(thisx + 188) == 1)
+        if (*(char*)(thisx + 188) == 1)
         {
-            *(_BYTE*)(thisx + 520) = 0x80;
-            *(_BYTE*)(thisx + 521) = 0;
-            *(_BYTE*)(thisx + 522) = 0;
+            *(char*)(thisx + 520) = 0x80;
+            *(char*)(thisx + 521) = 0;
+            *(char*)(thisx + 522) = 0;
         }
-        else if (*(_BYTE*)(thisx + 188) == 2)
+        else if (*(char*)(thisx + 188) == 2)
         {
-            *(_BYTE*)(thisx + 520) = -127;
-            *(_BYTE*)(thisx + 521) = 0;
-            *(_BYTE*)(thisx + 522) = 0;
+            *(char*)(thisx + 520) = -127;
+            *(char*)(thisx + 521) = 0;
+            *(char*)(thisx + 522) = 0;
         }
         else
         {
             for (j = 0; j < 3; ++j)
-                *(_BYTE*)(j + thisx + 520) = sub_4266B0((_BYTE*)(dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186)), j);
+                *(char*)(j + thisx + 520) = sub_4266B0((char*)(dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186)), j);
         }
         if (*(unsigned __int8*)(thisx + 188) >= 2u)
-            --* (_BYTE*)(thisx + 188);
+            --* (char*)(thisx + 188);
     }
 
     if (*(int*)(thisx + 168))
@@ -15481,21 +15481,21 @@ __int16 sub_41D84A(int thisx)
         if (v6)
         {
             *(short*)(thisx + 190) = sub_4266F0((short*)v6);
-            *(_BYTE*)(thisx + 192) = sub_426570((char*)v6);
+            *(char*)(thisx + 192) = sub_426570((char*)v6);
         }
     }
     else
     {
         *(short*)(thisx + 190) = sub_475CB0((short*)(dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 186)));
-        *(_BYTE*)(thisx + 192) = sub_4016F0((_BYTE*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
+        *(char*)(thisx + 192) = sub_4016F0((char*)(36 * *(unsigned __int16*)(thisx + 186) + dword_4B92E0));
     }
 
     v2 = *(unsigned __int8*)(thisx + 195);
     if (v2 == 4)
     {
         LOWORD(v2) = thisx;
-        *(short*)(thisx + 190) = (*(_BYTE*)(thisx + 184) & 1) + 23;
-        *(_BYTE*)(thisx + 192) = 3;
+        *(short*)(thisx + 190) = (*(char*)(thisx + 184) & 1) + 23;
+        *(char*)(thisx + 192) = 3;
     }
     return v2;
 }
@@ -15524,7 +15524,7 @@ void sub_41E5C9(int thisx, int* a2)
         v5 = 1;
         if (sub_41BA53(thisx, 0x88u, 0))
             v5 = 2;
-        ++* (_BYTE*)(thisx + 598);
+        ++* (char*)(thisx + 598);
         switch ((unsigned __int8)v10)
         {
         case 1u:
@@ -15622,7 +15622,7 @@ void sub_41E5C9(int thisx, int* a2)
                     v11 = 14;
                     break;
                 case 0x15u:
-                    sub_4659A5((int*)byte_4B9B10, (_BYTE*)thisx);
+                    sub_4659A5((int*)byte_4B9B10, (char*)thisx);
                     break;
                 case 0x16u:
                     if (rand() % 2)
@@ -15850,7 +15850,7 @@ unsigned __int16* sub_41EE57(unsigned __int16* thisx, int a2)
 }
 
 
-int sub_41EEB5(_BYTE* thisx, int* a2, char a3)
+int sub_41EEB5(char* thisx, int* a2, char a3)
 {
     //    int v4; // [esp+4h] [ebp-8h]
     //    int v5; // [esp+8h] [ebp-4h]
@@ -16027,7 +16027,7 @@ int sub_41F24C(int thisx, Concurrency::details::SchedulerProxy* a2)
     int ExecutingContext; // [esp+4h] [ebp-Ch]
 
 
-    *(_BYTE*)(thisx + 222) = 0;
+    *(char*)(thisx + 222) = 0;
     *(int*)(thisx + 480) = (int)a2;
     sub_49951D((int*)a2);
     QueueLength = Concurrency::details::SchedulerProxy::GetQueueLength(a2);
@@ -16118,7 +16118,7 @@ __int16 sub_41F380(int thisx, int a2)
                 v6 = 150 * v6 / 100;
             }
         }
-        if (sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
+        if (sub_41BA53(thisx, 0x8Cu, 0) && *(char*)(thisx + 609) == 11)
             v6 += *(short*)(thisx + 496) + 15;
     }
     if (sub_425CD0((int*)&byte_4B9B10) == 3 && *(int*)(thisx + 164))
@@ -16186,7 +16186,7 @@ __int16 sub_41F52F(int thisx, int a2)
                 v6 = 150 * v6 / 100;
             }
         }
-        if (sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
+        if (sub_41BA53(thisx, 0x8Cu, 0) && *(char*)(thisx + 609) == 11)
             v6 += *(short*)(thisx + 496) + 15;
     }
     if (sub_425CD0((int*)&byte_4B9B10) == 3 && *(int*)(thisx + 164))
@@ -16244,27 +16244,27 @@ int* sub_41F712(int* thisx)
 
 
     thisx[1] = 1;
-    *((_BYTE*)thisx + 84) = 0;
-    *((_BYTE*)thisx + 86) = 0;
-    *((_BYTE*)thisx + 87) = 0;
-    *((_BYTE*)thisx + 91) = 0;
-    *((_BYTE*)thisx + 92) = 0;
-    *((_BYTE*)thisx + 93) = 0;
-    *((_BYTE*)thisx + 88) = 0;
-    *((_BYTE*)thisx + 89) = 0;
-    *((_BYTE*)thisx + 90) = 0;
-    *((_BYTE*)thisx + 148) = 0;
-    *((_BYTE*)thisx + 147) = 0;
-    *((_BYTE*)thisx + 96) = 0;
-    *((_BYTE*)thisx + 95) = 0;
+    *((char*)thisx + 84) = 0;
+    *((char*)thisx + 86) = 0;
+    *((char*)thisx + 87) = 0;
+    *((char*)thisx + 91) = 0;
+    *((char*)thisx + 92) = 0;
+    *((char*)thisx + 93) = 0;
+    *((char*)thisx + 88) = 0;
+    *((char*)thisx + 89) = 0;
+    *((char*)thisx + 90) = 0;
+    *((char*)thisx + 148) = 0;
+    *((char*)thisx + 147) = 0;
+    *((char*)thisx + 96) = 0;
+    *((char*)thisx + 95) = 0;
     memset(thisx + 25, 0, 0x10u);
-    *((_BYTE*)thisx + 85) = 0;
-    *((_BYTE*)thisx + 97) = 0;
-    *((_BYTE*)thisx + 98) = 0;
+    *((char*)thisx + 85) = 0;
+    *((char*)thisx + 97) = 0;
+    *((char*)thisx + 98) = 0;
     for (i = 0; i < 4; ++i)
-        *((_BYTE*)thisx + i + 143) = 0;
-    *((_BYTE*)thisx + 141) = 0;
-    *((_BYTE*)thisx + 142) = 0;
+        *((char*)thisx + i + 143) = 0;
+    *((char*)thisx + 141) = 0;
+    *((char*)thisx + 142) = 0;
     thisx[20] = 0;
     thisx[2] = 0;
     thisx[9] = 0;
@@ -16285,24 +16285,24 @@ int* sub_41F712(int* thisx)
     *((short*)thisx + 11) = 0;
     if (sub_41BA53(thisx[31], 0x14u, 0))
     {
-        *((_BYTE*)thisx + 89) = 1;
+        *((char*)thisx + 89) = 1;
     }
     else if (sub_41BA53(thisx[31], 0x15u, 0))
     {
-        *((_BYTE*)thisx + 89) = 2;
+        *((char*)thisx + 89) = 2;
     }
     else
     {
-        *((_BYTE*)thisx + 89) = 0;
+        *((char*)thisx + 89) = 0;
     }
-    *((_BYTE*)thisx + 94) = sub_41BA53(thisx[31], 0x48u, 0);
+    *((char*)thisx + 94) = sub_41BA53(thisx[31], 0x48u, 0);
     v9 = sub_41BA53(thisx[31], 4u, 0) || sub_41BA53(thisx[31], 0xFu, 0);
-    *((_BYTE*)thisx + 91) = v9;
+    *((char*)thisx + 91) = v9;
     v8 = sub_41BA53(thisx[31], 3u, 0) || sub_41BA53(thisx[31], 0xCu, 0);
-    *((_BYTE*)thisx + 92) = v8;
-    *((_BYTE*)thisx + 90) = sub_41BA53(thisx[31], 0x22u, 0);
+    *((char*)thisx + 92) = v8;
+    *((char*)thisx + 90) = sub_41BA53(thisx[31], 0x22u, 0);
     v7 = sub_41BA53(thisx[31], 0x20u, 0) || sub_41BA53(thisx[31], 0x21u, 0);
-    *((_BYTE*)thisx + 87) = v7;
+    *((char*)thisx + 87) = v7;
     v6 = sub_41BA53(thisx[31], 0x1Du, 0)
         || sub_41BA53(thisx[31], 0x1Fu, 0)
         || sub_41BA53(thisx[31], 0x2Cu, 0)
@@ -16322,37 +16322,37 @@ int* sub_41F712(int* thisx)
         || sub_41BA53(thisx[31], 0x42u, 0)
         || sub_41BA53(thisx[31], 0x44u, 0)
         || sub_41BA53(thisx[31], 0x45u, 0);
-    *((_BYTE*)thisx + 88) = (2 * v5) | v6;
-    *((_BYTE*)thisx + 86) = 20;
+    *((char*)thisx + 88) = (2 * v5) | v6;
+    *((char*)thisx + 86) = 20;
     if (sub_41BA53(thisx[31], 0x1Cu, 0)
-        || *((_BYTE*)thisx + 88)
+        || *((char*)thisx + 88)
         || sub_41BA53(thisx[31], 0x20u, 0)
         || sub_41BA53(thisx[31], 0x21u, 0))
     {
-        *((_BYTE*)thisx + 86) += 50;
+        *((char*)thisx + 86) += 50;
     }
     v1 = (unsigned __int16)sub_41CCEA(thisx[31], 1);
     v18 = (v1 + (unsigned __int16)sub_41CB3B(thisx[31], 1)) / 2;
     v2 = (unsigned __int16)sub_41F380(thisx[31], 1);
     v17 = (v2 + (unsigned __int16)sub_41F52F(thisx[31], 1)) / 2;
     if (v17 - v18 + *((unsigned __int8*)thisx + 86) < 20)
-        *((_BYTE*)thisx + 86) += v17 - v18;
+        *((char*)thisx + 86) += v17 - v18;
     v11 = sub_425E70((char*)thisx[31]);
     if (v11 == 1 || v11 == 2 || v11 == 3 || (unsigned __int8)sub_4264F0((char*)thisx[31]) == 4)
-        *((_BYTE*)thisx + 86) = 0;
+        *((char*)thisx + 86) = 0;
     v12 = (unsigned __int16)sub_41CB3B(thisx[31], 1);
     v16 = (unsigned __int16)sub_41CCEA(thisx[31], 1);
     if (sub_41BA53(thisx[31], 1u, 0) || sub_41BA53(thisx[31], 0x16u, 0))
         v16 *= 2;
     if (sub_41BA53(thisx[31], 2u, 0) || sub_41BA53(thisx[31], 0x12u, 0))
         v12 *= 2;
-    *((_BYTE*)thisx + 95) = 100 * v12 / (v16 + v12);
-    *((_BYTE*)thisx + 96) = 100 - *((_BYTE*)thisx + 95);
-    *((_BYTE*)thisx + 99) = 50 * sub_41BA53(thisx[31], 0x88u, 0) + 50;
+    *((char*)thisx + 95) = 100 * v12 / (v16 + v12);
+    *((char*)thisx + 96) = 100 - *((char*)thisx + 95);
+    *((char*)thisx + 99) = 50 * sub_41BA53(thisx[31], 0x88u, 0) + 50;
     if (v11 == 1)
     {
-        *((_BYTE*)thisx + 95) = 100;
-        *((_BYTE*)thisx + 96) = 0;
+        *((char*)thisx + 95) = 100;
+        *((char*)thisx + 96) = 0;
     }
     v14 = (unsigned __int16)sub_41F380(thisx[31], 1);
     if (!v14)
@@ -16360,15 +16360,15 @@ int* sub_41F712(int* thisx)
     v13 = (unsigned __int16)sub_41F52F(thisx[31], 1);
     if (!v13)
         v13 = 1;
-    if (sub_41BA53(thisx[31], 0x1Cu, 0) || *((_BYTE*)thisx + 87))
+    if (sub_41BA53(thisx[31], 0x1Cu, 0) || *((char*)thisx + 87))
         v14 *= 3;
-    if (*((_BYTE*)thisx + 88))
+    if (*((char*)thisx + 88))
         v13 *= 3;
-    *((_BYTE*)thisx + 97) = 100 * v14 / (v13 + v14);
-    *((_BYTE*)thisx + 98) = 100 - *((_BYTE*)thisx + 97);
+    *((char*)thisx + 97) = 100 * v14 / (v13 + v14);
+    *((char*)thisx + 98) = 100 - *((char*)thisx + 97);
     v4 = sub_4268D0((int*)thisx[31]) || sub_41BA53(thisx[31], 0x26u, 0);
     result = thisx;
-    *((_BYTE*)thisx + 93) = v4;
+    *((char*)thisx + 93) = v4;
     return result;
 }
 
@@ -16405,7 +16405,7 @@ Concurrency::details::UMSFreeVirtualProcessorRoot* sub_41FE85(int thisx)
     for (i = 0; i < 3; ++i)
     {
         if (!i)
-            i = *(_BYTE*)(thisx + 87) == 0;
+            i = *(char*)(thisx + 87) == 0;
         if (i == 1 && !sub_41BA53(*(int*)(thisx + 124), 0x85u, 0))
             i = 2;
         for (j = 0; j < (unsigned __int8)byte_4B999A; ++j)
@@ -16467,7 +16467,7 @@ int sub_420119(int thisx)
     int v36; // [esp+44h] [ebp-38h]
     char v35; // [esp+40h] [ebp-3Ch]
     int v34; // [esp+3Ch] [ebp-40h]
-    _BYTE* v33; // [esp+38h] [ebp-44h]
+    char* v33; // [esp+38h] [ebp-44h]
     unsigned __int8 v32; // [esp+34h] [ebp-48h]
     char tc_11[4]; //8
     int v31; // [esp+2Ch] [ebp-50h]
@@ -16503,7 +16503,7 @@ int sub_420119(int thisx)
     int result; // eax
 
 
-    v35 = sub_425E70(*(_BYTE**)(thisx + 124));
+    v35 = sub_425E70(*(char**)(thisx + 124));
     v40 = sub_426090(*(int**)(thisx + 124));
     v39 = sub_4260B0(*(int**)(thisx + 124));
     result = v40 / 100 - sub_446465((char*)byte_4B9B10);
@@ -16511,25 +16511,25 @@ int sub_420119(int thisx)
     {
         if (sub_425FF0(*(int**)(thisx + 124)))
         {
-            v33 = (_BYTE*)sub_426910(*(int**)(thisx + 124));
-            if (*(_BYTE*)(thisx + 87))
+            v33 = (char*)sub_426910(*(int**)(thisx + 124));
+            if (*(char*)(thisx + 87))
             {
                 if (sub_494AA9(v33, 1))
                 {
                     result = sub_4655EF((int*)byte_4B9B10, *(int**)(thisx + 124), 32, 0);
                     if (result)
                     {
-                        *(_BYTE*)(thisx + 143) = 1;
+                        *(char*)(thisx + 143) = 1;
                         return result;
                     }
                 }
             }
-            if (!*(_BYTE*)(thisx + 88) && rand() % 1000 <= *(unsigned __int8*)(thisx + 98))
+            if (!*(char*)(thisx + 88) && rand() % 1000 <= *(unsigned __int8*)(thisx + 98))
             {
                 result = sub_4655EF((int*)byte_4B9B10, *(int**)(thisx + 124), 128, 1);
                 if (result)
                 {
-                    *(_BYTE*)(thisx + 144) = 1;
+                    *(char*)(thisx + 144) = 1;
                     return result;
                 }
             }
@@ -16538,18 +16538,18 @@ int sub_420119(int thisx)
             && sub_41BA53(*(int*)(thisx + 124), 0x23u, 0)
             && sub_4655EF((int*)byte_4B9B10, *(int**)(thisx + 124), 32, 0))
         {
-            *(_BYTE*)(thisx + 85) = 2;
+            *(char*)(thisx + 85) = 2;
         }
         if (sub_425FF0(*(int**)(thisx + 124)))
         {
             if (sub_425D30(*(int**)(thisx + 124)))
             {
-                if ((*(_BYTE*)(thisx + 88) & 2) != 0)
+                if ((*(char*)(thisx + 88) & 2) != 0)
                 {
                     result = sub_426350(*(unsigned __int8**)(thisx + 124));
                     if (result)
                     {
-                        *(_BYTE*)(thisx + 144) = 1;
+                        *(char*)(thisx + 144) = 1;
                         return result;
                     }
                 }
@@ -16558,25 +16558,25 @@ int sub_420119(int thisx)
             {
                 if (rand() % 2)
                 {
-                    if ((*(_BYTE*)(thisx + 88) & 1) != 0)
+                    if ((*(char*)(thisx + 88) & 1) != 0)
                     {
                         result = sub_426350(*(unsigned __int8**)(thisx + 124));
                         if (result)
                         {
-                            *(_BYTE*)(thisx + 144) = 1;
+                            *(char*)(thisx + 144) = 1;
                             return result;
                         }
                     }
                 }
-                if ((*(_BYTE*)(thisx + 88) & 2) != 0
+                if ((*(char*)(thisx + 88) & 2) != 0
                     && sub_426350(*(unsigned __int8**)(thisx + 124))
                     && Concurrency::details::SchedulerBase::GetNumberOfBoundContexts(*(Concurrency::details::SchedulerBase**)(thisx + 124)))
                 {
-                    *(_BYTE*)(thisx + 147) = 2;
-                    *(_BYTE*)(thisx + 144) = 1;
+                    *(char*)(thisx + 147) = 2;
+                    *(char*)(thisx + 144) = 1;
                     result = thisx;
-                    *(_BYTE*)(thisx + 143) = 1;
-                    *(_BYTE*)(thisx + 148) = 0;
+                    *(char*)(thisx + 143) = 1;
+                    *(char*)(thisx + 148) = 0;
                     return result;
                 }
             }
@@ -16596,20 +16596,20 @@ int sub_420119(int thisx)
                     if (SchedulerProxy == 8 && sub_41BA53(*(int*)(thisx + 124), 7u, 0))
                     {
                         if (sub_426930(*(int**)(thisx + 124)) >= 0 ? sub_4655EF((int*)byte_4B9B10, *(int**)(thisx + 124), 64, 1) : sub_4655EF((int*)byte_4B9B10, *(int**)(thisx + 124), 128, 1))
-                            *(_BYTE*)(thisx + 142) = 1;
+                            *(char*)(thisx + 142) = 1;
                     }
                     if (sub_41BA53(*(int*)(thisx + 124), 0x25u, 0)
                         && rand() % 100 < 5
                         && sub_4655EF((int*)byte_4B9B10, *(int**)(thisx + 124), 80, 1))
                     {
-                        *(_BYTE*)(thisx + 142) = 1;
-                        *(_BYTE*)(thisx + 143) = 1;
+                        *(char*)(thisx + 142) = 1;
+                        *(char*)(thisx + 143) = 1;
                     }
                     if (!sub_4268D0(*(int**)(thisx + 124)) && sub_41BA53(*(int*)(thisx + 124), 0x26u, 0))
                     {
-                        *(_BYTE*)(thisx + 142) = 1;
-                        *(_BYTE*)(thisx + 143) = 1;
-                        *(_BYTE*)(thisx + 144) = 1;
+                        *(char*)(thisx + 142) = 1;
+                        *(char*)(thisx + 143) = 1;
+                        *(char*)(thisx + 144) = 1;
                     }
                     result = sub_4268D0(*(int**)(thisx + 124));
                     if (result)
@@ -16619,10 +16619,10 @@ int sub_420119(int thisx)
                         result = v6 / 100;
                         if (v7 < 2)
                         {
-                            *(_BYTE*)(thisx + 142) = 1;
+                            *(char*)(thisx + 142) = 1;
                             result = thisx;
-                            *(_BYTE*)(thisx + 143) = 1;
-                            *(_BYTE*)(thisx + 144) = 1;
+                            *(char*)(thisx + 143) = 1;
+                            *(char*)(thisx + 144) = 1;
                         }
                     }
                 }
@@ -16631,24 +16631,24 @@ int sub_420119(int thisx)
         else
         {
             if (SchedulerProxy == 13
-                && (*(_BYTE*)(thisx + 91) || *(_BYTE*)(thisx + 92))
+                && (*(char*)(thisx + 91) || *(char*)(thisx + 92))
                 && rand() % 100 < 20
                 && sub_4655EF((int*)byte_4B9B10, *(int**)(thisx + 124), 128, 1))
             {
-                if (*(_BYTE*)(thisx + 91) && *(_BYTE*)(thisx + 92))
+                if (*(char*)(thisx + 91) && *(char*)(thisx + 92))
                 {
                     if (rand() % 100 >= *(unsigned __int8*)(thisx + 95))
-                        *(_BYTE*)(thisx + 144) = 1;
+                        *(char*)(thisx + 144) = 1;
                     else
-                        *(_BYTE*)(thisx + 143) = 1;
+                        *(char*)(thisx + 143) = 1;
                 }
-                else if (*(_BYTE*)(thisx + 91))
+                else if (*(char*)(thisx + 91))
                 {
-                    *(_BYTE*)(thisx + 143) = 1;
+                    *(char*)(thisx + 143) = 1;
                 }
                 else
                 {
-                    *(_BYTE*)(thisx + 144) = 1;
+                    *(char*)(thisx + 144) = 1;
                 }
             }
             if (v42 == 10
@@ -16656,44 +16656,44 @@ int sub_420119(int thisx)
                 && rand() % 100 < 10
                 && sub_4655EF((int*)byte_4B9B10, *(int**)(thisx + 124), 128, 1))
             {
-                *(_BYTE*)(thisx + 84) = 1;
+                *(char*)(thisx + 84) = 1;
             }
             if (SchedulerProxy == 10
                 && rand() % 100 < 10
                 && sub_41BA53(*(int*)(thisx + 124), 0x19u, 0)
                 && sub_457731((int*)byte_4B9B10, *(int**)(thisx + 124)))
             {
-                *(_BYTE*)(thisx + 84) = 1;
+                *(char*)(thisx + 84) = 1;
             }
-            if (SchedulerProxy != 162 && *(_BYTE*)(thisx + 89) == 1 && !*(_BYTE*)(thisx + 143) && rand() % 100 < 5)
-                *(_BYTE*)(thisx + 143) = 20;
+            if (SchedulerProxy != 162 && *(char*)(thisx + 89) == 1 && !*(char*)(thisx + 143) && rand() % 100 < 5)
+                *(char*)(thisx + 143) = 20;
             if (SchedulerProxy == 91)
-                *(_BYTE*)(thisx + 143) = sub_425ED0(*(int**)(thisx + 124)) < 37
+                *(char*)(thisx + 143) = sub_425ED0(*(int**)(thisx + 124)) < 37
                 || !sub_4655EF((int*)byte_4B9B10, *(int**)(thisx + 124), 320, 1);
-            v32 = sub_4268F0(*(_BYTE**)(thisx + 124));
+            v32 = sub_4268F0(*(char**)(thisx + 124));
             if (v32 < 3u
                 && SchedulerProxy != 163
-                && *(_BYTE*)(thisx + 89) == 2
-                && !*(_BYTE*)(thisx + 143)
+                && *(char*)(thisx + 89) == 2
+                && !*(char*)(thisx + 143)
                 && rand() % 100 < 5)
             {
-                *(_BYTE*)(thisx + 143) = 20;
+                *(char*)(thisx + 143) = 20;
             }
             if (SchedulerProxy == 92)
             {
                 if (v32 == 3 || v32 && sub_4655EF((int*)byte_4B9B10, *(int**)(thisx + 124), 32, 0))
                 {
-                    *(_BYTE*)(thisx + 143) = 0;
+                    *(char*)(thisx + 143) = 0;
                     if (v32 == 3)
-                        *(_BYTE*)(thisx + 145) = 1;
+                        *(char*)(thisx + 145) = 1;
                 }
                 else
                 {
-                    *(_BYTE*)(thisx + 143) = 1;
+                    *(char*)(thisx + 143) = 1;
                 }
             }
             result = *(unsigned __int8*)(thisx + 90);
-            if (*(_BYTE*)(thisx + 90))
+            if (*(char*)(thisx + 90))
             {
                 if (SchedulerProxy == 94 || SchedulerProxy == 176)
                 {
@@ -16702,7 +16702,7 @@ int sub_420119(int thisx)
                         v31 = sub_425ED0(*(int**)(thisx + 124));
                         result = *(int*)(thisx + 80);
                         if (result <= v31)
-                            *(_BYTE*)(thisx + 143) = 1;
+                            *(char*)(thisx + 143) = 1;
                     }
                 }
                 else
@@ -16715,7 +16715,7 @@ int sub_420119(int thisx)
                         result = sub_420CD4();
                         if (result > 0)
                         {
-                            *(_BYTE*)(thisx + 85) = 1;
+                            *(char*)(thisx + 85) = 1;
                             v4 = 30 * (rand() % 9);
                             result = thisx;
                             *(int*)(thisx + 80) = v4 + 60;
@@ -16729,7 +16729,7 @@ int sub_420119(int thisx)
                 if (result)
                 {
                     result = thisx;
-                    *(_BYTE*)(thisx + 85) = 1;
+                    *(char*)(thisx + 85) = 1;
                 }
             }
         }
@@ -16769,13 +16769,13 @@ int sub_420119(int thisx)
                     {
                         v30 = sub_425D70(*(int**)(thisx + 124));
                         if ((v41 & 1) == (v30 == 0) && v28 < 4800 && v27 < 500 && (v30 && v40 < v34 || !v30 && v40 > v34))
-                            *(_BYTE*)(thisx + 85) = 2;
+                            *(char*)(thisx + 85) = 2;
                     }
                 }
             }
             v37 = 3200;
             v38 = 800;
-            result = (unsigned __int8)sub_425E70(*(_BYTE**)(thisx + 124));
+            result = (unsigned __int8)sub_425E70(*(char**)(thisx + 124));
             if (result == 1)
             {
                 v37 = 4000;
@@ -16799,11 +16799,11 @@ int sub_420119(int thisx)
                     if (v11 >= *(unsigned __int8*)(thisx + 97))
                     {
                         result = thisx;
-                        *(_BYTE*)(thisx + 144) = 1;
+                        *(char*)(thisx + 144) = 1;
                     }
                     else
                     {
-                        *(_BYTE*)(thisx + 143) = 1;
+                        *(char*)(thisx + 143) = 1;
                     }
                 }
                 else
@@ -16813,11 +16813,11 @@ int sub_420119(int thisx)
                     if (v12 >= *(unsigned __int8*)(thisx + 95))
                     {
                         result = thisx;
-                        *(_BYTE*)(thisx + 144) = 1;
+                        *(char*)(thisx + 144) = 1;
                     }
                     else
                     {
-                        *(_BYTE*)(thisx + 143) = 1;
+                        *(char*)(thisx + 143) = 1;
                     }
                 }
             }
@@ -17083,7 +17083,7 @@ char* sub_420EF3(int thisx, int a2)
     result = (char*)(unsigned __int8)byte_4B99C8;
     if (byte_4B99C8)
     {
-        result = (char*)(unsigned __int8)sub_426070(*(_BYTE**)(thisx + 304));
+        result = (char*)(unsigned __int8)sub_426070(*(char**)(thisx + 304));
         if (result == (char*)*(unsigned __int8*)(thisx + 193))
             return sub_4211F5(thisx);
     }
@@ -17115,7 +17115,7 @@ int sub_420FC4(int thisx, int a2)
 
     result = thisx;
     *(int*)(thisx + 432) = 82;
-    *(_BYTE*)(thisx + 272) = 0;
+    *(char*)(thisx + 272) = 0;
     if (a2)
     {
         *(int*)(thisx + 320) = 1;
@@ -17156,7 +17156,7 @@ int sub_421051(int* thisx)
 }
 
 
-int sub_4210A8(_BYTE* thisx, char a2)
+int sub_4210A8(char* thisx, char a2)
 {
     thisx[556] = a2;
     thisx[557] = 60;
@@ -17209,7 +17209,7 @@ int* sub_421175(int* thisx, int a2, int a3, int a4)
 }
 
 
-BOOL sub_4211AC(_BYTE* thisx)
+BOOL sub_4211AC(char* thisx)
 {
     return (thisx[188] != 1 || rand() % 3 >= 2) && thisx[469] != 0;
 }
@@ -17243,13 +17243,13 @@ int sub_421238(int thisx)
     v3[5] = 1;
     v3[9] = 0;
     v3[0] = -1;
-    if (*(_BYTE*)(thisx + 188) == 1)
+    if (*(char*)(thisx + 188) == 1)
     {
         if (!sub_49DA45((int*)byte_4BDC60, aGraphicMisuzuB, (int)v3))
             return 0;
         *(int*)(thisx + 196) = v3[0];
     }
-    else if (*(_BYTE*)(thisx + 188) == 2 || *(_BYTE*)(thisx + 188) == 3)
+    else if (*(char*)(thisx + 188) == 2 || *(char*)(thisx + 188) == 3)
     {
         if (!sub_49DA45((int*)byte_4BDC60, aStageSodokuWav, (int)v3))
             return 0;
@@ -17400,7 +17400,7 @@ LONG sub_42142F(LONG thisx)
                                 {
                                     v5 = *(int*)(thisx + 64) * v6 + v7;
                                     if (!*(short*)(*(int*)(thisx + 52) + 2 * v5)
-                                        && ((unsigned __int8)v10 & *(_BYTE*)(*(int*)(thisx + 56) + v11)) != 0)
+                                        && ((unsigned __int8)v10 & *(char*)(*(int*)(thisx + 56) + v11)) != 0)
                                     {
                                         *(short*)(*(int*)(thisx + 52) + 2 * v5) = i + 1;
                                         if (v7 < xLeft)
@@ -17417,7 +17417,7 @@ LONG sub_42142F(LONG thisx)
                         }
                         for (n = 0; n < 2; ++n)
                         {
-                            if (*(_BYTE*)(*(int*)(thisx + 60) + 2 * v11 + n))
+                            if (*(char*)(*(int*)(thisx + 60) + 2 * v11 + n))
                             {
                                 v3 = *(char*)(*(int*)(thisx + 60) + 2 * v11 + n) + v11;
                                 if (!*(short*)(*(int*)(thisx + 52) + 2 * v3))
@@ -17591,7 +17591,7 @@ int __fastcall sub_4219B1(int* a1)
                     v50[j] = 0;
                     v5 = a1[15] + 2 * (a1[16] * v39 + v53);
                     v28 = *(char*)(v5 + j);
-                    if (*(_BYTE*)(v5 + j) && *(unsigned __int16*)(a1[13] + 2 * (a1[16] * v39 + v28 + v53)) == v40 - 1)
+                    if (*(char*)(v5 + j) && *(unsigned __int16*)(a1[13] + 2 * (a1[16] * v39 + v28 + v53)) == v40 - 1)
                     {
                         ++v45;
                         v50[j] = v28;
@@ -17622,7 +17622,7 @@ int __fastcall sub_4219B1(int* a1)
                                 v24 = v16 - v15;
                             }
                             if ((result = v53 + v25, v27 = v53 + v25, v26 = v39 + v24, k < 9)
-                                && (result = k, ((unsigned __int8)v47[k - 1] & *(_BYTE*)(a1[14] + a1[16] * v26 + v27)) != 0)
+                                && (result = k, ((unsigned __int8)v47[k - 1] & *(char*)(a1[14] + a1[16] * v26 + v27)) != 0)
                                 || k >= 9)
                             {
                                 v14 = v52 - v27 <= 0 ? v27 - v52 : v52 - v27;
@@ -17818,8 +17818,8 @@ int __fastcall sub_422573(int* a1)
                                         else
                                             v3 = v10 - j / 4;
                                         v6 = v4 + v3 + 1;
-                                        if (!*((_BYTE*)a1 + j + 100) || *((unsigned __int8*)a1 + j + 100) > (int)v6)
-                                            *((_BYTE*)a1 + j + 100) = v6;
+                                        if (!*((char*)a1 + j + 100) || *((unsigned __int8*)a1 + j + 100) > (int)v6)
+                                            *((char*)a1 + j + 100) = v6;
                                         result = j + 1;
                                     }
                                 }
@@ -17970,10 +17970,10 @@ int sub_422B5C(int thisx, int a2, int a3, int a4, int a5, __int16 a6, char a7)
     *(int*)(thisx + 376) = a3 - *(int*)(thisx + 332);
     *(int*)(thisx + 348) = a4 - *(int*)(thisx + 336);
     *(int*)(thisx + 424) = a5;
-    *(_BYTE*)(thisx + 212) = 0;
+    *(char*)(thisx + 212) = 0;
     *(short*)(thisx + 204) = a6;
     result = thisx;
-    *(_BYTE*)(thisx + 223) = a7;
+    *(char*)(thisx + 223) = a7;
     return result;
 }
 
@@ -17981,9 +17981,9 @@ int sub_422B5C(int thisx, int a2, int a3, int a4, int a5, __int16 a6, char a7)
 char sub_422BE5(int thisx)
 {
     if (*(int*)(thisx + 524))
-        return *(_BYTE*)(thisx + 536);
+        return *(char*)(thisx + 536);
     else
-        return *(_BYTE*)(thisx + 192);
+        return *(char*)(thisx + 192);
 }
 
 
@@ -18070,7 +18070,7 @@ int sub_422C3A(int thisx, HANDLE hFile, int a3)
         (struct VirtualProcessor*)1);
     *(int*)(thisx + 524) = 0;
     *(short*)(thisx + 528) = *(short*)(thisx + 190);
-    *(_BYTE*)(thisx + 536) = *(_BYTE*)(thisx + 192);
+    *(char*)(thisx + 536) = *(char*)(thisx + 192);
     *(short*)(thisx + 530) = *(short*)(thisx + 498);
     *(short*)(thisx + 538) = *(short*)(thisx + 502);
     *(short*)(thisx + 540) = *(short*)(thisx + 504);
@@ -18169,7 +18169,7 @@ int sub_4234E6(int thisx, int a2)
     {
         *(int*)(thisx + 580) += v8;
         *(int*)(thisx + 588) += v8;
-        if (!*(_BYTE*)(thisx + 593))
+        if (!*(char*)(thisx + 593))
         {
             *(int*)(thisx + 580) += a2 / 10;
             *(int*)(thisx + 588) += a2 / 10;
@@ -18178,10 +18178,10 @@ int sub_4234E6(int thisx, int a2)
             v4 = (a2 >= 0) - 1;
         else
             v4 = 1;
-        *(_BYTE*)(thisx + 593) += v4;
+        *(char*)(thisx + 593) += v4;
         *(short*)(thisx + 594) += a2;
         *(int*)(thisx + 584) %= 50;
-        *(_BYTE*)(thisx + 592) = 60;
+        *(char*)(thisx + 592) = 60;
     }
     if (*(char*)(thisx + 593) * *(__int16*)(thisx + 594) <= 0)
         v3 = -(*(char*)(thisx + 593) * *(__int16*)(thisx + 594));
@@ -18232,7 +18232,7 @@ int sub_42371C(int thisx)
                 v4 = 1;
                 for (k = 0; k < 3; ++k)
                 {
-                    LOBYTE(v4) = *(_BYTE*)(k + thisx + 520);
+                    LOBYTE(v4) = *(char*)(k + thisx + 520);
                     LOBYTE(v2) = j;
                     if (sub_47744C(v2, v4))
                         break;
@@ -18242,12 +18242,12 @@ int sub_42371C(int thisx)
                     break;
                 v2 = (j + 74) / 73;
             }
-            *(_BYTE*)(i + thisx + 520) = j;
+            *(char*)(i + thisx + 520) = j;
         }
     }
     *(int*)(thisx + 524) = 0;
     *(short*)(thisx + 528) = *(short*)(thisx + 190);
-    *(_BYTE*)(thisx + 536) = *(_BYTE*)(thisx + 192);
+    *(char*)(thisx + 536) = *(char*)(thisx + 192);
     *(short*)(thisx + 530) = *(short*)(thisx + 498);
     *(short*)(thisx + 538) = *(short*)(thisx + 502);
     *(short*)(thisx + 540) = *(short*)(thisx + 504);
@@ -18274,16 +18274,16 @@ int sub_4238DE(int thisx, SchedulerProxy* a2)
     sub_43FFC3((int*)byte_4BDB28, dword_4B9A1C, -1, 100, 100, 0);
     sub_41F24C(thisx, a2);
     if (*(char*)(thisx + 230) > 0 && *(char*)(thisx + 230) < 5)
-        *(_BYTE*)(thisx + 230) = 5;
+        *(char*)(thisx + 230) = 5;
     if (*(char*)(thisx + 231) > 0 && *(char*)(thisx + 231) < 5)
-        *(_BYTE*)(thisx + 231) = 5;
+        *(char*)(thisx + 231) = 5;
     if (*(char*)(thisx + 233) > 0 && *(char*)(thisx + 233) < 5)
-        *(_BYTE*)(thisx + 233) = 5;
+        *(char*)(thisx + 233) = 5;
     result = *(char*)(thisx + 234);
     if (result > 0 && *(char*)(thisx + 234) < 5)
     {
         result = thisx;
-        *(_BYTE*)(thisx + 234) = 5;
+        *(char*)(thisx + 234) = 5;
     }
     return result;
 }
@@ -18301,7 +18301,7 @@ int sub_4239D3(int thisx, __int16 a2)
     int result; // eax
 
 
-    if (*(_BYTE*)(thisx + 188) == 2 || (result = *(unsigned __int8*)(thisx + 188), result == 3))
+    if (*(char*)(thisx + 188) == 2 || (result = *(unsigned __int8*)(thisx + 188), result == 3))
     {
         v3 = *(__int16*)(thisx + 600) / 100;
         *(short*)(thisx + 600) += a2;
@@ -18410,7 +18410,7 @@ __int16 sub_423AC3(int thisx, int a2)
             v6 = 150 * v6 / 100;
         }
     }
-    if (sub_41BA53(thisx, 0x8Cu, 0) && *(_BYTE*)(thisx + 609) == 11)
+    if (sub_41BA53(thisx, 0x8Cu, 0) && *(char*)(thisx + 609) == 11)
         v6 += *(short*)(thisx + 496) + 10;
     if (v6)
         return v6;
@@ -18419,9 +18419,9 @@ __int16 sub_423AC3(int thisx, int a2)
 }
 
 //初始化fun
-_BYTE* sub_423CF2(_BYTE* thisx, char a2, char a3, char a4, char a5, char a6, char a7)
+char* sub_423CF2(char* thisx, char a2, char a3, char a4, char a5, char a6, char a7)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     thisx[602] = a2;
     thisx[603] = a3;
@@ -18623,7 +18623,7 @@ int sub_423F94(int* thisx, int a2, int a3)
         {
             v4 = thisx[15] + 2 * (thisx[16] * v13 + v14);
             v3 = (v9 + 1) / 2;
-            if (*(_BYTE*)(v4 + v3))
+            if (*(char*)(v4 + v3))
                 return 1;
         }
         LOBYTE(v3) = v13;
@@ -18792,7 +18792,7 @@ void sub_42455B(int thisx, __int16* a2)
     v17[3] = thisx + 352;
     v17[4] = thisx + 356;
     v17[5] = thisx + 360;
-    if (*((_BYTE*)a2 + 10))
+    if (*((char*)a2 + 10))
     {
         sub_41F6DE((int*)thisx);
         if (*(int*)(thisx + 304))
@@ -18816,7 +18816,7 @@ void sub_42455B(int thisx, __int16* a2)
             {
                 sub_417DCC(*(int*)(thisx + 304));
                 *(int*)(thisx + 304) = 0;
-                sub_423CF2((_BYTE*)thisx, 0, 0, 0, 0, 0, 0);
+                sub_423CF2((char*)thisx, 0, 0, 0, 0, 0, 0);
             }
         }
     }
@@ -18904,7 +18904,7 @@ void sub_42455B(int thisx, __int16* a2)
             v15 = v11;
         }
     }
-    if (*((_BYTE*)a2 + 11))
+    if (*((char*)a2 + 11))
     {
         if ((v10 = v15 * *((int*)a2 + 11), v10 > 0) && *(int*)(thisx + 372) > v10
             || v10 < 0 && *(int*)(thisx + 372) < v10)
@@ -18912,7 +18912,7 @@ void sub_42455B(int thisx, __int16* a2)
             *(int*)(thisx + 372) = v10;
         }
     }
-    if (*((_BYTE*)a2 + 12))
+    if (*((char*)a2 + 12))
     {
         if ((v9 = v14 * *((int*)a2 + 12), v9 > 0) && *(int*)(thisx + 376) > v9
             || v9 < 0 && *(int*)(thisx + 376) < v9)
@@ -18920,7 +18920,7 @@ void sub_42455B(int thisx, __int16* a2)
             *(int*)(thisx + 376) = v9;
         }
     }
-    switch (*((_BYTE*)a2 + 10))
+    switch (*((char*)a2 + 10))
     {
     case 1:
         *(int*)(thisx + 432) = 38;
@@ -18955,7 +18955,7 @@ void sub_42455B(int thisx, __int16* a2)
     default:
         break;
     }
-    if (*((_BYTE*)a2 + 10))
+    if (*((char*)a2 + 10))
     {
         *(int*)(thisx + 392) = 1;
         *(int*)(thisx + 340) = 0;
@@ -18963,11 +18963,11 @@ void sub_42455B(int thisx, __int16* a2)
         *(int*)(thisx + 380) = 0;
         *(int*)(thisx + 384) = 0;
         *(int*)(thisx + 444) = 0;
-        *(_BYTE*)(thisx + 176) = 0;
-        *(_BYTE*)(thisx + 177) = 0;
-        *(_BYTE*)(thisx + 178) = 1;
+        *(char*)(thisx + 176) = 0;
+        *(char*)(thisx + 177) = 0;
+        *(char*)(thisx + 178) = 1;
     }
-    else if (!*(int*)(thisx + 392) && *((_BYTE*)a2 + 13) && *(int*)(thisx + 348) < 0)
+    else if (!*(int*)(thisx + 392) && *((char*)a2 + 13) && *(int*)(thisx + 348) < 0)
     {
         *(int*)(thisx + 432) = 50;
     }
@@ -18992,45 +18992,45 @@ int __stdcall sub_424B7E(int a1, int a2)
     if (a1 == 19)
     {
         *(int*)(a2 + 20) = 100;
-        *(_BYTE*)(a2 + 14) = 11;
+        *(char*)(a2 + 14) = 11;
         *(int*)(a2 + 32) = 0;
-        *(_BYTE*)(a2 + 13) = 11;
+        *(char*)(a2 + 13) = 11;
         *(int*)(a2 + 28) = -800;
     }
     else
     {
         *(int*)(a2 + 20) = 300;
-        *(_BYTE*)(a2 + 14) = 11;
+        *(char*)(a2 + 14) = 11;
         *(int*)(a2 + 32) = 0;
-        *(_BYTE*)(a2 + 13) = 11;
+        *(char*)(a2 + 13) = 11;
         *(int*)(a2 + 28) = -550;
     }
-    *(_BYTE*)(a2 + 16) = 11;
+    *(char*)(a2 + 16) = 11;
     *(int*)(a2 + 40) = 30;
-    *(_BYTE*)(a2 + 6) = 0;
+    *(char*)(a2 + 6) = 0;
     *(short*)(a2 + 8) = 19;
     result = a1;
     switch (a1)
     {
     case 17:
         result = a2;
-        *(_BYTE*)(a2 + 10) = 2;
+        *(char*)(a2 + 10) = 2;
         break;
     case 18:
-        *(_BYTE*)(a2 + 10) = 5;
+        *(char*)(a2 + 10) = 5;
         break;
     case 19:
-        *(_BYTE*)(a2 + 10) = 10;
+        *(char*)(a2 + 10) = 10;
         break;
     case 20:
         result = a2;
-        *(_BYTE*)(a2 + 10) = 7;
+        *(char*)(a2 + 10) = 7;
         break;
     case 21:
-        *(_BYTE*)(a2 + 10) = 9;
+        *(char*)(a2 + 10) = 9;
         break;
     case 22:
-        *(_BYTE*)(a2 + 10) = 3;
+        *(char*)(a2 + 10) = 3;
         break;
     default:
         return result;
@@ -19132,7 +19132,7 @@ int __fastcall sub_424C9A(int* a1, int a2, int a3, int a4, int a5, int a6)
         {
             if (m >= 8)
             {
-                *(_BYTE*)(a1[14] + a1[16] * j + k) = v15;
+                *(char*)(a1[14] + a1[16] * j + k) = v15;
                 goto LABEL_22;
             }
             if (m >= 4)
@@ -19522,7 +19522,7 @@ int* sub_425617(int* thisx, int a2, int a3, int a4, int a5)
                 {
                     for (m = 0; m < 2; ++m)
                     {
-                        if (!*(_BYTE*)(thisx[15] + 2 * (thisx[16] * j + k) + m))
+                        if (!*(char*)(thisx[15] + 2 * (thisx[16] * j + k) + m))
                         {
                             v10 = k + 2 * m - 1;
                             if (v10 >= 0
@@ -19544,8 +19544,8 @@ int* sub_425617(int* thisx, int a2, int a3, int a4, int a5)
                                         v11 = v10 - k;
                                         if (v11 <= 127 && v11 >= -127)
                                         {
-                                            *(_BYTE*)(thisx[15] + 2 * (thisx[16] * j + k) + m) = v11;
-                                            *(_BYTE*)(thisx[15] + 2 * (thisx[16] * j + v11 + k) + 1 - m) = -(char)v11;
+                                            *(char*)(thisx[15] + 2 * (thisx[16] * j + k) + m) = v11;
+                                            *(char*)(thisx[15] + 2 * (thisx[16] * j + v11 + k) + 1 - m) = -(char)v11;
                                         }
                                         break;
                                     }
@@ -19627,7 +19627,7 @@ Concurrency::details::VirtualProcessorRoot* sub_425B40(
     return thisx;
 }
 //return thisx[10];
-char sub_425B70(_BYTE* thisx)
+char sub_425B70(char* thisx)
 {
     return thisx[10];
 }
@@ -19659,38 +19659,38 @@ int* sub_425BD0(char* thisx, int* a2, int a3, int a4)
 }
 
 //return thisx[7];
-char sub_425C10(_BYTE* thisx)
+char sub_425C10(char* thisx)
 {
     return thisx[7];
 }
 
 //return thisx[14];
-char sub_425C30(_BYTE* thisx)
+char sub_425C30(char* thisx)
 {
     return thisx[14];
 }
 
 //return (thisx[15] & 1) != 0;
 //thisx = byte_4B9B10
-BOOL sub_425C50(_BYTE* thisx)
+BOOL sub_425C50(char* thisx)
 {
     return (thisx[15] & 1) != 0;
 }
 
 //return (thisx[15] & 6) >> 1;
-int sub_425C70(_BYTE* thisx)
+int sub_425C70(char* thisx)
 {
     return (thisx[15] & 6) >> 1;
 }
 
 //return (thisx[15] & 8) != 0;
-BOOL sub_425C90(_BYTE* thisx)
+BOOL sub_425C90(char* thisx)
 {
     return (thisx[15] & 8) != 0;
 }
 
 //return thisx[72];
-char sub_425CB0(_BYTE* thisx)
+char sub_425CB0(char* thisx)
 {
     return thisx[72];
 }
@@ -19732,19 +19732,19 @@ int sub_425D70(int* thisx)
 }
 
 //return thisx[269];
-char sub_425D90(_BYTE* thisx)
+char sub_425D90(char* thisx)
 {
     return thisx[269];
 }
 
 //return thisx[270];
-char sub_425DB0(_BYTE* thisx)
+char sub_425DB0(char* thisx)
 {
     return thisx[270];
 }
 
 //return thisx[a2 + 271];
-char sub_425DD0(_BYTE* thisx, int a2)
+char sub_425DD0(char* thisx, int a2)
 {
     return thisx[a2 + 271];
 }
@@ -19761,14 +19761,14 @@ int sub_425E10(void* thisx, int a2)
     return (int)thisx + 276 * a2 + 12;
 }
 
-//return *(_BYTE*)(thisx + 558) || *(int*)(thisx + 560);
+//return *(char*)(thisx + 558) || *(int*)(thisx + 560);
 BOOL sub_425E30(int thisx)
 {
-    return *(_BYTE*)(thisx + 558) || *(int*)(thisx + 560);
+    return *(char*)(thisx + 558) || *(int*)(thisx + 560);
 }
 
 //return thisx[188];
-char sub_425E70(_BYTE* thisx)
+char sub_425E70(char* thisx)
 {
     return thisx[188];
 }
@@ -19780,7 +19780,7 @@ int sub_425E90(unsigned __int8* thisx)
 }
 
 //return thisx[470];
-char sub_425EB0(_BYTE* thisx)
+char sub_425EB0(char* thisx)
 {
     return thisx[470];
 }
@@ -19792,7 +19792,7 @@ int sub_425ED0(int* thisx)
 }
 
 //return thisx[184];
-char sub_425EF0(_BYTE* thisx)
+char sub_425EF0(char* thisx)
 {
     return thisx[184];
 }
@@ -19806,21 +19806,21 @@ int sub_425F30(int* thisx)
 }
 
 //return thisx[6];
-char sub_425F50(_BYTE* thisx)
+char sub_425F50(char* thisx)
 {
     return thisx[6];
 }
 
 
 //return thisx[5];
-char sub_425F90(_BYTE* thisx)
+char sub_425F90(char* thisx)
 {
     return thisx[5];
 }
 
 
 //return thisx[9];
-char sub_425FD0(_BYTE* thisx)
+char sub_425FD0(char* thisx)
 {
     return thisx[9];
 }
@@ -19838,7 +19838,7 @@ int sub_426010(int* thisx)
 }
 
 //get thisx[223];
-char sub_426030(_BYTE* thisx)
+char sub_426030(char* thisx)
 {
     return thisx[223];
 }
@@ -19854,7 +19854,7 @@ int* sub_426050(int* thisx, int a2)
 }
 
 //get thisx[193];
-char sub_426070(_BYTE* thisx)
+char sub_426070(char* thisx)
 {
     return thisx[193];
 }
@@ -19893,13 +19893,13 @@ __int16  sub_426130(short* thisx)
     return thisx[6];
 }
 //return thisx[17];
-char sub_426150(_BYTE* thisx)
+char sub_426150(char* thisx)
 {
     return thisx[17];
 }
 
 //return thisx[606] & 1 | thisx[604] & 1 | thisx[602] & 1;
-int sub_426170(_BYTE* thisx)
+int sub_426170(char* thisx)
 {
     return thisx[606] & 1 | thisx[604] & 1 | thisx[602] & 1;
 }
@@ -19916,7 +19916,7 @@ int sub_4261D0(char* thisx)
     return (unsigned __int8)sub_4261F0(thisx + 4);
 }
 //return thisx[13];
-char sub_4261F0(_BYTE* thisx)
+char sub_4261F0(char* thisx)
 {
     return thisx[13];
 }
@@ -19928,9 +19928,9 @@ char* sub_426210(char* thisx)
 }
 
 //  ++thisx[325];
-_BYTE* sub_426230(_BYTE* thisx)
+char* sub_426230(char* thisx)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     ++thisx[325];
@@ -19968,13 +19968,13 @@ int sub_4262D0(int* thisx)
 }
 
 //return thisx[419];
-char sub_4262F0(_BYTE* thisx)
+char sub_4262F0(char* thisx)
 {
     return thisx[419];
 }
 
 //return thisx[420];
-char sub_426310(_BYTE* thisx)
+char sub_426310(char* thisx)
 {
     return thisx[420];
 }
@@ -20005,7 +20005,7 @@ BOOL sub_4263D0(unsigned __int8* thisx)
 }
 
 //return thisx[416];
-char sub_4263F0(_BYTE* thisx)
+char sub_4263F0(char* thisx)
 {
     return thisx[416];
 }
@@ -20035,19 +20035,19 @@ int sub_426490(unsigned __int8* thisx, int a2)
 }
 
 //return thisx[250];
-char sub_4264B0(_BYTE* thisx)
+char sub_4264B0(char* thisx)
 {
     return thisx[250];
 }
 
 //return thisx[257];
-char sub_4264D0(_BYTE* thisx)
+char sub_4264D0(char* thisx)
 {
     return thisx[257];
 }
 
 //return thisx[195];
-char sub_4264F0(_BYTE* thisx)
+char sub_4264F0(char* thisx)
 {
     return thisx[195];
 }
@@ -20060,13 +20060,13 @@ int sub_426530(int* thisx)
 }
 
 //return thisx[26];
-char sub_426550(_BYTE* thisx)
+char sub_426550(char* thisx)
 {
     return thisx[26];
 }
 
 //return thisx[22];
-char sub_426570(_BYTE* thisx)
+char sub_426570(char* thisx)
 {
     return thisx[22];
 }
@@ -20078,55 +20078,55 @@ int sub_426590(void* thisx, int a2)
 }
 
 // return thisx[21];
-char sub_4265B0(_BYTE* thisx)
+char sub_4265B0(char* thisx)
 {
     return thisx[21];
 }
 
 //return thisx[23];
-char sub_4265D0(_BYTE* thisx)
+char sub_4265D0(char* thisx)
 {
     return thisx[23];
 }
 
 // return thisx[24];
-char sub_4265F0(_BYTE* thisx)
+char sub_4265F0(char* thisx)
 {
     return thisx[24];
 }
 
 // return thisx[25];
-char sub_426610(_BYTE* thisx)
+char sub_426610(char* thisx)
 {
     return thisx[25];
 }
 
 //return thisx[27];
-char sub_426630(_BYTE* thisx)
+char sub_426630(char* thisx)
 {
     return thisx[27];
 }
 
 // return thisx[28];
-char sub_426650(_BYTE* thisx)
+char sub_426650(char* thisx)
 {
     return thisx[28];
 }
 
 //return thisx[30];
-char sub_426670(_BYTE* thisx)
+char sub_426670(char* thisx)
 {
     return thisx[30];
 }
 
 //return thisx[31];
-char sub_426690(_BYTE* thisx)
+char sub_426690(char* thisx)
 {
     return thisx[31];
 }
 
 //return thisx[a2 + 32];
-char sub_4266B0(_BYTE* thisx, int a2)
+char sub_4266B0(char* thisx, int a2)
 {
     return thisx[a2 + 32];
 }
@@ -20209,7 +20209,7 @@ __int16 sub_426830(short* thisx)
 }
 
 //return thisx[a2 + 68];
-char sub_426850(_BYTE* thisx, unsigned __int8 a2)
+char sub_426850(char* thisx, unsigned __int8 a2)
 {
     return thisx[a2 + 68];
 }
@@ -20222,7 +20222,7 @@ int sub_4268D0(int* thisx)
 }
 
 //return thisx[476];
-char sub_4268F0(_BYTE* thisx)
+char sub_4268F0(char* thisx)
 {
     return thisx[476];
 }
@@ -20708,11 +20708,11 @@ Warning();//修正堆栈
                 v7 = sub_41D067(a1, 1);
                 sub_41F169((short*)a1, v6 * v7 / 200 + v5);
             }
-            *(_BYTE*)(a1 + 248) = 0;
-            *(_BYTE*)(a1 + 213) = -1;
+            *(char*)(a1 + 248) = 0;
+            *(char*)(a1 + 213) = -1;
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
-            *(_BYTE*)(a1 + 257) = 1;
+            *(char*)(a1 + 257) = 1;
             if (!*(int*)(a1 + 392))
             {
                 if (*(char*)(a1 + 224) < 0 && *(int*)(a1 + 424))
@@ -20724,8 +20724,8 @@ Warning();//修正堆栈
                     *(int*)(a1 + 424) = 1;
                 }
             }
-            if (*(_BYTE*)(a1 + 188) == 1)
-                *(_BYTE*)(a1 + 256) = 6;
+            if (*(char*)(a1 + 188) == 1)
+                *(char*)(a1 + 256) = 6;
             if (*(int*)(a1 + 392))
             {
                 if (*(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
@@ -20742,9 +20742,9 @@ Warning();//修正堆栈
             *(int*)(a1 + 400) = 0;
             *(int*)(a1 + 408) = 0;
         }
-        if (*(_BYTE*)(a1 + 188) == 1)
+        if (*(char*)(a1 + 188) == 1)
         {
-            *(_BYTE*)(a1 + 212) = 1;
+            *(char*)(a1 + 212) = 1;
             if (*(int*)(a1 + 444) >= 4)
             {
                 if (*(int*)(a1 + 444) >= 8)
@@ -20757,7 +20757,7 @@ Warning();//修正堆栈
                         }
                         else
                         {
-                            *(_BYTE*)(a1 + 257) = 2;
+                            *(char*)(a1 + 257) = 2;
                             *(short*)(a1 + 204) = 4;
                         }
                     }
@@ -20780,16 +20780,16 @@ Warning();//修正堆栈
             if (*(int*)(a1 + 444) >= 20)
                 *(int*)(a1 + 432) = 3;
         }
-        else if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+        else if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
         {
-            *(_BYTE*)(a1 + 212) = 1;
+            *(char*)(a1 + 212) = 1;
             if (*(int*)(a1 + 444) >= 4)
             {
                 if (*(int*)(a1 + 444) >= 8)
                 {
                     if (*(int*)(a1 + 444) >= 14)
                     {
-                        *(_BYTE*)(a1 + 257) = 2;
+                        *(char*)(a1 + 257) = 2;
                         *(short*)(a1 + 204) = 0;
                     }
                     else
@@ -20820,10 +20820,10 @@ Warning();//修正堆栈
         }
         else
         {
-            *(_BYTE*)(a1 + 212) = 1;
-            if (*(_BYTE*)(a1 + 195))
+            *(char*)(a1 + 212) = 1;
+            if (*(char*)(a1 + 195))
             {
-                switch (*(_BYTE*)(a1 + 195))
+                switch (*(char*)(a1 + 195))
                 {
                 case 1:
                     if (*(int*)(a1 + 444) >= 4)
@@ -20832,7 +20832,7 @@ Warning();//修正堆栈
                         {
                             if (*(int*)(a1 + 444) >= 12)
                             {
-                                *(_BYTE*)(a1 + 257) = 2;
+                                *(char*)(a1 + 257) = 2;
                                 *(short*)(a1 + 204) = 0;
                             }
                             else
@@ -20847,7 +20847,7 @@ Warning();//修正堆栈
                     }
                     else
                     {
-                        *(_BYTE*)(a1 + 212) = 0;
+                        *(char*)(a1 + 212) = 0;
                         *(short*)(a1 + 204) = 4;
                     }
                     if (*(int*)(a1 + 444) == 12)
@@ -20875,7 +20875,7 @@ Warning();//修正堆栈
                                 }
                                 else
                                 {
-                                    *(_BYTE*)(a1 + 257) = 2;
+                                    *(char*)(a1 + 257) = 2;
                                     *(short*)(a1 + 204) = 1;
                                 }
                             }
@@ -20918,7 +20918,7 @@ Warning();//修正堆栈
                                 }
                                 else
                                 {
-                                    *(_BYTE*)(a1 + 257) = 2;
+                                    *(char*)(a1 + 257) = 2;
                                     *(short*)(a1 + 204) = 1;
                                 }
                             }
@@ -20959,7 +20959,7 @@ Warning();//修正堆栈
                             }
                             else
                             {
-                                *(_BYTE*)(a1 + 257) = 2;
+                                *(char*)(a1 + 257) = 2;
                                 *(short*)(a1 + 204) = 2;
                             }
                         }
@@ -20994,7 +20994,7 @@ Warning();//修正堆栈
                     {
                         if (*(int*)(a1 + 444) >= 12)
                         {
-                            *(_BYTE*)(a1 + 257) = 2;
+                            *(char*)(a1 + 257) = 2;
                             *(short*)(a1 + 204) = 2;
                         }
                         else
@@ -21009,7 +21009,7 @@ Warning();//修正堆栈
                 }
                 else
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     *(short*)(a1 + 204) = 4;
                 }
                 if (*(int*)(a1 + 444) == 14)
@@ -21028,9 +21028,9 @@ Warning();//修正堆栈
         return;
     case 0x7B:
     case 0x7F:
-        *(_BYTE*)(a1 + 248) = 0;
-        *(_BYTE*)(a1 + 212) = 1;
-        *(_BYTE*)(a1 + 213) = -1;
+        *(char*)(a1 + 248) = 0;
+        *(char*)(a1 + 212) = 1;
+        *(char*)(a1 + 213) = -1;
         if (*(int*)(a1 + 444) == 1)
         {
             if (*(int*)(a1 + 392))
@@ -21047,7 +21047,7 @@ Warning();//修正堆栈
             }
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
-            *(_BYTE*)(a1 + 257) = 1;
+            *(char*)(a1 + 257) = 1;
             if (!*(int*)(a1 + 392))
             {
                 if (*(char*)(a1 + 224) < 0 && *(int*)(a1 + 424))
@@ -21064,16 +21064,16 @@ Warning();//修正堆栈
         }
         if (*(int*)(a1 + 444) == 5)
             *(int*)(a1 + 400) = 0;
-        if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+        if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
         {
-            *(_BYTE*)(a1 + 212) = 1;
+            *(char*)(a1 + 212) = 1;
             if (*(int*)(a1 + 444) >= 4)
             {
                 if (*(int*)(a1 + 444) >= 8)
                 {
                     if (*(int*)(a1 + 444) >= 14)
                     {
-                        *(_BYTE*)(a1 + 257) = 2;
+                        *(char*)(a1 + 257) = 2;
                         *(short*)(a1 + 204) = 0;
                     }
                     else
@@ -21102,16 +21102,16 @@ Warning();//修正堆栈
                     *(int*)(a1 + 432) = 4;
             }
         }
-        else if (*(_BYTE*)(a1 + 195))
+        else if (*(char*)(a1 + 195))
         {
-            switch (*(_BYTE*)(a1 + 195))
+            switch (*(char*)(a1 + 195))
             {
             case 1:
                 if (*(int*)(a1 + 444) >= 5)
                 {
                     if (*(int*)(a1 + 444) >= 10)
                     {
-                        *(_BYTE*)(a1 + 257) = 2;
+                        *(char*)(a1 + 257) = 2;
                         *(short*)(a1 + 204) = 2;
                     }
                     else
@@ -21146,7 +21146,7 @@ Warning();//修正堆栈
                         }
                         else
                         {
-                            *(_BYTE*)(a1 + 257) = 2;
+                            *(char*)(a1 + 257) = 2;
                             *(short*)(a1 + 204) = 3;
                         }
                     }
@@ -21185,7 +21185,7 @@ Warning();//修正堆栈
                         }
                         else
                         {
-                            *(_BYTE*)(a1 + 257) = 2;
+                            *(char*)(a1 + 257) = 2;
                             *(short*)(a1 + 204) = 3;
                         }
                     }
@@ -21221,7 +21221,7 @@ Warning();//修正堆栈
                         }
                         else
                         {
-                            *(_BYTE*)(a1 + 257) = 2;
+                            *(char*)(a1 + 257) = 2;
                             *(short*)(a1 + 204) = 4;
                         }
                     }
@@ -21254,7 +21254,7 @@ Warning();//修正堆栈
             {
                 if (*(int*)(a1 + 444) >= 10)
                 {
-                    *(_BYTE*)(a1 + 257) = 2;
+                    *(char*)(a1 + 257) = 2;
                     *(short*)(a1 + 204) = 0;
                 }
                 else
@@ -21280,16 +21280,16 @@ Warning();//修正堆栈
         }
         return;
     case 0x86:
-        *(_BYTE*)(a1 + 248) = 1;
-        *(_BYTE*)(a1 + 212) = 1;
-        *(_BYTE*)(a1 + 213) = -1;
+        *(char*)(a1 + 248) = 1;
+        *(char*)(a1 + 212) = 1;
+        *(char*)(a1 + 213) = -1;
         if (*(int*)(a1 + 444) == 1)
         {
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
-            *(_BYTE*)(a1 + 257) = 1;
+            *(char*)(a1 + 257) = 1;
         }
-        if (*(_BYTE*)(a1 + 188) == 1)
+        if (*(char*)(a1 + 188) == 1)
         {
             if (*(int*)(a1 + 444) >= 5)
             {
@@ -21314,7 +21314,7 @@ Warning();//修正堆栈
             if (*(int*)(a1 + 444) >= 20)
                 *(int*)(a1 + 432) = 3;
         }
-        else if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+        else if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
         {
             if (*(int*)(a1 + 436))
             {
@@ -21328,7 +21328,7 @@ Warning();//修正堆栈
                         {
                             if (*(int*)(a1 + 444) < 26)
                             {
-                                *(_BYTE*)(a1 + 257) = 2;
+                                *(char*)(a1 + 257) = 2;
                                 *(short*)(a1 + 204) = 19;
                             }
                         }
@@ -21367,7 +21367,7 @@ Warning();//修正堆栈
                             }
                             else
                             {
-                                *(_BYTE*)(a1 + 257) = 2;
+                                *(char*)(a1 + 257) = 2;
                                 *(short*)(a1 + 204) = 15;
                             }
                         }
@@ -21399,7 +21399,7 @@ Warning();//修正堆栈
                 v14 = sub_43E620((short*)*(int*)(a1 + 480));
                 sub_41F169((short*)a1, (v407 * v14 / 100 + 50) / 2);
             }
-            *(_BYTE*)(a1 + 212) = 0;
+            *(char*)(a1 + 212) = 0;
             if (*(int*)(a1 + 444) >= 4)
             {
                 if (*(int*)(a1 + 444) >= 8)
@@ -21414,13 +21414,13 @@ Warning();//修正堆栈
                             }
                             else
                             {
-                                *(_BYTE*)(a1 + 251) = 0;
+                                *(char*)(a1 + 251) = 0;
                                 *(short*)(a1 + 204) = 209;
                             }
                         }
                         else
                         {
-                            *(_BYTE*)(a1 + 257) = 2;
+                            *(char*)(a1 + 257) = 2;
                             *(short*)(a1 + 204) = 211;
                         }
                     }
@@ -21441,9 +21441,9 @@ Warning();//修正堆栈
             if (*(int*)(a1 + 444) >= 28)
                 *(int*)(a1 + 432) = 3;
         }
-        else if (*(_BYTE*)(a1 + 195))
+        else if (*(char*)(a1 + 195))
         {
-            switch (*(_BYTE*)(a1 + 195))
+            switch (*(char*)(a1 + 195))
             {
             case 1:
                 v16 = (double)sub_41CB3B(a1, 1) * 1.5;
@@ -21460,7 +21460,7 @@ Warning();//修正堆栈
                             }
                             else
                             {
-                                *(_BYTE*)(a1 + 257) = 2;
+                                *(char*)(a1 + 257) = 2;
                                 *(short*)(a1 + 204) = 7;
                             }
                         }
@@ -21504,7 +21504,7 @@ Warning();//修正堆栈
                                             }
                                             else
                                             {
-                                                *(_BYTE*)(a1 + 212) = 0;
+                                                *(char*)(a1 + 212) = 0;
                                                 *(short*)(a1 + 204) = 3;
                                             }
                                         }
@@ -21515,7 +21515,7 @@ Warning();//修正堆栈
                                     }
                                     else
                                     {
-                                        *(_BYTE*)(a1 + 257) = 2;
+                                        *(char*)(a1 + 257) = 2;
                                         *(short*)(a1 + 204) = 10;
                                     }
                                 }
@@ -21566,7 +21566,7 @@ Warning();//修正堆栈
                                 }
                                 else
                                 {
-                                    *(_BYTE*)(a1 + 257) = 2;
+                                    *(char*)(a1 + 257) = 2;
                                     *(short*)(a1 + 204) = 3;
                                 }
                             }
@@ -21612,7 +21612,7 @@ Warning();//修正堆栈
                                 }
                                 else
                                 {
-                                    *(_BYTE*)(a1 + 257) = 2;
+                                    *(char*)(a1 + 257) = 2;
                                     *(short*)(a1 + 204) = 10;
                                 }
                             }
@@ -21654,7 +21654,7 @@ Warning();//修正堆栈
                     }
                     else
                     {
-                        *(_BYTE*)(a1 + 257) = 2;
+                        *(char*)(a1 + 257) = 2;
                         *(short*)(a1 + 204) = 6;
                     }
                 }
@@ -21677,14 +21677,14 @@ Warning();//修正堆栈
         v22 = sub_41CA5F(a1, 1) * v21;
         v23 = sub_41D067(a1, 1);
         sub_41F169((short*)a1, v22 * v23 / 10000 + v20);
-        *(_BYTE*)(a1 + 248) = 2;
-        *(_BYTE*)(a1 + 212) = 1;
-        *(_BYTE*)(a1 + 213) = -1;
+        *(char*)(a1 + 248) = 2;
+        *(char*)(a1 + 212) = 1;
+        *(char*)(a1 + 213) = -1;
         if (*(int*)(a1 + 444) == 1)
         {
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
-            *(_BYTE*)(a1 + 257) = 1;
+            *(char*)(a1 + 257) = 1;
             if (*(unsigned __int8*)(a1 + 238) <= 1u)
             {
                 if (sub_41BA53(a1, 0x86u, 0))
@@ -21693,13 +21693,13 @@ Warning();//修正堆栈
         }
         if (*(int*)(a1 + 444) == 5)
             *(int*)(a1 + 400) = 0;
-        if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+        if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
         {
             *(short*)(a1 + 204) = 20;
         }
-        else if (*(_BYTE*)(a1 + 195))
+        else if (*(char*)(a1 + 195))
         {
-            switch (*(_BYTE*)(a1 + 195))
+            switch (*(char*)(a1 + 195))
             {
             case 1:
                 *(short*)(a1 + 204) = 3;
@@ -21728,14 +21728,14 @@ Warning();//修正堆栈
         v26 = sub_41CA5F(a1, 1) * v25;
         v27 = sub_41D067(a1, 1);
         sub_41F169((short*)a1, v26 * v27 / 10000 + v24);
-        *(_BYTE*)(a1 + 248) = 2;
-        *(_BYTE*)(a1 + 212) = 1;
-        *(_BYTE*)(a1 + 213) = -1;
+        *(char*)(a1 + 248) = 2;
+        *(char*)(a1 + 212) = 1;
+        *(char*)(a1 + 213) = -1;
         if (*(int*)(a1 + 444) == 1)
         {
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
-            *(_BYTE*)(a1 + 257) = 1;
+            *(char*)(a1 + 257) = 1;
             if (*(unsigned __int8*)(a1 + 238) <= 1u)
             {
                 if (sub_41BA53(a1, 0x86u, 0))
@@ -21744,13 +21744,13 @@ Warning();//修正堆栈
         }
         if (*(int*)(a1 + 444) == 5)
             *(int*)(a1 + 400) = 0;
-        if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+        if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
         {
             *(short*)(a1 + 204) = 8;
         }
-        else if (*(_BYTE*)(a1 + 195))
+        else if (*(char*)(a1 + 195))
         {
-            switch (*(_BYTE*)(a1 + 195))
+            switch (*(char*)(a1 + 195))
             {
             case 1:
                 *(short*)(a1 + 204) = 28;
@@ -21777,7 +21777,7 @@ Warning();//修正堆栈
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
         return;
     case 0x7D:
-        *(_BYTE*)(a1 + 212) = 1;
+        *(char*)(a1 + 212) = 1;
         if (*(int*)(a1 + 444) == 1)
         {
             memset((void*)(a1 + 453), 0, 8u);
@@ -21786,26 +21786,26 @@ Warning();//修正堆栈
             v29 = sub_41CCEA(a1, 1);
             v30 = sub_41CA5F(a1, 1);
             sub_41F169((short*)a1, v29 * v30 / 200 + v28);
-            *(_BYTE*)(a1 + 248) = 3;
-            *(_BYTE*)(a1 + 257) = 1;
-            *(_BYTE*)(a1 + 213) = -1;
-            if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+            *(char*)(a1 + 248) = 3;
+            *(char*)(a1 + 257) = 1;
+            *(char*)(a1 + 213) = -1;
+            if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
             {
-                *(_BYTE*)(a1 + 248) = 0;
+                *(char*)(a1 + 248) = 0;
                 *(int*)(a1 + 352) *= 2;
                 *(int*)(a1 + 356) *= 2;
             }
         }
-        if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+        if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
         {
-            *(_BYTE*)(a1 + 212) = 1;
+            *(char*)(a1 + 212) = 1;
             if (*(int*)(a1 + 444) >= 4)
             {
                 if (*(int*)(a1 + 444) >= 8)
                 {
                     if (*(int*)(a1 + 444) >= 14)
                     {
-                        *(_BYTE*)(a1 + 257) = 2;
+                        *(char*)(a1 + 257) = 2;
                         *(short*)(a1 + 204) = 0;
                     }
                     else
@@ -21829,9 +21829,9 @@ Warning();//修正堆栈
             if (*(int*)(a1 + 444) >= 18)
                 *(int*)(a1 + 432) = 4;
         }
-        else if (*(_BYTE*)(a1 + 195))
+        else if (*(char*)(a1 + 195))
         {
-            switch (*(_BYTE*)(a1 + 195))
+            switch (*(char*)(a1 + 195))
             {
             case 1:
                 *(short*)(a1 + 204) = 3;
@@ -21861,7 +21861,7 @@ Warning();//修正堆栈
                     *(int*)(a1 + 360) = 30;
                     *(int*)(a1 + 392) = 1;
                     *(int*)(a1 + 400) = 0;
-                    if ((unsigned __int8)++ * (_BYTE*)(a1 + 238) <= 1u)
+                    if ((unsigned __int8)++ * (char*)(a1 + 238) <= 1u)
                     {
                         if (sub_41BA53(a1, 0x86u, 0))
                             *(int*)(a1 + 400) = 1;
@@ -21876,12 +21876,12 @@ Warning();//修正堆栈
                 }
                 else if (*(int*)(a1 + 444) >= 5)
                 {
-                    *(_BYTE*)(a1 + 212) = 1;
+                    *(char*)(a1 + 212) = 1;
                     *(short*)(a1 + 204) = 33;
                 }
                 else
                 {
-                    *(_BYTE*)(a1 + 212) = 1;
+                    *(char*)(a1 + 212) = 1;
                     *(short*)(a1 + 204) = 32;
                 }
                 break;
@@ -21910,14 +21910,14 @@ Warning();//修正堆栈
         }
         return;
     case 0x7E:
-        *(_BYTE*)(a1 + 212) = 1;
-        *(_BYTE*)(a1 + 213) = -1;
+        *(char*)(a1 + 212) = 1;
+        *(char*)(a1 + 213) = -1;
         if (*(int*)(a1 + 444) == 1)
         {
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
-            *(_BYTE*)(a1 + 257) = 1;
-            if (*(_BYTE*)(a1 + 195) == 1)
+            *(char*)(a1 + 257) = 1;
+            if (*(char*)(a1 + 195) == 1)
             {
                 v31 = sub_41CB3B(a1, 1);
                 v32 = sub_41CB3B(a1, 1);
@@ -21931,15 +21931,15 @@ Warning();//修正堆栈
                 v36 = sub_41CA5F(a1, 1);
                 sub_41F169((short*)a1, v35 * v36 / 200 + v34);
             }
-            *(_BYTE*)(a1 + 248) = 3;
-            if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+            *(char*)(a1 + 248) = 3;
+            if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
             {
-                *(_BYTE*)(a1 + 248) = 0;
+                *(char*)(a1 + 248) = 0;
                 *(int*)(a1 + 352) *= 2;
                 *(int*)(a1 + 356) *= 2;
             }
         }
-        if (*(_BYTE*)(a1 + 188) == 1)
+        if (*(char*)(a1 + 188) == 1)
         {
             if (*(int*)(a1 + 444) >= 30)
             {
@@ -21949,7 +21949,7 @@ Warning();//修正堆栈
                 }
                 else
                 {
-                    *(_BYTE*)(a1 + 257) = 2;
+                    *(char*)(a1 + 257) = 2;
                     *(short*)(a1 + 204) = 4;
                 }
             }
@@ -21965,16 +21965,16 @@ Warning();//修正堆栈
                 *(int*)(a1 + 444) = 0;
             }
         }
-        else if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+        else if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
         {
-            *(_BYTE*)(a1 + 212) = 1;
+            *(char*)(a1 + 212) = 1;
             if (*(int*)(a1 + 444) >= 4)
             {
                 if (*(int*)(a1 + 444) >= 8)
                 {
                     if (*(int*)(a1 + 444) >= 14)
                     {
-                        *(_BYTE*)(a1 + 257) = 2;
+                        *(char*)(a1 + 257) = 2;
                         *(short*)(a1 + 204) = 0;
                     }
                     else
@@ -21998,9 +21998,9 @@ Warning();//修正堆栈
             if (*(int*)(a1 + 444) >= 18)
                 *(int*)(a1 + 432) = 4;
         }
-        else if (*(_BYTE*)(a1 + 195))
+        else if (*(char*)(a1 + 195))
         {
-            switch (*(_BYTE*)(a1 + 195))
+            switch (*(char*)(a1 + 195))
             {
             case 1:
                 if (*(int*)(a1 + 444) >= 10)
@@ -22036,7 +22036,7 @@ Warning();//修正堆栈
                 *(short*)(a1 + 204) = *(int*)(a1 + 444) / 5 % 4 + 10;
                 if (*(int*)(a1 + 444) >= 26)
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     *(short*)(a1 + 204) = 6;
                 }
                 if (*(int*)(a1 + 444) == 1)
@@ -22071,15 +22071,15 @@ Warning();//修正堆栈
     case 0x83:
         v37 = (double)sub_41CB3B(a1, 1) * 1.5;
         sub_41F169((short*)a1, (__int64)v37);
-        *(_BYTE*)(a1 + 248) = 1;
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 248) = 1;
+        *(char*)(a1 + 212) = 0;
         *(short*)(a1 + 204) = 54;
-        *(_BYTE*)(a1 + 213) = -1;
+        *(char*)(a1 + 213) = -1;
         if (*(int*)(a1 + 444) == 1)
         {
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
-            *(_BYTE*)(a1 + 257) = 1;
+            *(char*)(a1 + 257) = 1;
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
         }
         if (*(int*)(a1 + 444) > 30)
@@ -22095,11 +22095,11 @@ Warning();//修正堆栈
             v38 = sub_41CB3B(a1, 1);
             v39 = (double)(v38 * sub_41D067(a1, 1) / 200) + v284;
             sub_41F169((short*)a1, (__int64)v39);
-            *(_BYTE*)(a1 + 248) = 0;
-            *(_BYTE*)(a1 + 213) = -1;
+            *(char*)(a1 + 248) = 0;
+            *(char*)(a1 + 213) = -1;
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
-            *(_BYTE*)(a1 + 257) = 1;
+            *(char*)(a1 + 257) = 1;
             *(int*)(a1 + 372) = 0;
             *(int*)(a1 + 376) = 0;
             *(int*)(a1 + 340) = 0;
@@ -22109,7 +22109,7 @@ Warning();//修正堆栈
             *(int*)(a1 + 360) = 30;
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A04, -1, 100, 100, 0);
         }
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 348) >= 0)
             *(short*)(a1 + 204) = 54;
         else
@@ -22123,9 +22123,9 @@ Warning();//修正堆栈
             v40 = sub_41CCEA(a1, 1);
             v41 = (double)(v40 * sub_41D067(a1, 1) / 200) + v283;
             sub_41F169((short*)a1, (__int64)v41);
-            *(_BYTE*)(a1 + 248) = 0;
-            *(_BYTE*)(a1 + 257) = 1;
-            *(_BYTE*)(a1 + 213) = -1;
+            *(char*)(a1 + 248) = 0;
+            *(char*)(a1 + 257) = 1;
+            *(char*)(a1 + 213) = -1;
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
             *(int*)(a1 + 372) = 0;
@@ -22137,7 +22137,7 @@ Warning();//修正堆栈
             *(int*)(a1 + 360) = 30;
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A04, -1, 100, 100, 0);
         }
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 348) >= 0)
             *(short*)(a1 + 204) = 55;
         else
@@ -22146,8 +22146,8 @@ Warning();//修正堆栈
     case 0x8E:
         if (*(int*)(a1 + 480))
         {
-            LOBYTE(v406) = sub_425CB0(*(_BYTE**)(a1 + 480));
-            *(_BYTE*)(a1 + 212) = 0;
+            LOBYTE(v406) = sub_425CB0(*(char**)(a1 + 480));
+            *(char*)(a1 + 212) = 0;
             if (*(int*)(a1 + 444) == 1)
             {
                 memset((void*)(a1 + 453), 0, 8u);
@@ -22155,7 +22155,7 @@ Warning();//修正堆栈
                 if ((unsigned __int8)v406 == 1)
                 {
                     v405 = sub_41CB3B(a1, 1);
-                    if (*(_BYTE*)(a1 + 237))
+                    if (*(char*)(a1 + 237))
                     {
                         v42 = sub_41CB3B(a1, 1);
                         v405 += v42 * sub_41CA5F(a1, 1) / 250;
@@ -22171,7 +22171,7 @@ Warning();//修正堆栈
                 else
                 {
                     v404 = sub_41F380(a1, 1);
-                    if (*(_BYTE*)(a1 + 237))
+                    if (*(char*)(a1 + 237))
                     {
                         v45 = sub_41F380(a1, 1);
                         v404 += v45 * sub_41CA5F(a1, 1) / 250;
@@ -22184,15 +22184,15 @@ Warning();//修正堆栈
                     v47 = sub_43E620((short*)*(int*)(a1 + 480));
                     sub_41F169((short*)a1, v404 * v47 / 100 + 50);
                 }
-                *(_BYTE*)(a1 + 248) = 0;
-                *(_BYTE*)(a1 + 257) = 1;
-                *(_BYTE*)(a1 + 213) = -1;
+                *(char*)(a1 + 248) = 0;
+                *(char*)(a1 + 257) = 1;
+                *(char*)(a1 + 213) = -1;
                 if (!*(int*)(a1 + 392) || *(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
                     *(int*)(a1 + 400) = 1;
             }
             if (*(int*)(a1 + 444) == 5)
                 *(int*)(a1 + 400) = 0;
-            if (sub_494AA9(*(_BYTE**)(a1 + 480), 0))
+            if (sub_494AA9(*(char**)(a1 + 480), 0))
             {
                 if (*(int*)(a1 + 444) >= 6)
                 {
@@ -22200,7 +22200,7 @@ Warning();//修正堆栈
                     {
                         if (*(int*)(a1 + 444) >= 15)
                         {
-                            *(_BYTE*)(a1 + 257) = 2;
+                            *(char*)(a1 + 257) = 2;
                             *(short*)(a1 + 204) = 142;
                         }
                         else
@@ -22235,7 +22235,7 @@ Warning();//修正堆栈
                     {
                         if (*(int*)(a1 + 444) >= 10)
                         {
-                            *(_BYTE*)(a1 + 257) = 2;
+                            *(char*)(a1 + 257) = 2;
                             *(short*)(a1 + 204) = 132;
                         }
                         else
@@ -22276,7 +22276,7 @@ Warning();//修正堆栈
                             }
                             else
                             {
-                                *(_BYTE*)(a1 + 257) = 2;
+                                *(char*)(a1 + 257) = 2;
                                 *(short*)(a1 + 204) = 195;
                             }
                         }
@@ -22318,7 +22318,7 @@ Warning();//修正堆栈
                     {
                         if (*(int*)(a1 + 444) >= 13)
                         {
-                            *(_BYTE*)(a1 + 257) = 2;
+                            *(char*)(a1 + 257) = 2;
                             *(short*)(a1 + 204) = 132;
                         }
                         else
@@ -22379,26 +22379,26 @@ Warning();//修正堆栈
     case 0xC4:
     case 0xC5:
     case 0xC6:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) == 1)
         {
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
             if (*(int*)(a1 + 480))
             {
-                *(int*)(a1 + 436) = (unsigned __int8)sub_425CB0(*(_BYTE**)(a1 + 480));
+                *(int*)(a1 + 436) = (unsigned __int8)sub_425CB0(*(char**)(a1 + 480));
                 v48 = (unsigned __int16)sub_43E620((short*)*(int*)(a1 + 480));
                 *(short*)(a1 + 240) = v48 * sub_41F380(a1, 1) / 100;
             }
-            *(_BYTE*)(a1 + 248) = 0;
-            *(_BYTE*)(a1 + 213) = -1;
+            *(char*)(a1 + 248) = 0;
+            *(char*)(a1 + 213) = -1;
             if (!*(int*)(a1 + 392) || *(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
                 *(int*)(a1 + 400) = 1;
         }
         v49 = a1;
         if (*(int*)(a1 + 444) == 5)
             *(int*)(a1 + 400) = 0;
-        LOBYTE(v49) = *(_BYTE*)(a1 + 436);
+        LOBYTE(v49) = *(char*)(a1 + 436);
         if (sub_4771C5(0, v49))
         {
             if (*(int*)(a1 + 444) >= 5)
@@ -22407,7 +22407,7 @@ Warning();//修正堆栈
                 {
                     if (*(int*)(a1 + 444) >= 13)
                     {
-                        *(_BYTE*)(a1 + 257) = 2;
+                        *(char*)(a1 + 257) = 2;
                         *(short*)(a1 + 204) = 144;
                     }
                     else
@@ -22517,7 +22517,7 @@ Warning();//修正堆栈
                     {
                         if (*(int*)(a1 + 444) >= 13)
                         {
-                            *(_BYTE*)(a1 + 257) = 2;
+                            *(char*)(a1 + 257) = 2;
                             if (*(int*)(a1 + 440) == 1)
                             {
                                 *(short*)(a1 + 204) = 231;
@@ -22590,7 +22590,7 @@ Warning();//修正堆栈
                     {
                         v400 = 0;
                         if (sub_41BA53(a1, 0x85u, 0) && *(int*)(a1 + 440) >= 0)
-                            v400 = (char*)sub_4682D3((char*)byte_4B9B10, (int*)a1, *(_BYTE*)(a1 + 440));
+                            v400 = (char*)sub_4682D3((char*)byte_4B9B10, (int*)a1, *(char*)(a1 + 440));
                         v226 = *(int*)(a1 + 392);
                         v223 = *(unsigned __int8*)(a1 + 237);
                         v53 = sub_41F52F(a1, 1);
@@ -22615,7 +22615,7 @@ Warning();//修正堆栈
                 {
                     if (*(int*)(a1 + 444) >= 13)
                     {
-                        *(_BYTE*)(a1 + 257) = 2;
+                        *(char*)(a1 + 257) = 2;
                         *(short*)(a1 + 204) = 134;
                     }
                     else
@@ -22666,18 +22666,18 @@ Warning();//修正堆栈
     case 0x87:
     case 0x59:
         *(int*)(a1 + 372) = 180 * (*(int*)(a1 + 424) - (*(int*)(a1 + 424) == 0));
-        sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+        sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
         *(int*)(a1 + 304) = 0;
         if (*(int*)(a1 + 428) == 135 && *(int*)(a1 + 444) == 1)
         {
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
-            *(_BYTE*)(a1 + 257) = 1;
+            *(char*)(a1 + 257) = 1;
             sub_41F169((short*)a1, 10);
-            *(_BYTE*)(a1 + 248) = 2;
-            *(_BYTE*)(a1 + 253) = 1;
+            *(char*)(a1 + 248) = 2;
+            *(char*)(a1 + 253) = 1;
         }
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) / 10 % 2)
         {
             if (*(int*)(a1 + 428) == 135)
@@ -22702,33 +22702,33 @@ Warning();//修正堆栈
         {
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
-            *(_BYTE*)(a1 + *(int*)(a1 + 436) + 453) = -1;
+            *(char*)(a1 + *(int*)(a1 + 436) + 453) = -1;
             sub_41F1A3((unsigned __int8*)a1, -30);
-            *(_BYTE*)(a1 + 248) = 2;
-            *(_BYTE*)(a1 + 253) = 1;
+            *(char*)(a1 + 248) = 2;
+            *(char*)(a1 + 253) = 1;
             *(int*)(a1 + 304) = 0;
         }
         else if (*(int*)(a1 + 444) == 8)
         {
-            *(_BYTE*)(a1 + *(int*)(a1 + 436) + 453) = 0;
+            *(char*)(a1 + *(int*)(a1 + 436) + 453) = 0;
         }
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         *(short*)(a1 + 204) = 49;
         return;
     case 0x88:
     case 0x89:
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         if (*(int*)(a1 + 444) == 1)
         {
             for (i = 0; i < 8; ++i)
             {
-                if (*(int*)(a1 + 304) && (unsigned __int8)sub_425EF0(*(_BYTE**)(a1 + 304)) == i)
-                    *(_BYTE*)(i + a1 + 453) = -1;
+                if (*(int*)(a1 + 304) && (unsigned __int8)sub_425EF0(*(char**)(a1 + 304)) == i)
+                    *(char*)(i + a1 + 453) = -1;
                 else
-                    *(_BYTE*)(i + a1 + 453) = 0;
+                    *(char*)(i + a1 + 453) = 0;
             }
             *(int*)(a1 + 304) = 0;
-            *(_BYTE*)(a1 + 253) = 1;
+            *(char*)(a1 + 253) = 1;
             sub_41F1A3((unsigned __int8*)a1, -30);
         }
         if (*(int*)(a1 + 428) == 136)
@@ -22752,7 +22752,7 @@ Warning();//修正堆栈
         {
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
-            *(_BYTE*)(a1 + 257) = 1;
+            *(char*)(a1 + 257) = 1;
             *(int*)(a1 + 372) = 450 * (*(int*)(a1 + 424) - (*(int*)(a1 + 424) == 0));
             *(int*)(a1 + 352) = 0;
             *(int*)(a1 + 344) = 0;
@@ -22761,14 +22761,14 @@ Warning();//修正堆栈
             *(int*)(a1 + 348) = -350;
             *(int*)(a1 + 360) = 30;
             sub_41F169((short*)a1, 16);
-            *(_BYTE*)(a1 + 248) = 1;
-            *(_BYTE*)(a1 + 253) = 1;
-            *(_BYTE*)(a1 + 255) = 0;
-            *(_BYTE*)(a1 + 254) = 2;
-            *(_BYTE*)(a1 + 213) = -1;
+            *(char*)(a1 + 248) = 1;
+            *(char*)(a1 + 253) = 1;
+            *(char*)(a1 + 255) = 0;
+            *(char*)(a1 + 254) = 2;
+            *(char*)(a1 + 213) = -1;
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A4C, -1, 100, 100, 0);
         }
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 234;
         return;
     case 0x8D:
@@ -22776,7 +22776,7 @@ Warning();//修正堆栈
         {
             memset((void*)(a1 + 453), 0, 8u);
             memset((void*)(a1 + 461), 0, 8u);
-            *(_BYTE*)(a1 + 257) = 1;
+            *(char*)(a1 + 257) = 1;
             *(int*)(a1 + 372) = 600 * (*(int*)(a1 + 424) - (*(int*)(a1 + 424) == 0));
             *(int*)(a1 + 352) = -*(int*)(a1 + 372) / 90;
             *(int*)(a1 + 344) = 0;
@@ -22784,14 +22784,14 @@ Warning();//修正堆栈
             *(int*)(a1 + 348) = 0;
             *(int*)(a1 + 360) = 0;
             sub_41F169((short*)a1, 16);
-            *(_BYTE*)(a1 + 248) = 1;
-            *(_BYTE*)(a1 + 253) = 1;
-            *(_BYTE*)(a1 + 255) = 0;
-            *(_BYTE*)(a1 + 254) = 2;
-            *(_BYTE*)(a1 + 213) = -1;
+            *(char*)(a1 + 248) = 1;
+            *(char*)(a1 + 253) = 1;
+            *(char*)(a1 + 255) = 0;
+            *(char*)(a1 + 254) = 2;
+            *(char*)(a1 + 213) = -1;
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A4C, -1, 100, 100, 0);
         }
-        *(_BYTE*)(a1 + 212) = 0;
+        *(char*)(a1 + 212) = 0;
         *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 234;
         if (*(int*)(a1 + 444) == 40)
         {
@@ -22803,7 +22803,7 @@ Warning();//修正堆栈
         if (*(int*)(a1 + 444) != 1)
         {
         LABEL_897:
-            *(_BYTE*)(a1 + 212) = 0;
+            *(char*)(a1 + 212) = 0;
             *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 4 + 169;
             if (!((*(int*)(a1 + 444) - 1) % 6))
                 *(int*)(a1 + 436) = sub_43FFC3((int*)byte_4BDB28, dword_4B9A44, *(int*)(a1 + 436), 100, 100, 0);
@@ -22914,13 +22914,13 @@ Warning();//修正堆栈
         *(int*)(a1 + 356) = 0;
         *(int*)(a1 + 360) = 0;
         *(int*)(a1 + 392) = 1;
-        *(_BYTE*)(a1 + 248) = 1;
-        *(_BYTE*)(a1 + 253) = 2;
-        *(_BYTE*)(a1 + 213) = -1;
-        *(_BYTE*)(a1 + 255) = 0;
-        if (*(_BYTE*)(a1 + 195))
+        *(char*)(a1 + 248) = 1;
+        *(char*)(a1 + 253) = 2;
+        *(char*)(a1 + 213) = -1;
+        *(char*)(a1 + 255) = 0;
+        if (*(char*)(a1 + 195))
         {
-            switch (*(_BYTE*)(a1 + 195))
+            switch (*(char*)(a1 + 195))
             {
             case 1:
                 v55 = sub_41CB3B(a1, 1);
@@ -22928,9 +22928,9 @@ Warning();//修正堆栈
             LABEL_896:
                 memset((void*)(a1 + 453), 0, 8u);
                 memset((void*)(a1 + 461), 0, 8u);
-                *(int*)(a1 + 312) = sub_466127((char*)byte_4B9B10, (_BYTE*)a1, a1 + 453);
+                *(int*)(a1 + 312) = sub_466127((char*)byte_4B9B10, (char*)a1, a1 + 453);
                 *(int*)(a1 + 436) = -1;
-                ++* (_BYTE*)(a1 + 325);
+                ++* (char*)(a1 + 325);
                 goto LABEL_897;
             case 2:
                 v56 = sub_41CCEA(a1, 1);
@@ -22941,7 +22941,7 @@ Warning();//修正堆栈
                 sub_41F169((short*)a1, 3 * v57);
                 goto LABEL_896;
             }
-            if (*(_BYTE*)(a1 + 195) != 4)
+            if (*(char*)(a1 + 195) != 4)
                 goto LABEL_896;
         }
         v58 = sub_41CB3B(a1, 1);
@@ -22952,25 +22952,25 @@ Warning();//修正堆栈
     case 0x55:
         if (*(int*)(a1 + 444) == 1)
         {
-            *(_BYTE*)(a1 + 177) = 1;
+            *(char*)(a1 + 177) = 1;
             *(int*)(a1 + 328) += 700 * (*(int*)(a1 + 424) - (*(int*)(a1 + 424) == 0));
             if (*(int*)(a1 + 320))
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
             *(int*)(a1 + 436) = 0;
-            ++* (_BYTE*)(a1 + 325);
+            ++* (char*)(a1 + 325);
         }
         v394 = (*(int*)(a1 + 444) - 1) / 4 % 6;
         if (*(int*)(a1 + 444) <= 60)
         {
             if (!*(int*)(a1 + 320))
                 v394 = (v394 + 3) % 6;
-            *(_BYTE*)(a1 + 212) = 0;
+            *(char*)(a1 + 212) = 0;
             if (v394 && v394 != 3)
                 *(short*)(a1 + 204) = 173;
             else
                 *(short*)(a1 + 204) = 29;
             v270 = v394 == 4 || v394 == 5;
-            *(_BYTE*)(a1 + 176) = v270;
+            *(char*)(a1 + 176) = v270;
             *(int*)(a1 + 372) = 0;
             if (!((*(int*)(a1 + 444) - 1) % 4))
             {
@@ -23002,56 +23002,56 @@ Warning();//修正堆栈
         *(int*)(a1 + 392) = 1;
         if (!*(int*)(a1 + 320))
             goto LABEL_1004;
-        if (*(_BYTE*)(a1 + 195))
+        if (*(char*)(a1 + 195))
         {
-            switch (*(_BYTE*)(a1 + 195))
+            switch (*(char*)(a1 + 195))
             {
             case 1:
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9AB0, -1, 100, 100, 0);
-                *(_BYTE*)(a1 + 248) = 10;
-                *(_BYTE*)(a1 + 213) = -1;
+                *(char*)(a1 + 248) = 10;
+                *(char*)(a1 + 213) = -1;
                 break;
             case 2:
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A60, -1, 100, 100, 0);
-                *(_BYTE*)(a1 + 248) = 7;
-                *(_BYTE*)(a1 + 213) = -1;
+                *(char*)(a1 + 248) = 7;
+                *(char*)(a1 + 213) = -1;
                 break;
             case 3:
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A44, -1, 100, 100, 0);
-                *(_BYTE*)(a1 + 248) = 8;
-                *(_BYTE*)(a1 + 213) = -1;
+                *(char*)(a1 + 248) = 8;
+                *(char*)(a1 + 213) = -1;
                 break;
             case 4:
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A44, -1, 100, 100, 0);
-                *(_BYTE*)(a1 + 248) = 9;
-                *(_BYTE*)(a1 + 213) = -1;
+                *(char*)(a1 + 248) = 9;
+                *(char*)(a1 + 213) = -1;
                 break;
             }
         }
         else
         {
             sub_43FFC3((int*)byte_4BDB28, dword_4B9AAC, -1, 100, 100, 0);
-            *(_BYTE*)(a1 + 248) = 6;
-            *(_BYTE*)(a1 + 213) = -1;
+            *(char*)(a1 + 248) = 6;
+            *(char*)(a1 + 213) = -1;
         }
-        *(_BYTE*)(a1 + 255) = 0;
-        *(_BYTE*)(a1 + 254) = 1;
+        *(char*)(a1 + 255) = 0;
+        *(char*)(a1 + 254) = 1;
         v61 = sub_41CB3B(*(int*)(a1 + 304), 1);
         v391 = (v61 + sub_41CB3B(a1, 1)) / 2;
         v62 = sub_41CCEA(*(int*)(a1 + 304), 1);
         v393 = (v62 + sub_41CCEA(a1, 1)) / 2;
         v63 = sub_4175B4(*(int*)(a1 + 304), 1);
         v392 = (v63 + sub_4175B4(a1, 1)) / 2;
-        if (*(_BYTE*)(a1 + 195))
+        if (*(char*)(a1 + 195))
         {
-            switch (*(_BYTE*)(a1 + 195))
+            switch (*(char*)(a1 + 195))
             {
             case 1:
                 sub_41F169((short*)a1, 3 * v391);
             LABEL_1003:
                 memset((void*)(a1 + 453), 0, 8u);
                 memset((void*)(a1 + 461), 0, 8u);
-                *(int*)(a1 + 312) = sub_466127((char*)byte_4B9B10, (_BYTE*)a1, a1 + 453);
+                *(int*)(a1 + 312) = sub_466127((char*)byte_4B9B10, (char*)a1, a1 + 453);
             LABEL_1004:
                 if (*(int*)(a1 + 312)
                     && *(int*)(a1 + 304)
@@ -23061,13 +23061,13 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 320))
                     {
                         if (sub_4263D0(*(unsigned __int8**)(a1 + 312)) || sub_41BE56(*(int**)(a1 + 312)))
-                            *(int*)(a1 + 312) = sub_466127((char*)byte_4B9B10, (_BYTE*)a1, a1 + 453);
+                            *(int*)(a1 + 312) = sub_466127((char*)byte_4B9B10, (char*)a1, a1 + 453);
                         if (!((*(int*)(a1 + 444) - 1) % 4) && (v394 == 2 || v394 == 5))
                             *(int*)(a1 + 424) = *(int*)(a1 + 424) == 0;
-                        *(_BYTE*)(a1 + 212) = 1;
-                        if (*(_BYTE*)(a1 + 195))
+                        *(char*)(a1 + 212) = 1;
+                        if (*(char*)(a1 + 195))
                         {
-                            switch (*(_BYTE*)(a1 + 195))
+                            switch (*(char*)(a1 + 195))
                             {
                             case 1:
                                 if (v394 % 3)
@@ -23198,7 +23198,7 @@ Warning();//修正堆栈
                     }
                     else
                     {
-                        *(_BYTE*)(a1 + 176) = 1;
+                        *(char*)(a1 + 176) = 1;
                         *(int*)(a1 + 328) = sub_426090(*(int**)(a1 + 304));
                         *(int*)(a1 + 332) = sub_4260B0(*(int**)(a1 + 304));
                         *(int*)(a1 + 336) = sub_4260D0(*(int**)(a1 + 304));
@@ -23207,8 +23207,8 @@ Warning();//修正堆栈
                 else
                 {
                     *(int*)(a1 + 348) = 0;
-                    *(_BYTE*)(a1 + 176) = 0;
-                    *(_BYTE*)(a1 + 177) = 0;
+                    *(char*)(a1 + 176) = 0;
+                    *(char*)(a1 + 177) = 0;
                     *(int*)(a1 + 304) = 0;
                     if (*(int*)(a1 + 392))
                         *(int*)(a1 + 432) = 51;
@@ -23223,7 +23223,7 @@ Warning();//修正堆栈
                 sub_41F169((short*)a1, 3 * v392);
                 goto LABEL_1003;
             }
-            if (*(_BYTE*)(a1 + 195) != 4)
+            if (*(char*)(a1 + 195) != 4)
                 goto LABEL_1003;
         }
         sub_41F169((short*)a1, v392 + v393 + v391);
@@ -23257,15 +23257,15 @@ Warning();//修正堆栈
                 *(int*)(a1 + 304) = 0;
                 *(int*)(a1 + 392) = 1;
                 sub_41F169((short*)a1, *(unsigned __int16*)(a1 + 242));
-                *(_BYTE*)(a1 + 248) = 0;
-                *(_BYTE*)(a1 + 253) = 1;
-                *(_BYTE*)(a1 + 254) = 2;
-                *(_BYTE*)(a1 + 255) = 0;
+                *(char*)(a1 + 248) = 0;
+                *(char*)(a1 + 253) = 1;
+                *(char*)(a1 + 254) = 2;
+                *(char*)(a1 + 255) = 0;
                 *(int*)(a1 + 436) = 0;
                 memset((void*)(a1 + 453), 0, 8u);
                 memset((void*)(a1 + 461), 0, 8u);
             }
-            *(_BYTE*)(a1 + 212) = 0;
+            *(char*)(a1 + 212) = 0;
             *(short*)(a1 + 204) = 214;
             return;
         case 0x90:
@@ -23283,18 +23283,18 @@ Warning();//修正堆栈
                     v73 = sub_41CCEA(a1, 1);
                     sub_41F169((short*)a1, 50 * v73 / 100);
                 }
-                *(_BYTE*)(a1 + 257) = 1;
-                *(_BYTE*)(a1 + 248) = -1;
-                *(_BYTE*)(a1 + 212) = 1;
-                *(_BYTE*)(a1 + 213) = -1;
+                *(char*)(a1 + 257) = 1;
+                *(char*)(a1 + 248) = -1;
+                *(char*)(a1 + 212) = 1;
+                *(char*)(a1 + 213) = -1;
                 if (!*(int*)(a1 + 392) || *(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
                     *(int*)(a1 + 400) = 1;
             }
             if (*(int*)(a1 + 444) == 5)
                 *(int*)(a1 + 400) = 0;
-            if (*(_BYTE*)(a1 + 195))
+            if (*(char*)(a1 + 195))
             {
-                switch (*(_BYTE*)(a1 + 195))
+                switch (*(char*)(a1 + 195))
                 {
                 case 1:
                     if (!(*(int*)(a1 + 444) % 4))
@@ -23314,12 +23314,12 @@ Warning();//修正堆栈
                                     {
                                         if (*(int*)(a1 + 444) >= 24)
                                         {
-                                            *(_BYTE*)(a1 + 257) = 2;
+                                            *(char*)(a1 + 257) = 2;
                                             *(short*)(a1 + 204) = 2;
                                         }
                                         else
                                         {
-                                            *(_BYTE*)(a1 + 248) = 0;
+                                            *(char*)(a1 + 248) = 0;
                                             *(short*)(a1 + 204) = 3;
                                         }
                                     }
@@ -23375,12 +23375,12 @@ Warning();//修正堆栈
                                     {
                                         if (*(int*)(a1 + 444) >= 21)
                                         {
-                                            *(_BYTE*)(a1 + 257) = 2;
+                                            *(char*)(a1 + 257) = 2;
                                             *(short*)(a1 + 204) = 3;
                                         }
                                         else
                                         {
-                                            *(_BYTE*)(a1 + 248) = 0;
+                                            *(char*)(a1 + 248) = 0;
                                             *(short*)(a1 + 204) = 4;
                                         }
                                     }
@@ -23436,12 +23436,12 @@ Warning();//修正堆栈
                                     {
                                         if (*(int*)(a1 + 444) >= 24)
                                         {
-                                            *(_BYTE*)(a1 + 257) = 2;
+                                            *(char*)(a1 + 257) = 2;
                                             *(short*)(a1 + 204) = 3;
                                         }
                                         else
                                         {
-                                            *(_BYTE*)(a1 + 248) = 0;
+                                            *(char*)(a1 + 248) = 0;
                                             *(short*)(a1 + 204) = 4;
                                         }
                                     }
@@ -23497,12 +23497,12 @@ Warning();//修正堆栈
                                     {
                                         if (*(int*)(a1 + 444) >= 17)
                                         {
-                                            *(_BYTE*)(a1 + 257) = 2;
+                                            *(char*)(a1 + 257) = 2;
                                             *(short*)(a1 + 204) = 4;
                                         }
                                         else
                                         {
-                                            *(_BYTE*)(a1 + 248) = 0;
+                                            *(char*)(a1 + 248) = 0;
                                             *(short*)(a1 + 204) = 5;
                                         }
                                     }
@@ -23561,12 +23561,12 @@ Warning();//修正堆栈
                                 {
                                     if (*(int*)(a1 + 444) >= 24)
                                     {
-                                        *(_BYTE*)(a1 + 257) = 2;
+                                        *(char*)(a1 + 257) = 2;
                                         *(short*)(a1 + 204) = 0;
                                     }
                                     else
                                     {
-                                        *(_BYTE*)(a1 + 248) = 0;
+                                        *(char*)(a1 + 248) = 0;
                                         *(short*)(a1 + 204) = 1;
                                     }
                                 }
@@ -23637,10 +23637,10 @@ Warning();//修正堆栈
                     v83 = sub_41CB3B(a1, 1);
                     sub_41F169((short*)a1, 50 * v83 / 100);
                 }
-                *(_BYTE*)(a1 + 257) = 1;
-                *(_BYTE*)(a1 + 248) = -1;
-                *(_BYTE*)(a1 + 212) = 1;
-                *(_BYTE*)(a1 + 213) = -1;
+                *(char*)(a1 + 257) = 1;
+                *(char*)(a1 + 248) = -1;
+                *(char*)(a1 + 212) = 1;
+                *(char*)(a1 + 213) = -1;
                 if (!*(int*)(a1 + 392) || *(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
                 {
                     *(int*)(a1 + 400) = 1;
@@ -23655,9 +23655,9 @@ Warning();//修正堆栈
             }
             if (!*(int*)(a1 + 480))
             {
-                if (*(_BYTE*)(a1 + 195))
+                if (*(char*)(a1 + 195))
                 {
-                    switch (*(_BYTE*)(a1 + 195))
+                    switch (*(char*)(a1 + 195))
                     {
                     case 1:
                         if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 11 || *(int*)(a1 + 444) == 18)
@@ -23677,12 +23677,12 @@ Warning();//修正堆栈
                                         {
                                             if (*(int*)(a1 + 444) >= 21)
                                             {
-                                                *(_BYTE*)(a1 + 257) = 2;
+                                                *(char*)(a1 + 257) = 2;
                                                 *(short*)(a1 + 204) = 0;
                                             }
                                             else
                                             {
-                                                *(_BYTE*)(a1 + 248) = 0;
+                                                *(char*)(a1 + 248) = 0;
                                                 *(short*)(a1 + 204) = 1;
                                             }
                                         }
@@ -23738,12 +23738,12 @@ Warning();//修正堆栈
                                         {
                                             if (*(int*)(a1 + 444) >= 24)
                                             {
-                                                *(_BYTE*)(a1 + 257) = 2;
+                                                *(char*)(a1 + 257) = 2;
                                                 *(short*)(a1 + 204) = 1;
                                             }
                                             else
                                             {
-                                                *(_BYTE*)(a1 + 248) = 0;
+                                                *(char*)(a1 + 248) = 0;
                                                 *(short*)(a1 + 204) = 2;
                                             }
                                         }
@@ -23799,12 +23799,12 @@ Warning();//修正堆栈
                                         {
                                             if (*(int*)(a1 + 444) >= 24)
                                             {
-                                                *(_BYTE*)(a1 + 257) = 2;
+                                                *(char*)(a1 + 257) = 2;
                                                 *(short*)(a1 + 204) = 1;
                                             }
                                             else
                                             {
-                                                *(_BYTE*)(a1 + 248) = 0;
+                                                *(char*)(a1 + 248) = 0;
                                                 *(short*)(a1 + 204) = 2;
                                             }
                                         }
@@ -23860,12 +23860,12 @@ Warning();//修正堆栈
                                         {
                                             if (*(int*)(a1 + 444) >= 19)
                                             {
-                                                *(_BYTE*)(a1 + 257) = 2;
+                                                *(char*)(a1 + 257) = 2;
                                                 *(short*)(a1 + 204) = 2;
                                             }
                                             else
                                             {
-                                                *(_BYTE*)(a1 + 248) = 0;
+                                                *(char*)(a1 + 248) = 0;
                                                 *(short*)(a1 + 204) = 1;
                                             }
                                         }
@@ -23924,12 +23924,12 @@ Warning();//修正堆栈
                                     {
                                         if (*(int*)(a1 + 444) >= 24)
                                         {
-                                            *(_BYTE*)(a1 + 257) = 2;
+                                            *(char*)(a1 + 257) = 2;
                                             *(short*)(a1 + 204) = 2;
                                         }
                                         else
                                         {
-                                            *(_BYTE*)(a1 + 248) = 0;
+                                            *(char*)(a1 + 248) = 0;
                                             *(short*)(a1 + 204) = 3;
                                         }
                                     }
@@ -23974,7 +23974,7 @@ Warning();//修正堆栈
                 memset((void*)(a1 + 453), 0, 8u);
                 memset((void*)(a1 + 461), 0, 8u);
             }
-            *(_BYTE*)(a1 + 212) = 0;
+            *(char*)(a1 + 212) = 0;
             if (*(int*)(a1 + 444) >= 2)
             {
                 if (*(int*)(a1 + 444) >= 4)
@@ -23995,13 +23995,13 @@ Warning();//修正堆栈
                                         }
                                         else
                                         {
-                                            *(_BYTE*)(a1 + 257) = 2;
+                                            *(char*)(a1 + 257) = 2;
                                             *(short*)(a1 + 204) = 195;
                                         }
                                     }
                                     else
                                     {
-                                        *(_BYTE*)(a1 + 248) = 0;
+                                        *(char*)(a1 + 248) = 0;
                                         *(short*)(a1 + 204) = 196;
                                     }
                                 }
@@ -24053,10 +24053,10 @@ Warning();//修正堆栈
                 v84 = sub_41CCEA(a1, 1);
                 v85 = sub_41CCEA(a1, 1);
                 sub_41F169((short*)a1, v85 / 10 + v84);
-                *(_BYTE*)(a1 + 248) = 1;
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 248) = 1;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = 62;
-                *(_BYTE*)(a1 + 213) = -1;
+                *(char*)(a1 + 213) = -1;
                 if (*(int*)(a1 + 444) == 1)
                 {
                     *(int*)(a1 + 436) = 0;
@@ -24067,22 +24067,22 @@ Warning();//修正堆栈
                     *(int*)(a1 + 360) = 20;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + 257) = 1;
+                    *(char*)(a1 + 257) = 1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
                 }
                 return;
             case 0x93:
                 v86 = sub_41CB3B(a1, 1);
                 sub_41F169((short*)a1, v86);
-                *(_BYTE*)(a1 + 248) = 1;
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 248) = 1;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = *(int*)(a1 + 444) / 6 % 4 + 63;
-                *(_BYTE*)(a1 + 213) = -1;
+                *(char*)(a1 + 213) = -1;
                 if (*(int*)(a1 + 444) == 1)
                 {
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + 257) = 1;
+                    *(char*)(a1 + 257) = 1;
                     *(int*)(a1 + 436) = 0;
                     *(int*)(a1 + 372) = 0;
                     *(int*)(a1 + 340) = 450 * (*(int*)(a1 + 424) - (*(int*)(a1 + 424) == 0));
@@ -24090,7 +24090,7 @@ Warning();//修正堆栈
                     *(int*)(a1 + 348) = -300;
                     *(int*)(a1 + 360) = 20;
                     *(short*)(a1 + 244) = -60;
-                    *(_BYTE*)(a1 + 452) = 12;
+                    *(char*)(a1 + 452) = 12;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
                 }
                 return;
@@ -24105,12 +24105,12 @@ Warning();//修正堆栈
                     *(int*)(a1 + 360) = 0;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + 257) = 1;
+                    *(char*)(a1 + 257) = 1;
                     v87 = sub_41CCEA(a1, 1);
                     sub_41F169((short*)a1, v87);
-                    *(_BYTE*)(a1 + 248) = -1;
-                    *(_BYTE*)(a1 + 213) = -1;
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 248) = -1;
+                    *(char*)(a1 + 213) = -1;
+                    *(char*)(a1 + 212) = 0;
                     *(int*)(a1 + 400) = 1;
                 }
                 if (*(int*)(a1 + 444) == 5)
@@ -24131,10 +24131,10 @@ Warning();//修正堆栈
                 v89 = sub_41CB3B(a1, 1);
                 v90 = sub_41D067(a1, 1);
                 sub_41F169((short*)a1, (v363 + 75) * (v89 * v90 / 100 + v88) / 100);
-                *(_BYTE*)(a1 + 248) = 1;
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 248) = 1;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 6 % 4 + 63;
-                *(_BYTE*)(a1 + 213) = -1;
+                *(char*)(a1 + 213) = -1;
                 if (!((*(int*)(a1 + 444) - 1) % 12))
                 {
                     memset((void*)(a1 + 453), 0, 8u);
@@ -24147,13 +24147,13 @@ Warning();//修正堆栈
                     *(int*)(a1 + 360) = 20;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + 257) = 1;
+                    *(char*)(a1 + 257) = 1;
                 }
                 return;
             case 0x96:
-                *(_BYTE*)(a1 + 248) = 1;
-                *(_BYTE*)(a1 + 213) = -1;
-                *(_BYTE*)(a1 + 257) = 1;
+                *(char*)(a1 + 248) = 1;
+                *(char*)(a1 + 213) = -1;
+                *(char*)(a1 + 257) = 1;
                 if (*(int*)(a1 + 444) == 1)
                 {
                     v91 = (int)sub_41CCEA(a1, 1) >> 1;
@@ -24182,10 +24182,10 @@ Warning();//修正堆栈
                 }
                 if (*(int*)(a1 + 444) >= 12)
                 {
-                    *(_BYTE*)(a1 + 212) = 1;
-                    if (*(_BYTE*)(a1 + 195))
+                    *(char*)(a1 + 212) = 1;
+                    if (*(char*)(a1 + 195))
                     {
-                        switch (*(_BYTE*)(a1 + 195))
+                        switch (*(char*)(a1 + 195))
                         {
                         case 1:
                             *(short*)(a1 + 204) = 3;
@@ -24213,7 +24213,7 @@ Warning();//修正堆栈
                         memset((void*)(a1 + 453), 0, 8u);
                         memset((void*)(a1 + 461), 0, 8u);
                     }
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     *(short*)(a1 + 204) = *(int*)(a1 + 444) / 3 % 4 + 63;
                 }
                 return;
@@ -24222,21 +24222,21 @@ Warning();//修正堆栈
                 v98 = sub_41CCEA(a1, 1);
                 v99 = sub_41D067(a1, 1);
                 sub_41F169((short*)a1, v98 * v99 / 200 + v97);
-                *(_BYTE*)(a1 + 248) = 1;
-                *(_BYTE*)(a1 + 213) = -1;
+                *(char*)(a1 + 248) = 1;
+                *(char*)(a1 + 213) = -1;
                 if (*(int*)(a1 + 444) == 1)
                 {
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + 257) = 1;
-                    *(_BYTE*)(a1 + 250) = 10;
+                    *(char*)(a1 + 257) = 1;
+                    *(char*)(a1 + 250) = 10;
                     *(int*)(a1 + 436) = 0;
                     *(short*)(a1 + 244) = 30;
                 }
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 436))
                 {
-                    *(_BYTE*)(a1 + 257) = 2;
+                    *(char*)(a1 + 257) = 2;
                     *(short*)(a1 + 204) = 6;
                 }
                 else
@@ -24250,20 +24250,20 @@ Warning();//修正堆栈
                 v102 = v101 * sub_41D067(a1, 1) / 100 + v100;
                 v103 = sub_41CB3B(a1, 1);
                 sub_41F169((short*)a1, v103 / 5 + v102);
-                *(_BYTE*)(a1 + 248) = 17;
-                *(_BYTE*)(a1 + 213) = -1;
+                *(char*)(a1 + 248) = 17;
+                *(char*)(a1 + 213) = -1;
                 if (*(int*)(a1 + 444) == 1)
                 {
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + 257) = 1;
+                    *(char*)(a1 + 257) = 1;
                     *(int*)(a1 + 436) = 0;
                     *(short*)(a1 + 244) = 90;
                 }
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 436))
                 {
-                    *(_BYTE*)(a1 + 257) = 2;
+                    *(char*)(a1 + 257) = 2;
                     *(short*)(a1 + 204) = 6;
                 }
                 else
@@ -24282,21 +24282,21 @@ Warning();//修正堆栈
                     *(int*)(a1 + 352) = 0;
                     *(int*)(a1 + 348) = -100;
                     *(int*)(a1 + 360) = 5;
-                    *(_BYTE*)(a1 + 250) = 12;
+                    *(char*)(a1 + 250) = 12;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + 257) = 1;
-                    *(_BYTE*)(a1 + 212) = 0;
-                    *(_BYTE*)(a1 + 248) = 1;
+                    *(char*)(a1 + 257) = 1;
+                    *(char*)(a1 + 212) = 0;
+                    *(char*)(a1 + 248) = 1;
                     v255 = (double)sub_41CCEA(a1, 1) * 1.25;
                     v104 = sub_41CCEA(a1, 1);
                     v105 = (double)(v104 * sub_41D067(a1, 1) / 200) + v255;
                     sub_41F169((short*)a1, (__int64)v105);
-                    *(_BYTE*)(a1 + 213) = -1;
-                    if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+                    *(char*)(a1 + 213) = -1;
+                    if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
                     {
-                        *(_BYTE*)(a1 + 452) = 8;
-                        *(_BYTE*)(a1 + 248) = 12;
+                        *(char*)(a1 + 452) = 8;
+                        *(char*)(a1 + 248) = 12;
                         sub_4239D3(a1, 5);
                         v254 = (double)sub_41CCEA(a1, 1) * 1.25;
                         v106 = sub_41CCEA(a1, 1);
@@ -24309,12 +24309,12 @@ Warning();//修正堆栈
                 }
                 if (*(int*)(a1 + 444) == 5)
                     *(int*)(a1 + 400) = 0;
-                if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+                if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
                 {
-                    *(_BYTE*)(a1 + 212) = 1;
+                    *(char*)(a1 + 212) = 1;
                     if (*(int*)(a1 + 444) >= 40)
                     {
-                        *(_BYTE*)(a1 + 257) = 2;
+                        *(char*)(a1 + 257) = 2;
                         *(int*)(a1 + 360) = 30;
                         *(short*)(a1 + 204) = 4;
                     }
@@ -24325,7 +24325,7 @@ Warning();//修正堆栈
                 }
                 else if (*(int*)(a1 + 444) >= 40)
                 {
-                    *(_BYTE*)(a1 + 257) = 2;
+                    *(char*)(a1 + 257) = 2;
                     *(int*)(a1 + 360) = 30;
                     *(short*)(a1 + 204) = 5;
                 }
@@ -24337,13 +24337,13 @@ Warning();//修正堆栈
             case 0x9B:
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
-                    *(_BYTE*)(a1 + 248) = 3;
+                    *(char*)(a1 + 212) = 0;
+                    *(char*)(a1 + 248) = 3;
                     v253 = (double)sub_41CCEA(a1, 1) * 1.5;
                     v108 = sub_41CCEA(a1, 1);
                     v109 = (double)(v108 * sub_41D067(a1, 1) / 200) + v253;
                     sub_41F169((short*)a1, (__int64)v109);
-                    *(_BYTE*)(a1 + 213) = -1;
+                    *(char*)(a1 + 213) = -1;
                     *(int*)(a1 + 380) = 0;
                     *(int*)(a1 + 372) = 0;
                     *(int*)(a1 + 376) = 0;
@@ -24354,9 +24354,9 @@ Warning();//修正堆栈
                     *(int*)(a1 + 360) = 30;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + 257) = 1;
+                    *(char*)(a1 + 257) = 1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A3C, -1, 100, 100, 0);
-                    if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+                    if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
                     {
                         v252 = (double)sub_41CCEA(a1, 1) * 1.5;
                         v110 = sub_41CCEA(a1, 1);
@@ -24364,12 +24364,12 @@ Warning();//修正堆栈
                         sub_41F169((short*)a1, (__int64)v111);
                         *(int*)(a1 + 340) *= 2;
                         *(int*)(a1 + 352) = -*(int*)(a1 + 340) / 20;
-                        *(_BYTE*)(a1 + 212) = 1;
-                        *(_BYTE*)(a1 + 452) = 5;
+                        *(char*)(a1 + 212) = 1;
+                        *(char*)(a1 + 452) = 5;
                         sub_4239D3(a1, 5);
                     }
                 }
-                if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+                if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
                 {
                     if (*(int*)(a1 + 444) == 20)
                     {
@@ -24410,26 +24410,26 @@ Warning();//修正堆栈
                     *(int*)(a1 + 360) = 30;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + 257) = 1;
+                    *(char*)(a1 + 257) = 1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A40, -1, 100, 100, 0);
-                    *(_BYTE*)(a1 + 212) = 0;
-                    *(_BYTE*)(a1 + 248) = 5;
+                    *(char*)(a1 + 212) = 0;
+                    *(char*)(a1 + 248) = 5;
                     v251 = (double)sub_41CB3B(a1, 1) * 1.5;
                     v112 = sub_41CB3B(a1, 1);
                     v113 = (double)(v112 * sub_41D067(a1, 1) / 200) + v251;
                     sub_41F169((short*)a1, (__int64)v113);
-                    *(_BYTE*)(a1 + 213) = -1;
-                    if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+                    *(char*)(a1 + 213) = -1;
+                    if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
                     {
                         *(int*)(a1 + 348) = -500;
                         *(int*)(a1 + 340) *= 4;
                         *(int*)(a1 + 352) = -*(int*)(a1 + 340) / 16;
-                        *(_BYTE*)(a1 + 452) = 10;
-                        *(_BYTE*)(a1 + 212) = 1;
+                        *(char*)(a1 + 452) = 10;
+                        *(char*)(a1 + 212) = 1;
                         sub_4239D3(a1, 5);
                     }
                 }
-                if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+                if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
                 {
                     if (*(int*)(a1 + 444) >= 2)
                     {
@@ -24504,25 +24504,25 @@ Warning();//修正堆栈
                 }
                 return;
             case 0x9D:
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 444) == 1)
                 {
                     *(int*)(a1 + 348) = -100;
                     *(int*)(a1 + 360) = 10;
-                    *(_BYTE*)(a1 + 248) = 0;
-                    *(_BYTE*)(a1 + 257) = 1;
+                    *(char*)(a1 + 248) = 0;
+                    *(char*)(a1 + 257) = 1;
                     v114 = (int)sub_41CCEA(a1, 1) >> 1;
                     v115 = sub_41CCEA(a1, 1);
                     v116 = sub_41D067(a1, 1);
                     sub_41F169((short*)a1, v115 * v116 / 200 + v114);
-                    if (*(_BYTE*)(a1 + 236) == 3)
+                    if (*(char*)(a1 + 236) == 3)
                     {
                         v117 = (unsigned __int16)sub_4261B0((short*)a1);
                         v118 = sub_41CCEA(a1, 1);
                         v119 = sub_41CA5F(a1, 1);
                         sub_41F169((short*)a1, v118 * v119 / 200 + v117);
                     }
-                    *(_BYTE*)(a1 + 213) = -1;
+                    *(char*)(a1 + 213) = -1;
                     if (*(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
                         *(int*)(a1 + 400) = 1;
                 }
@@ -24573,9 +24573,9 @@ Warning();//修正堆栈
                     *(int*)(a1 + 360) = 30;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + 257) = 1;
+                    *(char*)(a1 + 257) = 1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A3C, -1, 100, 100, 0);
-                    *(_BYTE*)(a1 + 248) = 3;
+                    *(char*)(a1 + 248) = 3;
                     v121 = sub_41CB3B(a1, 1);
                     v122 = sub_41CB3B(a1, 1);
                     v123 = v122 * sub_41D067(a1, 1) / 100 + v121;
@@ -24586,24 +24586,24 @@ Warning();//修正堆栈
                         v361 += v124 * sub_41F380(a1, 1) / 250;
                     }
                     sub_41F169((short*)a1, v361);
-                    *(_BYTE*)(a1 + 213) = -1;
+                    *(char*)(a1 + 213) = -1;
                 }
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 444) >= 6)
                     *(short*)(a1 + 204) = 89;
                 else
                     *(short*)(a1 + 204) = 6;
                 return;
             case 0x5A:
-                *(_BYTE*)(a1 + 212) = 0;
-                *(_BYTE*)(a1 + 213) = -1;
+                *(char*)(a1 + 212) = 0;
+                *(char*)(a1 + 213) = -1;
                 if (*(int*)(a1 + 444) == 1)
                 {
                     v359 = 0;
                     v360 = sub_4175B4(a1, 1);
-                    if (*(_BYTE*)(a1 + 195))
+                    if (*(char*)(a1 + 195))
                     {
-                        switch (*(_BYTE*)(a1 + 195))
+                        switch (*(char*)(a1 + 195))
                         {
                         case 1:
                             v359 = 40 * v360 / 100;
@@ -24624,11 +24624,11 @@ Warning();//修正堆栈
                         v359 = 45 * v360 / 100;
                     }
                     v359 += 10;
-                    if (*(_BYTE*)(a1 + 258) == 1)
+                    if (*(char*)(a1 + 258) == 1)
                     {
                         v359 = 12 * v359 / 10;
                     }
-                    else if (*(_BYTE*)(a1 + 258) == 2)
+                    else if (*(char*)(a1 + 258) == 2)
                     {
                         v359 /= 2;
                     }
@@ -24645,7 +24645,7 @@ Warning();//修正堆栈
                     *(int*)(a1 + 348) = -1200;
                     *(int*)(a1 + 360) = 30;
                     *(int*)(a1 + 436) = 0;
-                    *(_BYTE*)(a1 + 177) = 1;
+                    *(char*)(a1 + 177) = 1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A44, -1, 100, 100, 0);
                 }
                 if (*(int*)(a1 + 436))
@@ -24662,12 +24662,12 @@ Warning();//修正堆栈
                 else
                 {
                     *(int*)(a1 + 432) = 50;
-                    *(_BYTE*)(a1 + 177) = 0;
+                    *(char*)(a1 + 177) = 0;
                     *(int*)(a1 + 304) = 0;
                 }
                 return;
             case 0x6E:
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = 33;
                 if (*(int*)(a1 + 444) == 1)
                 {
@@ -24680,8 +24680,8 @@ Warning();//修正堆栈
                     *(int*)(a1 + 348) = -1200;
                     *(int*)(a1 + 360) = 30;
                     *(int*)(a1 + 436) = 0;
-                    *(_BYTE*)(a1 + 177) = 1;
-                    sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                    *(char*)(a1 + 177) = 1;
+                    sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                 }
                 if (*(int*)(a1 + 304))
                 {
@@ -24700,29 +24700,29 @@ Warning();//修正堆栈
                             {
                             case 1:
                                 *(int*)(a1 + 424) = sub_425D70(*(int**)(a1 + 304)) == 0;
-                                *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) + 1;
+                                *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) + 1;
                                 break;
                             case 2:
                                 *(int*)(a1 + 424) = sub_425D70(*(int**)(a1 + 304));
-                                *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) + 1;
+                                *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) + 1;
                                 break;
                             case 3:
                                 *(int*)(a1 + 424) = sub_425D70(*(int**)(a1 + 304));
-                                *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) - 1;
+                                *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) - 1;
                                 if (*(int*)(a1 + 424))
                                     v358 -= 800;
                                 else
                                     v358 += 800;
                                 break;
                             case 4:
-                                *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) - 1;
+                                *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) - 1;
                                 break;
                             }
                         }
                         else
                         {
                             *(int*)(a1 + 424) = sub_425D70(*(int**)(a1 + 304)) == 0;
-                            *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) - 1;
+                            *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) - 1;
                             if (*(int*)(a1 + 424))
                                 v358 -= 800;
                             else
@@ -24733,29 +24733,29 @@ Warning();//修正堆栈
                 }
                 else
                 {
-                    *(_BYTE*)(a1 + 177) = 0;
+                    *(char*)(a1 + 177) = 0;
                     *(int*)(a1 + 372) = 0;
                     sub_417C83(a1);
                 }
                 return;
             case 0x9F:
-                *(_BYTE*)(a1 + 212) = 0;
-                *(_BYTE*)(a1 + 213) = 24;
+                *(char*)(a1 + 212) = 0;
+                *(char*)(a1 + 213) = 24;
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_BYTE*)(a1 + 248) = 2;
-                    *(_BYTE*)(a1 + 257) = 1;
+                    *(char*)(a1 + 248) = 2;
+                    *(char*)(a1 + 257) = 1;
                     v250 = (double)sub_41CB3B(a1, 1) * 1.7;
                     v125 = sub_41CB3B(a1, 1);
                     v126 = (double)(v125 * sub_41D067(a1, 1) / 100) + v250;
                     sub_41F169((short*)a1, (__int64)v126);
-                    if (*(_BYTE*)(a1 + 236) == 3)
+                    if (*(char*)(a1 + 236) == 3)
                     {
                         v127 = (unsigned __int16)sub_4261B0((short*)a1);
                         v128 = sub_41CB3B(a1, 1);
                         v129 = sub_41CA5F(a1, 1);
                         sub_41F169((short*)a1, v128 * v129 / 100 + v127);
-                        *(_BYTE*)(a1 + 248) = 3;
+                        *(char*)(a1 + 248) = 3;
                     }
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A3C, -1, 100, 100, 0);
                     memset((void*)(a1 + 453), 0, 8u);
@@ -24773,14 +24773,14 @@ Warning();//修正堆栈
             case 0xA0:
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_BYTE*)(a1 + 248) = -1;
-                    *(_BYTE*)(a1 + 257) = 1;
+                    *(char*)(a1 + 248) = -1;
+                    *(char*)(a1 + 257) = 1;
                     v130 = sub_41CB3B(a1, 1);
                     sub_41F169((short*)a1, v130 / 3);
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
                     *(short*)(a1 + 244) = -120;
-                    *(_BYTE*)(a1 + 213) = 24;
+                    *(char*)(a1 + 213) = 24;
                     if (!*(int*)(a1 + 392) || *(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
                     {
                         *(int*)(a1 + 400) = 1;
@@ -24793,7 +24793,7 @@ Warning();//修正堆栈
                     *(int*)(a1 + 400) = 0;
                     *(int*)(a1 + 408) = 0;
                 }
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 2 % 2 + 97;
                 if ((*(int*)(a1 + 444) - 1) % 4)
                 {
@@ -24814,12 +24814,12 @@ Warning();//修正堆栈
                 }
                 return;
             case 0xA1:
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_BYTE*)(a1 + 248) = 2;
-                    *(_BYTE*)(a1 + 257) = 1;
-                    *(_BYTE*)(a1 + 250) = 10;
+                    *(char*)(a1 + 248) = 2;
+                    *(char*)(a1 + 257) = 1;
+                    *(char*)(a1 + 250) = 10;
                     v249 = (double)sub_41CB3B(a1, 1) * 1.5;
                     v131 = sub_41CB3B(a1, 1);
                     v132 = (double)(v131 * sub_41D067(a1, 1) / 100) + v249;
@@ -24828,7 +24828,7 @@ Warning();//修正堆栈
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
                     *(short*)(a1 + 244) = 120;
-                    *(_BYTE*)(a1 + 213) = 24;
+                    *(char*)(a1 + 213) = 24;
                     if (*(unsigned __int8*)(a1 + 238) <= 1u)
                     {
                         if (sub_41BA53(a1, 0x86u, 0))
@@ -24843,13 +24843,13 @@ Warning();//修正堆栈
                     *(short*)(a1 + 204) = 97;
                 return;
             case 0x5B:
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 444) == 1)
                 {
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A50, -1, 100, 100, 0);
-                    *(_BYTE*)(a1 + 213) = 5;
+                    *(char*)(a1 + 213) = 5;
                     *(int*)(a1 + 412) = 1;
                     if (!*(int*)(a1 + 392) || *(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
                         *(int*)(a1 + 400) = 1;
@@ -24860,19 +24860,19 @@ Warning();//修正堆栈
                 switch (*(int*)(a1 + 444))
                 {
                 case '%':
-                    *(_BYTE*)(a1 + 248) = 2;
+                    *(char*)(a1 + 248) = 2;
                     v133 = sub_41CB3B(a1, 1);
                     sub_41F169((short*)a1, v133);
                     break;
                 case 'K':
-                    *(_BYTE*)(a1 + 248) = 3;
-                    *(_BYTE*)(a1 + 250) = 7;
+                    *(char*)(a1 + 248) = 3;
+                    *(char*)(a1 + 250) = 7;
                     v134 = sub_41CB3B(a1, 1);
                     sub_41F169((short*)a1, 2 * v134);
                     break;
                 case 'q':
-                    *(_BYTE*)(a1 + 248) = 1;
-                    *(_BYTE*)(a1 + 250) = 10;
+                    *(char*)(a1 + 248) = 1;
+                    *(char*)(a1 + 250) = 10;
                     v135 = (double)sub_41CB3B(a1, 1) * 2.5;
                     sub_41F169((short*)a1, (__int64)v135);
                     break;
@@ -24940,13 +24940,13 @@ Warning();//修正堆栈
                 if (*(int*)(a1 + 444) == 1)
                 {
                     *(short*)(a1 + 244) = -120;
-                    *(_BYTE*)(a1 + 257) = 1;
-                    if (*(_BYTE*)(a1 + 248) == 1)
-                        *(_BYTE*)(a1 + 249) = 1;
+                    *(char*)(a1 + 257) = 1;
+                    if (*(char*)(a1 + 248) == 1)
+                        *(char*)(a1 + 249) = 1;
                 }
-                if (*(_BYTE*)(a1 + 248) == 1 && *(_BYTE*)(a1 + 195) == 1)
+                if (*(char*)(a1 + 248) == 1 && *(char*)(a1 + 195) == 1)
                 {
-                    *(_BYTE*)(a1 + 212) = 1;
+                    *(char*)(a1 + 212) = 1;
                     if (*(int*)(a1 + 444) >= 4)
                     {
                         if (*(int*)(a1 + 444) >= 8)
@@ -24959,7 +24959,7 @@ Warning();//修正堆栈
                                 }
                                 else
                                 {
-                                    *(_BYTE*)(a1 + 257) = 2;
+                                    *(char*)(a1 + 257) = 2;
                                     *(short*)(a1 + 204) = 7;
                                 }
                             }
@@ -24984,14 +24984,14 @@ Warning();//修正堆栈
                 }
                 else
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     if (*(int*)(a1 + 444) >= 4)
                     {
                         if (*(int*)(a1 + 444) >= 8)
                         {
                             if (*(int*)(a1 + 444) >= 24)
                             {
-                                *(_BYTE*)(a1 + 257) = 2;
+                                *(char*)(a1 + 257) = 2;
                                 *(short*)(a1 + 204) = 103;
                             }
                             else
@@ -25024,10 +25024,10 @@ Warning();//修正堆栈
                 }
                 if (*(int*)(a1 + 444) == 5)
                     *(int*)(a1 + 400) = 0;
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = 100;
                 if (*(unsigned __int8*)(a1 + 476) < 5u && *(int*)(a1 + 444) >= 31 && !((*(int*)(a1 + 444) - 1) % 30))
-                    ++* (_BYTE*)(a1 + 476);
+                    ++* (char*)(a1 + 476);
                 if (*(unsigned __int8*)(a1 + 476) < 5u && !((*(int*)(a1 + 444) - 1) % 5))
                 {
                     v341 = (*(int*)(a1 + 444) - 1) % 30 / 6;
@@ -25104,7 +25104,7 @@ Warning();//修正堆栈
                 }
                 if (*(char*)(a1 + 230) <= 0)
                 {
-                    if (*(_BYTE*)(a1 + 476))
+                    if (*(char*)(a1 + 476))
                     {
                         *(int*)(a1 + 432) = 163;
                     }
@@ -25128,28 +25128,28 @@ Warning();//修正堆栈
             case 0xA3:
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_BYTE*)(a1 + 248) = 1;
-                    *(_BYTE*)(a1 + 257) = 1;
-                    *(_BYTE*)(a1 + 250) = 10;
+                    *(char*)(a1 + 248) = 1;
+                    *(char*)(a1 + 257) = 1;
+                    *(char*)(a1 + 250) = 10;
                     v136 = sub_41CB3B(a1, 1);
                     sub_41F169(
                         (short*)a1,
                         (6 * *(unsigned __int8*)(a1 + 476) + 10) * v136 / 10 + 2 * *(unsigned __int8*)(a1 + 476));
-                    if (*(_BYTE*)(a1 + 476) == 5)
-                        *(_BYTE*)(a1 + 255) = 0;
-                    *(_BYTE*)(a1 + 476) = 0;
+                    if (*(char*)(a1 + 476) == 5)
+                        *(char*)(a1 + 255) = 0;
+                    *(char*)(a1 + 476) = 0;
                     *(short*)(a1 + 244) = 60;
                     *(int*)(a1 + 412) = 1;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A58, -1, 100, 100, 0);
                 }
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 444) >= 5)
                 {
                     if (*(int*)(a1 + 444) >= 25)
                     {
-                        *(_BYTE*)(a1 + 257) = 2;
+                        *(char*)(a1 + 257) = 2;
                         *(short*)(a1 + 204) = 103;
                     }
                     else
@@ -25172,9 +25172,9 @@ Warning();//修正堆栈
             case 0xA4:
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_BYTE*)(a1 + 248) = 2;
-                    *(_BYTE*)(a1 + 257) = 1;
-                    *(_BYTE*)(a1 + 250) = 6;
+                    *(char*)(a1 + 248) = 2;
+                    *(char*)(a1 + 257) = 1;
+                    *(char*)(a1 + 250) = 6;
                     v137 = sub_41CB3B(a1, 1);
                     v138 = sub_41CCEA(a1, 1) + v137;
                     v139 = sub_417924(a1, 3, 1);
@@ -25186,15 +25186,15 @@ Warning();//修正堆栈
                         v142 = sub_41D067(a1, 1);
                         sub_41F169((short*)a1, v141 * v142 / 200 + v140);
                     }
-                    if (*(_BYTE*)(a1 + 237) || *(_BYTE*)(a1 + 236) == 3 && *(int*)(a1 + 392))
+                    if (*(char*)(a1 + 237) || *(char*)(a1 + 236) == 3 && *(int*)(a1 + 392))
                     {
-                        *(_BYTE*)(a1 + 248) = 3;
+                        *(char*)(a1 + 248) = 3;
                         v143 = (unsigned __int16)sub_4261B0((short*)a1);
                         v144 = (unsigned __int16)sub_4261B0((short*)a1);
                         v145 = sub_41CA5F(a1, 1);
                         sub_41F169((short*)a1, v144 * v145 / 200 + v143);
                     }
-                    *(_BYTE*)(a1 + 213) = -1;
+                    *(char*)(a1 + 213) = -1;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
                     if (!*(int*)(a1 + 392) || *(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
@@ -25202,7 +25202,7 @@ Warning();//修正堆栈
                 }
                 if (*(int*)(a1 + 444) == 5)
                     *(int*)(a1 + 400) = 0;
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 444) >= 4)
                 {
                     if (*(int*)(a1 + 444) >= 8)
@@ -25227,13 +25227,13 @@ Warning();//修正堆栈
             case 0xA5:
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     *(int*)(a1 + 424) = *(int*)(a1 + 424) == 0;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + 257) = 1;
-                    *(_BYTE*)(a1 + 248) = 3;
-                    *(_BYTE*)(a1 + 250) = 9;
+                    *(char*)(a1 + 257) = 1;
+                    *(char*)(a1 + 248) = 3;
+                    *(char*)(a1 + 250) = 9;
                     v248 = (double)sub_41CB3B(a1, 1) * 1.4;
                     v146 = sub_41CB3B(a1, 1);
                     v147 = (double)(v146 * sub_41CA5F(a1, 1) / 200) + v248;
@@ -25245,12 +25245,12 @@ Warning();//修正堆栈
                         v150 = sub_41D067(a1, 1);
                         sub_41F169((short*)a1, v149 * v150 / 100 + v148);
                     }
-                    *(_BYTE*)(a1 + 213) = -1;
+                    *(char*)(a1 + 213) = -1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A60, -1, 100, 100, 0);
                 }
-                if (*(_BYTE*)(a1 + 195) == 4)
+                if (*(char*)(a1 + 195) == 4)
                 {
-                    *(_BYTE*)(a1 + 212) = 1;
+                    *(char*)(a1 + 212) = 1;
                     if (*(int*)(a1 + 444) >= 5)
                     {
                         if (*(int*)(a1 + 444) >= 11)
@@ -25343,16 +25343,16 @@ Warning();//修正堆栈
             case 0xA6:
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + 248) = -1;
-                    *(_BYTE*)(a1 + 257) = 1;
+                    *(char*)(a1 + 248) = -1;
+                    *(char*)(a1 + 257) = 1;
                     v151 = sub_41CB3B(a1, 1) / 3;
                     v152 = sub_41CB3B(a1, 1);
                     v153 = sub_41CA5F(a1, 1);
                     sub_41F169((short*)a1, v152 * v153 / 200 + v151);
-                    *(_BYTE*)(a1 + 213) = 26;
+                    *(char*)(a1 + 213) = 26;
                     *(int*)(a1 + 400) = 1;
                 }
                 v340 = (*(int*)(a1 + 444) - 1) / 2 % 7;
@@ -25366,7 +25366,7 @@ Warning();//修正堆栈
                     memset((void*)(a1 + 461), 0, 8u);
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A08, -1, 100, 100, 0);
                     if (*(int*)(a1 + 444) == 22)
-                        *(_BYTE*)(a1 + 248) = 2;
+                        *(char*)(a1 + 248) = 2;
                 }
                 if (*(int*)(a1 + 444) == 14)
                     *(int*)(a1 + 424) = *(int*)(a1 + 424) == 0;
@@ -25379,17 +25379,17 @@ Warning();//修正堆栈
             case 0xA7:
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + 248) = 1;
-                    *(_BYTE*)(a1 + 257) = 1;
+                    *(char*)(a1 + 248) = 1;
+                    *(char*)(a1 + 257) = 1;
                     v154 = 6 * (sub_41CA5F(a1, 0) - 80);
                     v339 = *(unsigned __int16*)(a1 + 496) + sub_41CA5F(a1, 1) / 3 + v154;
                     if (v339 <= 0)
                         v339 = 1;
                     sub_41F169((short*)a1, v339);
-                    *(_BYTE*)(a1 + 213) = -1;
+                    *(char*)(a1 + 213) = -1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A68, -1, 100, 100, 0);
                     if (*(int*)(a1 + 308))
                     {
@@ -25426,7 +25426,7 @@ Warning();//修正堆栈
                 {
                     if (*(int*)(a1 + 444) >= 26)
                     {
-                        *(_BYTE*)(a1 + 257) = 2;
+                        *(char*)(a1 + 257) = 2;
                         *(short*)(a1 + 204) = 82;
                     }
                     else
@@ -25444,13 +25444,13 @@ Warning();//修正堆栈
             case 0xA8:
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + 257) = 1;
-                    *(_BYTE*)(a1 + 248) = -1;
+                    *(char*)(a1 + 257) = 1;
+                    *(char*)(a1 + 248) = -1;
                     sub_41F169((short*)a1, 1);
-                    *(_BYTE*)(a1 + 213) = -1;
+                    *(char*)(a1 + 213) = -1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A6C, -1, 100, 100, 0);
                 }
                 *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 4 % 3 + 118;
@@ -25470,7 +25470,7 @@ Warning();//修正堆栈
             case 0x5D:
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
                     *(int*)(a1 + 372) = 0;
@@ -25481,9 +25481,9 @@ Warning();//修正堆栈
                     *(int*)(a1 + 356) = 0;
                     *(int*)(a1 + 436) = 0;
                     v335 = 0;
-                    if (*(_BYTE*)(a1 + 195))
+                    if (*(char*)(a1 + 195))
                     {
-                        switch (*(_BYTE*)(a1 + 195))
+                        switch (*(char*)(a1 + 195))
                         {
                         case 1:
                             v335 = 25 * sub_4175B4(a1, 1) / 200;
@@ -25501,11 +25501,11 @@ Warning();//修正堆栈
                         v335 = 30 * sub_4175B4(a1, 1) / 200;
                     }
                     v335 = sub_41CB3B(a1, 1) / 3 + 10;
-                    if (*(_BYTE*)(a1 + 258) == 1)
+                    if (*(char*)(a1 + 258) == 1)
                     {
                         v335 = 12 * v335 / 10;
                     }
-                    else if (*(_BYTE*)(a1 + 258) == 2)
+                    else if (*(char*)(a1 + 258) == 2)
                     {
                         v335 /= 2;
                     }
@@ -25597,7 +25597,7 @@ Warning();//修正堆栈
             case 0x6F:
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
                     *(int*)(a1 + 372) = 0;
@@ -25607,7 +25607,7 @@ Warning();//修正堆栈
                     *(int*)(a1 + 352) = 0;
                     *(int*)(a1 + 356) = 0;
                     *(int*)(a1 + 392) = 1;
-                    sub_423CF2((_BYTE*)a1, 1, -16, 1, 0, 0, 0);
+                    sub_423CF2((char*)a1, 1, -16, 1, 0, 0, 0);
                 }
                 if (*(int*)(a1 + 444) >= 6)
                 {
@@ -25618,17 +25618,17 @@ Warning();//修正堆栈
                             && sub_426010(*(int**)(a1 + 304)) == 1)
                         {
                             *(int*)(a1 + 432) = 169;
-                            sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                            sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                         }
                         if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 304)) != (struct Concurrency::ISchedulerProxy*)93)
                         {
-                            sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                            sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                             *(int*)(a1 + 304) = 0;
                         }
                     }
                     else
                     {
-                        sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                        sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                     }
                 }
                 else
@@ -25645,16 +25645,16 @@ Warning();//修正堆栈
             case 0xA9:
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + 248) = 1;
-                    *(_BYTE*)(a1 + 257) = 1;
-                    *(_BYTE*)(a1 + 253) = 1;
-                    *(_BYTE*)(a1 + 213) = 5;
+                    *(char*)(a1 + 248) = 1;
+                    *(char*)(a1 + 257) = 1;
+                    *(char*)(a1 + 253) = 1;
+                    *(char*)(a1 + 213) = 5;
                     sub_41F169((short*)a1, *(unsigned __int16*)(a1 + 242));
-                    *(_BYTE*)(a1 + 254) = 1;
-                    *(_BYTE*)(a1 + 250) = 10;
+                    *(char*)(a1 + 254) = 1;
+                    *(char*)(a1 + 250) = 10;
                     *(int*)(a1 + 424) = 0;
                     *(int*)(a1 + 372) = -700;
                     *(int*)(a1 + 376) = 0;
@@ -25669,7 +25669,7 @@ Warning();//修正堆栈
                     *(int*)(a1 + 316) = *(int*)(a1 + 304);
                     if (*(int*)(a1 + 304))
                     {
-                        *(_BYTE*)(a1 + (unsigned __int8)sub_425EF0(*(_BYTE**)(a1 + 304)) + 453) = -1;
+                        *(char*)(a1 + (unsigned __int8)sub_425EF0(*(char**)(a1 + 304)) + 453) = -1;
                         if (sub_425D70(*(int**)(a1 + 304))
                             && Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 304)) == (struct Concurrency::ISchedulerProxy*)93
                             || !sub_425D70(*(int**)(a1 + 304))
@@ -25695,14 +25695,14 @@ Warning();//修正堆栈
                 }
                 return;
             case 0xAA:
-                LOBYTE(v334) = sub_425CB0(*(_BYTE**)(a1 + 480));
-                *(_BYTE*)(a1 + 212) = 0;
+                LOBYTE(v334) = sub_425CB0(*(char**)(a1 + 480));
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 444) == 1)
                 {
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
                     v333 = sub_41F380(a1, 1);
-                    if (*(_BYTE*)(a1 + 237))
+                    if (*(char*)(a1 + 237))
                     {
                         v155 = sub_41F380(a1, 1);
                         v333 += v155 * sub_41CA5F(a1, 1) / 250;
@@ -25714,23 +25714,23 @@ Warning();//修正堆栈
                     }
                     v157 = sub_43E620((short*)*(int*)(a1 + 480));
                     sub_41F169((short*)a1, (v333 * v157 / 100 + 50) / 2);
-                    *(_BYTE*)(a1 + 248) = -1;
-                    *(_BYTE*)(a1 + 257) = 1;
-                    *(_BYTE*)(a1 + 213) = -1;
+                    *(char*)(a1 + 248) = -1;
+                    *(char*)(a1 + 257) = 1;
+                    *(char*)(a1 + 213) = -1;
                     if (!*(int*)(a1 + 392) || *(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
                         *(int*)(a1 + 400) = 1;
                 }
                 if (*(int*)(a1 + 444) == 5)
                     *(int*)(a1 + 400) = 0;
                 v332 = (*(int*)(a1 + 444) - 1) / 3 % 2;
-                if (sub_494AA9(*(_BYTE**)(a1 + 480), 0))
+                if (sub_494AA9(*(char**)(a1 + 480), 0))
                     *(short*)(a1 + 204) = v332 + 140;
                 else
                     *(short*)(a1 + 204) = v332 + 130;
                 if (*(int*)(a1 + 444) >= 18)
                 {
-                    *(_BYTE*)(a1 + 257) = 2;
-                    if (sub_494AA9(*(_BYTE**)(a1 + 480), 0))
+                    *(char*)(a1 + 257) = 2;
+                    if (sub_494AA9(*(char**)(a1 + 480), 0))
                         *(short*)(a1 + 204) = 142;
                     else
                         *(short*)(a1 + 204) = 132;
@@ -25753,13 +25753,13 @@ Warning();//修正堆栈
                 }
                 return;
             case 0xAE:
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 444) == 1)
                 {
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
                     v330 = sub_41F380(a1, 1);
-                    if (*(_BYTE*)(a1 + 237))
+                    if (*(char*)(a1 + 237))
                     {
                         v158 = sub_41F380(a1, 1);
                         v330 += v158 * sub_41CA5F(a1, 1) / 250;
@@ -25771,9 +25771,9 @@ Warning();//修正堆栈
                     }
                     v160 = sub_43E620((short*)*(int*)(a1 + 480));
                     sub_41F169((short*)a1, v330 * v160 / 100 + 50);
-                    *(_BYTE*)(a1 + 248) = 0;
-                    *(_BYTE*)(a1 + 257) = 1;
-                    *(_BYTE*)(a1 + 213) = -1;
+                    *(char*)(a1 + 248) = 0;
+                    *(char*)(a1 + 257) = 1;
+                    *(char*)(a1 + 213) = -1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A90, -1, 100, 100, 0);
                     if (!*(int*)(a1 + 392) || *(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
                         *(int*)(a1 + 400) = 1;
@@ -25806,13 +25806,13 @@ Warning();//修正堆栈
                 }
                 return;
             case 0xAF:
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 444) == 1)
                 {
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
                     v329 = sub_41F380(a1, 1);
-                    if (*(_BYTE*)(a1 + 237))
+                    if (*(char*)(a1 + 237))
                     {
                         v161 = sub_41F380(a1, 1);
                         v329 += v161 * sub_41CA5F(a1, 1) / 250;
@@ -25824,9 +25824,9 @@ Warning();//修正堆栈
                     }
                     v163 = sub_43E620((short*)*(int*)(a1 + 480));
                     sub_41F169((short*)a1, (v329 * v163 / 100 + 50) / 3);
-                    *(_BYTE*)(a1 + 248) = 0;
-                    *(_BYTE*)(a1 + 257) = 1;
-                    *(_BYTE*)(a1 + 213) = -1;
+                    *(char*)(a1 + 248) = 0;
+                    *(char*)(a1 + 257) = 1;
+                    *(char*)(a1 + 213) = -1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A94, -1, 100, 100, 0);
                     if (!*(int*)(a1 + 392) || *(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
                         *(int*)(a1 + 400) = 1;
@@ -25848,7 +25848,7 @@ Warning();//修正堆栈
                 }
                 return;
             case 0x5E:
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = *(int*)(a1 + 444) % 2 + 154;
                 if (*(int*)(a1 + 444) == 1)
                 {
@@ -25862,7 +25862,7 @@ Warning();//修正堆栈
                     sub_464C06((char*)byte_4B9B10, 1, a1);
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A9C, -1, 100, 100, 0);
                 }
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 444) >= 5)
                 {
                     if (*(int*)(a1 + 444) >= 9)
@@ -25892,13 +25892,13 @@ Warning();//修正堆栈
             case 0xB1:
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + 257) = 1;
-                    *(_BYTE*)(a1 + 248) = -1;
+                    *(char*)(a1 + 257) = 1;
+                    *(char*)(a1 + 248) = -1;
                     v327 = sub_417924(a1, 3, 1);
-                    if (*(_BYTE*)(a1 + 237))
+                    if (*(char*)(a1 + 237))
                     {
                         v164 = sub_417924(a1, 3, 1);
                         v327 += v164 * sub_41CA5F(a1, 1) / 300;
@@ -25909,7 +25909,7 @@ Warning();//修正堆栈
                         v327 += v165 * sub_41D067(a1, 1) / 300;
                     }
                     sub_41F169((short*)a1, v327);
-                    *(_BYTE*)(a1 + 213) = -1;
+                    *(char*)(a1 + 213) = -1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9AA0, -1, 100, 100, 0);
                 }
                 v328 = (*(int*)(a1 + 444) - 1) / 2 % 6;
@@ -25936,11 +25936,11 @@ Warning();//修正堆栈
                 if (*(int*)(a1 + 444) == 1)
                 {
                     *(int*)(a1 + 304) = 0;
-                    *(_BYTE*)(a1 + 212) = 0;
-                    *(_BYTE*)(a1 + 257) = 1;
-                    *(_BYTE*)(a1 + 253) = 1;
-                    *(_BYTE*)(a1 + 248) = -1;
-                    *(_BYTE*)(a1 + 213) = -1;
+                    *(char*)(a1 + 212) = 0;
+                    *(char*)(a1 + 257) = 1;
+                    *(char*)(a1 + 253) = 1;
+                    *(char*)(a1 + 248) = -1;
+                    *(char*)(a1 + 213) = -1;
                 }
                 if (!*(int*)(a1 + 392))
                     *(int*)(a1 + 340) = 4 * (*(int*)(a1 + 424) - (*(int*)(a1 + 424) == 0));
@@ -25954,12 +25954,12 @@ Warning();//修正堆栈
             case 0xB3:
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
-                    *(_BYTE*)(a1 + 257) = 1;
-                    *(_BYTE*)(a1 + 248) = -1;
+                    *(char*)(a1 + 212) = 0;
+                    *(char*)(a1 + 257) = 1;
+                    *(char*)(a1 + 248) = -1;
                     v166 = sub_417924(a1, 3, 1);
                     sub_41F169((short*)a1, v166);
-                    *(_BYTE*)(a1 + 213) = -1;
+                    *(char*)(a1 + 213) = -1;
                 }
                 if (!*(int*)(a1 + 392))
                     *(int*)(a1 + 400) = 1;
@@ -25984,10 +25984,10 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 524))
                         *(int*)(a1 + 524) = 0;
                     else
-                        *(int*)(a1 + 524) = sub_46588C((char*)byte_4B9B10, (_BYTE*)a1);
+                        *(int*)(a1 + 524) = sub_46588C((char*)byte_4B9B10, (char*)a1);
                     if (*(int*)(a1 + 524))
                     {
-                        if (sub_4264F0(*(_BYTE**)(a1 + 524)) == 4)
+                        if (sub_4264F0(*(char**)(a1 + 524)) == 4)
                         {
                             LOWORD(v326) = sub_43E600(*(short**)(a1 + 524));
                             if (Concurrency::details::SchedulerProxy::GetNumBorrowedCores(*(Concurrency::details::SchedulerProxy**)(a1 + 524)))
@@ -25996,19 +25996,19 @@ Warning();//修正堆栈
                                 if (v325)
                                 {
                                     *(short*)(a1 + 190) = sub_4266F0((short*)v325);
-                                    *(_BYTE*)(a1 + 192) = sub_426570((char*)v325);
+                                    *(char*)(a1 + 192) = sub_426570((char*)v325);
                                 }
                             }
                             else
                             {
                                 *(short*)(a1 + 190) = sub_475CB0((short*)(36 * (unsigned __int16)v326 + dword_4B92E0));
-                                *(_BYTE*)(a1 + 192) = sub_4016F0((_BYTE*)(36 * (unsigned __int16)v326 + dword_4B92E0));
+                                *(char*)(a1 + 192) = sub_4016F0((char*)(36 * (unsigned __int16)v326 + dword_4B92E0));
                             }
                         }
                         else
                         {
                             *(short*)(a1 + 190) = sub_420F74(*(int*)(a1 + 524));
-                            *(_BYTE*)(a1 + 192) = sub_422BE5(*(int*)(a1 + 524));
+                            *(char*)(a1 + 192) = sub_422BE5(*(int*)(a1 + 524));
                         }
                         *(short*)(a1 + 498) = sub_43E5A0((short*)*(int*)(a1 + 524));
                         *(int*)(a1 + 200) = sub_43E5C0((int*)*(int*)(a1 + 524));
@@ -26025,7 +26025,7 @@ Warning();//修正堆栈
                     else
                     {
                         *(short*)(a1 + 190) = *(short*)(a1 + 528);
-                        *(_BYTE*)(a1 + 192) = *(_BYTE*)(a1 + 536);
+                        *(char*)(a1 + 192) = *(char*)(a1 + 536);
                         *(short*)(a1 + 498) = *(short*)(a1 + 530);
                         *(int*)(a1 + 200) = *(int*)(a1 + 532);
                         *(short*)(a1 + 502) = *(short*)(a1 + 538);
@@ -26068,11 +26068,11 @@ Warning();//修正堆栈
                 {
                     v167 = sub_41D61F(a1);
                     sub_41F169((short*)a1, 7 * v167 / 20);
-                    *(_BYTE*)(a1 + 248) = 2;
-                    *(_BYTE*)(a1 + 249) = 1;
-                    *(_BYTE*)(a1 + 253) = 1;
-                    *(_BYTE*)(a1 + 255) = 0;
-                    *(_BYTE*)(a1 + 254) = 2;
+                    *(char*)(a1 + 248) = 2;
+                    *(char*)(a1 + 249) = 1;
+                    *(char*)(a1 + 253) = 1;
+                    *(char*)(a1 + 255) = 0;
+                    *(char*)(a1 + 254) = 2;
                 }
                 if (*(int*)(a1 + 444) >= 60 && *(int*)(a1 + 444) <= 61
                     || *(int*)(a1 + 444) >= 62 && *(int*)(a1 + 444) < 65 && *(int*)(a1 + 444) % 2 == 1)
@@ -26085,14 +26085,14 @@ Warning();//修正堆栈
             case 0x61:
                 if (*(int*)(a1 + 444) == 1)
                 {
-                    *(_BYTE*)(a1 + 248) = 0;
-                    *(_BYTE*)(a1 + 253) = 0;
-                    *(_BYTE*)(a1 + 213) = 5;
-                    *(_BYTE*)(a1 + 257) = 0;
-                    *(_BYTE*)(a1 + 249) = 0;
+                    *(char*)(a1 + 248) = 0;
+                    *(char*)(a1 + 253) = 0;
+                    *(char*)(a1 + 213) = 5;
+                    *(char*)(a1 + 257) = 0;
+                    *(char*)(a1 + 249) = 0;
                     *(short*)(a1 + 244) = 0;
-                    *(_BYTE*)(a1 + 255) = 0;
-                    *(_BYTE*)(a1 + 256) = 0;
+                    *(char*)(a1 + 255) = 0;
+                    *(char*)(a1 + 256) = 0;
                     *(int*)(a1 + 264) = 112;
                     if (*(int*)(a1 + 392))
                     {
@@ -26101,7 +26101,7 @@ Warning();//修正堆栈
                         v170 = sub_41CA5F(a1, 1) * v169;
                         v171 = sub_41D067(a1, 1);
                         sub_41F169((short*)a1, v170 * v171 / 10000 + v168);
-                        *(_BYTE*)(a1 + 248) = 2;
+                        *(char*)(a1 + 248) = 2;
                     }
                     else
                     {
@@ -26109,7 +26109,7 @@ Warning();//修正堆栈
                         v173 = sub_41CB3B(a1, 1);
                         v174 = sub_41CA5F(a1, 1);
                         sub_41F169((short*)a1, v173 * v174 / 200 + v172);
-                        *(_BYTE*)(a1 + 248) = 3;
+                        *(char*)(a1 + 248) = 3;
                     }
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
@@ -26118,10 +26118,10 @@ Warning();//修正堆栈
                 }
                 if (*(int*)(a1 + 444) == 5)
                     *(int*)(a1 + 400) = 0;
-                *(_BYTE*)(a1 + 212) = 1;
-                if (*(_BYTE*)(a1 + 195))
+                *(char*)(a1 + 212) = 1;
+                if (*(char*)(a1 + 195))
                 {
-                    switch (*(_BYTE*)(a1 + 195))
+                    switch (*(char*)(a1 + 195))
                     {
                     case 1:
                         if (*(int*)(a1 + 444) >= 4)
@@ -26130,7 +26130,7 @@ Warning();//修正堆栈
                         }
                         else
                         {
-                            *(_BYTE*)(a1 + 212) = 0;
+                            *(char*)(a1 + 212) = 0;
                             *(short*)(a1 + 204) = 4;
                         }
                         if (*(int*)(a1 + 444) == 7)
@@ -26230,7 +26230,7 @@ Warning();//修正堆栈
                     }
                     else
                     {
-                        *(_BYTE*)(a1 + 212) = 0;
+                        *(char*)(a1 + 212) = 0;
                         *(short*)(a1 + 204) = 4;
                     }
                     if (*(int*)(a1 + 444) == 7)
@@ -26242,7 +26242,7 @@ Warning();//修正堆栈
             case 0x62:
                 if (*(int*)(a1 + 444) == 1)
                     *(int*)(a1 + 424) = *(int*)(a1 + 424) == 0;
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 444) >= 4)
                 {
                     if (*(int*)(a1 + 444) >= 8)
@@ -26276,8 +26276,8 @@ Warning();//修正堆栈
                     *(int*)(a1 + 352) = 0;
                     *(int*)(a1 + 356) = 0;
                     *(int*)(a1 + 360) = 0;
-                    if (*(_BYTE*)(a1 + 469))
-                        --* (_BYTE*)(a1 + 469);
+                    if (*(char*)(a1 + 469))
+                        --* (char*)(a1 + 469);
                 }
                 if (*(int*)(a1 + 444) == 1)
                 {
@@ -26287,20 +26287,20 @@ Warning();//修正堆栈
                     *(int*)(a1 + 436) = 0;
                     *(int*)(a1 + 348) = -550;
                     *(int*)(a1 + 360) = 30;
-                    *(_BYTE*)(a1 + 248) = 2;
-                    *(_BYTE*)(a1 + 250) = 10;
-                    *(_BYTE*)(a1 + 253) = 1;
-                    *(_BYTE*)(a1 + 213) = -1;
-                    *(_BYTE*)(a1 + 257) = 0;
-                    *(_BYTE*)(a1 + 249) = 0;
+                    *(char*)(a1 + 248) = 2;
+                    *(char*)(a1 + 250) = 10;
+                    *(char*)(a1 + 253) = 1;
+                    *(char*)(a1 + 213) = -1;
+                    *(char*)(a1 + 257) = 0;
+                    *(char*)(a1 + 249) = 0;
                     *(short*)(a1 + 244) = 0;
-                    *(_BYTE*)(a1 + 254) = 1;
-                    *(_BYTE*)(a1 + 255) = 0;
-                    *(_BYTE*)(a1 + 177) = 1;
+                    *(char*)(a1 + 254) = 1;
+                    *(char*)(a1 + 255) = 0;
+                    *(char*)(a1 + 177) = 1;
                     sub_41F169((short*)a1, *(unsigned __int16*)(a1 + 242));
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    *(_BYTE*)(a1 + *(int*)(a1 + 440) + 453) = -1;
+                    *(char*)(a1 + *(int*)(a1 + 440) + 453) = -1;
                     *(int*)(a1 + 316) = *(int*)(a1 + 304);
                 }
                 else if (*(int*)(a1 + 444) == 8)
@@ -26319,18 +26319,18 @@ Warning();//修正堆栈
                     && (!*(int*)(a1 + 304)
                         || Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 304)) != (struct Concurrency::ISchedulerProxy*)98))
                 {
-                    *(_BYTE*)(a1 + 177) = 0;
-                    *(_BYTE*)(a1 + 469) = 1;
+                    *(char*)(a1 + 177) = 0;
+                    *(char*)(a1 + 469) = 1;
                     *(int*)(a1 + 372) = 0;
                     *(int*)(a1 + 340) = 0;
                     *(int*)(a1 + 348) = 0;
                     *(int*)(a1 + 360) = 30;
                     *(int*)(a1 + 432) = 76;
                 }
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 436))
                 {
-                    *(_BYTE*)(a1 + 177) = 0;
+                    *(char*)(a1 + 177) = 0;
                     if ((*(int*)(a1 + 372) <= 0 || !*(int*)(a1 + 424))
                         && (*(int*)(a1 + 372) >= 0 || *(int*)(a1 + 424)))
                     {
@@ -26376,10 +26376,10 @@ Warning();//修正堆栈
                     *(int*)(a1 + 360) = 0;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A1C, -1, 100, 100, 0);
                 }
-                *(_BYTE*)(a1 + 212) = 0;
-                if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+                *(char*)(a1 + 212) = 0;
+                if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
                 {
-                    *(_BYTE*)(a1 + 212) = 1;
+                    *(char*)(a1 + 212) = 1;
                     if (*(int*)(a1 + 444) >= 6)
                     {
                         if (*(int*)(a1 + 444) >= 12)
@@ -26602,19 +26602,19 @@ Warning();//修正堆栈
                     *(int*)(a1 + 356) = 0;
                     *(int*)(a1 + 360) = 0;
                     if (*(int*)(a1 + 304))
-                        *(int*)(a1 + 440) = (unsigned __int8)sub_425E70(*(_BYTE**)(a1 + 304));
+                        *(int*)(a1 + 440) = (unsigned __int8)sub_425E70(*(char**)(a1 + 304));
                     memset((void*)(a1 + 453), 0, 8u);
                     memset((void*)(a1 + 461), 0, 8u);
-                    sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                    sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                 }
                 else if (*(int*)(a1 + 444) == 2 && *(int*)(a1 + 304))
                 {
                     v175 = sub_4175B4(*(int*)(a1 + 304), 1);
                     sub_41EF8A((short*)a1, 60 * v175 / 100);
                     sub_41F169((short*)a1, *(unsigned __int16*)(a1 + 242));
-                    *(_BYTE*)(a1 + (unsigned __int8)sub_425EF0(*(_BYTE**)(a1 + 304)) + 453) = -1;
+                    *(char*)(a1 + (unsigned __int8)sub_425EF0(*(char**)(a1 + 304)) + 453) = -1;
                 }
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if (*(int*)(a1 + 440) == 2 || *(int*)(a1 + 440) == 3)
                 {
                     if (*(int*)(a1 + 444) >= 6)
@@ -26712,19 +26712,19 @@ Warning();//修正堆栈
                     *(int*)(a1 + 356) = 0;
                     *(int*)(a1 + 360) = 30;
                     *(int*)(a1 + 436) = 0;
-                    *(_BYTE*)(a1 + 248) = 2;
-                    *(_BYTE*)(a1 + 253) = 1;
-                    *(_BYTE*)(a1 + 250) = 10;
-                    if (*(_BYTE*)(a1 + 469))
-                        --* (_BYTE*)(a1 + 469);
+                    *(char*)(a1 + 248) = 2;
+                    *(char*)(a1 + 253) = 1;
+                    *(char*)(a1 + 250) = 10;
+                    if (*(char*)(a1 + 469))
+                        --* (char*)(a1 + 469);
                 }
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 *(short*)(a1 + 204) = 49;
                 return;
             case 0x64:
                 if (*(int*)(a1 + 304))
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     *(short*)(a1 + 204) = (*(int*)(a1 + 444) - 1) / 2 % 3 + 187;
                     if ((*(int*)(a1 + 444) - 1) % 6)
                     {
@@ -26745,7 +26745,7 @@ Warning();//修正堆栈
                     {
                         v177 = sub_41CB3B(a1, 1);
                         sub_41EF8A((short*)a1, v177 / 60);
-                        sub_417C15(*(int*)(a1 + 304), *(_BYTE*)(a1 + 242));
+                        sub_417C15(*(int*)(a1 + 304), *(char*)(a1 + 242));
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9AB8, -1, 100, 100, 0);
                     }
                     if (*(int*)(a1 + 444) >= 19)
@@ -26761,11 +26761,11 @@ Warning();//修正堆栈
                 if (*(int*)(a1 + 444) == 1 && *(int*)(a1 + 304))
                 {
                     v316 = 12 * sub_41CB3B(a1, 1) / 100;
-                    if (*(_BYTE*)(a1 + 258) == 1)
+                    if (*(char*)(a1 + 258) == 1)
                     {
                         v316 = 12 * v316 / 10;
                     }
-                    else if (*(_BYTE*)(a1 + 258) == 2)
+                    else if (*(char*)(a1 + 258) == 2)
                     {
                         v316 /= 2;
                     }
@@ -26779,7 +26779,7 @@ Warning();//修正堆栈
                         || !*(int*)(a1 + 304)
                         || Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 304)) == (struct Concurrency::ISchedulerProxy*)115))
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     if (*(int*)(a1 + 444) >= 33)
                     {
                         if (*(int*)(a1 + 444) >= 37)
@@ -26820,11 +26820,11 @@ Warning();//修正堆栈
                     {
                     case '(':
                         v314 = 18 * sub_41CB3B(a1, 1) / 100;
-                        if (*(_BYTE*)(a1 + 258) == 1)
+                        if (*(char*)(a1 + 258) == 1)
                         {
                             v314 = 12 * v314 / 10;
                         }
-                        else if (*(_BYTE*)(a1 + 258) == 2)
+                        else if (*(char*)(a1 + 258) == 2)
                         {
                             v314 /= 2;
                         }
@@ -26848,7 +26848,7 @@ Warning();//修正堆栈
                 }
                 return;
             case 0x73:
-                *(_BYTE*)(a1 + 212) = 0;
+                *(char*)(a1 + 212) = 0;
                 if ((*(int*)(a1 + 444) > 41 || *(int*)(a1 + 304))
                     && (*(int*)(a1 + 444) < 2
                         || *(int*)(a1 + 444) > 41
@@ -26858,7 +26858,7 @@ Warning();//修正堆栈
                     if (*(int*)(a1 + 444) == 1)
                     {
                         *(int*)(a1 + 424) = sub_425D70(*(int**)(a1 + 304)) == 0;
-                        *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) - 1;
+                        *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) - 1;
                         *(int*)(a1 + 360) = 0;
                         *(int*)(a1 + 356) = 0;
                         *(int*)(a1 + 352) = 0;
@@ -26867,7 +26867,7 @@ Warning();//修正堆栈
                         *(int*)(a1 + 340) = 0;
                         *(int*)(a1 + 376) = 0;
                         *(int*)(a1 + 372) = 0;
-                        sub_423CF2((_BYTE*)a1, 1, -16, 1, 0, 0, 0);
+                        sub_423CF2((char*)a1, 1, -16, 1, 0, 0, 0);
                     }
                     if (*(int*)(a1 + 444) >= 33)
                     {
@@ -26914,7 +26914,7 @@ Warning();//修正堆栈
                         *(int*)(a1 + 348) = -650;
                         *(int*)(a1 + 360) = 25;
                         *(int*)(a1 + 304) = 0;
-                        sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                        sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                     }
                     else if (*(int*)(a1 + 444) == 45)
                     {
@@ -26933,7 +26933,7 @@ Warning();//修正堆栈
                     *(int*)(a1 + 340) = 0;
                     *(int*)(a1 + 376) = 0;
                     *(int*)(a1 + 372) = 0;
-                    sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                    sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                 }
                 return;
             case 0xB5:
@@ -26951,18 +26951,18 @@ Warning();//修正堆栈
                         v181 = sub_41CCEA(a1, 1);
                         sub_41F169((short*)a1, 75 * v181 / 100);
                     }
-                    *(_BYTE*)(a1 + 257) = 1;
-                    *(_BYTE*)(a1 + 248) = -1;
-                    *(_BYTE*)(a1 + 212) = 1;
-                    *(_BYTE*)(a1 + 213) = -1;
+                    *(char*)(a1 + 257) = 1;
+                    *(char*)(a1 + 248) = -1;
+                    *(char*)(a1 + 212) = 1;
+                    *(char*)(a1 + 213) = -1;
                     if (!*(int*)(a1 + 392) || *(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
                         *(int*)(a1 + 400) = 1;
                 }
                 if (*(int*)(a1 + 444) == 5)
                     *(int*)(a1 + 400) = 0;
-                if (*(_BYTE*)(a1 + 195))
+                if (*(char*)(a1 + 195))
                 {
-                    switch (*(_BYTE*)(a1 + 195))
+                    switch (*(char*)(a1 + 195))
                     {
                     case 1:
                         if (!(*(int*)(a1 + 444) % 4))
@@ -26984,12 +26984,12 @@ Warning();//修正堆栈
                                             {
                                                 if (*(int*)(a1 + 444) >= 28)
                                                 {
-                                                    *(_BYTE*)(a1 + 257) = 2;
+                                                    *(char*)(a1 + 257) = 2;
                                                     *(short*)(a1 + 204) = 23;
                                                 }
                                                 else
                                                 {
-                                                    *(_BYTE*)(a1 + 248) = 0;
+                                                    *(char*)(a1 + 248) = 0;
                                                     *(short*)(a1 + 204) = 22;
                                                 }
                                             }
@@ -27057,12 +27057,12 @@ Warning();//修正堆栈
                                             {
                                                 if (*(int*)(a1 + 444) >= 26)
                                                 {
-                                                    *(_BYTE*)(a1 + 257) = 2;
+                                                    *(char*)(a1 + 257) = 2;
                                                     *(short*)(a1 + 204) = 23;
                                                 }
                                                 else
                                                 {
-                                                    *(_BYTE*)(a1 + 248) = 0;
+                                                    *(char*)(a1 + 248) = 0;
                                                     *(short*)(a1 + 204) = 22;
                                                 }
                                             }
@@ -27132,13 +27132,13 @@ Warning();//修正堆栈
                                                 {
                                                     if (*(int*)(a1 + 444) < 36)
                                                     {
-                                                        *(_BYTE*)(a1 + 257) = 2;
+                                                        *(char*)(a1 + 257) = 2;
                                                         *(short*)(a1 + 204) = 26;
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    *(_BYTE*)(a1 + 248) = 0;
+                                                    *(char*)(a1 + 248) = 0;
                                                     *(short*)(a1 + 204) = 25;
                                                 }
                                             }
@@ -27209,7 +27209,7 @@ Warning();//修正堆栈
                                         {
                                             if (*(int*)(a1 + 444) >= 28)
                                             {
-                                                *(_BYTE*)(a1 + 257) = 2;
+                                                *(char*)(a1 + 257) = 2;
                                                 *(short*)(a1 + 204) = 19;
                                             }
                                             else
@@ -27219,7 +27219,7 @@ Warning();//修正堆栈
                                         }
                                         else
                                         {
-                                            *(_BYTE*)(a1 + 248) = 0;
+                                            *(char*)(a1 + 248) = 0;
                                             *(short*)(a1 + 204) = 17;
                                         }
                                     }
@@ -27270,7 +27270,7 @@ Warning();//修正堆栈
                 {
                     if (*(int*)(a1 + 444) == 1)
                     {
-                        *(_BYTE*)(a1 + 212) = 0;
+                        *(char*)(a1 + 212) = 0;
                         v198 = sub_41CCEA(a1, 1);
                         sub_41EF8A((short*)a1, v198 / 25);
                     }
@@ -27301,10 +27301,10 @@ Warning();//修正堆栈
                 }
                 if (*(int*)(a1 + 428) == 116)
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     if (*(int*)(a1 + 304))
                     {
-                        *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) + 1 - 2 * (*(int*)(a1 + 444) % 2);
+                        *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) + 1 - 2 * (*(int*)(a1 + 444) % 2);
                         if (*(int*)(a1 + 444) >= 5)
                         {
                             v308 = (*(int*)(a1 + 444) - 5) / 3 % 2;
@@ -27335,7 +27335,7 @@ Warning();//修正堆栈
                     {
                         *(int*)(a1 + 304) = 0;
                         if (*(int*)(a1 + 444) >= 28)
-                            *(_BYTE*)(a1 + 470) = *(unsigned __int8*)(a1 + 470) / 2;
+                            *(char*)(a1 + 470) = *(unsigned __int8*)(a1 + 470) / 2;
                         if (*(int*)(a1 + 436))
                             *(int*)(a1 + 432) = 45;
                         else
@@ -27355,10 +27355,10 @@ Warning();//修正堆栈
                         v242 = (double)(v200 * sub_41D067(a1, 1) / 10000) + v243;
                         v201 = (double)(*(int*)(a1 + 436) * sub_41CB3B(a1, 1) / 180) + v242;
                         sub_41F169((short*)a1, (__int64)v201);
-                        *(_BYTE*)(a1 + 257) = 1;
-                        *(_BYTE*)(a1 + 248) = 2;
-                        *(_BYTE*)(a1 + 212) = 0;
-                        *(_BYTE*)(a1 + 213) = -1;
+                        *(char*)(a1 + 257) = 1;
+                        *(char*)(a1 + 248) = 2;
+                        *(char*)(a1 + 212) = 0;
+                        *(char*)(a1 + 213) = -1;
                         *(int*)(a1 + 352) = 0;
                         *(int*)(a1 + 348) = -500 - *(int*)(a1 + 436);
                         if (2 * *(int*)(a1 + 372) <= 0)
@@ -27386,12 +27386,12 @@ Warning();//修正堆栈
                 }
                 if (*(int*)(a1 + 428) == 188)
                 {
-                    *(_BYTE*)(a1 + 212) = 0;
+                    *(char*)(a1 + 212) = 0;
                     if (*(int*)(a1 + 444) == 1)
                     {
                         *(int*)(a1 + 436) = 0;
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
-                        *(_BYTE*)(a1 + 248) = -1;
+                        *(char*)(a1 + 248) = -1;
                         *(int*)(a1 + 372) *= 2;
                         *(int*)(a1 + 380) = *(int*)(a1 + 372);
                         *(int*)(a1 + 352) = (__int64)((double)*(int*)(a1 + 352) * 1.5);
@@ -27423,7 +27423,7 @@ Warning();//修正堆栈
                 {
                     if (*(int*)(a1 + 444) == 1)
                     {
-                        *(_BYTE*)(a1 + 212) = 0;
+                        *(char*)(a1 + 212) = 0;
                         memset((void*)(a1 + 453), 0, 8u);
                         memset((void*)(a1 + 461), 0, 8u);
                         *(int*)(a1 + 372) = 0;
@@ -27434,9 +27434,9 @@ Warning();//修正堆栈
                         *(int*)(a1 + 356) = 0;
                         *(int*)(a1 + 436) = 0;
                         v302 = 0;
-                        if (*(_BYTE*)(a1 + 195))
+                        if (*(char*)(a1 + 195))
                         {
-                            switch (*(_BYTE*)(a1 + 195))
+                            switch (*(char*)(a1 + 195))
                             {
                             case 1:
                                 v302 = 32 * sub_4175B4(a1, 1) / 100;
@@ -27453,11 +27453,11 @@ Warning();//修正堆栈
                         {
                             v302 = 35 * sub_4175B4(a1, 1) / 100;
                         }
-                        if (*(_BYTE*)(a1 + 258) == 1)
+                        if (*(char*)(a1 + 258) == 1)
                         {
                             v302 = 12 * v302 / 10;
                         }
-                        else if (*(_BYTE*)(a1 + 258) == 2)
+                        else if (*(char*)(a1 + 258) == 2)
                         {
                             v302 = 80 * v302 / 100;
                         }
@@ -27549,7 +27549,7 @@ Warning();//修正堆栈
                             v304 + *(int*)(a1 + 336),
                             v307,
                             v305,
-                            v306 + *(_BYTE*)(a1 + 223));
+                            v306 + *(char*)(a1 + 223));
                     }
                     if (*(int*)(a1 + 444) >= 20)
                         *(int*)(a1 + 432) = 12;
@@ -27558,7 +27558,7 @@ Warning();//修正堆栈
                 if (*(int*)(a1 + 428) == 117)
                 {
                     if (*(int*)(a1 + 444) == 1)
-                        sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                        sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                     if (*(int*)(a1 + 444) == 16 && *(int*)(a1 + 304))
                     {
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
@@ -27581,16 +27581,16 @@ Warning();//修正堆栈
                 {
                     if (*(int*)(a1 + 444) == 1)
                     {
-                        *(_BYTE*)(a1 + 212) = 0;
+                        *(char*)(a1 + 212) = 0;
                         *(int*)(a1 + 436) = *(int*)(a1 + 328);
                         *(int*)(a1 + 440) = *(int*)(a1 + 336);
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A38, -1, 100, 100, 0);
-                        if (*(_BYTE*)(a1 + 224))
+                        if (*(char*)(a1 + 224))
                             *(int*)(a1 + 424) = *(char*)(a1 + 224) > 0;
                         v301 = 0;
-                        if (*(_BYTE*)(a1 + 195))
+                        if (*(char*)(a1 + 195))
                         {
-                            switch (*(_BYTE*)(a1 + 195))
+                            switch (*(char*)(a1 + 195))
                             {
                             case 1:
                                 v301 = 37 * sub_4175B4(a1, 1) / 100;
@@ -27607,11 +27607,11 @@ Warning();//修正堆栈
                         {
                             v301 = 40 * sub_4175B4(a1, 1) / 100;
                         }
-                        if (*(_BYTE*)(a1 + 258) == 1)
+                        if (*(char*)(a1 + 258) == 1)
                         {
                             v301 = 12 * v301 / 10;
                         }
-                        else if (*(_BYTE*)(a1 + 258) == 2)
+                        else if (*(char*)(a1 + 258) == 2)
                         {
                             v301 = 50 * v301 / 100;
                         }
@@ -27659,7 +27659,7 @@ Warning();//修正堆栈
                             v297 + *(int*)(a1 + 336),
                             v300,
                             v299,
-                            *(_BYTE*)(a1 + 223) - 1);
+                            *(char*)(a1 + 223) - 1);
                     }
                     else if (*(int*)(a1 + 444) == 61)
                     {
@@ -27683,16 +27683,16 @@ Warning();//修正堆栈
                 {
                     if (*(int*)(a1 + 444) == 1)
                     {
-                        *(_BYTE*)(a1 + 212) = 0;
+                        *(char*)(a1 + 212) = 0;
                         *(int*)(a1 + 392) = 1;
                         memset((void*)(a1 + 453), 0, 8u);
                         memset((void*)(a1 + 461), 0, 8u);
                         if (*(int*)(a1 + 304))
-                            *(_BYTE*)(a1 + (unsigned __int8)sub_425EF0(*(_BYTE**)(a1 + 304)) + 453) = -1;
-                        *(_BYTE*)(a1 + 257) = 1;
-                        *(_BYTE*)(a1 + 248) = 2;
-                        *(_BYTE*)(a1 + 253) = 1;
-                        sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                            *(char*)(a1 + (unsigned __int8)sub_425EF0(*(char**)(a1 + 304)) + 453) = -1;
+                        *(char*)(a1 + 257) = 1;
+                        *(char*)(a1 + 248) = 2;
+                        *(char*)(a1 + 253) = 1;
+                        sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                     }
                     if (*(int*)(a1 + 444) > 2
                         && *(int*)(a1 + 444) < 61
@@ -27704,7 +27704,7 @@ Warning();//修正堆栈
                     }
                     if (*(int*)(a1 + 444) >= 61 && *(int*)(a1 + 444) == 61)
                     {
-                        *(_BYTE*)(a1 + 257) = 0;
+                        *(char*)(a1 + 257) = 0;
                         sub_41261C((short*)a1, *(unsigned __int16*)(a1 + 242), *(int*)(a1 + 304), 1); //减血函数
                         *(int*)(a1 + 304) = 0;
                         *(int*)(a1 + 372) = 0;
@@ -27721,12 +27721,12 @@ Warning();//修正堆栈
                 {
                     if (*(int*)(a1 + 444) == 1)
                     {
-                        *(_BYTE*)(a1 + 212) = 0;
-                        *(_BYTE*)(a1 + 251) = 0;
+                        *(char*)(a1 + 212) = 0;
+                        *(char*)(a1 + 251) = 0;
                         v295 = 0;
-                        if (*(_BYTE*)(a1 + 195))
+                        if (*(char*)(a1 + 195))
                         {
-                            switch (*(_BYTE*)(a1 + 195))
+                            switch (*(char*)(a1 + 195))
                             {
                             case 1:
                                 v295 = 32 * sub_41CB3B(a1, 1) / 100;
@@ -27743,11 +27743,11 @@ Warning();//修正堆栈
                         {
                             v295 = 35 * sub_41CB3B(a1, 1) / 100;
                         }
-                        if (*(_BYTE*)(a1 + 258) == 1)
+                        if (*(char*)(a1 + 258) == 1)
                         {
                             v295 = 12 * v295 / 10;
                         }
-                        else if (*(_BYTE*)(a1 + 258) == 2)
+                        else if (*(char*)(a1 + 258) == 2)
                         {
                             v295 = 75 * v295 / 100;
                         }
@@ -27823,7 +27823,7 @@ Warning();//修正堆栈
                         if (*(int*)(a1 + 444) == 1)
                         {
                             *(int*)(a1 + 436) = 0;
-                            *(_BYTE*)(a1 + 212) = 0;
+                            *(char*)(a1 + 212) = 0;
                             *(int*)(a1 + 372) = 0;
                             *(int*)(a1 + 340) = 0;
                             *(int*)(a1 + 352) = 0;
@@ -27832,7 +27832,7 @@ Warning();//修正堆栈
                             *(int*)(a1 + 356) = 0;
                             *(int*)(a1 + 348) = 0;
                             *(int*)(a1 + 360) = 0;
-                            sub_423CF2((_BYTE*)a1, 1, 0, 1, 0, 0, 0);
+                            sub_423CF2((char*)a1, 1, 0, 1, 0, 0, 0);
                         }
                         if (*(int*)(a1 + 444) >= 6)
                         {
@@ -27865,7 +27865,7 @@ Warning();//修正堆栈
                             *(int*)(a1 + 304) = 0;
                             *(int*)(a1 + 372) = 0;
                             *(int*)(a1 + 376) = 0;
-                            sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                            sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                         }
                         if (*(int*)(a1 + 444) > 2 && *(int*)(a1 + 444) < 58 && !*(int*)(a1 + 436) && *(int*)(a1 + 304))
                             v294[2] = sub_425D70(*(int**)(a1 + 304));
@@ -27882,7 +27882,7 @@ Warning();//修正堆栈
                             *(int*)(a1 + 424) = sub_425D70(*(int**)(a1 + 304)) == 0;
                             *(int*)(a1 + 316) = *(int*)(a1 + 304);
                             *(int*)(a1 + 304) = 0;
-                            sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                            sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                             *(int*)(a1 + 348) = 0;
                             *(int*)(a1 + 360) = 0;
                         }
@@ -27912,8 +27912,8 @@ Warning();//修正堆栈
                         if (*(int*)(a1 + 444) == 1)
                         {
                             *(int*)(a1 + 436) = 0;
-                            *(_BYTE*)(a1 + 212) = 0;
-                            *(_BYTE*)(a1 + 251) = 0;
+                            *(char*)(a1 + 212) = 0;
+                            *(char*)(a1 + 251) = 0;
                             *(int*)(a1 + 360) = 0;
                             *(int*)(a1 + 356) = 0;
                             *(int*)(a1 + 352) = 0;
@@ -27923,10 +27923,10 @@ Warning();//修正堆栈
                             *(int*)(a1 + 376) = 0;
                             *(int*)(a1 + 372) = 0;
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A18, -1, 100, 100, 0);
-                            if (*(_BYTE*)(a1 + 224))
+                            if (*(char*)(a1 + 224))
                                 *(int*)(a1 + 424) = *(char*)(a1 + 224) > 0;
                             v289 = 0;
-                            switch (*(_BYTE*)(a1 + 195))
+                            switch (*(char*)(a1 + 195))
                             {
                             case 0:
                             case 1:
@@ -27939,11 +27939,11 @@ Warning();//修正堆栈
                                 v289 = 45 * sub_4175B4(a1, 1) / 100;
                                 break;
                             }
-                            if (*(_BYTE*)(a1 + 258) == 1)
+                            if (*(char*)(a1 + 258) == 1)
                             {
                                 v289 = 12 * v289 / 10;
                             }
-                            else if (*(_BYTE*)(a1 + 258) == 2)
+                            else if (*(char*)(a1 + 258) == 2)
                             {
                                 v289 = 75 * v289 / 100;
                             }
@@ -28008,7 +28008,7 @@ Warning();//修正堆栈
                         if (*(int*)(a1 + 444) == 1)
                         {
                             *(int*)(a1 + 436) = 0;
-                            *(_BYTE*)(a1 + 212) = 0;
+                            *(char*)(a1 + 212) = 0;
                             *(int*)(a1 + 372) = 0;
                             *(int*)(a1 + 340) = 0;
                             *(int*)(a1 + 352) = 0;
@@ -28021,14 +28021,14 @@ Warning();//修正堆栈
                             memset((void*)(a1 + 461), 0, 8u);
                             if (*(int*)(a1 + 304))
                             {
-                                *(_BYTE*)(a1 + (unsigned __int8)sub_425EF0(*(_BYTE**)(a1 + 304)) + 453) = -1;
+                                *(char*)(a1 + (unsigned __int8)sub_425EF0(*(char**)(a1 + 304)) + 453) = -1;
                                 *(int*)(a1 + 424) = sub_425D70(*(int**)(a1 + 304));
-                                *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) - 1;
+                                *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) - 1;
                             }
-                            *(_BYTE*)(a1 + 257) = 1;
-                            *(_BYTE*)(a1 + 248) = 2;
-                            *(_BYTE*)(a1 + 253) = 1;
-                            sub_423CF2((_BYTE*)a1, 1, -16, 1, 0, 0, 0);
+                            *(char*)(a1 + 257) = 1;
+                            *(char*)(a1 + 248) = 2;
+                            *(char*)(a1 + 253) = 1;
+                            sub_423CF2((char*)a1, 1, -16, 1, 0, 0, 0);
                         }
                         if (*(int*)(a1 + 444) > 1
                             && !*(int*)(a1 + 436)
@@ -28037,13 +28037,13 @@ Warning();//修正堆栈
                         {
                             *(int*)(a1 + 304) = 0;
                             sub_417C83(a1);
-                            sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                            sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                         }
                         if (*(int*)(a1 + 444) > 1 && *(int*)(a1 + 304) && sub_426010(*(int**)(a1 + 304)) == 1)
                         {
                             *(int*)(a1 + 316) = *(int*)(a1 + 304);
                             *(int*)(a1 + 304) = 0;
-                            sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                            sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                             *(int*)(a1 + 436) = 1;
                         }
                         if (*(int*)(a1 + 436) || !*(int*)(a1 + 304))
@@ -28067,14 +28067,14 @@ Warning();//修正堆栈
                         {
                             *(int*)(a1 + 436) = 0;
                             *(int*)(a1 + 392) = 1;
-                            *(_BYTE*)(a1 + 212) = 0;
-                            *(_BYTE*)(a1 + 251) = 0;
-                            *(_BYTE*)(a1 + 212) = 0;
-                            *(_BYTE*)(a1 + 251) = 0;
+                            *(char*)(a1 + 212) = 0;
+                            *(char*)(a1 + 251) = 0;
+                            *(char*)(a1 + 212) = 0;
+                            *(char*)(a1 + 251) = 0;
                             v288 = 0;
-                            if (*(_BYTE*)(a1 + 195))
+                            if (*(char*)(a1 + 195))
                             {
-                                switch (*(_BYTE*)(a1 + 195))
+                                switch (*(char*)(a1 + 195))
                                 {
                                 case 1:
                                     v288 = 25 * sub_41CB3B(a1, 1) / 100;
@@ -28091,11 +28091,11 @@ Warning();//修正堆栈
                             {
                                 v288 = 20 * sub_41CB3B(a1, 1) / 100;
                             }
-                            if (*(_BYTE*)(a1 + 258) == 1)
+                            if (*(char*)(a1 + 258) == 1)
                             {
                                 v288 = 12 * v288 / 10;
                             }
-                            else if (*(_BYTE*)(a1 + 258) == 2)
+                            else if (*(char*)(a1 + 258) == 2)
                             {
                                 v288 = 75 * v288 / 100;
                             }
@@ -28108,7 +28108,7 @@ Warning();//修正堆栈
                             && (!*(int*)(a1 + 304)
                                 || Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 304)) != (struct Concurrency::ISchedulerProxy*)121))
                         {
-                            sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                            sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                             *(int*)(a1 + 304) = 0;
                             *(int*)(a1 + 360) = 0;
                             *(int*)(a1 + 356) = 0;
@@ -28124,7 +28124,7 @@ Warning();//修正堆栈
                             *(int*)(a1 + 432) = 50;
                         }
                         if (*(int*)(a1 + 444) < 86 && *(int*)(a1 + 304))
-                            sub_423CF2((_BYTE*)a1, 1, 0, 1, 0, 1, -20);
+                            sub_423CF2((char*)a1, 1, 0, 1, 0, 1, -20);
                         if (*(int*)(a1 + 444) == 6 && *(int*)(a1 + 304))
                             *(int*)(a1 + 424) = sub_425D70(*(int**)(a1 + 304));
                         if (*(int*)(a1 + 444) >= 6)
@@ -28161,7 +28161,7 @@ Warning();//修正堆栈
                                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A10, -1, 100, 100, 0);
                                     sub_41261C(*(short**)(a1 + 304), *(unsigned __int16*)(a1 + 242), a1, 1); //减血函数
                                     *(int*)(a1 + 304) = 0;
-                                    sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                                    sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                                 }
                             }
                             else
@@ -28193,7 +28193,7 @@ Warning();//修正堆栈
                     {
                         if (*(int*)(a1 + 444) == 1)
                         {
-                            *(_BYTE*)(a1 + 212) = 0;
+                            *(char*)(a1 + 212) = 0;
                             *(int*)(a1 + 360) = 0;
                             *(int*)(a1 + 356) = 0;
                             *(int*)(a1 + 352) = 0;
@@ -28202,9 +28202,9 @@ Warning();//修正堆栈
                             *(int*)(a1 + 340) = 0;
                             *(int*)(a1 + 376) = 0;
                             *(int*)(a1 + 372) = 0;
-                            sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                            sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                             if (*(int*)(a1 + 304))
-                                *(_BYTE*)(a1 + 223) = sub_426030(*(_BYTE**)(a1 + 304)) - 1;
+                                *(char*)(a1 + 223) = sub_426030(*(char**)(a1 + 304)) - 1;
                         }
                         if (*(int*)(a1 + 444) > 1
                             && *(int*)(a1 + 444) < 86
@@ -28262,7 +28262,7 @@ Warning();//修正堆栈
                     {
                         if (*(int*)(a1 + 444) == 1)
                         {
-                            *(_BYTE*)(a1 + 212) = 0;
+                            *(char*)(a1 + 212) = 0;
                             memset((void*)(a1 + 453), 0, 8u);
                             memset((void*)(a1 + 461), 0, 8u);
                             *(int*)(a1 + 372) = 0;
@@ -28272,19 +28272,19 @@ Warning();//修正堆栈
                             *(int*)(a1 + 352) = 0;
                             *(int*)(a1 + 356) = 0;
                             *(int*)(a1 + 436) = 0;
-                            if (!*(_BYTE*)(a1 + 195)
-                                || *(_BYTE*)(a1 + 195) == 1
-                                || *(_BYTE*)(a1 + 195) == 2
-                                || *(_BYTE*)(a1 + 195) == 3)
+                            if (!*(char*)(a1 + 195)
+                                || *(char*)(a1 + 195) == 1
+                                || *(char*)(a1 + 195) == 2
+                                || *(char*)(a1 + 195) == 3)
                             {
                                 sub_4175B4(a1, 1);
                             }
                             v286 = sub_41CCEA(a1, 1) / 3 + 10;
-                            if (*(_BYTE*)(a1 + 258) == 1)
+                            if (*(char*)(a1 + 258) == 1)
                             {
                                 v286 = 12 * v286 / 10;
                             }
-                            else if (*(_BYTE*)(a1 + 258) == 2)
+                            else if (*(char*)(a1 + 258) == 2)
                             {
                                 v286 /= 2;
                             }
@@ -28396,7 +28396,7 @@ Warning();//修正堆栈
                     {
                         if (*(int*)(a1 + 444) == 1)
                         {
-                            *(_BYTE*)(a1 + 212) = 0;
+                            *(char*)(a1 + 212) = 0;
                             memset((void*)(a1 + 453), 0, 8u);
                             memset((void*)(a1 + 461), 0, 8u);
                             *(int*)(a1 + 372) = 0;
@@ -28406,11 +28406,11 @@ Warning();//修正堆栈
                             *(int*)(a1 + 352) = 0;
                             *(int*)(a1 + 356) = 0;
                             *(int*)(a1 + 392) = 1;
-                            sub_423CF2((_BYTE*)a1, 1, -16, 1, 0, 0, 0);
+                            sub_423CF2((char*)a1, 1, -16, 1, 0, 0, 0);
                         }
                         else if (*(int*)(a1 + 444) == 12)
                         {
-                            sub_423CF2((_BYTE*)a1, 1, 16, 1, 0, 0, 0);
+                            sub_423CF2((char*)a1, 1, 16, 1, 0, 0, 0);
                         }
                         if (*(int*)(a1 + 444) >= 6)
                         {
@@ -28421,17 +28421,17 @@ Warning();//修正堆栈
                                     && sub_426010(*(int**)(a1 + 304)) == 1)
                                 {
                                     *(int*)(a1 + 432) = 169;
-                                    sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                                    sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                                 }
                                 if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 304)) != (struct Concurrency::ISchedulerProxy*)108)
                                 {
-                                    sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                                    sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                                     *(int*)(a1 + 304) = 0;
                                 }
                             }
                             else
                             {
-                                sub_423CF2((_BYTE*)a1, 0, 0, 0, 0, 0, 0);
+                                sub_423CF2((char*)a1, 0, 0, 0, 0, 0, 0);
                             }
                         }
                         else
@@ -28450,8 +28450,8 @@ Warning();//修正堆栈
                     {
                         if (*(int*)(a1 + 444) == 1)
                         {
-                            *(_BYTE*)(a1 + 257) = 2;
-                            *(_BYTE*)(a1 + 252) = 0;
+                            *(char*)(a1 + 257) = 2;
+                            *(char*)(a1 + 252) = 0;
                             if (*(char*)(a1 + 224) <= 0)
                                 v234 = (*(char*)(a1 + 224) >= 0) - 1;
                             else
@@ -28463,12 +28463,12 @@ Warning();//修正堆栈
                             *(int*)(a1 + 440) = v234 + 8 * v233 + 9;
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9AE8, -1, 100, 100, 0);
                         }
-                        *(_BYTE*)(a1 + 212) = 0;
+                        *(char*)(a1 + 212) = 0;
                         *(short*)(a1 + 204) = *(int*)(a1 + 444) / 4 % 2 + 273;
                         if (*(int*)(a1 + 444) == 16)
                         {
                             sub_42526D((int*)a1, *(int*)(a1 + 436));
-                            *(_BYTE*)(a1 + 252) = 1;
+                            *(char*)(a1 + 252) = 1;
                         }
                         if (*(int*)(a1 + 444) >= 32)
                             *(int*)(a1 + 432) = 50;
@@ -28480,24 +28480,24 @@ Warning();//修正堆栈
                         {
                             *(int*)(a1 + 380) = 0;
                             *(int*)(a1 + 436) = 0;
-                            *(_BYTE*)(a1 + 212) = 0;
-                            *(_BYTE*)(a1 + 248) = 2;
+                            *(char*)(a1 + 212) = 0;
+                            *(char*)(a1 + 248) = 2;
                             v232 = (double)sub_41CCEA(a1, 1) * 1.5;
                             v212 = sub_41CCEA(a1, 1);
                             v213 = (double)(v212 * sub_41D067(a1, 1) / 200) + v232;
                             sub_41F169((short*)a1, (__int64)v213);
-                            *(_BYTE*)(a1 + 213) = -1;
+                            *(char*)(a1 + 213) = -1;
                             memset((void*)(a1 + 453), 0, 8u);
                             memset((void*)(a1 + 461), 0, 8u);
-                            *(_BYTE*)(a1 + 257) = 1;
-                            *(_BYTE*)(a1 + 212) = 1;
-                            *(_BYTE*)(a1 + 452) = 5;
-                            *(_BYTE*)(a1 + 259) = 1;
-                            *(_BYTE*)(a1 + 260) = 1;
+                            *(char*)(a1 + 257) = 1;
+                            *(char*)(a1 + 212) = 1;
+                            *(char*)(a1 + 452) = 5;
+                            *(char*)(a1 + 259) = 1;
+                            *(char*)(a1 + 260) = 1;
                         }
                         if (*(int*)(a1 + 444) == 2)
                         {
-                            *(_BYTE*)(a1 + 248) = 13 - 10 * (*(int*)(a1 + 436) == 2);
+                            *(char*)(a1 + 248) = 13 - 10 * (*(int*)(a1 + 436) == 2);
                             *(int*)(a1 + 372) = 0;
                             *(int*)(a1 + 376) = 0;
                             *(int*)(a1 + 340) = (350 * (*(int*)(a1 + 436) == 2) + 350)
@@ -28565,20 +28565,20 @@ Warning();//修正堆栈
                             *(int*)(a1 + 352) = 0;
                             *(int*)(a1 + 348) = -80;
                             *(int*)(a1 + 360) = 2;
-                            *(_BYTE*)(a1 + 250) = 12;
+                            *(char*)(a1 + 250) = 12;
                             memset((void*)(a1 + 453), 0, 8u);
                             memset((void*)(a1 + 461), 0, 8u);
-                            *(_BYTE*)(a1 + 257) = 1;
-                            *(_BYTE*)(a1 + 212) = 0;
-                            *(_BYTE*)(a1 + 248) = 1;
-                            *(_BYTE*)(a1 + 259) = 1;
+                            *(char*)(a1 + 257) = 1;
+                            *(char*)(a1 + 212) = 0;
+                            *(char*)(a1 + 248) = 1;
+                            *(char*)(a1 + 259) = 1;
                             v231 = (double)sub_41CCEA(a1, 1) * 1.25;
                             v214 = sub_41CCEA(a1, 1);
                             v215 = (double)(v214 * sub_41D067(a1, 1) / 200) + v231;
                             sub_41F169((short*)a1, (__int64)v215);
-                            *(_BYTE*)(a1 + 213) = -1;
-                            *(_BYTE*)(a1 + 452) = 8;
-                            *(_BYTE*)(a1 + 248) = 12;
+                            *(char*)(a1 + 213) = -1;
+                            *(char*)(a1 + 452) = 8;
+                            *(char*)(a1 + 248) = 12;
                             if (*(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
                                 *(int*)(a1 + 400) = 1;
                             break;
@@ -28590,10 +28590,10 @@ Warning();//修正堆栈
                             *(int*)(a1 + 400) = 0;
                             break;
                         }
-                        *(_BYTE*)(a1 + 212) = 1;
+                        *(char*)(a1 + 212) = 1;
                         if (*(int*)(a1 + 444) >= 80)
                         {
-                            *(_BYTE*)(a1 + 257) = 2;
+                            *(char*)(a1 + 257) = 2;
                             *(int*)(a1 + 360) = 30;
                             *(short*)(a1 + 204) = 4;
                         }
@@ -28620,18 +28620,18 @@ Warning();//修正堆栈
                             *(int*)(a1 + 360) = 0;
                             memset((void*)(a1 + 453), 0, 8u);
                             memset((void*)(a1 + 461), 0, 8u);
-                            *(_BYTE*)(a1 + 257) = 1;
-                            *(_BYTE*)(a1 + 212) = 0;
-                            *(_BYTE*)(a1 + 248) = 0;
-                            *(_BYTE*)(a1 + 259) = 1;
-                            *(_BYTE*)(a1 + 260) = 1;
+                            *(char*)(a1 + 257) = 1;
+                            *(char*)(a1 + 212) = 0;
+                            *(char*)(a1 + 248) = 0;
+                            *(char*)(a1 + 259) = 1;
+                            *(char*)(a1 + 260) = 1;
                             v230 = (double)sub_41CB3B(a1, 1) * 1.25;
                             v216 = sub_41CB3B(a1, 1);
                             v217 = (double)(v216 * sub_41D067(a1, 1) / 200) + v230;
                             sub_41F169((short*)a1, (__int64)v217);
-                            *(_BYTE*)(a1 + 213) = -1;
+                            *(char*)(a1 + 213) = -1;
                         }
-                        *(_BYTE*)(a1 + 212) = 1;
+                        *(char*)(a1 + 212) = 1;
                         if (*(int*)(a1 + 444) >= 4)
                         {
                             if (*(int*)(a1 + 444) >= 10)
@@ -28690,7 +28690,7 @@ Warning();//修正堆栈
                             if (*(int*)(a1 + 444) == 10)
                             {
                                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A40, -1, 100, 100, 0);
-                                *(_BYTE*)(a1 + 248) = 5;
+                                *(char*)(a1 + 248) = 5;
                                 *(int*)(a1 + 392) = 1;
                                 *(int*)(a1 + 340) = 200 * (*(int*)(a1 + 424) - (*(int*)(a1 + 424) == 0));
                                 *(int*)(a1 + 352) = -*(int*)(a1 + 340) / 20;
@@ -28722,21 +28722,21 @@ Warning();//修正堆栈
                                     *(int*)(a1 + 352) = 0;
                                     *(int*)(a1 + 348) = -100;
                                     *(int*)(a1 + 360) = 5;
-                                    *(_BYTE*)(a1 + 250) = 12;
+                                    *(char*)(a1 + 250) = 12;
                                     memset((void*)(a1 + 453), 0, 8u);
                                     memset((void*)(a1 + 461), 0, 8u);
-                                    *(_BYTE*)(a1 + 257) = 1;
-                                    *(_BYTE*)(a1 + 212) = 0;
-                                    *(_BYTE*)(a1 + 248) = 1;
+                                    *(char*)(a1 + 257) = 1;
+                                    *(char*)(a1 + 212) = 0;
+                                    *(char*)(a1 + 248) = 1;
                                     v228 = (double)sub_41CCEA(a1, 1) * 1.25;
                                     v220 = sub_41CCEA(a1, 1);
                                     v221 = (double)(v220 * sub_41D067(a1, 1) / 200) + v228;
                                     sub_41F169((short*)a1, (__int64)v221);
-                                    *(_BYTE*)(a1 + 213) = -1;
-                                    if (*(_BYTE*)(a1 + 188) == 2 || *(_BYTE*)(a1 + 188) == 3)
+                                    *(char*)(a1 + 213) = -1;
+                                    if (*(char*)(a1 + 188) == 2 || *(char*)(a1 + 188) == 3)
                                     {
-                                        *(_BYTE*)(a1 + 452) = 8;
-                                        *(_BYTE*)(a1 + 248) = 12;
+                                        *(char*)(a1 + 452) = 8;
+                                        *(char*)(a1 + 248) = 12;
                                         sub_4239D3(a1, 5);
                                     }
                                     if (*(int*)(a1 + 436) == 1 && *(int*)(a1 + 304))
@@ -28747,11 +28747,11 @@ Warning();//修正堆栈
                                     }
                                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A38, -1, 100, 100, 0);
                                 }
-                                *(_BYTE*)(a1 + 212) = 1;
+                                *(char*)(a1 + 212) = 1;
                                 if (*(int*)(a1 + 444) >= 40)
                                 {
                                     *(int*)(a1 + 304) = 0;
-                                    *(_BYTE*)(a1 + 257) = 2;
+                                    *(char*)(a1 + 257) = 2;
                                     *(int*)(a1 + 360) = 30;
                                     *(short*)(a1 + 204) = 4;
                                 }
@@ -28760,9 +28760,9 @@ Warning();//修正堆栈
                                     *(short*)(a1 + 204) = (*(int*)(a1 + 444) / 4 + 2 * *(int*)(a1 + 436)) % 4 + 68;
                                 }
                                 if (*(short*)(a1 + 204) == 69 || *(short*)(a1 + 204) == 70)
-                                    *(_BYTE*)(a1 + 223) = 127;
+                                    *(char*)(a1 + 223) = 127;
                                 else
-                                    *(_BYTE*)(a1 + 223) = 0x80;
+                                    *(char*)(a1 + 223) = 0x80;
                             }
                             return;
                         }
@@ -28778,20 +28778,20 @@ Warning();//修正堆栈
                             *(int*)(a1 + 360) = 0;
                             memset((void*)(a1 + 453), 0, 8u);
                             memset((void*)(a1 + 461), 0, 8u);
-                            *(_BYTE*)(a1 + 251) = 0;
-                            *(_BYTE*)(a1 + 257) = 1;
-                            *(_BYTE*)(a1 + 212) = 0;
-                            *(_BYTE*)(a1 + 248) = 7;
-                            *(_BYTE*)(a1 + 259) = 1;
-                            *(_BYTE*)(a1 + 452) = -1;
-                            *(_BYTE*)(a1 + 260) = 1;
+                            *(char*)(a1 + 251) = 0;
+                            *(char*)(a1 + 257) = 1;
+                            *(char*)(a1 + 212) = 0;
+                            *(char*)(a1 + 248) = 7;
+                            *(char*)(a1 + 259) = 1;
+                            *(char*)(a1 + 452) = -1;
+                            *(char*)(a1 + 260) = 1;
                             v229 = (double)sub_41CB3B(a1, 1) * 2.5;
                             v218 = sub_41CB3B(a1, 1);
                             v219 = (double)(v218 * sub_41D067(a1, 1) / 100) + v229;
                             sub_41F169((short*)a1, (__int64)v219);
-                            *(_BYTE*)(a1 + 213) = -1;
+                            *(char*)(a1 + 213) = -1;
                         }
-                        *(_BYTE*)(a1 + 212) = 1;
+                        *(char*)(a1 + 212) = 1;
                         if (*(int*)(a1 + 444) == 1)
                         {
                             *(short*)(a1 + 204) = 113;
@@ -28816,7 +28816,7 @@ Warning();//修正堆栈
                                 }
                                 else
                                 {
-                                    *(_BYTE*)(a1 + 251) = 1;
+                                    *(char*)(a1 + 251) = 1;
                                     *(short*)(a1 + 204) = 108;
                                 }
                             }
@@ -28874,10 +28874,10 @@ Warning();//修正堆栈
                     v191 = sub_41D067(a1, 1);
                     sub_41F169((short*)a1, v190 * v191 / 200 + v189);
                 }
-                *(_BYTE*)(a1 + 257) = 1;
-                *(_BYTE*)(a1 + 248) = -1;
-                *(_BYTE*)(a1 + 212) = 1;
-                *(_BYTE*)(a1 + 213) = -1;
+                *(char*)(a1 + 257) = 1;
+                *(char*)(a1 + 248) = -1;
+                *(char*)(a1 + 212) = 1;
+                *(char*)(a1 + 213) = -1;
                 if (!*(int*)(a1 + 392) || *(unsigned __int8*)(a1 + 238) <= 1u && sub_41BA53(a1, 0x86u, 0))
                 {
                     *(int*)(a1 + 400) = 1;
@@ -28892,9 +28892,9 @@ Warning();//修正堆栈
             }
             if (!*(int*)(a1 + 480))
             {
-                if (*(_BYTE*)(a1 + 195))
+                if (*(char*)(a1 + 195))
                 {
-                    switch (*(_BYTE*)(a1 + 195))
+                    switch (*(char*)(a1 + 195))
                     {
                     case 1:
                         if (*(int*)(a1 + 444) == 4 || *(int*)(a1 + 444) == 11 || *(int*)(a1 + 444) == 18)
@@ -28916,7 +28916,7 @@ Warning();//修正堆栈
                                             {
                                                 if (*(int*)(a1 + 444) >= 26)
                                                 {
-                                                    *(_BYTE*)(a1 + 257) = 2;
+                                                    *(char*)(a1 + 257) = 2;
                                                     *(short*)(a1 + 204) = 27;
                                                 }
                                                 else
@@ -28926,7 +28926,7 @@ Warning();//修正堆栈
                                             }
                                             else
                                             {
-                                                *(_BYTE*)(a1 + 248) = 0;
+                                                *(char*)(a1 + 248) = 0;
                                                 *(short*)(a1 + 204) = 25;
                                             }
                                         }
@@ -28993,7 +28993,7 @@ Warning();//修正堆栈
                                             {
                                                 if (*(int*)(a1 + 444) >= 31)
                                                 {
-                                                    *(_BYTE*)(a1 + 257) = 2;
+                                                    *(char*)(a1 + 257) = 2;
                                                     *(short*)(a1 + 204) = 27;
                                                 }
                                                 else
@@ -29003,7 +29003,7 @@ Warning();//修正堆栈
                                             }
                                             else
                                             {
-                                                *(_BYTE*)(a1 + 248) = 0;
+                                                *(char*)(a1 + 248) = 0;
                                                 *(short*)(a1 + 204) = 25;
                                             }
                                         }
@@ -29070,7 +29070,7 @@ Warning();//修正堆栈
                                             {
                                                 if (*(int*)(a1 + 444) >= 31)
                                                 {
-                                                    *(_BYTE*)(a1 + 257) = 2;
+                                                    *(char*)(a1 + 257) = 2;
                                                     *(short*)(a1 + 204) = 30;
                                                 }
                                                 else
@@ -29080,7 +29080,7 @@ Warning();//修正堆栈
                                             }
                                             else
                                             {
-                                                *(_BYTE*)(a1 + 248) = 0;
+                                                *(char*)(a1 + 248) = 0;
                                                 *(short*)(a1 + 204) = 28;
                                             }
                                         }
@@ -29150,7 +29150,7 @@ Warning();//修正堆栈
                                         {
                                             if (*(int*)(a1 + 444) >= 28)
                                             {
-                                                *(_BYTE*)(a1 + 257) = 2;
+                                                *(char*)(a1 + 257) = 2;
                                                 *(short*)(a1 + 204) = 23;
                                             }
                                             else
@@ -29160,7 +29160,7 @@ Warning();//修正堆栈
                                         }
                                         else
                                         {
-                                            *(_BYTE*)(a1 + 248) = 0;
+                                            *(char*)(a1 + 248) = 0;
                                             *(short*)(a1 + 204) = 21;
                                         }
                                     }
@@ -29214,7 +29214,7 @@ Warning();//修正堆栈
                 memset((void*)(a1 + 453), 0, 8u);
                 memset((void*)(a1 + 461), 0, 8u);
             }
-            *(_BYTE*)(a1 + 212) = 0;
+            *(char*)(a1 + 212) = 0;
             if (*(int*)(a1 + 444) >= 2)
             {
                 if (*(int*)(a1 + 444) >= 4)
@@ -29231,7 +29231,7 @@ Warning();//修正堆栈
                                     {
                                         if (*(int*)(a1 + 444) >= 24)
                                         {
-                                            *(_BYTE*)(a1 + 257) = 2;
+                                            *(char*)(a1 + 257) = 2;
                                             *(short*)(a1 + 204) = 211;
                                         }
                                         else
@@ -29241,7 +29241,7 @@ Warning();//修正堆栈
                                     }
                                     else
                                     {
-                                        *(_BYTE*)(a1 + 248) = 0;
+                                        *(char*)(a1 + 248) = 0;
                                         *(short*)(a1 + 204) = 209;
                                     }
                                 }
@@ -29306,9 +29306,9 @@ Warning();//修正堆栈
         {
             v64 = sub_4175B4(a1, 1);
             sub_41EF8A(*(short**)(a1 + 304), v64);
-            sub_423CF2(*(_BYTE**)(a1 + 304), 0, 0, 0, 0, 0, 0);
+            sub_423CF2(*(char**)(a1 + 304), 0, 0, 0, 0, 0, 0);
         }
-        v386 = (char*)sub_464AC9((char*)byte_4B9B10, (_BYTE*)a1, *(unsigned __int8**)(a1 + 304), 0);
+        v386 = (char*)sub_464AC9((char*)byte_4B9B10, (char*)a1, *(unsigned __int8**)(a1 + 304), 0);
         if (v386)
         {
             v383 = *(int*)(a1 + 328) - sub_426090((int*)v386);
@@ -29357,7 +29357,7 @@ Warning();//修正堆栈
         *(int*)(a1 + 304) = 0;
         *(int*)(a1 + 432) = 3;
     }
-    *(_BYTE*)(a1 + 212) = 1;
+    *(char*)(a1 + 212) = 1;
     if (*(int*)(a1 + 304))
     {
         v380 = sub_426090(*(int**)(a1 + 304));
@@ -29386,7 +29386,7 @@ Warning();//修正堆栈
                     v377 + *(int*)(a1 + 336),
                     *(int*)(a1 + 424),
                     16,
-                    *(_BYTE*)(a1 + 223) - 1);
+                    *(char*)(a1 + 223) - 1);
             }
         }
         else
@@ -29403,7 +29403,7 @@ Warning();//修正堆栈
                 v379 + *(int*)(a1 + 336),
                 *(int*)(a1 + 424),
                 15,
-                *(_BYTE*)(a1 + 223) - 1);
+                *(char*)(a1 + 223) - 1);
         }
         switch (*(int*)(a1 + 444))
         {
@@ -29424,12 +29424,12 @@ Warning();//修正堆栈
                 v375 + *(int*)(a1 + 336),
                 *(int*)(a1 + 424),
                 19,
-                *(_BYTE*)(a1 + 223) - 1);
+                *(char*)(a1 + 223) - 1);
             break;
         case 0x15:
             sub_426050(*(int**)(a1 + 304), 88);
             sub_408F50(*(int*)(a1 + 304), a2, a3, a4, 0);
-            v373 = (char*)sub_464AC9((char*)byte_4B9B10, (_BYTE*)a1, *(unsigned __int8**)(a1 + 304), 0);
+            v373 = (char*)sub_464AC9((char*)byte_4B9B10, (char*)a1, *(unsigned __int8**)(a1 + 304), 0);
             if (v373
                 && *(char**)(a1 + 304) != v373
                 && ((v65 = sub_426090((int*)v373), v369 = v65 - sub_426090(*(int**)(a1 + 304)), v369 >= 0)
@@ -29660,7 +29660,7 @@ int sub_43E7AA(int thisx, int a2, int a3)
                                                         if (v9 == 1)
                                                         {
                                                             memcpy((void*)(thisx + 4), String1, 0xAu);
-                                                            *(_BYTE*)(thisx + 14) = 0;
+                                                            *(char*)(thisx + 14) = 0;
                                                         }
                                                         else if (v9 == 2)
                                                         {
@@ -29669,7 +29669,7 @@ int sub_43E7AA(int thisx, int a2, int a3)
                                                         break;
                                                     case 2:
                                                         if (v9 > 0 && v9 < 11)
-                                                            *(_BYTE*)(thisx + v9 + 17) = sub_48307F(String1);
+                                                            *(char*)(thisx + v9 + 17) = sub_48307F(String1);
                                                         break;
                                                     case 3:
                                                         if (v9 == 1)
@@ -29701,15 +29701,15 @@ int sub_43E7AA(int thisx, int a2, int a3)
                                                         }
                                                         else if (v8 == 9 && v9 < 4)
                                                         {
-                                                            *(_BYTE*)(thisx + v9 + 27) = sub_48307F(String1);
+                                                            *(char*)(thisx + v9 + 27) = sub_48307F(String1);
                                                         }
                                                         else if (v8 == 10 && v9 < 7)
                                                         {
                                                             v5 = (v9 - 1) / 2;
                                                             if ((v9 - 1) % 2)
-                                                                *(_BYTE*)(thisx + 2 * v5 + 32) = sub_48307F(String1);
+                                                                *(char*)(thisx + 2 * v5 + 32) = sub_48307F(String1);
                                                             else
-                                                                *(_BYTE*)(thisx + 2 * v5 + 31) = sub_48307F(String1);
+                                                                *(char*)(thisx + 2 * v5 + 31) = sub_48307F(String1);
                                                         }
                                                         break;
                                                     }
@@ -29828,11 +29828,11 @@ unsigned __int8 sub_43EE02(unsigned __int8* thisx, int a2, int a3)
         v6 = sub_43ED4E(thisx, 2u);
         if (v6)
         {
-            v5 = *(_BYTE*)(a3 + 243);
+            v5 = *(char*)(a3 + 243);
             if (v5)
             {
                 v4 = 3 * (v5 - 1);
-                if (*(_BYTE*)(v6 + 1) == 1)
+                if (*(char*)(v6 + 1) == 1)
                     v4 -= 9;
                 if (!a2)
                     v4 *= 5;
@@ -29886,7 +29886,7 @@ char sub_43EF5D(int thisx, int a2, char a3)
 
     *(int*)(thisx + 4) = a2;
     result = a3;
-    *(_BYTE*)(thisx + 20) = a3;
+    *(char*)(thisx + 20) = a3;
     *(int*)(thisx + 16) = 0;
     return result;
 }
@@ -29924,7 +29924,7 @@ int __fastcall sub_43EF86(int a1)
                 {
                     *(int*)(a1 + 16) = 0;
                 }
-                *(_BYTE*)(a1 + 20) = -*(_BYTE*)(a1 + 20);
+                *(char*)(a1 + 20) = -*(char*)(a1 + 20);
             }
             sub_4097DF(*(void**)(a1 + 4), (int)v3);
             *(int*)(a1 + 8) = v3[0] - 20;
@@ -30143,7 +30143,7 @@ int* sub_43F690(int* thisx)
         thisx[j + 68] = (int)CreateEventA(0, 0, 0, 0);
     thisx[34] = 0;
     thisx[35] = 0;
-    *((_BYTE*)thisx + 154) = 0;
+    *((char*)thisx + 154) = 0;
     thisx[44] = -1;
     memset(thisx + 36, 0, 10);
     thisx[41] = 0;
@@ -30163,7 +30163,7 @@ int* sub_43F7BF(void* thisx)
 }
 
 //初始化
-_BYTE* sub_43F7D2(_BYTE* thisx)
+char* sub_43F7D2(char* thisx)
 {
     check_stack c(__FILE__, __LINE__);
     *(int*)thisx = 0;
@@ -30223,7 +30223,7 @@ int sub_43F91E(int* thisx)
         result = (*(int(**)(int, int))(*(int*)*thisx + 8))(*thisx, *thisx);
         *thisx = 0;
     }
-    *((_BYTE*)thisx + 4) = 0;
+    *((char*)thisx + 4) = 0;
     return result;
 }
 
@@ -30461,7 +30461,7 @@ int sub_43FC33(int* thisx, LPSTR pszFileName, int a3)
             {
                 (*(void(__stdcall**)(int, int, int, int, int))(*(int*)*thisx + 76))(*thisx, v12, v13, 0, 0);
                 sub_4901B9(&hmmio, (HGLOBAL*)&v14);//释放文件
-                *((_BYTE*)thisx + 4) = 1;
+                *((char*)thisx + 4) = 1;
                 return 1;
             }
         }
@@ -30503,7 +30503,7 @@ int sub_43FFC3(int* thisx, int a2, int a3, int a4, int a5, int a6)
   
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
-    _BYTE* v17; // [esp+34h] [ebp-4h]
+    char* v17; // [esp+34h] [ebp-4h]
     int v16; // [esp+30h] [ebp-8h]
     int v15; // [esp+2Ch] [ebp-Ch]
     int i; // [esp+28h] [ebp-10h]
@@ -30516,7 +30516,7 @@ int sub_43FFC3(int* thisx, int a2, int a3, int a4, int a5, int a6)
     int v7; // eax
 
     const char* var = R"(
-    _BYTE* v17; // [esp+34h] [ebp-4h]
+    char* v17; // [esp+34h] [ebp-4h]
     int v16; // [esp+30h] [ebp-8h]
     int v15; // [esp+2Ch] [ebp-Ch]
     int i; // [esp+28h] [ebp-10h]
@@ -30549,7 +30549,7 @@ int sub_43FFC3(int* thisx, int a2, int a3, int a4, int a5, int a6)
         return -1;
     if (a3 >= 16)
         return -1;
-    v17 = (_BYTE*)sub_440E6C(thisx, a2, 0);
+    v17 = (char*)sub_440E6C(thisx, a2, 0);
     if (!v17)
         return -1;
     if (sub_425F90(v17))
@@ -30755,7 +30755,7 @@ int sub_4404CB(int* thisx, LPSTR pszFileName, int a3)
         0) >= 0)
     {
         thisx[44] = -1;
-        *((_BYTE*)thisx + 296) = 0;
+        *((char*)thisx + 296) = 0;
         sub_44076B((int)thisx, 1);
         (*(void(**)(int, int, int, int, int))(*(int*)thisx[49] + 48))(
             thisx[49],
@@ -30965,7 +30965,7 @@ int __stdcall sub_440A5D(int a1)
             *(int*)(a1 + 172) = 0;
         }
         Sleep(0x10u);
-        if (*(_BYTE*)(a1 + 296))
+        if (*(char*)(a1 + 296))
             sub_440CD0(a1);
         ++v2;
     }
@@ -31091,14 +31091,14 @@ int sub_440CD0(int thisx)
     if (*(int*)(thisx + 300) <= 0)
         *(int*)(thisx + 300) = 1;
     v3 = 100 * *(int*)(thisx + 304) / *(int*)(thisx + 300);
-    if (*(_BYTE*)(thisx + 296) == 1)
+    if (*(char*)(thisx + 296) == 1)
         v3 = 100 - v3;
     sub_440C1D((int**)thisx, v3);
     result = thisx;
     if (*(int*)(thisx + 304) >= *(int*)(thisx + 300))
     {
         result = thisx;
-        *(_BYTE*)(thisx + 296) = 0;
+        *(char*)(thisx + 296) = 0;
     }
     return result;
 }
@@ -31108,7 +31108,7 @@ int sub_440D69(int thisx, char a2, int a3)
 {
     int result; // eax
 
-    *(_BYTE*)(thisx + 296) = a2;
+    *(char*)(thisx + 296) = a2;
     result = a3;
     *(int*)(thisx + 300) = a3;
     *(int*)(thisx + 304) = 0;
@@ -31295,9 +31295,9 @@ BOOL sub_4410E0(int* thisx)
 }
 
 
-_BYTE* sub_441100(_BYTE* thisx, char a2)
+char* sub_441100(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[5] = a2;
@@ -31305,9 +31305,9 @@ _BYTE* sub_441100(_BYTE* thisx, char a2)
 }
 
 
-_BYTE* sub_441120(_BYTE* thisx, char a2)
+char* sub_441120(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[5] += a2;
@@ -31573,7 +31573,7 @@ int __cdecl sub_441799(int* a1, int* a2, int* a3, unsigned int* a4)
 void sub_441930(void* thisx)
 {
     *(int*)thisx = off_4AC2D8;
-    *((_BYTE*)thisx + 20) = 0;
+    *((char*)thisx + 20) = 0;
     *((int*)thisx + 3) = 0;
     *((int*)thisx + 1) = 0;
     *((int*)thisx + 2) = 0;
@@ -31594,7 +31594,7 @@ int sub_441980(int thisx, int a2)
     {
         *(int*)(thisx + 4) = *(int*)a2;
         *(int*)(thisx + 8) = *(int*)(a2 + 4);
-        *(_BYTE*)(thisx + 20) = *(_BYTE*)(a2 + 8);
+        *(char*)(thisx + 20) = *(char*)(a2 + 8);
         *(int*)(thisx + 28) = *(int*)(a2 + 12);
         *(int*)(thisx + 16) = *(int*)(a2 + 16);
         *(int*)(thisx + 12) = -1;
@@ -31612,7 +31612,7 @@ int __fastcall sub_4419F6(int a1)
     int result; // eax 保存函数的返回值
 
     result = a1; // 初始化 result 为输入参数 a1
-    if (*(_BYTE*)(a1 + 20)) // 如果 a1 + 20 位置的字节不为 0
+    if (*(char*)(a1 + 20)) // 如果 a1 + 20 位置的字节不为 0
     {
         ++* (int*)(a1 + 12); // 将 a1 + 12 位置的 DWORD 增加 1
         result = *(unsigned __int8*)(a1 + 20); // result 赋值为 a1 + 20 位置的字节值
@@ -31628,12 +31628,12 @@ int __fastcall sub_4419F6(int a1)
             if (*(int*)(a1 + 12) == 6) // 如果 a1 + 12 位置的 DWORD 为 6
             {
                 result = a1; // result 赋值为 a1
-                *(_BYTE*)(a1 + 20) = 0; // 将 a1 + 20 位置的字节置为 0
+                *(char*)(a1 + 20) = 0; // 将 a1 + 20 位置的字节置为 0
             }
         }
         else if (*(unsigned __int8*)(a1 + 20) < 2u || (result = a1, *(unsigned __int8*)(a1 + 20) > 0x10u)) // 如果 a1 + 20 位置的字节值小于 2 或大于 16
         {
-            switch (*(_BYTE*)(a1 + 20)) // 根据 a1 + 20 位置的字节值进行 switch 分支判断
+            switch (*(char*)(a1 + 20)) // 根据 a1 + 20 位置的字节值进行 switch 分支判断
             {
             case 0x11: // 如果字节值为 17
                 if (*(int*)(a1 + 12) != 75 // 如果 a1 + 12 位置的 DWORD 不等于 75
@@ -31654,7 +31654,7 @@ int __fastcall sub_4419F6(int a1)
                 else
                 {
                     result = a1; // result 赋值为 a1
-                    *(_BYTE*)(a1 + 20) = 0; // 将 a1 + 20 位置的字节置为 0
+                    *(char*)(a1 + 20) = 0; // 将 a1 + 20 位置的字节置为 0
                 }
                 break;
             case 0x12: // 如果字节值为 18
@@ -31663,7 +31663,7 @@ int __fastcall sub_4419F6(int a1)
                 if (*(int*)(a1 + 12) >= 24) // 如果 a1 + 12 位置的 DWORD 大于等于 24
                 {
                     result = a1; // result 赋值为 a1
-                    *(_BYTE*)(a1 + 20) = 0; // 将 a1 + 20 位置的字节置为 0
+                    *(char*)(a1 + 20) = 0; // 将 a1 + 20 位置的字节置为 0
                 }
                 break;
             case 0x13: // 如果字节值为 19
@@ -31680,13 +31680,13 @@ int __fastcall sub_4419F6(int a1)
                 if (*(int*)(a1 + 12) >= 31) // 如果 a1 + 12 位置的 DWORD 大于等于 31
                 {
                     result = a1; // result 赋值为 a1
-                    *(_BYTE*)(a1 + 20) = 0; // 将 a1 + 20 位置的字节置为 0
+                    *(char*)(a1 + 20) = 0; // 将 a1 + 20 位置的字节置为 0
                 }
                 break;
             case 0x14: // 如果字节值为 20
                 result = a1; // result 赋值为 a1
                 if (*(int*)(a1 + 12) >= 20) // 如果 a1 + 12 位置的 DWORD 大于等于 20
-                    *(_BYTE*)(a1 + 20) = 0; // 将 a1 + 20 位置的字节置为 0
+                    *(char*)(a1 + 20) = 0; // 将 a1 + 20 位置的字节置为 0
                 break;
             }
         }
@@ -31701,9 +31701,9 @@ int __fastcall sub_4419F6(int a1)
             if (*(int*)(a1 + 12) >= 60) // 如果 a1 + 12 位置的 DWORD 大于等于 60
             {
                 result = a1; // result 赋值为 a1
-                *(_BYTE*)(a1 + 20) = 0; // 将 a1 + 20 位置的字节置为 0
+                *(char*)(a1 + 20) = 0; // 将 a1 + 20 位置的字节置为 0
             }
-            switch (*(_BYTE*)(a1 + 20)) // 根据 a1 + 20 位置的字节值进行 switch 分支判断
+            switch (*(char*)(a1 + 20)) // 根据 a1 + 20 位置的字节值进行 switch 分支判断
             {
             case 2:
                 result = a1; // result 赋值为 a1
@@ -31919,7 +31919,7 @@ unsigned __int16* __fastcall sub_441DB3(int a1)
     }
 
     result = (unsigned __int16*)a1;
-    if (*(_BYTE*)(a1 + 20) && !*(int*)(a1 + 32))
+    if (*(char*)(a1 + 20) && !*(int*)(a1 + 32))
     {
         sub_49C15E((int)&v39);
         if (*(int*)(a1 + 16))
@@ -31936,7 +31936,7 @@ unsigned __int16* __fastcall sub_441DB3(int a1)
         if ((*(unsigned __int8*)(a1 + 20) < 2u || *(unsigned __int8*)(a1 + 20) > 9u)
             && (*(unsigned __int8*)(a1 + 20) < 0xBu || *(unsigned __int8*)(a1 + 20) > 0x10u))
         {
-            switch (*(_BYTE*)(a1 + 20))
+            switch (*(char*)(a1 + 20))
             {
             case 0xA:
                 v40 -= 16;
@@ -32150,7 +32150,7 @@ unsigned __int16* __fastcall sub_441DB3(int a1)
                 sub_49AB05((int)byte_4BDC60, &v39);
                 v40 += v37;
             }
-            if (*(_BYTE*)(a1 + 20) == 4)
+            if (*(char*)(a1 + 20) == 4)
             {
                 result = v41 - 4;
                 v41 -= 4;
@@ -32173,7 +32173,7 @@ int sub_442815(int thisx)
     check_stack c(__FILE__, __LINE__);
     int result; // eax
 
-    *(_BYTE*)(thisx + 20) = 0;
+    *(char*)(thisx + 20) = 0;
     *(int*)(thisx + 12) = 0;
     *(int*)(thisx + 24) = 0;
     *(int*)(thisx + 4) = 0;
@@ -32190,7 +32190,7 @@ int* sub_442863(int* thisx)
     *thisx = 0;
     thisx[1] = 0;
     thisx[3] = 0;
-    *((_BYTE*)thisx + 8) = 0;
+    *((char*)thisx + 8) = 0;
     thisx[4] = 0;
     return thisx;
 }
@@ -32342,7 +32342,7 @@ int sub_44325C(int thisx)
 
     for (i = 0; i < *(unsigned __int8*)(thisx + 11352); ++i)
     {
-        *(_BYTE*)(*(int*)(thisx + 11356) + i) = 0;
+        *(char*)(*(int*)(thisx + 11356) + i) = 0;
         *(int*)(*(int*)(thisx + 11360) + 4 * i) = 0;
     }
     if (*(int*)(thisx + 104) != 1)
@@ -32357,25 +32357,25 @@ int sub_44325C(int thisx)
                     v18 = 0;
                     if (v20 == *(int*)(*(int*)(thisx + 11360) + 4 * j))
                     {
-                        if (*(_BYTE*)(*(int*)(thisx + 11356) + j))
+                        if (*(char*)(*(int*)(thisx + 11356) + j))
                         {
-                            v1 = (unsigned __int8)sub_426030((_BYTE*)(thisx + 612 * i + 2628));
-                            if (v1 < (unsigned __int8)sub_426030((_BYTE*)(thisx
+                            v1 = (unsigned __int8)sub_426030((char*)(thisx + 612 * i + 2628));
+                            if (v1 < (unsigned __int8)sub_426030((char*)(thisx
                                 + 612
                                 * (*(unsigned __int8*)(*(int*)(thisx + 11356) + j) - 1)
                                 + 2628)))
                                 v18 = 1;
                         }
                     }
-                    if (v18 || v20 < *(int*)(*(int*)(thisx + 11360) + 4 * j) || !*(_BYTE*)(*(int*)(thisx + 11356) + j))
+                    if (v18 || v20 < *(int*)(*(int*)(thisx + 11360) + 4 * j) || !*(char*)(*(int*)(thisx + 11356) + j))
                     {
                         for (k = 7; k > j; --k)
                         {
                             *(int*)(*(int*)(thisx + 11360) + 4 * k) = *(int*)(*(int*)(thisx + 11360) + 4 * k - 4);
-                            *(_BYTE*)(*(int*)(thisx + 11356) + k) = *(_BYTE*)(*(int*)(thisx + 11356) + k - 1);
+                            *(char*)(*(int*)(thisx + 11356) + k) = *(char*)(*(int*)(thisx + 11356) + k - 1);
                         }
                         *(int*)(*(int*)(thisx + 11360) + 4 * j) = v20;
-                        *(_BYTE*)(*(int*)(thisx + 11356) + j) = i + 1;
+                        *(char*)(*(int*)(thisx + 11356) + j) = i + 1;
                         break;
                     }
                 }
@@ -32388,15 +32388,15 @@ int sub_44325C(int thisx)
                 v16 = 100 * unknown_libname_26((int*)(thisx + 40 * i + 10760));
                 for (m = 0; m < *(unsigned __int8*)(thisx + 11352); ++m)
                 {
-                    if (v16 < *(int*)(*(int*)(thisx + 11360) + 4 * m) || !*(_BYTE*)(*(int*)(thisx + 11356) + m))
+                    if (v16 < *(int*)(*(int*)(thisx + 11360) + 4 * m) || !*(char*)(*(int*)(thisx + 11356) + m))
                     {
                         for (n = *(unsigned __int8*)(thisx + 11352) - 1; n > m; --n)
                         {
                             *(int*)(*(int*)(thisx + 11360) + 4 * n) = *(int*)(*(int*)(thisx + 11360) + 4 * n - 4);
-                            *(_BYTE*)(*(int*)(thisx + 11356) + n) = *(_BYTE*)(*(int*)(thisx + 11356) + n - 1);
+                            *(char*)(*(int*)(thisx + 11356) + n) = *(char*)(*(int*)(thisx + 11356) + n - 1);
                         }
                         *(int*)(*(int*)(thisx + 11360) + 4 * m) = v16;
-                        *(_BYTE*)(*(int*)(thisx + 11356) + m) = i + 9;
+                        *(char*)(*(int*)(thisx + 11356) + m) = i + 9;
                         break;
                     }
                 }
@@ -32410,15 +32410,15 @@ int sub_44325C(int thisx)
                 v13 = sub_426530((int*)(thisx + 196 * i + 7524));
                 for (ii = 0; ii < *(unsigned __int8*)(thisx + 11352); ++ii)
                 {
-                    if (v13 < *(int*)(*(int*)(thisx + 11360) + 4 * ii) || !*(_BYTE*)(*(int*)(thisx + 11356) + ii))
+                    if (v13 < *(int*)(*(int*)(thisx + 11360) + 4 * ii) || !*(char*)(*(int*)(thisx + 11356) + ii))
                     {
                         for (jj = *(unsigned __int8*)(thisx + 11352) - 1; jj > ii; --jj)
                         {
                             *(int*)(*(int*)(thisx + 11360) + 4 * jj) = *(int*)(*(int*)(thisx + 11360) + 4 * jj - 4);
-                            *(_BYTE*)(*(int*)(thisx + 11356) + jj) = *(_BYTE*)(*(int*)(thisx + 11356) + jj - 1);
+                            *(char*)(*(int*)(thisx + 11356) + jj) = *(char*)(*(int*)(thisx + 11356) + jj - 1);
                         }
                         *(int*)(*(int*)(thisx + 11360) + 4 * ii) = v13;
-                        *(_BYTE*)(*(int*)(thisx + 11356) + ii) = i + 17;
+                        *(char*)(*(int*)(thisx + 11356) + ii) = i + 17;
                         break;
                     }
                 }
@@ -32433,15 +32433,15 @@ int sub_44325C(int thisx)
             v9 = 100 * sub_474DD0(v10);
             for (kk = 0; kk < *(unsigned __int8*)(thisx + 11352); ++kk)
             {
-                if (v9 < *(int*)(*(int*)(thisx + 11360) + 4 * kk) || !*(_BYTE*)(*(int*)(thisx + 11356) + kk))
+                if (v9 < *(int*)(*(int*)(thisx + 11360) + 4 * kk) || !*(char*)(*(int*)(thisx + 11356) + kk))
                 {
                     for (mm = *(unsigned __int8*)(thisx + 11352) - 1; mm > kk; --mm)
                     {
                         *(int*)(*(int*)(thisx + 11360) + 4 * mm) = *(int*)(*(int*)(thisx + 11360) + 4 * mm - 4);
-                        *(_BYTE*)(*(int*)(thisx + 11356) + mm) = *(_BYTE*)(*(int*)(thisx + 11356) + mm - 1);
+                        *(char*)(*(int*)(thisx + 11356) + mm) = *(char*)(*(int*)(thisx + 11356) + mm - 1);
                     }
                     *(int*)(*(int*)(thisx + 11360) + 4 * kk) = v9;
-                    *(_BYTE*)(*(int*)(thisx + 11356) + kk) = i + 25;
+                    *(char*)(*(int*)(thisx + 11356) + kk) = i + 25;
                     break;
                 }
             }
@@ -32449,7 +32449,7 @@ int sub_44325C(int thisx)
     }
     for (i = 0; i < *(unsigned __int8*)(thisx + 11352); ++i)
     {
-        if (*(_BYTE*)(*(int*)(thisx + 11356) + i))
+        if (*(char*)(*(int*)(thisx + 11356) + i))
         {
             if (*(unsigned __int8*)(*(int*)(thisx + 11356) + i) >= 9u)
             {
@@ -32692,7 +32692,7 @@ int sub_443E80(int thisx)
     {
         // 获取当前槽位的状态
         LOBYTE(v29) = byte_4B9988[i];
-        LOBYTE(v27) = sub_425E70((_BYTE*)(thisx + 612 * (unsigned __int8)v29 + 2628));
+        LOBYTE(v27) = sub_425E70((char*)(thisx + 612 * (unsigned __int8)v29 + 2628));
 
         // 检查是否满足条件
         if (unknown_libname_7((int*)(thisx + 612 * (unsigned __int8)v29 + 2628)))
@@ -32748,10 +32748,10 @@ int sub_443E80(int thisx)
                 sub_47B7ED(v35 + 16, v36 + 4, String, 0, -1);
                 sub_47B91A(v35 + 40, v36 + 4, byte_4B088C, 0, -1);
             }
-            else if (*(_BYTE*)(thisx + (unsigned __int8)v29 + 13052) && *(int*)(thisx + 116) != 3)
+            else if (*(char*)(thisx + (unsigned __int8)v29 + 13052) && *(int*)(thisx + 116) != 3)
             {
                 // 渲染状态
-                LOBYTE(v22) = *(_BYTE*)(thisx + (unsigned __int8)v29 + 13052);
+                LOBYTE(v22) = *(char*)(thisx + (unsigned __int8)v29 + 13052);
                 wsprintfA(String, "%d", (unsigned __int8)v22);
                 if ((unsigned __int8)byte_4B9985 > 4u && *(int*)(thisx + 116) == 4)
                 {
@@ -32930,23 +32930,23 @@ int sub_44508E(int a1, double a2, double a3, double a4)
     int k; // [esp+A0h] [ebp-1Ch]
     signed int n; // [esp+9Ch] [ebp-20h]
     int jj; // [esp+98h] [ebp-24h]
-    _BYTE* v58; // [esp+94h] [ebp-28h]
+    char* v58; // [esp+94h] [ebp-28h]
     int v57; // [esp+90h] [ebp-2Ch]
     int kk; // [esp+8Ch] [ebp-30h]
     signed int mm; // [esp+88h] [ebp-34h]
     Concurrency::details::InternalContextBase* v54; // [esp+84h] [ebp-38h]
     int v53; // [esp+80h] [ebp-3Ch]
     int v52; // [esp+7Ch] [ebp-40h]
-    _BYTE* v51; // [esp+78h] [ebp-44h]
+    char* v51; // [esp+78h] [ebp-44h]
     int v50; // [esp+74h] [ebp-48h]
     int i1; // [esp+70h] [ebp-4Ch]
     int v48; // [esp+6Ch] [ebp-50h]
     unsigned __int8 v47; // [esp+68h] [ebp-54h]
     char v46; // [esp+64h] [ebp-58h]
     BOOL v45; // [esp+60h] [ebp-5Ch]
-    _BYTE* v44; // [esp+5Ch] [ebp-60h]
+    char* v44; // [esp+5Ch] [ebp-60h]
     int v43; // [esp+58h] [ebp-64h]
-    _BYTE* v42; // [esp+54h] [ebp-68h]
+    char* v42; // [esp+54h] [ebp-68h]
     char tc_99[4]; //8
     int v41; // [esp+4Ch] [ebp-70h]
     int v40; // [esp+48h] [ebp-74h]
@@ -32956,18 +32956,18 @@ int sub_44508E(int a1, double a2, double a3, double a4)
     int i8; // [esp+3Ch] [ebp-80h]
     int i7; // [esp+3Ch] [ebp-80h]
     unsigned __int8 v34; // [esp+38h] [ebp-84h]
-    _BYTE* v33; // [esp+34h] [ebp-88h]
+    char* v33; // [esp+34h] [ebp-88h]
     char tc_94[4]; //8
     int v32; // [esp+2Ch] [ebp-90h]
     signed int i9; // [esp+28h] [ebp-94h]
     int v30; // [esp+24h] [ebp-98h]
     char tc_88[4]; //8
-    _BYTE* v29; // [esp+1Ch] [ebp-A0h]
+    char* v29; // [esp+1Ch] [ebp-A0h]
     int v28; // [esp+18h] [ebp-A4h]
     char tc_52[8]; //12
     signed int i14; // [esp+Ch] [ebp-B0h]
     char tc_21[4]; //8
-    _BYTE* v25; // [esp+4h] [ebp-B8h]
+    char* v25; // [esp+4h] [ebp-B8h]
     char tc_92[4]; //8
     int v24; // [esp-4h] [ebp-C0h]
     int v23; // [esp-8h] [ebp-C4h]
@@ -32996,7 +32996,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
     dword_4B93AC = 0;
     *(int*)(a1 + 2488) = 100;
     *(int*)(a1 + 2492) = 0;
-    byte_4B9999 = *(_BYTE*)(a1 + 29);
+    byte_4B9999 = *(char*)(a1 + 29);
     memset(byte_4B999B, 0, sizeof(byte_4B999B));
     memset(byte_4B99A3, 0, 8u);
     for (i = 0; i < (int)dword_4B93A0; ++i)
@@ -33022,12 +33022,12 @@ int sub_44508E(int a1, double a2, double a3, double a4)
     }
     dword_4B99EC = 1;//如果获取焦点的时候，且程序设置又是不允许后台运行，该值为1，失去焦点又不允许后台允许该值为0
     *(int*)(a1 + 104) = 10;
-    *(_BYTE*)(a1 + 2516) = 1;
+    *(char*)(a1 + 2516) = 1;
     *(int*)(a1 + 2520) = 0;
     *(int*)(a1 + 2500) = 0;
     *(int*)(a1 + 2504) = 0;
-    *(_BYTE*)(a1 + 2544) = 0;
-    *(_BYTE*)(a1 + 2545) = 0;
+    *(char*)(a1 + 2544) = 0;
+    *(char*)(a1 + 2545) = 0;
     if (dword_4B9974)
     {
         if (!sub_484723(a1 + 13400, aReplayBin))
@@ -33038,13 +33038,13 @@ int sub_44508E(int a1, double a2, double a3, double a4)
         }
         *(int*)(a1 + 116) = sub_4750B0((int*)a1 + 13400);
         if (*(int*)(a1 + 116) == 3)
-            *(_BYTE*)(a1 + 11372) = byte_4B9998;
+            *(char*)(a1 + 11372) = byte_4B9998;
         memset((void*)(a1 + 2546), 0, 8u);
         for (jj = 0; jj < (unsigned __int8)byte_4B9985; ++jj)
         {
             v57 = (unsigned __int8)byte_4B9988[jj];
-            v58 = (_BYTE*)(a1 + 612 * v57 + 2628);
-            v25 = (_BYTE*)(a1 + (unsigned __int8)sub_426070(v58) + 2546);
+            v58 = (char*)(a1 + 612 * v57 + 2628);
+            v25 = (char*)(a1 + (unsigned __int8)sub_426070(v58) + 2546);
             ++* v25;
             *(short*)(a1 + 2 * jj + 2564) = sub_43E600((short*)v58);
             sub_41BF1D((int)v58);
@@ -33054,8 +33054,8 @@ int sub_44508E(int a1, double a2, double a3, double a4)
     else if (*(int*)(a1 + 116) == 3)
     {
         byte_4B9990 = 2;
-        *(_BYTE*)(a1 + 2546) = 1;
-        *(_BYTE*)(a1 + 2547) = 7;
+        *(char*)(a1 + 2546) = 1;
+        *(char*)(a1 + 2547) = 7;
         byte_4B9985 = 8;
         byte_4B9987 = 7;
         for (kk = (unsigned __int8)byte_4B9986; kk < (unsigned __int8)byte_4B9985; ++kk)
@@ -33066,28 +33066,28 @@ int sub_44508E(int a1, double a2, double a3, double a4)
                 {
                     if (mm >= (int)Size)
                         mm = 0;
-                    v5 = sub_44E484((_BYTE*)a1, kk, mm);
+                    v5 = sub_44E484((char*)a1, kk, mm);
                 }
                 else
                 {
                     mm = Size - 1;
-                    v5 = sub_44E484((_BYTE*)a1, kk, Size - 1);
+                    v5 = sub_44E484((char*)a1, kk, Size - 1);
                 }
                 if (!v5)
                     break;
             }
             *(short*)(a1 + 2 * kk + 2564) = mm;
-            *(_BYTE*)(kk + a1 + 2588) = 1;
-            *(_BYTE*)(kk + a1 + 2580) = MarkedForDetachment((_BYTE*)(36 * mm + dword_4B92E0));//call return thisxx[20]; 
+            *(char*)(kk + a1 + 2588) = 1;
+            *(char*)(kk + a1 + 2580) = MarkedForDetachment((char*)(36 * mm + dword_4B92E0));//call return thisxx[20]; 
         }
     }
     else if (!*(int*)(a1 + 116))
     {
-        byte_4B99CC = *(_BYTE*)(a1 + 11664);
-        byte_4B999A = *(_BYTE*)(a1 + 11614);
-        byte_4B99C8 = *(_BYTE*)(a1 + 11660);
-        byte_4B99DF = *(_BYTE*)(a1 + 11683);
-        byte_4B99E0 = *(_BYTE*)(a1 + 11684);
+        byte_4B99CC = *(char*)(a1 + 11664);
+        byte_4B999A = *(char*)(a1 + 11614);
+        byte_4B99C8 = *(char*)(a1 + 11660);
+        byte_4B99DF = *(char*)(a1 + 11683);
+        byte_4B99E0 = *(char*)(a1 + 11684);
     }
     if (!byte_4B9999)
         byte_4B9999 = rand() % *(int*)(a1 + 13388) + 1;
@@ -33138,7 +33138,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
                     if (nn >= 2)
                     {
                         v52 = *(unsigned __int8*)(a1 + 11690);
-                        switch (*(_BYTE*)(a1 + 11805))
+                        switch (*(char*)(a1 + 11805))
                         {
                         case 0:
                             v52 /= 2;
@@ -33158,7 +33158,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
                         default:
                             break;
                         }
-                        if (*(_BYTE*)(a1 + 11690) == 19)
+                        if (*(char*)(a1 + 11690) == 19)
                             v52 = 75 * v52 / 100;
                         sub_474F90((short*)v54, *(short*)(a1 + 11814) + v52);
                     }
@@ -33176,8 +33176,8 @@ int sub_44508E(int a1, double a2, double a3, double a4)
                 else
                     sub_475050((char*)v54, 0);
             }
-            sub_474FF0((char*)v54, *(_BYTE*)(nn + a1 + 2580));
-            sub_474F30((char*)v54, *(_BYTE*)(nn + a1 + 2620));
+            sub_474FF0((char*)v54, *(char*)(nn + a1 + 2580));
+            sub_474F30((char*)v54, *(char*)(nn + a1 + 2620));
         }
         if (!dword_4B9974)
         {
@@ -33186,7 +33186,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
             {
                 v8 = sub_426070((char*)v54);
                 v50 = a1 + 244 * v8 + 1392;
-                v51 = (_BYTE*)(84 * *(__int16*)(a1 + 244 * v8 + 1628) + dword_4B92D4);
+                v51 = (char*)(84 * *(__int16*)(a1 + 244 * v8 + 1628) + dword_4B92D4);
                 v9 = sub_43EE02((unsigned char*)v51, 0, v50);
                 sub_41EBBC((int)v54, v10, v9, 1);
                 v11 = sub_43EE02((unsigned char*)v51, 1, v50);
@@ -33232,7 +33232,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
                 }
             }
             sub_42371C((int)v54);
-            if (*(_BYTE*)(nn + a1 + 2580) == 4)
+            if (*(char*)(nn + a1 + 2580) == 4)
                 sub_474F70((short*)v54, nn % 2 + 23);
         }
         if (v53 >= (unsigned __int8)byte_4B9986)
@@ -33243,7 +33243,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
             v20 = sub_41F0A9((int*)v54);
             sub_41F712(v20);
             v24 = sub_4261D0((char*)(a1 + 128));
-            v23 = sub_4897D0((_BYTE*)(a1 + 128)) / 8;
+            v23 = sub_4897D0((char*)(a1 + 128)) / 8;
             v21 = sub_41F0A9((int*)v54);
             sub_42132D((int)v21, v23, v24);
         }
@@ -33268,7 +33268,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
     {
         for (i2 = 0; i2 < (int)Size; ++i2)
         {
-            v44 = (_BYTE*)(36 * i2 + dword_4B92E0);
+            v44 = (char*)(36 * i2 + dword_4B92E0);
             if (sub_401782(v44, 38) || sub_401782(v44, 255))
             {
                 v43 = (unsigned __int8)MarkedForDetachment(v44);//call return thisxx[20]; 
@@ -33281,7 +33281,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
     {
         for (i3 = 0; i3 < (unsigned __int8)byte_4B9985; ++i3)
         {
-            v42 = (_BYTE*)(a1 + 612 * (unsigned __int8)byte_4B9988[i3] + 2628);
+            v42 = (char*)(a1 + 612 * (unsigned __int8)byte_4B9988[i3] + 2628);
             if (sub_41BA53((int)v42, 0x26u, 0))
             {
                 v41 = (unsigned __int8)sub_4264F0(v42);
@@ -33312,7 +33312,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
     {
         for (i7 = 0; i7 < v62; ++i7)
         {
-            v33 = (_BYTE*)(a1 + 612 * (unsigned __int8)byte_4B9988[i7] + 2628);
+            v33 = (char*)(a1 + 612 * (unsigned __int8)byte_4B9988[i7] + 2628);
             v32 = (unsigned __int16)sub_474F50((short*)v33);
             v34 = sub_4264F0(v33);
             if (v34 < 4u)
@@ -33345,14 +33345,14 @@ int sub_44508E(int a1, double a2, double a3, double a4)
     {
         v30 = 4 * *(int*)(a1 + 2368) + 4;
         for (i11 = 0; i11 < v30; ++i11)
-            *(_BYTE*)(i11 + a1 + 2612) = *(_BYTE*)(a1
-                + 244 * (unsigned __int8)sub_426070((_BYTE*)(a1 + 612 * i11 + 2628))
+            *(char*)(i11 + a1 + 2612) = *(char*)(a1
+                + 244 * (unsigned __int8)sub_426070((char*)(a1 + 612 * i11 + 2628))
                 + 1630);
     }
     for (i12 = 0; i12 < (unsigned __int8)byte_4B9985; ++i12)
     {
         v28 = (unsigned __int8)byte_4B9988[i12];
-        v29 = (_BYTE*)(a1 + 612 * v28 + 2628);
+        v29 = (char*)(a1 + 612 * v28 + 2628);
         if (*(int*)(a1 + 116) == 3 && v28 >= (unsigned __int8)byte_4B9986)
         {
             v22 = sub_4264F0(v29);
@@ -33385,7 +33385,7 @@ int sub_44508E(int a1, double a2, double a3, double a4)
         {
             for (i14 = 0; i14 < (int)dword_4B93A0; ++i14)
             {
-                if (*(_BYTE*)(*((int*)dword_4B9364 + i13) + i14) == 1)
+                if (*(char*)(*((int*)dword_4B9364 + i13) + i14) == 1)
                     *(int*)(*((int*)dword_4B9360 + i13) + 4 * i14) = 1;
             }
         }
@@ -33403,10 +33403,10 @@ int sub_44508E(int a1, double a2, double a3, double a4)
     {
         for (i15 = 0; i15 < 2; ++i15)
         {
-            if (*(_BYTE*)(i15 + a1 + 11808))
+            if (*(char*)(i15 + a1 + 11808))
             {
-                byte_4B999B[i15] = *(_BYTE*)(i15 + a1 + 11808);
-                byte_4B99A3[i15] = *(_BYTE*)(i15 + a1 + 11810);
+                byte_4B999B[i15] = *(char*)(i15 + a1 + 11808);
+                byte_4B99A3[i15] = *(char*)(i15 + a1 + 11810);
             }
         }
     }
@@ -33575,7 +33575,7 @@ int sub_446A62(int* thisx, int* a2, char a3)
     int v12; // [esp+24h] [ebp-24h]
     int v11; // [esp+20h] [ebp-28h]
     struct Concurrency::ISchedulerProxy* SchedulerProxy; // [esp+1Ch] [ebp-2Ch]
-    _BYTE* v9; // [esp+18h] [ebp-30h]
+    char* v9; // [esp+18h] [ebp-30h]
     int v8; // [esp+14h] [ebp-34h]
     int v7; // [esp+10h] [ebp-38h]
     char tc_9[4]; //8
@@ -33999,7 +33999,7 @@ int sub_447651(int thisx)
     for (k = 0; k < (unsigned __int8)byte_4B9985; ++k)
     {
         v34 = 0;
-        if (!*(_BYTE*)(thisx + 2516))
+        if (!*(char*)(thisx + 2516))
         {
             v33 = -1;
             for (m = 0; ; ++m)
@@ -34014,7 +34014,7 @@ int sub_447651(int thisx)
                     break;
                 }
             }
-            if (v33 != -1 && !*(_BYTE*)(k + thisx + 2588))
+            if (v33 != -1 && !*(char*)(k + thisx + 2588))
             {
                 LOBYTE(v1) = v33;
                 v2 = sub_476D78(v1);
@@ -34026,12 +34026,12 @@ int sub_447651(int thisx)
                 LOBYTE(v6) = v33;
                 v30 = v5 - sub_476C8B(v6);
                 v7 = k + thisx;
-                if (*(_BYTE*)(k + thisx + 2604))
+                if (*(char*)(k + thisx + 2604))
                 {
-                    if (++ * (_BYTE*)(k + thisx + 2604) == 5)
-                        *(_BYTE*)(k + thisx + 2604) = 1;
+                    if (++ * (char*)(k + thisx + 2604) == 5)
+                        *(char*)(k + thisx + 2604) = 1;
                     v7 = k + thisx;
-                    if (*(_BYTE*)(k + thisx + 2604) == 1)
+                    if (*(char*)(k + thisx + 2604) == 1)
                     {
                         for (n = rand() % (int)Size; ; ++n)
                         {
@@ -34039,54 +34039,54 @@ int sub_447651(int thisx)
                             {
                                 if (n >= (int)Size)
                                     n = 0;
-                                v9 = sub_44E484((_BYTE*)thisx, k, n);
+                                v9 = sub_44E484((char*)thisx, k, n);
                             }
                             else
                             {
                                 n = Size - 1;
-                                v9 = sub_44E484((_BYTE*)thisx, k, Size - 1);
+                                v9 = sub_44E484((char*)thisx, k, Size - 1);
                             }
                             if (!v9)
                                 break;
                         }
                         *(short*)(thisx + 2 * k + 2564) = n;
-                        if (*(_BYTE*)(thisx + 98))
-                            *(_BYTE*)(k + thisx + 2580) = rand() % 4;
+                        if (*(char*)(thisx + 98))
+                            *(char*)(k + thisx + 2580) = rand() % 4;
                         else
-                            *(_BYTE*)(k + thisx + 2580) = MarkedForDetachment((_BYTE*)(36 * n + dword_4B92E0));//call return thisxx[20]; 
+                            *(char*)(k + thisx + 2580) = MarkedForDetachment((char*)(36 * n + dword_4B92E0));//call return thisxx[20]; 
                         v34 = 1;
                         v7 = sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
                     }
                 }
                 else if (v31)
                 {
-                    *(_BYTE*)(k + thisx + 13092) = 0;
+                    *(char*)(k + thisx + 13092) = 0;
                     for (ii = v31 + *(unsigned __int16*)(thisx + 2 * k + 2564); ; ii += v31)
                     {
                         if (ii >= 0)
                         {
                             if (ii >= (int)Size)
                                 ii = 0;
-                            v8 = sub_44E484((_BYTE*)thisx, k, ii);
+                            v8 = sub_44E484((char*)thisx, k, ii);
                         }
                         else
                         {
                             ii = Size - 1;
-                            v8 = sub_44E484((_BYTE*)thisx, k, Size - 1);
+                            v8 = sub_44E484((char*)thisx, k, Size - 1);
                         }
                         if (!v8)
                             break;
                     }
                     *(short*)(thisx + 2 * k + 2564) = ii;
-                    *(_BYTE*)(k + thisx + 2580) = MarkedForDetachment((_BYTE*)(36 * ii + dword_4B92E0));//call return thisxx[20]; 
+                    *(char*)(k + thisx + 2580) = MarkedForDetachment((char*)(36 * ii + dword_4B92E0));//call return thisxx[20]; 
                     v34 = 1;
                     v7 = sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
                 }
                 else if (v30)
                 {
-                    if (*(_BYTE*)(k + thisx + 2596) == 2)
+                    if (*(char*)(k + thisx + 2596) == 2)
                     {
-                        *(_BYTE*)(k + thisx + 13092) = (*(unsigned __int8*)(k + thisx + 13092) + v30 + 4) % 4;
+                        *(char*)(k + thisx + 13092) = (*(unsigned __int8*)(k + thisx + 13092) + v30 + 4) % 4;
                     }
                     else
                     {
@@ -34100,24 +34100,24 @@ int sub_447651(int thisx)
                         {
                             LOBYTE(v28) = 3;
                         }
-                        *(_BYTE*)(k + thisx + 2580) = v28;
+                        *(char*)(k + thisx + 2580) = v28;
                     }
                     v34 = 1;
                     v7 = sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
                 }
                 LOBYTE(v7) = v33;
-                if (sub_476DC7(v7, 0) && !sub_44E484((_BYTE*)thisx, k, -1))
+                if (sub_476DC7(v7, 0) && !sub_44E484((char*)thisx, k, -1))
                 {
-                    *(_BYTE*)(k + thisx + 2588) = 1;
+                    *(char*)(k + thisx + 2588) = 1;
                     v34 = 1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
                 }
                 LOBYTE(v10) = v33;
                 if (sub_476DC7(v10, 2))
                 {
-                    if ((unsigned __int8)++ * (_BYTE*)(k + thisx + 2596) > 2u)
-                        *(_BYTE*)(k + thisx + 2596) = 0;
-                    *(_BYTE*)(k + thisx + 13092) = 0;
+                    if ((unsigned __int8)++ * (char*)(k + thisx + 2596) > 2u)
+                        *(char*)(k + thisx + 2596) = 0;
+                    *(char*)(k + thisx + 13092) = 0;
                     v34 = 1;
                     sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
                 }
@@ -34126,21 +34126,21 @@ int sub_447651(int thisx)
                 if (v12)
                 {
                     v12 = *(unsigned __int8*)(k + thisx + 2604);
-                    if (*(_BYTE*)(k + thisx + 2604))
-                        *(_BYTE*)(k + thisx + 2604) = 0;
+                    if (*(char*)(k + thisx + 2604))
+                        *(char*)(k + thisx + 2604) = 0;
                     else
-                        *(_BYTE*)(k + thisx + 2604) = 1;
+                        *(char*)(k + thisx + 2604) = 1;
                 }
                 LOBYTE(v12) = v33;
                 if (sub_476DC7(v12, 6))
                     v43 = 1;
                 if (v34)
-                    sub_454469((_BYTE*)thisx, k);
+                    sub_454469((char*)thisx, k);
             }
         }
     }
     result = *(unsigned __int8*)(thisx + 2516);
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         for (jj = 0; jj < v48; ++jj)
         {
@@ -34153,7 +34153,7 @@ int sub_447651(int thisx)
                 if (*(unsigned __int8*)(jj + thisx + 2554) >= 8u)
                     continue;
                 result = v26 + thisx;
-                if (*(_BYTE*)(v26 + thisx + 2588) != 1)
+                if (*(char*)(v26 + thisx + 2588) != 1)
                     continue;
             }
             v23 = *(unsigned __int8*)(jj + thisx + 2554);
@@ -34165,12 +34165,12 @@ int sub_447651(int thisx)
             }
             if (v25)
             {
-                *(_BYTE*)(v26 + thisx + 2588) = 0;
+                *(char*)(v26 + thisx + 2588) = 0;
             }
             else
             {
                 result = v26 + thisx;
-                *(_BYTE*)(v26 + thisx + 2588) = 2;
+                *(char*)(v26 + thisx + 2588) = 2;
             }
             v22 = 1;
             v24 = 0;
@@ -34196,7 +34196,7 @@ int sub_447651(int thisx)
                     v23 = -1;
                     break;
                 }
-                if (!v25 && (result = *(unsigned __int8*)(v23 + thisx + 2588), !*(_BYTE*)(v23 + thisx + 2588)) || v25)
+                if (!v25 && (result = *(unsigned __int8*)(v23 + thisx + 2588), !*(char*)(v23 + thisx + 2588)) || v25)
                 {
                     if (jj == (unsigned __int8)byte_4B9988[v23]
                         || (result = v23, (unsigned __int8)byte_4B9988[v23] >= (int)(unsigned __int8)byte_4B9986))
@@ -34264,7 +34264,7 @@ int sub_447651(int thisx)
                                     if (!v25)
                                     {
                                         result = *(unsigned __int8*)(v18 + thisx + 2588);
-                                        if (!*(_BYTE*)(v18 + thisx + 2588))
+                                        if (!*(char*)(v18 + thisx + 2588))
                                         {
                                             v23 = v18;
                                             v22 = 0;
@@ -34294,17 +34294,17 @@ int sub_447651(int thisx)
                 if (!v25)
                 {
                     result = v26 + 100;
-                    *(_BYTE*)(jj + thisx + 2554) = v26 + 100;
+                    *(char*)(jj + thisx + 2554) = v26 + 100;
                 }
             }
             else
             {
                 LOBYTE(result) = v23;
-                *(_BYTE*)(jj + thisx + 2554) = v23;
+                *(char*)(jj + thisx + 2554) = v23;
                 if (v25)
                 {
-                    *(_BYTE*)(v23 + thisx + 2588) = 0;
-                    sub_454469((_BYTE*)thisx, v23);
+                    *(char*)(v23 + thisx + 2588) = 0;
+                    sub_454469((char*)thisx, v23);
                 }
             }
         }
@@ -34312,16 +34312,16 @@ int sub_447651(int thisx)
         {
             for (nn = 0; nn < (unsigned __int8)byte_4B9985; ++nn)
             {
-                if (!*(_BYTE*)(nn + thisx + 2588))
+                if (!*(char*)(nn + thisx + 2588))
                 {
-                    for (i1 = rand() % (int)Size; sub_44E484((_BYTE*)thisx, nn, i1); i1 = (int)(i1 + Size + 1) % (int)Size)
+                    for (i1 = rand() % (int)Size; sub_44E484((char*)thisx, nn, i1); i1 = (int)(i1 + Size + 1) % (int)Size)
                         ;
                     *(short*)(thisx + 2 * nn + 2564) = i1;
-                    if (*(_BYTE*)(thisx + 98))
-                        *(_BYTE*)(nn + thisx + 2580) = rand() % 4;
+                    if (*(char*)(thisx + 98))
+                        *(char*)(nn + thisx + 2580) = rand() % 4;
                     else
-                        *(_BYTE*)(nn + thisx + 2580) = MarkedForDetachment((_BYTE*)(36 * i1 + dword_4B92E0));//call return thisxx[20]; 
-                    *(_BYTE*)(nn + thisx + 2588) = 2;
+                        *(char*)(nn + thisx + 2580) = MarkedForDetachment((char*)(36 * i1 + dword_4B92E0));//call return thisxx[20]; 
+                    *(char*)(nn + thisx + 2588) = 2;
                 }
             }
             result = sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
@@ -34330,18 +34330,18 @@ int sub_447651(int thisx)
     v35 = 0;
     for (i2 = 0; i2 < (unsigned __int8)byte_4B9985; ++i2)
     {
-        result = (*(_BYTE*)(i2 + thisx + 2588) == 2) + v35;
+        result = (*(char*)(i2 + thisx + 2588) == 2) + v35;
         v35 = result;
     }
     if (v35 == (unsigned __int8)byte_4B9985)
     {
         *(int*)(thisx + 108) = 9;
         result = thisx;
-        *(_BYTE*)(thisx + 2516) = 2;
+        *(char*)(thisx + 2516) = 2;
     }
     for (i3 = 0; i3 < v48; ++i3)
     {
-        v16 = *(_BYTE*)(i3 + thisx + 2554);
+        v16 = *(char*)(i3 + thisx + 2554);
         wsprintfA(String, "%d>", i3 + 1);
         result = sub_47B91A(160 * (v16 / 4), 56 * (v16 & 3) + 24, String, 0, -1);
     }
@@ -34366,43 +34366,43 @@ int sub_448750(int thisx)
 
     *(int*)(thisx + 104) = 8;
     *(int*)(thisx + 2540) = 0;
-    *(_BYTE*)(thisx + 2516) = 1;
-    *(_BYTE*)(thisx + 2562) = 0;
+    *(char*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2562) = 0;
     memset((void*)(thisx + 2620), 0, 8u);
     for (i = 0; i < (unsigned __int8)byte_4B9986; ++i)
     {
         v4 = sub_4576F0(i);
         *(short*)(thisx + 2 * v4 + 2564) = 0;
-        *(_BYTE*)(v4 + thisx + 2580) = MarkedForDetachment((_BYTE*)dword_4B92E0);//call return thisxx[20]; 
+        *(char*)(v4 + thisx + 2580) = MarkedForDetachment((char*)dword_4B92E0);//call return thisxx[20]; 
         if (v4 < 0)
-            *(_BYTE*)(i + thisx + 2554) = -1;
+            *(char*)(i + thisx + 2554) = -1;
         else
-            *(_BYTE*)(i + thisx + 2554) = v4;
+            *(char*)(i + thisx + 2554) = v4;
     }
     v5 = 4;
     if (!byte_4B9986)
     {
         v5 = 0;
-        *(_BYTE*)(thisx + 2554) = 0;
+        *(char*)(thisx + 2554) = 0;
     }
     for (j = (unsigned __int8)byte_4B9986; j < (unsigned __int8)byte_4B9985; ++j)
     {
         v3 = sub_4576F0(j);
         *(short*)(thisx + 2 * v3 + 2564) = v5;
-        *(_BYTE*)(v3 + thisx + 2580) = MarkedForDetachment((_BYTE*)(36 * v5 + dword_4B92E0));//call return thisxx[20]; 
+        *(char*)(v3 + thisx + 2580) = MarkedForDetachment((char*)(36 * v5 + dword_4B92E0));//call return thisxx[20]; 
         v5 += 4;
         if (v5 >= 0x10u)
             v5 = 1;
     }
     for (k = 0; k < 8; ++k)
     {
-        *(_BYTE*)(k + thisx + 2596) = 0;
-        *(_BYTE*)(k + thisx + 2588) = 0;
-        *(_BYTE*)(k + thisx + 2604) = 0;
-        *(_BYTE*)(k + thisx + 13092) = 0;
+        *(char*)(k + thisx + 2596) = 0;
+        *(char*)(k + thisx + 2588) = 0;
+        *(char*)(k + thisx + 2604) = 0;
+        *(char*)(k + thisx + 13092) = 0;
     }
     sub_47C427();
-    sub_454469((_BYTE*)thisx, -1);
+    sub_454469((char*)thisx, -1);
     return sub_456D33((const CHAR*)thisx, aCharselWav, 1, 0);
 }
 
@@ -34554,7 +34554,7 @@ LABEL_4:
     {
         *(int*)(a1 + 2492) -= 100;
         v118 = dword_4B93B0 % (unsigned int)*(unsigned __int8*)(a1 + 2496) != 0;
-        if (*(_BYTE*)(a1 + 2496) == 1)
+        if (*(char*)(a1 + 2496) == 1)
             v118 = 1;
         if ((!*(int*)(a1 + 2504) && v118 || *(int*)(a1 + 2504) && sub_476DC7(0, 5))
             && *(int*)(a1 + 16136) > 0
@@ -34562,7 +34562,7 @@ LABEL_4:
         {
             for (i = 0; i < 32; ++i)
             {
-                if (MarkedForDetachment((_BYTE*)(a1 + 36 * i + 9608)) == 19)//call return thisxx[20]; 
+                if (MarkedForDetachment((char*)(a1 + 36 * i + 9608)) == 19)//call return thisxx[20]; 
                     sub_4419F6(a1 + 36 * i + 9608);
             }
         }
@@ -34619,14 +34619,14 @@ LABEL_4:
                     sub_486947((int*)a1 + 128, v113 + v110 / 100 + 160, 1);
             }
             sub_488981((int*)a1 + 128);
-            if (*(_BYTE*)(a1 + 2544))
+            if (*(char*)(a1 + 2544))
             {
-                if (*(_BYTE*)(a1 + 2544) == 1 && *(unsigned __int8*)(a1 + 2545) >= 4u)
+                if (*(char*)(a1 + 2544) == 1 && *(unsigned __int8*)(a1 + 2545) >= 4u)
                 {
-                    *(_BYTE*)(a1 + 2544) = 0;
-                    *(_BYTE*)(a1 + 2545) = 0;
+                    *(char*)(a1 + 2544) = 0;
+                    *(char*)(a1 + 2545) = 0;
                 }
-                ++* (_BYTE*)(a1 + 2545);
+                ++* (char*)(a1 + 2545);
             }
             for (i = 0; i < (unsigned __int8)byte_4B9985; ++i)
             {
@@ -34755,7 +34755,7 @@ LABEL_4:
             }
             if (*(int*)(a1 + 116) != 3 || i < 1 || dword_4B93AC % 2u)
             {
-                LOBYTE(v96) = sub_426070((_BYTE*)(a1 + 612 * i + 2628));
+                LOBYTE(v96) = sub_426070((char*)(a1 + 612 * i + 2628));
                 for (k = 0; ; ++k)
                 {
                     if (k >= 2)
@@ -34775,7 +34775,7 @@ LABEL_4:
                         {
                             if (k == 1
                                 && (!unknown_libname_22((int*)(a1 + 196 * m + 7524)) || sub_4753F0(
-                                    (_BYTE*)(a1 + 612 * i + 2628),
+                                    (char*)(a1 + 612 * i + 2628),
                                     m)))
                             {
                                 continue;
@@ -34787,7 +34787,7 @@ LABEL_4:
                                 continue;
                             if (!unknown_libname_7((int*)(a1 + 612 * m + 2628)))
                                 continue;
-                            if (sub_4753D0((_BYTE*)(a1 + 612 * i + 2628), m))
+                            if (sub_4753D0((char*)(a1 + 612 * i + 2628), m))
                                 continue;
                             if (!(unsigned __int8)sub_475210((char*)a1 + 612 * m + 2628))
                                 continue;
@@ -34796,14 +34796,14 @@ LABEL_4:
                             if (!byte_4B99CC)
                             {
                                 v12 = (unsigned __int8)v96;
-                                if (v12 == (unsigned __int8)sub_426070((_BYTE*)(a1 + 612 * m + 2628))
+                                if (v12 == (unsigned __int8)sub_426070((char*)(a1 + 612 * m + 2628))
                                     && !(unsigned __int8)sub_4752F0((char*)a1 + 612 * i + 2628))
                                 {
                                     continue;
                                 }
                             }
                             v13 = (unsigned __int8)v96;
-                            if (v13 == (unsigned __int8)sub_426070((_BYTE*)(a1 + 612 * m + 2628))
+                            if (v13 == (unsigned __int8)sub_426070((char*)(a1 + 612 * m + 2628))
                                 && (unsigned __int8)sub_4752F0((char*)a1 + 612 * i + 2628) == 2)
                             {
                                 continue;
@@ -34880,7 +34880,7 @@ LABEL_4:
                             v84 = Concurrency::details::SchedulerBase::GetSchedulerProxy((Concurrency::details::SchedulerBase*)(a1 + 612 * i + 2628));
                             v76 = v91;
                             LOBYTE(v90) = sub_475170((char*)a1 + 612 * i + 2628);
-                            if ((_BYTE)v90)
+                            if ((char)v90)
                             {
                                 if ((unsigned __int8)v90 == 1)
                                 {
@@ -34939,7 +34939,7 @@ LABEL_4:
                     v68 = 0;
                     for (n = 0; n < (unsigned __int8)byte_4B9985; ++n)//可能是对一局游戏内的角色成员循环
                     {
-                        if (unknown_libname_7((int*)(a1 + 612 * n + 2628)) && !sub_4755B0((_BYTE*)(a1 + 196 * i + 7524), n))
+                        if (unknown_libname_7((int*)(a1 + 612 * n + 2628)) && !sub_4755B0((char*)(a1 + 196 * i + 7524), n))
                         {
                             if ((unsigned __int8)sub_4751D0((char*)a1 + 612 * n + 2628) && sub_475530((int*)a1 + 196 * i + 7524) && v70 != 8)
                             {
@@ -35037,8 +35037,8 @@ LABEL_4:
                         memset(v47, 0, sizeof(v47));
                         for (i = 0; i < (unsigned __int8)byte_4B9990; ++i)
                         {
-                            LOBYTE(v46) = *(_BYTE*)(i + a1 + 2546);
-                            if (*(_BYTE*)(i + a1 + 13044))
+                            LOBYTE(v46) = *(char*)(i + a1 + 2546);
+                            if (*(char*)(i + a1 + 13044))
                             {
                                 v112 += (unsigned __int8)v46;
                             }
@@ -35063,12 +35063,12 @@ LABEL_4:
                         }
                         if (v48 > 0)
                         {
-                            *(_BYTE*)(a1 + 13042) -= v48;
+                            *(char*)(a1 + 13042) -= v48;
                             for (i = 0; i < (unsigned __int8)byte_4B9990; ++i)
                             {
                                 if (v47[i])
                                 {
-                                    *(_BYTE*)(i + a1 + 13044) = *(_BYTE*)(a1 + 13042);
+                                    *(char*)(i + a1 + 13044) = *(char*)(a1 + 13042);
                                     if (--v48 <= 0)
                                         break;
                                 }
@@ -35083,11 +35083,11 @@ LABEL_4:
                         {
                             if (Concurrency::details::SchedulerBase::GetSchedulerProxy((Concurrency::details::SchedulerBase*)(a1 + 612 * i + 2628)) != (struct Concurrency::ISchedulerProxy*)80)
                             {
-                                v24 = sub_426070((_BYTE*)(a1 + 612 * i + 2628));
+                                v24 = sub_426070((char*)(a1 + 612 * i + 2628));
                                 if (v24 != v116)
                                 {
                                     ++v117;
-                                    LOBYTE(v116) = sub_426070((_BYTE*)(a1 + 612 * i + 2628));
+                                    LOBYTE(v116) = sub_426070((char*)(a1 + 612 * i + 2628));
                                     v116 = v116;
                                 }
                             }
@@ -35111,10 +35111,10 @@ LABEL_4:
                                 {
                                     if (Concurrency::details::SchedulerBase::GetSchedulerProxy((Concurrency::details::SchedulerBase*)(a1 + 612 * jj + 2628)) != (struct Concurrency::ISchedulerProxy*)80)
                                     {
-                                        v25 = sub_426070((_BYTE*)(a1 + 612 * jj + 2628));
+                                        v25 = sub_426070((char*)(a1 + 612 * jj + 2628));
                                         if (v25 == v116)
                                         {
-                                            *(_BYTE*)(jj + a1 + 13052) = 1;
+                                            *(char*)(jj + a1 + 13052) = 1;
                                             if (!sub_41BEBA(a1 + 612 * jj + 2628))
                                                 v43 = 0;
                                         }
@@ -35124,7 +35124,7 @@ LABEL_4:
                             if (v43)
                             {
                                 sub_44B5EF((int*)a1, v116);
-                                *(_BYTE*)(v116 + a1 + 13044) = 1;
+                                *(char*)(v116 + a1 + 13044) = 1;
                             }
                         }
                     }
@@ -35210,12 +35210,12 @@ LABEL_4:
                     }
                     if (v109 > 0)
                     {
-                        *(_BYTE*)(a1 + 13043) -= v109;
+                        *(char*)(a1 + 13043) -= v109;
                         for (i = 0; i < (unsigned __int8)byte_4B9985; ++i)
                         {
                             if (*(unsigned __int8*)(i + a1 + 13052) == 255)
                             {
-                                *(_BYTE*)(i + a1 + 13052) = *(_BYTE*)(a1 + 13043);
+                                *(char*)(i + a1 + 13052) = *(char*)(a1 + 13043);
                                 if (--v109 <= 0)
                                     break;
                             }
@@ -35283,11 +35283,11 @@ LABEL_4:
         if (sub_476DC7(v27, 6))
             *(int*)(a1 + 2500) = 1;
     }
-    if (*(_BYTE*)(a1 + 2544) || *(int*)(a1 + 16136))
+    if (*(char*)(a1 + 2544) || *(int*)(a1 + 16136))
     {
         if (*(int*)(a1 + 16136) <= 0)
         {
-            if (*(_BYTE*)(a1 + 2544) == 1)
+            if (*(char*)(a1 + 2544) == 1)
             {
                 SetRect(&v38, 0, 0, 320, 176);
                 if (((*(unsigned __int8*)(a1 + 2545) / 2) & 0x80000001) != 0)
@@ -35296,11 +35296,11 @@ LABEL_4:
                     sub_49EDC1((int)byte_4BDC60, 0, (int*)&v38, 0);
                 if (*(unsigned __int8*)(a1 + 2545) >= 4u)
                 {
-                    *(_BYTE*)(a1 + 2544) = 0;
-                    *(_BYTE*)(a1 + 2545) = 0;
+                    *(char*)(a1 + 2544) = 0;
+                    *(char*)(a1 + 2545) = 0;
                 }
             }
-            ++* (_BYTE*)(a1 + 2545);
+            ++* (char*)(a1 + 2545);
         }
         else
         {
@@ -35420,7 +35420,7 @@ int  sub_44B63F(int thisx, double a2, double a3, double a4)
     int v25; // [esp+16Ch] [ebp-8h]
     unsigned __int8* v24; // [esp+168h] [ebp-Ch]
     int j; // [esp+164h] [ebp-10h]
-    _BYTE* v22; // [esp+160h] [ebp-14h]
+    char* v22; // [esp+160h] [ebp-14h]
     int i; // [esp+15Ch] [ebp-18h]
     int v20; // [esp+158h] [ebp-1Ch]
     int v19; // [esp+154h] [ebp-20h]
@@ -35428,7 +35428,7 @@ int  sub_44B63F(int thisx, double a2, double a3, double a4)
     Concurrency::details::SchedulerBase* v17; // [esp+14Ch] [ebp-28h]
     int v16; // [esp+148h] [ebp-2Ch]
     char v15; // [esp+144h] [ebp-30h]
-    _BYTE* v14; // [esp+140h] [ebp-34h]
+    char* v14; // [esp+140h] [ebp-34h]
     int k; // [esp+13Ch] [ebp-38h]
 
     struct tagRECT rc; // [esp+12Ch] [ebp-48h] BYREF
@@ -35450,7 +35450,7 @@ int  sub_44B63F(int thisx, double a2, double a3, double a4)
     if (v24)
     {
         v25 = (unsigned __int8)sub_425EF0((char*)v24);
-        LOBYTE(v26) = *(_BYTE*)(thisx + *(int*)(thisx + 2524) + 2546);
+        LOBYTE(v26) = *(char*)(thisx + *(int*)(thisx + 2524) + 2546);
     }
     if (*(int*)(thisx + 2520) < 241)
         ++* (int*)(thisx + 2520);
@@ -35465,7 +35465,7 @@ int  sub_44B63F(int thisx, double a2, double a3, double a4)
         }
         else if (*(int*)(thisx + 2524) < 0 || sub_41BEA6((int*)v24))
         {
-            if (sub_425E70((_BYTE*)(thisx + 3852)) == 1)
+            if (sub_425E70((char*)(thisx + 3852)) == 1)
                 sub_456D33((const CHAR*)thisx, aLoseMisuzuWav, 0, 0);
             else
                 sub_456D33((const CHAR*)thisx, aLoseWav_0, 0, 0);
@@ -35485,14 +35485,14 @@ int  sub_44B63F(int thisx, double a2, double a3, double a4)
                 if (*(int*)(thisx + 116) == 4)
                 {
                     *(int*)(thisx + 108) = 24;
-                    *(_BYTE*)(thisx + 2516) = 2;
-                    ++* (_BYTE*)(thisx + 2476);
+                    *(char*)(thisx + 2516) = 2;
+                    ++* (char*)(thisx + 2476);
                     for (i = 0; i < (unsigned __int8)byte_4B9985; ++i)
                     {
                         v17 = (Concurrency::details::SchedulerBase*)(thisx + 612 * (unsigned __int8)byte_4B9988[i] + 2628);
                         LOBYTE(v20) = sub_426070((char*)v17);
                         v18 = thisx + 244 * (unsigned __int8)v20 + 1392;
-                        v15 = *(_BYTE*)(v18 + i % (*(int*)(thisx + 2368) + 1) + 240);
+                        v15 = *(char*)(v18 + i % (*(int*)(thisx + 2368) + 1) + 240);
                         v16 = 28 * v15 + v18;
                         v19 = sub_474E70((int*)v17);
                         *(short*)(v16 + 6) += v19;
@@ -35500,8 +35500,8 @@ int  sub_44B63F(int thisx, double a2, double a3, double a4)
                             *(short*)(v16 + 22) = v19;
                         if (*(__int16*)(v16 + 24) > v19)
                             *(short*)(v16 + 24) = v19;
-                        *(_BYTE*)(v16 + 26) += sub_475610((char*)v17);
-                        ++* (_BYTE*)(v16 + 20);
+                        *(char*)(v16 + 26) += sub_475610((char*)v17);
+                        ++* (char*)(v16 + 20);
                         if (Concurrency::details::SchedulerBase::GetSchedulerProxy(v17) == (struct Concurrency::ISchedulerProxy*)80)
                         {
                             if ((unsigned __int16)sub_474EB0((short*)v17))
@@ -35517,14 +35517,14 @@ int  sub_44B63F(int thisx, double a2, double a3, double a4)
                         if (!sub_425FF0((int*)v17)
                             || Concurrency::details::SchedulerBase::GetSchedulerProxy(v17) == (struct Concurrency::ISchedulerProxy*)80)
                         {
-                            *(_BYTE*)(v16 + 10) = 0;
-                            *(_BYTE*)(v16 + 11) = 0;
+                            *(char*)(v16 + 10) = 0;
+                            *(char*)(v16 + 11) = 0;
                         }
                         else
                         {
-                            v14 = (_BYTE*)sub_426910((int*)v17);
-                            *(_BYTE*)(v16 + 10) = sub_425CB0(v14) + 1;
-                            *(_BYTE*)(v16 + 11) = sub_43E620((short*)v14);
+                            v14 = (char*)sub_426910((int*)v17);
+                            *(char*)(v16 + 10) = sub_425CB0(v14) + 1;
+                            *(char*)(v16 + 11) = sub_43E620((short*)v14);
                         }
                     }
                 }
@@ -35540,18 +35540,18 @@ int  sub_44B63F(int thisx, double a2, double a3, double a4)
                 {
                     if (sub_425FF0((int*)(thisx + 612 * j + 2628)))//括号
                     {
-                        v22 = (_BYTE*)sub_426910((int*)(thisx + 612 * j + 2628));//括号
-                        *(_BYTE*)(j + thisx + 11808) = sub_425CB0(v22) + 1;
-                        *(_BYTE*)(j + thisx + 11810) = sub_43E620((short*)v22);
+                        v22 = (char*)sub_426910((int*)(thisx + 612 * j + 2628));//括号
+                        *(char*)(j + thisx + 11808) = sub_425CB0(v22) + 1;
+                        *(char*)(j + thisx + 11810) = sub_43E620((short*)v22);
                     }
                     else
                     {
-                        *(_BYTE*)(j + thisx + 11808) = 0;
-                        *(_BYTE*)(j + thisx + 11810) = 0;
+                        *(char*)(j + thisx + 11808) = 0;
+                        *(char*)(j + thisx + 11810) = 0;
                     }
                 }
                 *(int*)(thisx + 108) = 16;
-                *(_BYTE*)(thisx + 2516) = 2;
+                *(char*)(thisx + 2516) = 2;
             }
         }
     }
@@ -35561,7 +35561,7 @@ int  sub_44B63F(int thisx, double a2, double a3, double a4)
     {
         for (k = 0; k < (unsigned __int8)byte_4B9985; ++k)
         {
-            if ((unsigned __int8)sub_426070((_BYTE*)(thisx + 612 * k + 2628)) == *(int*)(thisx + 2524)
+            if ((unsigned __int8)sub_426070((char*)(thisx + 612 * k + 2628)) == *(int*)(thisx + 2524)
                 && Concurrency::details::SchedulerBase::GetSchedulerProxy((Concurrency::details::SchedulerBase*)(thisx + 612 * k + 2628)) != (struct Concurrency::ISchedulerProxy*)80)
             {
                 if (unknown_libname_7((int*)(thisx + 612 * k + 2628)))
@@ -35686,7 +35686,7 @@ int  sub_44B63F(int thisx, double a2, double a3, double a4)
                 {
                     if (!dword_4B9974)
                     {
-                        *(_BYTE*)(thisx + 2516) = 2;
+                        *(char*)(thisx + 2516) = 2;
                         *(int*)(thisx + 108) = 11;
                         return result;
                     }
@@ -35697,13 +35697,13 @@ int  sub_44B63F(int thisx, double a2, double a3, double a4)
                 {
                     if (dword_4B9974)
                     {
-                        *(_BYTE*)(thisx + 2516) = 2;
+                        *(char*)(thisx + 2516) = 2;
                         *(int*)(thisx + 108) = 11;
                     }
                     else
                     {
                         result = thisx;
-                        *(_BYTE*)(thisx + 2516) = 2;
+                        *(char*)(thisx + 2516) = 2;
                         *(int*)(thisx + 108) = 9;
                     }
                     return result;
@@ -35716,7 +35716,7 @@ int  sub_44B63F(int thisx, double a2, double a3, double a4)
                     return sub_453B66(thisx);
                 }
                 result = thisx;
-                *(_BYTE*)(thisx + 2516) = 2;
+                *(char*)(thisx + 2516) = 2;
                 *(int*)(thisx + 108) = 8;
                 if (*(int*)(thisx + 116) == 3)
                 {
@@ -35740,28 +35740,28 @@ int sub_44C3D6(int thisx)
 
 
     *(int*)(thisx + 104) = 3;
-    *(_BYTE*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2516) = 1;
     *(int*)(thisx + 2512) = 0;
     *(int*)(thisx + 2528) = 0;
     *(int*)(thisx + 2532) = 0;
-    *(_BYTE*)(thisx + 2562) = 0;
-    *(_BYTE*)(thisx + 11372) = 2;
-    byte_4B999A = *(_BYTE*)(thisx + 30);
+    *(char*)(thisx + 2562) = 0;
+    *(char*)(thisx + 11372) = 2;
+    byte_4B999A = *(char*)(thisx + 30);
     for (i = 0; i < 14; ++i)
         word_4B99AC[i] = *(short*)(thisx + 2 * i + 48);
-    byte_4B99C8 = *(_BYTE*)(thisx + 76);
-    byte_4B99C9 = *(_BYTE*)(thisx + 77);
-    byte_4B99CA = *(_BYTE*)(thisx + 78);
-    byte_4B99CB = *(_BYTE*)(thisx + 79);
-    byte_4B99CC = *(_BYTE*)(thisx + 80);
-    byte_4B99CD = *(_BYTE*)(thisx + 81);
+    byte_4B99C8 = *(char*)(thisx + 76);
+    byte_4B99C9 = *(char*)(thisx + 77);
+    byte_4B99CA = *(char*)(thisx + 78);
+    byte_4B99CB = *(char*)(thisx + 79);
+    byte_4B99CC = *(char*)(thisx + 80);
+    byte_4B99CD = *(char*)(thisx + 81);
     sub_480054(thisx + 15644, (int)byte_4B0BA4);//thisx = b10,绘制目录文字，游戏模式,我加的2
-    sub_475630((_BYTE*)(thisx + 15644), 14, 2, 11, 4);
-    sub_475690((_BYTE*)(thisx + 15644), 2);
+    sub_475630((char*)(thisx + 15644), 14, 2, 11, 4);
+    sub_475690((char*)(thisx + 15644), 2);
     streambuf::unbuffered((streambuf*)(thisx + 15644), 0);
     sub_475670((int*)(thisx + 15644), 0);
     sub_480054(thisx + 15680, (int)&byte_4B0BB4);//绘制目录文字,故事模式战斗模式生存模式
-    sub_475630((_BYTE*)(thisx + 15680), 13, 8, 13, 12);
+    sub_475630((char*)(thisx + 15680), 13, 8, 13, 12);
     streambuf::unbuffered((streambuf*)(thisx + 15680), 0);
     sub_475670((int*)(thisx + 15680), 1);
     sub_48089C(thisx + 15896, 0);
@@ -35913,14 +35913,14 @@ unsigned __int8  sub_44C60C(int thisx)
     v38 = 0;
     v36 = 0;
     v39 = 0;
-    if (*(int*)(thisx + 15640) && !*(_BYTE*)(thisx + 2516))
+    if (*(int*)(thisx + 15640) && !*(char*)(thisx + 2516))
     {
         //thisx = byte_4B9B10
         //byte_4B9B10 + 15640
         v39 = (*(int(**)(int))(**(int**)(thisx + 15640) + 16))    (*(int*)(thisx + 15640));//sub_480227
         *(int*)(thisx + 2528) = unknown_libname_13(*(int**)(thisx + 15640));
     }
-    switch (*(_BYTE*)(thisx + 2562))
+    switch (*(char*)(thisx + 2562))
     {
     case 0:
         if (v39 != 1)
@@ -35939,9 +35939,9 @@ unsigned __int8  sub_44C60C(int thisx)
             *(int*)(thisx + 116) = 0;
             byte_4B99CB = 1;
             byte_4B99CC = 0;
-            *(_BYTE*)(thisx + 2562) = 7;
+            *(char*)(thisx + 2562) = 7;
             sub_480054(thisx + 15716, (int)&byte_4B0C10);
-            sub_4756B0((_BYTE*)(thisx + 15716), 20, 8);
+            sub_4756B0((char*)(thisx + 15716), 20, 8);
             if (*(int*)(thisx + 15640))
                 (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 0);
             (*(void(**)(int, int))(*(int*)(thisx + 15716) + 4))(thisx + 15716, 1);
@@ -35954,7 +35954,7 @@ unsigned __int8  sub_44C60C(int thisx)
                 *(int*)(thisx + 116) = 2;
             else
                 *(int*)(thisx + 116) = 1;
-            *(_BYTE*)(thisx + 2562) = 1;
+            *(char*)(thisx + 2562) = 1;
             v38 = 1;
             v36 = 1;
             byte_4B9985 = 4;
@@ -35964,7 +35964,7 @@ unsigned __int8  sub_44C60C(int thisx)
             (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 1);
             goto LABEL_224;
         case 2:
-            *(_BYTE*)(thisx + 2562) = 2;
+            *(char*)(thisx + 2562) = 2;
             if (*(int*)(thisx + 15640))
                 (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 0);
             (*(void(**)(int, int))(*(int*)(thisx + 15992) + 4))(thisx + 15992, 1);
@@ -35978,14 +35978,14 @@ unsigned __int8  sub_44C60C(int thisx)
             if (*(int*)(thisx + 2528) == 4)
             {
                 result = thisx;
-                *(_BYTE*)(thisx + 2516) = 2;
+                *(char*)(thisx + 2516) = 2;
                 *(int*)(thisx + 108) = 5;
                 return result;
             }
             break;
         }
         *(int*)(thisx + 116) = 4;
-        *(_BYTE*)(thisx + 2562) = 10;
+        *(char*)(thisx + 2562) = 10;
         if (*(int*)(thisx + 15640))
             (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 0);
         goto LABEL_24;
@@ -35998,29 +35998,29 @@ unsigned __int8  sub_44C60C(int thisx)
             if (*(int*)(thisx + 116) == 2)
             {
                 byte_4B9990 = 2;
-                *(_BYTE*)(thisx + 2546) = byte_4B9986;
-                *(_BYTE*)(thisx + 2547) = byte_4B9987;
+                *(char*)(thisx + 2546) = byte_4B9986;
+                *(char*)(thisx + 2547) = byte_4B9987;
                 for (i = 0; i < 8; ++i)
                     byte_4B9988[i] = i;
-                *(_BYTE*)(thisx + 2516) = 2;
+                *(char*)(thisx + 2516) = 2;
                 byte_4B99CB = 0;
                 byte_4B99CC = 0;
-                byte_4B999A = *(_BYTE*)(thisx + 30);
+                byte_4B999A = *(char*)(thisx + 30);
                 byte_4B99C8 = 0;
                 result = thisx;
                 *(int*)(thisx + 108) = 8;
                 return result;
             }
-            *(_BYTE*)(thisx + 2562) = 3;
+            *(char*)(thisx + 2562) = 3;
             sub_480054(thisx + 15716, (int)&byte_4B0C28);
-            sub_475690((_BYTE*)(thisx + 15716), 4);
-            sub_475630((_BYTE*)(thisx + 15716), 11, 11, 17, 8);
+            sub_475690((char*)(thisx + 15716), 4);
+            sub_475630((char*)(thisx + 15716), 11, 11, 17, 8);
             (*(void(**)(int, int))(*(int*)(thisx + 15716) + 4))(thisx + 15716, 1);
             *(int*)(thisx + 15640) = thisx + 15716;
             byte_4B9990 = byte_4B9985;
             memset((void*)(thisx + 2546), 0, 8u);
             for (j = 0; j < (unsigned __int8)byte_4B9990; ++j)
-                *(_BYTE*)(j + thisx + 2546) = 1;
+                *(char*)(j + thisx + 2546) = 1;
             for (k = 0; k < 8; ++k)
                 byte_4B9988[k] = k;
             *(int*)(thisx + 2528) = 0;
@@ -36031,7 +36031,7 @@ unsigned __int8  sub_44C60C(int thisx)
             (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 0);
             (*(void(**)(int, int))(*(int*)(thisx + 15680) + 4))(thisx + 15680, 1);
             *(int*)(thisx + 15640) = thisx + 15680;
-            *(_BYTE*)(thisx + 2562) = 0;
+            *(char*)(thisx + 2562) = 0;
             v38 = 1;
             v36 = 1;
             break;
@@ -36043,7 +36043,7 @@ unsigned __int8  sub_44C60C(int thisx)
     case 2:
         if (v39 == 1)
         {
-            *(_BYTE*)(thisx + 11372) = unknown_libname_13(*(int**)(thisx + 15640));
+            *(char*)(thisx + 11372) = unknown_libname_13(*(int**)(thisx + 15640));
             byte_4B9998 = unknown_libname_13(*(int**)(thisx + 15640));
             byte_4B99CB = 0;
             byte_4B99CC = 0;
@@ -36051,10 +36051,10 @@ unsigned __int8  sub_44C60C(int thisx)
             byte_4B9985 = 1;
             byte_4B9986 = 1;
             byte_4B9987 = 1;
-            byte_4B999A = *(_BYTE*)(thisx + 30);
+            byte_4B999A = *(char*)(thisx + 30);
             byte_4B99C8 = 0;
             result = thisx;
-            *(_BYTE*)(thisx + 2516) = 2;
+            *(char*)(thisx + 2516) = 2;
             *(int*)(thisx + 108) = 8;
             return result;
         }
@@ -36064,7 +36064,7 @@ unsigned __int8  sub_44C60C(int thisx)
                 (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 0);
             (*(void(**)(int, int))(*(int*)(thisx + 15680) + 4))(thisx + 15680, 1);
             *(int*)(thisx + 15640) = thisx + 15680;
-            *(_BYTE*)(thisx + 2562) = 0;
+            *(char*)(thisx + 2562) = 0;
             v36 = 1;
             v38 = 1;
         }
@@ -36078,25 +36078,25 @@ unsigned __int8  sub_44C60C(int thisx)
             switch (*(int*)(thisx + 2528))
             {
             case 0:
-                *(_BYTE*)(thisx + 2516) = 2;
-                byte_4B99CB = *(_BYTE*)(thisx + 79);
-                byte_4B99CC = *(_BYTE*)(thisx + 80);
-                byte_4B999A = *(_BYTE*)(thisx + 30);
-                byte_4B99C8 = *(_BYTE*)(thisx + 76);
-                byte_4B99DF = *(_BYTE*)(thisx + 99);
-                result = *(_BYTE*)(thisx + 100);
+                *(char*)(thisx + 2516) = 2;
+                byte_4B99CB = *(char*)(thisx + 79);
+                byte_4B99CC = *(char*)(thisx + 80);
+                byte_4B999A = *(char*)(thisx + 30);
+                byte_4B99C8 = *(char*)(thisx + 76);
+                byte_4B99DF = *(char*)(thisx + 99);
+                result = *(char*)(thisx + 100);
                 byte_4B99E0 = result;
                 *(int*)(thisx + 108) = 8;
                 return result;
             case 1:
-                *(_BYTE*)(thisx + 2562) = 4;
+                *(char*)(thisx + 2562) = 4;
                 *(int*)(thisx + 15640) = thisx + 15860;
                 (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 1);
                 v38 = 1;
                 v36 = 1;
                 break;
             case 2:
-                *(_BYTE*)(thisx + 2562) = 6;
+                *(char*)(thisx + 2562) = 6;
                 if (*(int*)(thisx + 15640))
                     (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 0);
                 (*(void(**)(int, int))(*(int*)(thisx + 15956) + 4))(thisx + 15956, 1);
@@ -36110,7 +36110,7 @@ unsigned __int8  sub_44C60C(int thisx)
             (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 0);
             *(int*)(thisx + 15640) = thisx + 15824;
             (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 1);
-            *(_BYTE*)(thisx + 2562) = 1;
+            *(char*)(thisx + 2562) = 1;
             v38 = 1;
             v36 = 1;
             break;
@@ -36126,7 +36126,7 @@ unsigned __int8  sub_44C60C(int thisx)
             {
                 for (m = 0; m < (unsigned __int8)byte_4B9986; ++m)
                     *(short*)(thisx + 2 * m + 2564) = (unsigned __int8)sub_4575B4((unsigned __int8*)thisx, m, 0);
-                *(_BYTE*)(thisx + 2562) = 3;
+                *(char*)(thisx + 2562) = 3;
                 (*(void(**)(int, int))(*(int*)(thisx + 15716) + 4))(thisx + 15716, 1);
                 *(int*)(thisx + 15640) = thisx + 15716;
                 v38 = 1;
@@ -36145,11 +36145,11 @@ unsigned __int8  sub_44C60C(int thisx)
             for (n = 0; n < 8; ++n)
                 byte_4B9988[n] = n;
             for (ii = 0; ii < 8; ++ii)
-                sub_48EC25(thisx + 15896, ii + thisx, ii, *(_BYTE*)(ii + thisx + 2546));
-            sub_48EC62((_BYTE*)(thisx + 15896));
+                sub_48EC25(thisx + 15896, ii + thisx, ii, *(char*)(ii + thisx + 2546));
+            sub_48EC62((char*)(thisx + 15896));
             *(int*)(thisx + 15640) = thisx + 15896;
             (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 1);
-            *(_BYTE*)(thisx + 2562) = 5;
+            *(char*)(thisx + 2562) = 5;
             v38 = 1;
             v36 = 1;
             break;
@@ -36161,7 +36161,7 @@ unsigned __int8  sub_44C60C(int thisx)
         if (v39 == 1)
         {
             for (kk = 0; kk < 8; ++kk)
-                *(short*)(thisx + 2 * kk + 2564) = (unsigned __int8)sub_475710((_BYTE*)(thisx + 15896), kk);
+                *(short*)(thisx + 2 * kk + 2564) = (unsigned __int8)sub_475710((char*)(thisx + 15896), kk);
             v28 = 0;
             v25 = 0;
             for (mm = 0; mm < (unsigned __int8)byte_4B9990; ++mm)
@@ -36177,7 +36177,7 @@ unsigned __int8  sub_44C60C(int thisx)
                 }
                 if (v22 < (int)*(unsigned __int8*)(mm + thisx + 2546))
                 {
-                    v21 = *(_BYTE*)(mm + thisx + 2546) - v22;
+                    v21 = *(char*)(mm + thisx + 2546) - v22;
                     for (i1 = 0; i1 < v21; ++i1)
                     {
                         byte_4B9988[v28] = v25 + byte_4B9986;
@@ -36189,7 +36189,7 @@ unsigned __int8  sub_44C60C(int thisx)
             (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 0);
             *(int*)(thisx + 15640) = thisx + 15716;
             (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 1);
-            *(_BYTE*)(thisx + 2562) = 3;
+            *(char*)(thisx + 2562) = 3;
             v38 = 1;
             v36 = 1;
         }
@@ -36198,7 +36198,7 @@ unsigned __int8  sub_44C60C(int thisx)
             (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 0);
             *(int*)(thisx + 15640) = thisx + 15860;
             (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 1);
-            *(_BYTE*)(thisx + 2562) = 4;
+            *(char*)(thisx + 2562) = 4;
             v38 = 1;
             v36 = 1;
         }
@@ -36223,7 +36223,7 @@ unsigned __int8  sub_44C60C(int thisx)
     LABEL_124:
         (*(void(**)(int, int))(*(int*)(thisx + 15716) + 4))(thisx + 15716, 1);
         *(int*)(thisx + 15640) = thisx + 15716;
-        *(_BYTE*)(thisx + 2562) = 3;
+        *(char*)(thisx + 2562) = 3;
         v38 = 1;
         v36 = 1;
         break;
@@ -36235,21 +36235,21 @@ unsigned __int8  sub_44C60C(int thisx)
             {
                 if (*(int*)(thisx + 2528) == 1)
                 {
-                    *(_BYTE*)(thisx + 2562) = 0;
+                    *(char*)(thisx + 2562) = 0;
                     *(int*)(thisx + 108) = 20;
-                    *(_BYTE*)(thisx + 2516) = 2;
+                    *(char*)(thisx + 2516) = 2;
                 }
             }
             else
             {
-                *(_BYTE*)(thisx + 2562) = 8;
+                *(char*)(thisx + 2562) = 8;
                 v38 = 1;
                 v36 = 1;
                 sub_463F05(thisx + 11436);
                 sub_475730((short*)(thisx + 11816), 0);
                 sub_475730((short*)(thisx + 11892), 0);
                 sub_480054(thisx + 15752, (int)&byte_4B0C5C);
-                sub_4756B0((_BYTE*)(thisx + 15752), 26, 8);
+                sub_4756B0((char*)(thisx + 15752), 26, 8);
                 (*(void(**)(int, int))(*(int*)(thisx + 15752) + 4))(thisx + 15752, 1);
                 *(int*)(thisx + 15640) = thisx + 15752;
             }
@@ -36259,7 +36259,7 @@ unsigned __int8  sub_44C60C(int thisx)
             (*(void(**)(int, int))(*(int*)(thisx + 15716) + 4))(thisx + 15716, 0);
             (*(void(**)(int, int))(*(int*)(thisx + 15680) + 4))(thisx + 15680, 1);
             *(int*)(thisx + 15640) = thisx + 15680;
-            *(_BYTE*)(thisx + 2562) = 0;
+            *(char*)(thisx + 2562) = 0;
             v38 = 1;
             v36 = 1;
         }
@@ -36267,9 +36267,9 @@ unsigned __int8  sub_44C60C(int thisx)
     case 8:
         if (v39 == 1)
         {
-            *(_BYTE*)(thisx + 11968) = *(int*)(thisx + 2528) + 1;
+            *(char*)(thisx + 11968) = *(int*)(thisx + 2528) + 1;
             result = thisx;
-            *(_BYTE*)(thisx + 2516) = 2;
+            *(char*)(thisx + 2516) = 2;
             *(int*)(thisx + 108) = 4;
             return result;
         }
@@ -36278,7 +36278,7 @@ unsigned __int8  sub_44C60C(int thisx)
             (*(void(**)(int, int))(*(int*)(thisx + 15752) + 4))(thisx + 15752, 0);
             (*(void(**)(int, int))(*(int*)(thisx + 15716) + 4))(thisx + 15716, 1);
             *(int*)(thisx + 15640) = thisx + 15716;
-            *(_BYTE*)(thisx + 2562) = 7;
+            *(char*)(thisx + 2562) = 7;
             v38 = 1;
             v36 = 1;
         }
@@ -36288,7 +36288,7 @@ unsigned __int8  sub_44C60C(int thisx)
         {
         case 1:
             v20 = (Concurrency::details::_CancellationTokenRegistration*)unknown_libname_12((int*)(thisx + 16048));
-            *(_BYTE*)(thisx + 2477) = (unsigned __int8)Concurrency::details::_CancellationTokenRegistration::_GetToken(v20);
+            *(char*)(thisx + 2477) = (unsigned __int8)Concurrency::details::_CancellationTokenRegistration::_GetToken(v20);
             *(int*)(thisx + 2368) = (int)Concurrency::details::_CancellationTokenRegistration::_GetToken((Concurrency::details::_CancellationTokenRegistration*)((char*)v20 + 32));
             byte_4B9986 = (unsigned __int8)Concurrency::details::_CancellationTokenRegistration::_GetToken((Concurrency::details::_CancellationTokenRegistration*)((char*)v20 + 64));
             byte_4B99CB = (unsigned __int8)Concurrency::details::_CancellationTokenRegistration::_GetToken((Concurrency::details::_CancellationTokenRegistration*)((char*)v20 + 96));
@@ -36302,12 +36302,12 @@ unsigned __int8  sub_44C60C(int thisx)
             memcpy((void*)(thisx + 2376), &dword_4B9980, 0x64u);
             memset((void*)(thisx + 2546), 0, 8u);
             for (i2 = 0; i2 < (unsigned __int8)byte_4B9990; ++i2)
-                *(_BYTE*)(i2 + thisx + 2546) = *(_BYTE*)(thisx + 2368) + 1;
+                *(char*)(i2 + thisx + 2546) = *(char*)(thisx + 2368) + 1;
             for (i3 = 0; i3 < 8; ++i3)
                 byte_4B9988[i3] = i3;
             if (!*(int*)(thisx + 2368))
             {
-                *(_BYTE*)(thisx + 2516) = 2;
+                *(char*)(thisx + 2516) = 2;
                 result = thisx;
                 *(int*)(thisx + 108) = 22;
                 return result;
@@ -36322,7 +36322,7 @@ unsigned __int8  sub_44C60C(int thisx)
                     ;
                 byte_4B9988[i7] = i6 + byte_4B9986;
             }
-            *(_BYTE*)(thisx + 2562) = 11;
+            *(char*)(thisx + 2562) = 11;
             if (*(int*)(thisx + 15640))
                 (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 0);
             (*(void(**)(int, int))(*(int*)(thisx + 16084) + 4))(thisx + 16084, 1);
@@ -36331,7 +36331,7 @@ unsigned __int8  sub_44C60C(int thisx)
             v38 = 1;
             break;
         case 2:
-            *(_BYTE*)(thisx + 2562) = 0;
+            *(char*)(thisx + 2562) = 0;
             if (*(int*)(thisx + 15640))
                 (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 0);
             (*(void(**)(int, int))(*(int*)(thisx + 15680) + 4))(thisx + 15680, 1);
@@ -36356,7 +36356,7 @@ unsigned __int8  sub_44C60C(int thisx)
                 byte_4B99CC = (unsigned __int8)Concurrency::details::_CancellationTokenRegistration::_GetToken((Concurrency::details::_CancellationTokenRegistration*)(v13 + 64));
                 memcpy((void*)(thisx + 2376), &dword_4B9980, 0x64u);
                 result = thisx;
-                *(_BYTE*)(thisx + 2516) = 2;
+                *(char*)(thisx + 2516) = 2;
                 *(int*)(thisx + 108) = 22;
                 return result;
             }
@@ -36368,19 +36368,19 @@ unsigned __int8  sub_44C60C(int thisx)
                     for (i8 = 0; i8 < 8; ++i8)
                     {
                         LOBYTE(v2) = i8;
-                        sub_48EC25(thisx + 15896, v2, i8, *(_BYTE*)(i8 + thisx + 2546));
+                        sub_48EC25(thisx + 15896, v2, i8, *(char*)(i8 + thisx + 2546));
                         v2 = i8 + 1;
                     }
-                    sub_48EC62((_BYTE*)(thisx + 15896));
+                    sub_48EC62((char*)(thisx + 15896));
                     *(int*)(thisx + 15640) = thisx + 15896;
                     (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 1);
-                    *(_BYTE*)(thisx + 2562) = 12;
+                    *(char*)(thisx + 2562) = 12;
                     v38 = 1;
                     v36 = 1;
                 }
                 else
                 {
-                    sub_451EB5((_BYTE*)thisx, 0, 1);
+                    sub_451EB5((char*)thisx, 0, 1);
                     sub_47B91A(16, 208, byte_4B0C68, 0, dword_4B9248);
                 }
             }
@@ -36398,7 +36398,7 @@ unsigned __int8  sub_44C60C(int thisx)
             }
             break;
         }
-        *(_BYTE*)(thisx + 2562) = 10;
+        *(char*)(thisx + 2562) = 10;
         if (*(int*)(thisx + 15640))
             (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 0);
     LABEL_24:
@@ -36411,7 +36411,7 @@ unsigned __int8  sub_44C60C(int thisx)
         if (v39 == 1)
         {
             for (i9 = 0; i9 < 8; ++i9)
-                *(short*)(thisx + 2 * i9 + 2564) = (unsigned __int8)sub_475710((_BYTE*)(thisx + 15896), i9);
+                *(short*)(thisx + 2 * i9 + 2564) = (unsigned __int8)sub_475710((char*)(thisx + 15896), i9);
             v11 = 0;
             v8 = 0;
             for (i10 = 0; i10 < (unsigned __int8)byte_4B9990; ++i10)
@@ -36427,7 +36427,7 @@ unsigned __int8  sub_44C60C(int thisx)
                 }
                 if (v5 < (int)*(unsigned __int8*)(i10 + thisx + 2546))
                 {
-                    v4 = *(_BYTE*)(i10 + thisx + 2546) - v5;
+                    v4 = *(char*)(i10 + thisx + 2546) - v5;
                     for (i12 = 0; i12 < v4; ++i12)
                     {
                         byte_4B9988[v11] = v8 + byte_4B9986;
@@ -36436,7 +36436,7 @@ unsigned __int8  sub_44C60C(int thisx)
                     }
                 }
             }
-            *(_BYTE*)(thisx + 2562) = 11;
+            *(char*)(thisx + 2562) = 11;
             if (*(int*)(thisx + 15640))
                 (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 0);
         }
@@ -36448,7 +36448,7 @@ unsigned __int8  sub_44C60C(int thisx)
                     v38 = 1;
                 break;
             }
-            *(_BYTE*)(thisx + 2562) = 11;
+            *(char*)(thisx + 2562) = 11;
             if (*(int*)(thisx + 15640))
                 (*(void(**)(int, int))(**(int**)(thisx + 15640) + 4))(*(int*)(thisx + 15640), 0);
         }
@@ -36466,7 +36466,7 @@ LABEL_224:
     v37[2] = 0;
     v37[0] = dword_4B9248;
     result = (unsigned __int8)sub_49AB05((int)byte_4BDC60, v37);
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         result = thisx;
         if (*(int*)(thisx + 15640))
@@ -36476,7 +36476,7 @@ LABEL_224:
 }
 
 
-BOOL sub_44E484(_BYTE* thisx, int a2, int a3)
+BOOL sub_44E484(char* thisx, int a2, int a3)
 {
     //    int v4; // [esp+8h] [ebp-8h]
     //    int i; // [esp+Ch] [ebp-4h]
@@ -36612,7 +36612,7 @@ int sub_44E835(int thisx)
     v4 = 0;
     for (i = 0; i < 3; ++i)
         v9[i] = 0;
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         if (sub_476CDA(0))
         {
@@ -36644,45 +36644,45 @@ int sub_44E835(int thisx)
                 switch (*(int*)(thisx + 2528))
                 {
                 case 1:
-                    *(_BYTE*)(thisx + 2496) -= v5;
+                    *(char*)(thisx + 2496) -= v5;
                     if (*(unsigned __int8*)(thisx + 2496) < 0xBu)
                     {
-                        if (*(_BYTE*)(thisx + 2496) == 1)
+                        if (*(char*)(thisx + 2496) == 1)
                         {
-                            *(_BYTE*)(thisx + 2496) = 2;
+                            *(char*)(thisx + 2496) = 2;
                         }
-                        else if (*(_BYTE*)(thisx + 2496))
+                        else if (*(char*)(thisx + 2496))
                         {
-                            if (*(_BYTE*)(thisx + 2496) == 2 && v5 < 0)
-                                *(_BYTE*)(thisx + 2496) = 1;
+                            if (*(char*)(thisx + 2496) == 2 && v5 < 0)
+                                *(char*)(thisx + 2496) = 1;
                         }
                         else
                         {
-                            *(_BYTE*)(thisx + 2496) = 10;
+                            *(char*)(thisx + 2496) = 10;
                         }
                     }
                     else
                     {
-                        *(_BYTE*)(thisx + 2496) = 1;
+                        *(char*)(thisx + 2496) = 1;
                     }
                     break;
                 case 2:
-                    *(_BYTE*)(thisx + 77) = *(_BYTE*)(thisx + 77) == 0;
+                    *(char*)(thisx + 77) = *(char*)(thisx + 77) == 0;
                     break;
                 case 3:
-                    *(_BYTE*)(thisx + 81) = *(_BYTE*)(thisx + 81) == 0;
+                    *(char*)(thisx + 81) = *(char*)(thisx + 81) == 0;
                     break;
                 case 4:
                     dword_4B99F0 = dword_4B99F0 == 0;
                     break;
                 case 5:
-                    *(_BYTE*)(thisx + 30) = (*(unsigned __int8*)(thisx + 30) + v5 + 9) % 9;
+                    *(char*)(thisx + 30) = (*(unsigned __int8*)(thisx + 30) + v5 + 9) % 9;
                     break;
                 case 6:
-                    *(_BYTE*)(thisx + 78) = *(_BYTE*)(thisx + 78) == 0;
+                    *(char*)(thisx + 78) = *(char*)(thisx + 78) == 0;
                     break;
                 case 7:
-                    *(_BYTE*)(thisx + 98) = *(_BYTE*)(thisx + 98) == 0;
+                    *(char*)(thisx + 98) = *(char*)(thisx + 98) == 0;
                     break;
                 }
             }
@@ -36719,13 +36719,13 @@ int sub_44E835(int thisx)
         if (*(int*)(thisx + 2528) == 8)
         {
             *(int*)(thisx + 108) = 6;
-            *(_BYTE*)(thisx + 2516) = 2;
+            *(char*)(thisx + 2516) = 2;
             *(int*)(thisx + 2512) = 0;
         }
         else if (*(int*)(thisx + 2528) == 9)
         {
             *(int*)(thisx + 108) = 7;
-            *(_BYTE*)(thisx + 2516) = 2;
+            *(char*)(thisx + 2516) = 2;
             *(int*)(thisx + 2512) = 0;
         }
         sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
@@ -36733,7 +36733,7 @@ int sub_44E835(int thisx)
     if (v9[0] && *(int*)(thisx + 2528) < 8 || v9[1])
     {
         *(int*)(thisx + 108) = 3;
-        *(_BYTE*)(thisx + 2516) = 2;
+        *(char*)(thisx + 2516) = 2;
         *(int*)(thisx + 2512) = 0;
     }
     if (v8)
@@ -36813,20 +36813,20 @@ UINT sub_44ED4D(UINT thisx)
 
     for (i = 0; i < 8; ++i)
         sub_477F0C(i);
-    LOBYTE(v38) = *(_BYTE*)(thisx + 2562);
-    if (!*(_BYTE*)(thisx + 2516))
+    LOBYTE(v38) = *(char*)(thisx + 2562);
+    if (!*(char*)(thisx + 2516))
     {
-        if (*(_BYTE*)(thisx + 2562))
+        if (*(char*)(thisx + 2562))
         {
-            if (*(_BYTE*)(thisx + 2562) == 1)
+            if (*(char*)(thisx + 2562) == 1)
             {
                 NumDevs = joyGetNumDevs();
                 v36 = NumDevs;
-                LOBYTE(NumDevs) = *(_BYTE*)(thisx + 2528);
+                LOBYTE(NumDevs) = *(char*)(thisx + 2528);
                 v4 = sub_476D78(NumDevs);
-                LOBYTE(v5) = *(_BYTE*)(thisx + 2528);
+                LOBYTE(v5) = *(char*)(thisx + 2528);
                 v35 = v4 - sub_476D29(v5);
-                v34 = *(_BYTE*)(thisx + 2536);
+                v34 = *(char*)(thisx + 2536);
                 if (v34 < 0 && v35)
                 {
                     if (!joyGetPos(0, &pji))
@@ -36855,13 +36855,13 @@ UINT sub_44ED4D(UINT thisx)
                 }
                 else
                 {
-                    LOBYTE(v6) = *(_BYTE*)(thisx + 2528);
+                    LOBYTE(v6) = *(char*)(thisx + 2528);
                     if (sub_476DC7(v6, 0))
                     {
                         //sub_47652C(player_list[108 * *(int*)(thisx + 2528)], *(int*)(thisx + 2536));
                         sub_47652C((int*)&player_list[108 * *(int*)(thisx + 2528)], *(int*)(thisx + 2536));
-                        *(_BYTE*)(thisx + 2562) = 2;
-                        *(_BYTE*)(thisx + *(int*)(thisx + 2528) + 2588) = 2;
+                        *(char*)(thisx + 2562) = 2;
+                        *(char*)(thisx + *(int*)(thisx + 2528) + 2588) = 2;
                         *(short*)(thisx + 2 * *(int*)(thisx + 2528) + 2564) = 0;
                         sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
                         for (j = 0; j < 256; ++j)
@@ -36869,9 +36869,9 @@ UINT sub_44ED4D(UINT thisx)
                     }
                     else
                     {
-                        LOBYTE(v7) = *(_BYTE*)(thisx + 2528);
+                        LOBYTE(v7) = *(char*)(thisx + 2528);
                         if (sub_476DC7(v7, 1))
-                            *(_BYTE*)(thisx + 2562) = 0;
+                            *(char*)(thisx + 2562) = 0;
                     }
                 }
             }
@@ -36903,7 +36903,7 @@ UINT sub_44ED4D(UINT thisx)
                 sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
             if (sub_476DC7(0, 0))
             {
-                *(_BYTE*)(thisx + 2562) = 1;
+                *(char*)(thisx + 2562) = 1;
                 *(int*)(thisx + 2536) = (char)sub_4768D5((int*)&player_list[108 * *(int*)(thisx + 2528)]);
                 if (*(int*)(thisx + 2536))
                 {
@@ -36920,7 +36920,7 @@ UINT sub_44ED4D(UINT thisx)
             {
                 result = thisx;
                 *(int*)(thisx + 108) = 5;
-                *(_BYTE*)(thisx + 2516) = 2;
+                *(char*)(thisx + 2516) = 2;
                 *(int*)(thisx + 2512) = 0;
                 return result;
             }
@@ -36944,13 +36944,13 @@ UINT sub_44ED4D(UINT thisx)
         v29 = v41 + 52 * v40 + 82;
         wsprintfA(String, "%dP", i + 1);
         sub_47B7ED(v29 - 8, v39, String, 0, -1);
-        if (!*(_BYTE*)(thisx + 2562) && *(int*)(thisx + 2528) == i)
+        if (!*(char*)(thisx + 2562) && *(int*)(thisx + 2528) == i)
             sub_47B91A(v29 - 20, v39, asc_4B0CB8, 0, -1);
         v27 = sub_4768D5((int*)&player_list[108 * i]);
-        if (*(_BYTE*)(thisx + 2562) == 1 && *(int*)(thisx + 2528) == i)
+        if (*(char*)(thisx + 2562) == 1 && *(int*)(thisx + 2528) == i)
         {
             if (*(int*)(thisx + 2536) >= 0)
-                v27 = *(_BYTE*)(thisx + 2536) + 1;
+                v27 = *(char*)(thisx + 2536) + 1;
             else
                 v27 = 0;
         }
@@ -36965,7 +36965,7 @@ UINT sub_44ED4D(UINT thisx)
         }
         v28 = lstrlenA(String);
         sub_47B7ED(v29 - 4 * v28, v39 + 16, String, 0, -1);
-        if (*(_BYTE*)(thisx + 2562) == 1 && *(int*)(thisx + 2528) == i)
+        if (*(char*)(thisx + 2562) == 1 && *(int*)(thisx + 2528) == i)
             sub_47B91A(v29 - 22, v39 + 16, asc_4B0CC8, 0, -1);
         if (v27 >= 0)
         {
@@ -36990,7 +36990,7 @@ UINT sub_44ED4D(UINT thisx)
                             v26 = v39 + 146;
                         }
                         sub_47B7ED(v29 - 4 * v28, v26, v22, 0, -1);
-                        if (*(_BYTE*)(thisx + 2562) == 2
+                        if (*(char*)(thisx + 2562) == 2
                             && *(int*)(thisx + 2528) == i
                             && *(unsigned __int16*)(thisx + 2 * i + 2564) == k)
                         {
@@ -37045,7 +37045,7 @@ UINT sub_44ED4D(UINT thisx)
                         v9 = lstrlenA(String);
                         sub_47B7ED(v29 - 4 * v9, v12, String, 0, -1);
                     }
-                    if (*(_BYTE*)(thisx + 2562) == 2
+                    if (*(char*)(thisx + 2562) == 2
                         && *(int*)(thisx + 2528) == i
                         && *(unsigned __int16*)(thisx + 2 * i + 2564) == m)
                     {
@@ -37054,7 +37054,7 @@ UINT sub_44ED4D(UINT thisx)
                     v26 += 10;
                 }
             }
-            if (*(_BYTE*)(thisx + 2562) == 2 && *(int*)(thisx + 2528) == i)
+            if (*(char*)(thisx + 2562) == 2 && *(int*)(thisx + 2528) == i)
             {
                 if (v27 <= 0)
                 {
@@ -37081,13 +37081,13 @@ UINT sub_44ED4D(UINT thisx)
                             }
                         }
                         if (v16 <= 0)
-                            *(_BYTE*)(i + thisx + 2588) = 0;
+                            *(char*)(i + thisx + 2588) = 0;
                         else
-                            ++* (_BYTE*)(i + thisx + 2588);
-                        if (*(_BYTE*)(i + thisx + 2588) == 1)
+                            ++* (char*)(i + thisx + 2588);
+                        if (*(char*)(i + thisx + 2588) == 1)
                         {
-                            *(_BYTE*)(thisx + 11 * i + 11264 + *(unsigned __int16*)(thisx + 2 * i + 2564)) = v16;
-                            sub_47690D((char*)&player_list[108 * i], *(_BYTE*)(thisx + 2 * i + 2564), v16);
+                            *(char*)(thisx + 11 * i + 11264 + *(unsigned __int16*)(thisx + 2 * i + 2564)) = v16;
+                            sub_47690D((char*)&player_list[108 * i], *(char*)(thisx + 2 * i + 2564), v16);
                             ++* (short*)(thisx + 2 * i + 2564);
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
                         }
@@ -37103,11 +37103,11 @@ UINT sub_44ED4D(UINT thisx)
                     {
                         ;
                     }
-                    if (n < 16 || *(_BYTE*)(i + thisx + 2588) == 2)
-                        ++* (_BYTE*)(i + thisx + 2588);
+                    if (n < 16 || *(char*)(i + thisx + 2588) == 2)
+                        ++* (char*)(i + thisx + 2588);
                     else
-                        *(_BYTE*)(i + thisx + 2588) = 0;
-                    if (*(_BYTE*)(i + thisx + 2588) == 1 && *(unsigned __int16*)(thisx + 2 * i + 2564) < 0xBu)
+                        *(char*)(i + thisx + 2588) = 0;
+                    if (*(char*)(i + thisx + 2588) == 1 && *(unsigned __int16*)(thisx + 2 * i + 2564) < 0xBu)
                     {
                         for (ii = -4; ii < 16; ++ii)
                         {
@@ -37117,8 +37117,8 @@ UINT sub_44ED4D(UINT thisx)
                                 v18 = sub_476A8E((int*)&player_list[108 * i], ii);
                             if (v18)
                             {
-                                sub_4768A2((int*)&player_list[108 * i], *(_BYTE*)(thisx + 2 * i + 2564), ii);
-                                *(_BYTE*)(thisx + 11 * i + 11176 + (unsigned __int16)(*(short*)(thisx + 2 * i + 2564))++) = ii;
+                                sub_4768A2((int*)&player_list[108 * i], *(char*)(thisx + 2 * i + 2564), ii);
+                                *(char*)(thisx + 11 * i + 11176 + (unsigned __int16)(*(short*)(thisx + 2 * i + 2564))++) = ii;
                                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
                                 break;
                             }
@@ -37128,24 +37128,24 @@ UINT sub_44ED4D(UINT thisx)
             }
         }
     }
-    if (*(_BYTE*)(thisx + 2562) == 2 && *(unsigned __int16*)(thisx + 2 * *(int*)(thisx + 2528) + 2564) >= 0xBu)
-        *(_BYTE*)(thisx + 2562) = 0;
+    if (*(char*)(thisx + 2562) == 2 && *(unsigned __int16*)(thisx + 2 * *(int*)(thisx + 2528) + 2564) >= 0xBu)
+        *(char*)(thisx + 2562) = 0;
     result = *(unsigned __int8*)(thisx + 2562);
     if ((unsigned __int8)v38 != result)
-        return (UINT)sub_455268((_BYTE*)thisx, -2);
+        return (UINT)sub_455268((char*)thisx, -2);
     return result;
 }
 
 
-_BYTE* sub_44FE2E(int thisx)
+char* sub_44FE2E(int thisx)
 {
     *(int*)(thisx + 104) = 7;
-    *(_BYTE*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2516) = 1;
     *(int*)(thisx + 2512) = 0;
-    *(_BYTE*)(thisx + 2562) = 0;
+    *(char*)(thisx + 2562) = 0;
     *(int*)(thisx + 2528) = 0;
     *(int*)(thisx + 2532) = 0;
-    return sub_455268((_BYTE*)thisx, -1);
+    return sub_455268((char*)thisx, -1);
 }
 
 //保存配置文件
@@ -37413,36 +37413,36 @@ UINT sub_450FF8(int thisx, LPCSTR lpFileName)
     //读取配置文件
     dword_4B99F4 = GetPrivateProfileIntA(aConfig_0, _KeyName, 0, lpFileName);//是否显示FPS
     dword_4B99F0 = GetPrivateProfileIntA(aConfig_1, aPutdamage, 1, lpFileName);//是否造成损坏
-    *(_BYTE*)(thisx + 2496) = GetPrivateProfileIntA(aConfig_2, aGamespeed, 1, lpFileName);//游戏速度
-    if (!*(_BYTE*)(thisx + 2496))
-        *(_BYTE*)(thisx + 2496) = 1;//意思可能是1倍速
-    *(_BYTE*)(thisx + 77) = GetPrivateProfileIntA(aConfig_3, aHitstop, 1, lpFileName);//命中停止？？
-    *(_BYTE*)(thisx + 81) = GetPrivateProfileIntA(aConfig_4, aSamechar, 0, lpFileName);//相同的字符??
-    *(_BYTE*)(thisx + 79) = GetPrivateProfileIntA(aConfig_5, aUseitem, 1, lpFileName);//是否使用物品
-    *(_BYTE*)(thisx + 80) = GetPrivateProfileIntA(aConfig_6, aHitsameteam, 0, lpFileName);//是否打同一队
-    *(_BYTE*)(thisx + 30) = GetPrivateProfileIntA(aConfig_7, aUseweaponnum, 4, lpFileName);//使用武器数量
-    *(_BYTE*)(thisx + 78) = GetPrivateProfileIntA(aConfig_8, aAttackbuttongu_0, 1, lpFileName);//a攻击按钮gu_0
-    *(_BYTE*)(thisx + 76) = GetPrivateProfileIntA(aConfig_9, aUsecombinemove_1, 1, lpFileName);//a使用组合移动_1
-    *(_BYTE*)(thisx + 99) = GetPrivateProfileIntA(aConfig_10, aGrounddamage, 1, lpFileName);//a地面损坏
-    *(_BYTE*)(thisx + 100) = GetPrivateProfileIntA(aConfig_11, aBlackholetype, 1, lpFileName);//A黑洞类型
-    *(_BYTE*)(thisx + 98) = GetPrivateProfileIntA(aConfig_12, aRandomselectfi_0, 0, lpFileName);//a随机选择_0
+    *(char*)(thisx + 2496) = GetPrivateProfileIntA(aConfig_2, aGamespeed, 1, lpFileName);//游戏速度
+    if (!*(char*)(thisx + 2496))
+        *(char*)(thisx + 2496) = 1;//意思可能是1倍速
+    *(char*)(thisx + 77) = GetPrivateProfileIntA(aConfig_3, aHitstop, 1, lpFileName);//命中停止？？
+    *(char*)(thisx + 81) = GetPrivateProfileIntA(aConfig_4, aSamechar, 0, lpFileName);//相同的字符??
+    *(char*)(thisx + 79) = GetPrivateProfileIntA(aConfig_5, aUseitem, 1, lpFileName);//是否使用物品
+    *(char*)(thisx + 80) = GetPrivateProfileIntA(aConfig_6, aHitsameteam, 0, lpFileName);//是否打同一队
+    *(char*)(thisx + 30) = GetPrivateProfileIntA(aConfig_7, aUseweaponnum, 4, lpFileName);//使用武器数量
+    *(char*)(thisx + 78) = GetPrivateProfileIntA(aConfig_8, aAttackbuttongu_0, 1, lpFileName);//a攻击按钮gu_0
+    *(char*)(thisx + 76) = GetPrivateProfileIntA(aConfig_9, aUsecombinemove_1, 1, lpFileName);//a使用组合移动_1
+    *(char*)(thisx + 99) = GetPrivateProfileIntA(aConfig_10, aGrounddamage, 1, lpFileName);//a地面损坏
+    *(char*)(thisx + 100) = GetPrivateProfileIntA(aConfig_11, aBlackholetype, 1, lpFileName);//A黑洞类型
+    *(char*)(thisx + 98) = GetPrivateProfileIntA(aConfig_12, aRandomselectfi_0, 0, lpFileName);//a随机选择_0
     *(int*)(thisx + 11380) = GetPrivateProfileIntA(aConfig_13, aSurvivalrecord_4, 0, lpFileName);//a生存记录_4
     *(int*)(thisx + 11384) = GetPrivateProfileIntA(aConfig_14, aSurvivalrecord_5, 0, lpFileName);
     *(int*)(thisx + 11388) = GetPrivateProfileIntA(aConfig_15, aSurvivalrecord_6, 0, lpFileName);
     *(int*)(thisx + 11392) = GetPrivateProfileIntA(aConfig_16, aSurvivalrecord_7, 0, lpFileName);
     *(int*)(thisx + 11396) = GetPrivateProfileIntA(aConfig_17, aSurvivalrecord_8, 0, lpFileName);
-    *(_BYTE*)(thisx + 2477) = GetPrivateProfileIntA(aKkconfig_0, aGamenum, 3, lpFileName) % 0xA;//a游戏编号
-    if (!*(_BYTE*)(thisx + 2477))
-        *(_BYTE*)(thisx + 2477) = 3;
+    *(char*)(thisx + 2477) = GetPrivateProfileIntA(aKkconfig_0, aGamenum, 3, lpFileName) % 0xA;//a游戏编号
+    if (!*(char*)(thisx + 2477))
+        *(char*)(thisx + 2477) = 3;
     *(int*)(thisx + 2368) = GetPrivateProfileIntA(aKkconfig_1, aIstag, 0, lpFileName);//舞台或场景
-    *(_BYTE*)(thisx + 2382) = GetPrivateProfileIntA(aKkconfig_2, aPlayernum, 1, lpFileName);//玩家数量
-    *(_BYTE*)(thisx + 2451) = GetPrivateProfileIntA(aKkconfig_3, aIsuseitem, 1, lpFileName);//a备用道具
-    *(_BYTE*)(thisx + 2402) = (unsigned __int8)GetPrivateProfileIntA(aKkconfig_4, aWeaponnum, 4, lpFileName) % 9;//a武器数量
+    *(char*)(thisx + 2382) = GetPrivateProfileIntA(aKkconfig_2, aPlayernum, 1, lpFileName);//玩家数量
+    *(char*)(thisx + 2451) = GetPrivateProfileIntA(aKkconfig_3, aIsuseitem, 1, lpFileName);//a备用道具
+    *(char*)(thisx + 2402) = (unsigned __int8)GetPrivateProfileIntA(aKkconfig_4, aWeaponnum, 4, lpFileName) % 9;//a武器数量
     *(int*)(thisx + 2372) = GetPrivateProfileIntA(aKkconfig_5, aShowpoint, 0, lpFileName);//a展示点
-    *(_BYTE*)(thisx + 2471) = GetPrivateProfileIntA(aKkconfig_6, aGrounddamage_0, 1, lpFileName);//a接地损坏_0
-    *(_BYTE*)(thisx + 2472) = (unsigned __int8)GetPrivateProfileIntA(aKkconfig_7, aBlackholetype_0, 0, lpFileName) % 3;//a黑洞类型0
-    *(_BYTE*)(thisx + 2448) = GetPrivateProfileIntA(aKkconfig_8, aUsecombinemove_2, 1, lpFileName);//a使用组合移动_2
-    *(_BYTE*)(thisx + 2452) = GetPrivateProfileIntA(aKkconfig_9, aHitsameteam_0, 0, lpFileName);//a命中同一团队_0
+    *(char*)(thisx + 2471) = GetPrivateProfileIntA(aKkconfig_6, aGrounddamage_0, 1, lpFileName);//a接地损坏_0
+    *(char*)(thisx + 2472) = (unsigned __int8)GetPrivateProfileIntA(aKkconfig_7, aBlackholetype_0, 0, lpFileName) % 3;//a黑洞类型0
+    *(char*)(thisx + 2448) = GetPrivateProfileIntA(aKkconfig_8, aUsecombinemove_2, 1, lpFileName);//a使用组合移动_2
+    *(char*)(thisx + 2452) = GetPrivateProfileIntA(aKkconfig_9, aHitsameteam_0, 0, lpFileName);//a命中同一团队_0
     byte_4B99E9 = GetPrivateProfileIntA(aDirectdrawconf_0, aFullscreen, 0, lpFileName);//这里读取配置是否全屏
     byte_4B99E6 = GetPrivateProfileIntA(aDirectdrawconf_1, aBackgroundrun, 0, lpFileName);//是否允许后台运行
     byte_4B99E8 = GetPrivateProfileIntA(aDirectdrawconf_2, aVsyncwait, 0, lpFileName);//是否垂直同步等待
@@ -37499,7 +37499,7 @@ UINT sub_450FF8(int thisx, LPCSTR lpFileName)
                 wsprintfA(KeyName, aUp_0);
             }
             v4 = GetPrivateProfileIntA(AppName, KeyName, v9, lpFileName);
-            *(_BYTE*)(thisx + 11 * nDefault + i + 11176) = v4;
+            *(char*)(thisx + 11 * nDefault + i + 11176) = v4;
         }
         wsprintfA(AppName, "KeyBoardAssign%dP", nDefault + 1);
         for (j = 0; j < 11; ++j)
@@ -37533,7 +37533,7 @@ UINT sub_450FF8(int thisx, LPCSTR lpFileName)
                 wsprintfA(KeyName, aUp_1);
             }
             v5 = GetPrivateProfileIntA(AppName, KeyName, *(unsigned __int8*)(thisx + 11 * nDefault + j + 11264), lpFileName);
-            *(_BYTE*)(thisx + 11 * nDefault + j + 11264) = v5;
+            *(char*)(thisx + 11 * nDefault + j + 11264) = v5;
         }
         result = nDefault + 1;
     }
@@ -37541,13 +37541,13 @@ UINT sub_450FF8(int thisx, LPCSTR lpFileName)
     {
         for (k = 0; k < 11; ++k)
         {
-            sub_4768A2((int*)&player_list[108 * nDefault], k, *(_BYTE*)(thisx + 11 * nDefault + k + 11176)); //k位置 = *(_BYTE*)(thisx + 11 * nDefault + k + 11176)
+            sub_4768A2((int*)&player_list[108 * nDefault], k, *(char*)(thisx + 11 * nDefault + k + 11176)); //k位置 = *(char*)(thisx + 11 * nDefault + k + 11176)
             result = k + 1;
         }
         //战斗键盘按键赋值
         for (m = 0; m < 11; ++m)
         {
-            sub_47690D((char*)&player_list[108 * nDefault], m, *(_BYTE*)(thisx + 11 * nDefault + m + 11264));//m位置 =  *(_BYTE*)(thisx + 11 * nDefault + m + 11264)
+            sub_47690D((char*)&player_list[108 * nDefault], m, *(char*)(thisx + 11 * nDefault + m + 11264));//m位置 =  *(char*)(thisx + 11 * nDefault + m + 11264)
             result = m + 1;
         }
     }
@@ -37582,9 +37582,9 @@ int* sub_451A0A(int* thisx, char a2, unsigned __int8 a3)
             }
         }
     }
-    *((_BYTE*)thisx + 2544) = 1;
+    *((char*)thisx + 2544) = 1;
     result = thisx;
-    *((_BYTE*)thisx + 2545) = 0;
+    *((char*)thisx + 2545) = 0;
     return result;
 }
 
@@ -37618,8 +37618,8 @@ int sub_451AF1(int thisx)
 
 
     *(int*)(thisx + 104) = 9;
-    *(_BYTE*)(thisx + 2516) = 1;
-    *(_BYTE*)(thisx + 29) = 0;
+    *(char*)(thisx + 2516) = 1;
+    *(char*)(thisx + 29) = 0;
     *(int*)(thisx + 2540) = 0;
     sub_49DB90(&v12);
     v13 = 0;
@@ -37685,14 +37685,14 @@ int sub_451AF1(int thisx)
             }
         }
     }
-    sub_451EB5((_BYTE*)thisx, 1, 1);
-    sub_452045((_BYTE*)thisx, 10, 2, 20, 4);
-    sub_452045((_BYTE*)thisx, 7, 8, 27, 12);
+    sub_451EB5((char*)thisx, 1, 1);
+    sub_452045((char*)thisx, 10, 2, 20, 4);
+    sub_452045((char*)thisx, 7, 8, 27, 12);
     return sub_456D33((const CHAR*)thisx, aCharselWav_0, 1, 0);
 }
 
 
-int* sub_451EB5(_BYTE* thisx, int a2, int a3)
+int* sub_451EB5(char* thisx, int a2, int a3)
 {
 
     //修正堆栈
@@ -37781,7 +37781,7 @@ int* sub_451EB5(_BYTE* thisx, int a2, int a3)
 }
 
 
-int sub_452045(_BYTE* thisx, int a2, int a3, int a4, int a5)
+int sub_452045(char* thisx, int a2, int a3, int a4, int a5)
 {
 
 
@@ -37983,7 +37983,7 @@ int sub_452368(int thisx)
     sub_477F0C(0);
     v19 = 0;
     v18 = 0;
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         if (sub_476CDA(0))
         {
@@ -38022,9 +38022,9 @@ int sub_452368(int thisx)
     sub_49AB05((int)byte_4BDC60, &v24);
     sub_47B91A(128, 32, byte_4B1550, 0, -1);
     v17 = 0;
-    if (*(_BYTE*)(thisx + 29))
+    if (*(char*)(thisx + 29))
         v17 = (int*)(20 * (*(unsigned __int8*)(thisx + 29) - 1) + *(int*)(thisx + 13392));
-    if (*(_BYTE*)(thisx + 29))
+    if (*(char*)(thisx + 29))
     {
         if (unknown_libname_26(v17))
         {
@@ -38049,7 +38049,7 @@ int sub_452368(int thisx)
     }
     SetRect(&rc, 0, 200, 320, 240);
     sub_49EDC1((int)byte_4BDC60, (int)&rc, (int*)&rc, 0);
-    if (*(_BYTE*)(thisx + 29))
+    if (*(char*)(thisx + 29))
     {
         if (unknown_libname_12(v17))
         {
@@ -38161,17 +38161,17 @@ int sub_452368(int thisx)
                 *(int*)(thisx + 2540) = 0;
                 v14 = *(unsigned __int8*)(thisx + 29) - 1;
                 if (v14 >= 0)
-                    *(_BYTE*)(thisx + 29) = v14;
+                    *(char*)(thisx + 29) = v14;
                 else
-                    *(_BYTE*)(thisx + 29) = *(_BYTE*)(thisx + 13388);
+                    *(char*)(thisx + 29) = *(char*)(thisx + 13388);
             }
         }
         else if ((int)++ * (int*)(thisx + 2540) >= 8)
         {
-            ++* (_BYTE*)(thisx + 29);
+            ++* (char*)(thisx + 29);
             *(int*)(thisx + 2540) = 0;
             if (*(unsigned __int8*)(thisx + 29) >= *(int*)(thisx + 13388) + 1)
-                *(_BYTE*)(thisx + 29) = 0;
+                *(char*)(thisx + 29) = 0;
         }
     }
     else if (*(int*)(thisx + 2532))
@@ -38194,7 +38194,7 @@ int sub_452368(int thisx)
                 v6 = (*(int*)(thisx + 2532) >= 0) - 1;
             else
                 v6 = 1;
-            *(_BYTE*)(thisx + 29) = (v13 * v6 + *(unsigned __int8*)(thisx + 29) + *(int*)(thisx + 13388) + 1)
+            *(char*)(thisx + 29) = (v13 * v6 + *(unsigned __int8*)(thisx + 29) + *(int*)(thisx + 13388) + 1)
                 % (*(int*)(thisx + 13388) + 1);
         }
         if (*(int*)(thisx + 2532) <= 0)
@@ -38205,11 +38205,11 @@ int sub_452368(int thisx)
             *(int*)(thisx + 2532) = 0;
     }
     result = sub_476DC7(0, 0);
-    if (result && !*(_BYTE*)(thisx + 2516))
+    if (result && !*(char*)(thisx + 2516))
     {
         result = sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
         *(int*)(thisx + 108) = 11;
-        *(_BYTE*)(thisx + 2516) = 2;
+        *(char*)(thisx + 2516) = 2;
     }
     return result;
 }
@@ -38257,7 +38257,7 @@ int sub_452368(int thisx)
     v18 = 0;
 
     // 检查条件并设置 v18 和 v19 的值
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         // 根据条件设置 v18 的值
         if (sub_476CDA(0))
@@ -38308,9 +38308,9 @@ int sub_452368(int thisx)
 
     // 根据条件设置 v17 的值并处理字符串
     v17 = 0;
-    if (*(_BYTE*)(thisx + 29))
+    if (*(char*)(thisx + 29))
         v17 = (int*)(20 * (*(unsigned __int8*)(thisx + 29) - 1) + *(int*)(thisx + 13392));
-    if (*(_BYTE*)(thisx + 29))
+    if (*(char*)(thisx + 29))
     {
         if (unknown_libname_26(v17))
         {
@@ -38343,7 +38343,7 @@ int sub_452368(int thisx)
     sub_49EDC1((int)byte_4BDC60, (int)&rc, (int*)&rc, 0);
 
     // 根据条件处理 v17 并显示信息
-    if (*(_BYTE*)(thisx + 29))
+    if (*(char*)(thisx + 29))
     {
         if (unknown_libname_12(v17))
         {
@@ -38470,17 +38470,17 @@ int sub_452368(int thisx)
                 *(int*)(thisx + 2540) = 0;
                 v14 = *(unsigned __int8*)(thisx + 29) - 1;
                 if (v14 >= 0)
-                    *(_BYTE*)(thisx + 29) = v14;
+                    *(char*)(thisx + 29) = v14;
                 else
-                    *(_BYTE*)(thisx + 29) = *(_BYTE*)(thisx + 13388);
+                    *(char*)(thisx + 29) = *(char*)(thisx + 13388);
             }
         }
         else if ((int)++ * (int*)(thisx + 2540) >= 8)
         {
-            ++* (_BYTE*)(thisx + 29);
+            ++* (char*)(thisx + 29);
             *(int*)(thisx + 2540) = 0;
             if (*(unsigned __int8*)(thisx + 29) >= *(int*)(thisx + 13388) + 1)
-                *(_BYTE*)(thisx + 29) = 0;
+                *(char*)(thisx + 29) = 0;
         }
     }
     else if (*(int*)(thisx + 2532))
@@ -38503,7 +38503,7 @@ int sub_452368(int thisx)
                 v6 = (*(int*)(thisx + 2532) >= 0) - 1;
             else
                 v6 = 1;
-            *(_BYTE*)(thisx + 29) = (v13 * v6 + *(unsigned __int8*)(thisx + 29) + *(int*)(thisx + 13388) + 1)
+            *(char*)(thisx + 29) = (v13 * v6 + *(unsigned __int8*)(thisx + 29) + *(int*)(thisx + 13388) + 1)
                 % (*(int*)(thisx + 13388) + 1);
         }
         if (*(int*)(thisx + 2532) <= 0)
@@ -38516,11 +38516,11 @@ int sub_452368(int thisx)
 
     // 调用函数检查某些条件，并根据结果更新状态
     result = sub_476DC7(0, 0);
-    if (result && !*(_BYTE*)(thisx + 2516))
+    if (result && !*(char*)(thisx + 2516))
     {
         result = sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
         *(int*)(thisx + 108) = 11;
-        *(_BYTE*)(thisx + 2516) = 2;
+        *(char*)(thisx + 2516) = 2;
     }
 
     return result; // 返回函数结果
@@ -38543,10 +38543,10 @@ int sub_452D16(int thisx, double a2, double a3, double a4)
 
 
     *(int*)(thisx + 104) = 10;
-    *(_BYTE*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2516) = 1;
     *(int*)(thisx + 2520) = 0;
-    *(_BYTE*)(thisx + 2544) = 0;
-    *(_BYTE*)(thisx + 2545) = 0;
+    *(char*)(thisx + 2544) = 0;
+    *(char*)(thisx + 2545) = 0;
     sub_488CCB(thisx + 128);
     *(int*)(thisx + 11376) = 0;
     sub_456617(thisx);
@@ -38586,10 +38586,10 @@ int sub_452D16(int thisx, double a2, double a3, double a4)
 
     // 初始化 thisx 相关的成员变量
     *(int*)(thisx + 104) = 10; // 设置偏移量为 104 的整数值为 10
-    *(_BYTE*)(thisx + 2516) = 1;  // 设置偏移量为 2516 的字节值为 1
+    *(char*)(thisx + 2516) = 1;  // 设置偏移量为 2516 的字节值为 1
     *(int*)(thisx + 2520) = 0; // 设置偏移量为 2520 的整数值为 0
-    *(_BYTE*)(thisx + 2544) = 0;  // 设置偏移量为 2544 的字节值为 0
-    *(_BYTE*)(thisx + 2545) = 0;  // 设置偏移量为 2545 的字节值为 0
+    *(char*)(thisx + 2544) = 0;  // 设置偏移量为 2544 的字节值为 0
+    *(char*)(thisx + 2545) = 0;  // 设置偏移量为 2545 的字节值为 0
 
     // 调用函数处理偏移量为 128 的位置
     sub_488CCB(thisx + 128);
@@ -38797,7 +38797,7 @@ void sub_4532F2(int a1, double a2, double a3, double a4)
         __asm int 3
     }
 
-    if (*(_BYTE*)(a1 + 2516))
+    if (*(char*)(a1 + 2516))
     {
         if (*(int*)(a1 + 2512) >= 3)
         {
@@ -38808,25 +38808,25 @@ void sub_4532F2(int a1, double a2, double a3, double a4)
         {
             v12 = 2 * *(int*)(a1 + 2512);
         }
-        if (*(_BYTE*)(a1 + 2516) == 1)
+        if (*(char*)(a1 + 2516) == 1)
         {
             SetRect(&rc, 0, 0, 160 - 20 * v12, 240);
             sub_49EDC1((int)byte_4BDC60, v4, (int*)&rc, 0);
             SetRect(&rc, 20 * v12 + 160, 0, 320, 240);
             sub_49EDC1((int)byte_4BDC60, v5, (int*)&rc, 0);
         }
-        else if (*(_BYTE*)(a1 + 2516) == 2)
+        else if (*(char*)(a1 + 2516) == 2)
         {
             SetRect(&v10, 0, 0, 20 * v12, 240);
             sub_49EDC1((int)byte_4BDC60, (int)&v10, (int*)&v10, 0);
             SetRect(&v10, 320 - 20 * v12, 0, 320, 240);
             sub_49EDC1((int)byte_4BDC60, v6, (int*)&v10, 0);
         }
-        if (*(_BYTE*)(a1 + 2516))
+        if (*(char*)(a1 + 2516))
         {
             if ((int)++ * (int*)(a1 + 2512) >= 10)
             {
-                if (*(_BYTE*)(a1 + 2516) == 2)
+                if (*(char*)(a1 + 2516) == 2)
                 {
                     switch (*(int*)(a1 + 104))
                     {
@@ -38877,16 +38877,16 @@ void sub_4532F2(int a1, double a2, double a3, double a4)
                         break;
                     }
                     dword_4B99EC = 1;//如果获取焦点的时候，且程序设置又是不允许后台运行，该值为1，失去焦点又不允许后台允许该值为0
-                    *(_BYTE*)(a1 + 2516) = 0;
+                    *(char*)(a1 + 2516) = 0;
                     *(int*)(a1 + 2512) = 0;
                     *(int*)(a1 + 112) = *(int*)(a1 + 104);
-                    if (*(_BYTE*)(a1 + 16140))
+                    if (*(char*)(a1 + 16140))
                     {
                         lstrcpyA(String1, (LPCSTR)(a1 + 16140));
                         sub_467AC6(a1, (const char*)(a1 + 16140));
                         if (!lstrcmpiA(String1, (LPCSTR)(a1 + 16140)))
                             memset((void*)(a1 + 16140), 0, 0x104u);
-                        *(_BYTE*)(a1 + 2516) = 1;
+                        *(char*)(a1 + 2516) = 1;
                     }
                     else
                     {
@@ -39000,10 +39000,10 @@ void sub_4532F2(int a1, double a2, double a3, double a4)
                 }
                 else
                 {
-                    *(_BYTE*)(a1 + 2516) = 0;
+                    *(char*)(a1 + 2516) = 0;
                     *(int*)(a1 + 2512) = 0;
-                    *(_BYTE*)(a1 + 11420) = 0;
-                    *(_BYTE*)(a1 + 11432) = 0;
+                    *(char*)(a1 + 11420) = 0;
+                    *(char*)(a1 + 11432) = 0;
                 }
             }
         }
@@ -39022,7 +39022,7 @@ int sub_453A31(int thisx)
 
 
     *(int*)(thisx + 104) = 2;
-    *(_BYTE*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2516) = 1;
     sub_49DB90(v3);
     v3[1] = 0;
     v3[2] = 0;
@@ -39042,7 +39042,7 @@ int sub_453A31(int thisx)
     int v3[15]; // [esp+4h] [ebp-3Ch] BYREF
 
     *(int*)(thisx + 104) = 2;               // 1. 将 `thisx` 指针所指对象的第 104 个偏移量的值设置为 2
-    *(_BYTE*)(thisx + 2516) = 1;               // 2. 将 `thisx` 指针所指对象的第 2516 个偏移量的值设置为 1
+    *(char*)(thisx + 2516) = 1;               // 2. 将 `thisx` 指针所指对象的第 2516 个偏移量的值设置为 1
     sub_49DB90(v3);                           // 3. 调用 `sub_49DB90` 函数初始化 `v3` 数组
     v3[1] = 0;                                // 4. 将 `v3` 数组的第 1 个元素设置为 0
     v3[2] = 0;                                // 5. 将 `v3` 数组的第 2 个元素设置为 0
@@ -39075,13 +39075,13 @@ int sub_453AAA(int thisx)
     v3[0] = dword_4B9248;
     sub_49AB05((int)byte_4BDC60, v3);
     result = *(unsigned __int8*)(thisx + 2516);
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         sub_477F0C(0);// //接收键盘输入，a1是第几号玩家
         if (sub_476DC7(0, 0) || sub_476DC7(0, 1) || (result = sub_476DC7(0, 2)) != 0)
         {
             *(int*)(thisx + 108) = 3;
-            *(_BYTE*)(thisx + 2516) = 2;
+            *(char*)(thisx + 2516) = 2;
             *(int*)(thisx + 2512) = 0;
             return sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
         }
@@ -39107,7 +39107,7 @@ int sub_453AAA(int thisx)
 
     result = *(unsigned __int8*)(thisx + 2516); // 6. 读取 `thisx` 指针所指对象的第 2516 个偏移量的值到 `result`
 
-    if (!*(_BYTE*)(thisx + 2516)) // 7. 如果 `thisx` 指针所指对象的第 2516 个偏移量的值为 0
+    if (!*(char*)(thisx + 2516)) // 7. 如果 `thisx` 指针所指对象的第 2516 个偏移量的值为 0
     {
         sub_477F0C(0);            // 8. 调用 `sub_477F0C` 函数，可能用于接收键盘输入
 
@@ -39115,7 +39115,7 @@ int sub_453AAA(int thisx)
         if (sub_476DC7(0, 0) || sub_476DC7(0, 1) || (result = sub_476DC7(0, 2)) != 0)
         {
             *(int*)(thisx + 108) = 3; // 10. 将 `thisx` 指针所指对象的第 108 个偏移量的值设置为 3
-            *(_BYTE*)(thisx + 2516) = 2; // 11. 将 `thisx` 指针所指对象的第 2516 个偏移量的值设置为 2
+            *(char*)(thisx + 2516) = 2; // 11. 将 `thisx` 指针所指对象的第 2516 个偏移量的值设置为 2
             *(int*)(thisx + 2512) = 0; // 12. 将 `thisx` 指针所指对象的第 2512 个偏移量的值设置为 0
             return sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0); // 13. 调用 `sub_43FFC3` 播放音效，并返回结果
         }
@@ -39131,7 +39131,7 @@ int sub_453B66(int thisx)
     int result; // eax
 
     result = thisx;
-    *(_BYTE*)(thisx + 2516) = 2;
+    *(char*)(thisx + 2516) = 2;
     *(int*)(thisx + 108) = 2;
     return result;
 }
@@ -39142,7 +39142,7 @@ int sub_453B66(int thisx)
     int result; // eax
 
     result = thisx;              // 1. 将 `thisx` 指针赋值给 `result`
-    *(_BYTE*)(thisx + 2516) = 2; // 2. 将 `thisx` 指针所指对象的第 2516 个偏移量的值设置为 2
+    *(char*)(thisx + 2516) = 2; // 2. 将 `thisx` 指针所指对象的第 2516 个偏移量的值设置为 2
     *(int*)(thisx + 108) = 2; // 3. 将 `thisx` 指针所指对象的第 108 个偏移量的值设置为 2
     return result;              // 4. 返回 `result`，即 `thisx`
 }*/
@@ -39162,7 +39162,7 @@ void sub_453B85(int thisx, int a2, int a3)
 
     if (a2)
     {
-        sub_451EB5((_BYTE*)thisx, 1, 0);
+        sub_451EB5((char*)thisx, 1, 0);
         v4 = *(int*)(thisx + 15640) != 0;
         for (i = 0; i < 4; ++i)
         {
@@ -39172,9 +39172,9 @@ void sub_453B85(int thisx, int a2, int a3)
             if (*(int*)(thisx + 15640) == thisx + 36 * i + 15644)
                 v4 = 0;
         }
-        if (*(_BYTE*)(thisx + 2562) == 11)
+        if (*(char*)(thisx + 2562) == 11)
             (*(void(**)(int))(*(int*)(thisx + 16048) + 12))(thisx + 16048);
-        if (*(_BYTE*)(thisx + 2562) == 12)
+        if (*(char*)(thisx + 2562) == 12)
         {
             (*(void(**)(int))(*(int*)(thisx + 16048) + 12))(thisx + 16048);
             (*(void(**)(int))(*(int*)(thisx + 16084) + 12))(thisx + 16084);
@@ -39184,12 +39184,12 @@ void sub_453B85(int thisx, int a2, int a3)
     }
     if (a3)
     {
-        sub_451EB5((_BYTE*)thisx, 0, 1);
+        sub_451EB5((char*)thisx, 0, 1);
         if (*(int*)(thisx + 15640))
             *(int*)(thisx + 2528) = unknown_libname_13(*(int**)(thisx + 15640));
-        if (*(_BYTE*)(thisx + 2562))
+        if (*(char*)(thisx + 2562))
         {
-            switch (*(_BYTE*)(thisx + 2562))
+            switch (*(char*)(thisx + 2562))
             {
             case 1:
                 sub_47B91A(16, 208, (LPCSTR)dword_4ABB14, 0, dword_4B9248);//选择参与者
@@ -39348,7 +39348,7 @@ void sub_453B85(int thisx, int a2, int a3)
 }
 
 
-void sub_454469(_BYTE* thisx, int a2)
+void sub_454469(char* thisx, int a2)
 {
 
 
@@ -39369,7 +39369,7 @@ void sub_454469(_BYTE* thisx, int a2)
     //
     CHAR String[256]; // [esp+30h] [ebp-19Ch] BYREF
     int v28; // [esp+2Ch] [ebp-1A0h]
-    _BYTE* v27; // [esp+28h] [ebp-1A4h]
+    char* v27; // [esp+28h] [ebp-1A4h]
     int v26; // [esp+24h] [ebp-1A8h]
     int v25; // [esp+20h] [ebp-1ACh]
     char tc_82[8]; //12
@@ -39461,13 +39461,13 @@ void sub_454469(_BYTE* thisx, int a2)
         v32 = 160 * (a2 / 4) + 8;
         v33 = 56 * (a2 % 4) + 48;
         v25 = (unsigned __int8)sub_4575B4((unsigned char*)thisx, a2, 1);
-        v26 = (unsigned __int8)sub_401710((_BYTE*)(dword_4B92E0 + 36 * *(unsigned __int16*)&thisx[2 * a2 + 2564]));
+        v26 = (unsigned __int8)sub_401710((char*)(dword_4B92E0 + 36 * *(unsigned __int16*)&thisx[2 * a2 + 2564]));
         sub_4A1307((int)word_4B9290, (Concurrency::details::HardwareAffinity*)(8 * v25 + word_4B9250));//ddd 4B9250
         sub_485E5A((int)dword_4B93A4 + 24 * v26, (unsigned short*)word_4B9290);
         SetRect(&v30, 24 * (unsigned __int8)thisx[a2 + 2580], 0, 24, 16);
         v31 = dword_4B9234;
         sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v31, (int*)&v30);
-        v27 = (_BYTE*)(36 * *(unsigned __int16*)&thisx[2 * a2 + 2564] + dword_4B92E0);
+        v27 = (char*)(36 * *(unsigned __int16*)&thisx[2 * a2 + 2564] + dword_4B92E0);
         if (thisx[a2 + 2596])
         {
             if (thisx[a2 + 2596] == 1)
@@ -39588,9 +39588,9 @@ void sub_454469(_BYTE* thisx, int a2)
 }
 
 
-_BYTE* sub_455268(_BYTE* thisx, int a2)
+char* sub_455268(char* thisx, int a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     if (a2 == -1)
     {
@@ -39617,18 +39617,18 @@ _BYTE* sub_455268(_BYTE* thisx, int a2)
         {
             if (thisx[2562] == 1)
             {
-                return (_BYTE*)sub_47B91A(16, 208, byte_4B2078, 0, dword_4B9248);
+                return (char*)sub_47B91A(16, 208, byte_4B2078, 0, dword_4B9248);
             }
             else
             {
                 result = thisx;
                 if (thisx[2562] == 2)
-                    return (_BYTE*)sub_47B91A(16, 208, byte_4B20A4, 0, dword_4B9248);
+                    return (char*)sub_47B91A(16, 208, byte_4B20A4, 0, dword_4B9248);
             }
         }
         else
         {
-            return (_BYTE*)sub_47B91A(16, 208, byte_4B203C, 0, dword_4B9248);
+            return (char*)sub_47B91A(16, 208, byte_4B203C, 0, dword_4B9248);
         }
     }
     return result;
@@ -39672,10 +39672,10 @@ int sub_455541(int thisx, char a2)
     int i; // [esp+10h] [ebp-4h]
 
     sub_45566E(thisx);
-    *(_BYTE*)(thisx + 11364) = a2;
+    *(char*)(thisx + 11364) = a2;
     *(int*)(thisx + 11368) = (int)new2(4 * *(unsigned __int8*)(thisx + 11364));
     memset(*(void**)(thisx + 11368), 0, 4 * *(unsigned __int8*)(thisx + 11364));
-    *(_BYTE*)(thisx + 11352) = a2 + 24;
+    *(char*)(thisx + 11352) = a2 + 24;
     result = (int)new2(*(unsigned __int8*)(thisx + 11352));
     *(int*)(thisx + 11356) = result;
     if (*(int*)(thisx + 11356))
@@ -39689,7 +39689,7 @@ int sub_455541(int thisx, char a2)
                 result = *(unsigned __int8*)(thisx + 11352);
                 if (i >= result)
                     break;
-                *(_BYTE*)(*(int*)(thisx + 11356) + i) = 0;
+                *(char*)(*(int*)(thisx + 11356) + i) = 0;
                 *(int*)(*(int*)(thisx + 11360) + 4 * i) = 0;
             }
         }
@@ -39707,7 +39707,7 @@ int sub_455541(int thisx, char a2)
     sub_45566E(thisx);
 
     // 将 thisx + 11364 地址处的字节设置为 a2
-    *(_BYTE*)(thisx + 11364) = a2;
+    *(char*)(thisx + 11364) = a2;
 
     // 为 thisx + 11368 地址处分配内存，大小为 4 * *(unsigned __int8*)(thisx + 11364)
     *(int*)(thisx + 11368) = (int)new2(4 * *(unsigned __int8*)(thisx + 11364));//this = B10
@@ -39716,7 +39716,7 @@ int sub_455541(int thisx, char a2)
     memset(*(void**)(thisx + 11368), 0, 4 * *(unsigned __int8*)(thisx + 11364));
 
     // 将 thisx + 11352 地址处的字节设置为 a2 + 24
-    *(_BYTE*)(thisx + 11352) = a2 + 24;
+    *(char*)(thisx + 11352) = a2 + 24;
 
     // 为 thisx + 11356 地址处分配内存，大小为 *(unsigned __int8*)(thisx + 11352)
     result = (int)new2(*(unsigned __int8*)(thisx + 11352));
@@ -39740,7 +39740,7 @@ int sub_455541(int thisx, char a2)
                 if (i >= result)
                     break;
                 // 将 thisx + 11356 地址处的内存区域初始化为 0
-                *(_BYTE*)(*(int*)(thisx + 11356) + i) = 0;
+                *(char*)(*(int*)(thisx + 11356) + i) = 0;
                 // 将 thisx + 11360 地址处的内存区域初始化为 0
                 *(int*)(*(int*)(thisx + 11360) + 4 * i) = 0;
             }
@@ -39762,8 +39762,8 @@ int sub_45566E(int thisx)
         delete2(*(void**)(thisx + 11356));
     if (*(int*)(thisx + 11360))
         delete2(*(void**)(thisx + 11360));
-    *(_BYTE*)(thisx + 11352) = 0;
-    *(_BYTE*)(thisx + 11364) = 0;
+    *(char*)(thisx + 11352) = 0;
+    *(char*)(thisx + 11364) = 0;
     *(int*)(thisx + 11368) = 0;
     result = thisx;
     *(int*)(thisx + 11356) = 0;
@@ -39795,7 +39795,7 @@ unsigned __int8* sub_45575F(unsigned __int8* thisx, int a1, int a2)
 int sub_455782(int thisx)
 {
     *(int*)(thisx + 104) = 5;
-    *(_BYTE*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2516) = 1;
     *(int*)(thisx + 2512) = 0;
     *(int*)(thisx + 2528) = 0;
     *(short*)(thisx + 2564) = 0;
@@ -39819,8 +39819,8 @@ unsigned __int16 sub_4557D1(int thisx, int a2)
 
     if (a2 == -1)
     {
-        sub_451EB5((_BYTE*)thisx, 1, 1);
-        sub_452045((_BYTE*)thisx, 13, 1, 14, 3);
+        sub_451EB5((char*)thisx, 1, 1);
+        sub_452045((char*)thisx, 13, 1, 14, 3);
         sub_47B91A(120, 16, byte_4B20CC, 0, dword_4B9248);
         sub_4557D1(thisx, 0);
         return sub_4557D1(thisx, -2);
@@ -39829,7 +39829,7 @@ unsigned __int16 sub_4557D1(int thisx, int a2)
     {
         if (a2 == -2)
         {
-            sub_451EB5((_BYTE*)thisx, 0, 1);
+            sub_451EB5((char*)thisx, 0, 1);
             if (*(int*)(thisx + 2528))
             {
                 switch (*(int*)(thisx + 2528))
@@ -39870,7 +39870,7 @@ unsigned __int16 sub_4557D1(int thisx, int a2)
     }
     else
     {
-        result = sub_452045((_BYTE*)thisx, 10, 5, 20, 18);
+        result = sub_452045((char*)thisx, 10, 5, 20, 18);
         for (i = 0; i < 7; ++i)
         {
             result = *(short*)(thisx + 2564);
@@ -39882,7 +39882,7 @@ unsigned __int16 sub_4557D1(int thisx, int a2)
                 {
                 case 1:
                     sub_47B91A(104, v5, byte_4B2100, 0, dword_4B9248);//游戏速度
-                    switch (*(_BYTE*)(thisx + 2496))
+                    switch (*(char*)(thisx + 2496))
                     {
                     case 1:
                         wsprintfA(String, a100);
@@ -39919,14 +39919,14 @@ unsigned __int16 sub_4557D1(int thisx, int a2)
                     break;
                 case 2:
                     sub_47B91A(104, v5, byte_4B2160, 0, dword_4B9248);//命中停止
-                    if (*(_BYTE*)(thisx + 77))
+                    if (*(char*)(thisx + 77))
                         result = sub_47B7ED(200, v5, aOn_0, 0, dword_4B9248);//ON
                     else
                         result = sub_47B7ED(200, v5, (LPCSTR)off_4B2174, 0, dword_4B9248);//OFF
                     break;
                 case 3:
                     sub_47B91A(104, v5, byte_4B2178, 0, dword_4B9248);//同角色对战
-                    if (*(_BYTE*)(thisx + 81))
+                    if (*(char*)(thisx + 81))
                         result = sub_47B7ED(200, v5, aOn_1, 0, dword_4B9248);//ON
                     else
                         result = sub_47B7ED(200, v5, (LPCSTR)off_4B2190, 0, dword_4B9248);//OFF
@@ -39945,14 +39945,14 @@ unsigned __int16 sub_4557D1(int thisx, int a2)
                     break;
                 case 6:
                     sub_47B91A(104, v5, byte_4B21C0, 0, dword_4B9248);//攻击按钮保护
-                    if (*(_BYTE*)(thisx + 78))
+                    if (*(char*)(thisx + 78))
                         result = sub_47B7ED(200, v5, aOn_3, 0, dword_4B9248);//ON
                     else
                         result = sub_47B7ED(200, v5, (LPCSTR)off_4B21DC, 0, dword_4B9248);//OFF
                     break;
                 case 7:
                     sub_47B91A(104, v5, byte_4B21E0, 0, dword_4B9248);//随机浮动类型
-                    if (*(_BYTE*)(thisx + 98))
+                    if (*(char*)(thisx + 98))
                         result = sub_47B7ED(200, v5, aOn_4, 0, dword_4B9248);//on
                     else
                         result = sub_47B7ED(200, v5, (LPCSTR)off_4B21FC, 0, dword_4B9248);//off
@@ -40122,9 +40122,9 @@ int sub_456617(int thisx)
 {
     int result; // eax
 
-    if (*(_BYTE*)(thisx + 11372))
+    if (*(char*)(thisx + 11372))
     {
-        switch (*(_BYTE*)(thisx + 11372))
+        switch (*(char*)(thisx + 11372))
         {
         case 1:
             *(int*)(thisx + 11400) = 8 * ((*(int*)(thisx + 11376) + 10) / 10);
@@ -40156,14 +40156,14 @@ __int16 sub_456738(int thisx, unsigned __int8 a2)
     int v2; // eax
 
     *(short*)(thisx + 2 * a2 + 11404) = 60 * (*(int*)(thisx + 11376) + 10) / 20;
-    if (*(_BYTE*)(thisx + 11372))
+    if (*(char*)(thisx + 11372))
     {
-        if (*(_BYTE*)(thisx + 11372) == 1)
+        if (*(char*)(thisx + 11372) == 1)
         {
             v2 = 15 * *(__int16*)(thisx + 2 * a2 + 11404) / 10;
             *(short*)(thisx + 2 * a2 + 11404) = v2;
         }
-        else if (*(_BYTE*)(thisx + 11372) == 3)
+        else if (*(char*)(thisx + 11372) == 3)
         {
             v2 = 75 * *(__int16*)(thisx + 2 * a2 + 11404) / 100;
             *(short*)(thisx + 2 * a2 + 11404) = v2;
@@ -40224,9 +40224,9 @@ int sub_456879(int* thisx, unsigned __int8 a2)
             v8 = 0;
     }
     sub_475010((short*)&thisx[153 * a2 + 657], v8);
-    v2 = MarkedForDetachment((_BYTE*)(36 * v8 + dword_4B92E0));//call return thisxx[20]; 
+    v2 = MarkedForDetachment((char*)(36 * v8 + dword_4B92E0));//call return thisxx[20]; 
     sub_474FF0((char*)&thisx[153 * a2 + 657], v2);
-    v3 = MarkedForDetachment((_BYTE*)(36 * v8 + dword_4B92E0));//call return thisxx[20]; 
+    v3 = MarkedForDetachment((char*)(36 * v8 + dword_4B92E0));//call return thisxx[20]; 
     sub_474FD0(&thisx[153 * a2 + 657], dword_4B9220[v3]);
     sub_41D84A((int)&thisx[153 * a2 + 657]);
     sub_42371C((int)&thisx[153 * a2 + 657]);
@@ -40461,7 +40461,7 @@ void sub_456FC8(int thisx)
     }
 
     sub_486476((int*)(thisx + 128));//这里估计是根据数据显示画面的
-    if (*(_BYTE*)(thisx + 11364))
+    if (*(char*)(thisx + 11364))
         sub_44325C(thisx);
     for (k = 0; k < 32; ++k)
         sub_441DB3(thisx + 36 * k + 9608);
@@ -40470,7 +40470,7 @@ void sub_456FC8(int thisx)
     sub_477F0C(0);//内有接收键盘输入
     if (sub_476DC7(0, 0))
         *(int*)(thisx + 1296) = 1;
-    if (*(int*)(thisx + 1296) && *(_BYTE*)(thisx + 2516) != 2)
+    if (*(int*)(thisx + 1296) && *(char*)(thisx + 2516) != 2)
         sub_4571BB(thisx);
 }
 
@@ -40479,8 +40479,8 @@ void sub_4571BB(int thisx)
 {
     int v1; // esi
 
-    *(_BYTE*)(thisx + 2516) = 2;
-    if (*(int*)(thisx + 108) != 2 && *(int*)(thisx + 104) == 1 && !*(_BYTE*)(thisx + 16140))
+    *(char*)(thisx + 2516) = 2;
+    if (*(int*)(thisx + 108) != 2 && *(int*)(thisx + 104) == 1 && !*(char*)(thisx + 16140))
     {
         switch (*(int*)(thisx + 124))
         {
@@ -40491,7 +40491,7 @@ void sub_4571BB(int thisx)
             *(int*)(thisx + 108) = 17;
             break;
         case 3:
-            ++ * (_BYTE*)(thisx + 11690);
+            ++ * (char*)(thisx + 11690);
             if (*(unsigned __int8*)(thisx + 11691) > 6u)
                 sub_462869((int*)thisx);
             else
@@ -40502,7 +40502,7 @@ void sub_4571BB(int thisx)
             *(int*)(thisx + 108) = 11;
             if (dword_4B9B08 == 1)
             {
-                *(_BYTE*)(thisx + 11690) += 2;
+                *(char*)(thisx + 11690) += 2;
                 sub_462BA9(thisx, 4);
             }
             else if (dword_4B9AF8 < 0)
@@ -40512,21 +40512,21 @@ void sub_4571BB(int thisx)
             }
             else
             {
-                ++* (_BYTE*)(thisx + 11690);
+                ++* (char*)(thisx + 11690);
                 sub_462BA9(thisx, 2);
             }
             break;
         case 5:
         case 7:
             if (*(unsigned __int8*)(thisx + 11806) != 255)
-                ++* (_BYTE*)(thisx + 11806);
-            *(_BYTE*)(thisx + 11690) = 0;
+                ++* (char*)(thisx + 11806);
+            *(char*)(thisx + 11690) = 0;
             v1 = (unsigned __int16)sub_4750D0((void*)(thisx + 11816));
             *(short*)(thisx + 11814) = (v1 + (unsigned __int16)sub_4750D0((void*)(thisx + 11892)) / 2);
             *(int*)(thisx + 124) = 5;
             *(int*)(thisx + 112) = 1;
             *(int*)(thisx + 108) = 20;
-            *(_BYTE*)(thisx + 2562) = 1;
+            *(char*)(thisx + 2562) = 1;
             break;
         case 6:
             *(int*)(thisx + 108) = 1;
@@ -40542,11 +40542,11 @@ int sub_4573CB(int thisx, char a2, int a3, char a4)
 {
     int result; // eax
 
-    *(_BYTE*)(thisx + 11420) = a2;
+    *(char*)(thisx + 11420) = a2;
     *(int*)(thisx + 11424) = a3;
     *(int*)(thisx + 11428) = a3;
     result = thisx;
-    *(_BYTE*)(thisx + 11421) = a4;
+    *(char*)(thisx + 11421) = a4;
     return result;
 }
 
@@ -40571,33 +40571,33 @@ int __fastcall sub_457408(int a1)
     LOBYTE(v6) = 0;
     if (*(int*)(a1 + 11428) > 0)
         LOBYTE(v6) = (*(int*)(a1 + 11424) << 6) / *(int*)(a1 + 11428);
-    if (*(_BYTE*)(a1 + 11420) == 1)
+    if (*(char*)(a1 + 11420) == 1)
     {
-        *(_BYTE*)(a1 + 11432) = 64 - v6;
+        *(char*)(a1 + 11432) = 64 - v6;
     }
-    else if (*(_BYTE*)(a1 + 11420) == 2)
+    else if (*(char*)(a1 + 11420) == 2)
     {
-        *(_BYTE*)(a1 + 11432) = v6;
+        *(char*)(a1 + 11432) = v6;
     }
     if (!*(int*)(a1 + 11424))
-        *(_BYTE*)(a1 + 11420) = 0;
-    if (*(_BYTE*)(a1 + 11432) && *(unsigned __int8*)(a1 + 11432) < 0x40u)
+        *(char*)(a1 + 11420) = 0;
+    if (*(char*)(a1 + 11432) && *(unsigned __int8*)(a1 + 11432) < 0x40u)
     {
         SetRect(&rc, 0, 0, 320, 240);
-        if (*(_BYTE*)(a1 + 11421))
-            return sub_49EF70((int)byte_4BDC60, (int*)&rc, 0xFFu, 0xFFu, 0xFFu, *(_BYTE*)(a1 + 11432));
+        if (*(char*)(a1 + 11421))
+            return sub_49EF70((int)byte_4BDC60, (int*)&rc, 0xFFu, 0xFFu, 0xFFu, *(char*)(a1 + 11432));
         else
-            return sub_49EF70((int)byte_4BDC60, (int*)&rc, 0, 0, 0, *(_BYTE*)(a1 + 11432));
+            return sub_49EF70((int)byte_4BDC60, (int*)&rc, 0, 0, 0, *(char*)(a1 + 11432));
     }
     else
     {
         result = *(unsigned __int8*)(a1 + 11432);
         if (result == 64)
         {
-            if (*(_BYTE*)(a1 + 11421))
+            if (*(char*)(a1 + 11421))
             {
                 result = a1;
-                if (*(_BYTE*)(a1 + 11421) == 1)
+                if (*(char*)(a1 + 11421) == 1)
                 {
                     v2 = sub_49FFEC(255, 255, 255);
                     return (int)sub_49EDC1((int)byte_4BDC60, v3, 0, v2);
@@ -40648,30 +40648,30 @@ int __fastcall sub_457408(int a1)
         LOBYTE(v6) = (*(int*)(a1 + 11424) << 6) / *(int*)(a1 + 11428);
 
     // 根据 a1 + 11420（某个状态值）的值来设置 a1 + 11432（某个透明度变量）
-    if (*(_BYTE*)(a1 + 11420) == 1)
+    if (*(char*)(a1 + 11420) == 1)
     {
-        *(_BYTE*)(a1 + 11432) = 64 - v6;
+        *(char*)(a1 + 11432) = 64 - v6;
     }
-    else if (*(_BYTE*)(a1 + 11420) == 2)
+    else if (*(char*)(a1 + 11420) == 2)
     {
-        *(_BYTE*)(a1 + 11432) = v6;
+        *(char*)(a1 + 11432) = v6;
     }
 
     // 如果倒计时结束，将状态值设为 0
     if (!*(int*)(a1 + 11424))
-        *(_BYTE*)(a1 + 11420) = 0;
+        *(char*)(a1 + 11420) = 0;
 
     // 如果透明度值在 1 到 63 之间
-    if (*(_BYTE*)(a1 + 11432) && *(unsigned __int8*)(a1 + 11432) < 0x40u)
+    if (*(char*)(a1 + 11432) && *(unsigned __int8*)(a1 + 11432) < 0x40u)
     {
         // 设置绘制区域为 320x240 的矩形
         SetRect(&rc, 0, 0, 320, 240);
 
         // 根据 a1 + 11421（某个标志变量）调用不同的绘图函数
-        if (*(_BYTE*)(a1 + 11421))
-            return sub_49EF70((int)byte_4BDC60, (int*)&rc, 0xFFu, 0xFFu, 0xFFu, *(_BYTE*)(a1 + 11432)); // 可能绘制一个白色的半透明矩形
+        if (*(char*)(a1 + 11421))
+            return sub_49EF70((int)byte_4BDC60, (int*)&rc, 0xFFu, 0xFFu, 0xFFu, *(char*)(a1 + 11432)); // 可能绘制一个白色的半透明矩形
         else
-            return sub_49EF70((int)byte_4BDC60, (int*)&rc, 0, 0, 0, *(_BYTE*)(a1 + 11432)); // 可能绘制一个黑色的半透明矩形
+            return sub_49EF70((int)byte_4BDC60, (int*)&rc, 0, 0, 0, *(char*)(a1 + 11432)); // 可能绘制一个黑色的半透明矩形
     }
     else
     {
@@ -40679,10 +40679,10 @@ int __fastcall sub_457408(int a1)
         result = *(unsigned __int8*)(a1 + 11432);
         if (result == 64)
         {
-            if (*(_BYTE*)(a1 + 11421))
+            if (*(char*)(a1 + 11421))
             {
                 result = a1;
-                if (*(_BYTE*)(a1 + 11421) == 1)
+                if (*(char*)(a1 + 11421) == 1)
                 {
                     // 调用 sub_49FFEC 函数生成颜色，然后调用 sub_49EDC1 绘制
                     v2 = sub_49FFEC(255, 255, 255);
@@ -40847,7 +40847,7 @@ int sub_457731(int* thisx, int* a2)
 int sub_457930(int thisx)
 {
     *(int*)(thisx + 104) = 13;
-    *(_BYTE*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2516) = 1;
     *(int*)(thisx + 2528) = 0;
     *(int*)(thisx + 2532) = 0;
     *(short*)(thisx + 2564) = 0;
@@ -40855,13 +40855,13 @@ int sub_457930(int thisx)
     *(short*)(thisx + 2570) = 0;
     if (*(int*)(thisx + 112) == 14)
     {
-        sub_45938D((_BYTE*)(thisx + 76 * *(unsigned __int16*)(thisx + 2568) + 11816));
+        sub_45938D((char*)(thisx + 76 * *(unsigned __int16*)(thisx + 2568) + 11816));
     }
     else
     {
         *(short*)(thisx + 2568) = 0;
-        sub_45938D((_BYTE*)(thisx + 11816));
-        sub_45938D((_BYTE*)(thisx + 11892));
+        sub_45938D((char*)(thisx + 11816));
+        sub_45938D((char*)(thisx + 11892));
     }
     return sub_4579E8(thisx, -1);
 }
@@ -40886,7 +40886,7 @@ int sub_4579E8(int thisx, int a2)
 
     if (a2 == -1)
     {
-        sub_451EB5((_BYTE*)thisx, 1, 0);
+        sub_451EB5((char*)thisx, 1, 0);
         sub_4579E8(thisx, 1);
         sub_4579E8(thisx, 0);
         return sub_4579E8(thisx, 2);
@@ -40895,7 +40895,7 @@ int sub_4579E8(int thisx, int a2)
     {
         if (a2 == 1)
         {
-            sub_452045((_BYTE*)thisx, 6, 0, 28, 7);
+            sub_452045((char*)thisx, 6, 0, 28, 7);
             sub_47B91A(72, 40, byte_4B2510, 0, dword_4B9248);
             sub_47B91A(136, 40, byte_4B2518, 0, dword_4B9248);
             sub_47B91A(160, 40, byte_4B251C, 0, dword_4B9248);
@@ -40905,9 +40905,9 @@ int sub_4579E8(int thisx, int a2)
         }
         else if (a2 == 2)
         {
-            sub_451EB5((_BYTE*)thisx, 0, 1);
-            LOBYTE(v6) = *(_BYTE*)(thisx + 2566);
-            if ((_BYTE)v6)
+            sub_451EB5((char*)thisx, 0, 1);
+            LOBYTE(v6) = *(char*)(thisx + 2566);
+            if ((char)v6)
             {
                 if ((unsigned __int8)v6 == 1)
                 {
@@ -40941,7 +40941,7 @@ int sub_4579E8(int thisx, int a2)
     }
     else
     {
-        sub_452045((_BYTE*)thisx, 6, 8, 28, 15);
+        sub_452045((char*)thisx, 6, 8, 28, 15);
         v9 = 64;
         v8 = 80;
         for (i = 0; i < 6; ++i)
@@ -41001,7 +41001,7 @@ int sub_457F11(int thisx)
     CHAR v22[4]; // [esp+3A4h] [ebp-8Ch] BYREF
     int j; // [esp+3A0h] [ebp-90h]
     char tc[60];
-    _BYTE v20[4]; // [esp+39Ch] [ebp-94h]
+    char v20[4]; // [esp+39Ch] [ebp-94h]
     //
     CHAR String[64]; // [esp+35Ch] [ebp-D4h] BYREF
     int v18; // [esp+358h] [ebp-D8h]
@@ -41027,12 +41027,12 @@ int sub_457F11(int thisx)
     int v1; // ecx
 
 
-    LOBYTE(v44) = *(_BYTE*)(thisx + 2568);
-    LOBYTE(v45) = *(_BYTE*)(thisx + 2566);
+    LOBYTE(v44) = *(char*)(thisx + 2568);
+    LOBYTE(v45) = *(char*)(thisx + 2566);
     sub_477F0C(v44);
     v41 = 0;
     v40 = 0;
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         LOBYTE(v1) = v44;
         v2 = sub_476D78(v1);
@@ -41045,17 +41045,17 @@ int sub_457F11(int thisx)
         v40 = v5 - sub_476C8B(v6);
     }
     v7 = *(unsigned __int8*)(thisx + 2516);
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         if (v41 || v40)
         {
             sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
-            if ((_BYTE)v45)
+            if ((char)v45)
             {
                 if ((unsigned __int8)v45 == 1)
                 {
                     for (i = 0; i < 2; ++i)
-                        *(&v36 + i) = sub_45943B((_BYTE*)(thisx + 76 * (unsigned __int8)v44 + 11816), i) - 1;
+                        *(&v36 + i) = sub_45943B((char*)(thisx + 76 * (unsigned __int8)v44 + 11816), i) - 1;
                     if (*(int*)(thisx + 2528))
                     {
                         if (*(int*)(thisx + 2528) == 1)
@@ -41080,12 +41080,12 @@ int sub_457F11(int thisx)
                     {
                         v36 = (v36 + v40 + 12) % 12;
                     }
-                    sub_459461((_BYTE*)(thisx + 76 * (unsigned __int8)v44 + 11816), v36 + 1, v37 + 1);
+                    sub_459461((char*)(thisx + 76 * (unsigned __int8)v44 + 11816), v36 + 1, v37 + 1);
                 }
                 else if ((unsigned __int8)v45 == 2)
                 {
                     LOBYTE(v32) = ((unsigned __int8)sub_475EB0((char*)thisx + 76 * (unsigned __int8)v44 + 11816) + v40 + 4) % 4;
-                    sub_475830((_BYTE*)(thisx + 76 * (unsigned __int8)v44 + 11816), v32);
+                    sub_475830((char*)(thisx + 76 * (unsigned __int8)v44 + 11816), v32);
                 }
                 else if ((unsigned __int8)v45 == 3 && v41)
                 {
@@ -41135,7 +41135,7 @@ int sub_457F11(int thisx)
             if (sub_476DC7(v7, 0))
             {
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-                if ((_BYTE)v45)
+                if ((char)v45)
                 {
                     switch ((unsigned __int8)v45)
                     {
@@ -41156,8 +41156,8 @@ int sub_457F11(int thisx)
                         {
                             sub_45948C(thisx + 76 * *(unsigned __int16*)(thisx + 2568) + 11816);
                             *(int*)(thisx + 108) = 14;
-                            *(_BYTE*)(thisx + 2516) = 2;
-                            *(_BYTE*)(thisx + 2562) = 0;
+                            *(char*)(thisx + 2516) = 2;
+                            *(char*)(thisx + 2562) = 0;
                             result = thisx;
                             *(short*)(thisx + 2566) = 0;
                             return result;
@@ -41174,10 +41174,10 @@ int sub_457F11(int thisx)
                         {
                             if (*(int*)(thisx + 2528) == 1)
                             {
-                                *(_BYTE*)(thisx + 2562) = 3;
+                                *(char*)(thisx + 2562) = 3;
                                 *(int*)(thisx + 108) = 14;
                                 result = thisx;
-                                *(_BYTE*)(thisx + 2516) = 2;
+                                *(char*)(thisx + 2516) = 2;
                                 return result;
                             }
                         }
@@ -41292,7 +41292,7 @@ int sub_457F11(int thisx)
                 if (sub_476DC7(v8, 1))
                 {
                     sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-                    if ((_BYTE)v45)
+                    if ((char)v45)
                     {
                         switch ((unsigned __int8)v45)
                         {
@@ -41300,7 +41300,7 @@ int sub_457F11(int thisx)
                             if (*(int*)(thisx + 2528))
                             {
                                 *(int*)(thisx + 2528) = 0;
-                                sub_459461((_BYTE*)(thisx + 76 * (unsigned __int8)v44 + 11816), -1, 1);
+                                sub_459461((char*)(thisx + 76 * (unsigned __int8)v44 + 11816), -1, 1);
                             }
                             else
                             {
@@ -41338,7 +41338,7 @@ int sub_457F11(int thisx)
             }
         }
     }
-    LOBYTE(v45) = *(_BYTE*)(thisx + 2566);
+    LOBYTE(v45) = *(char*)(thisx + 2566);
     sub_49C15E((int)v46);
     v46[1] = 0;
     v46[2] = 0;
@@ -41346,17 +41346,17 @@ int sub_457F11(int thisx)
     sub_49AB05((int)byte_4BDC60, v46);
     v10 = sub_4266D0((char*)(thisx + 76 * (unsigned __int8)v44 + 11816));
     sub_47B91A(72, 16, v10, 0, -1);
-    LOBYTE(v43) = *(_BYTE*)(thisx + 2570);
+    LOBYTE(v43) = *(char*)(thisx + 2570);
     for (n = 0; n < 5; ++n)
     {
-        if ((_BYTE)v45 || (unsigned __int8)v43 != n || ((unsigned int)dword_4B93B0 >> 1) % 2)
+        if ((char)v45 || (unsigned __int8)v43 != n || ((unsigned int)dword_4B93B0 >> 1) % 2)
             sub_47B91A(8 * n + 72, 22, byte_4B2664, 0, -1);
     }
-    if ((_BYTE)v45 && (unsigned __int8)v45 < 4u)
+    if ((char)v45 && (unsigned __int8)v45 < 4u)
     {
         for (n = 0; n < 2; ++n)
         {
-            v11 = sub_45943B((_BYTE*)(thisx + 76 * (unsigned __int8)v44 + 11816), n);
+            v11 = sub_45943B((char*)(thisx + 76 * (unsigned __int8)v44 + 11816), n);
             v20[n] = v11;
         }
         for (n = 0; n < 2; ++n)
@@ -41478,7 +41478,7 @@ int sub_457F11(int thisx)
         }
         sub_47B7ED(224, 24, v17, 0, -1);
     }
-    if ((_BYTE)v45)
+    if ((char)v45)
     {
         if ((unsigned __int8)v45 == 3)
         {
@@ -41509,9 +41509,9 @@ int sub_457F11(int thisx)
 }
 
 
-_BYTE* sub_45938D(_BYTE* thisx)
+char* sub_45938D(char* thisx)
 {
-    _BYTE* result; // eax
+    char* result; // eax
     int i; // [esp+4h] [ebp-4h]
 
     memset(thisx + 2, 0, 0xBu);
@@ -41538,7 +41538,7 @@ _BYTE* sub_45938D(_BYTE* thisx)
 }
 
 
-char sub_45943B(_BYTE* thisx, int a2)
+char sub_45943B(char* thisx, int a2)
 {
     if (a2 >= 0 && a2 <= 1)
         return thisx[a2 + 13];
@@ -41547,7 +41547,7 @@ char sub_45943B(_BYTE* thisx, int a2)
 }
 
 
-char sub_459461(_BYTE* thisx, int a2, int a3)
+char sub_459461(char* thisx, int a2, int a3)
 {
     char result; // al
 
@@ -41593,18 +41593,18 @@ int __fastcall sub_45948C(int a1)
     int v1; // edx
 
 
-    for (i = 4; i >= 0 && *(char*)(a1 + 2 * i + 2) == -127 && *(_BYTE*)(a1 + 2 * i + 3) == 64; --i)
+    for (i = 4; i >= 0 && *(char*)(a1 + 2 * i + 2) == -127 && *(char*)(a1 + 2 * i + 3) == 64; --i)
     {
-        *(_BYTE*)(a1 + 2 * i + 2) = 0;
-        *(_BYTE*)(a1 + 2 * i + 3) = 0;
+        *(char*)(a1 + 2 * i + 2) = 0;
+        *(char*)(a1 + 2 * i + 3) = 0;
     }
     HIWORD(v1) = HIWORD(a1);
     *(short*)a1 = 1;
     *(short*)(a1 + 24) = 0;
     LOWORD(v1) = *(short*)(a1 + 24);
-    *(_BYTE*)(a1 + 26) = sub_47C20C(v1);
+    *(char*)(a1 + 26) = sub_47C20C(v1);
     *(short*)(a1 + 18) = 0;
-    *(_BYTE*)(a1 + 22) = 0;
+    *(char*)(a1 + 22) = 0;
     if (lstrcmpiA((LPCSTR)(a1 + 2), byte_4B2730))
     {
         v10 = lstrlenA((LPCSTR)(a1 + 2));
@@ -41627,35 +41627,35 @@ int __fastcall sub_45948C(int a1)
         *(short*)(a1 + 42) = v8 / 5 % 10 + 80;
         *(short*)(a1 + 44) = v8 / 6 % 18 + 50;
         *(short*)(a1 + 46) = v8 / 7 % 50 + 30;
-        *(_BYTE*)(a1 + 48) = v8 / 8 % 6 + 10;
-        *(_BYTE*)(a1 + 49) = v8 / 9 % 6 + 10;
-        *(_BYTE*)(a1 + 50) = v8 / 10 % 6 + 10;
-        *(_BYTE*)(a1 + 51) = v8 / 11 % 6 + 10;
-        *(_BYTE*)(a1 + 52) = v8 / 20 % 6 + 15;
-        *(_BYTE*)(a1 + 53) = v8 / 21 % 6 + 15;
-        *(_BYTE*)(a1 + 54) = v8 / 12 % 3 + 8;
-        *(_BYTE*)(a1 + 55) = v8 / 13 % 5 + 8;
-        *(_BYTE*)(a1 + 56) = v8 / 14 % 5 + 8;
-        *(_BYTE*)(a1 + 57) = v8 / 15 % 5 + 8;
-        *(_BYTE*)(a1 + 16) = v8 / 16 % 4;
-        if (*(_BYTE*)(a1 + 16))
+        *(char*)(a1 + 48) = v8 / 8 % 6 + 10;
+        *(char*)(a1 + 49) = v8 / 9 % 6 + 10;
+        *(char*)(a1 + 50) = v8 / 10 % 6 + 10;
+        *(char*)(a1 + 51) = v8 / 11 % 6 + 10;
+        *(char*)(a1 + 52) = v8 / 20 % 6 + 15;
+        *(char*)(a1 + 53) = v8 / 21 % 6 + 15;
+        *(char*)(a1 + 54) = v8 / 12 % 3 + 8;
+        *(char*)(a1 + 55) = v8 / 13 % 5 + 8;
+        *(char*)(a1 + 56) = v8 / 14 % 5 + 8;
+        *(char*)(a1 + 57) = v8 / 15 % 5 + 8;
+        *(char*)(a1 + 16) = v8 / 16 % 4;
+        if (*(char*)(a1 + 16))
         {
-            switch (*(_BYTE*)(a1 + 16))
+            switch (*(char*)(a1 + 16))
             {
             case 1:
                 *(short*)(a1 + 30) += 30;
-                *(_BYTE*)(a1 + 49) += 10;
-                *(_BYTE*)(a1 + 57) += 2;
+                *(char*)(a1 + 49) += 10;
+                *(char*)(a1 + 57) += 2;
                 break;
             case 2:
                 *(short*)(a1 + 32) += 30;
-                *(_BYTE*)(a1 + 50) += 10;
-                *(_BYTE*)(a1 + 55) += 2;
+                *(char*)(a1 + 50) += 10;
+                *(char*)(a1 + 55) += 2;
                 break;
             case 3:
                 *(short*)(a1 + 34) += 30;
-                *(_BYTE*)(a1 + 51) += 10;
-                *(_BYTE*)(a1 + 54) += 2;
+                *(char*)(a1 + 51) += 10;
+                *(char*)(a1 + 54) += 2;
                 break;
             }
         }
@@ -41664,17 +41664,17 @@ int __fastcall sub_45948C(int a1)
             *(short*)(a1 + 30) += 10;
             *(short*)(a1 + 32) += 10;
             *(short*)(a1 + 34) += 10;
-            *(_BYTE*)(a1 + 49) += 5;
-            *(_BYTE*)(a1 + 50) += 5;
-            *(_BYTE*)(a1 + 51) += 5;
+            *(char*)(a1 + 49) += 5;
+            *(char*)(a1 + 50) += 5;
+            *(char*)(a1 + 51) += 5;
         }
         *(short*)(a1 + 20) = v8 / 17 % 4 + 19;
         if (*(short*)(a1 + 20) == 22)
-            *(_BYTE*)(a1 + 22) = 1;
-        v16 = *(unsigned __int8*)(a1 + 13) / 10 + *(_BYTE*)(a1 + 15) + 1;
-        v17 = *(unsigned __int8*)(a1 + 13) % 10 + *(_BYTE*)(a1 + 15) + 1;
-        v18 = *(unsigned __int8*)(a1 + 14) / 10 + *(_BYTE*)(a1 + 15) + 1;
-        v19 = *(unsigned __int8*)(a1 + 14) % 10 + *(_BYTE*)(a1 + 15) + 1;
+            *(char*)(a1 + 22) = 1;
+        v16 = *(unsigned __int8*)(a1 + 13) / 10 + *(char*)(a1 + 15) + 1;
+        v17 = *(unsigned __int8*)(a1 + 13) % 10 + *(char*)(a1 + 15) + 1;
+        v18 = *(unsigned __int8*)(a1 + 14) / 10 + *(char*)(a1 + 15) + 1;
+        v19 = *(unsigned __int8*)(a1 + 14) % 10 + *(char*)(a1 + 15) + 1;
         result = v18;
         v3 = (v19 + v18 + v17 + v16) % 4;
         v11 = v3;
@@ -41726,7 +41726,7 @@ int __fastcall sub_45948C(int a1)
             {
                 v9 = 3 * v18 + v16 + 2 * v17 + 4 * v19;
             }
-            *(_BYTE*)(k + a1 + 68) = v9 % 72 + 1;
+            *(char*)(k + a1 + 68) = v9 % 72 + 1;
             while (1)
             {
                 for (m = 0; ; ++m)
@@ -41738,21 +41738,21 @@ int __fastcall sub_45948C(int a1)
                     v4 = m + a1;
                     if (result == *(unsigned __int8*)(m + a1 + 68))
                         break;
-                    LOBYTE(result) = *(_BYTE*)(m + a1 + 68);
-                    LOBYTE(v4) = *(_BYTE*)(k + a1 + 68);
+                    LOBYTE(result) = *(char*)(m + a1 + 68);
+                    LOBYTE(v4) = *(char*)(k + a1 + 68);
                     result = sub_47744C(v4, result);
                     if (result)
                         break;
                 }
                 if (m == k)
                     break;
-                if ((unsigned __int8)++ * (_BYTE*)(k + a1 + 68) >= 0x49u)
-                    *(_BYTE*)(k + a1 + 68) = 1;
+                if ((unsigned __int8)++ * (char*)(k + a1 + 68) >= 0x49u)
+                    *(char*)(k + a1 + 68) = 1;
             }
         }
         while (k < 3)
         {
-            *(_BYTE*)(k + a1 + 68) = 0;
+            *(char*)(k + a1 + 68) = 0;
             result = ++k;
         }
     }
@@ -41769,22 +41769,22 @@ int __fastcall sub_45948C(int a1)
         *(short*)(a1 + 42) = 99;
         *(short*)(a1 + 44) = 99;
         *(short*)(a1 + 46) = 99;
-        *(_BYTE*)(a1 + 48) = 15;
-        *(_BYTE*)(a1 + 49) = 15;
-        *(_BYTE*)(a1 + 50) = 15;
-        *(_BYTE*)(a1 + 51) = 15;
-        *(_BYTE*)(a1 + 52) = 15;
-        *(_BYTE*)(a1 + 53) = 15;
-        *(_BYTE*)(a1 + 54) = 15;
-        *(_BYTE*)(a1 + 55) = 13;
-        *(_BYTE*)(a1 + 56) = 13;
-        *(_BYTE*)(a1 + 57) = 13;
-        *(_BYTE*)(a1 + 16) = 0;
+        *(char*)(a1 + 48) = 15;
+        *(char*)(a1 + 49) = 15;
+        *(char*)(a1 + 50) = 15;
+        *(char*)(a1 + 51) = 15;
+        *(char*)(a1 + 52) = 15;
+        *(char*)(a1 + 53) = 15;
+        *(char*)(a1 + 54) = 15;
+        *(char*)(a1 + 55) = 13;
+        *(char*)(a1 + 56) = 13;
+        *(char*)(a1 + 57) = 13;
+        *(char*)(a1 + 16) = 0;
         *(short*)(a1 + 20) = 19;
-        *(_BYTE*)(a1 + 68) = 1;
-        *(_BYTE*)(a1 + 69) = 3;
+        *(char*)(a1 + 68) = 1;
+        *(char*)(a1 + 69) = 3;
         result = a1;
-        *(_BYTE*)(a1 + 70) = 0;
+        *(char*)(a1 + 70) = 0;
     }
     return result;
 }
@@ -41795,15 +41795,15 @@ int sub_459DE1(int thisx)
     int result; // eax
 
     *(int*)(thisx + 104) = 14;
-    *(_BYTE*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2516) = 1;
     sub_47C25B(0);
     *(short*)(thisx + 2564) = 0;
     *(short*)(thisx + 2566) = 0;
-    if ((*(_BYTE*)(thisx + 2562) == 1 || *(_BYTE*)(thisx + 2562) == 3) && (unsigned __int16)sub_475850((short*)thisx + 11816) == 1)
+    if ((*(char*)(thisx + 2562) == 1 || *(char*)(thisx + 2562) == 3) && (unsigned __int16)sub_475850((short*)thisx + 11816) == 1)
         *(short*)(thisx + 2564) = 1;
     sub_459E91(thisx, -1);
     result = thisx;
-    if (*(_BYTE*)(thisx + 2562) == 2)
+    if (*(char*)(thisx + 2562) == 2)
         return sub_456D33((const CHAR*)thisx, aMenuWav_0, 1, 0);
     return result;
 }
@@ -41858,13 +41858,13 @@ void sub_459E91(int thisx, int a2)
     switch (a2)
     {
     case -1:
-        sub_451EB5((_BYTE*)thisx, 1, 0);
+        sub_451EB5((char*)thisx, 1, 0);
         sub_459E91(thisx, 0);
         sub_459E91(thisx, 1);
         sub_459E91(thisx, 2);
         return;
     case 0:
-        sub_452045((_BYTE*)thisx, 3, 1, 7, 7);
+        sub_452045((char*)thisx, 3, 1, 7, 7);
         v33[0] = 28;
         v33[1] = 12;
         v33[2] = 76;
@@ -41872,9 +41872,9 @@ void sub_459E91(int thisx, int a2)
         v10 = dword_4B9248;
         v2 = sub_49FFEC(197, 113, 0);
         sub_4A02E9((int*)byte_4BDC60, v3, (int)v33, v2, v10);
-        sub_452045((_BYTE*)thisx, 13, 1, 24, 7);
-        sub_452045((_BYTE*)thisx, 1, 9, 21, 14);
-        sub_452045((_BYTE*)thisx, 23, 9, 15, 11);
+        sub_452045((char*)thisx, 13, 1, 24, 7);
+        sub_452045((char*)thisx, 1, 9, 21, 14);
+        sub_452045((char*)thisx, 23, 9, 15, 11);
         sub_47B91A(200, 78, byte_4B2748, 0, dword_4B9248);
         v31 = 20;
         v30 = 84;
@@ -41920,13 +41920,13 @@ void sub_459E91(int thisx, int a2)
         return;
     case 1:
         v23 = *(unsigned __int16*)(thisx + 2564);
-        if (!*(_BYTE*)(thisx + 2562) || *(_BYTE*)(thisx + 2562) == 3)
+        if (!*(char*)(thisx + 2562) || *(char*)(thisx + 2562) == 3)
             v23 = *(unsigned __int16*)(thisx + 2568);
-        if (*(_BYTE*)(thisx + 2562))
+        if (*(char*)(thisx + 2562))
         {
-            if (*(_BYTE*)(thisx + 2562) == 1 || *(_BYTE*)(thisx + 2562) == 3)
+            if (*(char*)(thisx + 2562) == 1 || *(char*)(thisx + 2562) == 3)
             {
-                if (*(_BYTE*)(thisx + 2562) == 3)
+                if (*(char*)(thisx + 2562) == 3)
                 {
                     sub_45B346(
                         (short*)(thisx + 76 * v23 + 11816),
@@ -41939,7 +41939,7 @@ void sub_459E91(int thisx, int a2)
                     v22 = (Concurrency::details::_UnrealizedChore*)(thisx + 11892);
                 }
             }
-            else if (*(_BYTE*)(thisx + 2562) == 2)
+            else if (*(char*)(thisx + 2562) == 2)
             {
                 v22 = (Concurrency::details::_UnrealizedChore*)(thisx + 76 * *(unsigned __int16*)(thisx + 2564) + 11816);
             }
@@ -41959,16 +41959,16 @@ void sub_459E91(int thisx, int a2)
         sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v25, (int*)&rc);
         v26 += 4;
         v27 -= 8;
-        if (*(_BYTE*)(thisx + 2562))
+        if (*(char*)(thisx + 2562))
         {
-            if (*(_BYTE*)(thisx + 2562) == 1 || *(_BYTE*)(thisx + 2562) == 3)
+            if (*(char*)(thisx + 2562) == 1 || *(char*)(thisx + 2562) == 3)
             {
                 sub_47900E(&v25, 1, *(unsigned __int16*)(thisx + 2564), dword_4B9248);
             LABEL_38:
                 v20 = 144;
                 v19 = 20;
-                if (*(_BYTE*)(thisx + 2562) != 3
-                    && (*(_BYTE*)(thisx + 2562) == 1 || *(unsigned __int8*)(thisx + 11968) <= v23))
+                if (*(char*)(thisx + 2562) != 3
+                    && (*(char*)(thisx + 2562) == 1 || *(unsigned __int8*)(thisx + 11968) <= v23))
                 {
                     wsprintfA(String, aCpu);
                 }
@@ -42049,16 +42049,16 @@ void sub_459E91(int thisx, int a2)
                 }
                 return;
             }
-            if (*(_BYTE*)(thisx + 2562) != 2)
+            if (*(char*)(thisx + 2562) != 2)
                 goto LABEL_38;
         }
         sub_47900E(&v25, 1, -(v23 + 1), dword_4B9248);
         goto LABEL_38;
     case 2:
-        sub_451EB5((_BYTE*)thisx, 0, 1);
-        if (*(_BYTE*)(thisx + 2562))
+        sub_451EB5((char*)thisx, 0, 1);
+        if (*(char*)(thisx + 2562))
         {
-            switch (*(_BYTE*)(thisx + 2562))
+            switch (*(char*)(thisx + 2562))
             {
             case 1:
                 if (*(short*)(thisx + 2566))
@@ -42140,12 +42140,12 @@ int  sub_45AB5E(int thisx)
     int v1; // eax
 
 
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         v1 = *(unsigned __int8*)(thisx + 2562);
-        if (*(_BYTE*)(thisx + 2562))
+        if (*(char*)(thisx + 2562))
         {
-            if (*(_BYTE*)(thisx + 2562) == 1 || *(_BYTE*)(thisx + 2562) == 3)
+            if (*(char*)(thisx + 2562) == 1 || *(char*)(thisx + 2562) == 3)
             {
                 LOBYTE(v21) = 0;
                 v8 = *(unsigned __int8*)(thisx + 2562);
@@ -42178,15 +42178,15 @@ int  sub_45AB5E(int thisx)
                                 }
                                 else
                                 {
-                                    if (*(_BYTE*)(thisx + 2562) == 1)
+                                    if (*(char*)(thisx + 2562) == 1)
                                     {
                                         sub_475730((short*)(thisx + 11892), *(short*)(thisx + 2564) + 1);
                                         result = sub_45B65A(thisx);
                                         *(int*)(thisx + 108) = 15;
-                                        *(_BYTE*)(thisx + 2516) = 2;
+                                        *(char*)(thisx + 2516) = 2;
                                         return result;
                                     }
-                                    if (*(_BYTE*)(thisx + 2562) == 3)
+                                    if (*(char*)(thisx + 2562) == 3)
                                     {
                                         sub_475730(
                                             (short*)(thisx + 76 * *(unsigned __int16*)(thisx + 2568) + 11816),
@@ -42196,23 +42196,23 @@ int  sub_45AB5E(int thisx)
                                             ++* (short*)(thisx + 2568);
                                             result = thisx;
                                             *(int*)(thisx + 108) = 13;
-                                            *(_BYTE*)(thisx + 2516) = 2;
+                                            *(char*)(thisx + 2516) = 2;
                                             return result;
                                         }
-                                        if (*(_BYTE*)(thisx + 11968) == 1)
+                                        if (*(char*)(thisx + 11968) == 1)
                                         {
-                                            *(_BYTE*)(thisx + 2562) = 1;
+                                            *(char*)(thisx + 2562) = 1;
                                             *(short*)(thisx + 2564) = 0;
                                             if ((unsigned __int16)sub_475850((short*)thisx + 11816) == 1)
                                                 *(short*)(thisx + 2564) = 1;
                                             *(short*)(thisx + 2566) = 0;
                                             sub_459E91(thisx, -1);
                                         }
-                                        else if (*(_BYTE*)(thisx + 11968) == 2)
+                                        else if (*(char*)(thisx + 11968) == 2)
                                         {
                                             result = sub_45B65A(thisx);
                                             *(int*)(thisx + 108) = 15;
-                                            *(_BYTE*)(thisx + 2516) = 2;
+                                            *(char*)(thisx + 2516) = 2;
                                             return result;
                                         }
                                     }
@@ -42263,10 +42263,10 @@ int  sub_45AB5E(int thisx)
             else
             {
                 v14 = thisx;
-                if (*(_BYTE*)(thisx + 2562) == 2)
+                if (*(char*)(thisx + 2562) == 2)
                 {
-                    v18 = *(_BYTE*)(thisx + 2564);
-                    if (*(_BYTE*)(thisx + 11968) == 1)
+                    v18 = *(char*)(thisx + 2564);
+                    if (*(char*)(thisx + 11968) == 1)
                         v18 = 0;
                     LOBYTE(v14) = v18;
                     v15 = sub_477F0C(v14);
@@ -42279,7 +42279,7 @@ int  sub_45AB5E(int thisx)
                             if (*(short*)(thisx + 2564) == 1)
                             {
                                 *(int*)(thisx + 108) = 19;
-                                *(_BYTE*)(thisx + 2516) = 2;
+                                *(char*)(thisx + 2516) = 2;
                             }
                         }
                         else
@@ -42302,7 +42302,7 @@ int  sub_45AB5E(int thisx)
                             else
                             {
                                 *(int*)(thisx + 108) = 19;
-                                *(_BYTE*)(thisx + 2516) = 2;
+                                *(char*)(thisx + 2516) = 2;
                             }
                         }
                     }
@@ -42336,26 +42336,26 @@ int  sub_45AB5E(int thisx)
                     if (*(unsigned __int8*)(thisx + 11968) - 1 != v23)
                     {
                         *(int*)(thisx + 108) = 13;
-                        *(_BYTE*)(thisx + 2516) = 2;
+                        *(char*)(thisx + 2516) = 2;
                         result = thisx;
                         ++* (short*)(thisx + 2568);
                         return result;
                     }
-                    if (*(_BYTE*)(thisx + 11968) == 1)
+                    if (*(char*)(thisx + 11968) == 1)
                     {
-                        *(_BYTE*)(thisx + 2562) = 1;
+                        *(char*)(thisx + 2562) = 1;
                         *(short*)(thisx + 2564) = 0;
                         sub_459E91(thisx, -1);
                     }
                     else
                     {
                         v6 = thisx;
-                        if (*(_BYTE*)(thisx + 11968) == 2)
+                        if (*(char*)(thisx + 11968) == 2)
                         {
                             sub_45B65A(thisx);
                             result = thisx;
                             *(int*)(thisx + 108) = 15;
-                            *(_BYTE*)(thisx + 2516) = 2;
+                            *(char*)(thisx + 2516) = 2;
                             return result;
                         }
                     }
@@ -42368,7 +42368,7 @@ int  sub_45AB5E(int thisx)
             {
                 *(int*)(thisx + 108) = 13;
                 result = thisx;
-                *(_BYTE*)(thisx + 2516) = 2;
+                *(char*)(thisx + 2516) = 2;
                 return result;
             }
         }
@@ -42378,9 +42378,9 @@ int  sub_45AB5E(int thisx)
     v24[2] = 0;
     v24[0] = dword_4B9248;
     sub_49AB05((int)byte_4BDC60, v24);
-    if (!*(_BYTE*)(thisx + 2562))
+    if (!*(char*)(thisx + 2562))
         return sub_47B91A(56 * *(int*)(thisx + 2528) + 108, 224, asc_4B2918, 0, -1);
-    if (*(_BYTE*)(thisx + 2562) == 1 && *(short*)(thisx + 2566) == 1)
+    if (*(char*)(thisx + 2562) == 1 && *(short*)(thisx + 2566) == 1)
         return sub_47B91A(56 * *(int*)(thisx + 2528) + 68, 224, asc_4B291C, 0, -1);
     result = *(unsigned __int8*)(thisx + 2562);
     if (result == 3 && *(short*)(thisx + 2566) == 1)
@@ -42389,7 +42389,7 @@ int  sub_45AB5E(int thisx)
 }
 
 
-void sub_45B346(short* thisx, _BYTE* a2)
+void sub_45B346(short* thisx, char* a2)
 {
     const void* v2; // eax
     int i; // [esp+4h] [ebp-4h]
@@ -42400,10 +42400,10 @@ void sub_45B346(short* thisx, _BYTE* a2)
         memcpy(thisx + 1, v2, 0xBu);
         *thisx = 1;
         thisx[10] = sub_475CB0((short*)a2);
-        *((_BYTE*)thisx + 22) = sub_4016F0(a2);
-        *((_BYTE*)thisx + 26) = sub_401710(a2);
+        *((char*)thisx + 22) = sub_4016F0(a2);
+        *((char*)thisx + 26) = sub_401710(a2);
         thisx[12] = unknown_libname_22((int*)(char*)dword_4B93A4 + 24 * *((unsigned __int8*)thisx + 26));
-        *((_BYTE*)thisx + 16) = MarkedForDetachment(a2);//call return thisxx[20]; 
+        *((char*)thisx + 16) = MarkedForDetachment(a2);//call return thisxx[20]; 
         thisx[14] = 825 * (unsigned __int8)sub_4265B0(a2) / 1000;
         thisx[15] = (unsigned __int8)sub_426570(a2);
         thisx[16] = (unsigned __int8)sub_4265D0(a2);
@@ -42414,34 +42414,34 @@ void sub_45B346(short* thisx, _BYTE* a2)
         thisx[21] = (unsigned __int8)sub_426630(a2);
         thisx[22] = (unsigned __int8)sub_426650(a2);
         thisx[23] = 8 * (unsigned __int8)sub_426690(a2) / 10;
-        *((_BYTE*)thisx + 48) = 12;
-        *((_BYTE*)thisx + 49) = 12;
-        *((_BYTE*)thisx + 50) = 12;
-        *((_BYTE*)thisx + 51) = 12;
-        *((_BYTE*)thisx + 52) = 12;
-        *((_BYTE*)thisx + 53) = 12;
-        *((_BYTE*)thisx + 54) = 9;
-        *((_BYTE*)thisx + 55) = 12;
-        *((_BYTE*)thisx + 56) = 12;
-        *((_BYTE*)thisx + 57) = 12;
-        if (*((_BYTE*)thisx + 16))
+        *((char*)thisx + 48) = 12;
+        *((char*)thisx + 49) = 12;
+        *((char*)thisx + 50) = 12;
+        *((char*)thisx + 51) = 12;
+        *((char*)thisx + 52) = 12;
+        *((char*)thisx + 53) = 12;
+        *((char*)thisx + 54) = 9;
+        *((char*)thisx + 55) = 12;
+        *((char*)thisx + 56) = 12;
+        *((char*)thisx + 57) = 12;
+        if (*((char*)thisx + 16))
         {
-            switch (*((_BYTE*)thisx + 16))
+            switch (*((char*)thisx + 16))
             {
             case 1:
                 thisx[15] += 15;
-                *((_BYTE*)thisx + 49) += 10;
-                *((_BYTE*)thisx + 57) += 5;
+                *((char*)thisx + 49) += 10;
+                *((char*)thisx + 57) += 5;
                 break;
             case 2:
                 thisx[16] += 15;
-                *((_BYTE*)thisx + 50) += 10;
-                *((_BYTE*)thisx + 55) += 5;
+                *((char*)thisx + 50) += 10;
+                *((char*)thisx + 55) += 5;
                 break;
             case 3:
                 thisx[17] += 15;
-                *((_BYTE*)thisx + 51) += 10;
-                *((_BYTE*)thisx + 54) += 2;
+                *((char*)thisx + 51) += 10;
+                *((char*)thisx + 54) += 2;
                 break;
             }
         }
@@ -42450,12 +42450,12 @@ void sub_45B346(short* thisx, _BYTE* a2)
             thisx[15] += 5;
             thisx[16] += 5;
             thisx[17] += 5;
-            *((_BYTE*)thisx + 49) += 5;
-            *((_BYTE*)thisx + 50) += 5;
-            *((_BYTE*)thisx + 51) += 5;
+            *((char*)thisx + 49) += 5;
+            *((char*)thisx + 50) += 5;
+            *((char*)thisx + 51) += 5;
         }
         for (i = 0; i < 3; ++i)
-            *((_BYTE*)thisx + i + 68) = sub_4266B0(a2, i);
+            *((char*)thisx + i + 68) = sub_4266B0(a2, i);
     }
 }
 
@@ -42480,14 +42480,14 @@ int sub_45B65A(int thisx)
     DWORD Time; // eax
 
 
-    v10 = *(_BYTE*)(thisx + 11688);
+    v10 = *(char*)(thisx + 11688);
     for (i = 0; i < v10; ++i)
         *(short*)(thisx + 2 * i + 11692) = 0;
-    *(_BYTE*)(thisx + 11691) = 0;
+    *(char*)(thisx + 11691) = 0;
     *(short*)(thisx + 11724) = 0;
     *(short*)(thisx + 11726) = 1;
     v13 = 1;
-    if (!*(_BYTE*)(thisx + 11807))
+    if (!*(char*)(thisx + 11807))
         v13 = sub_4631F8((unsigned char*)thisx) + 1;
     v14 = sub_475850((short*)thisx + 11816);
     v9 = sub_475850((short*)thisx + 11892);
@@ -42496,7 +42496,7 @@ int sub_45B65A(int thisx)
     rand();
     for (j = v13; j < v10; ++j)
     {
-        *(_BYTE*)(j + thisx + 11788) = rand() % word_4B99E4;
+        *(char*)(j + thisx + 11788) = rand() % word_4B99E4;
         for (k = 0; k < 2; ++k)
         {
             for (m = rand() % (int)Size; ; m = (int)(m + Size + 1) % (int)Size)
@@ -42532,7 +42532,7 @@ int sub_45B65A(int thisx)
             *(short*)(thisx + 4 * j + 11724 + 2 * k) = m + 2;
         }
     }
-    *(_BYTE*)(thisx + 11690) = 1;
+    *(char*)(thisx + 11690) = 1;
     return sub_461D3E((unsigned char*)thisx);
 }
 
@@ -42547,7 +42547,7 @@ int sub_45B8F5(int thisx)
         sub_45FD81(thisx);
     }
     *(int*)(thisx + 104) = 15;
-    *(_BYTE*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2516) = 1;
     *(short*)(thisx + 2564) = 0;
     *(short*)(thisx + 2566) = *(unsigned __int8*)(thisx + 12969);
     sub_45B98A(thisx, -1);
@@ -42578,8 +42578,8 @@ int sub_45B98A(int thisx, int a2)
     const CHAR* v2; // eax
 
 
-    sub_451EB5((_BYTE*)thisx, 1, 1);
-    sub_452045((_BYTE*)thisx, 5, 1, 30, 3);
+    sub_451EB5((char*)thisx, 1, 1);
+    sub_452045((char*)thisx, 5, 1, 30, 3);
     sub_47B91A(64, 16, a1_1, 0, dword_4B9248);
     wsprintfA(String, "%2d", *(unsigned __int8*)(thisx + 11690));
     sub_47B7ED(120, 16, String, 0, dword_4B9248);
@@ -42588,7 +42588,7 @@ int sub_45B98A(int thisx, int a2)
         ++v16;
     v14 = 2;
     v13 = 8;
-    if (*(_BYTE*)(thisx + 11812) == 2)
+    if (*(char*)(thisx + 11812) == 2)
     {
         v14 = 3;
         v13 = 5;
@@ -42597,14 +42597,14 @@ int sub_45B98A(int thisx, int a2)
     *(int*)(thisx + 2528) = -1;
     for (i = 0; i < v14; ++i)
     {
-        sub_452045((_BYTE*)thisx, 5, (v13 + 1) * i + 6, 30, v13);
+        sub_452045((char*)thisx, 5, (v13 + 1) * i + 6, 30, v13);
         v10 = 8 * (v13 + 1) * i + 48;
         sub_47B91A(148, v10 + 4 * v13 - 4, (LPCSTR)&byte_4B25F6, 0, dword_4B9248);//ＶＳ
         for (j = 0; j < *(unsigned __int8*)(thisx + i + *(unsigned __int16*)(thisx + 2564) + 13002); ++j)
         {
             v8 = 112 * (j % 2) + 56;
             v7 = v10 + 28 * (j / 2) + 12;
-            v9 = *(_BYTE*)(thisx + j + 4 * (i + *(unsigned __int16*)(thisx + 2564)) + 12970);
+            v9 = *(char*)(thisx + j + 4 * (i + *(unsigned __int16*)(thisx + 2564)) + 12970);
             wsprintfA(String, "%3d POINT", *(unsigned __int16*)(thisx + 2 * v9 + 11692));
             sub_47B7ED(112 * (j % 2) + 72, v10 + 28 * (j / 2) + 22, String, 0, dword_4B9248);
             if (v9)
@@ -42659,7 +42659,7 @@ int sub_45BDE8(int thisx)
         sub_47B91A(*(int*)(thisx + 2528) + 40, *(int*)(thisx + 2532), byte_4B29BC, 0, -1);
     }
     v8 = 2;
-    if (*(_BYTE*)(thisx + 11812) == 2)
+    if (*(char*)(thisx + 11812) == 2)
         v8 = 3;
     if (!(dword_4B93B0 / 5u % 2))
     {
@@ -42669,7 +42669,7 @@ int sub_45BDE8(int thisx)
             sub_47B91A(156, 172, byte_4B29C4, 0, -1);
     }
     result = *(unsigned __int8*)(thisx + 2516);
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         sub_477F0C(0);
         v3 = sub_476CDA(0);
@@ -42719,64 +42719,64 @@ int sub_45C064(int thisx)
     memset((void*)(thisx + 2620), 0, 8u);
     for (i = 0; i < *(unsigned __int8*)(thisx + 12969); ++i)
     {
-        for (j = 0; j < *(unsigned __int8*)(i + thisx + 13002) && *(_BYTE*)(thisx + j + 4 * i + 12970); ++j)
+        for (j = 0; j < *(unsigned __int8*)(i + thisx + 13002) && *(char*)(thisx + j + 4 * i + 12970); ++j)
             ;
         if (j < *(unsigned __int8*)(i + thisx + 13002))
             break;
     }
     v7 = i;
-    byte_4B9985 = 2 * *(_BYTE*)(thisx + (unsigned __int8)i + 13002);
-    byte_4B9986 = *(_BYTE*)(thisx + 11968);
-    byte_4B9987 = byte_4B9985 - *(_BYTE*)(thisx + 11968);
-    byte_4B9990 = *(_BYTE*)(thisx + (unsigned __int8)i + 13002);
+    byte_4B9985 = 2 * *(char*)(thisx + (unsigned __int8)i + 13002);
+    byte_4B9986 = *(char*)(thisx + 11968);
+    byte_4B9987 = byte_4B9985 - *(char*)(thisx + 11968);
+    byte_4B9990 = *(char*)(thisx + (unsigned __int8)i + 13002);
     for (k = 0; k < (unsigned __int8)byte_4B9990; ++k)
-        *(_BYTE*)(k + thisx + 2546) = 2;
+        *(char*)(k + thisx + 2546) = 2;
     for (m = 0; m < (unsigned __int8)byte_4B9985; ++m)
         byte_4B9988[m] = m;
     *(short*)(thisx + 2564) = 0;
-    *(_BYTE*)(thisx + 2580) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11816));
+    *(char*)(thisx + 2580) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11816));
     *(short*)(thisx + 2566) = 1;
-    *(_BYTE*)(thisx + 2581) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11892));
-    *(_BYTE*)(thisx + 2612) = *(_BYTE*)(thisx + 11788);
-    *(_BYTE*)(thisx + 2613) = *(_BYTE*)(thisx + 2612);
+    *(char*)(thisx + 2581) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11892));
+    *(char*)(thisx + 2612) = *(char*)(thisx + 11788);
+    *(char*)(thisx + 2613) = *(char*)(thisx + 2612);
     v12 = 2;
     for (n = 1; n < (unsigned __int8)byte_4B9990; ++n)
     {
-        v5 = *(_BYTE*)(thisx + n + 4 * v7 + 12970);
+        v5 = *(char*)(thisx + n + 4 * v7 + 12970);
         for (ii = 0; ii < 2; ++ii)
         {
             *(short*)(thisx + 2 * v12 + 2564) = *(short*)(thisx + 4 * v5 + 11724 + 2 * ii) - 2;
-            *(_BYTE*)(v12 + thisx + 2612) = *(_BYTE*)(thisx + v5 + 11788);
-            *(_BYTE*)(v12 + thisx + 2580) = MarkedForDetachment(36 * *(unsigned __int16*)(thisx + 2 * v12 + 2564) + (char*)dword_4B92E0);//call return thisxx[20]; 
+            *(char*)(v12 + thisx + 2612) = *(char*)(thisx + v5 + 11788);
+            *(char*)(v12 + thisx + 2580) = MarkedForDetachment(36 * *(unsigned __int16*)(thisx + 2 * v12 + 2564) + (char*)dword_4B92E0);//call return thisxx[20]; 
             ++v12;
         }
     }
     if (*(int*)(thisx + 13388) <= 8)
     {
         result = thisx;
-        if (*(_BYTE*)(thisx + 11690) == 17)
+        if (*(char*)(thisx + 11690) == 17)
         {
-            *(_BYTE*)(thisx + 29) = 7;
+            *(char*)(thisx + 29) = 7;
         }
         else
         {
             result = thisx;
-            *(_BYTE*)(thisx + 29) = (*(unsigned __int8*)(thisx + 11690) - 1) % 6 + 1;
+            *(char*)(thisx + 29) = (*(unsigned __int8*)(thisx + 11690) - 1) % 6 + 1;
         }
     }
     else
     {
         v1 = rand() % (*(int*)(thisx + 13388) - 1) + 1;
         result = thisx;
-        *(_BYTE*)(thisx + 29) = v1;
+        *(char*)(thisx + 29) = v1;
         if (*(unsigned __int8*)(thisx + 29) > 7u)
         {
             result = thisx;
-            ++* (_BYTE*)(thisx + 29);
+            ++* (char*)(thisx + 29);
         }
     }
     *(int*)(thisx + 108) = 11;
-    *(_BYTE*)(thisx + 2516) = 2;
+    *(char*)(thisx + 2516) = 2;
     return result;
 }
 
@@ -42803,32 +42803,32 @@ int sub_45C3AF(int thisx)
     int result; // eax
 
 
-    if (*(_BYTE*)(thisx + 11690) == 18 || *(_BYTE*)(thisx + 11690) == 19 || *(_BYTE*)(thisx + 11690) == 20)
+    if (*(char*)(thisx + 11690) == 18 || *(char*)(thisx + 11690) == 19 || *(char*)(thisx + 11690) == 20)
     {
-        if (*(_BYTE*)(thisx + 13044) == 1)
+        if (*(char*)(thisx + 13044) == 1)
         {
-            if (*(_BYTE*)(thisx + 11690) == 18)
+            if (*(char*)(thisx + 11690) == 18)
             {
-                if (sub_425E70((_BYTE*)(thisx + 3852)) == 1)
+                if (sub_425E70((char*)(thisx + 3852)) == 1)
                     return sub_467B8F((int*)thisx);
                 else
                     return sub_462B0C(thisx);
             }
-            else if (*(_BYTE*)(thisx + 11690) == 19)
+            else if (*(char*)(thisx + 11690) == 19)
             {
                 return sub_463007(thisx);
             }
             else
             {
                 result = thisx;
-                if (*(_BYTE*)(thisx + 11690) == 20)
+                if (*(char*)(thisx + 11690) == 20)
                     return sub_473F53((int*)thisx);
             }
         }
         else
         {
-            if (*(_BYTE*)(thisx + 13044) == 2)
-                *(_BYTE*)(thisx + 13044) = 4;
+            if (*(char*)(thisx + 13044) == 2)
+                *(char*)(thisx + 13044) = 4;
             sub_46287E((char*)thisx);
             if (*(short*)(thisx + 2566) || *(short*)(thisx + 2568))
             {
@@ -42836,7 +42836,7 @@ int sub_45C3AF(int thisx)
             }
             else
             {
-                *(_BYTE*)(thisx + 13100) = 0;
+                *(char*)(thisx + 13100) = 0;
                 return sub_45DC7E(thisx);
             }
         }
@@ -42844,15 +42844,15 @@ int sub_45C3AF(int thisx)
     else
     {
         *(int*)(thisx + 104) = 16;
-        *(_BYTE*)(thisx + 2516) = 1;
+        *(char*)(thisx + 2516) = 1;
         for (i = 0; i < 8; ++i)
         {
             for (j = 0; j < 4; ++j)
-                *(_BYTE*)(thisx + j + 4 * i + 13010) = -1;
+                *(char*)(thisx + j + 4 * i + 13010) = -1;
         }
         for (k = 0; k < *(unsigned __int8*)(thisx + 12969); ++k)
         {
-            for (m = 0; m < *(unsigned __int8*)(k + thisx + 13002) && *(_BYTE*)(thisx + m + 4 * k + 12970); ++m)
+            for (m = 0; m < *(unsigned __int8*)(k + thisx + 13002) && *(char*)(thisx + m + 4 * k + 12970); ++m)
                 ;
             if (m < *(unsigned __int8*)(k + thisx + 13002))
                 break;
@@ -42867,7 +42867,7 @@ int sub_45C3AF(int thisx)
             {
                 if (*(unsigned __int8*)(ii + thisx + 13044) == n + 1)
                 {
-                    *(_BYTE*)(thisx + v10 + 4 * v11 + 13010) = *(_BYTE*)(thisx + ii + 4 * v11 + 12970);
+                    *(char*)(thisx + v10 + 4 * v11 + 13010) = *(char*)(thisx + ii + 4 * v11 + 12970);
                     *(short*)(thisx + 2 * v10++ + 2566) = n;
                 }
                 if (v10 >= 4)
@@ -42886,13 +42886,13 @@ int sub_45C3AF(int thisx)
                         ;
                         mm = (mm + 1) % *(unsigned __int8*)(jj + thisx + 13002))
                     {
-                        v4 = *(_BYTE*)(thisx + 4 * jj + 12970 + mm);
+                        v4 = *(char*)(thisx + 4 * jj + 12970 + mm);
                         for (nn = 0; nn < kk && *(unsigned __int8*)(thisx + nn + 4 * jj + 13010) != v4; ++nn)
                             ;
                         if (nn == kk)
                             break;
                     }
-                    *(_BYTE*)(thisx + kk + 4 * jj + 13010) = v4;
+                    *(char*)(thisx + kk + 4 * jj + 13010) = v4;
                 }
             }
         }
@@ -42946,7 +42946,7 @@ int sub_45C809(int thisx)
             sub_47B91A(288, 108, asc_4B29DC, 0, -1);
     }
     result = *(unsigned __int8*)(thisx + 2516);
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         sub_477F0C(0);
         v3 = sub_476D78(0);
@@ -42972,8 +42972,8 @@ int sub_45C809(int thisx)
                     v6 = k;
                     if (*(unsigned __int16*)(thisx + 2574) == j)
                         v6 = *(short*)(thisx + 2 * k + 2566);
-                    v7 = *(_BYTE*)(thisx + k + 4 * j + 13010);
-                    if (*(_BYTE*)(j + thisx + 13002) == 2)
+                    v7 = *(char*)(thisx + k + 4 * j + 13010);
+                    if (*(char*)(j + thisx + 13002) == 2)
                         v4 = 4 - 2 * v6 + *(short*)(thisx + 2 * v7 + 11692);
                     else
                         v4 = 4 - v6 + *(short*)(thisx + 2 * v7 + 11692);
@@ -42981,7 +42981,7 @@ int sub_45C809(int thisx)
                 }
             }
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-            *(_BYTE*)(thisx + 2562) = 0;
+            *(char*)(thisx + 2562) = 0;
             if (*(unsigned __int8*)(thisx + 11690) % 5)
             {
                 *(int*)(thisx + 108) = 17;
@@ -42993,7 +42993,7 @@ int sub_45C809(int thisx)
                 result = thisx;
                 *(int*)(thisx + 120) = 2;
             }
-            *(_BYTE*)(thisx + 2516) = 2;
+            *(char*)(thisx + 2516) = 2;
         }
     }
     return result;
@@ -43003,10 +43003,10 @@ int sub_45C809(int thisx)
 int sub_45CBC2(int thisx)
 {
     *(int*)(thisx + 104) = 17;
-    *(_BYTE*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2516) = 1;
     sub_45FF40((unsigned char*)thisx);
     *(short*)(thisx + 2564) = 0;
-    *(short*)(thisx + 2566) = ((*(_BYTE*)(thisx + 11688) & 3) != 0) + *(unsigned __int8*)(thisx + 11688) / 4;
+    *(short*)(thisx + 2566) = ((*(char*)(thisx + 11688) & 3) != 0) + *(unsigned __int8*)(thisx + 11688) / 4;
     sub_465102(thisx);
     return sub_456D33((const CHAR*)thisx, aMenuWav_3, 1, 0);
 }
@@ -43049,7 +43049,7 @@ int sub_45CC4E(int thisx)
     }
     sub_477F0C(0);
     result = *(unsigned __int8*)(thisx + 2516);
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         v3 = sub_476D78(0);
         v6 = v3 - sub_476D29(0);
@@ -43068,13 +43068,13 @@ int sub_45CC4E(int thisx)
         if (result)
         {
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-            if (*(_BYTE*)(thisx + 2562))
+            if (*(char*)(thisx + 2562))
             {
                 result = *(unsigned __int8*)(thisx + 2562);
                 if (result == 1)
                 {
                     *(int*)(thisx + 108) = 19;
-                    *(_BYTE*)(thisx + 2516) = 2;
+                    *(char*)(thisx + 2516) = 2;
                 }
             }
             else
@@ -43084,14 +43084,14 @@ int sub_45CC4E(int thisx)
                 {
                     result = thisx;
                     *(int*)(thisx + 108) = 18;
-                    *(_BYTE*)(thisx + 2516) = 2;
+                    *(char*)(thisx + 2516) = 2;
                 }
                 else
                 {
                     *(int*)(thisx + 108) = 19;
                     result = thisx;
-                    *(_BYTE*)(thisx + 2516) = 2;
-                    *(_BYTE*)(thisx + 13100) = 0;
+                    *(char*)(thisx + 2516) = 2;
+                    *(char*)(thisx + 13100) = 0;
                 }
             }
         }
@@ -43211,9 +43211,9 @@ int sub_45CF7B(int thisx)
 
 
     *(int*)(thisx + 104) = 18;
-    *(_BYTE*)(thisx + 2516) = 1;
-    sub_451EB5((_BYTE*)thisx, 1, 1);
-    sub_452045((_BYTE*)thisx, 5, 1, 30, 3);
+    *(char*)(thisx + 2516) = 1;
+    sub_451EB5((char*)thisx, 1, 1);
+    sub_452045((char*)thisx, 5, 1, 30, 3);
     wsprintfA(String, a1);
     v16 = dword_4B9248;
     v1 = lstrlenA(String);
@@ -43265,7 +43265,7 @@ int sub_45CF7B(int thisx)
     v73 = 0;
     for (i = 0; i < 2; ++i)
     {
-        sub_452045((_BYTE*)thisx, 20 * i, 5, 20, 15);
+        sub_452045((char*)thisx, 20 * i, 5, 20, 15);
         v22 = 160 * i + 8;
         v21 = 48;
         v24 = (char*)(thisx + 76 * i + 11816);
@@ -43368,8 +43368,8 @@ int sub_45D7AB(int thisx)
         sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
         result = thisx;
         *(int*)(thisx + 108) = 19;
-        *(_BYTE*)(thisx + 2516) = 2;
-        *(_BYTE*)(thisx + 13100) = 0;
+        *(char*)(thisx + 2516) = 2;
+        *(char*)(thisx + 13100) = 0;
     }
     return result;
 }
@@ -43482,17 +43482,17 @@ short* sub_45D835(short* thisx, int a2)
                     *(&v3 + i) -= 10;
             }
         }
-        *((_BYTE*)thisx + 58) = v3;
-        *((_BYTE*)thisx + 59) = v4;
-        *((_BYTE*)thisx + 60) = v5;
-        *((_BYTE*)thisx + 63) = v6;
-        *((_BYTE*)thisx + 61) = v7;
-        *((_BYTE*)thisx + 62) = v8;
-        *((_BYTE*)thisx + 64) = v9;
-        *((_BYTE*)thisx + 65) = v10;
-        *((_BYTE*)thisx + 66) = v11;
+        *((char*)thisx + 58) = v3;
+        *((char*)thisx + 59) = v4;
+        *((char*)thisx + 60) = v5;
+        *((char*)thisx + 63) = v6;
+        *((char*)thisx + 61) = v7;
+        *((char*)thisx + 62) = v8;
+        *((char*)thisx + 64) = v9;
+        *((char*)thisx + 65) = v10;
+        *((char*)thisx + 66) = v11;
         result = thisx;
-        *((_BYTE*)thisx + 67) = v12;
+        *((char*)thisx + 67) = v12;
     }
     return result;
 }
@@ -43515,22 +43515,22 @@ int sub_45DC7E(int thisxx)
 
 
     *(int*)(thisxx + 104) = 19;
-    *(_BYTE*)(thisxx + 2516) = 1;
+    *(char*)(thisxx + 2516) = 1;
     *(int*)(thisxx + 2528) = 0;
     *(int*)(thisxx + 2532) = 0;
-    *(_BYTE*)(thisxx + 13101) = 0;
+    *(char*)(thisxx + 13101) = 0;
     *(short*)(thisxx + 2564) = 0;
     *(short*)(thisxx + 2566) = 1;
     *(short*)(thisxx + 2568) = 1;
     *(short*)(thisxx + 2570) = 0;
-    if (*(_BYTE*)(thisxx + 11690) == 17 && *(unsigned __int8*)(thisxx + 13060) > 1u)
+    if (*(char*)(thisxx + 11690) == 17 && *(unsigned __int8*)(thisxx + 13060) > 1u)
     {
         *(short*)(thisxx + 2566) = 0;
         *(int*)(thisxx + 2528) = 1;
     }
     if (*(unsigned __int8*)(thisxx + 11690) >= 0x11u)
         *(short*)(thisxx + 2568) = 0;
-    if (!*(_BYTE*)(thisxx + 13100))
+    if (!*(char*)(thisxx + 13100))
     {
         for (i = 0; i < dword_4B9368; ++i)
         {
@@ -43543,53 +43543,53 @@ int sub_45DC7E(int thisxx)
             if ((unsigned __int8)RuntimeOwnsLifetime >= 4u)
                 RuntimeOwnsLifetime = 0;
             wsprintfA(FileName, "Graphic\\AnteroomBody%02d.bmp", RuntimeOwnsLifetime + 1);
-            v1 = sub_426550((_BYTE*)(thisxx + 76 * k + 11816));
+            v1 = sub_426550((char*)(thisxx + 76 * k + 11816));
             v5 = sub_478523(FileName, 0, v1);
             if (!k)
                 *(int*)(thisxx + 13104) = v5;
-            v2 = (unsigned __int8)sub_426570((_BYTE*)(thisxx + 76 * k + 11816));
-            *(int*)(*((int*)dword_4B9360 + v2) + 4 * (unsigned __int8)sub_426550((_BYTE*)(thisxx + 76 * k + 11816))) = 1;
+            v2 = (unsigned __int8)sub_426570((char*)(thisxx + 76 * k + 11816));
+            *(int*)(*((int*)dword_4B9360 + v2) + 4 * (unsigned __int8)sub_426550((char*)(thisxx + 76 * k + 11816))) = 1;
         }
         sub_4680EF();
         sub_45FDE4((int*)thisxx, aDataAnteroomti);
         sub_45F998((int*)thisxx, aDataAnteroomcg);
-        if (*(_BYTE*)(thisxx + 11808) || *(_BYTE*)(thisxx + 11809))
+        if (*(char*)(thisxx + 11808) || *(char*)(thisxx + 11809))
         {
-            *(_BYTE*)(thisxx + 13100) = 4;
+            *(char*)(thisxx + 13100) = 4;
         }
         else if (*(unsigned __int8*)(thisxx + 13044) < 3u && *(unsigned __int8*)(thisxx + 11812) > 2u
-            || *(_BYTE*)(thisxx + 13044) == 1)
+            || *(char*)(thisxx + 13044) == 1)
         {
-            *(_BYTE*)(thisxx + 13100) = rand() % 3 + 1;
+            *(char*)(thisxx + 13100) = rand() % 3 + 1;
         }
         else
         {
-            *(_BYTE*)(thisxx + 13100) = rand() % 4 + 100;
+            *(char*)(thisxx + 13100) = rand() % 4 + 100;
         }
         if (*(int*)(thisxx + 112) != 20 && *(int*)(thisxx + 112) != 4)
         {
-            if (*(_BYTE*)(thisxx + 11690) == 17)
+            if (*(char*)(thisxx + 11690) == 17)
             {
-                if (*(_BYTE*)(thisxx + 13060) == 1)
-                    *(_BYTE*)(thisxx + 13101) = 1;
+                if (*(char*)(thisxx + 13060) == 1)
+                    *(char*)(thisxx + 13101) = 1;
                 else
-                    *(_BYTE*)(thisxx + 13101) = 2;
+                    *(char*)(thisxx + 13101) = 2;
             }
             else if (*(unsigned __int8*)(thisxx + 11690) > 0x11u)
             {
-                if (sub_425E70((_BYTE*)(thisxx + 3852)) == 1)
+                if (sub_425E70((char*)(thisxx + 3852)) == 1)
                 {
-                    *(_BYTE*)(thisxx + 13101) = 4;
-                    *(_BYTE*)(thisxx + 11691) = 7;
-                    *(_BYTE*)(thisxx + 11690) = 17;
+                    *(char*)(thisxx + 13101) = 4;
+                    *(char*)(thisxx + 11691) = 7;
+                    *(char*)(thisxx + 11690) = 17;
                 }
                 else
                 {
-                    *(_BYTE*)(thisxx + 13101) = 3;
+                    *(char*)(thisxx + 13101) = 3;
                 }
             }
         }
-        if (*(_BYTE*)(thisxx + 13101))
+        if (*(char*)(thisxx + 13101))
             *(short*)(thisxx + 2564) = 1;
         else
             *(short*)(thisxx + 2564) = 0;
@@ -43645,7 +43645,7 @@ void sub_45E15F(int thisx, int a2)
 
     if (a2 == -1)
     {
-        sub_451EB5((_BYTE*)thisx, 1, 1);
+        sub_451EB5((char*)thisx, 1, 1);
         sub_45E15F(thisx, 0);
         sub_45E15F(thisx, 1);
     }
@@ -43653,8 +43653,8 @@ void sub_45E15F(int thisx, int a2)
     {
         if (a2 == 1)
         {
-            sub_451EB5((_BYTE*)thisx, 0, 1);
-            switch (*(_BYTE*)(thisx + 13101))
+            sub_451EB5((char*)thisx, 0, 1);
+            switch (*(char*)(thisx + 13101))
             {
             case 1:
                 switch (*(short*)(thisx + 2564))
@@ -43729,8 +43729,8 @@ void sub_45E15F(int thisx, int a2)
     }
     else
     {
-        sub_452045((_BYTE*)thisx, 9, 3, 22, 14);
-        sub_452045((_BYTE*)thisx, 11, 1, 18, 4);
+        sub_452045((char*)thisx, 9, 3, 22, 14);
+        sub_452045((char*)thisx, 11, 1, 18, 4);
         wsprintfA(String, byte_4B2B30);
         v3 = dword_4B9248;
         v2 = lstrlenA(String);
@@ -43750,7 +43750,7 @@ void sub_45E15F(int thisx, int a2)
         v28[0] = v7[0];
         sub_49CC5B((short*)byte_4BDC60, dword_4B9248, v28);
         sub_49DA8A((int*)byte_4BDC60, v28[0]);
-        sub_452045((_BYTE*)thisx, 8, 18, 24, 5);
+        sub_452045((char*)thisx, 8, 18, 24, 5);
         *(int*)v9 = dword_4B2B6C;
         v10 = dword_4B2B70;
         v11 = dword_4B2B74;
@@ -43844,7 +43844,7 @@ int sub_45E773(int thisx)
 
     sub_477F0C(0);//接受键盘输入
 
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         v1 = sub_476D78(0);
         v45 = v1 - sub_476D29(0);
@@ -43875,12 +43875,12 @@ int sub_45E773(int thisx)
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
             if (*(short*)(thisx + 2564))
             {
-                if (++ * (short*)(thisx + 2564) == 4 && *(_BYTE*)(thisx + 13101) == 1)
+                if (++ * (short*)(thisx + 2564) == 4 && *(char*)(thisx + 13101) == 1)
                 {
                     *(short*)(thisx + 2564) = 0;
                 }
                 else if (*(short*)(thisx + 2564) == 3
-                    && (*(_BYTE*)(thisx + 13101) == 2 || *(_BYTE*)(thisx + 13101) == 3 || *(_BYTE*)(thisx + 13101) == 4))
+                    && (*(char*)(thisx + 13101) == 2 || *(char*)(thisx + 13101) == 3 || *(char*)(thisx + 13101) == 4))
                 {
                     *(short*)(thisx + 2564) = 0;
                 }
@@ -43891,56 +43891,56 @@ int sub_45E773(int thisx)
                 if (*(int*)(thisx + 2528) == 1)
                 {
                     *(int*)(thisx + 108) = 14;
-                    *(_BYTE*)(thisx + 2562) = 2;
-                    *(_BYTE*)(thisx + 2516) = 2;
+                    *(char*)(thisx + 2562) = 2;
+                    *(char*)(thisx + 2516) = 2;
                     *(short*)(thisx + 2564) = 0;
                 }
                 else if (*(short*)(thisx + 2568) && *(int*)(thisx + 2528) == 2)
                 {
                     *(int*)(thisx + 108) = 17;
-                    *(_BYTE*)(thisx + 2562) = 1;
-                    *(_BYTE*)(thisx + 2516) = 2;
+                    *(char*)(thisx + 2562) = 1;
+                    *(char*)(thisx + 2516) = 2;
                 }
                 else if (*(int*)(thisx + 2528) == 3)
                 {
                     *(int*)(thisx + 108) = 20;
-                    *(_BYTE*)(thisx + 2562) = 1;
-                    *(_BYTE*)(thisx + 2516) = 2;
+                    *(char*)(thisx + 2562) = 1;
+                    *(char*)(thisx + 2516) = 2;
                 }
             }
             else
             {
-                byte_4B99CC = *(_BYTE*)(thisx + 11664);
+                byte_4B99CC = *(char*)(thisx + 11664);
                 byte_4B99CB = 1;
-                switch (*(_BYTE*)(thisx + 11690))
+                switch (*(char*)(thisx + 11690))
                 {
                 case 0x11:
                     *(int*)(thisx + 108) = 1;
                     *(int*)(thisx + 120) = 3;
-                    *(_BYTE*)(thisx + 2516) = 2;
+                    *(char*)(thisx + 2516) = 2;
                     break;
                 case 0x12:
                     sub_462869((int*)thisx);
                     *(int*)(thisx + 108) = 11;
-                    *(_BYTE*)(thisx + 2516) = 2;
+                    *(char*)(thisx + 2516) = 2;
                     break;
                 case 0x13:
                     sub_462BA9(thisx, 2);
                     *(int*)(thisx + 108) = 11;
-                    *(_BYTE*)(thisx + 2516) = 2;
+                    *(char*)(thisx + 2516) = 2;
                     break;
                 case 0x14:
                     sub_462BA9(thisx, 4);
                     *(int*)(thisx + 108) = 11;
-                    *(_BYTE*)(thisx + 2516) = 2;
+                    *(char*)(thisx + 2516) = 2;
                     break;
                 default:
                     if (*(unsigned __int8*)(thisx + 11690) < 0x11u)
                     {
-                        ++* (_BYTE*)(thisx + 11690);
+                        ++* (char*)(thisx + 11690);
                         sub_461D3E((unsigned char*)thisx);
                         *(int*)(thisx + 108) = 15;
-                        *(_BYTE*)(thisx + 2516) = 2;
+                        *(char*)(thisx + 2516) = 2;
                     }
                     break;
                 }
@@ -43963,7 +43963,7 @@ int sub_45E773(int thisx)
     {
         sub_47B91A(72 * (*(int*)(thisx + 2528) % 2) + 86, 16 * (*(int*)(thisx + 2528) / 2) + 152, asc_4B2E28, 0, -1);
     }
-    switch (*(_BYTE*)(thisx + 13100))
+    switch (*(char*)(thisx + 13100))
     {
     case 1:
 
@@ -44050,7 +44050,7 @@ int sub_45E773(int thisx)
                 v27[0] = m + *(int*)(thisx + 13104);
                 v24 = (char*)(152 * ((((unsigned int)dword_4B93B0 >> 1) % 0xA > 5) + 13) + *(int*)(thisx + 13112));
                 v25 = (unsigned __int16)sub_4266F0((short*)thisx + 76 * m + 11816);
-                result = sub_4788FA(v27, v24, *(int*)(thisx + 13120), v25, 0, *(_BYTE*)(m + thisx + 11808));
+                result = sub_4788FA(v27, v24, *(int*)(thisx + 13120), v25, 0, *(char*)(m + thisx + 11808));
             }
         }
         break;
@@ -44115,7 +44115,7 @@ int sub_45E773(int thisx)
         break;
     default:
         result = thisx;
-        if (*(_BYTE*)(thisx + 13100) == 103)
+        if (*(char*)(thisx + 13100) == 103)
         {
 
             result = sub_49C15E((int)v9);//初始化
@@ -44221,7 +44221,7 @@ int sub_45F998(int* thisx, LPCSTR lpFileName)
     v34 = -1;
     thisx[3278] = (int)v11;
     for (i = 0; i < thisx[3277]; ++i)
-        sub_40197E((_BYTE*)(152 * i + thisx[3278]), hFile, (unsigned __int8)Buffer, 0);
+        sub_40197E((char*)(152 * i + thisx[3278]), hFile, (unsigned __int8)Buffer, 0);
     for (i = 0; i < thisx[3277]; ++i)
     {
         v26 = (char*)(152 * i + thisx[3278]);
@@ -44230,10 +44230,10 @@ int sub_45F998(int* thisx, LPCSTR lpFileName)
         for (j = 0; j < v28; ++j)
         {
             v3 = sub_401BEF((int*)v26, j);
-            LOBYTE(v25) = sub_425F50((_BYTE*)(12 * v3 + thisx[3280]));
+            LOBYTE(v25) = sub_425F50((char*)(12 * v3 + thisx[3280]));
             v25 = (unsigned __int8)v25;
             v4 = sub_401BEF((int*)v26, j);
-            LOBYTE(v24) = sub_425F90((_BYTE*)(12 * v4 + thisx[3280]));
+            LOBYTE(v24) = sub_425F90((char*)(12 * v4 + thisx[3280]));
             v24 = (unsigned __int8)v24;
             v5 = sub_401C1E((int*)v26, j, 0);
             v17 = -v5 - 8 * v25;
@@ -44545,14 +44545,14 @@ int sub_460813(int thisx, HANDLE hFile, int a3)
     if ((unsigned __int8)a3 >= 6u)
         ReadFile(hFile, (LPVOID)(thisx + 22), 1u, (LPDWORD)&NumberOfBytesRead, 0);
     else
-        *(_BYTE*)(thisx + 22) = *(unsigned __int16*)(thisx + 20) == 22;
+        *(char*)(thisx + 22) = *(unsigned __int16*)(thisx + 20) == 22;
     v3 = (unsigned __int8)a3;
     if ((unsigned __int8)a3 < 3u)
         *(short*)(thisx + 24) = 0;
     else
         ReadFile(hFile, (LPVOID)(thisx + 24), 2u, (LPDWORD)&NumberOfBytesRead, 0);
     LOWORD(v3) = *(short*)(thisx + 24);
-    *(_BYTE*)(thisx + 26) = sub_47C20C(v3);
+    *(char*)(thisx + 26) = sub_47C20C(v3);
     ReadFile(hFile, (LPVOID)(thisx + 16), 1u, (LPDWORD)&NumberOfBytesRead, 0);
     ReadFile(hFile, (LPVOID)(thisx + 18), 2u, (LPDWORD)&NumberOfBytesRead, 0);
     ReadFile(hFile, (LPVOID)thisx, 2u, (LPDWORD)&NumberOfBytesRead, 0);
@@ -44607,7 +44607,7 @@ int sub_460813(int thisx, HANDLE hFile, int a3)
         if ((unsigned __int8)a3 >= 6u)
             ReadFile(hFile, (LPVOID)(thisx + i + 71), 1u, (LPDWORD)&NumberOfBytesRead, 0);
         else
-            *(_BYTE*)(i + thisx + 71) = 0;
+            *(char*)(i + thisx + 71) = 0;
     }
     ReadFile(hFile, (LPVOID)(thisx + 68), 3u, (LPDWORD)&NumberOfBytesRead, 0);
     if ((unsigned __int8)a3 == 1)
@@ -44620,13 +44620,13 @@ int sub_460813(int thisx, HANDLE hFile, int a3)
             + *(unsigned __int16*)(thisx + 30)
             + *(unsigned __int16*)(thisx + 32))
             / 3;
-        *(_BYTE*)(thisx + 52) = (*(unsigned __int8*)(thisx + 51)
+        *(char*)(thisx + 52) = (*(unsigned __int8*)(thisx + 51)
             + *(unsigned __int8*)(thisx + 49)
             + *(unsigned __int8*)(thisx + 50))
             / 3;
-        *(_BYTE*)(thisx + 53) = *(_BYTE*)(thisx + 52);
-        *(_BYTE*)(thisx + 61) = 0;
-        *(_BYTE*)(thisx + 62) = 0;
+        *(char*)(thisx + 53) = *(char*)(thisx + 52);
+        *(char*)(thisx + 61) = 0;
+        *(char*)(thisx + 62) = 0;
     }
     return 1;
 }
@@ -44652,7 +44652,7 @@ int sub_460D5F(void* thisx, HANDLE hFile, int a3, int a4, int a5)
     ReadFile(hFile, (LPVOID)(a4 + 368), 1u, (LPDWORD)&NumberOfBytesRead, 0);
     ReadFile(hFile, (LPVOID)(a4 + 254), 1u, (LPDWORD)&NumberOfBytesRead, 0);
     if ((unsigned __int8)a3 < 5u)
-        *(_BYTE*)(a4 + 255) = *(unsigned __int8*)(a4 + 254) / 2;
+        *(char*)(a4 + 255) = *(unsigned __int8*)(a4 + 254) / 2;
     else
         ReadFile(hFile, (LPVOID)(a4 + 255), 1u, (LPDWORD)&NumberOfBytesRead, 0);
     ReadFile(hFile, (LPVOID)(a4 + 370), 1u, (LPDWORD)&NumberOfBytesRead, 0);
@@ -44664,21 +44664,21 @@ int sub_460D5F(void* thisx, HANDLE hFile, int a3, int a4, int a5)
     ReadFile(hFile, (LPVOID)(a4 + 228), 1u, (LPDWORD)&NumberOfBytesRead, 0);
     ReadFile(hFile, (LPVOID)(a4 + 371), 1u, (LPDWORD)&NumberOfBytesRead, 0);
     if ((unsigned __int8)a3 < 2u)
-        *(_BYTE*)(a4 + 178) = 4;
+        *(char*)(a4 + 178) = 4;
     else
         ReadFile(hFile, (LPVOID)(a4 + 178), 1u, (LPDWORD)&NumberOfBytesRead, 0);
     if ((unsigned __int8)a3 < 3u)
-        *(_BYTE*)(a4 + 376) = 4;
+        *(char*)(a4 + 376) = 4;
     else
         ReadFile(hFile, (LPVOID)(a4 + 376), 1u, (LPDWORD)&NumberOfBytesRead, 0);
     if ((unsigned __int8)a3 < 4u)
-        *(_BYTE*)(a4 + 224) = 1;
+        *(char*)(a4 + 224) = 1;
     else
         ReadFile(hFile, (LPVOID)(a4 + 224), 1u, (LPDWORD)&NumberOfBytesRead, 0);
     if ((unsigned __int8)a3 < 7u)
     {
-        *(_BYTE*)(a4 + 247) = 1;
-        *(_BYTE*)(a4 + 248) = 0;
+        *(char*)(a4 + 247) = 1;
+        *(char*)(a4 + 248) = 0;
     }
     else
     {
@@ -44689,10 +44689,10 @@ int sub_460D5F(void* thisx, HANDLE hFile, int a3, int a4, int a5)
     {
         for (i = 0; i < 2; ++i)
         {
-            *(_BYTE*)(i + a4 + 372) = 0;
-            *(_BYTE*)(i + a4 + 374) = 0;
+            *(char*)(i + a4 + 372) = 0;
+            *(char*)(i + a4 + 374) = 0;
         }
-        *(_BYTE*)(a4 + 252) = 8;
+        *(char*)(a4 + 252) = 8;
     }
     else
     {
@@ -44713,7 +44713,7 @@ int sub_460D5F(void* thisx, HANDLE hFile, int a3, int a4, int a5)
             ReadFile(hFile, (LPVOID)(a4 + 4 * k + 288 + 2 * m), 2u, (LPDWORD)&NumberOfBytesRead, 0);
         ReadFile(hFile, (LPVOID)(a4 + 2 * k + 256), 2u, (LPDWORD)&NumberOfBytesRead, 0);
         if ((unsigned __int8)a3 < 3u)
-            *(_BYTE*)(k + a4 + 352) = k % 8;
+            *(char*)(k + a4 + 352) = k % 8;
         else
             ReadFile(hFile, (LPVOID)(a4 + k + 352), 1u, (LPDWORD)&NumberOfBytesRead, 0);
     }
@@ -44734,7 +44734,7 @@ int sub_460D5F(void* thisx, HANDLE hFile, int a3, int a4, int a5)
 }
 
 
-int sub_4611A8(_BYTE* thisx, int a2, int a3)
+int sub_4611A8(char* thisx, int a2, int a3)
 {
 
 
@@ -44778,10 +44778,10 @@ int sub_4611A8(_BYTE* thisx, int a2, int a3)
         sub_460D5F(thisx, hFile, v4, v10, v6);
         if (v6)
         {
-            if (*(_BYTE*)(v10 + 254))
+            if (*(char*)(v10 + 254))
             {
-                thisx[11968] = *(_BYTE*)(v10 + 253);
-                thisx[13044] = *(_BYTE*)(v10 + 368);
+                thisx[11968] = *(char*)(v10 + 253);
+                thisx[13044] = *(char*)(v10 + 368);
                 thisx[13100] = 0;
                 sub_45FF40((unsigned char*)thisx);
                 sub_466901((int*)thisx);
@@ -44822,18 +44822,18 @@ int sub_461335(int thisx)
 
     *(int*)(thisx + 104) = 20;
     if (*(unsigned __int8*)(thisx + 2562) < 2u)
-        *(_BYTE*)(thisx + 2516) = 1;
+        *(char*)(thisx + 2516) = 1;
     *(int*)(thisx + 2528) = *(unsigned __int8*)(thisx + 13124);
-    sub_451EB5((_BYTE*)thisx, 1, 1);
+    sub_451EB5((char*)thisx, 1, 1);
     sub_463E60((int)v12);
     for (i = 0; i < 6; ++i)
     {
-        sub_452045((_BYTE*)thisx, 19 * (i / 3) + 1, 7 * (i % 3) + 1, 18, 6);
+        sub_452045((char*)thisx, 19 * (i / 3) + 1, 7 * (i % 3) + 1, 18, 6);
         v10 = 8 * (19 * (i / 3) + 1);
         v9 = 8 * (7 * (i % 3) + 1);
         wsprintfA(String, "NO%d", i + 1);
         sub_47B7ED(v10 + 16, v9 + 8, String, 0, dword_4B9248);
-        if (sub_4611A8((_BYTE*)thisx, i, (int)v12))
+        if (sub_4611A8((char*)thisx, i, (int)v12))
         {
             *(short*)(thisx + 2 * i + 2564) = 1;
             v6 = dword_4B9248;
@@ -44875,7 +44875,7 @@ int sub_461335(int thisx)
             sub_47B91A(v10 + 48, v9 + 8, (LPCSTR)&byte_4B0C10, 0, dword_4B9248);
         }
     }
-    if (*(_BYTE*)(thisx + 2562))
+    if (*(char*)(thisx + 2562))
         result = sub_47B91A(16, 208, (LPCSTR)&byte_4B2DB2, 0, dword_4B9248);
     else
         result = sub_47B91A(16, 208, (LPCSTR)&byte_4B1B52, 0, dword_4B9248);
@@ -44899,7 +44899,7 @@ int sub_4617E5(int thisx)
     int v1; // esi
 
 
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         sub_477F0C(0);
         v1 = sub_476D78(0);
@@ -44908,7 +44908,7 @@ int sub_4617E5(int thisx)
         v5 = v2 - sub_476C8B(0);
         if (*(unsigned __int8*)(thisx + 2562) >= 2u)
         {
-            if (*(_BYTE*)(thisx + 2562) == 2 && v6)
+            if (*(char*)(thisx + 2562) == 2 && v6)
             {
                 sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
                 *(int*)(thisx + 2532) = *(int*)(thisx + 2532) == 0;
@@ -44927,32 +44927,32 @@ int sub_4617E5(int thisx)
         if (sub_476DC7(0, 0))
         {
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-            if (*(_BYTE*)(thisx + 2562) || !*(short*)(thisx + 2 * *(int*)(thisx + 2528) + 2564))
+            if (*(char*)(thisx + 2562) || !*(short*)(thisx + 2 * *(int*)(thisx + 2528) + 2564))
             {
-                switch (*(_BYTE*)(thisx + 2562))
+                switch (*(char*)(thisx + 2562))
                 {
                 case 1:
-                    *(_BYTE*)(thisx + 2562) = 2;
+                    *(char*)(thisx + 2562) = 2;
                     *(int*)(thisx + 2532) = 0;
-                    sub_451EB5((_BYTE*)thisx, 0, 1);
+                    sub_451EB5((char*)thisx, 0, 1);
                     sub_47B91A(16, 208, byte_4B2F38, 0, dword_4B9248);
                     sub_47B91A(16, 224, byte_4B2F64, 0, dword_4B9248);
                     break;
                 case 2:
                     if (*(int*)(thisx + 2532))
                     {
-                        sub_451EB5((_BYTE*)thisx, 0, 1);
+                        sub_451EB5((char*)thisx, 0, 1);
                         sub_47B91A(16, 208, byte_4B2FA4, 0, dword_4B9248);
-                        *(_BYTE*)(thisx + 2562) = 1;
+                        *(char*)(thisx + 2562) = 1;
                     }
                     else
                     {
                         sub_460758((unsigned __int8*)thisx, *(int*)(thisx + 2528));
-                        *(_BYTE*)(thisx + 13124) = *(_BYTE*)(thisx + 2528);
+                        *(char*)(thisx + 13124) = *(char*)(thisx + 2528);
                         sub_461335(thisx);
-                        sub_451EB5((_BYTE*)thisx, 0, 1);
+                        sub_451EB5((char*)thisx, 0, 1);
                         sub_47B91A(16, 208, byte_4B2F84, 0, dword_4B9248);
-                        *(_BYTE*)(thisx + 2562) = 3;
+                        *(char*)(thisx + 2562) = 3;
                     }
                     break;
                 case 3:
@@ -44960,13 +44960,13 @@ int sub_4617E5(int thisx)
                     {
                         *(int*)(thisx + 108) = 1;
                         *(int*)(thisx + 120) = 1;
-                        *(_BYTE*)(thisx + 2516) = 2;
+                        *(char*)(thisx + 2516) = 2;
                     }
                     else
                     {
                         *(int*)(thisx + 108) = 19;
-                        *(_BYTE*)(thisx + 2562) = 1;
-                        *(_BYTE*)(thisx + 2516) = 2;
+                        *(char*)(thisx + 2562) = 1;
+                        *(char*)(thisx + 2516) = 2;
                     }
                     break;
                 }
@@ -44974,47 +44974,47 @@ int sub_4617E5(int thisx)
             else
             {
                 *(int*)(thisx + 16404) = 1;
-                *(_BYTE*)(thisx + 13124) = *(_BYTE*)(thisx + 2528);
-                sub_4611A8((_BYTE*)thisx, *(int*)(thisx + 2528), 0);
-                *(_BYTE*)(thisx + 2562) = 0;
-                if (*(_BYTE*)(thisx + 11690))
+                *(char*)(thisx + 13124) = *(char*)(thisx + 2528);
+                sub_4611A8((char*)thisx, *(int*)(thisx + 2528), 0);
+                *(char*)(thisx + 2562) = 0;
+                if (*(char*)(thisx + 11690))
                     *(int*)(thisx + 108) = 19;
                 else
                     *(int*)(thisx + 108) = 4;
-                *(_BYTE*)(thisx + 2516) = 2;
+                *(char*)(thisx + 2516) = 2;
             }
         }
         else if (sub_476DC7(0, 1))
         {
-            if (*(_BYTE*)(thisx + 2562))
+            if (*(char*)(thisx + 2562))
             {
-                if (*(_BYTE*)(thisx + 2562) == 1)
+                if (*(char*)(thisx + 2562) == 1)
                 {
                     if (*(int*)(thisx + 112) == 1 && *(int*)(thisx + 124) == 5)
                     {
                         *(int*)(thisx + 108) = 1;
                         *(int*)(thisx + 120) = 1;
-                        *(_BYTE*)(thisx + 2516) = 2;
+                        *(char*)(thisx + 2516) = 2;
                     }
                     else
                     {
                         *(int*)(thisx + 108) = 19;
-                        *(_BYTE*)(thisx + 2562) = 1;
-                        *(_BYTE*)(thisx + 2516) = 2;
+                        *(char*)(thisx + 2562) = 1;
+                        *(char*)(thisx + 2516) = 2;
                     }
                 }
-                else if (*(_BYTE*)(thisx + 2562) == 2)
+                else if (*(char*)(thisx + 2562) == 2)
                 {
-                    sub_451EB5((_BYTE*)thisx, 0, 1);
+                    sub_451EB5((char*)thisx, 0, 1);
                     sub_47B91A(16, 208, byte_4B2FD0, 0, dword_4B9248);
-                    *(_BYTE*)(thisx + 2562) = 1;
+                    *(char*)(thisx + 2562) = 1;
                 }
             }
             else
             {
                 *(int*)(thisx + 16404) = 0;
                 *(int*)(thisx + 108) = 3;
-                *(_BYTE*)(thisx + 2516) = 2;
+                *(char*)(thisx + 2516) = 2;
             }
         }
     }
@@ -45025,7 +45025,7 @@ int sub_4617E5(int thisx)
     sub_49AB05((int)byte_4BDC60, v7);
     sub_47B91A(152 * (*(int*)(thisx + 2528) / 3) + 12, 56 * (*(int*)(thisx + 2528) % 3) + 16, asc_4B2FFC, 0, -1);
     result = thisx;
-    if (*(_BYTE*)(thisx + 2562) == 2)
+    if (*(char*)(thisx + 2562) == 2)
         return sub_47B91A(48 * *(int*)(thisx + 2532) + 44, 224, asc_4B3000, 0, -1);
     return result;
 }
@@ -45077,9 +45077,9 @@ int sub_461D3E(unsigned __int8* thisx)
     LOBYTE(v20) = thisx[11688] % (__int16)(unsigned __int8)v17;
     for (k = 0; k < (unsigned __int8)v22; ++k)
         thisx[k + 13002] = v17;
-    if ((_BYTE)v20)
+    if ((char)v20)
         thisx[k + 13002] = v20;
-    if ((_BYTE)v22 && (_BYTE)v20 && (unsigned __int8)v20 < 3u)
+    if ((char)v22 && (char)v20 && (unsigned __int8)v20 < 3u)
     {
         for (m = 3 - v20; (unsigned __int8)v22 < (int)m; --m)
             ;
@@ -45089,7 +45089,7 @@ int sub_461D3E(unsigned __int8* thisx)
             ++thisx[(unsigned __int8)v22 + 13002];
         }
     }
-    if ((_BYTE)v20)
+    if ((char)v20)
         LOBYTE(v22) = v22 + 1;
     thisx[12969] = v22;
     v8 = 0;
@@ -45217,7 +45217,7 @@ void sub_4623AC(int thisx, int a2, int a3)
                 dword_4B9AEC[a2] = *(unsigned __int8*)(thisx + 11691);
                 break;
             case 6:
-                dword_4B9AEC[a2] = (unsigned __int8)sub_425E70((_BYTE*)(thisx + 3852));
+                dword_4B9AEC[a2] = (unsigned __int8)sub_425E70((char*)(thisx + 3852));
                 break;
             }
         }
@@ -45255,7 +45255,7 @@ int sub_462556(int* thisx, int a2)
 }
 
 
-int sub_46259F(_BYTE* thisx)
+int sub_46259F(char* thisx)
 {
 
     //修正堆栈
@@ -45347,14 +45347,14 @@ void sub_462869(int* thisx)
 }
 
 
-void sub_46287E(_BYTE* thisx)
+void sub_46287E(char* thisx)
 {
 
     Warning();//修正堆栈
     check_stack c(__FILE__, __LINE__);
     int i; // [esp+14h] [ebp-4h]
     unsigned __int8 v8; // [esp+10h] [ebp-8h]
-    _BYTE* v7; // [esp+Ch] [ebp-Ch]
+    char* v7; // [esp+Ch] [ebp-Ch]
     Concurrency::details::SchedulerBase* v6; // [esp+8h] [ebp-10h]
     int v4; // esi
     int v3; // esi
@@ -45424,7 +45424,7 @@ int sub_462B0C(int thisx)
     dword_4B93AC = 0;
     sub_4891E4((int*)(thisx + 128), aDemoTigerdemo0_1);
     sub_47F958((int*)thisx + 736);
-    *(_BYTE*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2516) = 1;
     return sub_456169((void*)thisx);
 }
 
@@ -45444,7 +45444,7 @@ void sub_462BA9(int thisx, int a2)
 
     for (i = 0; i < 8; ++i)
     {
-        *(_BYTE*)(i + thisx + 2620) = 0;
+        *(char*)(i + thisx + 2620) = 0;
         byte_4B9988[i] = i;
     }
     byte_4B9984 = a2;
@@ -45452,85 +45452,85 @@ void sub_462BA9(int thisx, int a2)
     {
     case 1:
         byte_4B9985 = 4;
-        byte_4B9986 = *(_BYTE*)(thisx + 11968);
-        byte_4B9987 = 4 - *(_BYTE*)(thisx + 11968);
+        byte_4B9986 = *(char*)(thisx + 11968);
+        byte_4B9987 = 4 - *(char*)(thisx + 11968);
         byte_4B9990 = 2;
         for (j = 0; j < 2; ++j)
-            *(_BYTE*)(j + thisx + 2546) = 2;
+            *(char*)(j + thisx + 2546) = 2;
         *(short*)(thisx + 2564) = 0;
-        *(_BYTE*)(thisx + 2580) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11816));
+        *(char*)(thisx + 2580) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11816));
         *(short*)(thisx + 2566) = 1;
-        *(_BYTE*)(thisx + 2581) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11892));
+        *(char*)(thisx + 2581) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11892));
         *(short*)(thisx + 2568) = 16;
-        *(_BYTE*)(thisx + 2582) = 4;
+        *(char*)(thisx + 2582) = 4;
         *(short*)(thisx + 2570) = 17;
-        *(_BYTE*)(thisx + 2583) = 4;
-        *(_BYTE*)(thisx + 29) = 8;
+        *(char*)(thisx + 2583) = 4;
+        *(char*)(thisx + 29) = 8;
         break;
     case 2:
         byte_4B9985 = 6;
-        byte_4B9986 = *(_BYTE*)(thisx + 11968);
-        byte_4B9987 = 6 - *(_BYTE*)(thisx + 11968);
+        byte_4B9986 = *(char*)(thisx + 11968);
+        byte_4B9987 = 6 - *(char*)(thisx + 11968);
         byte_4B9990 = 2;
-        *(_BYTE*)(thisx + 2546) = 2;
-        *(_BYTE*)(thisx + 2547) = 4;
+        *(char*)(thisx + 2546) = 2;
+        *(char*)(thisx + 2547) = 4;
         *(short*)(thisx + 2564) = 0;
-        *(_BYTE*)(thisx + 2580) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11816));
+        *(char*)(thisx + 2580) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11816));
         *(short*)(thisx + 2566) = 1;
-        *(_BYTE*)(thisx + 2581) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11892));
+        *(char*)(thisx + 2581) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11892));
         *(short*)(thisx + 2568) = 18;
-        *(_BYTE*)(thisx + 2582) = 2;
+        *(char*)(thisx + 2582) = 2;
         *(short*)(thisx + 2570) = 19;
-        *(_BYTE*)(thisx + 2583) = 1;
+        *(char*)(thisx + 2583) = 1;
         *(short*)(thisx + 2572) = 20;
-        *(_BYTE*)(thisx + 2584) = 0;
+        *(char*)(thisx + 2584) = 0;
         *(short*)(thisx + 2574) = 21;
-        *(_BYTE*)(thisx + 2585) = 3;
+        *(char*)(thisx + 2585) = 3;
         for (k = 2; k < 6; ++k)
-            *(_BYTE*)(k + thisx + 2612) = 2;
-        *(_BYTE*)(thisx + 29) = 8;
+            *(char*)(k + thisx + 2612) = 2;
+        *(char*)(thisx + 29) = 8;
         break;
     case 3:
         byte_4B9985 = 3;
-        byte_4B9986 = *(_BYTE*)(thisx + 11968);
-        byte_4B9987 = 3 - *(_BYTE*)(thisx + 11968);
+        byte_4B9986 = *(char*)(thisx + 11968);
+        byte_4B9987 = 3 - *(char*)(thisx + 11968);
         byte_4B9990 = 2;
-        *(_BYTE*)(thisx + 2546) = 2;
-        *(_BYTE*)(thisx + 2547) = 1;
+        *(char*)(thisx + 2546) = 2;
+        *(char*)(thisx + 2547) = 1;
         for (m = 0; m < 8; ++m)
             byte_4B9988[m] = m;
         *(short*)(thisx + 2564) = 0;
-        *(_BYTE*)(thisx + 2580) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11816));
+        *(char*)(thisx + 2580) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11816));
         *(short*)(thisx + 2566) = 1;
-        *(_BYTE*)(thisx + 2581) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11892));
+        *(char*)(thisx + 2581) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11892));
         if (*(unsigned __int8*)(thisx + 11691) > 3u)
-            *(_BYTE*)(thisx + 2622) = 1;
+            *(char*)(thisx + 2622) = 1;
         else
-            *(_BYTE*)(thisx + 2622) = 2;
+            *(char*)(thisx + 2622) = 2;
         *(short*)(thisx + 2568) = 0;
-        *(_BYTE*)(thisx + 2582) = 0;
-        *(_BYTE*)(thisx + 29) = 8;
+        *(char*)(thisx + 2582) = 0;
+        *(char*)(thisx + 29) = 8;
         break;
     case 4:
         byte_4B9985 = 4;
-        byte_4B9986 = *(_BYTE*)(thisx + 11968);
-        byte_4B9987 = 4 - *(_BYTE*)(thisx + 11968);
+        byte_4B9986 = *(char*)(thisx + 11968);
+        byte_4B9987 = 4 - *(char*)(thisx + 11968);
         byte_4B9990 = 2;
-        *(_BYTE*)(thisx + 2546) = 2;
-        *(_BYTE*)(thisx + 2547) = 2;
+        *(char*)(thisx + 2546) = 2;
+        *(char*)(thisx + 2547) = 2;
         for (n = 0; n < 8; ++n)
             byte_4B9988[n] = n;
         *(short*)(thisx + 2564) = 0;
-        *(_BYTE*)(thisx + 2580) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11816));
+        *(char*)(thisx + 2580) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11816));
         *(short*)(thisx + 2566) = 1;
-        *(_BYTE*)(thisx + 2581) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11892));
-        *(_BYTE*)(thisx + 2622) = 3;
+        *(char*)(thisx + 2581) = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((_UnrealizedChore*)(thisx + 11892));
+        *(char*)(thisx + 2622) = 3;
         *(short*)(thisx + 2568) = 0;
-        *(_BYTE*)(thisx + 2582) = 0;
-        *(_BYTE*)(thisx + 2623) = 4;
+        *(char*)(thisx + 2582) = 0;
+        *(char*)(thisx + 2623) = 4;
         *(short*)(thisx + 2570) = 0;
-        *(_BYTE*)(thisx + 2583) = 0;
-        *(_BYTE*)(thisx + 29) = 8;
+        *(char*)(thisx + 2583) = 0;
+        *(char*)(thisx + 29) = 8;
         break;
     }
 }
@@ -45548,7 +45548,7 @@ int sub_463007(int thisx)
     dword_4B93AC = 0;
     sub_4891E4((int*)(thisx + 128), aDemoEnding01Tx);
     sub_47F958((int*)(thisx + 736));
-    *(_BYTE*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2516) = 1;
     return sub_456169((void*)thisx);
 }
 
@@ -45589,7 +45589,7 @@ unsigned __int8* sub_463101(unsigned __int8* thisx, int a2, int a3)
 }
 
 
-char* sub_4631A8(_BYTE* thisx, int a2)
+char* sub_4631A8(char* thisx, int a2)
 {
     char* result; // eax
 
@@ -45599,7 +45599,7 @@ char* sub_4631A8(_BYTE* thisx, int a2)
 }
 
 
-char* sub_4631D0(_BYTE* thisx, int a2)
+char* sub_4631D0(char* thisx, int a2)
 {
     char* result; // eax
 
@@ -45618,7 +45618,7 @@ int  sub_4631F8(unsigned __int8* thisx)
     char tc_5[8]; //12
     int v38; // [esp+1F8h] [ebp-10h]
     int v37; // [esp+1F4h] [ebp-14h]
-    _BYTE* v36; // [esp+1F0h] [ebp-18h]
+    char* v36; // [esp+1F0h] [ebp-18h]
     //
     CHAR String1[260]; // [esp+ECh] [ebp-11Ch] BYREF
     int v34; // [esp+E8h] [ebp-120h]
@@ -45898,22 +45898,22 @@ int  sub_4631F8(unsigned __int8* thisx)
 int sub_463E60(int thisx)
 {
     sub_402080(thisx, 76, 2, (void(*)(int))sub_463EF0);
-    *(_BYTE*)(thisx + 228) = 0;
-    *(_BYTE*)(thisx + 370) = 0;
+    *(char*)(thisx + 228) = 0;
+    *(char*)(thisx + 370) = 0;
     *(short*)(thisx + 378) = 0;
-    *(_BYTE*)(thisx + 369) = 2;
-    *(_BYTE*)(thisx + 371) = 0;
-    *(_BYTE*)(thisx + 178) = 4;
-    *(_BYTE*)(thisx + 252) = 8;
-    *(_BYTE*)(thisx + 376) = 4;
-    *(_BYTE*)(thisx + 224) = 1;
-    *(_BYTE*)(thisx + 247) = 1;
-    *(_BYTE*)(thisx + 248) = 0;
+    *(char*)(thisx + 369) = 2;
+    *(char*)(thisx + 371) = 0;
+    *(char*)(thisx + 178) = 4;
+    *(char*)(thisx + 252) = 8;
+    *(char*)(thisx + 376) = 4;
+    *(char*)(thisx + 224) = 1;
+    *(char*)(thisx + 247) = 1;
+    *(char*)(thisx + 248) = 0;
     return thisx;
 }
 
 
-_BYTE* sub_463EF0(_BYTE* thisx)
+char* sub_463EF0(char* thisx)
 {
     thisx[16] = 0;
     return thisx;
@@ -45926,20 +45926,20 @@ int sub_463F05(int thisx)
     int i; // [esp+4h] [ebp-4h]
 
     result = thisx;
-    *(_BYTE*)(thisx + 370) = 0;
-    *(_BYTE*)(thisx + 255) = 0;
+    *(char*)(thisx + 370) = 0;
+    *(char*)(thisx + 255) = 0;
     *(short*)(thisx + 378) = 0;
     for (i = 0; i < 2; ++i)
     {
-        *(_BYTE*)(i + thisx + 372) = 0;
-        *(_BYTE*)(i + thisx + 374) = 0;
+        *(char*)(i + thisx + 372) = 0;
+        *(char*)(i + thisx + 374) = 0;
         result = i + 1;
     }
     return result;
 }
 
 
-int sub_463F66(char* thisx, _BYTE* a2)
+int sub_463F66(char* thisx, char* a2)
 {
 
     Warning();//修正堆栈
@@ -46022,7 +46022,7 @@ int* sub_4641FE(int* thisx, int a1, int a2, int a3, int a4)
 }
 
 
-int sub_464229(_BYTE* thisx, SchedulerBase* a2)
+int sub_464229(char* thisx, SchedulerBase* a2)
 {
 
 
@@ -46237,13 +46237,13 @@ int sub_4647F2(int thisx, double a2, double a3, double a4)
     sub_456617(thisx);
     for (i = 0; i < 8; ++i)
         *(short*)(thisx + 2 * i + 11404) = 0;
-    *(_BYTE*)(thisx + 13042) = byte_4B9990 + 1;
-    *(_BYTE*)(thisx + 13043) = byte_4B9985 + 1;
+    *(char*)(thisx + 13042) = byte_4B9990 + 1;
+    *(char*)(thisx + 13043) = byte_4B9985 + 1;
     for (i = 0; i < 8; ++i)
     {
-        *(_BYTE*)(i + thisx + 13044) = 0;
-        *(_BYTE*)(i + thisx + 13052) = 0;
-        *(_BYTE*)(i + thisx + 13092) = *(_BYTE*)(i + thisx + 2546);
+        *(char*)(i + thisx + 13044) = 0;
+        *(char*)(i + thisx + 13052) = 0;
+        *(char*)(i + thisx + 13092) = *(char*)(i + thisx + 2546);
     }
     if (!dword_4B9974)
         dword_4B9980 = timeGetTime();
@@ -46292,7 +46292,7 @@ int sub_464A8A(char* thisx)
 }
 
 
-int sub_464AC9(char* thisx, _BYTE* a2, unsigned __int8* a3, int a4)
+int sub_464AC9(char* thisx, char* a2, unsigned __int8* a3, int a4)
 {
 
 
@@ -46328,7 +46328,7 @@ int sub_464AC9(char* thisx, _BYTE* a2, unsigned __int8* a3, int a4)
             }
         }
     }
-    if (!(_BYTE)v14)
+    if (!(char)v14)
         return 0;
     v12 = rand() % (unsigned __int8)v14;
     return (int)&thisx[612 * (unsigned __int8)v9[v12] + 2628];
@@ -46382,8 +46382,8 @@ int sub_464C88(int thisx)
     int v1; // eax
 
 
-    sub_451EB5((_BYTE*)thisx, 1, 1);
-    sub_452045((_BYTE*)thisx, 5, 1, 30, 3);
+    sub_451EB5((char*)thisx, 1, 1);
+    sub_452045((char*)thisx, 5, 1, 30, 3);
     wsprintfA(String, a1_0);
     v4 = dword_4B9248;
     v1 = lstrlenA(String);
@@ -46395,7 +46395,7 @@ int sub_464C88(int thisx)
         v15 = *(unsigned __int8*)(thisx + 12969);
     for (i = 0; i < v15; ++i)
     {
-        sub_452045((_BYTE*)thisx, 18 * i + 3, 5, 16, 18);
+        sub_452045((char*)thisx, 18 * i + 3, 5, 16, 18);
         v13 = i + *(short*)(thisx + 2564);
         v14 = 128 / *(unsigned __int8*)(thisx + v13 + 13002);
         for (j = 0; j < *(unsigned __int8*)(thisx + v13 + 13002); ++j)
@@ -46408,12 +46408,12 @@ int sub_464C88(int thisx)
             wsprintfA(String, "%d", v9 + 1);
             sub_47B7ED(v8, v7, String, 0, dword_4B9248);
             sub_47B91A(144 * i + 40, v7, (LPCSTR)&byte_4B2884, 0, dword_4B9248);
-            if (*(_BYTE*)(thisx + v13 + 13002) == 2)
+            if (*(char*)(thisx + v13 + 13002) == 2)
                 wsprintfA(String, "+%d POINT", 4 - 2 * v9);
             else
                 wsprintfA(String, "+%d POINT", 4 - v9);
             sub_47B7ED(144 * i + 56, v14 * j + 68, String, 0, dword_4B9248);
-            v11 = *(_BYTE*)(thisx + j + 4 * v13 + 13010);
+            v11 = *(char*)(thisx + j + 4 * v13 + 13010);
             if (v11)
             {
                 for (k = 0; k < 2; ++k)
@@ -46457,14 +46457,14 @@ int sub_465102(int thisx)
     int v1; // eax
 
 
-    sub_451EB5((_BYTE*)thisx, 1, 1);
-    sub_452045((_BYTE*)thisx, 5, 1, 30, 3);
+    sub_451EB5((char*)thisx, 1, 1);
+    sub_452045((char*)thisx, 5, 1, 30, 3);
     wsprintfA(String, (LPCSTR)&byte_4B299F);
     v4 = dword_4B9248;
     v1 = lstrlenA(String);
     sub_47B91A(160 - 2 * v1, 16, String, 0, v4);
     for (i = 0; i < 2; ++i)
-        sub_452045((_BYTE*)thisx, 18 * i + 3, 5, 16, 18);
+        sub_452045((char*)thisx, 18 * i + 3, 5, 16, 18);
     v13 = 0;
     *(int*)(thisx + 2532) = -1;
     *(int*)(thisx + 2528) = -1;
@@ -46474,7 +46474,7 @@ int sub_465102(int thisx)
         v7 = 32 * (v13 % 4) + 56;
         if (j + 4 * *(unsigned __int16*)(thisx + 2564) >= *(unsigned __int8*)(thisx + 11688))
             break;
-        v10 = *(_BYTE*)(thisx + j + 4 * *(unsigned __int16*)(thisx + 2564) + 13076);
+        v10 = *(char*)(thisx + j + 4 * *(unsigned __int16*)(thisx + 2564) + 13076);
         wsprintfA(String, "%2d", *(unsigned __int8*)(thisx + v10 + 13060));
         sub_47B7ED(144 * (v13 / 4) + 28, v7, String, 0, dword_4B9248);
         sub_47B91A(144 * (v13 / 4) + 44, v7, (LPCSTR)&byte_4B288C, 0, dword_4B9248);
@@ -46626,7 +46626,7 @@ int sub_465804(int* thisx, int* a2)
 }
 
 
-int sub_46588C(char* thisx, _BYTE* a2)
+int sub_46588C(char* thisx, char* a2)
 {
 
 
@@ -46653,16 +46653,16 @@ int sub_46588C(char* thisx, _BYTE* a2)
             LOBYTE(v10) = v10 + 1;
         }
     }
-    if (!(_BYTE)v10)
+    if (!(char)v10)
         return 0;
     v9 = rand() % (unsigned __int8)v10;
     return (int)&thisx[612 * (unsigned __int8)v6[v9] + 2628];
 }
 
 
-_BYTE* sub_465986(_BYTE* thisx)
+char* sub_465986(char* thisx)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[2544] = 1;
@@ -46671,7 +46671,7 @@ _BYTE* sub_465986(_BYTE* thisx)
 }
 
 
-void sub_4659A5(int* thisx, _BYTE* a2)
+void sub_4659A5(int* thisx, char* a2)
 {
 
 
@@ -46704,7 +46704,7 @@ void sub_4659A5(int* thisx, _BYTE* a2)
                 }
             }
         }
-        if ((_BYTE)v5)
+        if ((char)v5)
         {
             LOBYTE(v9) = v4[rand() % (unsigned __int8)v5];
             sub_41D697((int)&thisx[153 * (unsigned __int8)v9 + 657]);
@@ -46907,7 +46907,7 @@ int sub_465E7E(char* thisx, int* a2)
 }
 
 
-int sub_466127(char* thisx, _BYTE* a2, int a3)
+int sub_466127(char* thisx, char* a2, int a3)
 {
 
 
@@ -46932,7 +46932,7 @@ int sub_466127(char* thisx, _BYTE* a2, int a3)
             if (!sub_41BE56((int*)v6))
             {
                 v3 = sub_426070((char*)v6);
-                if (v3 != (unsigned __int8)v10 && !sub_4263D0(v6) && !*(_BYTE*)(i + a3))
+                if (v3 != (unsigned __int8)v10 && !sub_4263D0(v6) && !*(char*)(i + a3))
                 {
                     v8[(unsigned __int8)v9] = i;
                     LOBYTE(v9) = v9 + 1;
@@ -46940,14 +46940,14 @@ int sub_466127(char* thisx, _BYTE* a2, int a3)
             }
         }
     }
-    if ((_BYTE)v9)
+    if ((char)v9)
         return (int)&thisx[612 * (unsigned __int8)v8[rand() % (unsigned __int8)v9] + 2628];
     else
         return 0;
 }
 
 
-int sub_46622B(char* thisx, _BYTE* a2, unsigned __int8 a3)
+int sub_46622B(char* thisx, char* a2, unsigned __int8 a3)
 {
 
 
@@ -46955,7 +46955,7 @@ int sub_46622B(char* thisx, _BYTE* a2, unsigned __int8 a3)
     check_stack c(__FILE__, __LINE__);
     int v35; // [esp+78h] [ebp-4h]
     int v34; // [esp+74h] [ebp-8h]
-    _BYTE v33[9]; // [esp+6Bh] [ebp-11h]
+    char v33[9]; // [esp+6Bh] [ebp-11h]
     //char tc_60[2]; //3
     unsigned __int8 v32; // [esp+68h] [ebp-14h]
     int j; // [esp+64h] [ebp-18h]
@@ -47006,7 +47006,7 @@ int sub_46622B(char* thisx, _BYTE* a2, unsigned __int8 a3)
                         {
                             v26 = sub_41F0A9((int*)v25);
                             v24 = unknown_libname_30(v26);
-                            if ((_BYTE*)v26[32] == a2 && (v24 == 6 || v24 == 7))
+                            if ((char*)v26[32] == a2 && (v24 == 6 || v24 == 7))
                             {
                                 sub_4210E3(v26, (int)a2, (int)a2, a3);
                                 v3 = rand() % 2;
@@ -47076,7 +47076,7 @@ int sub_46622B(char* thisx, _BYTE* a2, unsigned __int8 a3)
                 }
             }
         }
-        if ((_BYTE)v34)
+        if ((char)v34)
         {
             for (j = 0; j < (unsigned __int8)v34; ++j)
             {
@@ -47099,7 +47099,7 @@ int sub_46622B(char* thisx, _BYTE* a2, unsigned __int8 a3)
                     v16 = unknown_libname_30(v19);
                     if (v16 != 6 && v16 != 7 && v16 != 8)
                         goto LABEL_67;
-                    if (a2 == (_BYTE*)v19[32])
+                    if (a2 == (char*)v19[32])
                     {
                         if (a3 == 1 && v16 == 6 || (v9 = a3, a3 == 2) && v16 == 7)
                         {
@@ -47130,7 +47130,7 @@ int sub_46622B(char* thisx, _BYTE* a2, unsigned __int8 a3)
 }
 
 
-int sub_4666C5(char* thisx, _BYTE* a2)
+int sub_4666C5(char* thisx, char* a2)
 {
 
     Warning();//修正堆栈
@@ -47234,7 +47234,7 @@ void* sub_466901(int* thisx)
         streambuf::unbuffered((streambuf*)((char*)dword_4B93A4 + 24 * i), 0);
     for (j = 0; j < (int)Size; ++j)
     {
-        v1 = sub_401710((_BYTE*)(36 * j + dword_4B92E0));
+        v1 = sub_401710((char*)(36 * j + dword_4B92E0));
         streambuf::unbuffered((streambuf*)((char*)dword_4B93A4 + 24 * v1), 1);
     }
     result = thisx;
@@ -47435,9 +47435,9 @@ void sub_466E2D(int thisx)
 
 
     *(int*)(thisx + 104) = 6;
-    *(_BYTE*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2516) = 1;
     *(int*)(thisx + 2512) = 0;
-    *(_BYTE*)(thisx + 2562) = 0;
+    *(char*)(thisx + 2562) = 0;
     *(int*)(thisx + 2528) = 0;
     *(int*)(thisx + 2532) = 0;
     *(short*)(thisx + 2564) = 0;
@@ -47480,10 +47480,10 @@ void sub_466F20(int thisx, int a2)
 
     if (a2 == -1)
     {
-        sub_451EB5((_BYTE*)thisx, 1, 1);
-        sub_452045((_BYTE*)thisx, 2, 1, 25, 3);
+        sub_451EB5((char*)thisx, 1, 1);
+        sub_452045((char*)thisx, 2, 1, 25, 3);
         sub_47B91A(24, 18, byte_4B3248, 0, dword_4B9248);
-        sub_452045((_BYTE*)thisx, 2, 4, 36, 19);
+        sub_452045((char*)thisx, 2, 4, 36, 19);
         for (i = 0; i < 8; ++i)
         {
             sub_47B91A(136 * (i / 4) + 76, 34 * (i % 4) + 48, byte_4B3258, 0, dword_4B9248);
@@ -47496,10 +47496,10 @@ void sub_466F20(int thisx, int a2)
     {
         if (a2 == 1)
         {
-            sub_451EB5((_BYTE*)thisx, 0, 1);
-            if (*(_BYTE*)(thisx + 2562))
+            sub_451EB5((char*)thisx, 0, 1);
+            if (*(char*)(thisx + 2562))
             {
-                if (*(_BYTE*)(thisx + 2562) == 1)
+                if (*(char*)(thisx + 2562) == 1)
                 {
                     sub_47B91A(16, 208, byte_4B3330, 0, dword_4B9248);
                     sub_47B91A(16, 224, aLeri, 0, dword_4B9248);
@@ -47584,7 +47584,7 @@ unsigned int sub_46753B(int thisx)
     v9 = 0;
     for (i = 0; i < 3; ++i)
         v18[i] = 0;
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         if (sub_476CDA(0))
         {
@@ -47613,9 +47613,9 @@ unsigned int sub_46753B(int thisx)
     {
         v16 = 1;
         sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
-        if (*(_BYTE*)(thisx + 2562))
+        if (*(char*)(thisx + 2562))
         {
-            if (*(_BYTE*)(thisx + 2562) == 1)
+            if (*(char*)(thisx + 2562) == 1)
             {
                 v5 = *(int*)(thisx + 2528) + 2 * *(int*)(thisx + 2532);
                 v6 = 5 * v10 + v11;
@@ -47654,30 +47654,30 @@ unsigned int sub_46753B(int thisx)
     {
         v17 = 1;
         sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-        if (*(_BYTE*)(thisx + 2562))
+        if (*(char*)(thisx + 2562))
         {
-            if (*(_BYTE*)(thisx + 2562) == 1)
-                *(_BYTE*)(thisx + 2562) = 0;
+            if (*(char*)(thisx + 2562) == 1)
+                *(char*)(thisx + 2562) = 0;
         }
         else
         {
-            *(_BYTE*)(thisx + 2562) = 1;
+            *(char*)(thisx + 2562) = 1;
         }
     }
     if (v18[1])
     {
-        if (*(_BYTE*)(thisx + 2562))
+        if (*(char*)(thisx + 2562))
         {
-            if (*(_BYTE*)(thisx + 2562) == 1)
+            if (*(char*)(thisx + 2562) == 1)
             {
-                *(_BYTE*)(thisx + 2562) = 0;
+                *(char*)(thisx + 2562) = 0;
                 v17 = 1;
             }
         }
         else
         {
             *(int*)(thisx + 108) = 5;
-            *(_BYTE*)(thisx + 2516) = 2;
+            *(char*)(thisx + 2516) = 2;
         }
     }
     if (v9)
@@ -47708,9 +47708,9 @@ unsigned int sub_46753B(int thisx)
     v19[0] = dword_4B9248;
     sub_49AB05((int)byte_4BDC60, v19);
     v13 = *(unsigned __int16*)(thisx + 2564);
-    if (*(_BYTE*)(thisx + 2562))
+    if (*(char*)(thisx + 2562))
     {
-        if (*(_BYTE*)(thisx + 2562) == 1)
+        if (*(char*)(thisx + 2562) == 1)
             sub_47B91A(136 * *(int*)(thisx + 2528) + 64, 34 * (*(int*)(thisx + 2532) - v13) + 48, asc_4B3388, 0, -1);
     }
     else
@@ -47746,7 +47746,7 @@ int sub_467AC6(int thisx, const char* a2)
     wsprintfA(FileName, "Demo\\%s", a2);
     sub_4891E4((int*)(thisx + 128), FileName);
     sub_47F958((int*)(thisx + 736));
-    *(_BYTE*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2516) = 1;
     return sub_456169((void*)thisx);
 }
 
@@ -47884,7 +47884,7 @@ int* sub_467DE0()
 
 
 
-BOOL sub_467E11(_BYTE* thisx, int a2)
+BOOL sub_467E11(char* thisx, int a2)
 {
     int i; // [esp+4h] [ebp-4h]
 
@@ -47899,7 +47899,7 @@ BOOL sub_467E11(_BYTE* thisx, int a2)
 }
 
 
-__int16 sub_467E7D(int thisx, _BYTE* a2)
+__int16 sub_467E7D(int thisx, char* a2)
 {
 
     Warning();//修正堆栈
@@ -47924,7 +47924,7 @@ __int16 sub_467E7D(int thisx, _BYTE* a2)
         {
             LOBYTE(v11) = sub_426070(v10);
             v2 = (unsigned __int8)v11;
-            if (v2 == (unsigned __int8)sub_426070(a2) && (!(_BYTE)v11 || *(int*)(thisx + 116) != 3))
+            if (v2 == (unsigned __int8)sub_426070(a2) && (!(char)v11 || *(int*)(thisx + 116) != 3))
             {
                 if (sub_41BA53((int)v10, 0x82u, 0))
                 {
@@ -47935,7 +47935,7 @@ __int16 sub_467E7D(int thisx, _BYTE* a2)
                     v9 = v10;
                     v8 = 0;
                     v7 = 15;
-                    sub_4561A5((_BYTE*)thisx, (int)v6);
+                    sub_4561A5((char*)thisx, (int)v6);
                     sub_43FFC3((int*)byte_4BDB28, (int)dword_4B9AD4, -1, 100, 100, 0);
                 }
             }
@@ -47943,18 +47943,18 @@ __int16 sub_467E7D(int thisx, _BYTE* a2)
     }
     LOBYTE(v13) = sub_425EF0(a2);
     if (*(int*)(thisx + 104) == 11 || *(int*)(thisx + 104) == 10)
-        *(_BYTE*)(thisx + (unsigned __int8)v13 + 13052) = -1;
+        *(char*)(thisx + (unsigned __int8)v13 + 13052) = -1;
     v3 = sub_426070(a2);
-    sub_4631A8((_BYTE*)thisx, v3);
+    sub_4631A8((char*)thisx, v3);
     result = thisx;
-    if (*(int*)(thisx + 116) == 3 && (_BYTE)v13)
+    if (*(int*)(thisx + 116) == 3 && (char)v13)
     {
         sub_4565CF(thisx);
         return sub_456738(thisx, v13);
     }
     return result;
 }
-char sub_468011(_BYTE* thisx, _BYTE* a2)
+char sub_468011(char* thisx, char* a2)
 {
     //    unsigned __int8 v2; // al
     //    char result; // al
@@ -48135,7 +48135,7 @@ int sub_4682D3(char* thisx, int* a2, char a3)
 }
 
 
-char sub_4684DD(_BYTE* thisx)
+char sub_4684DD(char* thisx)
 {
     char v3; // [esp+4h] [ebp-8h]
     int i; // [esp+8h] [ebp-4h]
@@ -48150,7 +48150,7 @@ char sub_4684DD(_BYTE* thisx)
 }
 
 
-int sub_468529(_BYTE* thisx, char a2)
+int sub_468529(char* thisx, char a2)
 {
     int i; // [esp+4h] [ebp-4h]
 
@@ -48168,7 +48168,7 @@ int sub_468529(_BYTE* thisx, char a2)
 }
 
 
-char sub_468591(_BYTE* thisx, int a2, int a3)
+char sub_468591(char* thisx, int a2, int a3)
 {
     char result; // al
     int v4; // [esp+4h] [ebp-4h]
@@ -48209,7 +48209,7 @@ int sub_468667(int thisx)
         return sub_4685D3((void*)thisx, (wchar_t*)&word_4B3450, 120);
     dword_4B9974 = 1;
     *(int*)(thisx + 108) = 11;
-    *(_BYTE*)(thisx + 2516) = 2;
+    *(char*)(thisx + 2516) = 2;
     return result;
 }
 
@@ -48219,8 +48219,8 @@ void sub_4686AA(int thisx)
 
     *(int*)(thisx + 104) = 22;
     *(int*)(thisx + 2540) = 0;
-    *(_BYTE*)(thisx + 2516) = 1;
-    *(_BYTE*)(thisx + 2562) = 0;
+    *(char*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2562) = 0;
     sub_46D747(thisx);
     sub_47C427();
     sub_46D3E1();
@@ -48238,7 +48238,7 @@ void sub_4686AA(int thisx)
         if (*(unsigned __int16*)(thisx + 2 * i + 2572) > (int)(unsigned __int8)byte_4B9986)
             *(short*)(thisx + 2 * i + 2572) = 0;
     }
-    sub_46B8AE((_BYTE*)thisx, -1);
+    sub_46B8AE((char*)thisx, -1);
 }
 
 
@@ -48412,7 +48412,7 @@ unsigned __int16* sub_46881A(int thisx)
             continue;
         }
         v2 = --v124;
-        if (!*(_BYTE*)(thisx + 2516))
+        if (!*(char*)(thisx + 2516))
         {
             LOBYTE(v2) = v124;
             v3 = sub_476D78(v2);
@@ -48440,17 +48440,17 @@ unsigned __int16* sub_46881A(int thisx)
         v123 = *(unsigned __int8*)(i + thisx + 2584);
         if (v119)
         {
-            if (*(_BYTE*)(i + thisx + 2604))
-                *(_BYTE*)(i + thisx + 2604) = 0;
+            if (*(char*)(i + thisx + 2604))
+                *(char*)(i + thisx + 2604) = 0;
             else
-                *(_BYTE*)(i + thisx + 2604) = 1;
+                *(char*)(i + thisx + 2604) = 1;
         }
-        if (*(_BYTE*)(i + thisx + 2604))
+        if (*(char*)(i + thisx + 2604))
         {
             v121 = 0;
             v120 = 0;
-            if ((unsigned __int8)++ * (_BYTE*)(i + thisx + 2604) >= 5u)
-                *(_BYTE*)(i + thisx + 2604) = 1;
+            if ((unsigned __int8)++ * (char*)(i + thisx + 2604) >= 5u)
+                *(char*)(i + thisx + 2604) = 1;
         }
         if (v123)
         {
@@ -48458,7 +48458,7 @@ unsigned __int16* sub_46881A(int thisx)
             {
                 if (v123 == 2)
                 {
-                    if (*(_BYTE*)(i + thisx + 2604) == 1)
+                    if (*(char*)(i + thisx + 2604) == 1)
                     {
                         v106 = 0;
                         for (j = 0; j < 4; ++j)
@@ -48494,7 +48494,7 @@ unsigned __int16* sub_46881A(int thisx)
                     }
                     if (v121)
                     {
-                        *(_BYTE*)(i + thisx + 2600) = (*(unsigned __int8*)(i + thisx + 2600) + v121 + 6) % 6;
+                        *(char*)(i + thisx + 2600) = (*(unsigned __int8*)(i + thisx + 2600) + v121 + 6) % 6;
                         sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
                         v122 = 1;
                     }
@@ -48511,16 +48511,16 @@ unsigned __int16* sub_46881A(int thisx)
                         if (!sub_46D56B((__int16*)(thisx + 1392), *(unsigned __int16*)(thisx + 2 * i + 2564), -1))
                         {
                             *(short*)(thisx + 244 * i + 1630) = *(short*)(thisx + 2 * i + 2564);
-                            *(_BYTE*)(i + thisx + 2584) = 3;
+                            *(char*)(i + thisx + 2584) = 3;
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
                             v129 = 1;
                             for (m = 0; m < 4; ++m)
                             {
-                                if (!*(_BYTE*)(m + thisx + 2584) && !*(short*)(thisx + 2 * m + 2572))
+                                if (!*(char*)(m + thisx + 2584) && !*(short*)(thisx + 2 * m + 2572))
                                 {
                                     *(short*)(thisx + 2 * i + 2572) = 0;
                                     *(short*)(thisx + 2 * m + 2572) = v124 + 101;
-                                    *(_BYTE*)(m + thisx + 2554) = i + 1;
+                                    *(char*)(m + thisx + 2554) = i + 1;
                                     goto LABEL_139;
                                 }
                             }
@@ -48530,15 +48530,15 @@ unsigned __int16* sub_46881A(int thisx)
                     {
                         *(short*)(thisx + 2 * i + 2564) = *(short*)(thisx + 244 * i + 1628);
                         *(short*)(thisx + 244 * i + 1628) = -1;
-                        *(_BYTE*)(i + thisx + 2600) = 6;
-                        *(_BYTE*)(i + thisx + 2584) = 1;
+                        *(char*)(i + thisx + 2600) = 6;
+                        *(char*)(i + thisx + 2584) = 1;
                         v122 = 1;
                         v129 = 1;
                     }
                 }
                 else if (v123 == 3 && v126)
                 {
-                    *(_BYTE*)(i + thisx + 2584) = 2;
+                    *(char*)(i + thisx + 2584) = 2;
                     *(short*)(thisx + 2 * i + 2564) = *(short*)(thisx + 244 * i + 1630);
                     *(short*)(thisx + 244 * i + 1630) = -1;
                     v129 = 1;
@@ -48546,11 +48546,11 @@ unsigned __int16* sub_46881A(int thisx)
                 goto LABEL_139;
             }
             v116 = *(unsigned __int8*)(i + thisx + 2600);
-            if (*(_BYTE*)(i + thisx + 2604) == 1)
+            if (*(char*)(i + thisx + 2604) == 1)
             {
                 if (v116 >= 6)
                 {
-                    if (*(_BYTE*)(thisx + 81))
+                    if (*(char*)(thisx + 81))
                     {
                         *(short*)(thisx + 2 * i + 2564) = rand() % dword_4B92D8;
                     }
@@ -48590,14 +48590,14 @@ unsigned __int16* sub_46881A(int thisx)
                 {
                     v15 = sub_46D5C0((char*)thisx);
                     *(short*)(thisx + 2 * i + 2564) = v15;
-                    if (*(_BYTE*)(thisx + 98))
+                    if (*(char*)(thisx + 98))
                     {
-                        *(_BYTE*)(i + thisx + 2580) = rand() % 4;
+                        *(char*)(i + thisx + 2580) = rand() % 4;
                     }
                     else
                     {
-                        v16 = MarkedForDetachment((_BYTE*)(36 * *(unsigned __int16*)(thisx + 2 * i + 2564) + dword_4B92E0));//call return thisxx[20]; 
-                        *(_BYTE*)(i + thisx + 2580) = v16;
+                        v16 = MarkedForDetachment((char*)(36 * *(unsigned __int16*)(thisx + 2 * i + 2564) + dword_4B92E0));//call return thisxx[20]; 
+                        *(char*)(i + thisx + 2580) = v16;
                     }
                 }
                 sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
@@ -48613,9 +48613,9 @@ unsigned __int16* sub_46881A(int thisx)
                 else
                 {
                     *(short*)(thisx + 2 * i + 2564) = (int)(Size + v121 + *(unsigned __int16*)(thisx + 2 * i + 2564)) % (int)Size;
-                    v17 = MarkedForDetachment((_BYTE*)(dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 2 * i + 2564)));//call return thisxx[20]; 
-                    *(_BYTE*)(i + thisx + 2580) = v17;
-                    *(_BYTE*)(i + thisx + 13092) = 0;
+                    v17 = MarkedForDetachment((char*)(dword_4B92E0 + 36 * *(unsigned __int16*)(thisx + 2 * i + 2564)));//call return thisxx[20]; 
+                    *(char*)(i + thisx + 2580) = v17;
+                    *(char*)(i + thisx + 13092) = 0;
                 }
             }
             else
@@ -48627,13 +48627,13 @@ unsigned __int16* sub_46881A(int thisx)
                         v108 = *(unsigned __int16*)(thisx + 2 * i + 2564);
                         if (*(unsigned __int8*)(i + thisx + 2600) > 5u)
                         {
-                            if (*(_BYTE*)(i + thisx + 2600) == 6
-                                && (*(_BYTE*)(thisx + 81) || !sub_46D516((__int16*)(thisx + 1392), v108, -1)))
+                            if (*(char*)(i + thisx + 2600) == 6
+                                && (*(char*)(thisx + 81) || !sub_46D516((__int16*)(thisx + 1392), v108, -1)))
                             {
                                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
                                 *(short*)(thisx + 244 * i + 1628) = *(short*)(thisx + 2 * i + 2564);
-                                *(_BYTE*)(i + thisx + 2600) = 0;
-                                *(_BYTE*)(i + thisx + 2584) = 2;
+                                *(char*)(i + thisx + 2600) = 0;
+                                *(char*)(i + thisx + 2584) = 2;
                                 if (*(__int16*)(thisx + 244 * i + 1630) < 0)
                                 {
                                     *(short*)(thisx + 2 * i + 2564) = i;
@@ -48646,19 +48646,19 @@ unsigned __int16* sub_46881A(int thisx)
                                 sub_476E46(*(unsigned __int16*)(thisx + 2 * i + 2564), (void*)(8 * i + word_4B9250));//ddd 4B9250
                             }
                         }
-                        else if (*(_BYTE*)(thisx + 81) || !*((_BYTE*)dword_4B92DC + v108))
+                        else if (*(char*)(thisx + 81) || !*((char*)dword_4B92DC + v108))
                         {
                             sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
                             *(int*)(thisx + 244 * i + 1392 + 28 * v116) = *(unsigned __int16*)(thisx + 2 * i + 2564);
-                            *((_BYTE*)dword_4B92DC + *(unsigned __int16*)(thisx + 2 * i + 2564)) = 1;
-                            *(_BYTE*)(thisx + 244 * i + 1392 + 28 * v116 + 4) = *(_BYTE*)(i + thisx + 2580);
-                            if (++ * (_BYTE*)(i + thisx + 2600) == 6)
+                            *((char*)dword_4B92DC + *(unsigned __int16*)(thisx + 2 * i + 2564)) = 1;
+                            *(char*)(thisx + 244 * i + 1392 + 28 * v116 + 4) = *(char*)(i + thisx + 2580);
+                            if (++ * (char*)(i + thisx + 2600) == 6)
                             {
                                 *(short*)(thisx + 2 * i + 2564) = 0;
                                 if (*(__int16*)(thisx + 244 * i + 1628) >= 0)
                                 {
-                                    *(_BYTE*)(i + thisx + 2600) = 0;
-                                    *(_BYTE*)(i + thisx + 2584) = 2;
+                                    *(char*)(i + thisx + 2600) = 0;
+                                    *(char*)(i + thisx + 2584) = 2;
                                     *(short*)(thisx + 2 * i + 2564) = i;
                                 }
                             }
@@ -48670,40 +48670,40 @@ unsigned __int16* sub_46881A(int thisx)
                     {
                         if (--v116 < 0)
                         {
-                            *(_BYTE*)(i + thisx + 2584) = 0;
+                            *(char*)(i + thisx + 2584) = 0;
                             *(short*)(thisx + 2 * i + 2564) = 0;
                         }
                         else
                         {
                             *(short*)(thisx + 2 * i + 2564) = *(short*)(thisx + 244 * i + 1392 + 28 * v116);
-                            *((_BYTE*)dword_4B92DC + *(unsigned __int16*)(thisx + 2 * i + 2564)) = 0;
-                            *(_BYTE*)(i + thisx + 2580) = *(_BYTE*)(thisx + 244 * i + 1392 + 28 * v116 + 4);
+                            *((char*)dword_4B92DC + *(unsigned __int16*)(thisx + 2 * i + 2564)) = 0;
+                            *(char*)(i + thisx + 2580) = *(char*)(thisx + 244 * i + 1392 + 28 * v116 + 4);
                             *(int*)(thisx + 244 * i + 1392 + 28 * v116) = -1;
-                            --* (_BYTE*)(i + thisx + 2600);
+                            --* (char*)(i + thisx + 2600);
                         }
                         v122 = 1;
                         v129 = 1;
                     }
                     else if (v125)
                     {
-                        *(_BYTE*)(i + thisx + 2596) = *(_BYTE*)(i + thisx + 2596) == 0;
-                        *(_BYTE*)(i + thisx + 13092) = 0;
+                        *(char*)(i + thisx + 2596) = *(char*)(i + thisx + 2596) == 0;
+                        *(char*)(i + thisx + 13092) = 0;
                         v122 = 1;
                         sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
                     }
                     goto LABEL_139;
                 }
-                if (*(_BYTE*)(i + thisx + 2596) == 1)
-                    *(_BYTE*)(i + thisx + 13092) = (*(unsigned __int8*)(i + thisx + 13092) + v120 + 4) % 4;
+                if (*(char*)(i + thisx + 2596) == 1)
+                    *(char*)(i + thisx + 13092) = (*(unsigned __int8*)(i + thisx + 13092) + v120 + 4) % 4;
                 else
-                    *(_BYTE*)(i + thisx + 2580) = (*(unsigned __int8*)(i + thisx + 2580) + v120 + 4) % 4;
+                    *(char*)(i + thisx + 2580) = (*(unsigned __int8*)(i + thisx + 2580) + v120 + 4) % 4;
             }
             sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
             v122 = 1;
         }
         else
         {
-            if (*(_BYTE*)(i + thisx + 2604) == 1)
+            if (*(char*)(i + thisx + 2604) == 1)
             {
                 *(short*)(thisx + 2 * i + 2564) = rand() % 2;
                 sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
@@ -48716,10 +48716,10 @@ unsigned __int16* sub_46881A(int thisx)
             else if (v118)
             {
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-                *(_BYTE*)(i + thisx + 13092) = 0;
+                *(char*)(i + thisx + 13092) = 0;
                 if (*(short*)(thisx + 2 * i + 2564))
                 {
-                    *(_BYTE*)(i + thisx + 2584) = 4;
+                    *(char*)(i + thisx + 2584) = 4;
                     v123 = 4;
                     v118 = 0;
                     v120 = *(int*)(thisx + 15636);
@@ -48728,30 +48728,30 @@ unsigned __int16* sub_46881A(int thisx)
                 }
                 else
                 {
-                    *(_BYTE*)(i + thisx + 2584) = 1;
+                    *(char*)(i + thisx + 2584) = 1;
                     v122 = 1;
-                    v14 = MarkedForDetachment((_BYTE*)(36 * *(unsigned __int16*)(thisx + 2 * i + 2564) + dword_4B92E0));//call return thisxx[20]; 
-                    *(_BYTE*)(i + thisx + 2580) = v14;
-                    *(_BYTE*)(thisx + 244 * i + 1564) = 0;
+                    v14 = MarkedForDetachment((char*)(36 * *(unsigned __int16*)(thisx + 2 * i + 2564) + dword_4B92E0));//call return thisxx[20]; 
+                    *(char*)(i + thisx + 2580) = v14;
+                    *(char*)(thisx + 244 * i + 1564) = 0;
                 }
             }
-            else if (v126 && *(_BYTE*)(i + thisx + 2554))
+            else if (v126 && *(char*)(i + thisx + 2554))
             {
                 v117 = *(unsigned __int8*)(i + thisx + 2554) - 1;
-                *(_BYTE*)(i + thisx + 2554) = 0;
+                *(char*)(i + thisx + 2554) = 0;
                 *(short*)(thisx + 2 * i + 2572) = 100;
-                *(_BYTE*)(v117 + thisx + 2584) = 2;
+                *(char*)(v117 + thisx + 2584) = 2;
                 *(short*)(thisx + 2 * v117 + 2564) = *(short*)(thisx + 244 * v117 + 1630);
                 *(short*)(thisx + 244 * v117 + 1630) = -1;
                 *(short*)(thisx + 2 * v117 + 2572) = v124 + 101;
-                *(_BYTE*)(v117 + thisx + 2600) = 0;
+                *(char*)(v117 + thisx + 2600) = 0;
                 v129 = 1;
             }
         }
     LABEL_139:
         if (v123 == 4)
         {
-            if (*(_BYTE*)(i + thisx + 2604) == 1)
+            if (*(char*)(i + thisx + 2604) == 1)
             {
                 if (byte_4B99CD)
                 {
@@ -48765,7 +48765,7 @@ unsigned __int16* sub_46881A(int thisx)
                     {
                         v96 = 244 * jj + *(int*)(thisx + 15628);
                         if (sub_46DCBB((int*)thisx, jj, 0))
-                            *(_BYTE*)(*(int*)(thisx + 15632) + jj) = 1;
+                            *(char*)(*(int*)(thisx + 15632) + jj) = 1;
                         else
                             ++v97;
                     }
@@ -48776,13 +48776,13 @@ unsigned __int16* sub_46881A(int thisx)
                         while (v95 >= 0)
                         {
                             ++v99;
-                            if (!*(_BYTE*)(*(int*)(thisx + 15632) + v99))
+                            if (!*(char*)(*(int*)(thisx + 15632) + v99))
                                 --v95;
                         }
                     }
                     else
                     {
-                        *(_BYTE*)(i + thisx + 2604) = 0;
+                        *(char*)(i + thisx + 2604) = 0;
                         v99 = 0;
                     }
                 }
@@ -48803,11 +48803,11 @@ unsigned __int16* sub_46881A(int thisx)
                 for (kk = 0; kk < 6; ++kk)
                 {
                     v87 = *(int*)(v94 + 28 * kk);
-                    if (v87 >= 0 && (byte_4B99CD || !*((_BYTE*)dword_4B92DC + v87)))
+                    if (v87 >= 0 && (byte_4B99CD || !*((char*)dword_4B92DC + v87)))
                     {
                         *(int*)(v92 + 28 * v88) = v87;
-                        *(_BYTE*)(v92 + 28 * v88 + 4) = *(_BYTE*)(v94 + 28 * kk + 4);
-                        *((_BYTE*)dword_4B92DC + v87) = 1;
+                        *(char*)(v92 + 28 * v88 + 4) = *(char*)(v94 + 28 * kk + 4);
+                        *((char*)dword_4B92DC + v87) = 1;
                         ++v88;
                     }
                 }
@@ -48820,32 +48820,32 @@ unsigned __int16* sub_46881A(int thisx)
                 else
                     *(short*)(v92 + 238) = v93;
                 *(short*)(thisx + 2 * i + 2564) = 0;
-                *(_BYTE*)(i + thisx + 2580) = 0;
-                *(_BYTE*)(i + thisx + 2596) = 0;
+                *(char*)(i + thisx + 2580) = 0;
+                *(char*)(i + thisx + 2596) = 0;
                 if (v88 >= 6)
                 {
                     if (*(__int16*)(v92 + 236) == -1)
                     {
-                        *(_BYTE*)(i + thisx + 2600) = 6;
-                        *(_BYTE*)(i + thisx + 2584) = 1;
+                        *(char*)(i + thisx + 2600) = 6;
+                        *(char*)(i + thisx + 2584) = 1;
                     }
                     else if (*(__int16*)(v92 + 238) == -1)
                     {
-                        *(_BYTE*)(i + thisx + 2600) = 0;
-                        *(_BYTE*)(i + thisx + 2584) = 2;
+                        *(char*)(i + thisx + 2600) = 0;
+                        *(char*)(i + thisx + 2584) = 2;
                         *(short*)(thisx + 2 * i + 2564) = i;
                         sub_476E46(*(unsigned __int16*)(thisx + 2 * i + 2564), (void*)(8 * i + word_4B9250));//ddd 4B9250
                     }
                     else
                     {
-                        *(_BYTE*)(i + thisx + 2584) = 3;
+                        *(char*)(i + thisx + 2584) = 3;
                         for (mm = 0; mm < 4; ++mm)
                         {
-                            if (!*(_BYTE*)(mm + thisx + 2584) && !*(short*)(thisx + 2 * mm + 2572))
+                            if (!*(char*)(mm + thisx + 2584) && !*(short*)(thisx + 2 * mm + 2572))
                             {
                                 *(short*)(thisx + 2 * i + 2572) = 0;
                                 *(short*)(thisx + 2 * mm + 2572) = v124 + 101;
-                                *(_BYTE*)(mm + thisx + 2554) = i + 1;
+                                *(char*)(mm + thisx + 2554) = i + 1;
                                 break;
                             }
                         }
@@ -48853,14 +48853,14 @@ unsigned __int16* sub_46881A(int thisx)
                 }
                 else
                 {
-                    *(_BYTE*)(i + thisx + 2600) = v88;
-                    *(_BYTE*)(i + thisx + 2584) = 1;
+                    *(char*)(i + thisx + 2600) = v88;
+                    *(char*)(i + thisx + 2584) = 1;
                 }
             }
             else if (v121)
             {
                 sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
-                *(_BYTE*)(i + thisx + 2600) = (*(unsigned __int8*)(i + thisx + 2600) + v121 + 8) % 8;
+                *(char*)(i + thisx + 2600) = (*(unsigned __int8*)(i + thisx + 2600) + v121 + 8) % 8;
                 v122 = 1;
             }
             else if (v120)
@@ -48869,7 +48869,7 @@ unsigned __int16* sub_46881A(int thisx)
                     sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
                 *(short*)(thisx + 2 * i + 2564) = (*(int*)(thisx + 15636) + v120 + *(unsigned __int16*)(thisx + 2 * i + 2564))
                     % *(int*)(thisx + 15636);
-                *(_BYTE*)(i + thisx + 2600) = 7;
+                *(char*)(i + thisx + 2600) = 7;
                 v82 = *(unsigned __int16*)(thisx + 2 * i + 2564);
                 v85 = 244 * v82 + *(int*)(thisx + 15628);
                 v83 = thisx + 244 * i + 1392;
@@ -48880,7 +48880,7 @@ unsigned __int16* sub_46881A(int thisx)
                         *(int*)(v83 + 28 * nn) = -1;
                     else
                         *(int*)(v83 + 28 * nn) = -(*(int*)(v85 + 28 * nn) + 2);
-                    *(_BYTE*)(v83 + 28 * nn + 4) = *(_BYTE*)(v85 + 28 * nn + 4);
+                    *(char*)(v83 + 28 * nn + 4) = *(char*)(v85 + 28 * nn + 4);
                 }
                 if (*(__int16*)(v85 + 236) < 0)
                     *(short*)(v83 + 236) = -1;
@@ -48901,14 +48901,14 @@ unsigned __int16* sub_46881A(int thisx)
             else if (v126)
             {
                 sub_46D2DE(thisx + 244 * i + 1392);
-                *(_BYTE*)(i + thisx + 2584) = 0;
-                *(_BYTE*)(i + thisx + 2600) = 0;
+                *(char*)(i + thisx + 2584) = 0;
+                *(char*)(i + thisx + 2600) = 0;
                 *(short*)(thisx + 2 * i + 2564) = 0;
                 v122 = 1;
             }
             else if (v125)
             {
-                *(_BYTE*)(i + thisx + 2596) = *(_BYTE*)(i + thisx + 2596) == 0;
+                *(char*)(i + thisx + 2596) = *(char*)(i + thisx + 2596) == 0;
                 v122 = 1;
                 sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
             }
@@ -48928,8 +48928,8 @@ unsigned __int16* sub_46881A(int thisx)
                 v81 = 3 * v18 + 1;
                 if (!(3 * v18))
                 {
-                    *(_BYTE*)(i + thisx + 2600) = 0;
-                    *(_BYTE*)(thisx + 244 * i + 1564) = 0;
+                    *(char*)(i + thisx + 2600) = 0;
+                    *(char*)(thisx + 244 * i + 1564) = 0;
                 }
             }
             if (v81 == 4)
@@ -48946,7 +48946,7 @@ unsigned __int16* sub_46881A(int thisx)
                     {
                         v76 = 244 * i1 + *(int*)(thisx + 15628);
                         if (sub_46DCBB((int*)thisx, i1, 1))
-                            *(_BYTE*)(*(int*)(thisx + 15632) + i1) = 1;
+                            *(char*)(*(int*)(thisx + 15632) + i1) = 1;
                         else
                             ++v77;
                     }
@@ -48957,19 +48957,19 @@ unsigned __int16* sub_46881A(int thisx)
                         while (v75 >= 0)
                         {
                             ++v79;
-                            if (!*(_BYTE*)(*(int*)(thisx + 15632) + v79))
+                            if (!*(char*)(*(int*)(thisx + 15632) + v79))
                                 --v75;
                         }
                     }
                     else
                     {
-                        *(_BYTE*)(i + thisx + 2604) = 0;
+                        *(char*)(i + thisx + 2604) = 0;
                         v79 = -1;
                     }
                 }
                 if (v79 < 0)
                 {
-                    *(_BYTE*)(i + thisx + 2600) = 0;
+                    *(char*)(i + thisx + 2600) = 0;
                     v81 = 1;
                 }
                 else
@@ -48982,11 +48982,11 @@ unsigned __int16* sub_46881A(int thisx)
                     for (i2 = 0; i2 < 6; ++i2)
                     {
                         v68 = *(int*)(v74 + 28 * i2);
-                        if (v68 >= 0 && (byte_4B99CD || !*((_BYTE*)dword_4B92DC + v68)))
+                        if (v68 >= 0 && (byte_4B99CD || !*((char*)dword_4B92DC + v68)))
                         {
                             *(int*)(v80 + 28 * v69) = v68;
-                            *(_BYTE*)(v80 + 28 * v69 + 4) = *(_BYTE*)(v74 + 28 * i2 + 4);
-                            *((_BYTE*)dword_4B92DC + v68) = 1;
+                            *(char*)(v80 + 28 * v69 + 4) = *(char*)(v74 + 28 * i2 + 4);
+                            *((char*)dword_4B92DC + v68) = 1;
                             ++v69;
                         }
                     }
@@ -49003,7 +49003,7 @@ unsigned __int16* sub_46881A(int thisx)
                     }
                     if (v69 < 6)
                     {
-                        *(_BYTE*)(i + thisx + 2600) = v69;
+                        *(char*)(i + thisx + 2600) = v69;
                         v81 = 1;
                     }
                 }
@@ -49015,21 +49015,21 @@ unsigned __int16* sub_46881A(int thisx)
                 {
                     v65 = sub_46D5C0((char*)thisx);
                     *(int*)(v80 + 28 * i3) = v65;
-                    if (*(_BYTE*)(thisx + 98))
+                    if (*(char*)(thisx + 98))
                     {
-                        *(_BYTE*)(v80 + 28 * i3 + 4) = rand() % 4;
+                        *(char*)(v80 + 28 * i3 + 4) = rand() % 4;
                     }
                     else
                     {
-                        v19 = MarkedForDetachment((_BYTE*)(36 * v65 + dword_4B92E0));//call return thisxx[20]; 
-                        *(_BYTE*)(v80 + 28 * i3 + 4) = v19;
+                        v19 = MarkedForDetachment((char*)(36 * v65 + dword_4B92E0));//call return thisxx[20]; 
+                        *(char*)(v80 + 28 * i3 + 4) = v19;
                     }
-                    *((_BYTE*)dword_4B92DC + v65) = 1;
+                    *((char*)dword_4B92DC + v65) = 1;
                 }
             }
             if (*(__int16*)(v80 + 236) < 0)
             {
-                if (*(_BYTE*)(thisx + 81))
+                if (*(char*)(thisx + 81))
                 {
                     *(short*)(thisx + 2 * i + 2564) = rand() % dword_4B92D8;
                 }
@@ -49097,17 +49097,17 @@ unsigned __int16* sub_46881A(int thisx)
                 }
                 *(short*)(v80 + 238) = v55;
             }
-            *(_BYTE*)(i + thisx + 2584) = 3;
+            *(char*)(i + thisx + 2584) = 3;
         }
     }
     for (i = 0; i < 4; ++i)
     {
         if (v133[i] || v129)
-            sub_46B8AE((_BYTE*)thisx, i);
+            sub_46B8AE((char*)thisx, i);
     }
-    for (i = 0; i < 4 && *(_BYTE*)(i + thisx + 2584) == 3; ++i)
+    for (i = 0; i < 4 && *(char*)(i + thisx + 2584) == 3; ++i)
         ;
-    if (i != 4 || *(_BYTE*)(thisx + 2516))
+    if (i != 4 || *(char*)(thisx + 2516))
     {
         sub_49C15E((int)v131);
         v131[0] = dword_4B9248;
@@ -49124,7 +49124,7 @@ unsigned __int16* sub_46881A(int thisx)
             {
                 wsprintfA(String, "%d>", v24);
                 v28 = *(unsigned __int8*)(i + thisx + 2584);
-                if (!*(_BYTE*)(i + thisx + 2584))
+                if (!*(char*)(i + thisx + 2584))
                 {
                     result = (unsigned __int16*)sub_47B91A(
                         160 * (i / 2) + 64,
@@ -49143,7 +49143,7 @@ unsigned __int16* sub_46881A(int thisx)
                     result = (unsigned __int16*)sub_47B91A(160 * (i / 2) + 48, 120 * (i % 2) + 48, String, 0, -1);
                     continue;
                 case 4:
-                    if (*(_BYTE*)(i + thisx + 2600) == 7)
+                    if (*(char*)(i + thisx + 2600) == 7)
                     {
                         result = (unsigned __int16*)sub_47B91A(160 * (i / 2) + 16, 120 * (i % 2) + 88, String, 0, -1);
                         continue;
@@ -49262,9 +49262,9 @@ unsigned __int16* sub_46881A(int thisx)
                     v29 = lstrlenA((LPCSTR)(thisx + 244 * i10 + 1564));
                     if (v29 + 3 >= 64)
                         v29 = 61;
-                    *(_BYTE*)(v29 + v30 + 172) = *((_BYTE*)&v41 + 3 * v31);
-                    *(_BYTE*)(v29 + v30 + 173) = *((_BYTE*)&v41 + 3 * v31 + 1);
-                    *(_BYTE*)(v29 + v30 + 174) = 0;
+                    *(char*)(v29 + v30 + 172) = *((char*)&v41 + 3 * v31);
+                    *(char*)(v29 + v30 + 173) = *((char*)&v41 + 3 * v31 + 1);
+                    *(char*)(v29 + v30 + 174) = 0;
                     v49[i10] = 0;
                     ++v31;
                 }
@@ -49273,12 +49273,12 @@ unsigned __int16* sub_46881A(int thisx)
     }
     result = (unsigned __int16*)thisx;
     *(int*)(thisx + 108) = 21;
-    *(_BYTE*)(thisx + 2516) = 2;
+    *(char*)(thisx + 2516) = 2;
     return result;
 }
 
 
-void sub_46B8AE(_BYTE* thisx, int a2)
+void sub_46B8AE(char* thisx, int a2)
 {
 
     Warning();//修正堆栈
@@ -49542,7 +49542,7 @@ void sub_46B8AE(_BYTE* thisx, int a2)
                         v103 = v106;
                         v104 = v93 + 8;
                         v88 = a2;
-                        v89 = (unsigned __int8)sub_401710((_BYTE*)(36 * v94 + dword_4B92E0));
+                        v89 = (unsigned __int8)sub_401710((char*)(36 * v94 + dword_4B92E0));
                         v87 = (unsigned short*)word_4B9290;
                         sub_4A1307((int)word_4B9290, (Concurrency::details::HardwareAffinity*)(8 * a2 + word_4B9250));//ddd 4B9250
                         sub_485E5A((int)dword_4B93A4 + 24 * v89, (unsigned short*)word_4B9290);
@@ -49552,7 +49552,7 @@ void sub_46B8AE(_BYTE* thisx, int a2)
                         SetRect(&rc, 24 * v92, 0, 24, 24);
                         v102 = dword_4B9234;
                         sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v102, (int*)&rc);
-                        if (!thisx[81] && *((_BYTE*)dword_4B92DC + v94))
+                        if (!thisx[81] && *((char*)dword_4B92DC + v94))
                         {
                             v103 = v106;
                             v104 = v93 + 4;
@@ -49687,7 +49687,7 @@ void sub_46B8AE(_BYTE* thisx, int a2)
                 sub_47900E(&v102, 1, v33, dword_4B9248);
                 v103 = v106;
                 v104 = yTop + 60;
-                v32 = (unsigned __int8)sub_401710((_BYTE*)(36 * v33 + dword_4B92E0));
+                v32 = (unsigned __int8)sub_401710((char*)(36 * v33 + dword_4B92E0));
                 sub_4A1307((int)word_4B9290, (Concurrency::details::HardwareAffinity*)(8 * a2 + word_4B9250));//ddd 4B9250
                 sub_485E5A((int)dword_4B93A4 + 24 * v32, (unsigned short*)word_4B9290);
                 v36 = (char)thisx[244 * a2 + 1396 + 28 * v96];
@@ -49737,7 +49737,7 @@ void sub_46B8AE(_BYTE* thisx, int a2)
                 sub_47900E(&v102, 1, v28, dword_4B9248);
                 v103 = v31;
                 v104 = v29 + 9;
-                v27 = (unsigned __int8)sub_401710((_BYTE*)(36 * v28 + dword_4B92E0));
+                v27 = (unsigned __int8)sub_401710((char*)(36 * v28 + dword_4B92E0));
                 sub_4A1307((int)word_4B9290, (Concurrency::details::HardwareAffinity*)(8 * a2 + word_4B9250));//ddd 4B9250
                 sub_485E5A((int)dword_4B93A4 + 24 * v27, (unsigned short*)word_4B9290);
                 SetRect(&rc, 24 * v30 + 1, 0, 19, 8);
@@ -49797,9 +49797,9 @@ void sub_46B8AE(_BYTE* thisx, int a2)
 }
 
 
-_BYTE* sub_46D26F(_BYTE* thisx)
+char* sub_46D26F(char* thisx)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     thisx[11] = 0;
     thisx[10] = 0;
@@ -49825,23 +49825,23 @@ int sub_46D2DE(int thisx)
 
     for (i = 0; i < 6; ++i)
     {
-        sub_46D26F((_BYTE*)(thisx + 28 * i));
+        sub_46D26F((char*)(thisx + 28 * i));
         *(int*)(thisx + 28 * i + 12) = thisx;
     }
     memset((void*)(thisx + 172), 0, 0x40u);
-    *(_BYTE*)(thisx + 240) = -1;
-    *(_BYTE*)(thisx + 241) = -1;
+    *(char*)(thisx + 240) = -1;
+    *(char*)(thisx + 241) = -1;
     *(int*)(thisx + 168) = 0;
     *(short*)(thisx + 236) = -1;
     *(short*)(thisx + 238) = -1;
     result = thisx;
-    *(_BYTE*)(thisx + 242) = 0;
-    *(_BYTE*)(thisx + 243) = 0;
+    *(char*)(thisx + 242) = 0;
+    *(char*)(thisx + 243) = 0;
     return result;
 }
 
 
-void* sub_46D387(_BYTE* thisx)
+void* sub_46D387(char* thisx)
 {
     int i; // [esp+4h] [ebp-4h]
 
@@ -49942,7 +49942,7 @@ int sub_46D56B(__int16* thisx, int a2, int a3)
 }
 
 
-int sub_46D5C0(_BYTE* thisx)
+int sub_46D5C0(char* thisx)
 {
     //    int j; // [esp+4h] [ebp-10h]
     //    int v3; // [esp+8h] [ebp-Ch]
@@ -49971,7 +49971,7 @@ int sub_46D5C0(_BYTE* thisx)
     v6 = rand() % (int)(Size - v3);
     for (k = 0; k < (int)Size; ++k)
     {
-        if (*((_BYTE*)dword_4B92DC + k))
+        if (*((char*)dword_4B92DC + k))
         {
             if (--v3 <= 0)
             {
@@ -50119,14 +50119,14 @@ void sub_46D747(int thisx)
                             v2 = unknown_libname_18((char*)(dword_4B92E0 + 36 * j));
                             if (!lstrcmpiA(String1, v2))
                             {
-                                v5 = MarkedForDetachment((_BYTE*)(dword_4B92E0 + 36 * j));//call return thisxx[20]; 
+                                v5 = MarkedForDetachment((char*)(dword_4B92E0 + 36 * j));//call return thisxx[20]; 
                                 break;
                             }
                         }
                         if (j == Size)
                             j = -1;
                         *(int*)(v7 + 28 * ((unsigned __int8)v11 - 4)) = j;
-                        *(_BYTE*)(v7 + 28 * ((unsigned __int8)v11 - 4) + 4) = v5;
+                        *(char*)(v7 + 28 * ((unsigned __int8)v11 - 4) + 4) = v5;
                     }
                     break;
                 }
@@ -50155,7 +50155,7 @@ BOOL sub_46DCBB(int* thisx, int a2, int a3)
         v4 = *(int*)(244 * a2 + thisx[3907] + 28 * i);
         if (v4 >= 0)
         {
-            if (*((_BYTE*)dword_4B92DC + v4))
+            if (*((char*)dword_4B92DC + v4))
             {
                 if (a3)
                     return 1;
@@ -50203,8 +50203,8 @@ int sub_46DD55(int a1, double a2, double a3, double a4)
 
     *(int*)(a1 + 104) = 23;
     *(int*)(a1 + 2540) = 0;
-    *(_BYTE*)(a1 + 2516) = 1;
-    *(_BYTE*)(a1 + 2562) = 0;
+    *(char*)(a1 + 2516) = 1;
+    *(char*)(a1 + 2562) = 0;
     *(int*)(a1 + 2528) = 0;
     memset((void*)(a1 + 2620), 0, 8u);
     memset((void*)(a1 + 2564), 0, 0x10u);
@@ -50214,20 +50214,20 @@ int sub_46DD55(int a1, double a2, double a3, double a4)
     memset((void*)(a1 + 13092), 0, 8u);
     for (i = 0; i < 4; ++i)
     {
-        *(_BYTE*)(i + a1 + 2616) = byte_4B9988[(*(int*)(a1 + 2368) + 1) * i] + 1;
+        *(char*)(i + a1 + 2616) = byte_4B9988[(*(int*)(a1 + 2368) + 1) * i] + 1;
         if (*(unsigned __int8*)(i + a1 + 2616) > (int)(unsigned __int8)byte_4B9986)
-            *(_BYTE*)(i + a1 + 2616) = 0;
+            *(char*)(i + a1 + 2616) = 0;
     }
     for (i = 0; i < 4; ++i)
     {
         v16 = a1 + 244 * i + 1392;
         v15 = *(int*)(a1 + 244 * i + 1560);
-        *(_BYTE*)(a1 + 244 * i + 1634) = 1;
+        *(char*)(a1 + 244 * i + 1634) = 1;
         for (j = 0; j < 4; ++j)
         {
             v14 = a1 + 244 * j + 1392;
             if (v15 < *(int*)(a1 + 244 * j + 1560))
-                ++* (_BYTE*)(v16 + 242);
+                ++* (char*)(v16 + 242);
         }
     }
     for (i = 0; i < 4; ++i)
@@ -50236,7 +50236,7 @@ int sub_46DD55(int a1, double a2, double a3, double a4)
     {
         sub_41BF1D(a1 + 612 * i + 2628);
         sub_474FB0((int*)(a1 + 612 * i + 2628), 0);
-        sub_474F30((_BYTE*)(a1 + 612 * i + 2628), 0);
+        sub_474F30((char*)(a1 + 612 * i + 2628), 0);
     }
     sub_4898D3((int*)(a1 + 128));
     sub_464A8A((char*)a1);
@@ -50277,7 +50277,7 @@ int sub_46DD55(int a1, double a2, double a3, double a4)
             && (!*(int*)(a1 + 2368) || i <= *(unsigned __int8*)(m + a1 + 2612));
             ++i)
         {
-            v6 = (unsigned __int8)sub_401710((_BYTE*)(36
+            v6 = (unsigned __int8)sub_401710((char*)(36
                 * *(int*)(28 * *(unsigned __int8*)(a1 + i + 2 * m + 2580)
                     + a1
                     + 244 * m
@@ -50312,7 +50312,7 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
     int v44; // [esp+8Ch] [ebp-4Ch]
     int v43; // [esp+88h] [ebp-50h]
     int v42; // [esp+84h] [ebp-54h]
-    _BYTE* v41; // [esp+80h] [ebp-58h]
+    char* v41; // [esp+80h] [ebp-58h]
     char* v40; // [esp+7Ch] [ebp-5Ch]
     int v39; // [esp+78h] [ebp-60h]
     char tc_55[4]; //8
@@ -50368,19 +50368,19 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
         v45 = 0;
         v44 = 0;
         v40 = (char*)(thisx + *(unsigned __int8*)(j + thisx + 2612) + 2 * j + 2580);
-        v41 = (_BYTE*)(thisx + j + 2596);
+        v41 = (char*)(thisx + j + 2596);
         v42 = *(int*)(thisx + 2368) + 1;
         v43 = *(unsigned __int8*)(j + thisx + 2616) - 1;
         v4 = *(unsigned __int8*)(thisx + 2516);
-        if (!*(_BYTE*)(thisx + 2516))
+        if (!*(char*)(thisx + 2516))
         {
-            if (*(_BYTE*)(j + thisx + 2616) || *(unsigned __int8*)(j + thisx + 2612) >= v42)
+            if (*(char*)(j + thisx + 2616) || *(unsigned __int8*)(j + thisx + 2612) >= v42)
             {
                 if (v43 >= 0)
                 {
                     if (*(unsigned __int8*)(j + thisx + 2612) < v42)
                     {
-                        LOBYTE(v4) = *(_BYTE*)(j + thisx + 2616) - 1;
+                        LOBYTE(v4) = *(char*)(j + thisx + 2616) - 1;
                         v7 = sub_476D78(v4);
                         LOBYTE(v8) = v43;
                         v38 = v7 - sub_476D29(v8);
@@ -50401,13 +50401,13 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
             }
             else
             {
-                if (!*(_BYTE*)(j + thisx + 2612) || *(_BYTE*)(thisx + 2 * j + 2588) == 2)
+                if (!*(char*)(j + thisx + 2612) || *(char*)(thisx + 2 * j + 2588) == 2)
                 {
                     v32 = -1;
                     v34 = 0;
                     for (k = 0; k < 6; ++k)
                     {
-                        if (*(_BYTE*)(j + thisx + 2612) != 1 || k != *(unsigned __int8*)(thisx + 2 * j + 2580))
+                        if (*(char*)(j + thisx + 2612) != 1 || k != *(unsigned __int8*)(thisx + 2 * j + 2580))
                         {
                             v30 = 28 * k + thisx + 244 * j + 1392;
                             v5 = *(__int16*)(v30 + 8);
@@ -50424,13 +50424,13 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
                     *v40 = v32;
                     v39 = 1;
                 }
-                if (!*(_BYTE*)(j + thisx + 2612) || *(_BYTE*)(thisx + 2 * j + 2588) == 3)
+                if (!*(char*)(j + thisx + 2612) || *(char*)(thisx + 2 * j + 2588) == 3)
                     v35 = 1;
             }
         }
         if (v35 && (unsigned __int8)*v40 < 6u)
         {
-            if ((*(_BYTE*)(j + thisx + 2612) != 1 || *(unsigned __int8*)(thisx + 2 * j + 2580) != (unsigned __int8)*v40)
+            if ((*(char*)(j + thisx + 2612) != 1 || *(unsigned __int8*)(thisx + 2 * j + 2580) != (unsigned __int8)*v40)
                 && *(unsigned __int8*)(j + thisx + 2612) <= *(int*)(thisx + 2368))
             {
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
@@ -50439,20 +50439,20 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
                     + 1392
                     + 28
                     * *(unsigned __int8*)(j + thisx + 2580));
-                *(_BYTE*)(thisx + (unsigned __int8)(*(_BYTE*)(j + thisx + 2612))++ + 2 * j + 2588) = 1;
-                if (*(_BYTE*)(j + thisx + 2612) == 1)
+                *(char*)(thisx + (unsigned __int8)(*(char*)(j + thisx + 2612))++ + 2 * j + 2588) = 1;
+                if (*(char*)(j + thisx + 2612) == 1)
                 {
-                    *(_BYTE*)(thisx + 2 * j + 2581) = *v40;
-                    *(_BYTE*)(thisx + 2 * j + 2589) = 0;
+                    *(char*)(thisx + 2 * j + 2581) = *v40;
+                    *(char*)(thisx + 2 * j + 2589) = 0;
                 }
             }
         }
         else if (v45)
         {
-            if (*(_BYTE*)(j + thisx + 2612))
+            if (*(char*)(j + thisx + 2612))
             {
                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-                *(_BYTE*)(thisx + (unsigned __int8)-- * (_BYTE*)(j + thisx + 2612) + 2 * j + 2588) = 4;
+                *(char*)(thisx + (unsigned __int8)-- * (char*)(j + thisx + 2612) + 2 * j + 2588) = 4;
                 v39 = 1;
             }
         }
@@ -50461,23 +50461,23 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
             sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
             v39 = 1;
             *v41 = ((unsigned __int8)*v41 + 1) % 3;
-            *(_BYTE*)(j + thisx + 13092) = 0;
+            *(char*)(j + thisx + 13092) = 0;
         }
         else if (v38)
         {
             sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
             *v40 = ((unsigned __int8)*v40 + v38 + 7) % 7;
-            *(_BYTE*)(j + thisx + 13092) = 0;
+            *(char*)(j + thisx + 13092) = 0;
             v39 = 1;
         }
         else if (v37 && *v41 == 2)
         {
-            *(_BYTE*)(j + thisx + 13092) = (*(unsigned __int8*)(j + thisx + 13092) + v37 + 4) % 4;
+            *(char*)(j + thisx + 13092) = (*(unsigned __int8*)(j + thisx + 13092) + v37 + 4) % 4;
             sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
             v39 = 1;
         }
         v36 = 160 * (j / 2) + 20;
-        if (*(_BYTE*)(thisx + 2516) != 2)
+        if (*(char*)(thisx + 2516) != 2)
         {
             for (m = 0;
                 m < 2
@@ -50494,8 +50494,8 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
                 {
                     v24 = 28 * v28 + thisx + 244 * j + 1392;
                     v26 = *(int*)v24;
-                    v23 = *(_BYTE*)(v24 + 4);
-                    v25 = (unsigned __int8)sub_401710((_BYTE*)(dword_4B92E0 + 36 * *(int*)v24));
+                    v23 = *(char*)(v24 + 4);
+                    v25 = (unsigned __int8)sub_401710((char*)(dword_4B92E0 + 36 * *(int*)v24));
                 }
                 sub_4A1307(8 * (m + 2 * j) + (int)word_4B9290, (Concurrency::details::HardwareAffinity*)(8 * j + (int)word_4B9250)); // ddd word_4B9290   4B9250
                 sub_485E5A((int)dword_4B93A4 + 24 * v25, (unsigned __int16*)(8 * (m + 2 * j) + word_4B9290));// ddd 4B9290
@@ -50505,9 +50505,9 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
                 sub_475050((char*)v27, m + 2 * j);
                 sub_41D84A((int)v27);//初始化角色属性
                 sub_42371C((int)v27);
-                if (v24 && *(_BYTE*)(v24 + 10))
+                if (v24 && *(char*)(v24 + 10))
                 {
-                    sub_475D90((_BYTE*)(thisx + 196 * (j + 4 * m) + 7524), *(_BYTE*)(v24 + 10) - 1);
+                    sub_475D90((char*)(thisx + 196 * (j + 4 * m) + 7524), *(char*)(v24 + 10) - 1);
                     sub_41F24C((int)v27, (Concurrency::details::SchedulerProxy*)(thisx + 196 * (j + 4 * m) + 7524));
                 }
                 else
@@ -50515,26 +50515,26 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
                     sub_41F6DE((int*)v27);
                 }
                 v29 = *(unsigned __int8*)(thisx + m + 2 * j + 2588);
-                if (*(_BYTE*)(j + thisx + 2612)
+                if (*(char*)(j + thisx + 2612)
                     && m == 1
                     && *(unsigned __int8*)(thisx + 2 * j + 2580) == *(unsigned __int8*)(thisx + 2 * j + 2581)
                     || !v24)
                 {
                     v36 += 320;
                 }
-                if (*(_BYTE*)(thisx + m + 2 * j + 2588))
+                if (*(char*)(thisx + m + 2 * j + 2588))
                 {
                     switch (v29)
                     {
                     case 1:
                         v22 = sub_426090((int*)v27);
                         if (v22 <= -3200)
-                            *(_BYTE*)(thisx + m + 2 * j + 2588) = 2;
+                            *(char*)(thisx + m + 2 * j + 2588) = 2;
                         sub_475D30((int*)v27, v22 - 400);
                         sub_426050((int*)v27, 10);
                         break;
                     case 2:
-                        *(_BYTE*)(thisx + m + 2 * j + 2588) = 3;
+                        *(char*)(thisx + m + 2 * j + 2588) = 3;
                         break;
                     case 3:
                         sub_475D30((int*)v27, 34000);
@@ -50542,7 +50542,7 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
                     case 4:
                         v21 = sub_426090((int*)v27);
                         if (v21 - 100 * v36 <= 500)
-                            *(_BYTE*)(thisx + m + 2 * j + 2588) = 0;
+                            *(char*)(thisx + m + 2 * j + 2588) = 0;
                         sub_475D30((int*)(int*)v27, v21 - 500);
                         sub_426050((int*)v27, 10);
                         break;
@@ -50573,15 +50573,15 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
         if (!*(int*)(thisx + 2368))
             break;
         result = (unsigned __int16*)(n + thisx);
-        if (*(_BYTE*)(n + thisx + 2608))
+        if (*(char*)(n + thisx + 2608))
             LABEL_92:
         sub_40230C(thisx + 612 * n + 2628);
     }
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         for (ii = 0; ii < 4 * *(int*)(thisx + 2368) + 4; ++ii)
         {
-            if (*(_BYTE*)((ii >= 4) + 2 * (ii % 4) + thisx + 2588) != 3)
+            if (*(char*)((ii >= 4) + 2 * (ii % 4) + thisx + 2588) != 3)
             {
                 *(int*)(thisx + 2528) = 0;
                 break;
@@ -50599,20 +50599,20 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
                     v19 = *(unsigned __int8*)(thisx + ((*(int*)(thisx + 2368) == 0) + 1) * jj + 2580);
                     v17 = thisx + 244 * (jj / (*(int*)(thisx + 2368) + 1)) + 1392;
                     v16 = 28 * v19 + v17;
-                    *(_BYTE*)(v17 + jj % (*(int*)(thisx + 2368) + 1) + 240) = v19;
+                    *(char*)(v17 + jj % (*(int*)(thisx + 2368) + 1) + 240) = v19;
                     v18 = *(int*)v16;
                     *(int*)(v16 + 16) = 1;
                     *(short*)(thisx + 2 * jj + 2564) = v18;
                     word_4B99CE[jj] = *(short*)(v16 + 8);
-                    *(_BYTE*)(jj + thisx + 2580) = *(_BYTE*)(v16 + 4);
-                    *(_BYTE*)(jj + thisx + 2403) = *(_BYTE*)(v16 + 10);
-                    *(_BYTE*)(jj + thisx + 2411) = *(_BYTE*)(v16 + 11);
+                    *(char*)(jj + thisx + 2580) = *(char*)(v16 + 4);
+                    *(char*)(jj + thisx + 2403) = *(char*)(v16 + 10);
+                    *(char*)(jj + thisx + 2411) = *(char*)(v16 + 11);
                 }
-                *(_BYTE*)(thisx + 29) = *(_BYTE*)(thisx + *(unsigned __int8*)(thisx + 2476) + 2478);
-                byte_4B9999 = *(_BYTE*)(thisx + 29);
+                *(char*)(thisx + 29) = *(char*)(thisx + *(unsigned __int8*)(thisx + 2476) + 2478);
+                byte_4B9999 = *(char*)(thisx + 29);
                 result = (unsigned __int16*)thisx;
                 *(int*)(thisx + 108) = 11;
-                *(_BYTE*)(thisx + 2516) = 2;
+                *(char*)(thisx + 2516) = 2;
             }
         }
     }
@@ -50687,7 +50687,7 @@ void sub_46F18C(int thisx, int a2)
     char v52; // [esp+86h] [ebp-1A6h]
     __int16 v51; // [esp+84h] [ebp-1A8h]
     CHAR v50[4]; // [esp+80h] [ebp-1ACh] BYREF
-    _BYTE* v49; // [esp+7Ch] [ebp-1B0h]
+    char* v49; // [esp+7Ch] [ebp-1B0h]
     int v48; // [esp+78h] [ebp-1B4h]
     int v47; // [esp+74h] [ebp-1B8h]
     int v46; // [esp+70h] [ebp-1BCh]
@@ -50703,7 +50703,7 @@ void sub_46F18C(int thisx, int a2)
     int v36; // [esp+48h] [ebp-1E4h]
     int v35; // [esp+44h] [ebp-1E8h]
     int v34; // [esp+40h] [ebp-1ECh]
-    _BYTE* v33; // [esp+3Ch] [ebp-1F0h]
+    char* v33; // [esp+3Ch] [ebp-1F0h]
     int ii; // [esp+38h] [ebp-1F4h]
     int v31[4]; // [esp+28h] [ebp-204h]
     unsigned __int8 v30; // [esp+24h] [ebp-208h]
@@ -50899,14 +50899,14 @@ void sub_46F18C(int thisx, int a2)
             sub_47B7ED(v98, yTop + 32, Buffer, 0, dword_4B9248);
             if (*(unsigned __int8*)(a2 + thisx + 2596) > 1u)
             {
-                if (*(_BYTE*)(a2 + thisx + 2596) == 2)
+                if (*(char*)(a2 + thisx + 2596) == 2)
                 {
                     for (ii = 0; ii < 3; ++ii)
                     {
                         v14 = sub_4266B0(v85, ii);
                         v31[ii + 1] = v14;
                     }
-                    v33 = (_BYTE*)(84 * *(__int16*)(v84 + 236) + dword_4B92D4);
+                    v33 = (char*)(84 * *(__int16*)(v84 + 236) + dword_4B92D4);
                     for (ii = 0; ii < 3; ++ii)
                     {
                         v29 = sub_475090(v33, ii);
@@ -50933,7 +50933,7 @@ void sub_46F18C(int thisx, int a2)
                     for (ii = 0; ii < 3; ++ii)
                     {
                         v26 = v31[ii + 1];
-                        if (*(_BYTE*)(a2 + thisx + 13092))
+                        if (*(char*)(a2 + thisx + 13092))
                         {
                             if (ii)
                                 break;
@@ -50952,7 +50952,7 @@ void sub_46F18C(int thisx, int a2)
                             sub_47B91A(xLeft + 32, yTop + 16 * ii + 56, (LPCSTR)&byte_4B46C0[27 * v26], 0, dword_4B9248);
                         }
                     }
-                    if (*(_BYTE*)(a2 + thisx + 13092))
+                    if (*(char*)(a2 + thisx + 13092))
                         sub_47BD8E(xLeft + 32, yTop + 72, v31[*(unsigned __int8*)(a2 + thisx + 13092)], dword_4B9248);
                 }
             }
@@ -50995,7 +50995,7 @@ void sub_46F18C(int thisx, int a2)
                 v46 = (unsigned __int8)sub_426630(v85);
                 v47 = (unsigned __int8)sub_426650(v85);
                 v48 = (unsigned __int8)sub_426690(v85);
-                v49 = (_BYTE*)(84 * *(__int16*)(v84 + 236) + dword_4B92D4);
+                v49 = (char*)(84 * *(__int16*)(v84 + 236) + dword_4B92D4);
                 for (jj = 0; jj < 5; ++jj)
                     *(&v40 + jj) += sub_43EE02((unsigned char*)v49, jj + 1, v84);
                 v10 = sub_43EE02((unsigned char*)v49, 9, v84);
@@ -51107,7 +51107,7 @@ __int16 sub_4705D7(int thisx, int a2, int a3)
             {
                 v7 += 96;
             }
-            v4 = *(_BYTE*)(*(int*)(thisx + 12) + 242);
+            v4 = *(char*)(*(int*)(thisx + 12) + 242);
             switch (v4)
             {
             case 2:
@@ -51140,7 +51140,7 @@ __int16 sub_47075A(int* thisx)
     __int16 v1; // bx
     __int16 v4; // [esp+8h] [ebp-4h]
 
-    v1 = (unsigned __int8)sub_4265B0((_BYTE*)(dword_4B92E0 + 36 * *thisx));
+    v1 = (unsigned __int8)sub_4265B0((char*)(dword_4B92E0 + 36 * *thisx));
     v4 = (char)sub_43EE02((unsigned __int8*)(dword_4B92D4 + 84 * *(__int16*)(thisx[3] + 236)), 0, thisx[3]) + v1;
     if (v4 <= 0)
         return 1;
@@ -51188,11 +51188,11 @@ int sub_47082B(int thisx)
 
     *(int*)(thisx + 104) = 24;
     *(int*)(thisx + 2540) = 0;
-    *(_BYTE*)(thisx + 2516) = 1;
-    *(_BYTE*)(thisx + 2562) = 0;
+    *(char*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2562) = 0;
     dword_4B91E0 = 0;
     *(int*)(thisx + 2540) = 0;
-    *(_BYTE*)(thisx + 2562) = 0;
+    *(char*)(thisx + 2562) = 0;
     *(short*)(thisx + 2564) = 0;
     *(short*)(thisx + 2566) = 0;
     v4 = 4;
@@ -51202,8 +51202,8 @@ int sub_47082B(int thisx)
         {
             if (*(unsigned __int8*)(j + thisx + 13044) == i)
             {
-                *(_BYTE*)(v4 + thisx + 13044) = j;
-                *(_BYTE*)(thisx + 244 * j + 1635) = i;
+                *(char*)(v4 + thisx + 13044) = j;
+                *(char*)(thisx + 244 * j + 1635) = i;
                 ++v4;
             }
             if (v4 >= 8)
@@ -51300,7 +51300,7 @@ int* sub_470C48(int thisx)
 
 
     v16 = 0;
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         for (i = 0; i < (unsigned __int8)byte_4B9986; ++i)
         {
@@ -51312,7 +51312,7 @@ int* sub_470C48(int thisx)
         if (v16)
             *(int*)(thisx + 2540) = 240;
     }
-    if ((int)++ * (int*)(thisx + 2540) <= 240 && (*(_BYTE*)(thisx + 2562) || *(int*)(thisx + 2540) <= 60))
+    if ((int)++ * (int*)(thisx + 2540) <= 240 && (*(char*)(thisx + 2562) || *(int*)(thisx + 2540) <= 60))
         goto LABEL_30;
     while (*(unsigned __int16*)(thisx + 2564) < 4u)
     {
@@ -51330,7 +51330,7 @@ int* sub_470C48(int thisx)
         *(short*)(thisx + 2566) = 0;
     }
     *(int*)(thisx + 2540) = 0;
-    if ((unsigned __int8)++ * (_BYTE*)(thisx + 2562) < 5u)
+    if ((unsigned __int8)++ * (char*)(thisx + 2562) < 5u)
     {
     LABEL_30:
         if (!*(int*)(thisx + 2540))
@@ -51370,7 +51370,7 @@ int* sub_470C48(int thisx)
             result = (int*)thisx;
             *(int*)(thisx + 108) = 23;
         }
-        *(_BYTE*)(thisx + 2516) = 2;
+        *(char*)(thisx + 2516) = 2;
     }
     return result;
 }
@@ -51438,9 +51438,9 @@ int sub_4710B5(int thisx)
 
     *(int*)(thisx + 104) = 25;
     *(int*)(thisx + 2540) = 0;
-    *(_BYTE*)(thisx + 2516) = 1;
-    *(_BYTE*)(thisx + 2562) = 0;
-    *(_BYTE*)(thisx + 2580) = 0;
+    *(char*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2562) = 0;
+    *(char*)(thisx + 2580) = 0;
     sub_440B78((int)byte_4BDB28);
     sub_4A02E9((int*)byte_4BDC60, dword_4B9248, 0, 0, dword_4B9248);
     sub_49DB90(v28);
@@ -51456,11 +51456,11 @@ int sub_4710B5(int thisx)
     {
         v24 = thisx + 244 * i + 1392;
         v23 = *(int*)(thisx + 244 * i + 1560);
-        *(_BYTE*)(thisx + 244 * i + 1634) = 1;
+        *(char*)(thisx + 244 * i + 1634) = 1;
         for (j = 0; j < 4; ++j)
         {
             if (v23 < *(int*)(thisx + 244 * j + 1560))
-                ++* (_BYTE*)(v24 + 242);
+                ++* (char*)(v24 + 242);
         }
     }
     for (i = 0; i < 4; ++i)
@@ -51468,11 +51468,11 @@ int sub_4710B5(int thisx)
         for (k = 0; k < 6; ++k)
         {
             for (m = 0; m < 5; ++m)
-                *((_BYTE*)&v26[6 * m + 14] + 6 * i + k) = 1;
+                *((char*)&v26[6 * m + 14] + 6 * i + k) = 1;
             v16 = *(unsigned __int8*)(thisx + 244 * i + 1634);
             v20 = v16 + 10 * *(__int16*)(28 * k + thisx + 244 * i + 1392 + 6);
             v17 = v16 + 10 * *(unsigned __int8*)(28 * k + thisx + 244 * i + 1392 + 26);
-            v18 = v16 + 10 * *(_BYTE*)(28 * k + thisx + 244 * i + 1392 + 20);
+            v18 = v16 + 10 * *(char*)(28 * k + thisx + 244 * i + 1392 + 20);
             v19 = v16
                 + 10
                 * (*(__int16*)(28 * k + thisx + 244 * i + 1392 + 22) - 2 * *(__int16*)(28 * k + thisx + 244 * i + 1392 + 24));
@@ -51485,7 +51485,7 @@ int sub_4710B5(int thisx)
                 {
                     v11 = v14 + 10 * *(__int16*)(28 * ii + thisx + 244 * n + 1392 + 6);
                     v12 = v14 + 10 * *(unsigned __int8*)(28 * ii + thisx + 244 * n + 1392 + 26);
-                    v10 = v14 + 10 * *(_BYTE*)(28 * ii + thisx + 244 * n + 1392 + 20);
+                    v10 = v14 + 10 * *(char*)(28 * ii + thisx + 244 * n + 1392 + 20);
                     v9 = v14
                         + 10
                         * (*(__int16*)(28 * ii + thisx + 244 * n + 1392 + 22)
@@ -51493,9 +51493,9 @@ int sub_4710B5(int thisx)
                     if (!(v10 / 10))
                         v11 = 0;
                     if (v18 < (int)v10 || v18 / 10 <= 1)
-                        ++* ((_BYTE*)&v26[14] + 6 * i + k);
+                        ++* ((char*)&v26[14] + 6 * i + k);
                     if (v20 < v11 || !(v18 / 10))
-                        ++* ((_BYTE*)&v26[20] + 6 * i + k);
+                        ++* ((char*)&v26[20] + 6 * i + k);
                     if (v20 <= 0)
                         v3 = -v20;
                     else
@@ -51505,11 +51505,11 @@ int sub_4710B5(int thisx)
                     else
                         v2 = v11;
                     if (v3 > v2 && v10 / 10 || !(v18 / 10))
-                        ++* ((_BYTE*)&v26[26] + 6 * i + k);
+                        ++* ((char*)&v26[26] + 6 * i + k);
                     if (v17 < v12 || !(v17 / 10))
-                        ++* ((_BYTE*)&v26[32] + 6 * i + k);
+                        ++* ((char*)&v26[32] + 6 * i + k);
                     if (v19 < v9)
-                        ++* ((_BYTE*)&v26[38] + 6 * i + k);
+                        ++* ((char*)&v26[38] + 6 * i + k);
                 }
             }
         }
@@ -51521,7 +51521,7 @@ int sub_4710B5(int thisx)
         {
             for (kk = 0; kk < 6; ++kk)
             {
-                if (*((_BYTE*)&v26[6 * jj + 14] + 6 * i + kk) == 1)
+                if (*((char*)&v26[6 * jj + 14] + 6 * i + kk) == 1)
                     ++v8;
             }
         }
@@ -51532,7 +51532,7 @@ int sub_4710B5(int thisx)
             {
                 for (mm = 0; mm < 6; ++mm)
                 {
-                    if (*((_BYTE*)&v26[6 * jj + 14] + 6 * i + mm) == 1 && --v7 == -1)
+                    if (*((char*)&v26[6 * jj + 14] + 6 * i + mm) == 1 && --v7 == -1)
                     {
                         *(short*)(thisx + 2 * jj + 2564) = mm + 10 * i;
                         break;
@@ -51560,7 +51560,7 @@ int* sub_47188C(int thisx)
     int v17; // [esp+130h] [ebp-3Ch]
     int i; // [esp+12Ch] [ebp-40h]
     int v15; // [esp+128h] [ebp-44h]
-    _BYTE* v14; // [esp+124h] [ebp-48h]
+    char* v14; // [esp+124h] [ebp-48h]
     int v13; // [esp+120h] [ebp-4Ch]
     //
     CHAR String[256]; // [esp+20h] [ebp-14Ch] BYREF
@@ -51578,11 +51578,11 @@ int* sub_47188C(int thisx)
     int v1; // eax
 
 
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         v17 = 0;
         v1 = *(unsigned __int8*)(thisx + 2516);
-        if (!*(_BYTE*)(thisx + 2516))
+        if (!*(char*)(thisx + 2516))
         {
             for (i = 0; i < (unsigned __int8)byte_4B9986; ++i)
             {
@@ -51593,23 +51593,23 @@ int* sub_47188C(int thisx)
                 if (v1)
                     v17 = 1;
             }
-            if (v17 && *(_BYTE*)(thisx + 2562) && *(unsigned __int8*)(thisx + 2562) <= 5u)
+            if (v17 && *(char*)(thisx + 2562) && *(unsigned __int8*)(thisx + 2562) <= 5u)
                 *(int*)(thisx + 2540) = 60;
         }
-        if (*(_BYTE*)(thisx + 2562))
+        if (*(char*)(thisx + 2562))
         {
             if (*(unsigned __int8*)(thisx + 2562) > 5u)
             {
-                if (*(_BYTE*)(thisx + 2562) == 6 && *(int*)(thisx + 2540) >= 540)
+                if (*(char*)(thisx + 2562) == 6 && *(int*)(thisx + 2540) >= 540)
                 {
                     *(int*)(thisx + 108) = 26;
-                    *(_BYTE*)(thisx + 2516) = 2;
+                    *(char*)(thisx + 2516) = 2;
                 }
             }
             else if (!(*(int*)(thisx + 2540) % 60))
             {
                 v11 = 0;
-                switch (*(_BYTE*)(thisx + 2562))
+                switch (*(char*)(thisx + 2562))
                 {
                 case 1:
                     wsprintfA(String, byte_4B38E4);
@@ -51634,9 +51634,9 @@ int* sub_47188C(int thisx)
                 default:
                     break;
                 }
-                v14 = (_BYTE*)(thisx + 2580);
+                v14 = (char*)(thisx + 2580);
                 v8 = 28 * (*(unsigned __int8*)(thisx + 2562) - 1) + 52;
-                LOBYTE(v15) = *(_BYTE*)(thisx + 2 * *(unsigned __int8*)(thisx + 2562) + 2562);
+                LOBYTE(v15) = *(char*)(thisx + 2 * *(unsigned __int8*)(thisx + 2562) + 2562);
                 LOBYTE(v13) = (unsigned __int8)v15 % 10;
                 LOBYTE(v15) = (unsigned __int8)v15 / 10;
                 v10 = 0;
@@ -51665,11 +51665,11 @@ int* sub_47188C(int thisx)
                 {
                     sub_47B91A(32, v8, String, 0, dword_4B9248);
                 }
-                if (v10 && *v14 && (unsigned __int8)*v14 <= 2u && *(_BYTE*)(thisx + 2562) != 3)
+                if (v10 && *v14 && (unsigned __int8)*v14 <= 2u && *(char*)(thisx + 2562) != 3)
                     sub_43FFC3((int*)byte_4BDB28, *(int*)(thisx + 2528), -1, 100, 100, 0);
                 if (++ * v14 == 4)
                 {
-                    ++* (_BYTE*)(thisx + 2562);
+                    ++* (char*)(thisx + 2562);
                     *v14 = 0;
                     *(int*)(thisx + 2540) = 0;
                 }
@@ -51684,13 +51684,13 @@ int* sub_47188C(int thisx)
             sub_456D33((const CHAR*)thisx, aKkResult2Wav, 1, 0);
             sub_47FA81((int*)(thisx + 736));
             *(int*)(thisx + 2540) = 0;
-            *(_BYTE*)(thisx + 2562) = 1;
+            *(char*)(thisx + 2562) = 1;
         }
         if (!*(int*)(thisx + 2540))
         {
-            if (*(_BYTE*)(thisx + 2562))
+            if (*(char*)(thisx + 2562))
             {
-                if (*(_BYTE*)(thisx + 2562) == 6)
+                if (*(char*)(thisx + 2562) == 6)
                     sub_47F9D6(thisx + 736, byte_4B39D8, 4);
             }
             else
@@ -51733,14 +51733,14 @@ void sub_471F33(int thisx)
     int v12[15]; // [esp+458h] [ebp-1480h] BYREF
     //
     CHAR FileName[64]; // [esp+418h] [ebp-14C0h] BYREF
-    _BYTE* v10; // [esp+414h] [ebp-14C4h]
+    char* v10; // [esp+414h] [ebp-14C4h]
     int v9; // [esp+410h] [ebp-14C8h]
     int v8; // [esp+40Ch] [ebp-14CCh]
     int v7; // [esp+408h] [ebp-14D0h]
     int v6; // [esp+404h] [ebp-14D4h]
     //
     char v5[1024]; // [esp+4h] [ebp-18D4h] BYREF
-    _BYTE* v3; // eax
+    char* v3; // eax
     unsigned __int8 v2; // al
     void* v1; // esp
 
@@ -51748,8 +51748,8 @@ void sub_471F33(int thisx)
     v1 = alloca(6348);
     *(int*)(thisx + 104) = 26;
     *(int*)(thisx + 2540) = 0;
-    *(_BYTE*)(thisx + 2516) = 1;
-    *(_BYTE*)(thisx + 2562) = 0;
+    *(char*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2562) = 0;
     *(int*)(thisx + 2528) = 0;
     *(int*)(thisx + 2540) = 0;
     for (i = 0; i < dword_4B9368; ++i)
@@ -51769,14 +51769,14 @@ void sub_471F33(int thisx)
             if (v16 < *(int*)(thisx + 244 * k + 1560))
                 ++v14;
         }
-        *(_BYTE*)(i + thisx + 13044) = v14;
+        *(char*)(i + thisx + 13044) = v14;
     }
     for (i = 1; i < 5; ++i)
     {
         for (m = 0; m < 4; ++m)
         {
             if (*(unsigned __int8*)(m + thisx + 13044) == i)
-                ++* (_BYTE*)(i + thisx + 13047);
+                ++* (char*)(i + thisx + 13047);
         }
     }
     sub_402080((int)v20, 20, 256, (void(*)(int))sub_48A44E);
@@ -51808,7 +51808,7 @@ void sub_471F33(int thisx)
     }
     for (i = 0; i < 4; ++i)
     {
-        v10 = (_BYTE*)sub_472F91((int*)thisx + 244 * i + 1392);
+        v10 = (char*)sub_472F91((int*)thisx + 244 * i + 1392);
         if (v10)
         {
             LOBYTE(v8) = sub_4016F0(v10);
@@ -51821,7 +51821,7 @@ void sub_471F33(int thisx)
     for (i = 0; i < 4; ++i)
     {
         v7 = *(__int16*)(thisx + 244 * i + 1630) + 1;
-        v3 = (_BYTE*)sub_472F91((int*)thisx + 244 * i + 1392);
+        v3 = (char*)sub_472F91((int*)thisx + 244 * i + 1392);
         LOWORD(v6) = (unsigned __int8)sub_401710(v3);
         sub_4784EA(v7, (int)v5);
         sub_485DFD((int)dword_4B93A4 + 24 * (unsigned __int16)v6, (int)v5);
@@ -51881,18 +51881,18 @@ int* sub_4724BD(int thisx)
     char v3; // [esp+10h] [ebp-170h]
 
 
-    if (*(_BYTE*)(thisx + 2562))
+    if (*(char*)(thisx + 2562))
     {
         if (*(unsigned __int8*)(thisx + 2562) > 4u)
         {
-            if (*(_BYTE*)(thisx + 2562) == 5)
+            if (*(char*)(thisx + 2562) == 5)
             {
                 if (*(int*)(thisx + 2540) == 1)
                     sub_47F9D6(thisx + 736, byte_4B3CB0, 4);
                 if (sub_475E70((int*)thisx + 736) >= 300)
                 {
                     *(int*)(thisx + 108) = 27;
-                    *(_BYTE*)(thisx + 2516) = 2;
+                    *(char*)(thisx + 2516) = 2;
                 }
             }
         }
@@ -51912,7 +51912,7 @@ int* sub_4724BD(int thisx)
                         break;
                     --v41;
                 }
-                *(_BYTE*)(thisx + 2562) = 5 - v41;
+                *(char*)(thisx + 2562) = 5 - v41;
                 v37 = 0;
                 for (i = 0; i < 4; ++i)
                 {
@@ -52021,7 +52021,7 @@ int* sub_4724BD(int thisx)
                         sub_47FADE(thisx + 736, byte_4B3BD8);
                     if (v41 <= 3 && v32 < 4)
                     {
-                        v3 = *(_BYTE*)(v33 + 4);
+                        v3 = *(char*)(v33 + 4);
                         v5 = *(int*)v33;
                         v4 = 0;
                         switch (v39)
@@ -52104,7 +52104,7 @@ int* sub_4724BD(int thisx)
                 }
                 else
                 {
-                    ++* (_BYTE*)(thisx + 2562);
+                    ++* (char*)(thisx + 2562);
                     *(int*)(thisx + 2540) = 0;
                 }
             }
@@ -52117,7 +52117,7 @@ int* sub_4724BD(int thisx)
         if (sub_475E70((int*)thisx + 736) > 120)
         {
             *(int*)(thisx + 2540) = 0;
-            ++* (_BYTE*)(thisx + 2562);
+            ++* (char*)(thisx + 2562);
         }
     }
     ++* (int*)(thisx + 2540);
@@ -52167,10 +52167,10 @@ void sub_472FC4(int thisx)
 
 
     *(int*)(thisx + 104) = 21;
-    *(_BYTE*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2516) = 1;
     *(int*)(thisx + 2540) = 0;
-    *(_BYTE*)(thisx + 2604) = 0;
-    *(_BYTE*)(thisx + 2562) = 0;
+    *(char*)(thisx + 2604) = 0;
+    *(char*)(thisx + 2562) = 0;
     *(int*)(thisx + 2528) = 0;
     sub_49DB90(&v11);
     v12 = 0;
@@ -52265,7 +52265,7 @@ unsigned __int16* sub_47336A(int thisx)
     v14 = 0;
     v8 = 0;
     v9 = 0;
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         sub_477F0C(0);
         v1 = sub_476D78(0);
@@ -52278,11 +52278,11 @@ unsigned __int16* sub_47336A(int thisx)
         v9 = sub_476DC7(0, 6);
     }
     v12 = 0;
-    if (*(_BYTE*)(thisx + 2604) && *(unsigned __int8*)(thisx + 2562) < (int)*(unsigned __int8*)(thisx + 2477))
+    if (*(char*)(thisx + 2604) && *(unsigned __int8*)(thisx + 2562) < (int)*(unsigned __int8*)(thisx + 2477))
     {
-        if ((unsigned __int8)++ * (_BYTE*)(thisx + 2604) > 5u)
+        if ((unsigned __int8)++ * (char*)(thisx + 2604) > 5u)
         {
-            *(_BYTE*)(thisx + 2604) = 1;
+            *(char*)(thisx + 2604) = 1;
             *(int*)(thisx + 2528) = rand() % (*(int*)(thisx + 13388) + 1);
             sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
             v12 = 1;
@@ -52309,32 +52309,32 @@ unsigned __int16* sub_47336A(int thisx)
     {
         sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
         if (*(unsigned __int8*)(thisx + 2562) < (int)*(unsigned __int8*)(thisx + 2477))
-            *(_BYTE*)(thisx + *(unsigned __int8*)(thisx + 2562) + 2478) = *(_BYTE*)(thisx + 2528);
-        if ((unsigned __int8)++ * (_BYTE*)(thisx + 2562) >= *(unsigned __int8*)(thisx + 2477) + 1)
+            *(char*)(thisx + *(unsigned __int8*)(thisx + 2562) + 2478) = *(char*)(thisx + 2528);
+        if ((unsigned __int8)++ * (char*)(thisx + 2562) >= *(unsigned __int8*)(thisx + 2477) + 1)
         {
             *(int*)(thisx + 108) = 23;
-            *(_BYTE*)(thisx + 2516) = 2;
+            *(char*)(thisx + 2516) = 2;
         }
         v12 = 1;
     }
     else if (v14)
     {
-        if (*(_BYTE*)(thisx + 2562))
-            --* (_BYTE*)(thisx + 2562);
+        if (*(char*)(thisx + 2562))
+            --* (char*)(thisx + 2562);
         v12 = 1;
     }
     else if (v8)
     {
-        *(_BYTE*)(thisx + 2604) = *(_BYTE*)(thisx + 2604) == 0;
+        *(char*)(thisx + 2604) = *(char*)(thisx + 2604) == 0;
     }
     else if (v9)
     {
         for (i = *(unsigned __int8*)(thisx + 2562); i < *(unsigned __int8*)(thisx + 2477); ++i)
-            *(_BYTE*)(i + thisx + 2478) = rand() % (*(int*)(thisx + 13388) + 1);
+            *(char*)(i + thisx + 2478) = rand() % (*(int*)(thisx + 13388) + 1);
         sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-        *(_BYTE*)(thisx + 2562) = *(_BYTE*)(thisx + 2477) + 1;
+        *(char*)(thisx + 2562) = *(char*)(thisx + 2477) + 1;
         *(int*)(thisx + 108) = 23;
-        *(_BYTE*)(thisx + 2516) = 2;
+        *(char*)(thisx + 2516) = 2;
         v12 = 1;
     }
     if (v12)
@@ -52366,10 +52366,10 @@ void sub_4737C8(int thisx)
     const char* v1; // eax
 
 
-    sub_451EB5((_BYTE*)thisx, 1, 1);
-    sub_452045((_BYTE*)thisx, 14, 0, 12, 3);
+    sub_451EB5((char*)thisx, 1, 1);
+    sub_452045((char*)thisx, 14, 0, 12, 3);
     sub_47B91A(128, 8, byte_4B3D54, 0, dword_4B9248);
-    sub_452045((_BYTE*)thisx, 1, 4, 18, 2 * *(unsigned __int8*)(thisx + 2477) + 1);
+    sub_452045((char*)thisx, 1, 4, 18, 2 * *(unsigned __int8*)(thisx + 2477) + 1);
     for (i = 0; i < *(unsigned __int8*)(thisx + 2477); ++i)
     {
         v11 = 16 * i + 40;
@@ -52384,7 +52384,7 @@ void sub_4737C8(int thisx)
         }
         if (i < *(unsigned __int8*)(thisx + 2562))
         {
-            if (*(_BYTE*)(i + thisx + 2478))
+            if (*(char*)(i + thisx + 2478))
             {
                 v10 = (int*)(20 * (*(unsigned __int8*)(i + thisx + 2478) - 1) + *(int*)(thisx + 13392));
                 if (unknown_libname_26(v10))
@@ -52407,7 +52407,7 @@ void sub_4737C8(int thisx)
             }
         }
     }
-    sub_452045((_BYTE*)thisx, 20, 4, 19, 10);
+    sub_452045((char*)thisx, 20, 4, 19, 10);
     if (*(unsigned __int8*)(thisx + 2562) >= (int)*(unsigned __int8*)(thisx + 2477))
     {
         sub_47B91A(188, 52, byte_4B3DE4, 0, dword_4B9248);
@@ -52477,7 +52477,7 @@ void sub_4737C8(int thisx)
 int sub_473CFA(int thisx)
 {
     *(int*)(thisx + 104) = 27;
-    *(_BYTE*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2516) = 1;
     sub_4898D3((int*)(thisx + 128));
     sub_4891E4((int*)(thisx + 128), aDemoKkEndTxt);
     return sub_456D33((const CHAR*)thisx, aKkEndWav, 1, 0);
@@ -52486,7 +52486,7 @@ int sub_473CFA(int thisx)
 
 int* sub_473D4B(int thisx)
 {
-    if (!*(_BYTE*)(thisx + 2516))
+    if (!*(char*)(thisx + 2516))
     {
         sub_477F0C(0);
         if (sub_476DC7(0, 0))
@@ -52756,7 +52756,7 @@ int __fastcall sub_4744E5(int a1)
     if (*(int*)(a1 + 16400))
     {
         *(int*)(a1 + 16400) = 0;
-        v15 = sub_4897D0((_BYTE*)(a1 + 128)) / 8;
+        v15 = sub_4897D0((char*)(a1 + 128)) / 8;
         v14 = sub_4261D0((char*)(a1 + 128));
         v13 = unknown_libname_20((char*)(a1 + 128));
         for (i = 0; i < v14; ++i)
@@ -52828,18 +52828,18 @@ void sub_47482E(int thisx)
     *(int*)(thisx + 104) = 4;
     *(int*)(thisx + 2540) = 0;
     sub_480054(thisx + 15644, (int)&byte_4B3E50);
-    sub_475630((_BYTE*)(thisx + 15644), 12, 2, 17, 4);
-    sub_475690((_BYTE*)(thisx + 15644), 2);
+    sub_475630((char*)(thisx + 15644), 12, 2, 17, 4);
+    sub_475690((char*)(thisx + 15644), 2);
     streambuf::unbuffered((streambuf*)(thisx + 15644), 0);
     sub_475670((int*)(thisx + 15644), 0);
     (*(void(**)(int, int))(*(int*)(thisx + 15680) + 4))(thisx + 15680, 0);
     (*(void(**)(int, int))(*(int*)(thisx + 15716) + 4))(thisx + 15716, 0);
     (*(void(**)(int, int))(*(int*)(thisx + 15752) + 4))(thisx + 15752, 0);
     (*(void(**)(int, int))(*(int*)(thisx + 15788) + 4))(thisx + 15788, 1);
-    sub_4756B0((_BYTE*)(thisx + 15788), 8, 7);
+    sub_4756B0((char*)(thisx + 15788), 8, 7);
     sub_48089C(thisx + 15788, 0);
     *(int*)(thisx + 15640) = thisx + 15788;
-    *(_BYTE*)(thisx + 2516) = 1;
+    *(char*)(thisx + 2516) = 1;
     sub_47494F(thisx, 1, 1);
 }
 
@@ -52848,14 +52848,14 @@ void sub_47494F(int thisx, int a2, int a3)
 {
     if (a2)
     {
-        sub_451EB5((_BYTE*)thisx, 1, 0);
+        sub_451EB5((char*)thisx, 1, 0);
         (*(void(**)(int))(*(int*)(thisx + 15644) + 12))(thisx + 15644);
         if (*(int*)(thisx + 15640))
             (*(void(**)(int))(**(int**)(thisx + 15640) + 12))(*(int*)(thisx + 15640));
     }
     if (a3)
     {
-        sub_451EB5((_BYTE*)thisx, 0, 1);
+        sub_451EB5((char*)thisx, 0, 1);
         if (*(int*)(thisx + 15640))
             *(int*)(thisx + 2528) = unknown_libname_13(*(int**)(thisx + 15640));
         if (*(int*)(thisx + 2528))
@@ -52918,7 +52918,7 @@ int sub_474BC1(int thisx)
     v6 = 0;
 
     // 检查 thisx + 15640 地址指向的内容是否非空，且 thisx + 2516 位置是否为 0
-    if (*(int*)(thisx + 15640) && !*(_BYTE*)(thisx + 2516))
+    if (*(int*)(thisx + 15640) && !*(char*)(thisx + 2516))
     {
         // 调用函数指针，获取状态值 v6
         v6 = (*(int(**)(int))(**(int**)(thisx + 15640) + 16))(*(int*)(thisx + 15640));
@@ -52931,7 +52931,7 @@ int sub_474BC1(int thisx)
     if (v6 == 1)
     {
         // 设置 thisx + 2516 的值为 2
-        *(_BYTE*)(thisx + 2516) = 2;
+        *(char*)(thisx + 2516) = 2;
         result = thisx;
 
         // 检查 thisx + 112 的值，并根据其不同，修改 thisx + 108 的值
@@ -52947,10 +52947,10 @@ int sub_474BC1(int thisx)
             sub_45B65A(thisx);
 
             // 更新 thisx 的若干状态位
-            *(_BYTE*)(thisx + 11690) = 0;
-            *(_BYTE*)(thisx + 11968) = *(_BYTE*)(thisx + 11689);
-            *(_BYTE*)(thisx + 13044) = *(_BYTE*)(thisx + 11804);
-            *(_BYTE*)(thisx + 13100) = 0;
+            *(char*)(thisx + 11690) = 0;
+            *(char*)(thisx + 11968) = *(char*)(thisx + 11689);
+            *(char*)(thisx + 13044) = *(char*)(thisx + 11804);
+            *(char*)(thisx + 13100) = 0;
 
             // 调用子函数处理 thisx
             sub_45FF40((unsigned __int8*)thisx);
@@ -52988,7 +52988,7 @@ int sub_474BC1(int thisx)
         result = *(unsigned __int8*)(thisx + 2516);
 
         // 如果 thisx + 2516 为 0，且 thisx + 15640 非空，调用一个函数并返回其结果
-        if (!*(_BYTE*)(thisx + 2516) && *(int*)(thisx + 15640))
+        if (!*(char*)(thisx + 2516) && *(int*)(thisx + 15640))
             return (*(int(**)(int))(**(int**)(thisx + 15640) + 8))(*(int*)(thisx + 15640));
     }
     return result;
@@ -53007,9 +53007,9 @@ int* sub_474D80(int* thisx, char a2)
 //全解，设置游戏状态为运行状态
 //this = C60，byte_4BDC60[50440] = 4CA168，该变量表示游戏正在运行
  //Set  thisx[50440] = a2;
-_BYTE* sub_474DB0(_BYTE* thisx, char a2)
+char* sub_474DB0(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[50440] = a2; //该变量表示游戏正在运行
@@ -53047,7 +53047,7 @@ int sub_474E70(int* thisx)
 }
 
 //get
-char sub_474E90(_BYTE* thisx)
+char sub_474E90(char* thisx)
 {
     return thisx[556];
 }
@@ -53069,7 +53069,7 @@ short* sub_474ED0(short* thisx, __int16 a2)
 }
 
 //set
-char* sub_474EF0(_BYTE* thisx, int a2, char a3)
+char* sub_474EF0(char* thisx, int a2, char a3)
 {
     char* result; // eax
 
@@ -53079,15 +53079,15 @@ char* sub_474EF0(_BYTE* thisx, int a2, char a3)
 }
 
 //get
-char sub_474F10(_BYTE* thisx, int a2)
+char sub_474F10(char* thisx, int a2)
 {
     return thisx[a2 + 520];
 }
 
 //set
-_BYTE* sub_474F30(_BYTE* thisx, char a2)
+char* sub_474F30(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[188] = a2;
@@ -53141,9 +53141,9 @@ int* sub_474FD0(int* thisx, int a2)
 }
 
 //set
-_BYTE* sub_474FF0(_BYTE* thisx, char a2)
+char* sub_474FF0(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[195] = a2;
@@ -53161,9 +53161,9 @@ short* sub_475010(short* thisx, __int16 a2)
 }
 
 //set
-_BYTE* sub_475030(_BYTE* thisx, char a2)
+char* sub_475030(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[184] = a2;
@@ -53171,9 +53171,9 @@ _BYTE* sub_475030(_BYTE* thisx, char a2)
 }
 
 //set
-_BYTE* sub_475050(_BYTE* thisx, char a2)
+char* sub_475050(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[193] = a2;
@@ -53181,7 +53181,7 @@ _BYTE* sub_475050(_BYTE* thisx, char a2)
 }
 
 //get
-char sub_475090(_BYTE* thisx, int a2)
+char sub_475090(char* thisx, int a2)
 {
     return thisx[a2 + 28];
 }
@@ -53211,43 +53211,43 @@ int sub_475150(int* thisx)
 }
 
 //get
-char sub_475170(_BYTE* thisx)
+char sub_475170(char* thisx)
 {
     return thisx[260];
 }
 
 //get
-char sub_475190(_BYTE* thisx)
+char sub_475190(char* thisx)
 {
     return thisx[259];
 }
 
 //get
-char sub_4751B0(_BYTE* thisx)
+char sub_4751B0(char* thisx)
 {
     return thisx[452];
 }
 
 //get
-char sub_4751D0(_BYTE* thisx)
+char sub_4751D0(char* thisx)
 {
     return thisx[222];
 }
 
 //get
-char sub_4751F0(_BYTE* thisx)
+char sub_4751F0(char* thisx)
 {
     return thisx[251];
 }
 
 //get
-char sub_475210(_BYTE* thisx)
+char sub_475210(char* thisx)
 {
     return thisx[252];
 }
 
 //get
-char sub_475250(_BYTE* thisx)
+char sub_475250(char* thisx)
 {
     return thisx[256];
 }
@@ -53259,7 +53259,7 @@ int sub_475270(int* thisx)
 }
 
 //get
-char sub_475290(_BYTE* thisx)
+char sub_475290(char* thisx)
 {
     return thisx[254];
 }
@@ -53278,13 +53278,13 @@ int sub_4752D0(__int16* thisx)
 }
 
 //get
-char sub_4752F0(_BYTE* thisx)
+char sub_4752F0(char* thisx)
 {
     return thisx[253];
 }
 
 //get
-char sub_475310(_BYTE* thisx)
+char sub_475310(char* thisx)
 {
     return thisx[213];
 }
@@ -53303,7 +53303,7 @@ int sub_475350(int* thisx)
 }
 
 //get
-char sub_475370(_BYTE* thisx)
+char sub_475370(char* thisx)
 {
     return thisx[272];
 }
@@ -53319,25 +53319,25 @@ int* sub_475390(int* thisx, int a2)
 }
 
 //get
-char sub_4753B0(_BYTE* thisx)
+char sub_4753B0(char* thisx)
 {
     return thisx[248];
 }
 
 //get
-char sub_4753D0(_BYTE* thisx, int a2)
+char sub_4753D0(char* thisx, int a2)
 {
     return thisx[a2 + 453];
 }
 
 //get
-char sub_4753F0(_BYTE* thisx, int a2)
+char sub_4753F0(char* thisx, int a2)
 {
     return thisx[a2 + 461];
 }
 
 //get
-char sub_475410(_BYTE* thisx, int a2)
+char sub_475410(char* thisx, int a2)
 {
     return thisx[a2 + 336];
 }
@@ -53361,13 +53361,13 @@ char* sub_475490(char* thisx)
 }
 
 //get
-char sub_4754B0(_BYTE* thisx)
+char sub_4754B0(char* thisx)
 {
     return thisx[346];
 }
 
 //get
-char sub_4754F0(_BYTE* thisx)
+char sub_4754F0(char* thisx)
 {
     return thisx[70];
 }
@@ -53384,7 +53384,7 @@ int sub_475530(int* thisx)
 }
 
 //get
-char sub_475550(_BYTE* thisx)
+char sub_475550(char* thisx)
 {
     return thisx[194];
 }
@@ -53402,7 +53402,7 @@ int sub_475590(int* thisx)
 }
 
 //get
-char sub_4755B0(_BYTE* thisx, unsigned __int8 a2)
+char sub_4755B0(char* thisx, unsigned __int8 a2)
 {
     return thisx[a2 + 181];
 }
@@ -53413,15 +53413,15 @@ int sub_4755F0(int* thisx)
     return thisx[77];
 }
 
-char sub_475610(_BYTE* thisx)
+char sub_475610(char* thisx)
 {
     return thisx[598];
 }
 
 //set
-_BYTE* sub_475630(_BYTE* thisx, char a2, char a3, char a4, char a5)
+char* sub_475630(char* thisx, char a2, char a3, char a4, char a5)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     thisx[4] = a2;
     thisx[5] = a3;
@@ -53442,9 +53442,9 @@ int* sub_475670(int* thisx, int a2)
 }
 
 //get
-_BYTE* sub_475690(_BYTE* thisx, char a2)
+char* sub_475690(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[28] = a2;
@@ -53452,7 +53452,7 @@ _BYTE* sub_475690(_BYTE* thisx, char a2)
 }
 
 //set
-char sub_4756B0(_BYTE* thisx, char a2, char a3)
+char sub_4756B0(char* thisx, char a2, char a3)
 {
     char result; // al
 
@@ -53464,7 +53464,7 @@ char sub_4756B0(_BYTE* thisx, char a2, char a3)
 
 
 //get
-char sub_475710(_BYTE* thisx, unsigned __int8 a2)
+char sub_475710(char* thisx, unsigned __int8 a2)
 {
     return thisx[a2 + 36];
 }
@@ -53523,9 +53523,9 @@ int sub_475810(int* thisx)
 }
 
 //set
-_BYTE* sub_475830(_BYTE* thisx, char a2)
+char* sub_475830(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[15] = a2;
@@ -53539,7 +53539,7 @@ __int16 sub_475850(short* thisx)
 }
 
 
-int sub_475890(_BYTE* thisx, unsigned __int8 a2, char a3)
+int sub_475890(char* thisx, unsigned __int8 a2, char a3)
 {
     int result; // eax
 
@@ -53549,18 +53549,18 @@ int sub_475890(_BYTE* thisx, unsigned __int8 a2, char a3)
 }
 
 
-char sub_4758B0(_BYTE* thisx, unsigned __int8 a2)
+char sub_4758B0(char* thisx, unsigned __int8 a2)
 {
     return thisx[a2 + 71];
 }
 
 
-char sub_4758D0(_BYTE* thisx, int a2)
+char sub_4758D0(char* thisx, int a2)
 {
     return thisx[a2 + 11];
 }
 
-char sub_4758F0(_BYTE* thisx, int a2)
+char sub_4758F0(char* thisx, int a2)
 {
     return thisx[a2 + 13];
 }
@@ -53593,7 +53593,7 @@ int sub_475950(char* thisx, int a2, int a3, int a4, int a5, int a6, int a7)
     return result;
 }
 
-char* sub_475990(_BYTE* thisx, char a2, int a3)
+char* sub_475990(char* thisx, char a2, int a3)
 {
     char* result; // eax
 
@@ -53603,7 +53603,7 @@ char* sub_475990(_BYTE* thisx, char a2, int a3)
 }
 
 
-char* sub_4759B0(_BYTE* thisx, char a2, int a3)
+char* sub_4759B0(char* thisx, char a2, int a3)
 {
     char* result; // eax
 
@@ -53748,9 +53748,9 @@ int* sub_475D70(int* thisx, int a2)
     return result;
 }
 
-_BYTE* sub_475D90(_BYTE* thisx, char a2)
+char* sub_475D90(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[72] = a2;
@@ -53785,9 +53785,9 @@ int* sub_475E10(int* thisx, int a2)
     return result;
 }
 
-_BYTE* sub_475E30(_BYTE* thisx, char a2)
+char* sub_475E30(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[86] = a2;
@@ -53813,7 +53813,7 @@ int sub_475E90(char* thisx)
     return sub_475EB0(thisx + 4);
 }
 //return thisx[15];
-char sub_475EB0(_BYTE* thisx)
+char sub_475EB0(char* thisx)
 {
     return thisx[15];
 }
@@ -53843,7 +53843,7 @@ int sub_475F40(int* thisx)
 }
 
 
-_BYTE* sub_475FA0(_BYTE* thisx)
+char* sub_475FA0(char* thisx)
 {
 
     //修正堆栈
@@ -54080,7 +54080,7 @@ BOOL sub_476485(int* thisx, char a2)
 
     if (!*thisx)
         return ((BOOL(*)(int*))funcs_476478[a2])(thisx);
-    v3 = *((_BYTE*)thisx + a2 + 80);
+    v3 = *((char*)thisx + a2 + 80);
     if (v3 >= 0)
         return ((BOOL(*)(int*))funcs_476478[v3])(thisx);
     switch (v3)
@@ -54262,7 +54262,7 @@ BOOL sub_476928(int* thisx, char a2)
     if (*thisx)
     {
     LABEL_10:
-        v3 = ((_BYTE*)thisx - a2)[75];
+        v3 = ((char*)thisx - a2)[75];
         if (v3 >= 0)
         {
             return sub_47646A(thisx, v3);
@@ -54908,7 +54908,7 @@ signed int sub_4780C0()
     signed int k; // [esp+10h] [ebp-4h]
     
     signed int j; // [esp+Ch] [ebp-8h]
-    _BYTE* v2; // [esp+8h] [ebp-Ch]
+    char* v2; // [esp+8h] [ebp-Ch]
     int v1; // [esp+4h] [ebp-10h]
     signed int result; // eax
     int i; // [esp+10h] [ebp-4h]，改改改
@@ -54917,7 +54917,7 @@ signed int sub_4780C0()
     signed int k; // [esp+10h] [ebp-4h]
     
     signed int j; // [esp+Ch] [ebp-8h]
-    _BYTE* v2; // [esp+8h] [ebp-Ch]
+    char* v2; // [esp+8h] [ebp-Ch]
     int v1; // [esp+4h] [ebp-10h]
     )";
     if (!check_stack_fun2({
@@ -54935,18 +54935,18 @@ signed int sub_4780C0()
     for (i = 0; i < dword_4B9368; ++i)
     {
         for (j = 0; j < (int)dword_4B93A0; ++j)
-            *(_BYTE*)(*((int*)dword_4B9364 + i) + j) = 0;
+            *(char*)(*((int*)dword_4B9364 + i) + j) = 0;
     }
     for (k = 0; ; ++k)
     {
         result = k;
         if (k >= (int)Size)
             break;
-        v2 = (_BYTE*)(36 * k + dword_4B92E0);
+        v2 = (char*)(36 * k + dword_4B92E0);
         v1 = (unsigned __int8)sub_4016F0(v2);
-        *(_BYTE*)(*((int*)dword_4B9364 + v1) + (unsigned __int8)sub_401710(v2)) = 1;
+        *(char*)(*((int*)dword_4B9364 + v1) + (unsigned __int8)sub_401710(v2)) = 1;
     }
-    **((_BYTE**)dword_4B9364 + 3) = 1;
+    **((char**)dword_4B9364 + 3) = 1;
     return result;
 }
 
@@ -55218,7 +55218,7 @@ int __cdecl sub_4788FA(int* a1, char* a2, int a3, int a4, int a5, unsigned __int
     int v38; // [esp+ACh] [ebp-20h]
     int Src[6]; // [esp+94h] [ebp-38h] BYREF
     int v36; // [esp+90h] [ebp-3Ch]
-    _BYTE* v35; // [esp+8Ch] [ebp-40h]
+    char* v35; // [esp+8Ch] [ebp-40h]
     int i; // [esp+88h] [ebp-44h]
     int v33; // [esp+84h] [ebp-48h]
     int v32; // [esp+80h] [ebp-4Ch]
@@ -55264,7 +55264,7 @@ int __cdecl sub_4788FA(int* a1, char* a2, int a3, int a4, int a5, unsigned __int
         v7 = sub_425C10(a2);
         if (v7 == i && unknown_libname_5(a2))
         {
-            v35 = (_BYTE*)(12 * (unsigned __int16)sub_401BEF((int*)a2, 0) + a3);
+            v35 = (char*)(12 * (unsigned __int16)sub_401BEF((int*)a2, 0) + a3);
             sub_49C15E((int)&v27);
             v30 = a1[6];
             v8 = sub_425F90(a2);
@@ -55311,7 +55311,7 @@ int __cdecl sub_4788FA(int* a1, char* a2, int a3, int a4, int a5, unsigned __int
         }
         if (i != v36)
         {
-            v35 = (_BYTE*)(12 * (unsigned __int16)sub_401BEF((int*)a2, i) + a3);
+            v35 = (char*)(12 * (unsigned __int16)sub_401BEF((int*)a2, i) + a3);
             v19 = sub_401C1E((int*)a2, i, a1[6]);
             Src[1] = v19 + v32;
             v20 = sub_401C5B((int*)a2, i, 0);
@@ -55343,7 +55343,7 @@ int __cdecl sub_478C4C(int* a1, int a2)
     int v42; // [esp+9Ch] [ebp-3Ch]
     int v41; // [esp+98h] [ebp-40h]
     int v40; // [esp+94h] [ebp-44h]
-    _BYTE* v39; // [esp+90h] [ebp-48h]
+    char* v39; // [esp+90h] [ebp-48h]
     int i; // [esp+8Ch] [ebp-4Ch]
     int v37; // [esp+88h] [ebp-50h]
     int v36; // [esp+84h] [ebp-54h]
@@ -55390,7 +55390,7 @@ int __cdecl sub_478C4C(int* a1, int a2)
 
     v35 = *(char**)a2;
     v40 = *(int*)(a2 + 4);
-    LOBYTE(v42) = *(_BYTE*)(a2 + 24);
+    LOBYTE(v42) = *(char*)(a2 + 24);
     v41 = (unsigned __int8)sub_401DFE(v35);
     v36 = a1[1];
     v37 = a1[2];
@@ -55406,7 +55406,7 @@ int __cdecl sub_478C4C(int* a1, int a2)
         if (v3 == i && unknown_libname_5(v35))
         {
             v4 = sub_401BEF((int*)v35, 0);
-            v39 = (_BYTE*)(12 * v4 + v40);
+            v39 = (char*)(12 * v4 + v40);
             sub_49C15E((int)v30);
             v33 = a1[6];
             v5 = sub_425F90(v35);
@@ -55429,9 +55429,9 @@ int __cdecl sub_478C4C(int* a1, int a2)
                 v33 = a1[6] == 0;
                 v31 += v34;
             }
-            if (*(_BYTE*)(a2 + 25))
+            if (*(char*)(a2 + 25))
             {
-                if (*(_BYTE*)(a2 + 25) == 1)
+                if (*(char*)(a2 + 25) == 1)
                 {
                     v24 = *(int*)(a2 + 8);
                     v23 = *(int*)(a2 + 28);
@@ -55447,7 +55447,7 @@ int __cdecl sub_478C4C(int* a1, int a2)
                 sub_478682((int*)v30, v12, v21, v22, -1, -1);
             }
         }
-        if ((_BYTE)v42)
+        if ((char)v42)
         {
             v14 = sub_475EB0(v35);
             if (v14 == i)
@@ -55469,7 +55469,7 @@ int __cdecl sub_478C4C(int* a1, int a2)
         if (i != v41)
         {
             v18 = sub_401BEF((int*)v35, i);
-            v39 = (_BYTE*)(12 * v18 + v40);
+            v39 = (char*)(12 * v18 + v40);
             v19 = sub_401C1E((int*)v35, i, a1[6]);
             Src[1] = v19 + v36;
             v20 = sub_401C5B((int*)v35, i, 0);
@@ -55691,7 +55691,7 @@ int sub_4790CD()
             if (String1[0] == 110)
                 goto LABEL_78;
             v1 = atoi(String1);
-            sub_47EA90((_BYTE*)(dword_4B92E0 + 36 * i), v1);
+            sub_47EA90((char*)(dword_4B92E0 + 36 * i), v1);
             if (!sub_482D44(v26, String1) || String1[0] == 110)
                 goto LABEL_78;
             v25 = atoi(String1);
@@ -55700,71 +55700,71 @@ int sub_4790CD()
             if (j == dword_4B93A0)
                 j = 0;
             streambuf::unbuffered((streambuf*)((char*)dword_4B93A4 + 24 * j), 1);
-            sub_47EAB0((_BYTE*)(dword_4B92E0 + 36 * i), j);
+            sub_47EAB0((char*)(dword_4B92E0 + 36 * i), j);
             if (!sub_482D44(v26, String1))
                 goto LABEL_78;
             if (String1[0] == 110)
                 goto LABEL_78;
             v2 = atoi(String1);
-            sub_47EAD0((_BYTE*)(36 * i + dword_4B92E0), v2);
+            sub_47EAD0((char*)(36 * i + dword_4B92E0), v2);
             if (!sub_482D44(v26, String1))
                 goto LABEL_78;
             if (String1[0] == 110)
                 goto LABEL_78;
             v3 = atoi(String1);
-            sub_47EAF0((_BYTE*)(dword_4B92E0 + 36 * i), v3);
+            sub_47EAF0((char*)(dword_4B92E0 + 36 * i), v3);
             if (!sub_482D44(v26, String1))
                 goto LABEL_78;
             if (String1[0] == 110)
                 goto LABEL_78;
             v4 = atoi(String1);
-            sub_47EB10((_BYTE*)(36 * i + dword_4B92E0), v4);
+            sub_47EB10((char*)(36 * i + dword_4B92E0), v4);
             if (!sub_482D44(v26, String1))
                 goto LABEL_78;
             if (String1[0] == 110)
                 goto LABEL_78;
             v5 = atoi(String1);
-            sub_47EB30((_BYTE*)(dword_4B92E0 + 36 * i), v5);
+            sub_47EB30((char*)(dword_4B92E0 + 36 * i), v5);
             if (!sub_482D44(v26, String1))
                 goto LABEL_78;
             if (String1[0] == 110)
                 goto LABEL_78;
             v6 = atoi(String1);
-            sub_47EB50((_BYTE*)(36 * i + dword_4B92E0), v6);
+            sub_47EB50((char*)(36 * i + dword_4B92E0), v6);
             if (!sub_482D44(v26, String1))
                 goto LABEL_78;
             if (String1[0] == 110)
                 goto LABEL_78;
             v7 = atoi(String1);
-            sub_47EB70((_BYTE*)(dword_4B92E0 + 36 * i), v7);
+            sub_47EB70((char*)(dword_4B92E0 + 36 * i), v7);
             if (!sub_482D44(v26, String1))
                 goto LABEL_78;
             if (String1[0] == 110)
                 goto LABEL_78;
             v8 = atoi(String1);
-            sub_47EB90((_BYTE*)(36 * i + dword_4B92E0), v8);
+            sub_47EB90((char*)(36 * i + dword_4B92E0), v8);
             if (!sub_482D44(v26, String1))
                 goto LABEL_78;
             if (String1[0] == 110)
                 goto LABEL_78;
             v9 = atoi(String1);
-            sub_47EBB0((_BYTE*)(dword_4B92E0 + 36 * i), v9);
+            sub_47EBB0((char*)(dword_4B92E0 + 36 * i), v9);
             if (!sub_482D44(v26, String1))
                 goto LABEL_78;
             if (String1[0] == 110)
                 goto LABEL_78;
             v10 = atoi(String1);
-            sub_489E30((_BYTE*)(36 * i + dword_4B92E0), v10);
+            sub_489E30((char*)(36 * i + dword_4B92E0), v10);
             if (!sub_482D44(v26, String1))
                 goto LABEL_78;
             if (String1[0] == 110)
                 goto LABEL_78;
             v11 = atoi(String1);
-            sub_47EBF0((_BYTE*)(dword_4B92E0 + 36 * i), v11);
+            sub_47EBF0((char*)(dword_4B92E0 + 36 * i), v11);
             if (!sub_482D44(v26, String1) || String1[0] == 110)
                 goto LABEL_78;
             v12 = atoi(String1);
-            sub_47EBD0((_BYTE*)(36 * i + dword_4B92E0), v12);
+            sub_47EBD0((char*)(36 * i + dword_4B92E0), v12);
             for (k = 0; k < 3; ++k)
             {
                 if (!sub_482D44(v26, String1) || String1[0] == 110)
@@ -55776,11 +55776,11 @@ int sub_4790CD()
                 v21 = v15;
                 if (v15 != 255 && v15 != 254 && v15 >= 73 && (v15 - 128 < 2 || v15 - 128 >= 13))
                     v21 = 0;
-                sub_47EC10((_BYTE*)(36 * i + dword_4B92E0), k, v21);
+                sub_47EC10((char*)(36 * i + dword_4B92E0), k, v21);
             }
             for (m = 0; m < 3; ++m)
             {
-                if ((unsigned __int8)sub_4266B0((_BYTE*)(36 * i + dword_4B92E0), m) == 254)
+                if ((unsigned __int8)sub_4266B0((char*)(36 * i + dword_4B92E0), m) == 254)
                 {
                     v20 = 0;
                     while (!v20)
@@ -55792,7 +55792,7 @@ int sub_4790CD()
                             {
                                 if (n != m)
                                 {
-                                    v14 = sub_4266B0((_BYTE*)(dword_4B92E0 + 36 * i), n);
+                                    v14 = sub_4266B0((char*)(dword_4B92E0 + 36 * i), n);
                                     if (sub_47744C(v20, v14))
                                         v20 = 0;
                                 }
@@ -55805,7 +55805,7 @@ int sub_4790CD()
                             {
                                 for (ii = 0; ii < 3; ++ii)
                                 {
-                                    if (ii != m && v20 == (unsigned __int8)sub_4266B0((_BYTE*)(36 * i + dword_4B92E0), ii))
+                                    if (ii != m && v20 == (unsigned __int8)sub_4266B0((char*)(36 * i + dword_4B92E0), ii))
                                         v20 = 0;
                                 }
                             }
@@ -55815,7 +55815,7 @@ int sub_4790CD()
                             }
                         }
                     }
-                    sub_47EC10((_BYTE*)(36 * i + dword_4B92E0), m, v20);
+                    sub_47EC10((char*)(36 * i + dword_4B92E0), m, v20);
                 }
             }
             sub_482FAA(v26);
@@ -56155,7 +56155,7 @@ int __cdecl sub_47A42F(HANDLE hFile, int a2, LPVOID lpBuffer)
     {
         //每个块的大小为152，一共lpBuffer个，
         //a2是//a2 = for in dword_4B9324[0-5]，hfile是文件，buffer是文件的第一个字节数据
-        sub_40197E((_BYTE*)(152 * i + *(int*)a2), hFile, (unsigned __int8)Buffer, 0);
+        sub_40197E((char*)(152 * i + *(int*)a2), hFile, (unsigned __int8)Buffer, 0);
     }
     return 1;
 }
@@ -56279,12 +56279,12 @@ int sub_47A55C(LPCSTR lpFileName, int a0, int a1, int a2, int a3, LPCSTR lpFileN
             //v2 = (int*)*((int*)lpFileName + 130);
             v2 = (int*)*((int*)a0);
             v3 = sub_401BEF((int*)v23, j);
-            LOBYTE(v22) = sub_425F50((_BYTE*)(12 * v3 + *v2));
+            LOBYTE(v22) = sub_425F50((char*)(12 * v3 + *v2));
             v22 = (unsigned __int8)v22;
             //v4 = (int*)*((int*)lpFileName + 130);
             v4 = (int*)*(int*)a0;
             v5 = sub_401BEF((int*)v23, j);
-            LOBYTE(v21) = sub_425F90((_BYTE*)(12 * v5 + *v4));
+            LOBYTE(v21) = sub_425F90((char*)(12 * v5 + *v4));
             v21 = (unsigned __int8)v21;
             v6 = sub_401C1E((int*)v23, j, 0);
             v14 = -v6 - 8 * v22;
@@ -56493,7 +56493,7 @@ int sub_47AC9D()
     HANDLE hObject; // [esp+24h] [ebp-32Ch]
     int j; // [esp+20h] [ebp-330h]
     signed int k; // [esp+1Ch] [ebp-334h]
-    _BYTE* v4; // [esp+18h] [ebp-338h]
+    char* v4; // [esp+18h] [ebp-338h]
     int v3; // [esp+14h] [ebp-33Ch]
     signed int v2; // [esp+10h] [ebp-340h]
     signed int n; // [esp+Ch] [ebp-344h]
@@ -56515,7 +56515,7 @@ int sub_47AC9D()
     HANDLE hObject; // [esp+24h] [ebp-32Ch]
     int j; // [esp+20h] [ebp-330h]
     signed int k; // [esp+1Ch] [ebp-334h]
-    _BYTE* v4; // [esp+18h] [ebp-338h]
+    char* v4; // [esp+18h] [ebp-338h]
     int v3; // [esp+14h] [ebp-33Ch]
     signed int v2; // [esp+10h] [ebp-340h]
     signed int n; // [esp+Ch] [ebp-344h]
@@ -56642,7 +56642,7 @@ int sub_47AC9D()
     }
     for (m = 0; m < (int)Size; ++m)
     {
-        v4 = (_BYTE*)(36 * m + dword_4B92E0);
+        v4 = (char*)(36 * m + dword_4B92E0);
         v2 = (unsigned __int8)sub_401710(v4);
         v3 = (unsigned __int8)MarkedForDetachment(v4);//call return thisxx[20]; 
         if (v2 < (int)dword_4B93A0 && v3 < 4)
@@ -57443,10 +57443,10 @@ int __cdecl sub_47BD8E(int a1, int a2, int a3, int a4)
             for (i = 0; i < 2; ++i)
             {
                 result = i + v10;
-                if (!*(_BYTE*)(i + v10))
+                if (!*(char*)(i + v10))
                     break;
                 result = i;
-                String[i] = *(_BYTE*)(i + v10);
+                String[i] = *(char*)(i + v10);
             }
             if (i < 2)
                 break;
@@ -58246,10 +58246,10 @@ int sub_47C5F0()
                                                                                                                     for (k = 0; k < v38; ++k)
                                                                                                                     {
                                                                                                                         v1 = sub_401BEF((int*)v36, k);
-                                                                                                                        LOBYTE(v35) = sub_425F50((_BYTE*)(12 * v1 + dword_4B9348[j]));
+                                                                                                                        LOBYTE(v35) = sub_425F50((char*)(12 * v1 + dword_4B9348[j]));
                                                                                                                         v35 = (unsigned __int8)v35;
                                                                                                                         v2 = sub_401BEF((int*)v36, k);
-                                                                                                                        LOBYTE(v34) = sub_425F90((_BYTE*)(12 * v2 + dword_4B9348[j]));
+                                                                                                                        LOBYTE(v34) = sub_425F90((char*)(12 * v2 + dword_4B9348[j]));
                                                                                                                         v34 = (unsigned __int8)v34;
                                                                                                                         v3 = sub_401C1E((int*)v36, k, 0);
                                                                                                                         v27 = -v3 - 8 * v35;
@@ -58287,17 +58287,17 @@ int sub_47C5F0()
                                                                                                                 v24 = (unsigned __int8)v24;
                                                                                                                 for (m = 0; m < v24; ++m)
                                                                                                                 {
-                                                                                                                    LOBYTE(v21) = sub_425F50((_BYTE*)(12
+                                                                                                                    LOBYTE(v21) = sub_425F50((char*)(12
                                                                                                                         * *(unsigned __int16*)(v22 + 8 * m)
                                                                                                                         + dword_4B92F0));
                                                                                                                     v21 = (unsigned __int8)v21;
-                                                                                                                    LOBYTE(v20) = sub_425F90((_BYTE*)(12
+                                                                                                                    LOBYTE(v20) = sub_425F90((char*)(12
                                                                                                                         * *(unsigned __int16*)(v22 + 8 * m)
                                                                                                                         + dword_4B92F0));
                                                                                                                     v20 = (unsigned __int8)v20;
-                                                                                                                    *(_BYTE*)(v22 + 8 * m + 3) = -*(_BYTE*)(v22 + 8 * m + 2)
+                                                                                                                    *(char*)(v22 + 8 * m + 3) = -*(char*)(v22 + 8 * m + 2)
                                                                                                                         - 8 * v21;
-                                                                                                                    *(_BYTE*)(v22 + 8 * m + 5) = -*(_BYTE*)(v22 + 8 * m + 4)
+                                                                                                                    *(char*)(v22 + 8 * m + 5) = -*(char*)(v22 + 8 * m + 4)
                                                                                                                         - 8 * v20;
                                                                                                                     v9 = sub_47EE20(v26, (int*)v12, 0, 0);
                                                                                                                     v16 = *v9;
@@ -58791,115 +58791,115 @@ LRESULT __stdcall sub_47E7B6(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 }
 
 
-_BYTE* sub_47EA90(_BYTE* thisx, char a2)
+char* sub_47EA90(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[18] = a2;
     return result;
 }
 
-_BYTE* sub_47EAB0(_BYTE* thisx, char a2)
+char* sub_47EAB0(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[19] = a2;
     return result;
 }
 
-_BYTE* sub_47EAD0(_BYTE* thisx, char a2)
+char* sub_47EAD0(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[20] = a2;
     return result;
 }
 
-_BYTE* sub_47EAF0(_BYTE* thisx, char a2)
+char* sub_47EAF0(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[21] = a2;
     return result;
 }
 
-_BYTE* sub_47EB10(_BYTE* thisx, char a2)
+char* sub_47EB10(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[22] = a2;
     return result;
 }
 
-_BYTE* sub_47EB30(_BYTE* thisx, char a2)
+char* sub_47EB30(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[23] = a2;
     return result;
 }
 
-_BYTE* sub_47EB50(_BYTE* thisx, char a2)
+char* sub_47EB50(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[24] = a2;
     return result;
 }
 
-_BYTE* sub_47EB70(_BYTE* thisx, char a2)
+char* sub_47EB70(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[25] = a2;
     return result;
 }
 
-_BYTE* sub_47EB90(_BYTE* thisx, char a2)
+char* sub_47EB90(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[26] = a2;
     return result;
 }
 
-_BYTE* sub_47EBB0(_BYTE* thisx, char a2)
+char* sub_47EBB0(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[27] = a2;
     return result;
 }
 
-_BYTE* sub_47EBD0(_BYTE* thisx, char a2)
+char* sub_47EBD0(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[30] = a2;
     return result;
 }
 
-_BYTE* sub_47EBF0(_BYTE* thisx, char a2)
+char* sub_47EBF0(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[31] = a2;
     return result;
 }
 
-char* sub_47EC10(_BYTE* thisx, int a2, char a3)
+char* sub_47EC10(char* thisx, int a2, char a3)
 {
     char* result; // eax
 
@@ -59068,7 +59068,7 @@ char* sub_47EFA0(char* thisx)
 void sub_47EFC0(void* thisx)
 {
     *(int*)thisx = off_4AC2E0;
-    *((_BYTE*)thisx + 28) = 0;
+    *((char*)thisx + 28) = 0;
 }
 
 //不管，析构函数
@@ -59084,7 +59084,7 @@ int sub_47EFF2(int thisx, int a2)
 
     if (a2)
     {
-        *(_BYTE*)(thisx + 28) = *(_BYTE*)(a2 + 12);
+        *(char*)(thisx + 28) = *(char*)(a2 + 12);
         *(int*)(thisx + 4) = *(int*)a2;
         *(int*)(thisx + 8) = *(int*)(a2 + 4);
         *(int*)(thisx + 12) = *(int*)(a2 + 8);
@@ -59101,13 +59101,13 @@ int sub_47F04A(int thisx)
     int result; // eax
 
     result = thisx;
-    if (*(_BYTE*)(thisx + 28))
+    if (*(char*)(thisx + 28))
     {
         if ((int)++ * (int*)(thisx + 32) >= 300)
             *(int*)(thisx + 36) = *(int*)(thisx + 32) / 5 % 2;
         result = thisx;
         if (*(int*)(thisx + 32) == 480)
-            *(_BYTE*)(thisx + 28) = 0;
+            *(char*)(thisx + 28) = 0;
     }
     return result;
 }
@@ -59119,7 +59119,7 @@ unsigned __int16* sub_47F0B1(int thisx)
     int v4[14]; // [esp+8h] [ebp-38h] BYREF
 
     result = (unsigned __int16*)thisx;
-    if (*(_BYTE*)(thisx + 28))
+    if (*(char*)(thisx + 28))
     {
         if (!*(int*)(thisx + 36))
         {
@@ -59135,9 +59135,9 @@ unsigned __int16* sub_47F0B1(int thisx)
 }
 
 //初始化
-_BYTE* sub_47F138(_BYTE* thisx)
+char* sub_47F138(char* thisx)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[28] = 0;
@@ -59145,9 +59145,9 @@ _BYTE* sub_47F138(_BYTE* thisx)
 }
 
 //初始化
-_BYTE* sub_47F14A(_BYTE* thisx)
+char* sub_47F14A(char* thisx)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[28] = 0;
@@ -59242,9 +59242,9 @@ int __fastcall sub_47F211(int a1)
                         return result;
                     }
                 }
-                v12 = *(_BYTE*)(a1 + *(int*)(a1 + 260) + 4);
+                v12 = *(char*)(a1 + *(int*)(a1 + 260) + 4);
                 if (*(int*)(a1 + 292) >= 0)
-                    v12 = *(_BYTE*)(a1 + *(int*)(a1 + 292) + 296);
+                    v12 = *(char*)(a1 + *(int*)(a1 + 292) + 296);
                 if (v12 == 92)
                 {
                     result = a1;
@@ -59254,14 +59254,14 @@ int __fastcall sub_47F211(int a1)
                         *(int*)(a1 + 268) = -1;
                         return result;
                     }
-                    v12 = *(_BYTE*)(a1 + *(int*)(a1 + 260) + 4);
+                    v12 = *(char*)(a1 + *(int*)(a1 + 260) + 4);
                     result = a1;
-                    v11 = *(_BYTE*)(a1 + *(int*)(a1 + 260) + 5);
+                    v11 = *(char*)(a1 + *(int*)(a1 + 260) + 5);
                     if (v12 == 110)
                     {
-                        *(_BYTE*)(a1 + 264) = 0;
+                        *(char*)(a1 + 264) = 0;
                         result = a1;
-                        ++* (_BYTE*)(a1 + 265);
+                        ++* (char*)(a1 + 265);
                     }
                     else if (v12 == 46)
                     {
@@ -59336,20 +59336,20 @@ int __fastcall sub_47F211(int a1)
                             *(int*)(a1 + 268) = -1;
                             return result;
                         }
-                        v6 = *(_BYTE*)(a1 + *(int*)(a1 + 260) + 4);
+                        v6 = *(char*)(a1 + *(int*)(a1 + 260) + 4);
                     }
                     else
                     {
                         ++* (int*)(a1 + 292);
-                        v6 = *(_BYTE*)(a1 + (*(int*)(a1 + 292))++ + 296);
+                        v6 = *(char*)(a1 + (*(int*)(a1 + 292))++ + 296);
                         if (lstrlenA((LPCSTR)(a1 + 296)) <= *(int*)(a1 + 292))
                             *(int*)(a1 + 292) = -1;
                     }
                     v7 = 0;
-                    if ((unsigned __int8)++ * (_BYTE*)(a1 + 264) >= 0x24u)
+                    if ((unsigned __int8)++ * (char*)(a1 + 264) >= 0x24u)
                     {
-                        *(_BYTE*)(a1 + 264) = 0;
-                        ++* (_BYTE*)(a1 + 265);
+                        *(char*)(a1 + 264) = 0;
+                        ++* (char*)(a1 + 265);
                     }
                     sub_47B91A(
                         8 * *(unsigned __int8*)(a1 + 264),
@@ -59429,11 +59429,11 @@ int __fastcall sub_47F211(int a1)
                 }
 
                 // 从内存中读取一个字节到v12
-                v12 = *(_BYTE*)(a1 + *(int*)(a1 + 260) + 4);
+                v12 = *(char*)(a1 + *(int*)(a1 + 260) + 4);
 
                 // 如果a1+292处的DWORD不小于0，读取相应内存中的字节到v12
                 if (*(int*)(a1 + 292) >= 0)
-                    v12 = *(_BYTE*)(a1 + *(int*)(a1 + 292) + 296);
+                    v12 = *(char*)(a1 + *(int*)(a1 + 292) + 296);
 
                 // 如果v12等于反斜杠（ASCII码92），执行以下操作
                 if (v12 == 92)
@@ -59448,16 +59448,16 @@ int __fastcall sub_47F211(int a1)
                     }
 
                     // 再次从内存中读取一个字节到v12，并从下一个位置读取字节到v11
-                    v12 = *(_BYTE*)(a1 + *(int*)(a1 + 260) + 4);
+                    v12 = *(char*)(a1 + *(int*)(a1 + 260) + 4);
                     result = a1;
-                    v11 = *(_BYTE*)(a1 + *(int*)(a1 + 260) + 5);
+                    v11 = *(char*)(a1 + *(int*)(a1 + 260) + 5);
 
                     // 根据v12的值进行不同的处理
                     if (v12 == 110) // \n 换行符
                     {
-                        *(_BYTE*)(a1 + 264) = 0;
+                        *(char*)(a1 + 264) = 0;
                         result = a1;
-                        ++* (_BYTE*)(a1 + 265);
+                        ++* (char*)(a1 + 265);
                     }
                     else if (v12 == 46) // . 点号
                     {
@@ -59550,13 +59550,13 @@ int __fastcall sub_47F211(int a1)
                         }
 
                         // 从内存中读取一个字节到v6
-                        v6 = *(_BYTE*)(a1 + *(int*)(a1 + 260) + 4);
+                        v6 = *(char*)(a1 + *(int*)(a1 + 260) + 4);
                     }
                     else
                     {
                         // 否则，处理多字节字符
                         ++* (int*)(a1 + 292);
-                        v6 = *(_BYTE*)(a1 + (*(int*)(a1 + 292))++ + 296);
+                        v6 = *(char*)(a1 + (*(int*)(a1 + 292))++ + 296);
 
                         // 如果a1+296中的字符串长度小于a1+292，则将a1+292置为-1
                         if (lstrlenA((LPCSTR)(a1 + 296)) <= *(int*)(a1 + 292))
@@ -59565,10 +59565,10 @@ int __fastcall sub_47F211(int a1)
 
                     // 更新a1+264和a1+265的值，执行一些图形处理函数
                     v7 = 0;
-                    if ((unsigned __int8)++ * (_BYTE*)(a1 + 264) >= 0x24u)
+                    if ((unsigned __int8)++ * (char*)(a1 + 264) >= 0x24u)
                     {
-                        *(_BYTE*)(a1 + 264) = 0;
-                        ++* (_BYTE*)(a1 + 265);
+                        *(char*)(a1 + 264) = 0;
+                        ++* (char*)(a1 + 265);
                     }
 
                     // 调用sub_47B91A进行图形绘制或其他操作
@@ -59606,18 +59606,18 @@ int sub_47F6B3(int thisx)
 
     if ((int)++ * (int*)(thisx + 260) >= 256 || *(int*)(thisx + 260) >= lstrlenA((LPCSTR)(thisx + 4)))
         return -1;
-    if (*(_BYTE*)(thisx + *(int*)(thisx + 260) + 4) != 91)
+    if (*(char*)(thisx + *(int*)(thisx + 260) + 4) != 91)
         return -1;
     ++* (int*)(thisx + 260);
     v3 = 0;
-    if (*(_BYTE*)(thisx + *(int*)(thisx + 260) + 4) == 118 || *(_BYTE*)(thisx + *(int*)(thisx + 260) + 4) == 86)
+    if (*(char*)(thisx + *(int*)(thisx + 260) + 4) == 118 || *(char*)(thisx + *(int*)(thisx + 260) + 4) == 86)
     {
         ++* (int*)(thisx + 260);
         v3 = 1;
     }
     if (*(int*)(thisx + 260) >= 256 || *(int*)(thisx + 260) >= lstrlenA((LPCSTR)(thisx + 4)))
         return -1;
-    if (*(_BYTE*)(thisx + *(int*)(thisx + 260) + 4) == 93)
+    if (*(char*)(thisx + *(int*)(thisx + 260) + 4) == 93)
         return 0;
     if (*(char*)(thisx + *(int*)(thisx + 260) + 4) < 48 || *(char*)(thisx + *(int*)(thisx + 260) + 4) > 57)
         return 0;
@@ -59626,7 +59626,7 @@ int sub_47F6B3(int thisx)
     {
         if ((int)++ * (int*)(thisx + 260) >= 256 || *(int*)(thisx + 260) >= lstrlenA((LPCSTR)(thisx + 4)))
             return -1;
-    } while (*(_BYTE*)(thisx + *(int*)(thisx + 260) + 4) != 93);
+    } while (*(char*)(thisx + *(int*)(thisx + 260) + 4) != 93);
     v6 = *(int*)(thisx + 260);
     lstrcpynA(String1, (LPCSTR)(thisx + v4 + 4), v6 - v4 + 1);
     if (v3)
@@ -59651,14 +59651,14 @@ int sub_47F6B3(int thisx)
         return -1; // 超出范围，返回 -1
 
     // 检查当前位置字符是否为 '['
-    if (*(_BYTE*)(thisx + *(int*)(thisx + 260) + 4) != 91)
+    if (*(char*)(thisx + *(int*)(thisx + 260) + 4) != 91)
         return -1; // 字符不是 '[', 返回 -1
 
     ++* (int*)(thisx + 260); // 索引自增
     v3 = 0; // 初始化标志变量
 
     // 检查当前位置字符是否为 'v' 或 'V'
-    if (*(_BYTE*)(thisx + *(int*)(thisx + 260) + 4) == 118 || *(_BYTE*)(thisx + *(int*)(thisx + 260) + 4) == 86)
+    if (*(char*)(thisx + *(int*)(thisx + 260) + 4) == 118 || *(char*)(thisx + *(int*)(thisx + 260) + 4) == 86)
     {
         ++* (int*)(thisx + 260); // 索引自增
         v3 = 1; // 设置标志变量
@@ -59669,7 +59669,7 @@ int sub_47F6B3(int thisx)
         return -1; // 超出范围，返回 -1
 
     // 检查当前位置字符是否为 ']'
-    if (*(_BYTE*)(thisx + *(int*)(thisx + 260) + 4) == 93)
+    if (*(char*)(thisx + *(int*)(thisx + 260) + 4) == 93)
         return 0; // 字符是 ']', 返回 0
 
     // 检查当前位置字符是否为数字
@@ -59683,7 +59683,7 @@ int sub_47F6B3(int thisx)
     {
         if ((int)++ * (int*)(thisx + 260) >= 256 || *(int*)(thisx + 260) >= lstrlenA((LPCSTR)(thisx + 4)))
             return -1; // 超出范围，返回 -1
-    } while (*(_BYTE*)(thisx + *(int*)(thisx + 260) + 4) != 93);
+    } while (*(char*)(thisx + *(int*)(thisx + 260) + 4) != 93);
 
     v6 = *(int*)(thisx + 260); // 记录结束索引
 
@@ -59759,8 +59759,8 @@ void sub_47F9D6(int thisx, LPCSTR lpString, int a3)
 
         // 设置数据结构中的其他成员
         *(int*)(thisx + 272) = a3; // 设置 thisx + 272 位置的值为 a3
-        *(_BYTE*)(thisx + 264) = 0;   // 将 thisx + 264 位置的字节设置为 0
-        *(_BYTE*)(thisx + 265) = 0;   // 将 thisx + 265 位置的字节设置为 0
+        *(char*)(thisx + 264) = 0;   // 将 thisx + 264 位置的字节设置为 0
+        *(char*)(thisx + 265) = 0;   // 将 thisx + 265 位置的字节设置为 0
         *(int*)(thisx + 260) = -1; // 将 thisx + 260 位置的值设置为 -1
         *(int*)(thisx + 268) = *(int*)(thisx + 272); // 将 thisx + 268 位置的值设置为 thisx + 272 位置的值
         *(int*)(thisx + 552) = 0; // 将 thisx + 552 位置的值设置为 0
@@ -59841,8 +59841,8 @@ int sub_47FBA3(int thisx)
 
     memset((void*)(thisx + 4), 0, 256);
     memset((void*)(thisx + 296), 0, 256);
-    *(_BYTE*)(thisx + 264) = 0;
-    *(_BYTE*)(thisx + 265) = 0;
+    *(char*)(thisx + 264) = 0;
+    *(char*)(thisx + 265) = 0;
     *(int*)(thisx + 260) = 0;
     *(int*)(thisx + 272) = 4;
     result = thisx;
@@ -59870,8 +59870,8 @@ void sub_47FC70(void* thisx)
     *((int*)thisx + 5) = 0;
     *((int*)thisx + 6) = 0;
     *((int*)thisx + 3) = 0;
-    *((_BYTE*)thisx + 28) = 3;
-    *((_BYTE*)thisx + 29) = 0;
+    *((char*)thisx + 28) = 3;
+    *((char*)thisx + 29) = 0;
     *((int*)thisx + 8) = 1;
 }
 
@@ -60040,7 +60040,7 @@ int sub_480054(int thisx, int a2)
         sub_480950(*(char**)(thisx + 12), 3);
     *(int*)(thisx + 20) = 0;
     *(int*)(thisx + 24) = 0;
-    *(_BYTE*)(thisx + 28) = 3;
+    *(char*)(thisx + 28) = 3;
     v10 = 0;
     v7 = 0;
     for (i = 0; ; ++i)
@@ -60072,9 +60072,9 @@ int sub_480054(int thisx, int a2)
         sub_47FE72((int*)(*(int*)(thisx + 12) + 32 * j), (LPCSTR)(v8 + a2), 0, 0, 0, 0);
         v8 += lstrlenA((LPCSTR)(v8 + a2)) + 1;
     }
-    *(_BYTE*)(thisx + 6) = v10 / 2 + 5;
+    *(char*)(thisx + 6) = v10 / 2 + 5;
     result = 2 * i + 2;
-    *(_BYTE*)(thisx + 7) = result;
+    *(char*)(thisx + 7) = result;
     return result;
 }
 
@@ -60414,7 +60414,7 @@ char* sub_480950(char* thisx, char a2)
 }
 
 //初始化
-_BYTE* sub_480A00(_BYTE* thisx)
+char* sub_480A00(char* thisx)
 {
     *(int*)thisx = off_4AC2FC;
     thisx[7] = 0;
@@ -60483,11 +60483,11 @@ int* sub_480BC0(int* thisx)
     sub_47FEB2(thisx[3] + 160, (LPCSTR)&byte_4AFAD7, &byte_4AFB11, 0);
     sub_47FEB2(thisx[3] + 192, (LPCSTR)&byte_4AFB1E, &byte_4AFB11, 1);
     sub_47FEB2(thisx[3] + 224, (LPCSTR)&byte_4AFB6C, &byte_4AFC02, 0);
-    *((_BYTE*)thisx + 4) = 10;
-    *((_BYTE*)thisx + 5) = 8;
-    *((_BYTE*)thisx + 6) = 19;
-    *((_BYTE*)thisx + 7) = 14;
-    *((_BYTE*)thisx + 29) = 14;
+    *((char*)thisx + 4) = 10;
+    *((char*)thisx + 5) = 8;
+    *((char*)thisx + 6) = 19;
+    *((char*)thisx + 7) = 14;
+    *((char*)thisx + 29) = 14;
     return thisx;
 }
 //不管，析构函数
@@ -60558,11 +60558,11 @@ int* sub_480F30(int* thisx)
     sub_47FEB2(thisx[3] + 32, (LPCSTR)&byte_4AFC4C, &byte_4AFB11, 1);
     sub_47FEB2(thisx[3] + 64, (LPCSTR)&byte_4AFCA0, &byte_4AFD14, 0); //关....
     sub_47FE72((int*)(thisx[3] + 96), (LPCSTR)&byte_4AFD21, 0, 0, 0, 0);
-    *((_BYTE*)thisx + 4) = 9;
-    *((_BYTE*)thisx + 5) = 10;
-    *((_BYTE*)thisx + 6) = 21;
-    *((_BYTE*)thisx + 7) = 10;
-    *((_BYTE*)thisx + 29) = 15;
+    *((char*)thisx + 4) = 9;
+    *((char*)thisx + 5) = 10;
+    *((char*)thisx + 6) = 21;
+    *((char*)thisx + 7) = 10;
+    *((char*)thisx + 29) = 15;
     return thisx;
 }
 
@@ -60682,15 +60682,15 @@ BOOL sub_481285(int thisx, HANDLE hFile)
 void sub_48142C(void* thisx)
 {
     *(int*)thisx = off_4AC32C;
-    *((_BYTE*)thisx + 4) = 0;
-    *((_BYTE*)thisx + 8) = 0;
-    *((_BYTE*)thisx + 9) = 0;
+    *((char*)thisx + 4) = 0;
+    *((char*)thisx + 8) = 0;
+    *((char*)thisx + 9) = 0;
     *((short*)thisx + 5) = 0;
     *((short*)thisx + 6) = 0;
-    *((_BYTE*)thisx + 14) = 0;
-    *((_BYTE*)thisx + 15) = 2;
-    *((_BYTE*)thisx + 16) = 50;
-    *((_BYTE*)thisx + 17) = 100;
+    *((char*)thisx + 14) = 0;
+    *((char*)thisx + 15) = 2;
+    *((char*)thisx + 16) = 50;
+    *((char*)thisx + 17) = 100;
     *((short*)thisx + 3) = 0;
 }
 
@@ -60707,9 +60707,9 @@ int* sub_4814A3(int* thisx)
     *thisx = off_4AC330;
     thisx[1] = 0;
     thisx[2] = 0;
-    *((_BYTE*)thisx + 13) = 0;
-    *((_BYTE*)thisx + 12) = 0;
-    *((_BYTE*)thisx + 14) = 0;
+    *((char*)thisx + 13) = 0;
+    *((char*)thisx + 12) = 0;
+    *((char*)thisx + 14) = 0;
     thisx[4] = 0;
     *((short*)thisx + 10) = 0;
     return thisx;
@@ -60736,8 +60736,8 @@ int sub_48151A(int thisx)
     *(int*)(thisx + 4) = 0;
     *(int*)(thisx + 8) = 0;
     result = thisx;
-    *(_BYTE*)(thisx + 13) = 0;
-    *(_BYTE*)(thisx + 12) = 0;
+    *(char*)(thisx + 13) = 0;
+    *(char*)(thisx + 12) = 0;
     return result;
 }
 
@@ -60757,8 +60757,8 @@ int sub_48159D(int thisx, char a2, char a3)
     if (!a2 || !a3)
         return 0;
     sub_48151A(thisx);
-    *(_BYTE*)(thisx + 12) = a2;
-    *(_BYTE*)(thisx + 13) = a3;
+    *(char*)(thisx + 12) = a2;
+    *(char*)(thisx + 13) = a3;
     v7 = *(unsigned __int8*)(thisx + 13) * *(unsigned __int8*)(thisx + 12);
     Block = (int*)new2(20 * v7 + 4);
     if (Block)
@@ -60826,8 +60826,8 @@ int sub_48176C(int thisx, unsigned __int8 a2, unsigned __int8 a3)
         return 0;
     if (*(int*)(thisx + 4))
     {
-        v9 = *(_BYTE*)(thisx + 12);
-        v8 = *(_BYTE*)(thisx + 13);
+        v9 = *(char*)(thisx + 12);
+        v8 = *(char*)(thisx + 13);
         if (v9 > (int)a2)
             v9 = a2;
         if (v8 > (int)a3)
@@ -60837,8 +60837,8 @@ int sub_48176C(int thisx, unsigned __int8 a2, unsigned __int8 a3)
         sub_48151A(thisx);
     }
     *(int*)(thisx + 4) = (int)v4;
-    *(_BYTE*)(thisx + 12) = a2;
-    *(_BYTE*)(thisx + 13) = a3;
+    *(char*)(thisx + 12) = a2;
+    *(char*)(thisx + 13) = a3;
     *(int*)(thisx + 8) = (int)new2(a3 * a2);
     memset(*(void**)(thisx + 8), 0, a3 * a2);
     return 1;
@@ -60892,7 +60892,7 @@ int sub_481B9F(int thisx, HANDLE hFile)
     if (lstrcmpiA(Buffer, aKdMapdata))
     {
         SetFilePointer(hFile, 0, 0, 0);
-        *(_BYTE*)(thisx + 14) = 0;
+        *(char*)(thisx + 14) = 0;
     }
     else
     {
@@ -60901,14 +60901,14 @@ int sub_481B9F(int thisx, HANDLE hFile)
     }
     ReadFile(hFile, &v11, 1u, (LPDWORD)&NumberOfBytesRead, 0);
     ReadFile(hFile, &v10, 1u, (LPDWORD)&NumberOfBytesRead, 0);
-    if (!(_BYTE)v11 || !(_BYTE)v10 || (unsigned __int8)v10 > 0x16u)
+    if (!(char)v11 || !(char)v10 || (unsigned __int8)v10 > 0x16u)
         return 0;
     if ((unsigned __int8)v11 != *(unsigned __int8*)(thisx + 12)
         || (unsigned __int8)v10 != *(unsigned __int8*)(thisx + 13))
     {
         sub_48151A(thisx);
-        *(_BYTE*)(thisx + 13) = v10;
-        *(_BYTE*)(thisx + 12) = v11;
+        *(char*)(thisx + 13) = v10;
+        *(char*)(thisx + 12) = v11;
         v9 = *(unsigned __int8*)(thisx + 13) * *(unsigned __int8*)(thisx + 12);
         Block = (int*)new2(20 * v9 + 4);
         v17 = 0;
@@ -60950,12 +60950,12 @@ int sub_481B9F(int thisx, HANDLE hFile)
         if (!sub_482900((int*)thisx, hFile, v4))
             return 0;
     }
-    *(_BYTE*)(thisx + 15) = 0;
+    *(char*)(thisx + 15) = 0;
     for (i = 0; i < v16; ++i)
     {
         RuntimeOwnsLifetime = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime((Concurrency::details::_UnrealizedChore*)(*(int*)(thisx + 4) + 20 * i));
         if (RuntimeOwnsLifetime > (int)*(unsigned __int8*)(thisx + 15))
-            *(_BYTE*)(thisx + 15) = RuntimeOwnsLifetime;
+            *(char*)(thisx + 15) = RuntimeOwnsLifetime;
     }
     return 1;
 }
@@ -60993,11 +60993,11 @@ int sub_481F98(short* thisx, HANDLE hFile, int a3)
         v6 = 0;
         thisx[5] = 0;
         thisx[6] = 0;
-        *((_BYTE*)thisx + 14) = 0;
-        *((_BYTE*)thisx + 15) = 0;
-        *((_BYTE*)thisx + 16) = 50;
-        *((_BYTE*)thisx + 17) = 100;
-        switch (*((_BYTE*)thisx + 4))
+        *((char*)thisx + 14) = 0;
+        *((char*)thisx + 15) = 0;
+        *((char*)thisx + 16) = 50;
+        *((char*)thisx + 17) = 100;
+        switch (*((char*)thisx + 4))
         {
         case 7:
             v8 = 1;
@@ -61008,7 +61008,7 @@ int sub_481F98(short* thisx, HANDLE hFile, int a3)
             thisx[5] = 30;
             break;
         case 0xB:
-            *((_BYTE*)thisx + 14) = 8;
+            *((char*)thisx + 14) = 8;
             thisx[5] = -30;
             v5 = 2;
             v6 = 1;
@@ -61016,25 +61016,25 @@ int sub_481F98(short* thisx, HANDLE hFile, int a3)
         case 0xC:
             v8 = 1;
             v7 = 11;
-            *((_BYTE*)thisx + 14) = 8;
+            *((char*)thisx + 14) = 8;
             thisx[5] = 30;
             v5 = 2;
             v6 = 1;
             break;
         case 0xD:
-            *((_BYTE*)thisx + 16) = 90;
-            *((_BYTE*)thisx + 17) = 10;
+            *((char*)thisx + 16) = 90;
+            *((char*)thisx + 17) = 10;
             break;
         }
-        *((_BYTE*)thisx + 15) = 2 * v5;
+        *((char*)thisx + 15) = 2 * v5;
         if (v6)
-            *((_BYTE*)thisx + 15) |= 8u;
+            *((char*)thisx + 15) |= 8u;
         if (v8)
-            *((_BYTE*)thisx + 4) = v7;
+            *((char*)thisx + 4) = v7;
     }
     if ((unsigned __int16)a3 < 2u)
     {
-        switch (*((_BYTE*)thisx + 4))
+        switch (*((char*)thisx + 4))
         {
         case 2:
             thisx[3] = 1;
@@ -61059,7 +61059,7 @@ int sub_481F98(short* thisx, HANDLE hFile, int a3)
             break;
         }
         if (thisx[3])
-            *((_BYTE*)thisx + 4) = 0;
+            *((char*)thisx + 4) = 0;
     }
     else
     {
@@ -61070,9 +61070,9 @@ int sub_481F98(short* thisx, HANDLE hFile, int a3)
 
 
 //set
-_BYTE* sub_4822B3(_BYTE* thisx, int a2)
+char* sub_4822B3(char* thisx, int a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
     char v3; // cl
 
     result = thisx;
@@ -61157,134 +61157,134 @@ int sub_482427(void* thisx)
     if (!sub_4822EC((int)thisx, 6u))
         return 0;
     v2 = sub_4828CD((int)thisx, 0);
-    *(_BYTE*)(v2 + 10) = 2;
-    *(_BYTE*)(v2 + 6) = 0;
+    *(char*)(v2 + 10) = 2;
+    *(char*)(v2 + 6) = 0;
     *(short*)(v2 + 8) = 19;
-    *(_BYTE*)(v2 + 52) = 2;
+    *(char*)(v2 + 52) = 2;
     *(short*)v2 = 14;
     *(short*)(v2 + 2) = 0;
     *(short*)(v2 + 4) = 1;
-    *(_BYTE*)(v2 + 11) = 21;
+    *(char*)(v2 + 11) = 21;
     *(int*)(v2 + 20) = 300;
-    *(_BYTE*)(v2 + 12) = 0;
+    *(char*)(v2 + 12) = 0;
     *(int*)(v2 + 24) = 0;
-    *(_BYTE*)(v2 + 13) = 11;
+    *(char*)(v2 + 13) = 11;
     *(int*)(v2 + 28) = -550;
-    *(_BYTE*)(v2 + 14) = 11;
+    *(char*)(v2 + 14) = 11;
     *(int*)(v2 + 32) = 0;
-    *(_BYTE*)(v2 + 15) = 0;
+    *(char*)(v2 + 15) = 0;
     *(int*)(v2 + 36) = 0;
-    *(_BYTE*)(v2 + 16) = 11;
+    *(char*)(v2 + 16) = 11;
     *(int*)(v2 + 40) = 30;
     *(int*)(v2 + 44) = 0;
     *(int*)(v2 + 48) = 0;
     v3 = sub_4828CD((int)thisx, 1);
-    *(_BYTE*)(v3 + 10) = 1;
-    *(_BYTE*)(v3 + 6) = 0;
+    *(char*)(v3 + 10) = 1;
+    *(char*)(v3 + 6) = 0;
     *(short*)(v3 + 8) = 14;
-    *(_BYTE*)(v3 + 52) = 5;
+    *(char*)(v3 + 52) = 5;
     *(short*)v3 = 40;
     *(short*)(v3 + 2) = 0;
     *(short*)(v3 + 4) = 1;
-    *(_BYTE*)(v3 + 11) = 42;
+    *(char*)(v3 + 11) = 42;
     *(int*)(v3 + 20) = 100;
-    *(_BYTE*)(v3 + 12) = 0;
+    *(char*)(v3 + 12) = 0;
     *(int*)(v3 + 24) = 0;
-    *(_BYTE*)(v3 + 13) = 11;
+    *(char*)(v3 + 13) = 11;
     *(int*)(v3 + 28) = -500;
-    *(_BYTE*)(v3 + 14) = 11;
+    *(char*)(v3 + 14) = 11;
     *(int*)(v3 + 32) = 0;
-    *(_BYTE*)(v3 + 15) = 0;
+    *(char*)(v3 + 15) = 0;
     *(int*)(v3 + 36) = 0;
-    *(_BYTE*)(v3 + 16) = 11;
+    *(char*)(v3 + 16) = 11;
     *(int*)(v3 + 40) = 30;
     *(int*)(v3 + 44) = 300;
     *(int*)(v3 + 48) = 0;
     v4 = sub_4828CD((int)thisx, 2);
-    *(_BYTE*)(v4 + 10) = 1;
-    *(_BYTE*)(v4 + 6) = 0;
+    *(char*)(v4 + 10) = 1;
+    *(char*)(v4 + 6) = 0;
     *(short*)(v4 + 8) = 14;
-    *(_BYTE*)(v4 + 52) = 9;
+    *(char*)(v4 + 52) = 9;
     *(short*)v4 = 40;
     *(short*)(v4 + 2) = 0;
     *(short*)(v4 + 4) = 1;
-    *(_BYTE*)(v4 + 11) = 42;
+    *(char*)(v4 + 11) = 42;
     *(int*)(v4 + 20) = 100;
-    *(_BYTE*)(v4 + 12) = 0;
+    *(char*)(v4 + 12) = 0;
     *(int*)(v4 + 24) = 0;
-    *(_BYTE*)(v4 + 13) = 11;
+    *(char*)(v4 + 13) = 11;
     *(int*)(v4 + 28) = -500;
-    *(_BYTE*)(v4 + 14) = 11;
+    *(char*)(v4 + 14) = 11;
     *(int*)(v4 + 32) = 0;
-    *(_BYTE*)(v4 + 15) = 0;
+    *(char*)(v4 + 15) = 0;
     *(int*)(v4 + 36) = 0;
-    *(_BYTE*)(v4 + 16) = 11;
+    *(char*)(v4 + 16) = 11;
     *(int*)(v4 + 40) = 30;
     *(int*)(v4 + 44) = 300;
     *(int*)(v4 + 48) = 0;
     v5 = sub_4828CD((int)thisx, 3);
-    *(_BYTE*)(v5 + 10) = 1;
-    *(_BYTE*)(v5 + 6) = 0;
+    *(char*)(v5 + 10) = 1;
+    *(char*)(v5 + 6) = 0;
     *(short*)(v5 + 8) = 19;
-    *(_BYTE*)(v5 + 52) = 3;
+    *(char*)(v5 + 52) = 3;
     *(short*)v5 = 9;
     *(short*)(v5 + 2) = 0;
     *(short*)(v5 + 4) = 1;
-    *(_BYTE*)(v5 + 11) = 21;
+    *(char*)(v5 + 11) = 21;
     *(int*)(v5 + 20) = 400;
-    *(_BYTE*)(v5 + 12) = 0;
+    *(char*)(v5 + 12) = 0;
     *(int*)(v5 + 24) = 0;
-    *(_BYTE*)(v5 + 13) = 11;
+    *(char*)(v5 + 13) = 11;
     *(int*)(v5 + 28) = -700;
-    *(_BYTE*)(v5 + 14) = 11;
+    *(char*)(v5 + 14) = 11;
     *(int*)(v5 + 32) = 0;
-    *(_BYTE*)(v5 + 15) = 0;
+    *(char*)(v5 + 15) = 0;
     *(int*)(v5 + 36) = 0;
-    *(_BYTE*)(v5 + 16) = 11;
+    *(char*)(v5 + 16) = 11;
     *(int*)(v5 + 40) = 30;
     *(int*)(v5 + 44) = 0;
     *(int*)(v5 + 48) = 0;
     v8 = sub_4828CD((int)thisx, 4);
-    *(_BYTE*)(v8 + 10) = 1;
-    *(_BYTE*)(v8 + 6) = 0;
+    *(char*)(v8 + 10) = 1;
+    *(char*)(v8 + 6) = 0;
     *(short*)(v8 + 8) = 19;
-    *(_BYTE*)(v8 + 52) = 3;
+    *(char*)(v8 + 52) = 3;
     *(short*)v8 = 9;
     *(short*)(v8 + 2) = 0;
     *(short*)(v8 + 4) = 1;
-    *(_BYTE*)(v8 + 11) = 0;
+    *(char*)(v8 + 11) = 0;
     *(int*)(v8 + 20) = 0;
-    *(_BYTE*)(v8 + 12) = 11;
+    *(char*)(v8 + 12) = 11;
     *(int*)(v8 + 24) = 100;
-    *(_BYTE*)(v8 + 13) = 11;
+    *(char*)(v8 + 13) = 11;
     *(int*)(v8 + 28) = -500;
-    *(_BYTE*)(v8 + 14) = 11;
+    *(char*)(v8 + 14) = 11;
     *(int*)(v8 + 32) = 0;
-    *(_BYTE*)(v8 + 15) = 0;
+    *(char*)(v8 + 15) = 0;
     *(int*)(v8 + 36) = 0;
-    *(_BYTE*)(v8 + 16) = 11;
+    *(char*)(v8 + 16) = 11;
     *(int*)(v8 + 40) = 30;
     *(int*)(v8 + 44) = 0;
     *(int*)(v8 + 48) = 0;
     v6 = sub_4828CD((int)thisx, 5);
-    *(_BYTE*)(v6 + 10) = 1;
-    *(_BYTE*)(v6 + 6) = 0;
+    *(char*)(v6 + 10) = 1;
+    *(char*)(v6 + 6) = 0;
     *(short*)(v6 + 8) = 19;
-    *(_BYTE*)(v6 + 52) = 3;
+    *(char*)(v6 + 52) = 3;
     *(short*)v6 = 9;
     *(short*)(v6 + 2) = 0;
     *(short*)(v6 + 4) = 1;
-    *(_BYTE*)(v6 + 11) = 21;
+    *(char*)(v6 + 11) = 21;
     *(int*)(v6 + 20) = 200;
-    *(_BYTE*)(v6 + 12) = 0;
+    *(char*)(v6 + 12) = 0;
     *(int*)(v6 + 24) = 0;
-    *(_BYTE*)(v6 + 13) = 11;
+    *(char*)(v6 + 13) = 11;
     *(int*)(v6 + 28) = -500;
-    *(_BYTE*)(v6 + 14) = 11;
+    *(char*)(v6 + 14) = 11;
     *(int*)(v6 + 32) = 0;
-    *(_BYTE*)(v6 + 15) = 0;
+    *(char*)(v6 + 15) = 0;
     *(int*)(v6 + 36) = 0;
-    *(_BYTE*)(v6 + 16) = 11;
+    *(char*)(v6 + 16) = 11;
     *(int*)(v6 + 40) = 30;
     *(int*)(v6 + 44) = 0;
     *(int*)(v6 + 48) = 0;
@@ -61356,7 +61356,7 @@ int sub_482A1B(int thisx, unsigned __int8 a2, unsigned __int8 a3, char a4)
         if (a3 < (int)*(unsigned __int8*)(thisx + 13))
         {
             result = *(unsigned __int8*)(thisx + 12) * a3 + a2;
-            *(_BYTE*)(*(int*)(thisx + 8) + result) = a4;
+            *(char*)(*(int*)(thisx + 8) + result) = a4;
         }
     }
     return result;
@@ -61365,15 +61365,15 @@ int sub_482A1B(int thisx, unsigned __int8 a2, unsigned __int8 a3, char a4)
 char sub_482A7E(int thisx, unsigned __int8 a2, unsigned __int8 a3)
 {
     if (a2 < (int)*(unsigned __int8*)(thisx + 12) && a3 < (int)*(unsigned __int8*)(thisx + 13))
-        return *(_BYTE*)(*(int*)(thisx + 8) + *(unsigned __int8*)(thisx + 12) * a3 + a2);
+        return *(char*)(*(int*)(thisx + 8) + *(unsigned __int8*)(thisx + 12) * a3 + a2);
     else
         return 0;
 }
 
 //set
-_BYTE* sub_482AE0(_BYTE* thisx, unsigned __int8 a2)
+char* sub_482AE0(char* thisx, unsigned __int8 a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     thisx[15] &= 0xF9u;
     result = thisx;
@@ -61382,9 +61382,9 @@ _BYTE* sub_482AE0(_BYTE* thisx, unsigned __int8 a2)
 }
 
 //set
-_BYTE* sub_482B1C(_BYTE* thisx, int a2)
+char* sub_482B1C(char* thisx, int a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[15] &= ~8u;
@@ -61552,7 +61552,7 @@ int sub_482D44(int* thisx, LPSTR lpString1)
             break;
 
         // 当前字符
-        v5 = *(_BYTE*)(*thisx + thisx[2]);//这里是读取内存保存的数据。那个data.text的，毕竟*thisx的整个空间，拿出下一行数据
+        v5 = *(char*)(*thisx + thisx[2]);//这里是读取内存保存的数据。那个data.text的，毕竟*thisx的整个空间，拿出下一行数据
 
         // 把TAB替换成空格
         if (v5 == 9)//9，水平定位符
@@ -61691,7 +61691,7 @@ int sub_482D44(int* thisx, LPSTR lpString1)
             break;
 
         // 读取当前字符
-        v5 = *(_BYTE*)(*thisx + thisx[2]);
+        v5 = *(char*)(*thisx + thisx[2]);
 
         // 如果字符是制表符（水平定位符），将其转换为空格
         if (v5 == 9)
@@ -61805,7 +61805,7 @@ int sub_482D44_noai(int* thisx, LPSTR lpString1)
         if (thisx[2] >= thisx[1])//thisx[2]疑是作为下标，thisx[1]是文件大小，不能超过文件大小
             break;
 
-        v5 = *(_BYTE*)(*thisx + thisx[2]);//这里是读取内存保存的数据。那个data.text的，毕竟*thisx的整个空间，拿出下一行数据
+        v5 = *(char*)(*thisx + thisx[2]);//这里是读取内存保存的数据。那个data.text的，毕竟*thisx的整个空间，拿出下一行数据
 
         if (v5 == 9)//9，水平定位符
             v5 = 32;//32，空格
@@ -61891,7 +61891,7 @@ int sub_482FAA(int* thisx)
 
     for (i = thisx[2]; i < thisx[1]; ++i)//如果没有内容了就返回0
     {
-        if (*(_BYTE*)(*thisx + i) == 10)//对整个内存空间遍历，找到换行符，其实是以//往后遍历，找到换行符，作用是忽略注释内容
+        if (*(char*)(*thisx + i) == 10)//对整个内存空间遍历，找到换行符，其实是以//往后遍历，找到换行符，作用是忽略注释内容
         {
             thisx[2] = i + 1;//记录下换行符的位置
             thisx[3] = 0; //0表示需要处理开始新的内容
@@ -62108,7 +62108,7 @@ int* sub_48330A(int* thisx)
     */
     for (i = thisx[2] - 1; i >= 0; --i)
     {
-        if (*(_BYTE*)(*thisx + i) == 13 || *(_BYTE*)(*thisx + i) == 10)
+        if (*(char*)(*thisx + i) == 13 || *(char*)(*thisx + i) == 10)
         {
             ++i;
             break;
@@ -62183,7 +62183,7 @@ unsigned __int8 __fastcall sub_48342F(int a1, int a2, unsigned __int8 a3, char a
     }
     if (v14)
     {
-        *(_BYTE*)(a1 + 24) = (*(unsigned __int8*)(a1 + 24) + 1) % 32;
+        *(char*)(a1 + 24) = (*(unsigned __int8*)(a1 + 24) + 1) % 32;
         v10 = (unsigned __int8*)(a1 + 2 * *(unsigned __int8*)(a1 + 24) + 29);
         *v10 = a3;
         v10[1] = 1;
@@ -62193,7 +62193,7 @@ unsigned __int8 __fastcall sub_48342F(int a1, int a2, unsigned __int8 a3, char a
     v12 = 1;
     for (i = 0; i < 4; ++i)
     {
-        v11 = *(_BYTE*)(a1 + 32 * i + 93 + *(unsigned __int8*)(i + a1 + 25));
+        v11 = *(char*)(a1 + 32 * i + 93 + *(unsigned __int8*)(i + a1 + 25));
         v8 = v11 & 0x7F;
         v7 = (unsigned __int8)(v12 & a4) != 0;
         v5 = (v11 & 0x80) != 0;
@@ -62201,7 +62201,7 @@ unsigned __int8 __fastcall sub_48342F(int a1, int a2, unsigned __int8 a3, char a
         if (v5 != v7 && !v8)
         {
             v15 = 0;
-            *(_BYTE*)(a1 + 32 * i + 93 + *(unsigned __int8*)(i + a1 + 25)) = v7 << 7;
+            *(char*)(a1 + 32 * i + 93 + *(unsigned __int8*)(i + a1 + 25)) = v7 << 7;
             *(int*)(a1 + 4 * i + 8) = 1;
         }
         if (!v15)
@@ -62209,12 +62209,12 @@ unsigned __int8 __fastcall sub_48342F(int a1, int a2, unsigned __int8 a3, char a
             if (v8 == 127)
                 v15 = 1;
             else
-                ++* (_BYTE*)(a1 + 32 * i + 93 + *(unsigned __int8*)(i + a1 + 25));
+                ++* (char*)(a1 + 32 * i + 93 + *(unsigned __int8*)(i + a1 + 25));
         }
         if (v15)
         {
-            *(_BYTE*)(i + a1 + 25) = (*(unsigned __int8*)(i + a1 + 25) + 1) % 32;
-            *(_BYTE*)(a1 + 32 * i + 93 + *(unsigned __int8*)(i + a1 + 25)) = (v7 << 7) | 1;
+            *(char*)(i + a1 + 25) = (*(unsigned __int8*)(i + a1 + 25) + 1) % 32;
+            *(char*)(a1 + 32 * i + 93 + *(unsigned __int8*)(i + a1 + 25)) = (v7 << 7) | 1;
             ++* (int*)(a1 + 4 * i + 8);
         }
         v12 *= 2;
@@ -62295,7 +62295,7 @@ char  sub_4837FA(int* thisx, int a2)
     v11 = 0;
     for (i = 0; i < 4; ++i)
     {
-        if (sub_485100((_BYTE*)a2, i))
+        if (sub_485100((char*)a2, i))
             v11 |= 1 << i;
         v2 = i + 1;
     }
@@ -62327,14 +62327,14 @@ int __fastcall sub_483927(int a1, int a2, HANDLE hFile, int a4, int a5)
 
     v12 = 0;
     result = a1;
-    if ((*(_BYTE*)(a1 + 24) & 0xF) == 0 || a5)
+    if ((*(char*)(a1 + 24) & 0xF) == 0 || a5)
     {
         v9 = *(unsigned __int8*)(a1 + 24);
         if (a5)
             v9 += 16;
         v12 = (16 * (v9 / 16) + 16) % 0x20u;
         result = a1;
-        if (*(_BYTE*)(a1 + 2 * v12 + 30))
+        if (*(char*)(a1 + 2 * v12 + 30))
         {
             Buffer[0] = a4;
             WriteFile(hFile, Buffer, 1u, (LPDWORD)&NumberOfBytesWritten, 0);
@@ -62345,13 +62345,13 @@ int __fastcall sub_483927(int a1, int a2, HANDLE hFile, int a4, int a5)
     for (i = 0; i < 4; ++i)
     {
         result = i + a1;
-        if ((*(_BYTE*)(i + a1 + 25) & 0xF) == 0 || a5)
+        if ((*(char*)(i + a1 + 25) & 0xF) == 0 || a5)
         {
             v7 = *(unsigned __int8*)(i + a1 + 25);
             if (a5)
                 v7 += 16;
             v12 = (16 * (v7 / 16) + 16) % 0x20u;
-            v8 = *(_BYTE*)(a1 + 32 * i + v12 + 93) & 0x7F;
+            v8 = *(char*)(a1 + 32 * i + v12 + 93) & 0x7F;
             result = v8;
             if (v8)
             {
@@ -62576,8 +62576,8 @@ int sub_484410(int* thisx, unsigned int a2, char a3, char a4)
 {
     if (a2 >= thisx[1])
         return 0;
-    *(_BYTE*)(thisx[57] + 2 * a2) = a3;
-    *(_BYTE*)(thisx[57] + 2 * a2 + 1) = a4;
+    *(char*)(thisx[57] + 2 * a2) = a3;
+    *(char*)(thisx[57] + 2 * a2 + 1) = a4;
     return 1;
 }
 
@@ -62588,7 +62588,7 @@ int sub_484456(int* thisx, unsigned __int8 a2, unsigned int a3, char a4)
         return 0;
     if (a3 >= thisx[a2 + 2])
         return 0;
-    *(_BYTE*)(thisx[a2 + 62] + a3) = a4;
+    *(char*)(thisx[a2 + 62] + a3) = a4;
     return 1;
 }
 
@@ -62610,22 +62610,22 @@ unsigned int __fastcall sub_4844AE(unsigned int a1)
     unsigned int result; // eax
 
 
-    if (*(_BYTE*)(a1 + 264))
-        --* (_BYTE*)(a1 + 264);
+    if (*(char*)(a1 + 264))
+        --* (char*)(a1 + 264);
     result = *(unsigned __int8*)(a1 + 264);
-    if (!*(_BYTE*)(a1 + 264))
+    if (!*(char*)(a1 + 264))
     {
-        *(_BYTE*)(a1 + 269) = 0;
-        *(_BYTE*)(a1 + 270) = 0;
+        *(char*)(a1 + 269) = 0;
+        *(char*)(a1 + 270) = 0;
         result = a1;
         if (*(int*)(a1 + 224) < *(int*)(a1 + 4))
         {
             ++* (int*)(a1 + 224);
             v7 = (unsigned __int8*)(*(int*)(a1 + 228) + 2 * *(int*)(a1 + 224));
-            *(_BYTE*)(a1 + 264) = v7[1];
+            *(char*)(a1 + 264) = v7[1];
             v5 = *v7 >= 3u && *v7 <= 5u;
             v4 = *v7 >= 7u && *v7 <= 9u;
-            *(_BYTE*)(a1 + 269) = v5 - v4;
+            *(char*)(a1 + 269) = v5 - v4;
             result = (unsigned int)v7;
             v3 = 0;
             if (*v7 >= 5u)
@@ -62645,22 +62645,22 @@ unsigned int __fastcall sub_4844AE(unsigned int a1)
                         v2 = 0;
                 }
             }
-            *(_BYTE*)(a1 + 270) = v3 - v2;
+            *(char*)(a1 + 270) = v3 - v2;
         }
     }
     for (i = 0; i < 4; ++i)
     {
-        if (*(_BYTE*)(i + a1 + 265))
-            --* (_BYTE*)(i + a1 + 265);
-        if (!*(_BYTE*)(i + a1 + 265))
+        if (*(char*)(i + a1 + 265))
+            --* (char*)(i + a1 + 265);
+        if (!*(char*)(i + a1 + 265))
         {
-            *(_BYTE*)(i + a1 + 271) = 0;
+            *(char*)(i + a1 + 271) = 0;
             if (*(int*)(a1 + 4 * i + 232) < *(int*)(a1 + 4 * i + 8))
             {
                 ++* (int*)(a1 + 4 * i + 232);
-                v6 = *(_BYTE*)(*(int*)(a1 + 4 * i + 248) + *(int*)(a1 + 4 * i + 232));
-                *(_BYTE*)(i + a1 + 265) = v6 & 0x7F;
-                *(_BYTE*)(i + a1 + 271) = (v6 & 0x80) != 0;
+                v6 = *(char*)(*(int*)(a1 + 4 * i + 248) + *(int*)(a1 + 4 * i + 232));
+                *(char*)(i + a1 + 265) = v6 & 0x7F;
+                *(char*)(i + a1 + 271) = (v6 & 0x80) != 0;
             }
         }
         result = i + 1;
@@ -62745,7 +62745,7 @@ int sub_484723(int thisx, LPCSTR lpFileName)
             ReadFile(hFile, &byte_4B99CB, 1u, (LPDWORD)&NumberOfBytesRead, 0);
             ReadFile(hFile, &byte_4B99CC, 1u, (LPDWORD)&NumberOfBytesRead, 0);
             ReadFile(hFile, &byte_4B99CD, 1u, (LPDWORD)&NumberOfBytesRead, 0);
-            if ((_BYTE)v20)
+            if ((char)v20)
             {
                 v3 = (void*)sub_485160((char*)byte_4B9B10);
                 ReadFile(hFile, v3, 8u, (LPDWORD)&NumberOfBytesRead, 0);
@@ -62779,7 +62779,7 @@ int sub_484723(int thisx, LPCSTR lpFileName)
             v12 = 0;
             do
             {
-                if (!(_BYTE)v16)
+                if (!(char)v16)
                     break;
                 ReadFile(hFile, &v19, 1u, (LPDWORD)&NumberOfBytesRead, 0);
                 LOBYTE(v18) = v19 & 0xF;
@@ -62787,7 +62787,7 @@ int sub_484723(int thisx, LPCSTR lpFileName)
                 v8 = (int*)(thisx + 276 * (v19 & 0xF) + 12);
                 for (k = 0; k < 16; ++k)
                 {
-                    if ((_BYTE)v14)
+                    if ((char)v14)
                     {
                         if ((unsigned __int8)v14 > 4u)
                         {
@@ -62833,10 +62833,10 @@ unsigned int sub_484F5F(int thisx)
 
 
     v8 = (unsigned __int8*)(*(int*)(thisx + 228) + 2 * *(int*)(thisx + 224));
-    *(_BYTE*)(thisx + 264) = v8[1];
+    *(char*)(thisx + 264) = v8[1];
     v5 = *v8 >= 3u && *v8 <= 5u;
     v4 = *v8 >= 7u && *v8 <= 9u;
-    *(_BYTE*)(thisx + 269) = v5 - v4;
+    *(char*)(thisx + 269) = v5 - v4;
     result = (unsigned int)v8;
     v3 = 0;
     if (*v8 >= 5u)
@@ -62856,12 +62856,12 @@ unsigned int sub_484F5F(int thisx)
                 v2 = 0;
         }
     }
-    *(_BYTE*)(thisx + 270) = v3 - v2;
+    *(char*)(thisx + 270) = v3 - v2;
     for (i = 0; i < 4; ++i)
     {
-        v6 = *(_BYTE*)(*(int*)(thisx + 4 * i + 248) + *(int*)(thisx + 4 * i + 232));
-        *(_BYTE*)(i + thisx + 265) = v6 & 0x7F;
-        *(_BYTE*)(i + thisx + 271) = (v6 & 0x80) != 0;
+        v6 = *(char*)(*(int*)(thisx + 4 * i + 248) + *(int*)(thisx + 4 * i + 232));
+        *(char*)(i + thisx + 265) = v6 & 0x7F;
+        *(char*)(i + thisx + 271) = (v6 & 0x80) != 0;
         result = i + 1;
     }
     return result;
@@ -62875,17 +62875,17 @@ int* sub_4850D0(int* thisx, char a2)
     return thisx;
 }
 
-char sub_485100(_BYTE* thisx, unsigned __int8 a2)
+char sub_485100(char* thisx, unsigned __int8 a2)
 {
     return thisx[a2 + 226];
 }
 
-char sub_485120(_BYTE* thisx)
+char sub_485120(char* thisx)
 {
     return thisx[224];
 }
 
-char sub_485140(_BYTE* thisx)
+char sub_485140(char* thisx)
 {
     return thisx[225];
 }
@@ -62901,7 +62901,7 @@ int sub_485180(int* thisx, int a2)
     return thisx[a2 + 2];
 }
 
-_BYTE* sub_4851A0(_BYTE* thisx)
+char* sub_4851A0(char* thisx)
 {
     sub_47FC70(thisx);
     *(int*)thisx = off_4AC338;
@@ -63113,7 +63113,7 @@ int* sub_485720(int* thisx, char a2)
 }
 
 
-_BYTE* sub_485750(_BYTE* thisx)
+char* sub_485750(char* thisx)
 {
     sub_47FC70(thisx);
     *(int*)thisx = off_4AC34C;
@@ -63337,17 +63337,17 @@ int sub_485BCA(int thisx, int* a2)
             break;
             // 第三字段（循环）：将当前字符串转换为 byte，写入 thisx + 16 的缓冲区第 v4 项
         case 2:
-            *(_BYTE*)(*(int*)(thisx + 16) + v4) = atoi(String);
+            *(char*)(*(int*)(thisx + 16) + v4) = atoi(String);
             break;
         case 3:
 
-            *(_BYTE*)(*(int*)(thisx + 20) + 4 * v4 + 2) = atoi(String);
+            *(char*)(*(int*)(thisx + 20) + 4 * v4 + 2) = atoi(String);
             break;
         case 4:
-            *(_BYTE*)(*(int*)(thisx + 20) + 4 * v4 + 1) = atoi(String);
+            *(char*)(*(int*)(thisx + 20) + 4 * v4 + 1) = atoi(String);
             break;
         case 5:
-            *(_BYTE*)(*(int*)(thisx + 20) + 4 * v4) = atoi(String);
+            *(char*)(*(int*)(thisx + 20) + 4 * v4) = atoi(String);
             break;
         default:
             break;
@@ -63396,10 +63396,10 @@ int sub_485E5A(int thisx, unsigned __int16* a2)
     {
         sub_4A0B26(
             a2,
-            *(_BYTE*)(*(int*)(thisx + 16) + i),
-            *(_BYTE*)(*(int*)(thisx + 20) + 4 * i + 2),
-            *(_BYTE*)(*(int*)(thisx + 20) + 4 * i + 1),
-            *(_BYTE*)(*(int*)(thisx + 20) + 4 * i));
+            *(char*)(*(int*)(thisx + 16) + i),
+            *(char*)(*(int*)(thisx + 20) + 4 * i + 2),
+            *(char*)(*(int*)(thisx + 20) + 4 * i + 1),
+            *(char*)(*(int*)(thisx + 20) + 4 * i));
         result = i + 1;
     }
     return result;
@@ -63543,7 +63543,7 @@ int sub_486189(int thisx, int a2, char* Source)
         else if (sub_481B9F(thisx + 4, hObject))
         {
             CloseHandle(hObject);
-            *(int*)(thisx + 312) = 4 * (unsigned __int8)unknown_libname_25((_BYTE*)(thisx + 4));
+            *(int*)(thisx + 312) = 4 * (unsigned __int8)unknown_libname_25((char*)(thisx + 4));
             *(int*)(thisx + 316) = 4 * (unsigned __int8)sub_4261F0((char*)thisx + 4);
             *(int*)(thisx + 320) = 9 * (8 * (unsigned __int8)sub_4261F0((char*)thisx + 4) / 10);
             *(int*)(thisx + 324) = 3 * (8 * (unsigned __int8)sub_4261F0((char*)thisx + 4) / 10);
@@ -63603,7 +63603,7 @@ int* sub_486476(int* thisx)
         result = thisx;
         if (i >= thisx[77])
             break;
-        if (unknown_libname_6((_BYTE*)(432 * i + thisx[82])) != 2)////return thisx[8];
+        if (unknown_libname_6((char*)(432 * i + thisx[82])) != 2)////return thisx[8];
             sub_48D421(432 * i + thisx[82], thisx[76]);
     }
     return result;
@@ -63664,8 +63664,8 @@ void sub_48655E(int thisx, int* a2, int* a3)
         }
         if (v4 >= 0)
         {
-            if (v4 >= 8 * (unsigned __int8)sub_4261F0((_BYTE*)(thisx + 4)))
-                v4 = 8 * (unsigned __int8)sub_4261F0((_BYTE*)(thisx + 4)) - 1;
+            if (v4 >= 8 * (unsigned __int8)sub_4261F0((char*)(thisx + 4)))
+                v4 = 8 * (unsigned __int8)sub_4261F0((char*)(thisx + 4)) - 1;
         }
         else
         {
@@ -63685,13 +63685,13 @@ int sub_486633(int* thisx, int a2, int a3)
     unsigned __int8 v13; // [esp+28h] [ebp-8h]
     char tc_54[4]; //8，系统填充
     unsigned __int8 v12; // [esp+20h] [ebp-10h]
-    _BYTE* v11; // [esp+1Ch] [ebp-14h]
+    char* v11; // [esp+1Ch] [ebp-14h]
     int v10; // [esp+18h] [ebp-18h]
     int v9; // [esp+14h] [ebp-1Ch]
     int v8; // [esp+10h] [ebp-20h]
     int v7; // [esp+Ch] [ebp-24h]
     char v5; // al
-    _BYTE* v4; // eax
+    char* v4; // eax
 
 
     if (!unknown_libname_24(thisx + 1)) //unknown_libname_24 return thisx[1]; return byte_4B9B10 + 130
@@ -63703,7 +63703,7 @@ int sub_486633(int* thisx, int a2, int a3)
         --v10;
     if (a3 < 0)
         --v9;
-    v11 = (_BYTE*)sub_4816F5((int)(thisx + 1), v10, v9);
+    v11 = (char*)sub_4816F5((int)(thisx + 1), v10, v9);
     if (v11)
     {
         v13 = unknown_libname_6(v11); //   unknown_libname_6 return thisx[8];
@@ -63746,8 +63746,8 @@ int sub_486633(int* thisx, int a2, int a3)
     }
     else
     {
-        v8 = (unsigned __int8)unknown_libname_25((_BYTE*)thisx + 1); // unknown_libname_25 return thisx[12];
-        v7 = (unsigned __int8)sub_4261F0((_BYTE*)thisx + 4); //  sub_4261F0  return thisx[13];
+        v8 = (unsigned __int8)unknown_libname_25((char*)thisx + 1); // unknown_libname_25 return thisx[12];
+        v7 = (unsigned __int8)sub_4261F0((char*)thisx + 4); //  sub_4261F0  return thisx[13];
         if (v10 >= 0)
         {
             if (v10 >= v8)
@@ -63761,11 +63761,11 @@ int sub_486633(int* thisx, int a2, int a3)
         {
             if (v9 >= v7)
                 LOBYTE(v9) = v7 - 1;
-            v4 = (_BYTE*)sub_4816F5((int)(thisx + 1), v10, v9);
+            v4 = (char*)sub_4816F5((int)(thisx + 1), v10, v9);
         }
         else
         {
-            v4 = (_BYTE*)sub_4816F5((int)(thisx + 1), v10, 0);
+            v4 = (char*)sub_4816F5((int)(thisx + 1), v10, 0);
         }
         if (v4 && unknown_libname_5(v4) == 7) //   unknown_libname_5 return thisx[4];
             return -1020;
@@ -63784,13 +63784,13 @@ int sub_486633(int* thisx, int a2, int a3)
     check_stack c(__FILE__, __LINE__);
     unsigned __int8 v13; // 用于存储从 unknown_libname_6 返回的值
     unsigned __int8 v12; // 用于存储某种倍数
-    _BYTE* v11; // 指向某个对象的指针
+    char* v11; // 指向某个对象的指针
     int v10; // 用于存储 a2/8 的值
     int v9; // 用于存储 a3/8 的值
     int v8; // 用于存储从 unknown_libname_25 返回的值
     int v7; // 用于存储从 sub_4261F0 返回的值
     char v5; // 用于存储从 sub_425FD0 返回的值
-    _BYTE* v4; // 用于存储从 sub_4816F5 返回的指针
+    char* v4; // 用于存储从 sub_4816F5 返回的指针
 
     // 如果 unknown_libname_24(thisx + 1) 返回 0，则直接返回 0
     if (!unknown_libname_24(thisx + 1))
@@ -63804,7 +63804,7 @@ int sub_486633(int* thisx, int a2, int a3)
         --v9; // 如果 a3 为负数，v9 减 1
 
     // 根据 v10 和 v9 的值调用 sub_4816F5，并将返回值存储在 v11 中
-    v11 = (_BYTE*)sub_4816F5((int)(thisx + 1), v10, v9);
+    v11 = (char*)sub_4816F5((int)(thisx + 1), v10, v9);
 
     if (v11)
     {
@@ -63857,8 +63857,8 @@ int sub_486633(int* thisx, int a2, int a3)
     else
     {
         // 处理 v11 为空的情况
-        v8 = (unsigned __int8)unknown_libname_25((_BYTE*)thisx + 1);
-        v7 = (unsigned __int8)sub_4261F0((_BYTE*)thisx + 4);
+        v8 = (unsigned __int8)unknown_libname_25((char*)thisx + 1);
+        v7 = (unsigned __int8)sub_4261F0((char*)thisx + 4);
 
         // 对 v10 和 v9 进行边界处理
         if (v10 >= 0)
@@ -63875,11 +63875,11 @@ int sub_486633(int* thisx, int a2, int a3)
         {
             if (v9 >= v7)
                 LOBYTE(v9) = v7 - 1;
-            v4 = (_BYTE*)sub_4816F5((int)(thisx + 1), v10, v9);
+            v4 = (char*)sub_4816F5((int)(thisx + 1), v10, v9);
         }
         else
         {
-            v4 = (_BYTE*)sub_4816F5((int)(thisx + 1), v10, 0);
+            v4 = (char*)sub_4816F5((int)(thisx + 1), v10, 0);
         }
 
         // 如果 v4 不为空且 unknown_libname_5(v4) 返回 7，返回 -1020，否则返回 1020
@@ -63893,9 +63893,9 @@ int sub_486633(int* thisx, int a2, int a3)
 
 char sub_4868C1(void* thisx, unsigned __int8 a2, unsigned __int8 a3)
 {
-    _BYTE* v4; // [esp+4h] [ebp-4h]
+    char* v4; // [esp+4h] [ebp-4h]
 
-    v4 = (_BYTE*)sub_4816F5((int)thisx + 4, a2, a3);
+    v4 = (char*)sub_4816F5((int)thisx + 4, a2, a3);
     if (v4)
         return sub_425FD0(v4); //sub_425FD0    return thisx[9];
     else
@@ -63904,11 +63904,11 @@ char sub_4868C1(void* thisx, unsigned __int8 a2, unsigned __int8 a3)
 
 char sub_4868F8(int* thisx, unsigned __int8 a2, unsigned __int8 a3)
 {
-    _BYTE* v5; // [esp+4h] [ebp-4h]
+    char* v5; // [esp+4h] [ebp-4h]
 
     if (!unknown_libname_24(thisx + 1))
         return 0;
-    v5 = (_BYTE*)sub_4816F5((int)(thisx + 1), a2, a3);
+    v5 = (char*)sub_4816F5((int)(thisx + 1), a2, a3);
     if (v5)
         return unknown_libname_5(v5);
     else
@@ -64045,7 +64045,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
     int k; // [esp+218h] [ebp-2584h]
     //
     CHAR v56[260]; // [esp+114h] [ebp-2688h] BYREF
-    _BYTE* v55; // [esp+110h] [ebp-268Ch]
+    char* v55; // [esp+110h] [ebp-268Ch]
     int j; // [esp+10Ch] [ebp-2690h]
     int v53; // [esp+108h] [ebp-2694h]
     int v52; // [esp+104h] [ebp-2698h]
@@ -64160,7 +64160,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
     int k; // [esp+218h] [ebp-2584h]
     //
     CHAR v56[260]; // [esp+114h] [ebp-2688h] BYREF
-    _BYTE* v55; // [esp+110h] [ebp-268Ch]
+    char* v55; // [esp+110h] [ebp-268Ch]
     int j; // [esp+10Ch] [ebp-2690h]
     int v53; // [esp+108h] [ebp-2694h]
     int v52; // [esp+104h] [ebp-2698h]
@@ -64443,7 +64443,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                                 {
                                     if (v58 < 0 || v58 >= 3)
                                         v58 = 0;
-                                    v55 = (_BYTE*)(thisx + 32 * v58 + 512);
+                                    v55 = (char*)(thisx + 32 * v58 + 512);
                                     sub_4014A3(v55, v60, v56);
                                     if (k >= 4)
                                         sub_489E30(v55, v59);
@@ -64584,7 +64584,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                 ++* (int*)(thisx + 336);
                 sub_482FAA(v80);
             }
-            else if (!(_BYTE)v89)
+            else if (!(char)v89)
             {
                 sub_482FAA(v80);
             }
@@ -64654,7 +64654,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                 ++* (int*)(thisx + 352);
                 sub_482FAA(v80);
             }
-            else if (!(_BYTE)v89)
+            else if (!(char)v89)
             {
                 sub_482FAA(v80);
             }
@@ -64761,7 +64761,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                         }
                     }
                     v41 = (short*)(50 * v90 + dword_4CA1D8);
-                    *(_BYTE*)v41 = atoi(String1);
+                    *(char*)v41 = atoi(String1);
                     v42 = 0;
                     while (sub_482D44(v80, String1) && *String1 != 110)
                     {
@@ -64784,7 +64784,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                     }
                     ++v90;
                 }
-                else if (!(_BYTE)v89)
+                else if (!(char)v89)
                 {
                     sub_482FAA(v80);
                 }
@@ -64813,7 +64813,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                     ++v91;
                 sub_482FAA(v80);
             }
-            else if (!(_BYTE)v89)
+            else if (!(char)v89)
             {
                 sub_482FAA(v80);
             }
@@ -64859,7 +64859,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
             }
             if (!lstrcmpiA(String1, aPutend_0))
                 break;
-            if (!(_BYTE)v89)
+            if (!(char)v89)
                 sub_482FAA(v80);
         }
         if ((unsigned __int8)v89 == 1)
@@ -64928,8 +64928,8 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
         sub_488E57((char*)thisx + 3 * i1 + 358);
         sub_488E76((int*)(thisx + 16 * i1 + 384));//改了括号
     }
-    *(_BYTE*)(thisx + 356) = 0;
-    *(_BYTE*)(thisx + 357) = 0;
+    *(char*)(thisx + 356) = 0;
+    *(char*)(thisx + 357) = 0;
     int size = 0;
     while (sub_482D44(v80, String1))
     {
@@ -64938,7 +64938,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
         {
             if (!lstrcmpiA(String1, aEtcdataend))
                 break;
-            if ((_BYTE)v89)
+            if ((char)v89)
             {
                 if ((unsigned __int8)v89 == 1)
                 {
@@ -64980,8 +64980,8 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                                 *(int*)(thisx + 16 * *(unsigned __int8*)(thisx + 357) + 384) = v16;
                                 *(int*)(thisx + 16 * *(unsigned __int8*)(thisx + 357) + 388) = v15;
                                 *(int*)(thisx + 16 * *(unsigned __int8*)(thisx + 357) + 392) = v17;
-                                *(_BYTE*)(thisx + 16 * *(unsigned __int8*)(thisx + 357) + 397) = v20;
-                                *(_BYTE*)(thisx + 16 * (unsigned __int8)(*(_BYTE*)(thisx + 357))++ + 396) = v19;
+                                *(char*)(thisx + 16 * *(unsigned __int8*)(thisx + 357) + 397) = v20;
+                                *(char*)(thisx + 16 * (unsigned __int8)(*(char*)(thisx + 357))++ + 396) = v19;
                                 if (*String1 != 110)
                                     sub_482FAA(v80);
                             }
@@ -65012,9 +65012,9 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                         }
                         if (*(unsigned __int8*)(thisx + 356) < 8u)
                         {
-                            *(_BYTE*)(thisx + 3 * *(unsigned __int8*)(thisx + 356) + 358) = v24;
-                            *(_BYTE*)(thisx + 3 * *(unsigned __int8*)(thisx + 356) + 359) = v23;
-                            *(_BYTE*)(thisx + 3 * (unsigned __int8)(*(_BYTE*)(thisx + 356))++ + 360) = v22;
+                            *(char*)(thisx + 3 * *(unsigned __int8*)(thisx + 356) + 358) = v24;
+                            *(char*)(thisx + 3 * *(unsigned __int8*)(thisx + 356) + 359) = v23;
+                            *(char*)(thisx + 3 * (unsigned __int8)(*(char*)(thisx + 356))++ + 360) = v22;
                             if (*String1 != 110)
                                 sub_482FAA(v80);
                         }
@@ -65097,7 +65097,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
     int k; // [esp+218h] [ebp-2584h]
     //
     CHAR v56[260]; // [esp+114h] [ebp-2688h] BYREF
-    _BYTE* v55; // [esp+110h] [ebp-268Ch]
+    char* v55; // [esp+110h] [ebp-268Ch]
     int j; // [esp+10Ch] [ebp-2690h]
     int v53; // [esp+108h] [ebp-2694h]
     int v52; // [esp+104h] [ebp-2698h]
@@ -65290,7 +65290,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                                 {
                                     if (v58 < 0 || v58 >= 3)
                                         v58 = 0;
-                                    v55 = (_BYTE*)(thisx + 32 * v58 + 512);
+                                    v55 = (char*)(thisx + 32 * v58 + 512);
                                     sub_4014A3(v55, v60, v56);
                                     if (k >= 4)
                                         sub_489E30(v55, v59);
@@ -65431,7 +65431,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                 ++* (int*)(thisx + 336);
                 sub_482FAA(v80);
             }
-            else if (!(_BYTE)v89)
+            else if (!(char)v89)
             {
                 sub_482FAA(v80);
             }
@@ -65501,7 +65501,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                 ++* (int*)(thisx + 352);
                 sub_482FAA(v80);
             }
-            else if (!(_BYTE)v89)
+            else if (!(char)v89)
             {
                 sub_482FAA(v80);
             }
@@ -65608,7 +65608,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                         }
                     }
                     v41 = (short*)(50 * v90 + dword_4CA1D8);
-                    *(_BYTE*)v41 = atoi(&String1);
+                    *(char*)v41 = atoi(&String1);
                     v42 = 0;
                     while (sub_482D44(v80, &String1) && String1 != 110)
                     {
@@ -65631,7 +65631,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                     }
                     ++v90;
                 }
-                else if (!(_BYTE)v89)
+                else if (!(char)v89)
                 {
                     sub_482FAA(v80);
                 }
@@ -65660,7 +65660,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                     ++v91;
                 sub_482FAA(v80);
             }
-            else if (!(_BYTE)v89)
+            else if (!(char)v89)
             {
                 sub_482FAA(v80);
             }
@@ -65706,7 +65706,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
             }
             if (!lstrcmpiA(&String1, aPutend_0))
                 break;
-            if (!(_BYTE)v89)
+            if (!(char)v89)
                 sub_482FAA(v80);
         }
         if ((unsigned __int8)v89 == 1)
@@ -65775,8 +65775,8 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
         sub_488E57((char*)thisx + 3 * i1 + 358);
         sub_488E76((int*)(thisx + 16 * i1 + 384));//改了括号
     }
-    *(_BYTE*)(thisx + 356) = 0;
-    *(_BYTE*)(thisx + 357) = 0;
+    *(char*)(thisx + 356) = 0;
+    *(char*)(thisx + 357) = 0;
     int size = 0;
     while (sub_482D44(v80, &String1))
     {
@@ -65785,7 +65785,7 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
         {
             if (!lstrcmpiA(&String1, aEtcdataend))
                 break;
-            if ((_BYTE)v89)
+            if ((char)v89)
             {
                 if ((unsigned __int8)v89 == 1)
                 {
@@ -65827,8 +65827,8 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                                 *(int*)(thisx + 16 * *(unsigned __int8*)(thisx + 357) + 384) = v16;
                                 *(int*)(thisx + 16 * *(unsigned __int8*)(thisx + 357) + 388) = v15;
                                 *(int*)(thisx + 16 * *(unsigned __int8*)(thisx + 357) + 392) = v17;
-                                *(_BYTE*)(thisx + 16 * *(unsigned __int8*)(thisx + 357) + 397) = v20;
-                                *(_BYTE*)(thisx + 16 * (unsigned __int8)(*(_BYTE*)(thisx + 357))++ + 396) = v19;
+                                *(char*)(thisx + 16 * *(unsigned __int8*)(thisx + 357) + 397) = v20;
+                                *(char*)(thisx + 16 * (unsigned __int8)(*(char*)(thisx + 357))++ + 396) = v19;
                                 if (String1 != 110)
                                     sub_482FAA(v80);
                             }
@@ -65859,9 +65859,9 @@ int sub_486B0E(int thisx, LPCSTR lpFileName)
                         }
                         if (*(unsigned __int8*)(thisx + 356) < 8u)
                         {
-                            *(_BYTE*)(thisx + 3 * *(unsigned __int8*)(thisx + 356) + 358) = v24;
-                            *(_BYTE*)(thisx + 3 * *(unsigned __int8*)(thisx + 356) + 359) = v23;
-                            *(_BYTE*)(thisx + 3 * (unsigned __int8)(*(_BYTE*)(thisx + 356))++ + 360) = v22;
+                            *(char*)(thisx + 3 * *(unsigned __int8*)(thisx + 356) + 358) = v24;
+                            *(char*)(thisx + 3 * *(unsigned __int8*)(thisx + 356) + 359) = v23;
+                            *(char*)(thisx + 3 * (unsigned __int8)(*(char*)(thisx + 356))++ + 360) = v22;
                             if (String1 != 110)
                                 sub_482FAA(v80);
                         }
@@ -65967,7 +65967,7 @@ struct tagRECT* sub_488A07(int* thisx, struct tagRECT* a2, unsigned __int8 a3, u
         if (!v8)
             break;
         v15 = 1;
-        if ((*(_BYTE*)(v8 + 52) & 0xC) == 4 || !v10)
+        if ((*(char*)(v8 + 52) & 0xC) == 4 || !v10)
             break;
         --v10;
     }
@@ -65988,16 +65988,16 @@ struct tagRECT* sub_488A07(int* thisx, struct tagRECT* a2, unsigned __int8 a3, u
             v9 = sub_489C74(thisx, v14 - 1);
             if (!v9)
                 break;
-        } while ((*(_BYTE*)(v9 + 52) & 8) == 8);
+        } while ((*(char*)(v9 + 52) & 8) == 8);
         rc.right = v10;
         for (i = 0; i < thisx[77]; ++i)
         {
-            if (unknown_libname_6((_BYTE*)(thisx[82] + 432 * i)) == 1)
+            if (unknown_libname_6((char*)(thisx[82] + 432 * i)) == 1)
             {
                 v7 = sub_475F40((int*)(thisx[82] + 432 * i)) / 8;
                 v4 = sub_474DD0((int*)(thisx[82] + 432 * i));
                 if (rc.left - 1 <= v7 && rc.right > v7 && a4 == (unsigned __int8)((v4 - thisx[9]) / 8))
-                    sub_489F60((_BYTE*)(thisx[82] + 432 * i), 0);
+                    sub_489F60((char*)(thisx[82] + 432 * i), 0);
             }
         }
     }
@@ -66020,10 +66020,10 @@ HANDLE sub_488CCB(int thisx)
 
 
     v7 = (unsigned __int8)unknown_libname_25((char*)thisx + 4);
-    v6 = (unsigned __int8)sub_4261F0((_BYTE*)(thisx + 4));
+    v6 = (unsigned __int8)sub_4261F0((char*)(thisx + 4));
     for (i = 0; i < *(int*)(thisx + 308); ++i)
     {
-        sub_489F60((_BYTE*)(432 * i + *(int*)(thisx + 328)), 1);
+        sub_489F60((char*)(432 * i + *(int*)(thisx + 328)), 1);
         sub_48A700(432 * i + *(int*)(thisx + 328));
     }
     *(int*)(thisx + 28) = *(int*)(thisx + 312) - 160;
@@ -66047,9 +66047,9 @@ int sub_488E1E(int* thisx, int a2)
 }
 
 //初始化
-_BYTE* sub_488E57(_BYTE* thisx)
+char* sub_488E57(char* thisx)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     *thisx = 0;
@@ -66067,8 +66067,8 @@ int* sub_488E76(int* thisx)
     thisx[1] = 0;
     thisx[2] = 0;
     result = thisx;
-    *((_BYTE*)thisx + 13) = 0;
-    *((_BYTE*)thisx + 12) = 0;
+    *((char*)thisx + 13) = 0;
+    *((char*)thisx + 12) = 0;
     return result;
 }
 
@@ -66677,7 +66677,7 @@ int sub_489927(void* thisx, int a2, int a3, int a4, int* a5)
                 sub_482FAA((int*)a2);
                 ++v8;
             }
-            else if (!(_BYTE)v9)
+            else if (!(char)v9)
             {
                 sub_482FAA((int*)a2);
             }
@@ -66702,7 +66702,7 @@ int sub_489A73(void* thisx, int a2)
         return 0;
 }
 
-void sub_489B1D(int* thisx, int a2, int a3, _BYTE* a4, int a5)
+void sub_489B1D(int* thisx, int a2, int a3, char* a4, int a5)
 {
     //    int j; // [esp+4h] [ebp-8h]
     //    int i; // [esp+8h] [ebp-4h]
@@ -66773,7 +66773,7 @@ int* sub_489CF0(int* thisx, char a2)
 }
 
 
-char sub_489D40(_BYTE* thisx)
+char sub_489D40(char* thisx)
 {
     return thisx[14];
 }
@@ -66797,9 +66797,9 @@ char* sub_489D60(char* thisx, char a2)
 }
 
 //set
-_BYTE* sub_489E30(_BYTE* thisx, char a2)
+char* sub_489E30(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[28] = a2;
@@ -66836,9 +66836,9 @@ short* sub_489F40(short* thisx, __int16 a2)
 }
 
 //set
-_BYTE* sub_489F60(_BYTE* thisx, char a2)
+char* sub_489F60(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[12] = a2;
@@ -66846,9 +66846,9 @@ _BYTE* sub_489F60(_BYTE* thisx, char a2)
 }
 
 //set
-_BYTE* sub_489F80(_BYTE* thisx, char a2)
+char* sub_489F80(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[4] = a2;
@@ -66856,9 +66856,9 @@ _BYTE* sub_489F80(_BYTE* thisx, char a2)
 }
 
 //set
-_BYTE* sub_489FA0(_BYTE* thisx, char a2)
+char* sub_489FA0(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[8] = a2;
@@ -66866,9 +66866,9 @@ _BYTE* sub_489FA0(_BYTE* thisx, char a2)
 }
 
 //set
-_BYTE* sub_489FC0(_BYTE* thisx, char a2)
+char* sub_489FC0(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[9] = a2;
@@ -66896,9 +66896,9 @@ short* sub_48A000(short* thisx, __int16 a2)
 }
 
 //set
-_BYTE* sub_48A020(_BYTE* thisx, char a2)
+char* sub_48A020(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[14] = a2;
@@ -67158,7 +67158,7 @@ void sub_48A43A(void* thisx)
 
 int* sub_48A44E(int* thisx)
 {
-    *(_BYTE*)thisx = 0;
+    *(char*)thisx = 0;
     thisx[4] = -1;
     return thisx;
 }
@@ -67178,7 +67178,7 @@ char sub_48A49F(short* thisx, unsigned __int8 a2, __int16 a3, char a4)
     {
         thisx[a2 + 1] = a3;
         result = a4;
-        *((_BYTE*)thisx + a2 + 34) = a4;
+        *((char*)thisx + a2 + 34) = a4;
     }
     return result;
 }
@@ -67188,12 +67188,12 @@ int sub_48A4E3(__int16* thisx, unsigned __int8 a2)
 {
     if (a2 >= 16)
         return 0;
-    if (*((_BYTE*)thisx + a2 + 34))
+    if (*((char*)thisx + a2 + 34))
         return dword_4B9AEC[thisx[a2 + 1]];
     return thisx[a2 + 1];
 }
 
-_BYTE* sub_48A54F(_BYTE* thisx)
+char* sub_48A54F(char* thisx)
 {
     int i; // [esp+4h] [ebp-4h]
 
@@ -67206,9 +67206,9 @@ _BYTE* sub_48A54F(_BYTE* thisx)
     return thisx;
 }
 
-_BYTE* sub_48A596(_BYTE* thisx)
+char* sub_48A596(char* thisx)
 {
-    _BYTE* result; // eax
+    char* result; // eax
     int i; // [esp+4h] [ebp-4h]
 
     result = thisx;
@@ -67227,7 +67227,7 @@ int sub_48A5DA(int thisx, char a2, int a3, int a4, int a5, int a6, int a7, int a
 {
     int result; // eax
 
-    *(_BYTE*)(thisx + 8) = a2;
+    *(char*)(thisx + 8) = a2;
     *(int*)(thisx + 104) = 100 * a3;
     *(int*)(thisx + 20) = *(int*)(thisx + 104);
     *(int*)(thisx + 108) = 100 * a4;
@@ -67246,9 +67246,9 @@ int sub_48A5DA(int thisx, char a2, int a3, int a4, int a5, int a6, int a7, int a
     *(int*)(thisx + 144) = a8;
     *(int*)(thisx + 36) = a8;
     *(int*)(thisx + 4) = a9;
-    *(_BYTE*)(thisx + 86) = a10;
-    *(_BYTE*)(thisx + 85) = a10;
-    *(_BYTE*)(thisx + 148) = 0;
+    *(char*)(thisx + 86) = a10;
+    *(char*)(thisx + 85) = a10;
+    *(char*)(thisx + 148) = 0;
     *(int*)(thisx + 156) = 0;
     *(int*)(thisx + 52) = 0;
     result = thisx;
@@ -67261,7 +67261,7 @@ int sub_48A5DA(int thisx, char a2, int a3, int a4, int a5, int a6, int a7, int a
 //432初始化 + 赋值常数
 int sub_48A700(int thisx)
 {
-    *(_BYTE*)(thisx + 12) = 1;
+    *(char*)(thisx + 12) = 1;
     *(short*)(thisx + 10) = -1;
     *(int*)(thisx + 44) = -1;
     *(int*)(thisx + 40) = *(int*)(thisx + 16);
@@ -67270,7 +67270,7 @@ int sub_48A700(int thisx)
     *(int*)(thisx + 112) = *(int*)(thisx + 28);
     *(int*)(thisx + 140) = *(int*)(thisx + 32);
     *(int*)(thisx + 144) = *(int*)(thisx + 36);
-    *(_BYTE*)(thisx + 148) = 0;
+    *(char*)(thisx + 148) = 0;
     *(int*)(thisx + 152) = 0;
     *(int*)(thisx + 156) = 0;
     *(int*)(thisx + 52) = 0;
@@ -67278,12 +67278,12 @@ int sub_48A700(int thisx)
     *(int*)(thisx + 60) = 0;
     *(int*)(thisx + 96) = 0;
     *(int*)(thisx + 100) = 0;
-    *(_BYTE*)(thisx + 48) = 0;
+    *(char*)(thisx + 48) = 0;
     *(int*)(thisx + 92) = 0;
     *(int*)(thisx + 80) = 0;
-    *(_BYTE*)(thisx + 84) = 0;
-    *(_BYTE*)(thisx + 76) = 0;
-    *(_BYTE*)(thisx + 86) = *(_BYTE*)(thisx + 85);
+    *(char*)(thisx + 84) = 0;
+    *(char*)(thisx + 76) = 0;
+    *(char*)(thisx + 86) = *(char*)(thisx + 85);
     *(int*)(thisx + 88) = -1;
     *(int*)(thisx + 164) = 0;
     *(int*)(thisx + 116) = 0;
@@ -67296,22 +67296,22 @@ int sub_48A700(int thisx)
     *(int*)(thisx + 68) = 0;
     *(short*)(thisx + 72) = 100;
     *(short*)(thisx + 74) = 100;
-    *(_BYTE*)(thisx + 224) = 0;
+    *(char*)(thisx + 224) = 0;
     memset((void*)(thisx + 228), 0, 56);
     memset((void*)(thisx + 284), 0, 52);
     *(int*)(thisx + 332) = 83;
     memset((void*)(thisx + 336), 0, 8u);
-    *(_BYTE*)(thisx + 346) = 0;
+    *(char*)(thisx + 346) = 0;
     memset((void*)(thisx + 348), 0, 32);
     memset((void*)(thisx + 380), 0, 8u);
-    *(_BYTE*)(thisx + 388) = 0;
+    *(char*)(thisx + 388) = 0;
     memset((void*)(thisx + 392), 0, 32);
     memset((void*)(thisx + 424), 0, 8u);
     return sub_48E02B((int*)thisx);
 }
 //432大小n个
 //this = byte_4B9B10 + 128 + 328 + 432 ,         a2 = 0 , a3 = 1
-void sub_48A94C(int thisx, _BYTE* a2, int a3)
+void sub_48A94C(int thisx, char* a2, int a3)
 {
 
     //修正堆栈
@@ -67744,7 +67744,7 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
             v144 = (__int16*)a2;
         else
             v144 = (__int16*)(50 * *(int*)(thisx + 40) + dword_4CA1D8);
-        LOBYTE(v142) = *(_BYTE*)v144;
+        LOBYTE(v142) = *(char*)v144;
         v143 = 1;
         switch ((unsigned __int8)v142)
         {
@@ -67819,7 +67819,7 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
                     v126 = sub_48A4E3(v144, 2 * j);
                     if (v126 > 0 && v126 <= 7)
                     {
-                        *(_BYTE*)(thisx + 8 * v126 + 160) = v126;
+                        *(char*)(thisx + 8 * v126 + 160) = v126;
                         *(int*)(thisx + 8 * v126 + 164) = sub_48A4E3(v144, 2 * j + 1);
                     }
                 }
@@ -67883,7 +67883,7 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
             *(int*)(thisx + 156) = *(int*)(thisx + 40);
             *(int*)(thisx + 40) = sub_48A4E3(v144, 0);
             *(int*)(thisx + 160) = *(int*)(thisx + 40);
-            *(_BYTE*)(thisx + 148) = sub_48A4E3(v144, 1u);
+            *(char*)(thisx + 148) = sub_48A4E3(v144, 1u);
             *(int*)(thisx + 152) = sub_48A4E3(v144, 2u);
             sub_48A94C(thisx, 0, 1);
             v143 = 0;
@@ -68011,7 +68011,7 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
             sub_4573CB((int)byte_4B9B10, v100, v102, v101);
             break;
         case 0x15u:
-            *(_BYTE*)(thisx + 48) = sub_48A4E3(v144, 0);
+            *(char*)(thisx + 48) = sub_48A4E3(v144, 0);
             break;
         case 0x16u:
             v98 = sub_48A4E3(v144, 0);
@@ -68137,7 +68137,7 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
             *(int*)(thisx + 92) = sub_48A4E3(v144, 0);
             break;
         case 0x1Du:
-            *(_BYTE*)(thisx + 86) = sub_48A4E3(v144, 0);
+            *(char*)(thisx + 86) = sub_48A4E3(v144, 0);
             break;
         case 0x1Eu:
             v79 = sub_48A4E3(v144, 0);
@@ -68256,7 +68256,7 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
                 *(short*)(thisx + 74) = sub_48A4E3(v144, 3u);
             break;
         case 0x25u:
-            *(_BYTE*)(thisx + 84) = sub_48A4E3(v144, 0);
+            *(char*)(thisx + 84) = sub_48A4E3(v144, 0);
             break;
         case 0x26u:
             *(int*)(thisx + 80) = sub_48A4E3(v144, 0);
@@ -68401,18 +68401,18 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
                 switch (v47)
                 {
                 case 1:
-                    *(_BYTE*)(thisx + 224) = sub_48A4E3(v144, 1u);
-                    *(_BYTE*)(thisx + 238) = sub_48A4E3(v144, 2u);
+                    *(char*)(thisx + 224) = sub_48A4E3(v144, 1u);
+                    *(char*)(thisx + 238) = sub_48A4E3(v144, 2u);
                     *(int*)(thisx + 304) = sub_48A4E3(v144, 3u);
                     *(short*)(thisx + 344) = sub_48A4E3(v144, 4u);
-                    *(_BYTE*)(thisx + 313) = sub_48A4E3(v144, 5u);
-                    *(_BYTE*)(thisx + 234) = sub_48A4E3(v144, 6u);
+                    *(char*)(thisx + 313) = sub_48A4E3(v144, 5u);
+                    *(char*)(thisx + 234) = sub_48A4E3(v144, 6u);
                     *(short*)(thisx + 236) = sub_48A4E3(v144, 7u);
                     break;
                 case 2:
                     for (ii = 0; ii < 6; ++ii)
                     {
-                        *(_BYTE*)(ii + thisx + 239) = sub_48A4E3(v144, 2 * ii + 1);
+                        *(char*)(ii + thisx + 239) = sub_48A4E3(v144, 2 * ii + 1);
                         *(int*)(thisx + 4 * ii + 248) = sub_48A4E3(v144, 2 * ii + 2);
                     }
                     *(int*)(thisx + 272) = sub_48A4E3(v144, 0xDu);
@@ -68434,14 +68434,14 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
             }
             else
             {
-                *(_BYTE*)(thisx + 346) = sub_48A4E3(v144, 1u);
+                *(char*)(thisx + 346) = sub_48A4E3(v144, 1u);
                 *(int*)(thisx + 348) = sub_48A4E3(v144, 2u);
                 *(int*)(thisx + 352) = sub_48A4E3(v144, 3u);
                 *(int*)(thisx + 356) = sub_48A4E3(v144, 4u);
                 *(int*)(thisx + 360) = sub_48A4E3(v144, 5u);
                 *(int*)(thisx + 380) = sub_48A4E3(v144, 6u);
                 *(int*)(thisx + 384) = sub_48A4E3(v144, 7u);
-                if (*(_BYTE*)(thisx + 346) == 2)
+                if (*(char*)(thisx + 346) == 2)
                 {
                     *(int*)(thisx + 364) = -sub_48A4E3(v144, 4u);
                     *(int*)(thisx + 368) = -sub_48A4E3(v144, 5u);
@@ -68466,10 +68466,10 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
                     {
                         if (v43 == 1)
                         {
-                            *(_BYTE*)(v44 + 10) = sub_48A4E3(v144, 2u);
-                            *(_BYTE*)(v44 + 6) = sub_48A4E3(v144, 3u);
+                            *(char*)(v44 + 10) = sub_48A4E3(v144, 2u);
+                            *(char*)(v44 + 6) = sub_48A4E3(v144, 3u);
                             *(short*)(v44 + 8) = sub_48A4E3(v144, 4u);
-                            *(_BYTE*)(v44 + 52) = sub_48A4E3(v144, 5u);
+                            *(char*)(v44 + 52) = sub_48A4E3(v144, 5u);
                         }
                         else if (v43 == 3)
                         {
@@ -68482,7 +68482,7 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
                     {
                         for (jj = 0; jj < 6; ++jj)
                         {
-                            *(_BYTE*)(jj + v44 + 11) = sub_48A4E3(v144, 2 * jj + 2);
+                            *(char*)(jj + v44 + 11) = sub_48A4E3(v144, 2 * jj + 2);
                             *(int*)(v44 + 4 * jj + 20) = sub_48A4E3(v144, 2 * jj + 3);
                         }
                         *(int*)(v44 + 44) = sub_48A4E3(v144, 0xEu);
@@ -68497,18 +68497,18 @@ void sub_48A94C(int thisx, _BYTE* a2, int a3)
             v30 = (const CHAR*)sub_4893BC((int*)v41, v29);
             sub_474011((char*)byte_4B9B10, v30);
             sub_48E090((int*)byte_4B9B10, 1);
-            *(_BYTE*)(thisx + 12) = 0;
+            *(char*)(thisx + 12) = 0;
             return;
         case 0xFEu:
             sub_48E090((int*)byte_4B9B10, 1);
-            *(_BYTE*)(thisx + 12) = 0;
+            *(char*)(thisx + 12) = 0;
             return;
         case 0xFFu:
-            if (*(_BYTE*)(thisx + 148))
+            if (*(char*)(thisx + 148))
             {
                 if (*(unsigned __int8*)(thisx + 148) != 255)
-                    --* (_BYTE*)(thisx + 148);
-                if (*(_BYTE*)(thisx + 148))
+                    --* (char*)(thisx + 148);
+                if (*(char*)(thisx + 148))
                     *(int*)(thisx + 40) = *(int*)(thisx + 160);
                 else
                     *(int*)(thisx + 40) = *(int*)(thisx + 156) + 1;
@@ -68574,12 +68574,12 @@ void sub_48CD23(int thisx)
     BOOL v1; // [esp+0h] [ebp-78h]
 
 
-    if (*(_BYTE*)(thisx + 12) && !*(int*)(thisx + 100))//1，0
+    if (*(char*)(thisx + 12) && !*(int*)(thisx + 100))//1，0
     {
         for (i = 0; i < (unsigned __int8)byte_4B9985; ++i)
         {
-            if (*(_BYTE*)(i + thisx + 336))
-                --* (_BYTE*)(i + thisx + 336);
+            if (*(char*)(i + thisx + 336))
+                --* (char*)(i + thisx + 336);
         }
 
         v9 = sub_426210((char*)byte_4B9B10);//sub_426210 return thisx + 128;//全解
@@ -68678,7 +68678,7 @@ void sub_48CD23(int thisx)
                 {
                     *(int*)(thisx + 40) = *(int*)(thisx + 8 * j + 172);
                     *(int*)(thisx + 8 * j + 172) = -1;
-                    *(_BYTE*)(thisx + 148) = 0;
+                    *(char*)(thisx + 148) = 0;
                     *(int*)(thisx + 152) = 0;
                     sub_48A94C(thisx, 0, 1);
                     v10 = 1;
@@ -68689,7 +68689,7 @@ void sub_48CD23(int thisx)
         {
             if (*(int*)(thisx + 152) > 0 && !-- * (int*)(thisx + 152))
             {
-                *(_BYTE*)(thisx + 148) = 0;
+                *(char*)(thisx + 148) = 0;
                 *(int*)(thisx + 40) = *(int*)(thisx + 156) + 1;
                 v12 = 1;
             }
@@ -68748,13 +68748,13 @@ void sub_48CD23(int thisx)
     BOOL v1; // [esp+0h] [ebp-78h]
 
     // 检查对象的某个状态字节是否为真，并且计数器是否为零
-    if (*(_BYTE*)(thisx + 12) && !*(int*)(thisx + 100))//1，!0
+    if (*(char*)(thisx + 12) && !*(int*)(thisx + 100))//1，!0
     {
         // 遍历某个计数器并减少其值，可能用于控制动画帧或动作延迟
         for (i = 0; i < (unsigned __int8)byte_4B9985; ++i)
         {
-            if (*(_BYTE*)(i + thisx + 336))
-                --* (_BYTE*)(i + thisx + 336);
+            if (*(char*)(i + thisx + 336))
+                --* (char*)(i + thisx + 336);
         }
 
         v9 = sub_426210((char*)byte_4B9B10);//返回b10.128;
@@ -68874,7 +68874,7 @@ void sub_48CD23(int thisx)
                 {
                     *(int*)(thisx + 40) = *(int*)(thisx + 8 * j + 172);
                     *(int*)(thisx + 8 * j + 172) = -1;
-                    *(_BYTE*)(thisx + 148) = 0;
+                    *(char*)(thisx + 148) = 0;
                     *(int*)(thisx + 152) = 0;
                     sub_48A94C(thisx, 0, 1);
                     v10 = 1;
@@ -68886,7 +68886,7 @@ void sub_48CD23(int thisx)
         {
             if (*(int*)(thisx + 152) > 0 && !-- * (int*)(thisx + 152))
             {
-                *(_BYTE*)(thisx + 148) = 0;
+                *(char*)(thisx + 148) = 0;
                 *(int*)(thisx + 40) = *(int*)(thisx + 156) + 1;
                 v12 = 1;
             }
@@ -68925,7 +68925,7 @@ unsigned __int16* sub_48D421(int thisx, int a2)
     int v28; // [esp+8Ch] [ebp-34h]4
     int v27; // [esp+88h] [ebp-38h] BYREF 0
     int v26; // [esp+84h] [ebp-3Ch]
-    _BYTE* v25; // [esp+80h] [ebp-40h]
+    char* v25; // [esp+80h] [ebp-40h]
     int v24; // [esp+7Ch] [ebp-44h]
     int v23; // [esp+78h] [ebp-48h]
     int v22; // [esp+74h] [ebp-4Ch]
@@ -68961,7 +68961,7 @@ unsigned __int16* sub_48D421(int thisx, int a2)
     int v28; // [esp+8Ch] [ebp-34h]4
     int v27; // [esp+88h] [ebp-38h] BYREF 0
     int v26; // [esp+84h] [ebp-3Ch]
-    _BYTE* v25; // [esp+80h] [ebp-40h]
+    char* v25; // [esp+80h] [ebp-40h]
     int v24; // [esp+7Ch] [ebp-44h]
     int v23; // [esp+78h] [ebp-48h]
     int v22; // [esp+74h] [ebp-4Ch]
@@ -69016,7 +69016,7 @@ unsigned __int16* sub_48D421(int thisx, int a2)
     }
 
     result = (unsigned __int16*)thisx;
-    if (*(_BYTE*)(thisx + 12))
+    if (*(char*)(thisx + 12))
     {
         if (*(int*)(thisx + 44) == -1 || *(int*)(thisx + 96))
         {
@@ -69026,15 +69026,15 @@ unsigned __int16* sub_48D421(int thisx, int a2)
         {
             sub_49C15E((int)&v27);//初始化，赋值常数，v27是个坑啊，52位char的数组
             v26 = *(__int16*)(thisx + 72) * sub_446465((char*)byte_4B9B10) / 100;//sub_446465()return thisx[7];
-            if (*(_BYTE*)(thisx + 8) && *(_BYTE*)(thisx + 8) != 1)
+            if (*(char*)(thisx + 8) && *(char*)(thisx + 8) != 1)
             {
-                if (*(_BYTE*)(thisx + 8) == 2)
+                if (*(char*)(thisx + 8) == 2)
                 {
                     v28 = *(int*)(thisx + 140) + *(int*)(thisx + 104) / 100 - v26;
                     v3 = *(int*)(thisx + 108) / 100 - *(int*)(thisx + 112) / 100;
                     v29 = *(int*)(thisx + 144) + sub_4464BA((int)byte_4B9B10) + v3;
                 }
-                else if (*(_BYTE*)(thisx + 8) == 3)
+                else if (*(char*)(thisx + 8) == 3)
                 {
                     v28 = *(int*)(thisx + 140) + *(int*)(thisx + 104) / 100;
                     v29 = *(int*)(thisx + 144) + *(int*)(thisx + 108) / 100;
@@ -69047,7 +69047,7 @@ unsigned __int16* sub_48D421(int thisx, int a2)
             }
             if (*(int*)(thisx + 92))
             {
-                v25 = (_BYTE*)sub_4741F8((int)byte_4B9B10, *(int*)(thisx + 104) / 800, *(int*)(thisx + 108) / 800);
+                v25 = (char*)sub_4741F8((int)byte_4B9B10, *(int*)(thisx + 104) / 800, *(int*)(thisx + 108) / 800);
                 v24 = sub_446497((int*)byte_4B9B10, *(int*)(thisx + 104) / 100, *(int*)(thisx + 108) / 100);
                 if (v25 && sub_425C50(v25))
                     v24 = 4 * (unsigned __int8)unknown_libname_6(v25);
@@ -69081,7 +69081,7 @@ unsigned __int16* sub_48D421(int thisx, int a2)
             if (*(int*)(thisx + 56))
                 v30 = *(int*)(thisx + 52) == 0;
             v31 = *(int*)(thisx + 60);
-            if (*(_BYTE*)(thisx + 48) == 1)
+            if (*(char*)(thisx + 48) == 1)
             {
                 v18 = sub_426210((char*)byte_4B9B10);
                 v19 = (int*)sub_489A73(v18, *(unsigned __int8*)(thisx + 76));
@@ -69148,7 +69148,7 @@ unsigned __int16* sub_48D421(int thisx, int a2)
                 v15 = (unsigned __int16)sub_4266F0((short*)v16);
                 v5 = sub_4682AC((unsigned char*)v16);
                 v17 = v5;
-                LOBYTE(v5) = *(_BYTE*)(thisx + 84);
+                LOBYTE(v5) = *(char*)(thisx + 84);
                 sub_4788FA(&v27, (char*)v13, v14, v15, v17, v5);
             }
             return sub_48DD3C(thisx);
@@ -69167,7 +69167,7 @@ void sub_48DC0D(int thisx, int a2)
         *(int*)(thisx + 40) = a2;
 
         // 将 thisx 对象的偏移量为 148 的字节设置为 0
-        *(_BYTE*)(thisx + 148) = 0;
+        *(char*)(thisx + 148) = 0;
 
         // 将 thisx 对象的偏移量为 152 的 DWORD 设置为 0
         *(int*)(thisx + 152) = 0;
@@ -69206,7 +69206,7 @@ void sub_48DC76(int thisx, int a2, int a3)
 
     if (!a2)
     {
-        if ((*(_BYTE*)(thisx + *(unsigned __int8*)(a3 + 40) + 336) = *(_BYTE*)(thisx + 313), !*(int*)(a3 + 24))
+        if ((*(char*)(thisx + *(unsigned __int8*)(a3 + 40) + 336) = *(char*)(thisx + 313), !*(int*)(a3 + 24))
             && *(int*)(thisx + 188) >= 0
             || *(int*)(a3 + 24) && *(int*)(thisx + 220) >= 0)
         {
@@ -69216,7 +69216,7 @@ void sub_48DC76(int thisx, int a2, int a3)
                 v3 = 2;
             *(int*)(thisx + 40) = *(int*)(thisx + 8 * v3 + 172);
             *(int*)(thisx + 8 * v3 + 172) = -1;
-            *(_BYTE*)(thisx + 148) = 0;
+            *(char*)(thisx + 148) = 0;
             *(int*)(thisx + 152) = 0;
             sub_48A94C(thisx, 0, 1);
         }
@@ -69232,7 +69232,7 @@ void sub_48DC76(int thisx, int a2, int a3)
     if (!a2) // 如果 a2 为 0，则继续执行
     {
         // 更新状态：根据不同条件更新对象的内存值
-        if ((*(_BYTE*)(thisx + *(unsigned __int8*)(a3 + 40) + 336) = *(_BYTE*)(thisx + 313), !*(int*)(a3 + 24))
+        if ((*(char*)(thisx + *(unsigned __int8*)(a3 + 40) + 336) = *(char*)(thisx + 313), !*(int*)(a3 + 24))
             && *(int*)(thisx + 188) >= 0
             || *(int*)(a3 + 24) && *(int*)(thisx + 220) >= 0)
         {
@@ -69245,7 +69245,7 @@ void sub_48DC76(int thisx, int a2, int a3)
             // 更新 thisx 相关数据
             *(int*)(thisx + 40) = *(int*)(thisx + 8 * v3 + 172);
             *(int*)(thisx + 8 * v3 + 172) = -1;
-            *(_BYTE*)(thisx + 148) = 0;
+            *(char*)(thisx + 148) = 0;
             *(int*)(thisx + 152) = 0;
 
             // 调用其他函数，传递参数 0 和 1
@@ -69307,7 +69307,7 @@ unsigned __int16* sub_48DD3C(int thisx)
             {
                 if (i == 1)
                 {
-                    LOBYTE(v11) = sub_4754B0((_BYTE*)thisx);
+                    LOBYTE(v11) = sub_4754B0((char*)thisx);
                     v4 = sub_475F00((int*)thisx, v7, *(int*)(thisx + 52));
                     v13 = *v4;
                     v14 = v4[1];
@@ -69325,7 +69325,7 @@ unsigned __int16* sub_48DD3C(int thisx)
                 v16 = v3[3];
             }
             result = (unsigned __int16*)(unsigned __int8)v11;
-            if ((_BYTE)v11 && (v13 || v14 || v15 || v16))
+            if ((char)v11 && (v13 || v14 || v15 || v16))
             {
                 if ((unsigned __int8)v11 == 1)
                 {
@@ -69394,7 +69394,7 @@ int sub_48E02B(int* thisx)
 //初始化或改变状态
 int* sub_48E070(int* thisx)
 {
-    *(_BYTE*)thisx = 0;
+    *(char*)thisx = 0;
     thisx[1] = -1;
     return thisx;
 }
@@ -69454,7 +69454,7 @@ int* sub_48E150(int* thisx, int* a2, int a3)
 }
 
 //get
-char sub_48E190(_BYTE* thisx)
+char sub_48E190(char* thisx)
 {
     return thisx[388];
 }
@@ -69554,7 +69554,7 @@ int* sub_48E960(int* thisx, char a2)
 }
 
 //初始化
-_BYTE* sub_48E990(_BYTE* thisx)
+char* sub_48E990(char* thisx)
 {
     sub_47FC70(thisx);
     *(int*)thisx = off_4AC38C;
@@ -69596,7 +69596,7 @@ int sub_48E9E7(int* thisx)
     v9 = 0;
     if (v7)
     {
-        *((_BYTE*)thisx + thisx[5] + 36) = ((unsigned __int8)byte_4B9990 + v7 + *((unsigned __int8*)thisx + thisx[5] + 36))
+        *((char*)thisx + thisx[5] + 36) = ((unsigned __int8)byte_4B9990 + v7 + *((unsigned __int8*)thisx + thisx[5] + 36))
             % (unsigned __int8)byte_4B9990;
         v9 = 3;
         sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
@@ -69651,12 +69651,12 @@ int __fastcall sub_48EC25(int a1, int a2, unsigned __int8 a3, unsigned __int8 a4
     if (a3 < 8u && a4 < 8u)
     {
         result = a1;
-        *(_BYTE*)(a1 + a3 + 44) = a4;
+        *(char*)(a1 + a3 + 44) = a4;
     }
     return result;
 }
 
-int sub_48EC62(_BYTE* thisx)
+int sub_48EC62(char* thisx)
 {
 
 
@@ -69726,7 +69726,7 @@ int sub_48ECDE(int thisx)
         result = (unsigned __int8)byte_4B9986;
         if (j >= (unsigned __int8)byte_4B9986)
             break;
-        v5 = *(_BYTE*)(j + thisx + 36);
+        v5 = *(char*)(j + thisx + 36);
         v6 = 0;
         for (k = 0; k < j; ++k)
         {
@@ -69761,7 +69761,7 @@ int* sub_48F020(int* thisx, char a2)
 }
 
 
-_BYTE* sub_48F050(_BYTE* thisx)
+char* sub_48F050(char* thisx)
 {
     sub_47FC70(thisx);
     *(int*)thisx = off_4AC3A0;
@@ -69959,9 +69959,9 @@ char* sub_48F610(char* thisx)
 void sub_48F630(void* thisx)
 {
     *(int*)thisx = (int)&off_4AC3B4;
-    *((_BYTE*)thisx + 4) = 0;
-    *((_BYTE*)thisx + 5) = 0;
-    *((_BYTE*)thisx + 6) = 0;
+    *((char*)thisx + 4) = 0;
+    *((char*)thisx + 5) = 0;
+    *((char*)thisx + 6) = 0;
     *((int*)thisx + 2) = 0;
 }
 
@@ -69980,9 +69980,9 @@ int sub_48F682(int thisx)
     if (*(int*)(thisx + 8))
         delete2(*(void**)(thisx + 8));
     *(int*)(thisx + 8) = 0;
-    *(_BYTE*)(thisx + 5) = 0;
+    *(char*)(thisx + 5) = 0;
     result = thisx;
-    *(_BYTE*)(thisx + 6) = 0;
+    *(char*)(thisx + 6) = 0;
     return result;
 }
 
@@ -70334,7 +70334,7 @@ MMRESULT __cdecl sub_4900C4(HMMIO hmmio, int a2, int a3, int a4, int a5)
                 goto LABEL_13;
             }
         }
-        *(_BYTE*)(i + a3) = *pmmioinfo.pchNext++;
+        *(char*)(i + a3) = *pmmioinfo.pchNext++;
     }
     v10 = mmioSetInfo(hmmio, &pmmioinfo, 0);
     if (v10)
@@ -70456,7 +70456,7 @@ MMRESULT __cdecl sub_4903F4(HMMIO hmmio, int a2, int a3, int a4, int a5, LPMMIOI
             if (v8)
                 break;
         }
-        *pmmioinfo->pchNext++ = *(_BYTE*)(i + a3);
+        *pmmioinfo->pchNext++ = *(char*)(i + a3);
         ++* (int*)a5;
     }
     return v8;
@@ -70616,7 +70616,7 @@ int sub_490A5B(void* thisx, void* Src)
         v8 = 12 * *(unsigned __int16*)(v5 + 8 * i) + dword_4B92F0;
         v11[1] = *(char*)(v5 + 8 * i + *((int*)Src + 6) + 2) + v4;
         v11[2] = *(char*)(v5 + 8 * i + 4) + v6;
-        if (*(_BYTE*)(v5 + 8 * i + 6))
+        if (*(char*)(v5 + 8 * i + 6))
             v11[6] = *((int*)Src + 6) == 0;
         else
             v11[6] = *((int*)Src + 6);
@@ -70656,9 +70656,9 @@ void sub_490BDC(int a1, double a2, double a3, double a4, int a5)
     {
         *(int*)(a1 + 104) = *(int*)(a5 + 12);
     }
-    if (*(_BYTE*)a5)
+    if (*(char*)a5)
     {
-        *(_BYTE*)(a1 + 72) = *(_BYTE*)a5 - 1;
+        *(char*)(a1 + 72) = *(char*)a5 - 1;
     }
     else
     {
@@ -70676,7 +70676,7 @@ void sub_490BDC(int a1, double a2, double a3, double a4, int a5)
     *(int*)(a1 + 108) = 0;
     *(int*)(a1 + 156) = 0;
     *(int*)(a1 + 160) = 0;
-    *(_BYTE*)(a1 + 22) = 0;
+    *(char*)(a1 + 22) = 0;
     *(int*)(a1 + 84) = -1;
     sub_4914CC(a1, a3, a2, a4);
 }
@@ -70697,7 +70697,7 @@ int __fastcall sub_490D23(int a1)
     int v40; // [esp+A4h] [ebp-30h]
     int v39; // [esp+A0h] [ebp-34h]
     int Src; // [esp+9Ch] [ebp-38h] BYREF
-    _BYTE* v37; // [esp+98h] [ebp-3Ch]
+    char* v37; // [esp+98h] [ebp-3Ch]
     char v36; // [esp+94h] [ebp-40h]
     int v35; // [esp+90h] [ebp-44h]
     int v34; // [esp+8Ch] [ebp-48h]
@@ -70711,7 +70711,7 @@ int __fastcall sub_490D23(int a1)
     char* v26; // [esp+68h] [ebp-6Ch]
     char* v25; // [esp+64h] [ebp-70h]
     int v24; // [esp+60h] [ebp-74h]
-    _BYTE* v23; // [esp+5Ch] [ebp-78h]
+    char* v23; // [esp+5Ch] [ebp-78h]
     int v22; // [esp+58h] [ebp-7Ch]
     int j; // [esp+54h] [ebp-80h]
     int v20; // [esp+50h] [ebp-84h]
@@ -70743,7 +70743,7 @@ int __fastcall sub_490D23(int a1)
         v29 = v28[1];
         v35 = sub_446497((int*)byte_4B9B10, *(int*)(a1 + 96) / 100, *(int*)(a1 + 100) / 100);
         v36 = sub_4464F6((int*)byte_4B9B10, *(int*)(a1 + 96) / 800, *(int*)(a1 + 100) / 800);
-        v37 = (_BYTE*)sub_4741F8((int)byte_4B9B10, *(int*)(a1 + 96) / 800, *(int*)(a1 + 100) / 800);
+        v37 = (char*)sub_4741F8((int)byte_4B9B10, *(int*)(a1 + 96) / 800, *(int*)(a1 + 100) / 800);
         if (v37 && sub_425C50(v37))
             v35 = 4 * (unsigned __int8)unknown_libname_6(v37);
         v34 = 0;
@@ -70757,7 +70757,7 @@ int __fastcall sub_490D23(int a1)
             v32 = sub_425C90(v37);
         }
         sub_49C15E((int)&Src);
-        if ((_BYTE)v31 && *(int*)(a1 + 12) != 1 && (*(int*)(a1 + 172) && v35 < *(int*)(a1 + 104) / -100 || v32))
+        if ((char)v31 && *(int*)(a1 + 12) != 1 && (*(int*)(a1 + 172) && v35 < *(int*)(a1 + 104) / -100 || v32))
         {
             v39 = v30 - 8;
             v2 = *(int*)(a1 + 100) / 100 - v35;
@@ -70774,7 +70774,7 @@ int __fastcall sub_490D23(int a1)
                 sub_49AB05((int)byte_4BDC60, &Src);
             }
         }
-        if (*(_BYTE*)(a1 + 71) == 1)
+        if (*(char*)(a1 + 71) == 1)
         {
             result = ((unsigned int)dword_4B93AC >> 1) / 4;
             v27 = ((unsigned int)dword_4B93AC >> 1) % 4;
@@ -70848,12 +70848,12 @@ int __fastcall sub_490D23(int a1)
                 v24 = result;
                 for (j = 0; j < v24; ++j)
                 {
-                    v23 = (_BYTE*)(12 * *(unsigned __int16*)(v20 + 8 * j) + dword_4B92F0);
-                    v16 = *(_BYTE*)(v20 + 8 * j + *(int*)(a1 + 164) + 2);
-                    v15 = *(_BYTE*)(v20 + 8 * j + 4);
+                    v23 = (char*)(12 * *(unsigned __int16*)(v20 + 8 * j) + dword_4B92F0);
+                    v16 = *(char*)(v20 + 8 * j + *(int*)(a1 + 164) + 2);
+                    v15 = *(char*)(v20 + 8 * j + 4);
                     v39 = v16 + v18;
                     v40 = v15 + v19;
-                    if (*(_BYTE*)(v20 + 8 * j + 6))
+                    if (*(char*)(v20 + 8 * j + 6))
                         v41 = *(int*)(a1 + 164) == 0;
                     else
                         v41 = *(int*)(a1 + 164);
@@ -70930,39 +70930,39 @@ void sub_4914CC(int thisx, double a2, double st5_0, double a4)
         *(int*)(thisx + 156) = 0;
         sub_4967E4(thisx, a2, st5_0, a4);
     }
-    if (*(_BYTE*)(thisx + 72) == 11)
+    if (*(char*)(thisx + 72) == 11)
     {
         if (*(int*)(thisx + 84) > 0)
         {
             if (*(int*)(thisx + 84) >= 60)
             {
                 if (*(int*)(thisx + 84) >= 180)
-                    *(_BYTE*)(thisx + 22) = *(int*)(thisx + 84) / 3 % 2;
+                    *(char*)(thisx + 22) = *(int*)(thisx + 84) / 3 % 2;
                 else
-                    *(_BYTE*)(thisx + 22) = *(int*)(thisx + 84) / 3 % 2 + 2;
+                    *(char*)(thisx + 22) = *(int*)(thisx + 84) / 3 % 2 + 2;
             }
             else
             {
-                *(_BYTE*)(thisx + 22) = *(int*)(thisx + 84) / 3 % 2 + 4;
+                *(char*)(thisx + 22) = *(int*)(thisx + 84) / 3 % 2 + 4;
             }
         }
         else
         {
-            *(_BYTE*)(thisx + 22) = 0;
+            *(char*)(thisx + 22) = 0;
         }
     }
-    else if (*(_BYTE*)(thisx + 72) == 13)
+    else if (*(char*)(thisx + 72) == 13)
     {
         if (*(int*)(thisx + 84) > 0)
         {
             if (*(int*)(thisx + 84) >= 60)
-                *(_BYTE*)(thisx + 71) = 2 * (*(int*)(thisx + 84) % (*(int*)(thisx + 84) / 60 + 2) <= 1);
+                *(char*)(thisx + 71) = 2 * (*(int*)(thisx + 84) % (*(int*)(thisx + 84) / 60 + 2) <= 1);
             else
-                *(_BYTE*)(thisx + 71) = 2 * (*(int*)(thisx + 84) % 2);
+                *(char*)(thisx + 71) = 2 * (*(int*)(thisx + 84) % 2);
         }
         else
         {
-            *(_BYTE*)(thisx + 71) = 0;
+            *(char*)(thisx + 71) = 0;
         }
     }
     if (*(int*)(thisx + 12) != 1)
@@ -70975,10 +70975,10 @@ int sub_491639(int thisx, int a2)
     *(int*)(thisx + 56) = a2;
     *(int*)(thisx + 172) = 0;
     *(int*)(thisx + 168) = 0;
-    *(_BYTE*)(thisx + 68) = 0;
-    *(_BYTE*)(thisx + 71) = 0;
+    *(char*)(thisx + 68) = 0;
+    *(char*)(thisx + 71) = 0;
     *(int*)(thisx + 76) = 0;
-    if (*(_BYTE*)(thisx + 72) != 11 && *(_BYTE*)(thisx + 72) != 13)
+    if (*(char*)(thisx + 72) != 11 && *(char*)(thisx + 72) != 13)
         *(int*)(thisx + 80) = 0;
     *(int*)(thisx + 120) = 0;
     *(int*)(thisx + 124) = 0;
@@ -71199,7 +71199,7 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
     if (a5)
         v123 += a3 * sub_41D067(*(int*)(a1 + 56), 1) / 250;
     v124 = *(unsigned __int16*)(a1 + 190);
-    if (sub_41BA53(*(int*)(a1 + 56), 0x85u, 0) && *(_BYTE*)(a1 + 72) == 12)
+    if (sub_41BA53(*(int*)(a1 + 56), 0x85u, 0) && *(char*)(a1 + 72) == 12)
         v124 += 50;
     switch (*(int*)(a1 + 8))
     {
@@ -71235,13 +71235,13 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
     if (v125 > 0xFFFF)
         LOWORD(v125) = -1;
     *(short*)(a1 + 192) = v125;
-    *(_BYTE*)(a1 + 195) = 5;
-    *(_BYTE*)(a1 + 194) = 0;
-    *(_BYTE*)(a1 + 69) = 1;
+    *(char*)(a1 + 195) = 5;
+    *(char*)(a1 + 194) = 0;
+    *(char*)(a1 + 69) = 1;
     *(int*)(a1 + 156) = 0;
     *(int*)(a1 + 160) = 0;
     *(int*)(a1 + 88) = 0;
-    *(_BYTE*)(a1 + 180) = 0;
+    *(char*)(a1 + 180) = 0;
     *(int*)(a1 + 104) -= 400;
     *(int*)(a1 + 172) = 1;
     *(int*)(a1 + 168) = 1;
@@ -71249,22 +71249,22 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
     *(int*)(a1 + 136) = 1;
     *(int*)(a1 + 132) = 1;
     *(int*)(a1 + 76) = 0;
-    if (*(_BYTE*)(a1 + 72) != 11 && *(_BYTE*)(a1 + 72) != 13)
+    if (*(char*)(a1 + 72) != 11 && *(char*)(a1 + 72) != 13)
         *(int*)(a1 + 80) = 0;
     sub_499622(a1);
     memset((void*)(a1 + 181), 0, 8u);
-    *(_BYTE*)(a1 + (unsigned __int8)sub_425EF0(*(_BYTE**)(a1 + 56)) + 181) = 1;
-    *(_BYTE*)(a1 + 68) = 0;
-    *(_BYTE*)(a1 + 71) = 0;
-    *(_BYTE*)(a1 + 70) = -1;
-    if ((*(_BYTE*)(a1 + 72) == 11 || *(_BYTE*)(a1 + 72) == 13) && *(int*)(a1 + 84) < 0)
+    *(char*)(a1 + (unsigned __int8)sub_425EF0(*(char**)(a1 + 56)) + 181) = 1;
+    *(char*)(a1 + 68) = 0;
+    *(char*)(a1 + 71) = 0;
+    *(char*)(a1 + 70) = -1;
+    if ((*(char*)(a1 + 72) == 11 || *(char*)(a1 + 72) == 13) && *(int*)(a1 + 84) < 0)
     {
         *(int*)(a1 + 84) = rand() % 300 + 300;
         *(int*)(a1 + 80) = *(int*)(a1 + 84);
     }
     if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 56)) == (struct Concurrency::ISchedulerProxy*)171)
     {
-        v122 = (char*)sub_464AC9((char*)byte_4B9B10, *(_BYTE**)(a1 + 56), 0, 1);
+        v122 = (char*)sub_464AC9((char*)byte_4B9B10, *(char**)(a1 + 56), 0, 1);
         if (v122)
         {
             *(int*)(a1 + 96) = sub_426090((int*)v122);
@@ -71278,7 +71278,7 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
     }
     if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 56)) == (struct Concurrency::ISchedulerProxy*)172)
     {
-        v121 = (char*)sub_464AC9((char*)byte_4B9B10, *(_BYTE**)(a1 + 56), 0, 1);
+        v121 = (char*)sub_464AC9((char*)byte_4B9B10, *(char**)(a1 + 56), 0, 1);
         if (v121)
         {
             *(int*)(a1 + 16) = 4;
@@ -71294,16 +71294,16 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
     }
     if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 56)) == (struct Concurrency::ISchedulerProxy*)173)
     {
-        *(_BYTE*)(a1 + 68) = 1;
-        *(_BYTE*)(a1 + 71) = 1;
-        *(_BYTE*)(a1 + 69) = 0;
-        *(_BYTE*)(a1 + 194) = 3;
+        *(char*)(a1 + 68) = 1;
+        *(char*)(a1 + 71) = 1;
+        *(char*)(a1 + 69) = 0;
+        *(char*)(a1 + 194) = 3;
         goto LABEL_259;
     }
     if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 56)) == (struct Concurrency::ISchedulerProxy*)180)
     {
-        *(_BYTE*)(a1 + 194) = 11;
-        *(_BYTE*)(a1 + 71) = 1;
+        *(char*)(a1 + 194) = 11;
+        *(char*)(a1 + 71) = 1;
         *(int*)(a1 + 120) = 2 * a3 + 320;
         if (*(int*)(a1 + 120) < 440)
             *(int*)(a1 + 120) = 440;
@@ -71354,23 +71354,23 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
     {
         if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 56)) == (struct Concurrency::ISchedulerProxy*)184)
         {
-            *(_BYTE*)(a1 + 71) = 1;
-            *(_BYTE*)(a1 + 194) = 11;
-            *(_BYTE*)(a1 + 70) = 5;
+            *(char*)(a1 + 71) = 1;
+            *(char*)(a1 + 194) = 11;
+            *(char*)(a1 + 70) = 5;
         }
         else if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 56)) == (struct Concurrency::ISchedulerProxy*)185)
         {
-            *(_BYTE*)(a1 + 71) = 1;
-            *(_BYTE*)(a1 + 194) = 3;
-            *(_BYTE*)(a1 + 70) = 5;
+            *(char*)(a1 + 71) = 1;
+            *(char*)(a1 + 194) = 3;
+            *(char*)(a1 + 70) = 5;
         }
         else
         {
             if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 56)) == (struct Concurrency::ISchedulerProxy*)186)
             {
-                *(_BYTE*)(a1 + 71) = 1;
-                *(_BYTE*)(a1 + 194) = 3;
-                *(_BYTE*)(a1 + 70) = 5;
+                *(char*)(a1 + 71) = 1;
+                *(char*)(a1 + 194) = 3;
+                *(char*)(a1 + 70) = 5;
                 *(int*)(a1 + 120) = 2 * a3 + 320;
                 if (*(int*)(a1 + 120) < 440)
                     *(int*)(a1 + 120) = 440;
@@ -71433,9 +71433,9 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
                 *(int*)(a1 + 88) = *(unsigned __int16*)(a1 + 192) / 85;
                 if (*(int*)(a1 + 88) <= 0)
                     *(int*)(a1 + 88) = 1;
-                *(_BYTE*)(a1 + 71) = 1;
-                *(_BYTE*)(a1 + 194) = 3;
-                *(_BYTE*)(a1 + 70) = 5;
+                *(char*)(a1 + 71) = 1;
+                *(char*)(a1 + 194) = 3;
+                *(char*)(a1 + 70) = 5;
                 *(int*)(a1 + 136) = 1000;
                 *(int*)(a1 + 132) = 1000;
                 *(int*)(a1 + 140) = 1;
@@ -71475,10 +71475,10 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
             }
             if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 56)) == (struct Concurrency::ISchedulerProxy*)190)
             {
-                *(_BYTE*)(a1 + 68) = 1;
-                *(_BYTE*)(a1 + 71) = 1;
-                *(_BYTE*)(a1 + 194) = 5;
-                *(_BYTE*)(a1 + 70) = 5;
+                *(char*)(a1 + 68) = 1;
+                *(char*)(a1 + 71) = 1;
+                *(char*)(a1 + 194) = 5;
+                *(char*)(a1 + 70) = 5;
                 *(int*)(a1 + 120) = 2 * a3 + 200;
                 if (*(int*)(a1 + 120) < 440)
                     *(int*)(a1 + 120) = 440;
@@ -71517,9 +71517,9 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
             }
             if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 56)) == (struct Concurrency::ISchedulerProxy*)191)
             {
-                *(_BYTE*)(a1 + 71) = 1;
-                *(_BYTE*)(a1 + 194) = 3;
-                *(_BYTE*)(a1 + 70) = 5;
+                *(char*)(a1 + 71) = 1;
+                *(char*)(a1 + 194) = 3;
+                *(char*)(a1 + 70) = 5;
                 *(int*)(a1 + 120) = 2 * a3 + 320;
                 if (*(int*)(a1 + 120) < 440)
                     *(int*)(a1 + 120) = 440;
@@ -71578,9 +71578,9 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
             }
             if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 56)) == (struct Concurrency::ISchedulerProxy*)192)
             {
-                *(_BYTE*)(a1 + 71) = 1;
-                *(_BYTE*)(a1 + 194) = 3;
-                *(_BYTE*)(a1 + 70) = 5;
+                *(char*)(a1 + 71) = 1;
+                *(char*)(a1 + 194) = 3;
+                *(char*)(a1 + 70) = 5;
                 *(int*)(a1 + 120) = 2 * a3 + 150;
                 if (*(int*)(a1 + 120) < 200)
                     *(int*)(a1 + 120) = 200;
@@ -71621,9 +71621,9 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
             {
                 if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 56)) == (struct Concurrency::ISchedulerProxy*)194)
                 {
-                    *(_BYTE*)(a1 + 71) = 1;
-                    *(_BYTE*)(a1 + 194) = 3;
-                    *(_BYTE*)(a1 + 70) = 5;
+                    *(char*)(a1 + 71) = 1;
+                    *(char*)(a1 + 194) = 3;
+                    *(char*)(a1 + 70) = 5;
                     *(int*)(a1 + 120) = 2 * a3 + 150;
                     if (*(int*)(a1 + 120) < 200)
                         *(int*)(a1 + 120) = 200;
@@ -71663,12 +71663,12 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
                 {
                     if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 56)) == (struct Concurrency::ISchedulerProxy*)195)
                     {
-                        *(int*)(a1 + 60) = sub_464AC9((char*)byte_4B9B10, *(_BYTE**)(a1 + 56), 0, 1);
+                        *(int*)(a1 + 60) = sub_464AC9((char*)byte_4B9B10, *(char**)(a1 + 56), 0, 1);
                         if (*(int*)(a1 + 60))
                         {
-                            *(_BYTE*)(a1 + 71) = 1;
-                            *(_BYTE*)(a1 + 194) = 11;
-                            *(_BYTE*)(a1 + 70) = 5;
+                            *(char*)(a1 + 71) = 1;
+                            *(char*)(a1 + 194) = 11;
+                            *(char*)(a1 + 70) = 5;
                             *(int*)(a1 + 120) = 10 * (*(int*)(a1 + 164) - (*(int*)(a1 + 164) == 0));
                             if (sub_425D30((int*)*(int*)(a1 + 56)))
                                 *(int*)(a1 + 128) = 5;
@@ -71682,9 +71682,9 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
                     }
                     if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 56)) == (struct Concurrency::ISchedulerProxy*)196)
                     {
-                        *(_BYTE*)(a1 + 71) = 1;
-                        *(_BYTE*)(a1 + 68) = 1;
-                        *(_BYTE*)(a1 + 194) = 2;
+                        *(char*)(a1 + 71) = 1;
+                        *(char*)(a1 + 68) = 1;
+                        *(char*)(a1 + 194) = 2;
                         *(int*)(a1 + 120) = 2 * a3 + 150;
                         if (*(int*)(a1 + 120) < 200)
                             *(int*)(a1 + 120) = 200;
@@ -71728,18 +71728,18 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
                             if (Concurrency::details::SchedulerBase::GetSchedulerProxy(*(Concurrency::details::SchedulerBase**)(a1 + 56)) == (struct Concurrency::ISchedulerProxy*)198)
                             {
                                 *(int*)(a1 + 120) = 10 * (*(int*)(a1 + 164) - (*(int*)(a1 + 164) == 0));
-                                *(_BYTE*)(a1 + 71) = 1;
-                                *(_BYTE*)(a1 + 68) = rand() % 3 == 0;
+                                *(char*)(a1 + 71) = 1;
+                                *(char*)(a1 + 68) = rand() % 3 == 0;
                                 HIDWORD(v7) = rand() % 14;
                                 LODWORD(v7) = a1;
-                                *(_BYTE*)(a1 + 194) = BYTE4(v7);
+                                *(char*)(a1 + 194) = BYTE4(v7);
                                 return v7;
                             }
                             goto LABEL_259;
                         }
-                        *(_BYTE*)(a1 + 71) = 1;
-                        *(_BYTE*)(a1 + 194) = 3;
-                        *(_BYTE*)(a1 + 70) = 5;
+                        *(char*)(a1 + 71) = 1;
+                        *(char*)(a1 + 194) = 3;
+                        *(char*)(a1 + 70) = 5;
                         *(int*)(a1 + 120) = 2 * a3 + 320;
                         if (*(int*)(a1 + 120) < 440)
                             *(int*)(a1 + 120) = 440;
@@ -71794,15 +71794,15 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
                 }
                 return v7;
             }
-            *(_BYTE*)(a1 + 71) = 1;
-            *(_BYTE*)(a1 + 194) = 3;
-            *(_BYTE*)(a1 + 70) = 5;
+            *(char*)(a1 + 71) = 1;
+            *(char*)(a1 + 194) = 3;
+            *(char*)(a1 + 70) = 5;
         }
     LABEL_259:
         if (*(unsigned __int8*)(a1 + 72) < 2u
             || *(unsigned __int8*)(a1 + 72) >= 4u && *(unsigned __int8*)(a1 + 72) <= 7u
-            || *(_BYTE*)(a1 + 72) == 11
-            || *(_BYTE*)(a1 + 72) == 12)
+            || *(char*)(a1 + 72) == 11
+            || *(char*)(a1 + 72) == 12)
         {
             *(int*)(a1 + 120) = 2 * a3 + 320;
             if (*(int*)(a1 + 120) < 440)
@@ -71868,7 +71868,7 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
                 *(int*)(a1 + 128) = v7;
             }
         }
-        else if (*(_BYTE*)(a1 + 72) == 2)
+        else if (*(char*)(a1 + 72) == 2)
         {
             *(int*)(a1 + 120) = 150 * (*(int*)(a1 + 164) - (*(int*)(a1 + 164) == 0));
             *(int*)(a1 + 96) = *(int*)(a1 + 120) + sub_426090(*(int**)(a1 + 56));
@@ -71879,7 +71879,7 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
             *(int*)(a1 + 148) = 0;
             *(int*)(a1 + 152) = 30;
         }
-        else if (*(_BYTE*)(a1 + 72) == 3)
+        else if (*(char*)(a1 + 72) == 3)
         {
             *(int*)(a1 + 120) = 250;
             if (!*(int*)(a1 + 164))
@@ -71891,9 +71891,9 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
             *(int*)(a1 + 148) = 0;
             *(int*)(a1 + 152) = 30;
         }
-        else if (*(_BYTE*)(a1 + 72) == 8
-            || *(_BYTE*)(a1 + 72) == 9
-            || *(_BYTE*)(a1 + 72) == 10
+        else if (*(char*)(a1 + 72) == 8
+            || *(char*)(a1 + 72) == 9
+            || *(char*)(a1 + 72) == 10
             || (LODWORD(v7) = *(unsigned __int8*)(a1 + 72), (int)v7 == 13))
         {
             *(int*)(a1 + 120) = 300;
@@ -71912,10 +71912,10 @@ int sub_4917E7(int a1, double st6_0, double st7_0, int a3, int a4, int a5, int a
         a6 = (int)sub_4682D3((char*)byte_4B9B10, *(int**)(a1 + 56), 0);
     if (!a6)
         goto LABEL_259;
-    *(_BYTE*)(a1 + 70) = 5;
+    *(char*)(a1 + 70) = 5;
     *(int*)(a1 + 60) = a6;
-    *(_BYTE*)(a1 + 194) = 3;
-    *(_BYTE*)(a1 + 71) = 1;
+    *(char*)(a1 + 194) = 3;
+    *(char*)(a1 + 71) = 1;
     sub_44647E(byte_4B9B10);
     v11 = sub_426090((int*)a6);
     v113 = v11 - sub_426470((int*)a1);
@@ -72014,7 +72014,7 @@ int sub_494257(int thisx, int a2, int a3, int a4)
         if (a3)
         {
             result = thisx;
-            *(_BYTE*)(thisx + *(unsigned __int8*)(a3 + 40) + 181) = 1;
+            *(char*)(thisx + *(unsigned __int8*)(a3 + 40) + 181) = 1;
         }
     }
     else if (a2 && !a4)
@@ -72022,9 +72022,9 @@ int sub_494257(int thisx, int a2, int a3, int a4)
         *(int*)(thisx + 56) = *(int*)(a3 + 32);
         *(int*)(thisx + 16) = 7;
         *(int*)(thisx + 12) = 7;
-        *(int*)(thisx + 76) = (unsigned __int8)sub_425EF0(*(_BYTE**)(a3 + 32));
+        *(int*)(thisx + 76) = (unsigned __int8)sub_425EF0(*(char**)(a3 + 32));
         memset((void*)(thisx + 181), 0, 8u);
-        *(_BYTE*)(thisx + *(int*)(thisx + 76) + 181) = 1;
+        *(char*)(thisx + *(int*)(thisx + 76) + 181) = 1;
         *(int*)(thisx + 156) = 0;
         *(int*)(thisx + 120) = 10 * *(int*)a3;
         if (*(int*)(thisx + 120) >= 100)
@@ -72036,13 +72036,13 @@ int sub_494257(int thisx, int a2, int a3, int a4)
         {
             *(int*)(thisx + 120) = 100;
         }
-        if (*(_BYTE*)(a3 + 4) == 5)
+        if (*(char*)(a3 + 4) == 5)
         {
             *(int*)(thisx + 172) = 1;
             *(int*)(thisx + 128) = 2 * *(int*)(thisx + 120) / -3;
             *(int*)(thisx + 152) = 30;
             *(int*)(thisx + 120) /= 5;
-            if (*(_BYTE*)(thisx + 72) == 10 || *(_BYTE*)(thisx + 72) == 13)
+            if (*(char*)(thisx + 72) == 10 || *(char*)(thisx + 72) == 13)
             {
                 *(int*)(thisx + 128) = 2 * *(int*)(thisx + 128) / 3;
                 *(int*)(thisx + 120) = 2 * *(int*)(thisx + 120) / 3;
@@ -72052,13 +72052,13 @@ int sub_494257(int thisx, int a2, int a3, int a4)
             *(int*)(thisx + 120) = -*(int*)(thisx + 120);
         *(int*)(thisx + 124) = 0;
         *(short*)(thisx + 192) = *(unsigned __int16*)(thisx + 190) / 5 + *(int*)a3;
-        *(_BYTE*)(thisx + 194) = 0;
-        *(_BYTE*)(thisx + 69) = 1;
-        if (*(_BYTE*)(thisx + 72) == 10)
+        *(char*)(thisx + 194) = 0;
+        *(char*)(thisx + 69) = 1;
+        if (*(char*)(thisx + 72) == 10)
         {
-            *(_BYTE*)(thisx + 22) = (*(char*)(thisx + 22) + 1) % 4;
+            *(char*)(thisx + 22) = (*(char*)(thisx + 22) + 1) % 4;
         }
-        else if (*(_BYTE*)(thisx + 72) == 13)
+        else if (*(char*)(thisx + 72) == 13)
         {
             *(int*)(thisx + 120) /= 2;
             if (*(int*)(thisx + 84) > 0)
@@ -72069,7 +72069,7 @@ int sub_494257(int thisx, int a2, int a3, int a4)
             }
         }
         result = *(unsigned __int8*)(thisx + 72);
-        switch (*(_BYTE*)(thisx + 72))
+        switch (*(char*)(thisx + 72))
         {
         case 8:
             result = sub_43FFC3((int*)byte_4BDB28, dword_4B9ABC, -1, 100, 100, 0);
@@ -72094,7 +72094,7 @@ int sub_494257(int thisx, int a2, int a3, int a4)
             result = thisx;
             *(int*)(thisx + 152) = -60;
         }
-        if (*(_BYTE*)(thisx + 68) && a4)
+        if (*(char*)(thisx + 68) && a4)
         {
             result = thisx;
             if (*(int*)(thisx + 8) != 190)
@@ -72131,15 +72131,15 @@ int sub_494257(int thisx, int a2, int a3, int a4)
                 *(int*)(thisx + 16) = 2;
                 *(int*)(thisx + 12) = 2;
                 result = thisx;
-                *(_BYTE*)(thisx + 180) = 0;
+                *(char*)(thisx + 180) = 0;
             }
         }
         if (!a4)
         {
             result = thisx;
-            *(_BYTE*)(thisx + *(unsigned __int8*)(a3 + 40) + 181) = 1;
+            *(char*)(thisx + *(unsigned __int8*)(a3 + 40) + 181) = 1;
         }
-        if (*(_BYTE*)(thisx + 72) == 11 || (result = thisx, *(_BYTE*)(thisx + 72) == 13))
+        if (*(char*)(thisx + 72) == 11 || (result = thisx, *(char*)(thisx + 72) == 13))
         {
             if (*(int*)(thisx + 12) != 8)
             {
@@ -72220,7 +72220,7 @@ int sub_494754(int thisx)
         *(int*)(thisx + 144) = 0;
         *(int*)(thisx + 148) = 0;
         *(int*)(thisx + 168) = 0;
-        *(_BYTE*)(thisx + 180) = 0;
+        *(char*)(thisx + 180) = 0;
         if (*(int*)(thisx + 172))
             *(int*)(thisx + 152) = 30;
         result = *(unsigned __int8*)(thisx + 72);
@@ -72260,8 +72260,8 @@ int sub_494754(int thisx)
                 result = *(unsigned __int8*)(thisx + 72);
                 if (result == 12)
                 {
-                    *(_BYTE*)(thisx + 71) = 0;
-                    *(_BYTE*)(thisx + 68) = 0;
+                    *(char*)(thisx + 71) = 0;
+                    *(char*)(thisx + 68) = 0;
                     result = thisx;
                     *(int*)(thisx + 168) = 0;
                 }
@@ -72285,9 +72285,9 @@ int sub_494979(int thisx)
         *(int*)(thisx + 56) = 0;
         *(int*)(thisx + 168) = 0;
         *(int*)(thisx + 172) = 1;
-        *(_BYTE*)(thisx + 180) = 0;
+        *(char*)(thisx + 180) = 0;
         *(int*)(thisx + 76) = 0;
-        if (*(_BYTE*)(thisx + 72) != 11 && *(_BYTE*)(thisx + 72) != 13)
+        if (*(char*)(thisx + 72) != 11 && *(char*)(thisx + 72) != 13)
             *(int*)(thisx + 80) = 0;
         *(int*)(thisx + 152) = 0;
         *(int*)(thisx + 148) = 0;
@@ -72297,12 +72297,12 @@ int sub_494979(int thisx)
         *(int*)(thisx + 120) = 0;
         result = thisx;
         *(int*)(thisx + 152) = 30;
-        if (*(_BYTE*)(thisx + 72) == 2)
+        if (*(char*)(thisx + 72) == 2)
         {
             result = thisx;
             *(int*)(thisx + 76) = 3;
         }
-        else if (*(_BYTE*)(thisx + 72) == 3)
+        else if (*(char*)(thisx + 72) == 3)
         {
             result = thisx;
             *(int*)(thisx + 76) = 4;
@@ -72332,18 +72332,18 @@ int sub_494AC9(int thisx)
     *(int*)(thisx + 168) = 0;
     *(int*)(thisx + 176) = 0;
     *(int*)(thisx + 4) = 0;
-    *(_BYTE*)(thisx + 195) = 5;
-    *(_BYTE*)(thisx + 194) = 0;
-    *(_BYTE*)(thisx + 180) = 0;
+    *(char*)(thisx + 195) = 5;
+    *(char*)(thisx + 194) = 0;
+    *(char*)(thisx + 180) = 0;
     for (i = 0; i < 8; ++i)
-        *(_BYTE*)(i + thisx + 181) = 0;
-    *(_BYTE*)(thisx + 69) = 1;
-    *(_BYTE*)(thisx + 68) = 0;
-    *(_BYTE*)(thisx + 71) = 0;
-    *(_BYTE*)(thisx + 72) = 0;
-    *(_BYTE*)(thisx + 22) = 0;
+        *(char*)(i + thisx + 181) = 0;
+    *(char*)(thisx + 69) = 1;
+    *(char*)(thisx + 68) = 0;
+    *(char*)(thisx + 71) = 0;
+    *(char*)(thisx + 72) = 0;
+    *(char*)(thisx + 22) = 0;
     *(int*)(thisx + 8) = 3;
-    *(_BYTE*)(thisx + 70) = -1;
+    *(char*)(thisx + 70) = -1;
     for (j = 0; j < 2; ++j)
         *(short*)(thisx + 16 * j + 24) = -2;
     *(int*)(thisx + 156) = 0;
@@ -72381,7 +72381,7 @@ int sub_494AC9(int thisx)
 }
 
 
-int __fastcall sub_494D01(int a1, int a2, unsigned __int8 a3, _BYTE* a4, int a5)
+int __fastcall sub_494D01(int a1, int a2, unsigned __int8 a3, char* a4, int a5)
 {
 
 
@@ -72399,7 +72399,7 @@ int __fastcall sub_494D01(int a1, int a2, unsigned __int8 a3, _BYTE* a4, int a5)
         if (a3 == 1)
         {
             result = a1;
-            if (*(int*)(a1 + 12) == 5 && *(_BYTE**)(a1 + 56) == a4)
+            if (*(int*)(a1 + 12) == 5 && *(char**)(a1 + 56) == a4)
             {
                 v9 = (int*)sub_464AC9((char*)byte_4B9B10, a4, 0, 0);
                 if (v9)
@@ -72419,14 +72419,14 @@ int __fastcall sub_494D01(int a1, int a2, unsigned __int8 a3, _BYTE* a4, int a5)
                     if (v7 > 0xFFFF)
                         LOWORD(v7) = -1;
                     *(short*)(a1 + 192) = v7;
-                    *(_BYTE*)(a1 + 194) = 0;
-                    *(_BYTE*)(a1 + 195) = 5;
+                    *(char*)(a1 + 194) = 0;
+                    *(char*)(a1 + 195) = 5;
                     *(int*)(a1 + 156) = 0;
-                    *(_BYTE*)(a1 + 180) = 0;
+                    *(char*)(a1 + 180) = 0;
                     *(int*)(a1 + 172) = 1;
                     *(int*)(a1 + 168) = 1;
                     *(int*)(a1 + 76) = 0;
-                    if (*(_BYTE*)(a1 + 72) == 11 || *(_BYTE*)(a1 + 72) == 13)
+                    if (*(char*)(a1 + 72) == 11 || *(char*)(a1 + 72) == 13)
                     {
                         if (*(int*)(a1 + 84) < 0)
                         {
@@ -72439,10 +72439,10 @@ int __fastcall sub_494D01(int a1, int a2, unsigned __int8 a3, _BYTE* a4, int a5)
                         *(int*)(a1 + 80) = 0;
                     }
                     memset((void*)(a1 + 181), 0, 8u);
-                    *(_BYTE*)(a1 + (unsigned __int8)sub_425EF0(*(_BYTE**)(a1 + 56)) + 181) = 1;
-                    *(_BYTE*)(a1 + 68) = 0;
+                    *(char*)(a1 + (unsigned __int8)sub_425EF0(*(char**)(a1 + 56)) + 181) = 1;
+                    *(char*)(a1 + 68) = 0;
                     result = a1;
-                    *(_BYTE*)(a1 + 71) = 0;
+                    *(char*)(a1 + 71) = 0;
                 }
                 else
                 {
@@ -72453,7 +72453,7 @@ int __fastcall sub_494D01(int a1, int a2, unsigned __int8 a3, _BYTE* a4, int a5)
         else if (a3 == 2 && *(int*)(a1 + 12) == 5)
         {
             result = a1;
-            if (*(_BYTE**)(a1 + 56) == a4)
+            if (*(char**)(a1 + 56) == a4)
             {
                 *(int*)(a1 + 16) = 2;
                 *(int*)(a1 + 12) = 2;
@@ -72462,7 +72462,7 @@ int __fastcall sub_494D01(int a1, int a2, unsigned __int8 a3, _BYTE* a4, int a5)
                 result = a1;
                 *(int*)(a1 + 152) = 30;
                 *(int*)(a1 + 168) = 0;
-                *(_BYTE*)(a1 + 180) = 0;
+                *(char*)(a1 + 180) = 0;
             }
         }
     }
@@ -72476,7 +72476,7 @@ int __fastcall sub_494D01(int a1, int a2, unsigned __int8 a3, _BYTE* a4, int a5)
             *(int*)(a1 + 12) = 5;
             *(int*)(a1 + 156) = 0;
             *(int*)(a1 + 76) = 0;
-            if (*(_BYTE*)(a1 + 72) != 11 && *(_BYTE*)(a1 + 72) != 13)
+            if (*(char*)(a1 + 72) != 11 && *(char*)(a1 + 72) != 13)
                 *(int*)(a1 + 80) = 0;
             result = a1;
             *(int*)(a1 + 128) = 0;
@@ -72515,7 +72515,7 @@ int sub_4950AF(int thisx)
 
 
     result = thisx;
-    switch (*(_BYTE*)(thisx + 72))
+    switch (*(char*)(thisx + 72))
     {
     case 0:
         v2 = 10 * (rand() % 5) + 175;
@@ -72827,7 +72827,7 @@ LABEL_65:
         *(int*)(a1 + 144) = 0;
         *(int*)(a1 + 148) = 0;
         *(int*)(a1 + 8) = 83;
-        *(_BYTE*)(a1 + 71) = 0;
+        *(char*)(a1 + 71) = 0;
         if (*(int*)(a1 + 172))
             *(int*)(a1 + 152) = 30;
     }
@@ -72849,7 +72849,7 @@ LABEL_65:
     v46 = sub_4868C1(v25, *(int*)(a1 + 96) / 800, *(int*)(a1 + 100) / 800);
     if (*(int*)(a1 + 104) > v42 && *(int*)(a1 + 172))
     {
-        switch (*(_BYTE*)(a1 + 72))
+        switch (*(char*)(a1 + 72))
         {
         case 0:
             sub_43FFC3((int*)byte_4BDB28, dword_4B9A78, -1, 100, 100, 0);
@@ -72885,7 +72885,7 @@ LABEL_65:
         *(int*)(a1 + 8) = 83;
         sub_4995EB((short*)a1);
         sub_49951D((int*)a1);
-        if ((*(_BYTE*)(a1 + 72) == 11 || *(_BYTE*)(a1 + 72) == 13) && *(int*)(a1 + 12) != 8)
+        if ((*(char*)(a1 + 72) == 11 || *(char*)(a1 + 72) == 13) && *(int*)(a1 + 12) != 8)
         {
             if (*(int*)(a1 + 56) && sub_41BA53(*(int*)(a1 + 56), 0x8Au, 0))
             {
@@ -72901,10 +72901,10 @@ LABEL_65:
         *(int*)(a1 + 104) = v42;
         *(int*)(a1 + 144) = 0;
         *(int*)(a1 + 148) = 0;
-        if (*(_BYTE*)(a1 + 72) == 12)
+        if (*(char*)(a1 + 72) == 12)
         {
             *(int*)(a1 + 168) = 0;
-            *(_BYTE*)(a1 + 71) = 0;
+            *(char*)(a1 + 71) = 0;
             v5 = *(int*)(a1 + 100) / 800;
             v4 = *(int*)(a1 + 96) / 800;
             v3 = sub_426210((char*)byte_4B9B10);
@@ -72954,12 +72954,12 @@ LABEL_65:
                 *(int*)(a1 + 76) = 1;
             }
         }
-        else if (*(unsigned __int8*)(a1 + 180) >= 2u || *(_BYTE*)(a1 + 72) == 10)
+        else if (*(unsigned __int8*)(a1 + 180) >= 2u || *(char*)(a1 + 72) == 10)
         {
             if (*(unsigned __int8*)(a1 + 72) < 2u
                 || *(unsigned __int8*)(a1 + 72) >= 4u && *(unsigned __int8*)(a1 + 72) <= 7u
-                || *(_BYTE*)(a1 + 72) == 11
-                || *(_BYTE*)(a1 + 72) == 12)
+                || *(char*)(a1 + 72) == 11
+                || *(char*)(a1 + 72) == 12)
             {
                 *(int*)(a1 + 120) = 0;
                 *(int*)(a1 + 128) = 0;
@@ -72967,7 +72967,7 @@ LABEL_65:
                 *(int*)(a1 + 16) = 0;
                 return a3;
             }
-            if (*(unsigned __int8*)(a1 + 72) < 4u || *(_BYTE*)(a1 + 72) == 13)
+            if (*(unsigned __int8*)(a1 + 72) < 4u || *(char*)(a1 + 72) == 13)
             {
                 if (*(int*)(a1 + 76) || !*(int*)(a1 + 120))
                 {
@@ -72975,8 +72975,8 @@ LABEL_65:
                     *(int*)(a1 + 128) = 0;
                     *(int*)(a1 + 152) = 0;
                     *(int*)(a1 + 16) = 0;
-                    *(_BYTE*)(a1 + 68) = 0;
-                    *(_BYTE*)(a1 + 71) = 0;
+                    *(char*)(a1 + 68) = 0;
+                    *(char*)(a1 + 71) = 0;
                     return a3;
                 }
                 *(int*)(a1 + 76) = 1;
@@ -72993,13 +72993,13 @@ LABEL_65:
         }
         else
         {
-            ++* (_BYTE*)(a1 + 180);
-            if ((*(_BYTE*)(a1 + 72) == 7 || *(_BYTE*)(a1 + 72) == 8 || *(_BYTE*)(a1 + 72) == 9)
-                && *(_BYTE*)(a1 + 180) == 1)
+            ++* (char*)(a1 + 180);
+            if ((*(char*)(a1 + 72) == 7 || *(char*)(a1 + 72) == 8 || *(char*)(a1 + 72) == 9)
+                && *(char*)(a1 + 180) == 1)
             {
-                ++* (_BYTE*)(a1 + 180);
+                ++* (char*)(a1 + 180);
             }
-            if (*(_BYTE*)(a1 + 72) == 8 || *(_BYTE*)(a1 + 72) == 9)
+            if (*(char*)(a1 + 72) == 8 || *(char*)(a1 + 72) == 9)
             {
                 *(int*)(a1 + 120) = 90 * *(int*)(a1 + 120) / 100;
                 *(int*)(a1 + 124) = 75 * *(int*)(a1 + 124) / 100;
@@ -73015,14 +73015,14 @@ LABEL_65:
             *(int*)(a1 + 172) = 1;
             if ((*(unsigned __int8*)(a1 + 72) < 2u
                 || *(unsigned __int8*)(a1 + 72) >= 4u && *(unsigned __int8*)(a1 + 72) <= 7u
-                || *(_BYTE*)(a1 + 72) == 11
-                || *(_BYTE*)(a1 + 72) == 12)
+                || *(char*)(a1 + 72) == 11
+                || *(char*)(a1 + 72) == 12)
                 && *(unsigned __int8*)(a1 + 180) >= 2u)
             {
                 *(int*)(a1 + 168) = 0;
                 *(int*)(a1 + 16) = 3;
-                *(_BYTE*)(a1 + 68) = 0;
-                *(_BYTE*)(a1 + 71) = 0;
+                *(char*)(a1 + 68) = 0;
+                *(char*)(a1 + 71) = 0;
             }
         }
     }
@@ -73030,7 +73030,7 @@ LABEL_65:
     {
         *(int*)(a1 + 172) = 1;
         *(int*)(a1 + 152) = 30;
-        *(_BYTE*)(a1 + 180) = 0;
+        *(char*)(a1 + 180) = 0;
     }
     if (v42 - *(int*)(a1 + 104) <= 0)
         v6 = *(int*)(a1 + 104) - v42;
@@ -73062,7 +73062,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
     Warning();//修正堆栈
     check_stack c(__FILE__, __LINE__);
     int v60; // [esp+ECh] [ebp-4h]
-    _BYTE* v59; // [esp+E8h] [ebp-8h]
+    char* v59; // [esp+E8h] [ebp-8h]
     unsigned __int8 v58; // [esp+E4h] [ebp-Ch]
     char* v57; // [esp+E0h] [ebp-10h]
     char tc_49[12]; //16
@@ -73121,7 +73121,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
     __int64 v4; // rax
 
 
-    if (*(_BYTE*)(a1 + 72) != 11 && *(_BYTE*)(a1 + 72) != 13)
+    if (*(char*)(a1 + 72) != 11 && *(char*)(a1 + 72) != 13)
         goto LABEL_433;
     if (*(int*)(a1 + 84) > 0)
         --* (int*)(a1 + 84);
@@ -73133,8 +73133,8 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
             switch (*(int*)(a1 + 12))
             {
             case 1:
-                *(_BYTE*)(a1 + 22) = 0;
-                v59 = (_BYTE*)sub_41C915(*(int*)(a1 + 56));
+                *(char*)(a1 + 22) = 0;
+                v59 = (char*)sub_41C915(*(int*)(a1 + 56));
                 *(int*)(a1 + 164) = sub_425D70((int*)*(int*)(a1 + 56));
                 v5 = sub_426090(*(int**)(a1 + 56));
                 *(int*)(a1 + 96) = 100 * sub_4758D0(v59, *(int*)(a1 + 164)) + v5;
@@ -73446,9 +73446,9 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                     --* (int*)(a1 + 160);
                     break;
                 }
-                if (*(_BYTE*)(a1 + 72))
+                if (*(char*)(a1 + 72))
                 {
-                    switch (*(_BYTE*)(a1 + 72))
+                    switch (*(char*)(a1 + 72))
                     {
                     case 1:
                         LOWORD(v4) = a1;
@@ -73456,7 +73456,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                         break;
                     case 2:
                     case 0xD:
-                        if (*(_BYTE*)(a1 + 72) == 2)
+                        if (*(char*)(a1 + 72) == 2)
                             *(short*)(a1 + 20) = 20;
                         else
                             *(short*)(a1 + 20) = 184;
@@ -73479,7 +73479,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                         if (*(int*)(a1 + 76) == 2)
                         {
                             *(int*)(a1 + 76) = 3;
-                            *(_BYTE*)(a1 + 180) = 0;
+                            *(char*)(a1 + 180) = 0;
                             *(int*)(a1 + 172) = 1;
                             *(int*)(a1 + 168) = 0;
                             *(int*)(a1 + 120) = 0;
@@ -73512,8 +73512,8 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                             && !*(int*)(a1 + 172)
                             && !v58)
                         {
-                            *(_BYTE*)(a1 + 68) = 0;
-                            *(_BYTE*)(a1 + 71) = 0;
+                            *(char*)(a1 + 68) = 0;
+                            *(char*)(a1 + 71) = 0;
                             *(int*)(a1 + 76) = 2;
                             *(int*)(a1 + 156) = 160;
                         }
@@ -73549,7 +73549,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                             if (*(int*)(a1 + 76) == 3)
                             {
                                 *(int*)(a1 + 76) = 4;
-                                *(_BYTE*)(a1 + 180) = 0;
+                                *(char*)(a1 + 180) = 0;
                                 *(int*)(a1 + 172) = 1;
                                 *(int*)(a1 + 168) = 0;
                                 *(int*)(a1 + 120) = 0;
@@ -73628,7 +73628,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                         break;
                     case 9:
                         *(short*)(a1 + 20) = 92;
-                        *(_BYTE*)(a1 + 22) = *(int*)(a1 + 156) / 10 % 4;
+                        *(char*)(a1 + 22) = *(int*)(a1 + 156) / 10 % 4;
                         LOWORD(v4) = a1;
                         if (!*(int*)(a1 + 172))
                         {
@@ -73668,7 +73668,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                         break;
                     case 0xA:
                         *(short*)(a1 + 20) = 107;
-                        *(_BYTE*)(a1 + 22) = *(int*)(a1 + 156) / 4 % 4;
+                        *(char*)(a1 + 22) = *(int*)(a1 + 156) / 4 % 4;
                         LOWORD(v4) = a1;
                         if (!*(int*)(a1 + 172))
                         {
@@ -73952,7 +73952,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                 }
                 else
                 {
-                    LOWORD(v4) = sub_494D01(a1, a1, 2u, *(_BYTE**)(a1 + 56), 0);
+                    LOWORD(v4) = sub_494D01(a1, a1, 2u, *(char**)(a1 + 56), 0);
                 }
                 break;
             default:
@@ -73967,15 +73967,15 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                     {
                         *(int*)(a1 + 56) = 0;
                         sub_4995EB((short*)a1);
-                        *(_BYTE*)(a1 + 72) = sub_477148();
+                        *(char*)(a1 + 72) = sub_477148();
                         *(int*)(a1 + 152) = 30;
-                        *(_BYTE*)(a1 + 180) = 0;
+                        *(char*)(a1 + 180) = 0;
                         *(int*)(a1 + 176) = 0;
                         *(int*)(a1 + 172) = 1;
                         *(int*)(a1 + 156) = 0;
                         *(int*)(a1 + 76) = 255;
                         *(int*)(a1 + 84) = -1;
-                        *(_BYTE*)(a1 + 22) = 0;
+                        *(char*)(a1 + 22) = 0;
                         *(int*)(a1 + 16) = 2;
                         *(int*)(a1 + 116) = 0;
                         *(int*)(a1 + 112) = 0;
@@ -73988,9 +73988,9 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                         *(int*)(a1 + 124) = 0;
                         *(int*)(a1 + 148) = 0;
                         *(int*)(a1 + 128) = 0;
-                        if (*(_BYTE*)(a1 + 72))
+                        if (*(char*)(a1 + 72))
                         {
-                            --* (_BYTE*)(a1 + 72);
+                            --* (char*)(a1 + 72);
                             sub_4654DA((char*)byte_4B9B10, (int*)(a1 + 96), (int*)(a1 + 100));
                             *(int*)(a1 + 104) = -24000;
                             LOWORD(v4) = sub_4950AF(a1);
@@ -74008,17 +74008,17 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                 case 7:
                     sub_495368(a1, a2, a4);
                     if (++ * (int*)(a1 + 156) == 12)
-                        *(_BYTE*)(a1 + *(int*)(a1 + 76) + 181) = 0;
+                        *(char*)(a1 + *(int*)(a1 + 76) + 181) = 0;
                     *(int*)(a1 + 168) = 1;
-                    if (*(_BYTE*)(a1 + 72) != 10 || *(int*)(a1 + 172))
+                    if (*(char*)(a1 + 72) != 10 || *(int*)(a1 + 172))
                     {
                         if (*(int*)(a1 + 156) > 8 && !*(int*)(a1 + 172))
                         {
-                            *(int*)(a1 + 120) = *(_BYTE*)(a1 + 72) == 13 ? 95 * *(int*)(a1 + 120) / 100 : 90 * *(int*)(a1 + 120) / 100;
-                            if (*(_BYTE*)(a1 + 72) != 13
+                            *(int*)(a1 + 120) = *(char*)(a1 + 72) == 13 ? 95 * *(int*)(a1 + 120) / 100 : 90 * *(int*)(a1 + 120) / 100;
+                            if (*(char*)(a1 + 72) != 13
                                 && (*(int*)(a1 + 120) <= 0 ? (v19 = -*(int*)(a1 + 120)) : (v19 = *(int*)(a1 + 120)),
                                     v19 < 50)
-                                || *(_BYTE*)(a1 + 72) == 13
+                                || *(char*)(a1 + 72) == 13
                                 && (*(int*)(a1 + 120) <= 0 ? (v18 = -*(int*)(a1 + 120)) : (v18 = *(int*)(a1 + 120)),
                                     v18 < 10))
                             {
@@ -74043,28 +74043,28 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                     if (*(int*)(a1 + 172))
                         *(int*)(a1 + 152) = 30;
                     LOWORD(v4) = a1;
-                    if (*(_BYTE*)(a1 + 72) == 8)
+                    if (*(char*)(a1 + 72) == 8)
                     {
                         *(short*)(a1 + 20) = 73;
                     }
                     else
                     {
                         LOWORD(v4) = a1;
-                        if (*(_BYTE*)(a1 + 72) == 9)
+                        if (*(char*)(a1 + 72) == 9)
                         {
                             *(short*)(a1 + 20) = 88;
                         }
                         else
                         {
                             LOWORD(v4) = a1;
-                            if (*(_BYTE*)(a1 + 72) == 10)
+                            if (*(char*)(a1 + 72) == 10)
                             {
                                 *(short*)(a1 + 20) = 103;
                                 LOWORD(v4) = a1;
                                 if (!(*(int*)(a1 + 156) % 4))
                                 {
                                     LODWORD(v4) = (*(char*)(a1 + 22) + 1) % 4;
-                                    *(_BYTE*)(a1 + 22) = v4;
+                                    *(char*)(a1 + 22) = v4;
                                 }
                             }
                         }
@@ -74092,17 +74092,17 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                             if (*(int*)(a1 + 80) < 300)
                                 *(int*)(a1 + 80) = 300;
                             *(short*)(a1 + 192) = (*(int*)(a1 + 80) - 300) / 10 + *(unsigned __int16*)(a1 + 190) / 8;
-                            *(_BYTE*)(a1 + 195) = 16;
-                            if (*(_BYTE*)(a1 + 72) == 13)
-                                *(_BYTE*)(a1 + 195) += 8;
-                            *(_BYTE*)(a1 + 194) = 3;
+                            *(char*)(a1 + 195) = 16;
+                            if (*(char*)(a1 + 72) == 13)
+                                *(char*)(a1 + 195) += 8;
+                            *(char*)(a1 + 194) = 3;
                             *(int*)(a1 + 168) = 1;
                             memset((void*)(a1 + 181), 0, 8u);
-                            if (*(_BYTE*)(a1 + 72) == 11)
+                            if (*(char*)(a1 + 72) == 11)
                             {
                                 sub_43FFC3((int*)byte_4BDB28, dword_4B9AC4, -1, 100, 100, 0);
                             }
-                            else if (*(_BYTE*)(a1 + 72) == 13)
+                            else if (*(char*)(a1 + 72) == 13)
                             {
                                 sub_43FFC3((int*)byte_4BDB28, dword_4B9A34, -1, 100, 100, 0);
                             }
@@ -74119,7 +74119,7 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
                         {
                             *(short*)(a1 + 20) = *(int*)(a1 + 156) / 2 % 4 + 153;
                         }
-                        if (*(_BYTE*)(a1 + 72) == 13)
+                        if (*(char*)(a1 + 72) == 13)
                         {
                             for (j = 0; j < 2; ++j)
                             {
@@ -74157,8 +74157,8 @@ __int16 sub_4967E4(int a1, double a2, double st5_0, double a4)
             *(int*)(a1 + 148) = 0;
             *(int*)(a1 + 144) = 0;
             *(int*)(a1 + 168) = 0;
-            *(_BYTE*)(a1 + 68) = 0;
-            *(_BYTE*)(a1 + 71) = 0;
+            *(char*)(a1 + 68) = 0;
+            *(char*)(a1 + 71) = 0;
             LOWORD(v4) = dword_4B719C[11 * *(unsigned __int8*)(a1 + 72)];
             *(short*)(a1 + 20) = v4;
             *(int*)(a1 + 172) = 0;
@@ -74199,7 +74199,7 @@ __int16 __fastcall sub_498F3D(int a1)
 
     Warning();//修正堆栈
     check_stack c(__FILE__, __LINE__);
-    _BYTE* v7; // [esp+8h] [ebp-4h]
+    char* v7; // [esp+8h] [ebp-4h]
     int v4; // esi
     int v3; // esi
     int v2; // esi
@@ -74209,8 +74209,8 @@ __int16 __fastcall sub_498F3D(int a1)
     LOWORD(v1) = a1;
     if (*(int*)(a1 + 56))
     {
-        *(_BYTE*)(a1 + 22) = 0;
-        v7 = (_BYTE*)sub_41C915(*(int*)(a1 + 56));
+        *(char*)(a1 + 22) = 0;
+        v7 = (char*)sub_41C915(*(int*)(a1 + 56));
         *(int*)(a1 + 164) = sub_425D70(*(int**)(a1 + 56));
         v2 = sub_426090(*(int**)(a1 + 56));
         *(int*)(a1 + 96) = 100 * sub_4758D0(v7, *(int*)(a1 + 164)) + v2;
@@ -74267,7 +74267,7 @@ void __fastcall sub_499622(int a1)
 
     Warning();//修正堆栈
     check_stack c(__FILE__, __LINE__);
-    _BYTE* v13; // [esp+38h] [ebp-4h]
+    char* v13; // [esp+38h] [ebp-4h]
     int v12; // [esp+34h] [ebp-8h]
     int v11; // [esp+30h] [ebp-Ch]
     int v10; // [esp+2Ch] [ebp-10h]
@@ -74292,7 +74292,7 @@ void __fastcall sub_499622(int a1)
             v10 = sub_426090(*(int**)(a1 + 56));
             v9 = sub_4260B0(*(int**)(a1 + 56));
         }
-        v13 = (_BYTE*)sub_4741F8((int)byte_4B9B10, v10 / 800, v9 / 800);
+        v13 = (char*)sub_4741F8((int)byte_4B9B10, v10 / 800, v9 / 800);
         v8 = (int*)sub_426210((char*)byte_4B9B10);
         v12 = -100 * sub_486633(v8, v10 / 100, v9 / 100);
         if (v13 && sub_425C50(v13))
@@ -74345,9 +74345,9 @@ int __cdecl messagebox(LPCSTR lpText)
 void sub_499868(void* thisx)
 {
     *(char*)thisx = 0;//*(int*)thisx = 0;
-    *((_BYTE*)thisx + 4) = 0;
+    *((char*)thisx + 4) = 0;
     *((char*)thisx + 20) = -1;//*((int*)thisx + 5) = -1;
-    *((_BYTE*)thisx + 5) = 0;
+    *((char*)thisx + 5) = 0;
     *((char*)thisx + 16) = 0;//*((int*)thisx + 4) = 0;
     *((char*)thisx + 12) = 0;//*((int*)thisx + 3) = 0;
 }
@@ -74402,16 +74402,16 @@ int sub_4998E0(int thisx, int a2)
     *(short*)(thisx + 50448) = *(short*)(a2 + 4);//[1]宽度
     *(short*)(thisx + 50450) = *(short*)(a2 + 8);//[2]高度
     *(short*)(thisx + 50446) = *(short*)(a2 + 12);//[3]初始化256
-    *(_BYTE*)(thisx + 50442) = *(_BYTE*)(a2 + 16);//[4]是否全屏变量
-    if (*(_BYTE*)(thisx + 50442))
+    *(char*)(thisx + 50442) = *(char*)(a2 + 16);//[4]是否全屏变量
+    if (*(char*)(thisx + 50442))
     {
-        *(_BYTE*)(thisx + 50443) = *(_BYTE*)(a2 + 20);
-        *(_BYTE*)(thisx + 50444) = *(_BYTE*)(a2 + 21);
+        *(char*)(thisx + 50443) = *(char*)(a2 + 20);
+        *(char*)(thisx + 50444) = *(char*)(a2 + 21);
     }
     else
     {
-        *(_BYTE*)(thisx + 50443) = 1;
-        *(_BYTE*)(thisx + 50444) = 0;
+        *(char*)(thisx + 50443) = 1;
+        *(char*)(thisx + 50444) = 0;
     }
     SetRect((LPRECT)(thisx + 50452), 0, 0, *(__int16*)(thisx + 50448), *(__int16*)(thisx + 50450));
     SetRect(&rc, 0, 0, *(__int16*)(thisx + 50448), *(__int16*)(thisx + 50450));
@@ -74463,7 +74463,7 @@ int sub_4998E0(int thisx, int a2)
         MessageBoxA(0, aQueryinterface, aDdrawerror_0, 0);//QueryInterface失败。
         goto LABEL_52;
     }
-    if (*(_BYTE*)(thisx + 50442))
+    if (*(char*)(thisx + 50442))
         v12 = 17;
     else
         v12 = 8;
@@ -74480,7 +74480,7 @@ int sub_4998E0(int thisx, int a2)
         MessageBoxA(*(HWND*)(thisx + 50500), byte_4B749C, aDdrawerror_1, 0);//无法设置协调级别。
         goto LABEL_52;
     }
-    if (*(_BYTE*)(thisx + 50442))
+    if (*(char*)(thisx + 50442))
         //正常来讲，不会执行到这里面
     {
         if ((*(int(__stdcall**)(int, int, int, int, int, int))(**(int**)(thisx + 50508) + 84))(
@@ -74509,7 +74509,7 @@ int sub_4998E0(int thisx, int a2)
     v8[0] = 124;
     v8[1] = 2095598;
     (*IDD_50508)->GetDisplayMode((LPDDSURFACEDESC2)v8);//(*(void(__stdcall**)(int, int*))(**(int**)(thisx + 50508) + 48))  (*(int*)(thisx + 50508), v8);
-    if (!*(_BYTE*)(thisx + 50442) && ((v8[19] & 0x40) == 0 || v8[21] != 16))
+    if (!*(char*)(thisx + 50442) && ((v8[19] & 0x40) == 0 || v8[21] != 16))
     {
         //设置16位兼容的，不用也可以
         //MessageBoxA(*(HWND*)(thisx + 50500), (LPCSTR)&byte_4B74F8, aNot16bit, 0);
@@ -74550,7 +74550,7 @@ int sub_4998E0(int thisx, int a2)
     v11[1] = 1;
     v11[26] = 512;
     v11[5] = 1;
-    if (*(_BYTE*)(thisx + 50442) && *(_BYTE*)(thisx + 50444) || !*(_BYTE*)(thisx + 50444) && !*(_BYTE*)(thisx + 50443))
+    if (*(char*)(thisx + 50442) && *(char*)(thisx + 50444) || !*(char*)(thisx + 50444) && !*(char*)(thisx + 50443))
     {
         v11[1] |= 0x20u;
         v11[26] |= 0x18u;
@@ -74562,7 +74562,7 @@ int sub_4998E0(int thisx, int a2)
         MessageBoxA(0, byte_4B7528, aError04, 0);//无法创建主曲面。
         goto LABEL_52;
     }
-    if (*(_BYTE*)(thisx + 50442) && *(_BYTE*)(thisx + 50444) || !*(_BYTE*)(thisx + 50444) && !*(_BYTE*)(thisx + 50443))
+    if (*(char*)(thisx + 50442) && *(char*)(thisx + 50444) || !*(char*)(thisx + 50444) && !*(char*)(thisx + 50443))
     {
         v5[0] = 4;
         IDirectDrawSurface7* IDDS_50512 = (IDirectDrawSurface7*)(int*)(thisx + 50512);
@@ -74748,7 +74748,7 @@ int sub_4998E0(int thisx, int a2)
         */
 
     if (
-        *(_BYTE*)(thisx + 50443)
+        *(char*)(thisx + 50443)
         && r
         )
     {
@@ -74846,11 +74846,11 @@ int sub_49A518(int thisx)
 
     Point.y = 0;
     Point.x = 0;
-    if (!*(_BYTE*)(thisx + 50442) && !ClientToScreen(*(HWND*)(thisx + 50500), &Point))
+    if (!*(char*)(thisx + 50442) && !ClientToScreen(*(HWND*)(thisx + 50500), &Point))
     {
         MessageBoxA(*(HWND*)(thisx + 50500), aClienttoscreen, byte_4B75D4, 0);//ClientToScreen失败
     }
-    if (*(_BYTE*)(thisx + 50445))
+    if (*(char*)(thisx + 50445))
     {
 
         //if (        (*(int(__stdcall**)(int, HDC*))           (**(int**)(thisx + 50520) + 68))            (*(int*)(thisx + 50520), &hdcSrc)           )
@@ -74885,9 +74885,9 @@ int sub_49A518(int thisx)
 
         result = ReleaseDC(*(HWND*)(thisx + 50500), hdc);
     }
-    else if (*(_BYTE*)(thisx + 50443))
+    else if (*(char*)(thisx + 50443))
     {
-        if (*(_BYTE*)(thisx + 50444))//不会进入这里
+        if (*(char*)(thisx + 50444))//不会进入这里
         {
             if (*(short*)(thisx + 50446) == 256)
             {
@@ -74940,7 +74940,7 @@ int sub_49A518(int thisx)
     }
     else
     {
-        if (*(_BYTE*)(thisx + 50444))
+        if (*(char*)(thisx + 50444))
         {
             result = (*(int(**)(int, int, int, int))(**(int**)(thisx + 50512) + 44))(*(int*)(thisx + 50512), *(int*)(thisx + 50512), 0, 1);
             IDirectDrawSurface7* IDDS_50512 = (IDirectDrawSurface7*)*(int*)(thisx + 50512);
@@ -74981,7 +74981,7 @@ unsigned __int16* sub_49AB05(int thisx, int* a2)
     result = (unsigned __int16*)thisx;
 
     // 检查 thisx + 50440 位置的字节是否非零，并且 a2[0] 的值小于 2048
-    if (*(_BYTE*)(thisx + 50440) && *a2 < 2048)
+    if (*(char*)(thisx + 50440) && *a2 < 2048)
     {
         // 如果 a2[8] 非零，将 a2[3] 设置为 thisx + 50452
         if (a2[8])
@@ -75000,7 +75000,7 @@ unsigned __int16* sub_49AB05(int thisx, int* a2)
         a2[5] = 256;
 
         // 如果 thisx + 50443 位置的字节非零，调用 sub_49ABE2，并传入不同的参数
-        if (*(_BYTE*)(thisx + 50443))
+        if (*(char*)(thisx + 50443))
             return sub_49ABE2((unsigned __int16*)(24 * *a2 + thisx), *(int*)(thisx + 50520), (int)a2);
         else
             return sub_49ABE2((unsigned __int16*)(24 * *a2 + thisx), *(int*)(thisx + 50516), (int)a2);
@@ -75078,7 +75078,7 @@ unsigned __int16* sub_49ABE2(unsigned __int16* thisx, int a2, int a3)
         {
             if (*(int*)(a3 + 40) < 64)
                 return (unsigned __int16*)sub_49E6A3((int*)thisx, a2, a3);
-            if (*(_BYTE*)(a3 + 44))
+            if (*(char*)(a3 + 44))
                 return (unsigned __int16*)sub_49E6A3((int*)thisx, a2, a3);
             if (*(char*)(a3 + 45) > 0)
                 return (unsigned __int16*)sub_49F638((int*)thisx, a2, a3, 0);
@@ -75143,7 +75143,7 @@ unsigned __int16* sub_49ABE2(unsigned __int16* thisx, int a2, int a3)
                 v15[0] = 100;
                 v15[1] = 0;
                 v20 = 0x1000000;
-                if (*((_BYTE*)thisx + 5))
+                if (*((char*)thisx + 5))
                 {
                     v4 = v20;
                     BYTE1(v4) = BYTE1(v20) | 0x80;
@@ -75397,9 +75397,9 @@ int sub_49C15E(int thisx)
     *(int*)(thisx + 20) = 256;
     *(int*)(thisx + 16) = 256;
     *(int*)(thisx + 40) = 64;
-    *(_BYTE*)(thisx + 44) = 0;
+    *(char*)(thisx + 44) = 0;
     *(int*)(thisx + 32) = 1;
-    *(_BYTE*)(thisx + 45) = 0;
+    *(char*)(thisx + 45) = 0;
     *(short*)(thisx + 50) = 0;
     *(short*)(thisx + 48) = 0;
     *(short*)(thisx + 46) = 0;
@@ -75540,7 +75540,7 @@ int sub_49C541(int* thisx, int a2, int a3, struct tagRECT* a4)
                 v11[0] = 100;
                 v11[1] = 0;
                 v25 = 0x1000000;
-                if (*((_BYTE*)thisx + 5))
+                if (*((char*)thisx + 5))
                 {
                     v6 = v25;
                     BYTE1(v6) = BYTE1(v25) | 0x80;
@@ -75654,10 +75654,10 @@ int sub_49C8A6(int thisx, int* a2, int* a3)
     int result; // eax
 
     result = thisx;
-    if (*(_BYTE*)(thisx + 50440) && *a2 < 2048)
+    if (*(char*)(thisx + 50440) && *a2 < 2048)
     {
         a2[3] = thisx + 50452;
-        if (*(_BYTE*)(thisx + 50443))
+        if (*(char*)(thisx + 50443))
             //DDSf对象的大小是24个字节吗
             return sub_49C541((int*)(24 * *a2 + thisx), *(int*)(thisx + 50520), (int)a2, (tagRECT*)a3);
         else
@@ -75777,22 +75777,22 @@ int  sub_49CDF4(int* thisx, int a2)
 
     if (thisx[3] && thisx[4])
     {
-        *((_BYTE*)thisx + 5) = *(_BYTE*)a2;
+        *((char*)thisx + 5) = *(char*)a2;
         return 1;
     }
     else if (*thisx)
     {
-        if (*(_BYTE*)a2)
+        if (*(char*)a2)
         {
             v4[0] = *(int*)(a2 + 4);
             v4[1] = *(int*)(a2 + 4);
             IDirectDrawSurface7* IDDS_thisx = (IDirectDrawSurface7*)*thisx;//this = byte_4BDC60*i*24
             (*IDDS_thisx).SetColorKey(8, (LPDDCOLORKEY)v4);//(*(void(__stdcall**)(int, int, int*))(*(int*)*thisx + 116))(*thisx, 8, v4);
-            *((_BYTE*)thisx + 5) = 1;
+            *((char*)thisx + 5) = 1;
         }
         else
         {
-            *((_BYTE*)thisx + 5) = 0;
+            *((char*)thisx + 5) = 0;
         }
         return 1;
     }
@@ -75877,7 +75877,7 @@ int  sub_49D0B7(int* thisx, int a2, int a3, int cy, void* Src)
                 for (i = 0; i < cy; ++i)
                 {
                     for (j = 0; j < a3; ++j)
-                        *((_BYTE*)ppvBits + j + ((a3 + 3) & 0xFFFFFFFC) * (cy - i - 1)) = *(_BYTE*)(a2 + j + a3 * i);
+                        *((char*)ppvBits + j + ((a3 + 3) & 0xFFFFFFFC) * (cy - i - 1)) = *(char*)(a2 + j + a3 * i);
                 }
                 hdcSrc = CreateCompatibleDC(hdc);
                 v10 = SelectObject(hdcSrc, h);
@@ -75965,7 +75965,7 @@ int sub_49D318(int thisx, int a2)
             v17 = 0;
             if (*(int*)a2 == -1)
                 v20 = *(int*)(thisx + 49152);
-            v23 = sub_4A13C0(*(_BYTE**)(a2 + 52));//return thisx[1344];
+            v23 = sub_4A13C0(*(char**)(a2 + 52));//return thisx[1344];
             v16 = unknown_libname_13(*(int**)(a2 + 52)); //return thisx[5];
             v25 = unknown_libname_21(*(int**)(a2 + 52));//  return thisx[6];
             bool b = *(int*)(a2 + 12) + *(int*)(a2 + 4) <= v16 && *(int*)(a2 + 16) + *(int*)(a2 + 8) <= v25 || v23;
@@ -75994,11 +75994,11 @@ int sub_49D318(int thisx, int a2)
                 *(int*)a2 = v20;
                 if (*(int*)(a2 + 20) == -1)
                     *(int*)(a2 + 20) = v25 / cy * (v16 / (int)Size);
-                if (*(_BYTE*)(a2 + 48))
+                if (*(char*)(a2 + 48))
                 {
-                    if (*(_BYTE*)(a2 + 48) != 1 && *(_BYTE*)(thisx + 50442))
+                    if (*(char*)(a2 + 48) != 1 && *(char*)(thisx + 50442))
                     {
-                        if (*(_BYTE*)(a2 + 48) == 2 && *(_BYTE*)(thisx + 50442))
+                        if (*(char*)(a2 + 48) == 2 && *(char*)(thisx + 50442))
                             v22 = 0;
                     }
                     else
@@ -76008,7 +76008,7 @@ int sub_49D318(int thisx, int a2)
                 }
                 else
                 {
-                    v22 = *(_BYTE*)(thisx + 50443);
+                    v22 = *(char*)(thisx + 50443);
                 }
                 for (i = v20; i < *(int*)(a2 + 20) + v20; ++i)
                 {
@@ -76185,7 +76185,7 @@ int sub_49D318(int thisx, int a2)
                 v20 = *(int*)(thisx + 49152);
 
             // 获取资源类型，通常是位图类型或其他图像类型
-            v23 = sub_4A13C0(*(_BYTE**)(a2 + 52)); // 从地址 a2 + 52 获取资源类型标识
+            v23 = sub_4A13C0(*(char**)(a2 + 52)); // 从地址 a2 + 52 获取资源类型标识
             v16 = unknown_libname_13(*(int**)(a2 + 52)); // 获取资源的宽度
             v25 = unknown_libname_21(*(int**)(a2 + 52)); // 获取资源的高度
 
@@ -76231,11 +76231,11 @@ int sub_49D318(int thisx, int a2)
                     *(int*)(a2 + 20) = v25 / cy * (v16 / (int)Size);
 
                 // 根据资源的状态进行额外的调整
-                if (*(_BYTE*)(a2 + 48))
+                if (*(char*)(a2 + 48))
                 {
-                    if (*(_BYTE*)(a2 + 48) != 1 && *(_BYTE*)(thisx + 50442))
+                    if (*(char*)(a2 + 48) != 1 && *(char*)(thisx + 50442))
                     {
-                        if (*(_BYTE*)(a2 + 48) == 2 && *(_BYTE*)(thisx + 50442))
+                        if (*(char*)(a2 + 48) == 2 && *(char*)(thisx + 50442))
                             v22 = 0;
                     }
                     else
@@ -76245,7 +76245,7 @@ int sub_49D318(int thisx, int a2)
                 }
                 else
                 {
-                    v22 = *(_BYTE*)(thisx + 50443); // 如果没有指定标志，使用默认值
+                    v22 = *(char*)(thisx + 50443); // 如果没有指定标志，使用默认值
                 }
 
                 // 遍历资源块，依次加载每个资源
@@ -76447,7 +76447,7 @@ int sub_49D318_noai(int thisx, int a2)
             v17 = 0;
             if (*(int*)a2 == -1)
                 v20 = *(int*)(thisx + 49152);
-            v23 = sub_4A13C0(*(_BYTE**)(a2 + 52));//return thisx[1344];
+            v23 = sub_4A13C0(*(char**)(a2 + 52));//return thisx[1344];
             v16 = unknown_libname_13(*(int**)(a2 + 52)); //return thisx[5];
             v25 = unknown_libname_21(*(int**)(a2 + 52));//  return thisx[6];
             bool b = *(int*)(a2 + 12) + *(int*)(a2 + 4) <= v16 && *(int*)(a2 + 16) + *(int*)(a2 + 8) <= v25 || v23;
@@ -76476,11 +76476,11 @@ int sub_49D318_noai(int thisx, int a2)
                 *(int*)a2 = v20;
                 if (*(int*)(a2 + 20) == -1)
                     *(int*)(a2 + 20) = v25 / cy * (v16 / (int)Size);
-                if (*(_BYTE*)(a2 + 48))
+                if (*(char*)(a2 + 48))
                 {
-                    if (*(_BYTE*)(a2 + 48) != 1 && *(_BYTE*)(thisx + 50442))
+                    if (*(char*)(a2 + 48) != 1 && *(char*)(thisx + 50442))
                     {
-                        if (*(_BYTE*)(a2 + 48) == 2 && *(_BYTE*)(thisx + 50442))
+                        if (*(char*)(a2 + 48) == 2 && *(char*)(thisx + 50442))
                             v22 = 0;
                     }
                     else
@@ -76490,7 +76490,7 @@ int sub_49D318_noai(int thisx, int a2)
                 }
                 else
                 {
-                    v22 = *(_BYTE*)(thisx + 50443);
+                    v22 = *(char*)(thisx + 50443);
                 }
                 for (i = v20; i < *(int*)(a2 + 20) + v20; ++i)
                 {
@@ -76685,8 +76685,8 @@ int* sub_49DB43(int* thisx)
     *thisx = 0;//窗口句柄
     thisx[1] = 240;//宽
     thisx[3] = 256;
-    *((_BYTE*)thisx + 20) = 1;
-    *((_BYTE*)thisx + 21) = 0;
+    *((char*)thisx + 20) = 1;
+    *((char*)thisx + 21) = 0;
     return thisx;
 }
 //初始化资源对象
@@ -76703,7 +76703,7 @@ int* sub_49DB90(int* thisx)
     thisx[9] = 0;
     thisx[10] = 0;
     thisx[11] = 0;
-    *((_BYTE*)thisx + 48) = 0;//[12]
+    *((char*)thisx + 48) = 0;//[12]
     thisx[13] = 0;//资源数据内存地址
     thisx[14] = 0;
     return thisx;
@@ -76862,7 +76862,7 @@ int  sub_49DDFD(unsigned __int16* thisx, int a2, int a3)
 }
 
 
-int sub_49E288(_BYTE* thisx, short* a2)
+int sub_49E288(char* thisx, short* a2)
 {
 
 
@@ -76935,7 +76935,7 @@ int sub_49E288(_BYTE* thisx, short* a2)
 }
 
 
-int sub_49E561(_BYTE* thisx, int a2)
+int sub_49E561(char* thisx, int a2)
 {
 
     Warning();//修正堆栈
@@ -77135,7 +77135,7 @@ int sub_49E6A3(int* thisx, int a2, int a3)
                     v7 = v10;
                     for (j = 0; j < v43; ++j)
                     {
-                        if (!*((_BYTE*)thisx + 5) || (unsigned __int16)*v19 != (unsigned __int16)v16)
+                        if (!*((char*)thisx + 5) || (unsigned __int16)*v19 != (unsigned __int16)v16)
                         {
                             LOWORD(v22) = v53 & *v19;
                             LOWORD(v11) = v44 & *v19;
@@ -77198,7 +77198,7 @@ int* sub_49EDC1(int a1, int a2, int* a3, int a4)
     }
 
     result = (int*)a1;
-    if (*(_BYTE*)(a1 + 50440))
+    if (*(char*)(a1 + 50440))
     {
         if (!a3)
             a3 = (int*)(a1 + 50452);
@@ -77209,7 +77209,7 @@ int* sub_49EDC1(int a1, int a2, int* a3, int a4)
             if (a3[1] < a3[3])
             {
                 result = (int*)a1;
-                if (*(_BYTE*)(a1 + 50443))
+                if (*(char*)(a1 + 50443))
                 {
                     if (*(int*)(a1 + 50520))
                     {
@@ -77398,9 +77398,9 @@ int sub_49EF70(
     
 
     result = thisx;
-    if (*(_BYTE*)(thisx + 50440))
+    if (*(char*)(thisx + 50440))
     {
-        if (*(_BYTE*)(thisx + 50443))
+        if (*(char*)(thisx + 50443))
             v20 = *(int*)(thisx + 50520);
         else
             v20 = *(int*)(thisx + 50516);
@@ -77653,7 +77653,7 @@ int sub_49F638(int* thisx, int a2, int a3, int* a4)
                 LOWORD(v11) = (int)(unsigned __int16)word_4CA1F0[0] >> byte_4CA210[0];
                 LOWORD(v35) = (int)(unsigned __int16)word_4CA1F2 >> byte_4CA211;
                 LOWORD(v15) = (int)(unsigned __int16)word_4CA1F4 >> byte_4CA212;
-                v37 = *(_BYTE*)(a3 + 45);
+                v37 = *(char*)(a3 + 45);
                 v23 = *(short*)(a3 + 46);
                 v64 = *(short*)(a3 + 48);
                 v24 = *(short*)(a3 + 50);
@@ -77666,7 +77666,7 @@ int sub_49F638(int* thisx, int a2, int a3, int* a4)
                     v7 = v13;
                     for (j = 0; j < v49; ++j)
                     {
-                        if (!*((_BYTE*)thisx + 5) || (unsigned __int16)*v25 != (unsigned __int16)v20)
+                        if (!*((char*)thisx + 5) || (unsigned __int16)*v25 != (unsigned __int16)v20)
                         {
                             if (v37 == 4)
                             {
@@ -77812,7 +77812,7 @@ int sub_4A00C6(int thisx, int* a2, int a3, int* a4)
 
 
     result = thisx;
-    if (*(_BYTE*)(thisx + 50440) || a2[9] >= 0)
+    if (*(char*)(thisx + 50440) || a2[9] >= 0)
     {
         result = (int)a2;
         if (*a2 >= 0 && *a2 < 2048)
@@ -77849,7 +77849,7 @@ int sub_4A00C6(int thisx, int* a2, int a3, int* a4)
                     v6 = unknown_libname_30((int*)(void*)(24 * a2[9] + thisx));
                     return sub_49C541((int*)(24 * *a2 + thisx), v6, (int)a2, (tagRECT*)(int*)&v11);
                 }
-                else if (*(_BYTE*)(thisx + 50443))
+                else if (*(char*)(thisx + 50443))
                 {
                     return sub_49C541((int*)(thisx + 24 * *a2), *(int*)(thisx + 50520), (int)a2, (tagRECT*)(int*)&v11);
                 }
@@ -78068,7 +78068,7 @@ int sub_4A0C45(unsigned __int16* thisx, int a1, unsigned __int16 a2)
 
     for (i = 0; i < a2; ++i)
     {
-        sub_4A0B26(thisx, i, *(_BYTE*)(a1 + 4 * i + 2), *(_BYTE*)(a1 + 4 * i + 1), *(_BYTE*)(a1 + 4 * i));
+        sub_4A0B26(thisx, i, *(char*)(a1 + 4 * i + 2), *(char*)(a1 + 4 * i + 1), *(char*)(a1 + 4 * i));
         result = i + 1;
     }
     return result;
@@ -78244,7 +78244,7 @@ int sub_4A0CA2(int thisx, int a2, int a3, struct tagRECT* p_rc)
                 for (j = 0; j < right; ++j)
                 {
                     v6 = *v7;
-                    if (!*(_BYTE*)(thisx + 5) || v6)
+                    if (!*(char*)(thisx + 5) || v6)
                         *v9 = *(short*)(v19 + 2 * v6);
                     v7 += v24;
                     ++v9;
@@ -78311,9 +78311,9 @@ void sub_4A1307(int thisx, HardwareAffinity* a2)
 }
 
 //失去焦点与获得焦点进入的函数
-_BYTE* sub_4A1376(_BYTE* thisx, char a2)
+char* sub_4A1376(char* thisx, char a2)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     result = thisx;
     thisx[50445] = a2;
@@ -78331,7 +78331,7 @@ void* sub_4A1390(void* thisx, char a2)
 
 //获取资源类型标识
 //return thisx[1344];
-char sub_4A13C0(_BYTE* thisx)
+char sub_4A13C0(char* thisx)
 {
     return thisx[1344];
 }
@@ -78452,7 +78452,7 @@ int sub_4A14C0(short* thisx, LPCSTR lpFileName)
     SetFilePointer(hFile, *(int*)(thisx + 5), 0, 0);
     //以char来说，this + 60                     //以char来说，this + 36
     ReadFile(hFile, *((LPVOID*)thisx + 15), *((int*)thisx + 9), (LPDWORD)&NumberOfBytesRead, 0);
-    *((_BYTE*)thisx + 1344) = 0;
+    *((char*)thisx + 1344) = 0;
     CloseHandle(hFile);
     return 1;
 }
@@ -78468,7 +78468,7 @@ int sub_4A1694(int thisx, void* a2, int a3, int a4, size_t Size, int a6)
     int v9; // [esp+8h] [ebp-Ch]
     int i; // [esp+4h] [ebp-10h]
 
-    if (*(_BYTE*)(thisx + 1344))
+    if (*(char*)(thisx + 1344))
         return sub_4A1C28((int*)thisx, a2, Size, a6, 1);
     v10 = *(int*)(thisx + 24);
     if (*(int*)(thisx + 20) < (signed int)(Size + a3) || v10 < a6 + a4)
@@ -78479,7 +78479,7 @@ int sub_4A1694(int thisx, void* a2, int a3, int a4, size_t Size, int a6)
     return 1;
 }
 
-char* sub_4A17BF(_BYTE* thisx, int a2, int a3, char* a4, int a5, int a6)
+char* sub_4A17BF(char* thisx, int a2, int a3, char* a4, int a5, int a6)
 {
 
 
@@ -78507,14 +78507,14 @@ char* sub_4A17BF(_BYTE* thisx, int a2, int a3, char* a4, int a5, int a6)
                 for (j = v8; j < 256; ++j)
                 {
                     result = (char*)(j + a3);
-                    if (!*(_BYTE*)(j + a3))
+                    if (!*(char*)(j + a3))
                     {
-                        *(_BYTE*)(j + a3) = 1;
-                        *(_BYTE*)(a2 + 4 * j) = thisx[4 * i + 66];
-                        *(_BYTE*)(a2 + 4 * j + 1) = thisx[4 * i + 65];
-                        *(_BYTE*)(a2 + 4 * j + 2) = thisx[4 * i + 64];
+                        *(char*)(j + a3) = 1;
+                        *(char*)(a2 + 4 * j) = thisx[4 * i + 66];
+                        *(char*)(a2 + 4 * j + 1) = thisx[4 * i + 65];
+                        *(char*)(a2 + 4 * j + 2) = thisx[4 * i + 64];
                         result = (char*)(i + a5);
-                        *(_BYTE*)(i + a5) = j;
+                        *(char*)(i + a5) = j;
                         break;
                     }
                 }
@@ -78522,11 +78522,11 @@ char* sub_4A17BF(_BYTE* thisx, int a2, int a3, char* a4, int a5, int a6)
             }
             else
             {
-                *(_BYTE*)(a2 + 4 * (int)&a4[i]) = thisx[4 * i + 66];
-                *(_BYTE*)(a2 + 4 * (int)&a4[i] + 1) = thisx[4 * i + 65];
-                *(_BYTE*)(a2 + 4 * (int)&a4[i] + 2) = thisx[4 * i + 64];
+                *(char*)(a2 + 4 * (int)&a4[i]) = thisx[4 * i + 66];
+                *(char*)(a2 + 4 * (int)&a4[i] + 1) = thisx[4 * i + 65];
+                *(char*)(a2 + 4 * (int)&a4[i] + 2) = thisx[4 * i + 64];
                 result = (char*)(i + a5);
-                *(_BYTE*)(i + a5) = i + (_BYTE)a4;
+                *(char*)(i + a5) = i + (char)a4;
             }
         }
     }
@@ -78580,7 +78580,7 @@ int sub_4A1ACA(int thisx, LPCSTR lpFileName)
         *(int*)(thisx + 1352) = GetFileSize(hFile, 0) - 16;
         *(int*)(thisx + 60) = (int)new2(*(int*)(thisx + 1352));//改*(int*)(thisx + 60) = new2(*(int*)(thisx + 1352));
         ReadFile(hFile, *(LPVOID*)(thisx + 60), *(int*)(thisx + 1352), (LPDWORD)&NumberOfBytesRead, 0);
-        *(_BYTE*)(thisx + 1344) = 1;
+        *(char*)(thisx + 1344) = 1;
         *(int*)(thisx + 1348) = 0;
         CloseHandle(hFile);
         return 1;
@@ -78784,7 +78784,7 @@ int  unknown_libname_24(int* thisx)
     return thisx[1];
 }
 // Microsoft VisualC 2-14/net runtime
-char  unknown_libname_25(_BYTE* thisx)
+char  unknown_libname_25(char* thisx)
 {
     return thisx[12];
 }
@@ -78812,7 +78812,7 @@ void  unknown_libname_28(void* thisx)
 // Microsoft VisualC 2-14/net runtime
 char  unknown_libname_3(void* thisx)
 {
-    return *(_BYTE*)thisx;
+    return *(char*)thisx;
 }
 //return *(int *)thisx;
 int  unknown_libname_30(int* thisx)
@@ -78829,7 +78829,7 @@ char* unknown_libname_31(char* thisx)
 
 // Microsoft VisualC 2-14/net runtime
 //return thisx[4];
-char  unknown_libname_5(_BYTE* thisx)
+char  unknown_libname_5(char* thisx)
 {
     return thisx[4];
 }
@@ -78837,7 +78837,7 @@ char  unknown_libname_5(_BYTE* thisx)
 
 
 //return thisx[8];
-char  unknown_libname_6(_BYTE* thisx)
+char  unknown_libname_6(char* thisx)
 {
     return thisx[8];
 }
@@ -79516,7 +79516,7 @@ int* __cdecl _dosmaperr(unsigned int a1)
 //  int v5; // eax
 //  char *base; // eax
 //  signed int v7; // edi
-//  _BYTE *v8; // eax
+//  char *v8; // eax
 //
 //  v2 = File;
 //  flag = File->_flag;
@@ -79555,7 +79555,7 @@ int* __cdecl _dosmaperr(unsigned int a1)
 //      if ( v4 == -1 )
 //        v8 = byte_4B86C0;
 //      else
-//        v8 = (_BYTE *)(dword_4CC6C0[v4 >> 5] + 8 * (v4 & 0x1F));
+//        v8 = (char *)(dword_4CC6C0[v4 >> 5] + 8 * (v4 & 0x1F));
 //      if ( (v8[4] & 0x20) != 0 )
 //        _lseek(v4, 0, 2);
 //    }
@@ -79619,7 +79619,7 @@ char* __cdecl _fptostr(void* a1, int a2, int a3)
     v4 = a2;
     v6 = *(char**)(a3 + 12);
     v7 = (char*)a1 + 1;
-    *(_BYTE*)a1 = 48;
+    *(char*)a1 = 48;
     result = (char*)a1 + 1;
     if (a2 > 0)
     {
@@ -79644,7 +79644,7 @@ char* __cdecl _fptostr(void* a1, int a2, int a3)
             *result = 48;
         ++* result;
     }
-    if (*(_BYTE*)a1 == 49)
+    if (*(char*)a1 == 49)
     {
         ++* (int*)(v3 + 4);
     }
@@ -79694,7 +79694,7 @@ int __cdecl _getbuf(int* a1)
 bool Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime(
     Concurrency::details::_UnrealizedChore* thisxx)
 {
-    return *((_BYTE*)thisxx + 16);
+    return *((char*)thisxx + 16);
 }
 struct Concurrency::details::_CancellationTokenState* Concurrency::details::_CancellationTokenRegistration::_GetToken(
     Concurrency::details::_CancellationTokenRegistration* thisxx)
@@ -79709,7 +79709,7 @@ intptr_t __cdecl _get_osfhandle(int FileHandle)
     if (FileHandle < uNumber)
     {
         v1 = dword_4CC6C0[FileHandle >> 5] + 8 * (FileHandle & 0x1F);
-        if ((*(_BYTE*)(v1 + 4) & 1) != 0)
+        if ((*(char*)(v1 + 4) & 1) != 0)
             return *(int*)v1;
     }
     dword_4CB270 = 0;
@@ -79749,14 +79749,14 @@ int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5)
     Warning();//修正堆栈
     check_stack c(__FILE__, __LINE__);
     int v25; // [esp+24h] [ebp-4h]
-    _BYTE v24[12]; // [esp+18h] [ebp-10h] BYREF
+    char v24[12]; // [esp+18h] [ebp-10h] BYREF
     char v23[12]; // [esp+Ch] [ebp-1Ch] BYREF
     char v21; // al
-    _BYTE* v20; // ecx
+    char* v20; // ecx
     bool v19; // cc
-    _BYTE* v18; // eax
+    char* v18; // eax
     char v17; // cl
-    _BYTE* v16; // ecx
+    char* v16; // ecx
     char v15; // al
     int v14; // eax
     int i; // esi
@@ -79778,9 +79778,9 @@ int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5)
     v25 = 1;
     v7 = a2 & 0x7FFF;
     if ((a2 & 0x8000u) == 0)
-        *(_BYTE*)(a5 + 2) = 32;
+        *(char*)(a5 + 2) = 32;
     else
-        *(_BYTE*)(a5 + 2) = 45;
+        *(char*)(a5 + 2) = 45;
     v8 = HIDWORD(a1);
     if (!v7 && !a1)
         goto LABEL_6;
@@ -79791,7 +79791,7 @@ int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5)
         {
             strcpy((char*)(v5 + 4), "1#SNAN");
         LABEL_22:
-            *(_BYTE*)(v5 + 3) = 6;
+            *(char*)(v5 + 3) = 6;
             return 0;
         }
         if (v6 && v8 == -1073741824)
@@ -79800,7 +79800,7 @@ int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5)
             {
                 strcpy((char*)(v5 + 4), "1#IND");
             LABEL_19:
-                *(_BYTE*)(v5 + 3) = 5;
+                *(char*)(v5 + 3) = 5;
                 return 0;
             }
         }
@@ -79862,7 +79862,7 @@ int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5)
                 __add_12((int*)v24, (int*)&a1);
                 __shl_12((int*)v24);
                 v15 = v24[11];
-                v16 = (_BYTE*)a5;
+                v16 = (char*)a5;
                 v24[11] = 0;
                 ++a5;
                 v10 = a3-- == 1;
@@ -79870,10 +79870,10 @@ int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5)
             } while (!v10);
             v14 = a5;
         }
-        v17 = *(_BYTE*)(v14 - 1);
-        v18 = (_BYTE*)(v14 - 2);
+        v17 = *(char*)(v14 - 1);
+        v18 = (char*)(v14 - 2);
         v19 = v17 < 53;
-        v20 = (_BYTE*)(v5 + 4);
+        v20 = (char*)(v5 + 4);
         if (v19)
         {
             while (v18 >= v20)
@@ -79887,8 +79887,8 @@ int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5)
                 --v18;
             }
             *(short*)v5 = 0;
-            *(_BYTE*)(v5 + 2) = 32;
-            *(_BYTE*)(v5 + 3) = 1;
+            *(char*)(v5 + 2) = 32;
+            *(char*)(v5 + 3) = 1;
             *v20 = 48;
             goto LABEL_54;
         }
@@ -79907,18 +79907,18 @@ int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5)
     LABEL_46:
         ++* v18;
     LABEL_47:
-        v21 = (_BYTE)v18 - v5 - 3;
-        *(_BYTE*)(v5 + 3) = v21;
-        *(_BYTE*)(v21 + v5 + 4) = 0;
+        v21 = (char)v18 - v5 - 3;
+        *(char*)(v5 + 3) = v21;
+        *(char*)(v21 + v5 + 4) = 0;
         return v25;
     }
 LABEL_6:
     *(short*)v5 = 0;
-    *(_BYTE*)(v5 + 2) = 32;
-    *(_BYTE*)(v5 + 3) = 1;
-    *(_BYTE*)(v5 + 4) = 48;
+    *(char*)(v5 + 2) = 32;
+    *(char*)(v5 + 3) = 1;
+    *(char*)(v5 + 4) = 48;
 LABEL_54:
-    *(_BYTE*)(v5 + 5) = 0;
+    *(char*)(v5 + 5) = 0;
     return 1;
 }
 
@@ -79949,7 +79949,7 @@ int __cdecl _IncMan(int a1, int a2)
 int __cdecl _isatty(int FileHandle)
 {
     if (FileHandle < uNumber)
-        return *(_BYTE*)(dword_4CC6C0[FileHandle >> 5] + 8 * (FileHandle & 0x1F) + 4) & 0x40;
+        return *(char*)(dword_4CC6C0[FileHandle >> 5] + 8 * (FileHandle & 0x1F) + 4) & 0x40;
     else
         return 0;
 }
@@ -79967,7 +79967,7 @@ int __cdecl _lseek(int FileHandle, int Offset, int Origin)
     unsigned int LastError; // eax
 
     if (FileHandle < uNumber
-        && (v3 = 8 * (FileHandle & 0x1F), (*(_BYTE*)(dword_4CC6C0[FileHandle >> 5] + v3 + 4) & 1) != 0))
+        && (v3 = 8 * (FileHandle & 0x1F), (*(char*)(dword_4CC6C0[FileHandle >> 5] + v3 + 4) & 1) != 0))
     {
         osfhandle = (void*)_get_osfhandle(FileHandle);
         if (osfhandle == (void*)-1)
@@ -79983,7 +79983,7 @@ int __cdecl _lseek(int FileHandle, int Offset, int Origin)
                 LastError = 0;
             if (!LastError)
             {
-                *(_BYTE*)(dword_4CC6C0[FileHandle >> 5] + v3 + 4) &= ~2u;
+                *(char*)(dword_4CC6C0[FileHandle >> 5] + v3 + 4) &= ~2u;
                 return v5;
             }
             _dosmaperr(LastError);
@@ -80080,7 +80080,7 @@ void _SetDetached(
     Concurrency::details::_UnrealizedChore* thisxx,
     bool a2)
 {
-    *((_BYTE*)thisxx + 17) = a2;
+    *((char*)thisxx + 17) = a2;
 }
 
 //不管
@@ -80135,7 +80135,7 @@ int __cdecl _setmbcp(int CodePage)
             memset(&byte_4CB580, 0, 0x100u);
             v21 = 0;
             v9 = 48 * v3;
-            *((_BYTE*)&byte_4CB580 + 256) = 0;
+            *((char*)&byte_4CB580 + 256) = 0;
             v10 = (char*)&byte_4B8B98 + 48 * v3;
             do
             {
@@ -80181,8 +80181,8 @@ int __cdecl _setmbcp(int CodePage)
         dword_4CB458 = v2;
         //memset(&byte_4CB580, 0, 0x100u);
         memset(&byte_4CB581, 0, 0x100u);
-        //*((_BYTE *)&byte_4CB580 + 256) = 0;
-        *((_BYTE*)&byte_4CB581 + 256) = 0;
+        //*((char *)&byte_4CB580 + 256) = 0;
+        *((char*)&byte_4CB581 + 256) = 0;
         Locale = 0;
         if (v5)
         {
@@ -80223,7 +80223,7 @@ void _SetRuntimeOwnsLifetime(
     Concurrency::details::_UnrealizedChore* thisxx,
     bool a2)
 {
-    *((_BYTE*)thisxx + 16) = a2;
+    *((char*)thisxx + 16) = a2;
 }
 
 
@@ -80329,7 +80329,7 @@ int __cdecl _write(int FileHandle, const void* Buf, unsigned int MaxCharCount)
     if (FileHandle < uNumber
         && (v3 = (int*)(4 * (FileHandle >> 5) + dword_4CC6C0),//ddd dword_4CC6C0
             v4 = 8 * (FileHandle & 0x1F),
-            v5 = *(_BYTE*)(dword_4CC6C0[FileHandle >> 5] + v4 + 4),
+            v5 = *(char*)(dword_4CC6C0[FileHandle >> 5] + v4 + 4),
             (v5 & 1) != 0))
     {
         v15 = 0;
@@ -80360,7 +80360,7 @@ int __cdecl _write(int FileHandle, const void* Buf, unsigned int MaxCharCount)
                 v8 = Buffer;
                 do
                 {
-                    if (v16 - (_BYTE*)Buf >= MaxCharCount)
+                    if (v16 - (char*)Buf >= MaxCharCount)
                         break;
                     v9 = v16++;
                     v10 = *v9;
@@ -80376,7 +80376,7 @@ int __cdecl _write(int FileHandle, const void* Buf, unsigned int MaxCharCount)
                     if (!WriteFile(*(HANDLE*)(*v3 + v4), Buffer, v8 - Buffer, (LPDWORD)&NumberOfBytesWritten, 0))
                         break;
                 v15 += NumberOfBytesWritten;
-                if ((int)NumberOfBytesWritten < v11 || v16 - (_BYTE*)Buf >= MaxCharCount)
+                if ((int)NumberOfBytesWritten < v11 || v16 - (char*)Buf >= MaxCharCount)
                     goto LABEL_17;
             }
             FileHandlea = GetLastError();
@@ -80398,7 +80398,7 @@ int __cdecl _write(int FileHandle, const void* Buf, unsigned int MaxCharCount)
         }
         else
         {
-            if ((*(_BYTE*)(*v3 + v4 + 4) & 0x40) != 0 && *(_BYTE*)Buf == 26)
+            if ((*(char*)(*v3 + v4 + 4) & 0x40) != 0 && *(char*)Buf == 26)
                 return 0;
             dword_4CB26C = 28;
             dword_4CB270 = 0;
@@ -81178,36 +81178,36 @@ char* sub_4428D0(char* thisx)
     //36大小，4个
     eh_vector_constructor_iterator(thisx + 15644, 36, 4, sub_47FC70, sub_47FCCF);
     sub_48E210((int*)(thisx + 15788));
-    sub_4851A0((_BYTE*)(thisx + 15824));
-    sub_48F050((_BYTE*)(thisx + 15860));
-    sub_48E990((_BYTE*)(thisx + 15896));
+    sub_4851A0((char*)(thisx + 15824));
+    sub_48F050((char*)(thisx + 15860));
+    sub_48E990((char*)(thisx + 15896));
     sub_401000((char*)(thisx + 15956));
-    sub_485750((_BYTE*)(thisx + 15992));
+    sub_485750((char*)(thisx + 15992));
     sub_480BC0((int*)(thisx + 16048));
     sub_480F30((int*)(thisx + 16084));
     *(int*)thisx = off_4AC2DC;
     *(int*)(thisx + 104) = 3;
     *(int*)(thisx + 2488) = 100;
-    *(_BYTE*)(thisx + 2496) = 1;
+    *(char*)(thisx + 2496) = 1;
     *(int*)(thisx + 9092) = 0;
     *(int*)(thisx + 2512) = 0;
-    *(_BYTE*)(thisx + 2516) = 0;
+    *(char*)(thisx + 2516) = 0;
     byte_4B9985 = 4;
     byte_4B9986 = 1;
     byte_4B9987 = 3;
     byte_4B99CD = 0;
-    *(_BYTE*)(thisx + 79) = 1;
-    *(_BYTE*)(thisx + 80) = 0;
-    *(_BYTE*)(thisx + 76) = 1;
-    *(_BYTE*)(thisx + 30) = 4;
-    *(_BYTE*)(thisx + 98) = 0;
-    *(_BYTE*)(thisx + 99) = 1;
-    *(_BYTE*)(thisx + 100) = 0;
+    *(char*)(thisx + 79) = 1;
+    *(char*)(thisx + 80) = 0;
+    *(char*)(thisx + 76) = 1;
+    *(char*)(thisx + 30) = 4;
+    *(char*)(thisx + 98) = 0;
+    *(char*)(thisx + 99) = 1;
+    *(char*)(thisx + 100) = 0;
     *(int*)(thisx + 13396) = 0;
-    *(_BYTE*)(thisx + 11352) = 0;
+    *(char*)(thisx + 11352) = 0;
     *(int*)(thisx + 11356) = 0;
     *(int*)(thisx + 11360) = 0;
-    *(_BYTE*)(thisx + 11364) = 0;
+    *(char*)(thisx + 11364) = 0;
     *(int*)(thisx + 11368) = 0;
     *(int*)(thisx + 13104) = -1;
     *(int*)(thisx + 13108) = 0;
@@ -81215,10 +81215,10 @@ char* sub_4428D0(char* thisx)
     *(int*)(thisx + 13116) = 0;
     *(int*)(thisx + 13120) = 0;
     memset((void*)(thisx + 16140), 0, 260);
-    *(_BYTE*)(thisx + 11420) = 0;
+    *(char*)(thisx + 11420) = 0;
     *(int*)(thisx + 11424) = 0;
-    *(_BYTE*)(thisx + 11432) = 0;
-    *(_BYTE*)(thisx + 13124) = 0;
+    *(char*)(thisx + 11432) = 0;
+    *(char*)(thisx + 13124) = 0;
     *(int*)(thisx + 13392) = 0;
     *(int*)(thisx + 15628) = 0;
     *(int*)(thisx + 15632) = 0;
@@ -81324,9 +81324,9 @@ int* sub_48E210(int* thisx)
     sub_47FEB2(thisx[3] + 192, (LPCSTR)&byte_4B2746, &byte_4B0C59, 1);//合体技//ＯＦＦＯＮ
     sub_47FEB2(thisx[3] + 224, (LPCSTR)&byte_4B279E, &byte_4B2A50, 1);//伤害陷阱 关
     sub_47FEB2(*((int*)thisx + 3) + 256, (LPCSTR)&byte_4B2A5D, &byte_4B2A75, 0);//死亡陷阱 , off on
-    *((_BYTE*)thisx + 7) = 16;
-    *((_BYTE*)thisx + 6) = 25;
-    *((_BYTE*)thisx + 29) = 19;
+    *((char*)thisx + 7) = 16;
+    *((char*)thisx + 6) = 25;
+    *((char*)thisx + 29) = 19;
     return thisx;
 }
 
@@ -81375,17 +81375,17 @@ BOOL __cdecl _ValidateExecute(FARPROC lpfn)
 
 
 
-_BYTE* _wincmdln()
+char* _wincmdln()
 {
-    _BYTE* v0; // esi
+    char* v0; // esi
     unsigned __int8 v1; // al
 
     if (!dword_4CC7C8)
         __initmbctable();
-    v0 = (_BYTE*)dword_4CC7D4;
-    if (*(_BYTE*)dword_4CC7D4 != 34)
+    v0 = (char*)dword_4CC7D4;
+    if (*(char*)dword_4CC7D4 != 34)
     {
-        if (*(_BYTE*)dword_4CC7D4 > 0x20u)
+        if (*(char*)dword_4CC7D4 > 0x20u)
         {
             do
                 ++v0;
@@ -81476,7 +81476,7 @@ int _setargv()
     GetModuleFileNameA(0, (LPSTR)Filename, 260);
     dword_4CB2A4 = (int)Filename;
     v0 = (char*)Filename;
-    if (*(_BYTE*)dword_4CC7D4)
+    if (*(char*)dword_4CC7D4)
         v0 = (CHAR*)dword_4CC7D4;
     parse_cmdline((unsigned char*)v0, 0, 0, &v4, &v3);
     v1 = (char*)malloc(v3 + 4 * v4);
@@ -81567,7 +81567,7 @@ UINT _ioinit()
             {
                 v10 = dword_4CC6C0[k >> 5] + 8 * (k & 0x1F);
                 *(int*)v10 = (int)*v5;
-                *(_BYTE*)(v10 + 4) = *v4;
+                *(char*)(v10 + 4) = *v4;
             }
             ++k;
             ++v4;
@@ -81578,7 +81578,7 @@ UINT _ioinit()
         v12 = dword_4CC6C0[0] + 8 * m;
         if (*(int*)v12 == -1)
         {
-            *(_BYTE*)(v12 + 4) = -127;
+            *(char*)(v12 + 4) = -127;
             if (m)
                 v13 = -(m != 1) - 11;
             else
@@ -81589,16 +81589,16 @@ UINT _ioinit()
                 || (FileType = GetFileType(StdHandle)) == 0
                 || (*(int*)v12 = (int)v15, (unsigned __int8)FileType == 2))
             {
-                *(_BYTE*)(v12 + 4) |= 64;
+                *(char*)(v12 + 4) |= 64;
             }
             else if ((unsigned __int8)FileType == 3)
             {
-                *(_BYTE*)(v12 + 4) |= 8u;
+                *(char*)(v12 + 4) |= 8u;
             }
         }
         else
         {
-            *(_BYTE*)(v12 + 4) |= 0x80u;
+            *(char*)(v12 + 4) |= 0x80u;
         }
     }
     return SetHandleCount(uNumber);
@@ -81930,7 +81930,7 @@ int __cdecl __strgtold12(int a1, char** a2, char* a3, int a4, int a5, int a6, in
             continue;
         case 3:
             v45 = 1;
-            while (cbMultiByte <= 1 ? *((_BYTE*)off_4B8414 + 2 * (unsigned __int8)v10) & 4 : _isctype(
+            while (cbMultiByte <= 1 ? *((char*)off_4B8414 + 2 * (unsigned __int8)v10) & 4 : _isctype(
                 (unsigned __int8)v10,
                 4))
             {
@@ -81963,7 +81963,7 @@ int __cdecl __strgtold12(int a1, char** a2, char* a3, int a4, int a5, int a6, in
                     v10 = *v7++;
                 }
             }
-            while (cbMultiByte <= 1 ? *((_BYTE*)off_4B8414 + 2 * (unsigned __int8)v10) & 4 : _isctype(
+            while (cbMultiByte <= 1 ? *((char*)off_4B8414 + 2 * (unsigned __int8)v10) & 4 : _isctype(
                 (unsigned __int8)v10,
                 4))
             {
@@ -81999,7 +81999,7 @@ int __cdecl __strgtold12(int a1, char** a2, char* a3, int a4, int a5, int a6, in
         case 5:
             v40 = 1;
             if (cbMultiByte <= 1)
-                v15 = *((_BYTE*)off_4B8414 + 2 * (unsigned __int8)v10) & 4;
+                v15 = *((char*)off_4B8414 + 2 * (unsigned __int8)v10) & 4;
             else
                 v15 = _isctype((unsigned __int8)v10, 4);
             if (!v15)
@@ -82041,7 +82041,7 @@ int __cdecl __strgtold12(int a1, char** a2, char* a3, int a4, int a5, int a6, in
             while (2)
             {
                 if (cbMultiByte <= 1)
-                    v18 = *((_BYTE*)off_4B8414 + 2 * (unsigned __int8)v10) & 4;
+                    v18 = *((char*)off_4B8414 + 2 * (unsigned __int8)v10) & 4;
                 else
                     v18 = _isctype((unsigned __int8)v10, 4);
                 if (v18)
@@ -82057,7 +82057,7 @@ int __cdecl __strgtold12(int a1, char** a2, char* a3, int a4, int a5, int a6, in
                 break;
             }
             v42 = v17;
-            while (cbMultiByte <= 1 ? *((_BYTE*)off_4B8414 + 2 * (unsigned __int8)v10) & 4 : _isctype(
+            while (cbMultiByte <= 1 ? *((char*)off_4B8414 + 2 * (unsigned __int8)v10) & 4 : _isctype(
                 (unsigned __int8)v10,
                 4))
                 v10 = *v7++;
@@ -82118,7 +82118,7 @@ int __cdecl __strgtold12(int a1, char** a2, char* a3, int a4, int a5, int a6, in
                 }
                 if (v48)
                 {
-                    while (!*(_BYTE*)--v21)
+                    while (!*(char*)--v21)
                     {
                         --v48;
                         ++v47;
@@ -82283,7 +82283,7 @@ LABEL_16:
     result = 0;
 LABEL_17:
     v13 = a3[4];
-    v14 = v20 | (v23 != 0 ? 0x80000000 : 0) | (v8 << (31 - *((_BYTE*)a3 + 12)));
+    v14 = v20 | (v23 != 0 ? 0x80000000 : 0) | (v8 << (31 - *((char*)a3 + 12)));
     if (v13 == 64)
     {
         v15 = v21;
@@ -82495,9 +82495,9 @@ __int16 __cdecl __mtold12(char* a1, int a2, int a3)
 
 
 
-_BYTE* __cdecl _cftoe_g(double* a1, _BYTE* a2, int a3, int a4)
+char* __cdecl _cftoe_g(double* a1, char* a2, int a3, int a4)
 {
-    _BYTE* result; // eax
+    char* result; // eax
 
     byte_4CB24C = 1;
     result = _cftoe(a1, a2, a3, a4);
@@ -82550,7 +82550,7 @@ char* __cdecl _cropzeros(char* a1)
 }
 
 //不管
-_BYTE* __cdecl _cftoe(double* a1, _BYTE* a2, int a3, int a4)
+char* __cdecl _cftoe(double* a1, char* a2, int a3, int a4)
 {
 
     Warning();//修正堆栈
@@ -82558,7 +82558,7 @@ _BYTE* __cdecl _cftoe(double* a1, _BYTE* a2, int a3, int a4)
     double v10; // [esp+0h] [ebp-10h]
     int v8; // ebx
     char* v7; // eax
-    _BYTE* v6; // eax
+    char* v6; // eax
     int v5; // esi
     int v4; // ebx
 
@@ -82590,7 +82590,7 @@ _BYTE* __cdecl _cftoe(double* a1, _BYTE* a2, int a3, int a4)
     v7 = strcpy(&v6[(byte_4CB24C == 0) + v4], "e+000");
     if (a4)
         *v7 = 69;
-    if (**(_BYTE**)(v5 + 12) != 48)
+    if (**(char**)(v5 + 12) != 48)
     {
         v8 = *(int*)(v5 + 4) - 1;
         if (v8 < 0)
@@ -82670,7 +82670,7 @@ char __cdecl _forcdecpt(char* a1)
         {
             ++v1;
             if (cbMultiByte <= 1)
-                v2 = *((_BYTE*)off_4B8414 + 2 * *v1) & 4;
+                v2 = *((char*)off_4B8414 + 2 * *v1) & 4;
             else
                 v2 = _isctype(*v1, 4);
         } while (v2);
@@ -82881,18 +82881,18 @@ int sub_49A318(int thisx)
     *(int*)(thisx + 49152) = 0;//资源最大数量
     *(int*)(thisx + 50436) = 0;//读取资源文件，new存储地址
     *(int*)(thisx + 50500) = 0;//窗口句柄
-    *(_BYTE*)(thisx + 50441) = -1;//未知？？
-    *(_BYTE*)(thisx + 50445) = 0;//判断窗口焦点
+    *(char*)(thisx + 50441) = -1;//未知？？
+    *(char*)(thisx + 50445) = 0;//判断窗口焦点
     memset((void*)(thisx + 49156), 0, 1024);
     memset((void*)(thisx + 50180), 0, 256);
     for (i = 0; i < 256; ++i)
     {
-        *(_BYTE*)(thisx + 4 * i + 49156) = (-1 - i) * (i % 3 == 0);
-        *(_BYTE*)(thisx + 4 * i + 49157) = (-1 - i) * (i % 3 == 1);
-        *(_BYTE*)(thisx + 4 * i + 49158) = (-1 - i) * (i % 3 == 2);
-        *(_BYTE*)(thisx + 4 * i + 49159) = 1;
+        *(char*)(thisx + 4 * i + 49156) = (-1 - i) * (i % 3 == 0);
+        *(char*)(thisx + 4 * i + 49157) = (-1 - i) * (i % 3 == 1);
+        *(char*)(thisx + 4 * i + 49158) = (-1 - i) * (i % 3 == 2);
+        *(char*)(thisx + 4 * i + 49159) = 1;
     }
-    *(_BYTE*)(thisx + 50443) = 1;
+    *(char*)(thisx + 50443) = 1;
     for (j = 0; j < 64; ++j)
     {
         for (k = 0; k < 64; ++k)
