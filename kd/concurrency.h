@@ -128,7 +128,11 @@ struct TryBlockMapEntry
 };
 
 struct type_info;
-struct ios;
+
+struct ios
+{
+	static void delbuf(ios* thisx, int a2);
+};
 
 #endif // DEBUG
 

@@ -229,9 +229,9 @@ void mySleep(int a)
 // 宏：将变量名转化为字符串
 #define TO(var) {#var,&var},
 
-#define byte_get_value(a1,a2) ida_chars[a1 - 0x4AC230  + a2]
+//#define byte_get_value(a1,a2) ida_chars[a1 - 0x4AC230  + a2]
 
-#define byte__get_address(a1) ida_chars + (a1 - 0x4AC230)
+//#define byte__get_address(a1) ida_chars + (a1 - 0x4AC230)
 
 int fineebp(char* code) {
     // 查找 ebp- 的位置
@@ -30312,6 +30312,7 @@ int* sub_43F951(int* thisx)
 }
 
 //加载声音文件的函数2层
+//this = byte_4BDB28
 int sub_43FB7E(int* thisx, LPSTR pszFileName, int a3)
 {
     char* v5; // [esp+4h] [ebp-4h]
@@ -30332,6 +30333,7 @@ int sub_43FB7E(int* thisx, LPSTR pszFileName, int a3)
 }
 
 //加载声音文件的函数
+//this = byte_4BDB28
 int sub_43FC18(int* thisx, LPSTR pszFileName)
 {
     //加载声音文件的函数2层
@@ -31145,7 +31147,7 @@ int sub_440DF5(int* thisx)
     return result;
 }
 
-
+//this = byte_4BDB28
 char* sub_440E6C(int* thisx, int a2, int a3)
 {
 
@@ -31189,6 +31191,7 @@ char* sub_440E6C(int* thisx, int a2, int a3)
     return sub_44106A(v7, a2 & 63);
 }
 
+//this = byte_4BDB28
 int sub_440F3C(int* thisx)
 {
 
@@ -31243,7 +31246,7 @@ int sub_440F3C(int* thisx)
     return 1;
 }
 
-
+//this = byte_4BDB28
 int* sub_44101E(int* thisx, int a2)
 {
 
@@ -31289,6 +31292,7 @@ void* sub_4410B0(void* thisx, char a2)
 }
 
 //return *thisx != 0;
+//this = byte_4BDB28
 BOOL sub_4410E0(int* thisx)
 {
     return *thisx != 0;
@@ -38761,19 +38765,23 @@ int* sub_4532B9(int* thisx)
 
 
 //a1 = byte_4B9B10
+//这段代码属于状态机中“过渡状态”的典型处理方式，包含 UI 渲染、状态切换、缓冲清理、以及多个子系统跳转。整体结构是严谨的事件驱动式逻辑。
+
 void sub_4532F2(int a1, double a2, double a3, double a4)
 {
 
 
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
-    int v12; // [esp+138h] [ebp-4h]
+    int v12; // [esp+138h] [ebp-4h]                     // 临时变量，用于计算 UI 显示宽度
 
-    struct tagRECT rc; // [esp+128h] [ebp-14h] BYREF
-    struct tagRECT v10; // [esp+118h] [ebp-24h] BYREF
+    struct tagRECT rc; // [esp+128h] [ebp-14h] BYREF    // 用于绘制左/右 UI 区域
+    struct tagRECT v10; // [esp+118h] [ebp-24h] BYREF   // 用于绘制左/右 UI 区域（备用）
     //
-    CHAR String1[264]; // [esp+10h] [ebp-12Ch] BYREF
-    int v7; // eax
+    CHAR String1[264]; // [esp+10h] [ebp-12Ch] BYREF     // 字符串缓冲区（用于处理重载状态名）
+    int v7; // eax                                      // 存储函数返回值
+
+    // 局部变量，用于绘制函数调用
     int v6 = 0; // edx
     int v5 = 0; // edx
     int v4 = 0; // edx
@@ -38797,8 +38805,11 @@ void sub_4532F2(int a1, double a2, double a3, double a4)
         __asm int 3
     }
 
+    // 如果 UI 状态标志位为非 0（a1+2516）
     if (*(char*)(a1 + 2516))
     {
+
+        // 获取 UI 计数器（a1+2512）并判断范围
         if (*(int*)(a1 + 2512) >= 3)
         {
             if (*(int*)(a1 + 2512) <= 10)
@@ -38808,26 +38819,33 @@ void sub_4532F2(int a1, double a2, double a3, double a4)
         {
             v12 = 2 * *(int*)(a1 + 2512);
         }
+
+        // UI 状态 == 1（例如中间展开动画）
         if (*(char*)(a1 + 2516) == 1)
         {
             SetRect(&rc, 0, 0, 160 - 20 * v12, 240);
-            sub_49EDC1((int)byte_4BDC60, v4, (int*)&rc, 0);
+            sub_49EDC1((int)byte_4BDC60, v4, (int*)&rc, 0);// 绘制左侧遮挡层
             SetRect(&rc, 20 * v12 + 160, 0, 320, 240);
-            sub_49EDC1((int)byte_4BDC60, v5, (int*)&rc, 0);
+            sub_49EDC1((int)byte_4BDC60, v5, (int*)&rc, 0); // 绘制右侧遮挡层
         }
+
+        // UI 状态 == 2（例如两侧向内收缩）
         else if (*(char*)(a1 + 2516) == 2)
         {
             SetRect(&v10, 0, 0, 20 * v12, 240);
-            sub_49EDC1((int)byte_4BDC60, (int)&v10, (int*)&v10, 0);
+            sub_49EDC1((int)byte_4BDC60, (int)&v10, (int*)&v10, 0);//左侧
             SetRect(&v10, 320 - 20 * v12, 0, 320, 240);
-            sub_49EDC1((int)byte_4BDC60, v6, (int*)&v10, 0);
+            sub_49EDC1((int)byte_4BDC60, v6, (int*)&v10, 0);//右侧
         }
+
+        // 增加 UI 帧计数器（a1+2512）
         if (*(char*)(a1 + 2516))
         {
-            if ((int)++ * (int*)(a1 + 2512) >= 10)
+            if ((int)++ * (int*)(a1 + 2512) >= 10)// 达到动画完成时
             {
-                if (*(char*)(a1 + 2516) == 2)
+                if (*(char*)(a1 + 2516) == 2)// 状态为关闭
                 {
+                    // 处理状态关闭后的逻辑，取决于当前状态码（a1+104）
                     switch (*(int*)(a1 + 104))
                     {
                     case 1:
@@ -38876,20 +38894,24 @@ void sub_4532F2(int a1, double a2, double a3, double a4)
                     default:
                         break;
                     }
+                    // 状态切换完成，清理
                     dword_4B99EC = 1;//如果获取焦点的时候，且程序设置又是不允许后台运行，该值为1，失去焦点又不允许后台允许该值为0
                     *(char*)(a1 + 2516) = 0;
                     *(int*)(a1 + 2512) = 0;
-                    *(int*)(a1 + 112) = *(int*)(a1 + 104);
+                    *(int*)(a1 + 112) = *(int*)(a1 + 104);// 保存当前状态为上一个状态
+
+                    // 如果有缓存在 a1+16140 的状态名，执行转换
                     if (*(char*)(a1 + 16140))
                     {
                         lstrcpyA(String1, (LPCSTR)(a1 + 16140));
                         sub_467AC6(a1, (const char*)(a1 + 16140));
                         if (!lstrcmpiA(String1, (LPCSTR)(a1 + 16140)))
                             memset((void*)(a1 + 16140), 0, 0x104u);
-                        *(char*)(a1 + 2516) = 1;
+                        *(char*)(a1 + 2516) = 1;// 标记再次进入 UI 动画
                     }
                     else
                     {
+                        // 根据状态码 (a1+108) 执行不同状态切换逻辑
                         switch (*(int*)(a1 + 108))//
                         {
                         case 1:
@@ -39000,6 +39022,7 @@ void sub_4532F2(int a1, double a2, double a3, double a4)
                 }
                 else
                 {
+                    // 动画中途被终止，清空相关状态
                     *(char*)(a1 + 2516) = 0;
                     *(int*)(a1 + 2512) = 0;
                     *(char*)(a1 + 11420) = 0;
@@ -39009,6 +39032,7 @@ void sub_4532F2(int a1, double a2, double a3, double a4)
         }
     }
 }
+
 
 
 int sub_453A31(int thisx)
@@ -40870,7 +40894,7 @@ int sub_457930(int thisx)
 int sub_4579E8(int thisx, int a2)
 {
  
-    Warning();//修正堆栈
+    //修正堆栈
     check_stack c(__FILE__, __LINE__);
     int i; // [esp+214h] [ebp-4h]
     int v9; // [esp+210h] [ebp-8h]
@@ -40883,6 +40907,30 @@ int sub_4579E8(int thisx, int a2)
     CHAR v4[256]; // [esp+4h] [ebp-214h] BYREF
     int result; // eax
 
+    const char* var = R"(
+    int i; // [esp+214h] [ebp-4h]
+    int v9; // [esp+210h] [ebp-8h]
+    int v8; // [esp+20Ch] [ebp-Ch]
+    int j; // [esp+208h] [ebp-10h]
+    int v6; // [esp+204h] [ebp-14h]
+    //
+    CHAR String[256]; // [esp+104h] [ebp-114h] BYREF
+    //
+    CHAR v4[256]; // [esp+4h] [ebp-214h] BYREF
+    )";
+    if (!check_stack_fun2({
+        TO(c)
+        TO(i)
+        TO(v9)
+        TO(v8)
+        TO(j)
+        TO(v6)
+        TO(String)
+        TO(v4)
+        }, 0x214, var, 1))
+    {
+        __asm int 3
+    }
 
     if (a2 == -1)
     {
@@ -40967,10 +41015,11 @@ int sub_4579E8(int thisx, int a2)
     }
     return result;
 }
+
 int sub_457F11(int thisx)
 {
   
-    Warning();//修正堆栈
+    //修正堆栈
     check_stack c(__FILE__, __LINE__);
     int v46[14]; // [esp+3F8h] [ebp-38h] BYREF
     int v45; // [esp+3F4h] [ebp-3Ch]
@@ -40982,8 +41031,12 @@ int sub_457F11(int thisx)
     int v39; // [esp+3DCh] [ebp-54h]
     int v38; // [esp+3D8h] [ebp-58h]
     //char tc_63[2]; //3
-    unsigned __int8 v37; // [esp+3D5h] [ebp-5Bh]
-    unsigned __int8 v36; // [esp+3D4h] [ebp-5Ch]
+    //unsigned char v37; // [esp+3D5h] [ebp-5Bh]，改改改
+    unsigned char v36[2]; // [esp+3D4h] [ebp-5Ch]，改改改
+    /*原来是
+    *     unsigned char v37; // [esp+3D5h] [ebp-5Bh]
+          unsigned char v36; // [esp+3D4h] [ebp-5Ch]
+    */
     int i; // [esp+3D0h] [ebp-60h]
     int v34; // [esp+3CCh] [ebp-64h]
     int v33; // [esp+3C8h] [ebp-68h]
@@ -40993,14 +41046,18 @@ int sub_457F11(int thisx)
     BOOL v29; // [esp+3B8h] [ebp-78h]
     BOOL v28; // [esp+3B4h] [ebp-7Ch]
     //char tc_95[1]; //2
-    char v27; // [esp+3B2h] [ebp-7Eh]
-    char v26; // [esp+3B1h] [ebp-7Fh]
-    CHAR String1; // [esp+3B0h] [ebp-80h] BYREF
+    //char v27; // [esp+3B2h] [ebp-7Eh]
+    //char v26; // [esp+3B1h] [ebp-7Fh]
+    CHAR String1[3]; // [esp+3B0h] [ebp-80h] BYREF
+    /*
+    *   char v27; // [esp+3B2h] [ebp-7Eh]
+        char v26; // [esp+3B1h] [ebp-7Fh]
+        CHAR String1; // [esp+3B0h] [ebp-80h] BYREF
+    */
     int k; // [esp+3ACh] [ebp-84h]
     int m; // [esp+3A8h] [ebp-88h]
     CHAR v22[4]; // [esp+3A4h] [ebp-8Ch] BYREF
     int j; // [esp+3A0h] [ebp-90h]
-    char tc[60];
     char v20[4]; // [esp+39Ch] [ebp-94h]
     //
     CHAR String[64]; // [esp+35Ch] [ebp-D4h] BYREF
@@ -41011,6 +41068,7 @@ int sub_457F11(int thisx)
     //
     CHAR v15[256]; // [esp+214h] [ebp-21Ch] BYREF
     //
+    char tc[8];
     CHAR v14[256]; // [esp+10Ch] [ebp-324h] BYREF
     //
     CHAR v13[256]; // [esp+Ch] [ebp-424h] BYREF
@@ -41026,6 +41084,90 @@ int sub_457F11(int thisx)
     int v2; // esi
     int v1; // ecx
 
+    const char* var = R"(
+int v46[14]; // [esp+3F8h] [ebp-38h] BYREF
+int v45; // [esp+3F4h] [ebp-3Ch]
+int v44; // [esp+3F0h] [ebp-40h]
+int v43; // [esp+3ECh] [ebp-44h]
+int n; // [esp+3E8h] [ebp-48h]
+int v41; // [esp+3E4h] [ebp-4Ch]
+int v40; // [esp+3E0h] [ebp-50h]
+int v39; // [esp+3DCh] [ebp-54h]
+int v38; // [esp+3D8h] [ebp-58h]
+//char tc_63[2]; //3
+unsigned char v37; // [esp+3D5h] [ebp-5Bh]，改改改
+//unsigned char v36; // [esp+3D4h] [ebp-5Ch]，改改改
+int i; // [esp+3D0h] [ebp-60h]
+int v34; // [esp+3CCh] [ebp-64h]
+int v33; // [esp+3C8h] [ebp-68h]
+int v32; // [esp+3C4h] [ebp-6Ch]
+int v31; // [esp+3C0h] [ebp-70h]
+char* v30; // [esp+3BCh] [ebp-74h]
+BOOL v29; // [esp+3B8h] [ebp-78h]
+BOOL v28; // [esp+3B4h] [ebp-7Ch]
+//char tc_95[1]; //2
+char v27; // [esp+3B2h] [ebp-7Eh]
+char v26; // [esp+3B1h] [ebp-7Fh]
+CHAR String1; // [esp+3B0h] [ebp-80h] BYREF
+int k; // [esp+3ACh] [ebp-84h]
+int m; // [esp+3A8h] [ebp-88h]
+CHAR v22[4]; // [esp+3A4h] [ebp-8Ch] BYREF
+int j; // [esp+3A0h] [ebp-90h]
+char tc[60];
+char v20[4]; // [esp+39Ch] [ebp-94h]
+//
+CHAR String[64]; // [esp+35Ch] [ebp-D4h] BYREF
+int v18; // [esp+358h] [ebp-D8h]
+//
+CHAR v17[64]; // [esp+318h] [ebp-118h] BYREF
+int v16; // [esp+314h] [ebp-11Ch]
+//
+CHAR v15[256]; // [esp+214h] [ebp-21Ch] BYREF
+//
+CHAR v14[256]; // [esp+10Ch] [ebp-324h] BYREF
+//
+CHAR v13[256]; // [esp+Ch] [ebp-424h] BYREF
+    )";
+    if (!check_stack_fun2({
+        TO(c)
+        TO(v46)
+        TO(v45)
+        TO(v44)
+        TO(v43)
+        TO(n)
+        TO(v41)
+        TO(v40)
+        TO(v39)
+        TO(v38)
+        //TO(v37)
+        TO(v36)
+        TO(i)
+        TO(v34)
+        TO(v33)
+        TO(v32)
+        TO(v31)
+        TO(v30)
+        TO(v29)
+        TO(v28)
+        //TO(v27)
+        //TO(v26)
+        TO(String1)
+        TO(k)
+        TO(m)
+        TO(v22)
+        TO(j)
+        TO(v20)
+        TO(String)
+        TO(v18)
+        TO(v17)
+        TO(v16)
+        TO(v15)
+        TO(v14)
+        TO(v13)
+        }, 0x424, var, 1))
+    {
+        __asm int 3
+    }
 
     LOBYTE(v44) = *(char*)(thisx + 2568);
     LOBYTE(v45) = *(char*)(thisx + 2566);
@@ -41055,13 +41197,13 @@ int sub_457F11(int thisx)
                 if ((unsigned __int8)v45 == 1)
                 {
                     for (i = 0; i < 2; ++i)
-                        *(&v36 + i) = sub_45943B((char*)(thisx + 76 * (unsigned __int8)v44 + 11816), i) - 1;
+                        *(&v36[0] + i) = sub_45943B((char*)(thisx + 76 * (unsigned __int8)v44 + 11816), i) - 1;
                     if (*(int*)(thisx + 2528))
                     {
                         if (*(int*)(thisx + 2528) == 1)
                         {
                             v34 = 31;
-                            LOBYTE(v33) = v36 + 1;
+                            LOBYTE(v33) = v36[0] + 1;
                             if ((unsigned __int8)(v36 + 1) == 2)
                             {
                                 v34 = 29;
@@ -41073,14 +41215,14 @@ int sub_457F11(int thisx)
                             {
                                 v34 = 30;
                             }
-                            v37 = (v34 + v40 + v37) % v34;
+                            v36[1] = (v34 + v40 + v36[1]) % v34;
                         }
                     }
                     else
                     {
-                        v36 = (v36 + v40 + 12) % 12;
+                        v36[0] = (v36[0] + v40 + 12) % 12;
                     }
-                    sub_459461((char*)(thisx + 76 * (unsigned __int8)v44 + 11816), v36 + 1, v37 + 1);
+                    sub_459461((char*)(thisx + 76 * (unsigned __int8)v44 + 11816), v36[0] + 1, v36[1] + 1);
                 }
                 else if ((unsigned __int8)v45 == 2)
                 {
@@ -41235,19 +41377,19 @@ int sub_457F11(int thisx)
                         {
                             v28 = *(int*)(thisx + 2528) == 10;
                             v29 = *(int*)(thisx + 2528) == 11;
-                            String1 = v30[(unsigned __int8)v31];
-                            v26 = v30[(unsigned __int8)v31 + 1];
-                            v27 = 0;
-                            if (!lstrcmpiA(&String1, byte_4B2658) && (unsigned __int8)v31 > 1u)
+                            String1[0] = v30[(unsigned __int8)v31];
+                            String1[1] = v30[(unsigned __int8)v31 + 1];
+                            String1[2] = 0;
+                            if (!lstrcmpiA(&String1[0], byte_4B2658) && (unsigned __int8)v31 > 1u)
                             {
                                 LOBYTE(v31) = v31 - 2;
-                                String1 = v30[(unsigned __int8)v31];
-                                v26 = v30[(unsigned __int8)v31 + 1];
-                                v27 = 0;
+                                String1[0] = v30[(unsigned __int8)v31];
+                                String1[1] = v30[(unsigned __int8)v31 + 1];
+                                String1[2] = 0;
                             }
                             if (v28)
                             {
-                                for (k = 0; k < 81 && (byte_4B4530[3 * k] != String1 || byte_4B4531[3 * k] != v26); ++k)
+                                for (k = 0; k < 81 && (byte_4B4530[3 * k] != String1[0] || byte_4B4531[3 * k] != String1[1]); ++k)
                                     ;
                                 if (k < 81)
                                 {
@@ -41260,7 +41402,7 @@ int sub_457F11(int thisx)
                             }
                             else if (v29)
                             {
-                                for (m = 0; m < 10 && (byte_4B4644[3 * m] != String1 || byte_4B4645[3 * m] != v26); ++m)
+                                for (m = 0; m < 10 && (byte_4B4644[3 * m] != String1[0] || byte_4B4645[3 * m] != String1[1]); ++m)
                                     ;
                                 if (m < 10)
                                 {
@@ -52822,7 +52964,7 @@ void sub_4747D2(int* thisx, int a2, int a3)
     }
 }
 
-
+//thisx = B10
 void sub_47482E(int thisx)
 {
     *(int*)(thisx + 104) = 4;
@@ -52835,7 +52977,7 @@ void sub_47482E(int thisx)
     (*(void(**)(int, int))(*(int*)(thisx + 15680) + 4))(thisx + 15680, 0);
     (*(void(**)(int, int))(*(int*)(thisx + 15716) + 4))(thisx + 15716, 0);
     (*(void(**)(int, int))(*(int*)(thisx + 15752) + 4))(thisx + 15752, 0);
-    (*(void(**)(int, int))(*(int*)(thisx + 15788) + 4))(thisx + 15788, 1);
+    (*(void(**)(int, int))          (*      (int*)(thisx + 15788)    + 4)        )     (thisx + 15788, 1);//这里应该是进入sub_48E6E0才对
     sub_4756B0((char*)(thisx + 15788), 8, 7);
     sub_48089C(thisx + 15788, 0);
     *(int*)(thisx + 15640) = thisx + 15788;
@@ -53859,6 +54001,7 @@ char* sub_475FA0(char* thisx)
     return thisx;
 }
 //tmd,这里才是接收键盘输入
+//this是player_list列表的一个成员，一般是第0个或第二个
 BOOL sub_476009(char* thisx)
 {
 
@@ -53878,8 +54021,8 @@ BOOL sub_476009(char* thisx)
 
     if (*(int*)thisx)
         return joyGetPosEx(*((int*)thisx + 1), (LPJOYINFOEX)(thisx + 24)) == 0;
-    *((int*)thisx + 9) = 1;//W和S的按键标志位，初始化
-    *((int*)thisx + 8) = 1;//A和D的按键标志位，初始化
+    *((int*)thisx + 9) = 1;//W和S的按键标志位，初始化//4*9=36
+    *((int*)thisx + 8) = 1;//A和D的按键标志位，初始化//4*8=32
     *((int*)thisx + 14) = 0;//按钮区按键的标志位，初始化，位标志，一个位表示一个按键标志位
     if (GetAsyncKeyState((unsigned __int8)thisx[92]) < 0)//W
     {
@@ -53915,30 +54058,30 @@ BOOL sub_476009(char* thisx)
         LOBYTE(v2) = v2 | 2;
         *((int*)thisx + 14) = v2;
     }
-    if (GetAsyncKeyState((unsigned __int8)thisx[98]) < 0)//l
+    if (GetAsyncKeyState((unsigned __int8)thisx[98]) < 0)//I
     {
-        printf("L被按下\n");
+        printf("I被按下\n");
         v3 = *((int*)thisx + 14);
         LOBYTE(v3) = v3 | 4;
         *((int*)thisx + 14) = v3;
     }
-    if (GetAsyncKeyState((unsigned __int8)thisx[99]) < 0)//u
+    if (GetAsyncKeyState((unsigned __int8)thisx[99]) < 0)//L
     {
-        printf("U被按下\n");
+        printf("L被按下\n");
         v4 = *((int*)thisx + 14);
         LOBYTE(v4) = v4 | 8;
         *((int*)thisx + 14) = v4;
     }
-    if (GetAsyncKeyState((unsigned __int8)thisx[100]) < 0)//i
+    if (GetAsyncKeyState((unsigned __int8)thisx[100]) < 0)//U
     {
-        printf("I被按下\n");
+        printf("U被按下\n");
         v5 = *((int*)thisx + 14);
         LOBYTE(v5) = v5 | 16;
         *((int*)thisx + 14) = v5;
     }
-    if (GetAsyncKeyState((unsigned __int8)thisx[101]) < 0)//o
+    if (GetAsyncKeyState((unsigned __int8)thisx[101]) < 0)//空格键
     {
-        printf("O被按下\n");
+        printf("空格键被按下\n");
         v6 = *((int*)thisx + 14);
         LOBYTE(v6) = v6 | 32;
         *((int*)thisx + 14) = v6;
@@ -55526,6 +55669,8 @@ UINT sub_479090()
     return sub_450FF8((int)byte_4B9B10, FileName);//读取配置文件
 }
 
+
+//CharData.txt配置项数据读取
 int sub_4790CD()
 {
   
@@ -55839,6 +55984,8 @@ int sub_4790CD()
         return 0;
     }
 }
+
+//Data\CheerGirlData.txt配置项的数据读取
 int sub_479E2A()
 {
 
@@ -56385,6 +56532,7 @@ int __cdecl sub_47A8B4(HANDLE hFile)
     return 1;
 }
 
+//皮肤颜色txt配置项的数据读取
 int sub_47AA55()
 {
 
@@ -56605,16 +56753,16 @@ int sub_47AC9D()
     v16 = (__int16*)&byte_4B92FA;
     if (!sub_47A55C(v11, (int)&v13, (int)&v14, (int)&v15, (int)&v16, v12))
         return 0;
-    if (!sub_47AA55())
+    if (!sub_47AA55())//皮肤颜色txt配置项的数据读取
         return 0;
-    if (!sub_4790CD())
+    if (!sub_4790CD())//CharData.txt配置项数据读取
         return 0;
-    if (!sub_479E2A())
+    if (!sub_479E2A())//Data\CheerGirlData.txt配置项的数据读取
         return 0;
     v10 = 0;
     dword_4B9398 = 0;
     streambuf::unbuffered((streambuf*)dword_4B93A4, 1);
-    for (i = 0; i < (int)dword_4B93A0; ++i)
+    for (i = 0; i < (int)dword_4B93A0; ++i)//txt配置下效行的行数
     {
         if (unknown_libname_17((int*)dword_4B93A4 + 6 * i))
         {
@@ -56778,7 +56926,7 @@ int __cdecl sub_47B7ED(int a1, int a2, LPCSTR lpString, int a4, int a5)
 
 
 
-    Warning();//修正堆栈
+    //修正堆栈
     check_stack c(__FILE__, __LINE__);
     char v11_tc[44];
     int v11; // [esp+24h] [ebp-30h]
@@ -56791,6 +56939,29 @@ int __cdecl sub_47B7ED(int a1, int a2, LPCSTR lpString, int a4, int a5)
     int v6; // [esp+4h] [ebp-50h]
     int result; // eax
 
+    const char* var = R"(
+    char v11_tc[44];
+    int v11; // [esp+24h] [ebp-30h]
+    int v10; // [esp+20h] [ebp-34h]
+    int v9; // [esp+1Ch] [ebp-38h] BYREF
+
+
+    struct tagRECT rc; // [esp+Ch] [ebp-48h] BYREF
+    int i; // [esp+8h] [ebp-4Ch]
+    int v6; // [esp+4h] [ebp-50h]
+    )";
+    if (!check_stack_fun2({
+        TO(c)
+        TO(v11)
+        TO(v10)
+        TO(v9)
+        TO(rc)
+        TO(i)
+        TO(v6)
+        }, 0x50, var, 1))
+    {
+        __asm int 3
+    }
 
     sub_49C15E((int)&v9);//初始化，赋值常数
 
@@ -56940,16 +57111,17 @@ int __cdecl sub_47B91A(int a1, int a2, LPCSTR lpString, int a4, int a5)
             {
                 for (k = 0; k < 10; ++k)
                 {
-                    if (String1[0] == byte_get_value(0x4B4624,3 * k) && String1[1] == byte_get_value(0x4B4625,3 * k))
+                    if (String1[0] == byte_4B4624[3 * k] && String1[1] == byte_4B4625[3 * k])
                     {
                         v11 = 1;
-                        String1[0] = byte_get_value(0x4B4644, 3 * k);
-                        String1[1] = byte_get_value(0x4B4645, 3 * k);
+                        String1[0] = byte_4B4644[3 * k];
+                        String1[1] = byte_4B4645[3 * k];
                         break;
                     }
                 }
             }
-            for (m = 0; m < 246 && (String1[0] != byte_get_value(0x4B4158,3 * m) || String1[1] != byte_get_value(0x4B4159, 3 * m)); ++m)
+
+            for (m = 0; m < 246 && (String1[0] != byte_4B4158[3 * m] || String1[1] != byte_4B4159[3 * m]); ++m)
                 ;//????
             if (m != 246)
             {
@@ -59910,15 +60082,16 @@ void sub_47FDAB(void* thisx)
 }
 
 //其实这个this就是给单指针，根本没用到**this这个用法
+//*byte_4B9B10[15800] 是这个位置的值，这个值是内存块地址
 LPSTR sub_47FE10(void** thisx, LPCSTR lpString)
 {
     int v4; // [esp+Ch] [ebp-4h]
 
     if (*thisx)
         delete2(*thisx);//可能内存泄露
-    v4 = lstrlenA(lpString);
-    *thisx = new2(v4 + 1);
-    return lstrcpyA((LPSTR)*thisx, lpString);
+    v4 = lstrlenA(lpString);//计算字符串的长度
+    *thisx = new2(v4 + 1);//申请可以保存字符串大小的内存块
+    return lstrcpyA((LPSTR)*thisx, lpString);//把字符串保存到该内存块
 }
 
 //汇编的push还是从左到右的顺序的
@@ -59932,6 +60105,9 @@ int  sub_47FE72(int* thisx, LPCSTR lpString, int a3, int a4, int a5, int a6)
 }
 
 //初始化
+// *byte_4B9B10[15800] 是这个位置的值，这个值是内存块地址
+//this本身是一块内存，a4 = 2
+//初始化并设置战场难度
 int  sub_47FEB2(int thisx, LPCSTR lpString, void* Src, int a4)
 {
     //修正堆栈
@@ -59943,12 +60119,13 @@ int  sub_47FEB2(int thisx, LPCSTR lpString, void* Src, int a4)
     int v6; // [esp+14h] [ebp-10h]
 
 
-    sub_47FE10((void**)thisx, lpString);
+    sub_47FE10((void**)thisx, lpString);//*thisx存着一个内存地址，该内存地址指向存着该字符串的内存块
     if (*(int*)(thisx + 8))
         delete2(*(void**)(thisx + 8));
     if (*(int*)(thisx + 12))
         delete2(*(void**)(thisx + 12));
     v7 = 0;
+    
     for (i = 0; ; ++i)
     {
         v6 = lstrlenA((LPCSTR)Src + v7);
@@ -59956,23 +60133,23 @@ int  sub_47FEB2(int thisx, LPCSTR lpString, void* Src, int a4)
             break;
         v7 += v6 + 1;
     }
-    *(int*)(thisx + 8) = (int)new2(v7 + 1);
-    *(int*)(thisx + 12) = (int)new2(2 * i);
+    *(int*)(thisx + 8) = (int)new2(v7 + 1);//v7表示i个字符串总长度
+    *(int*)(thisx + 12) = (int)new2(2 * i);//i表示有几段字符串再*2的内存块大小
     memcpy(*(void**)(thisx + 8), Src, v7 + 1);
     v8 = 0;
     for (j = 0; j < i; ++j)
     {
         *(short*)(*(int*)(thisx + 12) + 2 * j) = v8;
-        v8 += lstrlenA((LPCSTR)Src + v8) + 1;
+        v8 += lstrlenA((LPCSTR)Src + v8) + 1;//把*(short*)(*(int*)(thisx + 12)内存块用来当作short数组每个成员存储每段字符串的长度
     }
     *(int*)(thisx + 4) = 1;
     *(int*)(thisx + 20) = 0;
     *(int*)(thisx + 24) = i - 1;
-    return sub_480016((int*)thisx, a4);
+    return sub_480016((int*)thisx, a4);//设置战场难度
 }
 
 
-//set
+//set，可能是设置战场难度
 int sub_480016(int* thisx, int a2)
 {
     int result; // eax
@@ -60309,7 +60486,7 @@ void sub_48070C(streambuf* thisx, int a2)
     streambuf::unbuffered(thisx, a2 == 0);
 }
 
-//初始化
+//初始化//this = byte_4B9B10 + 15788，a2 = 9
 int sub_480737(int* thisx, int a2)
 {
     int* v3; // [esp+0h] [ebp-2Ch]
@@ -60473,7 +60650,7 @@ int* sub_480B90(int* thisx, char a2)
 int* sub_480BC0(int* thisx)
 {
     sub_47FC70(thisx);
-    *thisx = off_4AC304;
+    *thisx = (int)off_4AC304;
     sub_480737(thisx, 8);
     sub_47FE72((int*)thisx[3], (LPCSTR)&byte_4AF907, 1, 1, 9, 3);
     sub_47FEB2(thisx[3] + 32, (LPCSTR)&byte_4AF949, &byte_4AF9BB, 0);
@@ -60493,7 +60670,7 @@ int* sub_480BC0(int* thisx)
 //不管，析构函数
 void sub_480D15(int* thisx)
 {
-    *thisx = off_4AC304;
+    *thisx = (int)off_4AC304;
     sub_47FCCF(thisx);
 }
 
@@ -60552,7 +60729,7 @@ char* sub_480F10(char* thisx)
 int* sub_480F30(int* thisx)
 {
     sub_47FC70(thisx);
-    *thisx = off_4AC318;
+    *thisx = (int)off_4AC318;
     sub_480737(thisx, 4);
     sub_47FE72((int*)thisx[3], (LPCSTR)&byte_4AFC1A, 0, 0, 0, 0);
     sub_47FEB2(thisx[3] + 32, (LPCSTR)&byte_4AFC4C, &byte_4AFB11, 1);
@@ -60569,7 +60746,7 @@ int* sub_480F30(int* thisx)
 //不管，析构函数
 void sub_481010(int* thisx)
 {
-    *thisx = off_4AC318;
+    *thisx = (int)off_4AC318;
     sub_47FCCF(thisx);
 }
 
@@ -61459,8 +61636,8 @@ void sub_482C42(void** thisx)
 
 
 //把Stage\\Stage%02d_data.txt文件内容拷贝到new内存空间，new内存地址保存在int[0]
- //1，是一个4个int大小的数组
-//2，是Stage\\Stage%02d_data.txt文件路径
+ //thisx，是一个4个int大小的数组,sub_482BF0对象
+//lpFileName，是Stage\\Stage%02d_data.txt文件路径
 int sub_482C74(int thisx, LPCSTR lpFileName)
 {
     //    HANDLE hFile; // [esp+8h] [ebp-8h]
@@ -62904,7 +63081,7 @@ int sub_485180(int* thisx, int a2)
 char* sub_4851A0(char* thisx)
 {
     sub_47FC70(thisx);
-    *(int*)thisx = off_4AC338;
+    *(int*)thisx = (int)off_4AC338;
     thisx[4] = 10;
     thisx[5] = 14;
     thisx[6] = 19;
@@ -62915,7 +63092,7 @@ char* sub_4851A0(char* thisx)
 //不管，析构函数
 void sub_4851DB(int* thisx)
 {
-    *thisx = off_4AC338;
+    *thisx = (int)off_4AC338;
     sub_47FCCF(thisx);
 }
 
@@ -63116,7 +63293,7 @@ int* sub_485720(int* thisx, char a2)
 char* sub_485750(char* thisx)
 {
     sub_47FC70(thisx);
-    *(int*)thisx = off_4AC34C;
+    *(int*)thisx = (int)off_4AC34C;
     thisx[4] = 23;
     thisx[5] = 8;
     thisx[6] = 15;
@@ -63127,7 +63304,7 @@ char* sub_485750(char* thisx)
 //不管，析构函数
 void sub_48578B(int* thisx)
 {
-    *thisx = off_4AC34C;
+    *thisx = (int)off_4AC34C;
     sub_47FCCF(thisx);
 }
 
@@ -63335,9 +63512,9 @@ int sub_485BCA(int thisx, int* a2)
                 *(int*)(thisx + 20) = (int)new2(4 * *(unsigned __int16*)(thisx + 12));
             }
             break;
-            // 第三字段（循环）：将当前字符串转换为 byte，写入 thisx + 16 的缓冲区第 v4 项
+            // 第三字段（循环）：将当前字符串转换为 char，写入 thisx + 16 的缓冲区第 v4 项
         case 2:
-            *(char*)(*(int*)(thisx + 16) + v4) = atoi(String);
+            *   (char*)    (*(int*)(thisx + 16) + v4) = atoi(String);
             break;
         case 3:
 
@@ -69482,7 +69659,7 @@ int sub_48E1DB(int* thisx, int a2, int a3, int a4)
 //不管，析构函数
 void sub_48E374(int* thisx)
 {
-    *thisx = off_4AC374;
+    *thisx = (int)off_4AC374;
     sub_47FCCF(thisx);
 }
 
@@ -69557,7 +69734,7 @@ int* sub_48E960(int* thisx, char a2)
 char* sub_48E990(char* thisx)
 {
     sub_47FC70(thisx);
-    *(int*)thisx = off_4AC38C;
+    *(int*)thisx = (int)off_4AC38C;
     thisx[4] = 3;
     thisx[5] = 13;
     thisx[6] = 32;
@@ -69568,7 +69745,7 @@ char* sub_48E990(char* thisx)
 //不管，析构函数
 void sub_48E9CB(int* thisx)
 {
-    *thisx = off_4AC38C;
+    *thisx = (int)off_4AC38C;
     sub_47FCCF(thisx);
 }
 
@@ -69764,7 +69941,7 @@ int* sub_48F020(int* thisx, char a2)
 char* sub_48F050(char* thisx)
 {
     sub_47FC70(thisx);
-    *(int*)thisx = off_4AC3A0;
+    *(int*)thisx = (int)off_4AC3A0;
     thisx[4] = 5;
     thisx[5] = 14;
     thisx[6] = 28;
@@ -69775,7 +69952,7 @@ char* sub_48F050(char* thisx)
 //不管，析构函数
 void sub_48F08B(int* thisx)
 {
-    *thisx = off_4AC3A0;
+    *thisx = (int)off_4AC3A0;
     sub_47FCCF(thisx);
 }
 
@@ -69986,6 +70163,7 @@ int sub_48F682(int thisx)
     return result;
 }
 
+//this是一块内存地址，以存取*.dat文件的数据
 int sub_48F6C5(LPVOID* thisx, HANDLE hFile)
 {
     DWORD NumberOfBytesRead; // [esp+8h] [ebp-4h] BYREF
@@ -78362,7 +78540,7 @@ void sub_4A148B(void** thisx)
 }
 
 //ai
-//thisx =  *byte_4BDC60[12609]    lpFileName = aGraphicSystem的路径
+//thisx =  *byte_4BDC60[12609]申请的内存块    lpFileName = aGraphicSystem的路径
 //把文件内的数据读取到内存
 ////加载文件函数3
 int sub_4A14C0(short* thisx, LPCSTR lpFileName)
@@ -78371,9 +78549,9 @@ int sub_4A14C0(short* thisx, LPCSTR lpFileName)
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
     DWORD NumberOfBytesRead; // [esp+18h] [ebp-4h] BYREF
-    int v6; // [esp+14h] [ebp-8h]
+    int v6; // [esp+14h] [ebp-8h]           // 临时变量，用来存储调色板颜色数量
     HANDLE hFile; // [esp+10h] [ebp-Ch]
-    int v4; // [esp+Ch] [ebp-10h]
+    int v4; // [esp+Ch] [ebp-10h]       // 图像高度（取绝对值）
 
     const char* var = R"(
     DWORD NumberOfBytesRead; // [esp+18h] [ebp-4h] BYREF
@@ -78394,65 +78572,95 @@ int sub_4A14C0(short* thisx, LPCSTR lpFileName)
 
 
     hFile = CreateFileA(lpFileName,
-        0x80000000,//请求对文件或设备的访问权限，可以汇总为读取、写入或 0，以指示两者都不) 。
-        0,//请求的文件或设备的共享模式
-        0, //指向 SECURITY_ATTRIBUTES结构
-        3,//要对存在或不存在的文件或设备执行的操作。
-        128,//文件或设备属性和标志 ，FILE_ATTRIBUTE_NORMAL 是文件最常见的默认值。
+        0x80000000,//请求对文件或设备的访问权限，可以汇总为读取、写入或 0，以指示两者都不) 。GENERIC_READ
+        0,//请求的文件或设备的共享模式，// 不共享
+        0, //指向 SECURITY_ATTRIBUTES结构// 默认安全属性
+        3,//要对存在或不存在的文件或设备执行的操作。OPEN_EXISTING,    // 文件必须存在
+        128,//文件或设备属性和标志 ，FILE_ATTRIBUTE_NORMAL 是文件最常见的默认值。FILE_ATTRIBUTE_NORMAL,
         0);//具有 GENERIC_READ 访问权限的模板文件的有效句柄。
 
     if (hFile == (HANDLE)-1)
         return 0;
+
+    // 读取 BMP 文件头（14 字节）
     ReadFile(hFile, thisx, 14, (LPDWORD)&NumberOfBytesRead, 0);
 
     if (NumberOfBytesRead != 14 || *thisx != 19778)
         return 0;
 
+    // 读取 BMP 信息头（40 字节）
     //以char来说，this + 16
     ReadFile(hFile, thisx + 8, 40, (LPDWORD)&NumberOfBytesRead, 0);
     if (NumberOfBytesRead != 40)
         return 0;
 
+    // 检查位深度是否为 8 位（每像素 1 字节，对应调色板索引）
     //以char来说，this + 30
     if (thisx[15] != 8)
         return 0;
+
+    // 检查压缩方式是否为 0（BI_RGB，未压缩）
     //以char来说，this + 32
     if (*((int*)thisx + 8))
         return 0;
+
+    // 获取颜色表颜色数（256）
     //以char来说，this + 48
     v6 = *((int*)thisx + 12);
     if (!v6)
     {
+
+        
         //以char来说，this + 48
         *((int*)thisx + 12) = 256;
         v6 = 256;
     }
+
+    // 计算每行实际字节宽度（4 字节对齐）
     //以char来说，this + 56
     *((int*)thisx + 14) = (*((int*)thisx + 5) + 3) & 0xFFFFFFFC;
+
+    // 如果 image size 为 0，则计算它（高 * 每行字节）
     //以char来说，this + 36
     if (!*((int*)thisx + 9))
     {
         //以char来说，this + 24
-        v4 = *((int*)thisx + 6);
+        v4 = *((int*)thisx + 6);// 图像高度
         if (v4 < 0)
             v4 = -v4;
         //以char来说，this + 36                         //以char来说，this + 56
         *((int*)thisx + 9) = v4 * *((int*)thisx + 14);
     }
+
+    // 清空调色板区域（调色板最多 256 个，每个 4 字节，共 1024 字节）
     //以char来说，this + 64
     memset(thisx + 32, 0, 1024);
+
+    // 读取调色板数据（v6 个 RGBQUAD，每个 4 字节）
     //以char来说，this + 64
     ReadFile(hFile, thisx + 32, 4 * v6, (LPDWORD)&NumberOfBytesRead, 0);
+
+    // 释放之前的图像数据内存（如果有）
     //以char来说，this + 60
     if (*((int*)thisx + 15))
         //以char来说，this + 60
         delete2(*((void**)thisx + 15));
+
+    // 分配新的图像数据内存（大小 = image size）
     //以char来说，this + 60                             //以char来说，this + 36
     *((int*)thisx + 15) = (int)new2(*((int*)thisx + 9));
+
+    // 定位文件指针到图像数据开始位置（位图偏移）
     SetFilePointer(hFile, *(int*)(thisx + 5), 0, 0);
+
+    // 读取图像数据到 newly 分配的内存
     //以char来说，this + 60                     //以char来说，this + 36
     ReadFile(hFile, *((LPVOID*)thisx + 15), *((int*)thisx + 9), (LPDWORD)&NumberOfBytesRead, 0);
+
+    // 额外标志清零（通常用于状态标记）
     *((char*)thisx + 1344) = 0;
+
+    //关闭文件
     CloseHandle(hFile);
     return 1;
 }
@@ -78953,45 +79161,45 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
         __asm int 3
     }
 
-    dword_4B93A4 = 0;//streambuf是某未解析的类，dword_4B93A4是这个类的指针
+    dword_4B93A4 = 0;//streambuf是某未解析的类，dword_4B93A4是这个类的指针，//皮肤颜色txt配置项的小对象数组的地址
 
-    Src = 0;
-    dword_4B9394 = 0;
+    Src = 0;//txt有效行数乘以2的内存块大小，2 * dword_4B93A0
+    dword_4B9394 = 0;//txt有效行数乘以8的内存块大小，8 * dword_4B93A0的地址
 
     for (i = 0; i < 4; ++i)
     {
         //*(&dword_4B9380 + i) = 0;
         //dword_4B9370[i] = 0;????
         //更好的代码
-        dword_4B9370[i] = 0;
-        dword_4B9370[i] = 0;
+        dword_4B9370[i] = 0;//txt有效行数乘以2的内存块地址，2 * dword_4B93A0
+        dword_4B9370[i] = 0;//txt有效行数乘以2的内存块地址，2 * dword_4B93A0
     }
-    dword_4B92E0 = 0;
-    dword_4B92DC = 0;
-    Size = 0;
-    dword_4B92D4 = 0;
-    dword_4B92D8 = 0;
+    dword_4B92E0 = 0;//CharData.txt配置项的小对象数组的地址
+    dword_4B92DC = 0; //CharData.txt配置项的有效项或行的数量这么大内存块的地址
+    Size = 0; //CharData.txt配置项的有效项或行的数量
+    dword_4B92D4 = 0; //CheerGirlData.txt配置项的小对象数组的地址
+    dword_4B92D8 = 0;//CheerGirlData.txt配置项的有效行或有效项数量
     for (i = 0; i < 6; ++i)
     {
-        dword_4B9348[i] = 0;
-        dword_4B9324[i] = 0;
+        dword_4B9348[i] = 0; //tp01-05.dat的小对象数组的地址
+        dword_4B9324[i] = 0;//CG01-05.dat的小对象数组的地址，可能用同一个资源创建两个不同的对象
     }
     for (i = 0; i < 2; ++i)
     {
-        dword_4B9308[i] = 0;
-        dword_4B92FC[i] = 0;
+        dword_4B9308[i] = 0; //misuzu_tp.dat小对象数组的地址
+        dword_4B92FC[i] = 0;//misuzu_tp.dat小对象数组的地址
         //*(dword_4B9310 + i) = 0;????
         //更好的代码
-        dword_4B9310[i] = 0;
+        dword_4B9310[i] = 0;//SpCharGraphic%02d.txt配置项的小对象数组的地址
     }
     for (i = 0; i < 14; ++i)
     {
-        word_4B99AC[i] = 10;
+        word_4B99AC[i] = 10;////读取了某个文件的数据配置，
     }
 
-    dword_4B92F0 = 0;
-    dword_4B92E8 = 0;
-    dword_4B9368 = 0;
+    dword_4B92F0 = 0;//WeaponTP.dat资源的小对象数组的地址
+    dword_4B92E8 = 0;//WeaponCG.dat资源的小对象数组的地址
+    dword_4B9368 = 0;//头部资源文件的高度 / 8，也就是有多少行资源，有64行资源，64再乘以4的大小，256
     dword_4B9364 = 0;//头部资源文件的高度 / 8，也就是有多少行资源，有64行资源，64再乘以4的大小，256
     dword_4B9360 = 0;//头部资源文件的高度 / 8，也就是有多少行资源，有64行资源，64再乘以4的大小，256
     dword_4B93B0 = 0; //逻辑帧计数器，用于记录总的逻辑帧数
@@ -81177,7 +81385,7 @@ char* sub_4428D0(char* thisx)
     sub_483390((int*)(thisx + 13400));//强转//这个后面的+会根据前面强制转换的指针类型而改变大小。也会根据他本来的类型，改变，例如int*类型+1，其实就是this+4字节，这个只限于指针类型
     //36大小，4个
     eh_vector_constructor_iterator(thisx + 15644, 36, 4, sub_47FC70, sub_47FCCF);
-    sub_48E210((int*)(thisx + 15788));
+    sub_48E210((int*)(thisx + 15788));//战场设置相关的初始化
     sub_4851A0((char*)(thisx + 15824));
     sub_48F050((char*)(thisx + 15860));
     sub_48E990((char*)(thisx + 15896));
@@ -81306,23 +81514,31 @@ LONG(__stdcall* sub_4A655B())(struct _EXCEPTION_POINTERS* ExceptionInfo)
     return result;
 }
 
-//战场设置相关
-//thsi = byte_4B9B10 + 15788
+//故事模式战场设置相关初始化
+// 
+//this = byte_4B9B10 + 15788
 int* sub_48E210(int* thisx)
 {
     sub_47FC70(thisx);
-    *thisx = off_4AC374; //sub_48E820
-    sub_480737(thisx, 9);
-    sub_47FEB2(thisx[3], (LPCSTR)&byte_4B1F62, &byte_4B1F9C, 2); //难度//１......２....３....４......５........
+    *thisx = (int)off_4AC374; //sub_48E820
+    sub_480737(thisx, 9);//初始化sub_47FD4E对象9个，分别对应下面的9个配置项，地址保存在byte_4B9B10 + 15788 + 12，9这个数量保存在byte_4B9B10 + 15788 + 16
+    //初始化并设置战场难度
+    sub_47FEB2(thisx[3], (LPCSTR)&byte_4B1F62, &byte_4B1F9C, 2); //注意是取值操作，把thisx[3]的值送入堆栈，//byte_4B1F62 难度   //byte_4B1F9C １......２....３....４......５........
+    //FC模式设置初始化
     sub_47FEB2(thisx[3] + 32, (LPCSTR)&byte_4B21D4, &byte_4B0C59, 0);//模式 ＯＦＦＯＮ
+    //CPU队伍设置初始化
     sub_47FEB2(thisx[3] + 64, (LPCSTR)&byte_4B2246, &byte_4B1FC8, 0); //队伍设置//　　Ａ　　Ｂ
-
+    //武器初始化
     sub_47FE72((int*)&thisx[3] + 96, (LPCSTR)&byte_4B22F2, 1, 0, 8, 4); //武器//这里可能不是取地址数据再强转类型，而是取地址,这里和反编译的代码不一样
+    //全部人员数量初始化
     sub_47FE72((int*)&thisx[3] + 128, (LPCSTR)&byte_4B2352, 1, 2, 16, 8);//队伍数量
-    sub_47FE72((int*)&thisx[3] + 160, byte_4B23F0, 1, 2, 4, 4);//你可以改变武器出现的概率
-
+    //比赛队伍数量初始化
+    sub_47FE72((int*)&thisx[3] + 160, byte_4B23F0, 1, 2, 4, 4);//日文字符串参数？？？？
+    //合体技初始
     sub_47FEB2(thisx[3] + 192, (LPCSTR)&byte_4B2746, &byte_4B0C59, 1);//合体技//ＯＦＦＯＮ
+    //伤害陷阱初始化
     sub_47FEB2(thisx[3] + 224, (LPCSTR)&byte_4B279E, &byte_4B2A50, 1);//伤害陷阱 关
+    //死亡陷阱初始化
     sub_47FEB2(*((int*)thisx + 3) + 256, (LPCSTR)&byte_4B2A5D, &byte_4B2A75, 0);//死亡陷阱 , off on
     *((char*)thisx + 7) = 16;
     *((char*)thisx + 6) = 25;
@@ -81872,7 +82088,7 @@ int __cdecl __strgtold12(int a1, char** a2, char* a3, int a4, int a5, int a6, in
         case 0:
             if (v10 >= 49 && v10 <= 57)
                 goto LABEL_10;
-            if (v10 == *(byte*)byte_4B8624)
+            if (v10 == *(char*)byte_4B8624)
                 goto LABEL_12;
             if (v10 == 43)
             {
@@ -81893,7 +82109,7 @@ int __cdecl __strgtold12(int a1, char** a2, char* a3, int a4, int a5, int a6, in
             v45 = 1;
             if (v10 >= 49 && v10 <= 57)
                 goto LABEL_10;
-            if (v10 == *(byte*)byte_4B8624)
+            if (v10 == *(char*)byte_4B8624)
                 goto LABEL_46;
             if (v10 == 43 || v10 == 45)
                 goto LABEL_30;
@@ -81912,7 +82128,7 @@ int __cdecl __strgtold12(int a1, char** a2, char* a3, int a4, int a5, int a6, in
             }
             else
             {
-                if (v10 == *(byte*)byte_4B8624)
+                if (v10 == *(char*)byte_4B8624)
                 {
                 LABEL_12:
                     v31 = 5;
@@ -81947,7 +82163,7 @@ int __cdecl __strgtold12(int a1, char** a2, char* a3, int a4, int a5, int a6, in
                 }
                 v10 = *v7++;
             }
-            if (v10 != *(byte*)byte_4B8624)
+            if (v10 != *(char*)byte_4B8624)
                 goto LABEL_57;
         LABEL_46:
             v8 = 4;
@@ -82518,7 +82734,7 @@ char* __cdecl _cropzeros(char* a1)
     v1 = a1;
     for (i = *a1; i; i = *++v1)
     {
-        if (i == *(byte*)byte_4B8624)
+        if (i == *(char*)byte_4B8624)
             break;
     }
     v3 = *v1;
@@ -82536,7 +82752,7 @@ char* __cdecl _cropzeros(char* a1)
         do
             --result;
         while (*result == 48);
-        if (*result == *(byte*)byte_4B8624)
+        if (*result == *(char*)byte_4B8624)
             --result;
         do
         {
@@ -82676,7 +82892,7 @@ char __cdecl _forcdecpt(char* a1)
         } while (v2);
     }
     result = *v1;
-    *v1 = *(byte*)byte_4B8624;
+    *v1 = *(char*)byte_4B8624;
     v4 = v1 + 1;
     do
     {
@@ -83027,8 +83243,86 @@ int __cdecl flsall(int a1)
 }
 */
 
+void ios::delbuf(ios* thisx, int a2)
+{
+    *((_DWORD*)thisx + 7) = a2;
+}
 
+int sub_48E390(int thisx)
+{
+    struct Concurrency::details::_CancellationTokenState* v1; // esi
+    struct Concurrency::details::_CancellationTokenState* v2; // esi
+    int v5; // [esp+8h] [ebp-Ch]
+    unsigned __int8* v6; // [esp+Ch] [ebp-8h]
+    int v7; // [esp+10h] [ebp-4h]
 
+    v6 = (unsigned __int8*)sub_47EFA0((char*)byte_4B9B10);
+    sub_480016(*(_DWORD**)(thisx + 12), v6[369]);
+    sub_480016((_DWORD*)(*(_DWORD*)(thisx + 12) + 32), v6[228]);
+    sub_480016((_DWORD*)(*(_DWORD*)(thisx + 12) + 64), v6[371]);
+    sub_480016((_DWORD*)(*(_DWORD*)(thisx + 12) + 96), v6[178]);
+    sub_480016((_DWORD*)(*(_DWORD*)(thisx + 12) + 128), v6[252]);
+    ios::delbuf((ios*)(*(_DWORD*)(thisx + 12) + 128), v6[376]);
+    sub_480016((_DWORD*)(*(_DWORD*)(thisx + 12) + 160), v6[376]);
+    sub_480016((_DWORD*)(*(_DWORD*)(thisx + 12) + 192), v6[224]);
+    sub_480016((_DWORD*)(*(_DWORD*)(thisx + 12) + 224), v6[247]);
+    sub_480016((_DWORD*)(*(_DWORD*)(thisx + 12) + 256), v6[248]);
+    v7 = sub_480227((_DWORD*)thisx);
+    v6[369] = (unsigned __int8)Concurrency::details::_CancellationTokenRegistration::_GetToken(*(Concurrency::details::_CancellationTokenRegistration**)(thisx + 12));
+    v6[228] = (unsigned __int8)Concurrency::details::_CancellationTokenRegistration::_GetToken((Concurrency::details::_CancellationTokenRegistration*)(*(_DWORD*)(thisx + 12) + 32));
+    v6[371] = (unsigned __int8)Concurrency::details::_CancellationTokenRegistration::_GetToken((Concurrency::details::_CancellationTokenRegistration*)(*(_DWORD*)(thisx + 12) + 64));
+    v6[178] = (unsigned __int8)Concurrency::details::_CancellationTokenRegistration::_GetToken((Concurrency::details::_CancellationTokenRegistration*)(*(_DWORD*)(thisx + 12) + 96));
+    v1 = (struct Concurrency::details::_CancellationTokenState*)v6[252];
+    if (v1 != Concurrency::details::_CancellationTokenRegistration::_GetToken((Concurrency::details::_CancellationTokenRegistration*)(*(_DWORD*)(thisx + 12) + 128)))
+    {
+        v6[252] = (unsigned __int8)Concurrency::details::_CancellationTokenRegistration::_GetToken((Concurrency::details::_CancellationTokenRegistration*)(*(_DWORD*)(thisx + 12) + 128));
+        if (v6[252] < 2u)
+            v6[252] = 2;
+        if (v6[252] > dword_4B92D0)
+            v6[252] = dword_4B92D0;
+    }
+    v2 = (struct Concurrency::details::_CancellationTokenState*)v6[376];
+    if (v2 != Concurrency::details::_CancellationTokenRegistration::_GetToken((Concurrency::details::_CancellationTokenRegistration*)(*(_DWORD*)(thisx + 12) + 160)))
+    {
+        v6[376] = (unsigned __int8)Concurrency::details::_CancellationTokenRegistration::_GetToken((Concurrency::details::_CancellationTokenRegistration*)(*(_DWORD*)(thisx + 12) + 160));
+        if (v6[376] >= 2u)
+        {
+            if (v6[376] > 4u)
+                v6[376] = 4;
+        }
+        else
+        {
+            v6[376] = 2;
+        }
+    }
+    v5 = v6[252] % (int)v6[376];
+    if (v5)
+        v6[252] -= v5;
+    if (v6[252] < (int)v6[376])
+        v6[252] = v6[376];
+    sub_480016((_DWORD*)(*(_DWORD*)(thisx + 12) + 128), v6[252]);
+    v6[224] = (unsigned __int8)Concurrency::details::_CancellationTokenRegistration::_GetToken((Concurrency::details::_CancellationTokenRegistration*)(*(_DWORD*)(thisx + 12) + 192));
+    v6[247] = (unsigned __int8)Concurrency::details::_CancellationTokenRegistration::_GetToken((Concurrency::details::_CancellationTokenRegistration*)(*(_DWORD*)(thisx + 12) + 224));
+    v6[248] = (unsigned __int8)Concurrency::details::_CancellationTokenRegistration::_GetToken((Concurrency::details::_CancellationTokenRegistration*)(*(_DWORD*)(thisx + 12) + 256));
+    return v7;
+}
 
+int sub_48E6E0(streambuf* thisx, int a2)
+{
+    unsigned __int8* v4; // [esp+4h] [ebp-4h]
+
+    sub_48070C(thisx, a2);
+    v4 = (unsigned __int8*)sub_47EFA0((char*)byte_4B9B10);
+    sub_480016(*((_DWORD**)thisx + 3), v4[369]);
+    sub_480016((_DWORD*)(*((_DWORD*)thisx + 3) + 32), v4[228]);
+    sub_480016((_DWORD*)(*((_DWORD*)thisx + 3) + 64), v4[371]);
+    sub_480016((_DWORD*)(*((_DWORD*)thisx + 3) + 96), v4[178]);
+    sub_480016((_DWORD*)(*((_DWORD*)thisx + 3) + 128), v4[252]);
+    ios::delbuf((ios*)(*((_DWORD*)thisx + 3) + 128), v4[376]);
+    sub_480016((_DWORD*)(*((_DWORD*)thisx + 3) + 160), v4[376]);
+    sub_480016((_DWORD*)(*((_DWORD*)thisx + 3) + 192), v4[224]);
+    sub_480016((_DWORD*)(*((_DWORD*)thisx + 3) + 224), v4[247]);
+    return sub_480016((_DWORD*)(*((_DWORD*)thisx + 3) + 256), v4[248]);
+}
 
 #endif

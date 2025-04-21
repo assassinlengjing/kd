@@ -1,7 +1,7 @@
 #pragma once
 
 #include "s.h" 
-extern dd off_4AC230;
+extern dd off_4AC230[];
 extern dd off_4AC244;//
 extern dd off_4AC248;//
 extern dd off_4AC24C;//
@@ -18,22 +18,22 @@ extern dd off_4AC2E4;//
 extern dd off_4AC2E8[];//
 extern dd off_4AC2FC;//
 extern dd off_4AC300;//
-extern dd off_4AC304;//
-extern dd off_4AC318;//
+extern dd off_4AC304[];//
+extern dd off_4AC318[];//
 extern dd off_4AC32C;//
 extern dd off_4AC330;//
 extern dd off_4AC334;//
-extern dd off_4AC338;//
-extern dd off_4AC34C;//
+extern dd off_4AC338[];//
+extern dd off_4AC34C[];//
 extern dd off_4AC360;//
 extern dd off_4AC364;//
 extern dd off_4AC368;//
 extern dd off_4AC36C;//
 extern dd off_4AC370;//
-extern dd off_4AC374;//
+extern dd off_4AC374[];//
 extern dd off_4AC388;//
-extern dd off_4AC38C;//
-extern dd off_4AC3A0;//
+extern dd off_4AC38C[];//
+extern dd off_4AC3A0[];//
 extern dd off_4AC3B4;//
 extern dd off_4AC3B8;//
 extern dd off_4AC3BC;//

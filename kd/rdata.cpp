@@ -2,15 +2,55 @@
 
 #include "s.h" 
 
-dd off_4AC230 = (dd)sub_401320;
+dd off_4AC230[] =
+{
+	(dd)sub_401320,
+	(dd)sub_401265,
+	(dd)sub_4805DF,
+	(dd)sub_4803D8,
+	(dd)sub_401135,
+};
 dd off_4AC244 = (dd)sub_4016C0;
 dd off_4AC248 = (dd)sub_47EC30;
 dd off_4AC24C = (dd)sub_4759D0;
 dd off_4AC250 = (dd)sub_425B40;//不管
+
+/*
+* .rdata:004AC258 dbl_4AC258      dq 1.25                 ; DATA XREF: sub_41CA5F+5C↑r
+.rdata:004AC258                                         ; sub_426990+9568↑r ...
+.rdata:004AC260 dbl_4AC260      dq 1.5                  ; DATA XREF: sub_41D067+58↑r
+.rdata:004AC260                                         ; sub_426990+1502↑r ...
+.rdata:004AC268 dbl_4AC268      dq 0.2                  ; DATA XREF: sub_41D84A+AE4↑r
+.rdata:004AC270 dbl_4AC270      dq 0.9                  ; DATA XREF: sub_41D84A+88E↑r
+.rdata:004AC278 dbl_4AC278      dq 3.0                  ; DATA XREF: sub_41D84A+72C↑r
+.rdata:004AC278                                         ; sub_426990+9697↑r
+.rdata:004AC280 dbl_4AC280      dq 1.2                  ; DATA XREF: sub_41D84A+726↑r
+.rdata:004AC280                                         ; sub_41D84A+767↑r ...
+.rdata:004AC288 dbl_4AC288      dq 1.4                  ; DATA XREF: sub_426990+C2C9↑r
+.rdata:004AC290 dbl_4AC290      dq 2.5                  ; DATA XREF: sub_426990+B487↑r
+.rdata:004AC290                                         ; sub_426990+1759D↑r
+.rdata:004AC298 dbl_4AC298      dq 1.7                  ; DATA XREF: sub_426990+ACD0↑r
+.rdata:004AC2A0 dbl_4AC2A0      dq 2.0                  ; DATA XREF: sub_426990+9A96↑r
+.rdata:004AC2A0                                         ; __d_inttype+38↑r
+.rdata:004AC2A8 dbl_4AC2A8      dq 1.3                  ; DATA XREF: sub_426990+8C45↑r
+.rdata:004AC2B0 dbl_4AC2B0      dq 800.0 
+*/
+
 dd off_4AC2B8 = (dd)sub_47ECC0;
 dd off_4AC2BC = (dd)sub_43F100;
 dd off_4AC2C0 = (dd)sub_43F330;
 dd off_4AC2C4 = (dd)sub_43F660;
+
+
+/*
+.rdata:004AC2C8 dbl_4AC2C8      dq 1000.0               ; DATA XREF: sub_43FFC3+21A↑r
+.rdata:004AC2C8                                         ; sub_440C1D+83↑r
+.rdata:004AC2D0 flt_4AC2D0      dd 100.0                ; DATA XREF: sub_43FFC3+206↑r
+.rdata:004AC2D0                                         ; sub_440C1D+6F↑r
+.rdata:004AC2D4 ; const CHAR Type[4]
+.rdata:004AC2D4 Type            db 'WAV',0
+*/
+
 dd off_4AC2D8 = (dd)sub_4428A0;
 dd off_4AC2DC = (dd)sub_474D80;
 dd off_4AC2E0 = (dd)sub_47F160;
@@ -27,28 +67,78 @@ dd off_4AC2E8[] =
 
 dd off_4AC2FC = (dd)sub_480A90;
 dd off_4AC300 = (dd)sub_480B90;
-dd off_4AC304 = (dd)sub_480EE0;
+dd off_4AC304[] =
+{
+	(dd)sub_480EE0,
+	(dd)sub_480DDD,
+	(dd)sub_4805DF,
+	(dd)sub_4803D8,
+	(dd)sub_480D31,
+};
 //
-dd off_4AC318 = (dd)sub_481090;
+dd off_4AC318[] =
+{
+	(dd)sub_481090,
+	(dd)sub_48102C,
+	(dd)sub_4805DF,
+	(dd)sub_4803D8,
+	(dd)sub_480227,
+};
 //
 dd off_4AC32C = (dd)sub_482B80;
 dd off_4AC330 = (dd)sub_482B50;
 dd off_4AC334 = (dd)sub_4850D0;
-dd off_4AC338 = (dd)sub_485720;
+dd off_4AC338[] =
+{
+	(dd)sub_485720,
+	(dd)sub_48070C,
+	(dd)sub_4856EF,
+	(dd)sub_485510,
+	(dd)sub_4851F7,
+};
 //
-dd off_4AC34C = (dd)sub_485AE0;
+dd off_4AC34C[] =
+{
+	(dd)sub_485AE0,
+	(dd)sub_485A7C,
+	(dd)sub_485A3A,
+	(dd)sub_4857A7,
+	(dd)sub_485955,
+};
 //
 dd off_4AC360 = (dd)sub_47EDB0;
 dd off_4AC364 = (dd)sub_489CF0;
 dd off_4AC368 = (dd)sub_475C40;//疑似地图析构函数
 dd off_4AC36C = (dd)sub_489EC0;
 dd off_4AC370 = (int)vector_deleting_destructor;
-dd off_4AC374 = (dd)sub_48E820;
+dd off_4AC374[] =
+{
+	(dd)sub_48E820,
+	(dd)sub_48E6E0,
+	(dd)sub_4805DF,
+	(dd)sub_4803D8,
+	(dd)sub_48E390
+};
+
 //
 dd off_4AC388 = (dd)sub_48E960;
-dd off_4AC38C = (dd)sub_48F020;
+dd off_4AC38C[] = 
+{
+	(dd)sub_48F020,
+	(dd)sub_48070C,
+	(dd)sub_48EFF1,
+	(dd)sub_48ECDE,
+	(dd)sub_48E9E7,
+};
 //
-dd off_4AC3A0 = (dd)sub_48F5E0;
+dd off_4AC3A0[] =
+{
+	(dd)sub_48F5E0,
+	(dd)sub_48070C,
+	(dd)sub_48F55F,
+	(dd)sub_48F3C5,
+	(dd)sub_48F0A7,
+};
 //
 dd off_4AC3B4 = (dd)(int)vector_deleting_destructor;
 dd off_4AC3B8 = (dd)sub_47ED30;
@@ -79,7 +169,6 @@ double _ST5;
 double _ST6;
 short word_4CA1F2;
 short word_4CA1F4;
-unsigned char* byte_4CA218;
 int* dword_4CB460;//不管
 char* byte_4B1F22;
 char* byte_4B1B38;
