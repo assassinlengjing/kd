@@ -112,6 +112,8 @@
       <StackReserveSize>3048576</StackReserveSize>
       <StackCommitSize>3048576</StackCommitSize>
       <Profile>false</Profile>
+      <SpecifySectionAttributes>
+      </SpecifySectionAttributes>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

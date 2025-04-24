@@ -792,10 +792,10 @@ BOOL sub_47644B(_DWORD* thisx);
 BOOL sub_47646A(_DWORD* thisx, char a2);
 BOOL sub_476485(_DWORD* thisx, char a2);
 void* sub_47652C(_DWORD* thisx, signed int a2);//初始化玩家手柄数据
-int sub_4768A2(int* thisx, char a2, char a3);
-char sub_4768BD(int* thisx, char a2);
+int sub_4768A2(char* thisx, char a2, char a3);
+char sub_4768BD(char* thisx, char a2);
 char sub_4768D5(_DWORD* thisx);
-char sub_4768F5(int* thisx, char a2);
+char sub_4768F5(char* thisx, char a2);
 int sub_47690D(char* thisx, char a2, char a3);
 BOOL sub_476928(_DWORD* thisx, char a2);
 BOOL sub_476A3A(_DWORD* thisx);

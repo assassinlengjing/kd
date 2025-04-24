@@ -3205,14 +3205,14 @@ extern char byte_4B93B4[];
 
 extern char byte_4B93EC[];
 
-extern char byte_4B93ED[];
+//extern char byte_4B93ED[];
 
-extern char byte_4B93EE[];
+//extern char byte_4B93EE[];
 
-extern char byte_4B93EF[];
+//extern char byte_4B93EF[];
 
 //extern unk byte_4B9410[];
-extern int player_list[];
+extern char player_list[];
 
 extern char Buffer[];
 
