@@ -3184,6 +3184,7 @@ extern dword dword_4B936C;
 extern dword dword_4B9370[4];
 
 extern dword dword_4B9380[5];
+//extern void* dword_4B9380[];
 
 extern void* dword_4B9394;
 
@@ -3848,3 +3849,26 @@ extern unk byte_4B2A75[];
 extern unk dword_4B8768[];
 extern unk dword_4B8780[];
 extern void* MessageBoxA_0;
+
+
+//中文数据替换
+extern const CHAR unk_4ABCB8[];
+extern unk unk_4ABD18[];
+extern const CHAR unk_4ABD25[];
+extern const CHAR unk_4ABD99[];
+extern const CHAR unk_4ABDED[];
+extern const CHAR unk_4ABE45[];
+extern unk unk_4ABE95[];
+extern unk unk_4ABEFA[];
+extern const CHAR unk_4ABEA2[];
+extern const CHAR unk_4AFF01[];
+extern const CHAR unk_4AFEF9[];
+extern CHAR unk_4B0B24[];
+extern unk unk_4B1D15[];
+extern unk unk_4B1CE0[];
+extern CHAR unk_4B2F0C[];
+extern CHAR unk_4B08BC[];
+extern CHAR unk_4B08AC[];
+
+
+

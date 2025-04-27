@@ -2997,12 +2997,20 @@ char* sub_401000(char* thisx)
     sub_480737((int*)thisx, 6);
 
     //什么乱七八糟的东西
-    sub_47FEB2(*((int*)thisx + 3), (LPCSTR)&byte_4B0060, &byte_4B0050, 1);//项目来源//ＯＦＦＯＮ
-    sub_47FEB2(*((int*)thisx + 3) + 32, (LPCSTR)&byte_4B0088, &byte_4B0078, 0);//视在同一方向上的估计//ＯＦＦＯＮ
-    sub_47FEB2(*((int*)thisx + 3) + 64, (LPCSTR)&byte_4B00B8, &byte_4B00A8, 1);//假象//ＯＦＦ
-    sub_47FE72((int*)(*((int*)thisx + 3) + 96), (LPCSTR)&byte_4B00D0, 1, 0, 8, 4);//木屑
-    sub_47FEB2(*((int*)thisx + 3) + 128, (LPCSTR)&byte_4B00E8, &byte_4B00DC, 1);//地形伤害
-    sub_47FEB2(*((int*)thisx + 3) + 160, (LPCSTR)&byte_4B0104, &byte_4B00F8, 0);//测地仪
+    sub_47FEB2(*((int*)thisx + 3), unk_4ABCB8, &unk_4ABD18, 1);
+    sub_47FEB2(*((int*)thisx + 3) + 32, unk_4ABD25, &unk_4ABD18, 0);
+    sub_47FEB2(*((int*)thisx + 3) + 64, unk_4ABD99, &unk_4ABD18, 1);
+    sub_47FE72((*((int*)thisx + 3) + 96), unk_4ABDED, 1, 0, 8, 4);
+    sub_47FEB2(*((int*)thisx + 3) + 128, unk_4ABE45, &unk_4ABE95, 1);
+    sub_47FEB2(*((int*)thisx + 3) + 160, unk_4ABEA2, &unk_4ABEFA, 0);
+
+    //sub_47FEB2(*((int*)thisx + 3), (LPCSTR)&byte_4B0060, &byte_4B0050, 1);//项目来源//ＯＦＦＯＮ
+    //sub_47FEB2(*((int*)thisx + 3) + 32, (LPCSTR)&byte_4B0088, &byte_4B0078, 0);//视在同一方向上的估计//ＯＦＦＯＮ
+    //sub_47FEB2(*((int*)thisx + 3) + 64, (LPCSTR)&byte_4B00B8, &byte_4B00A8, 1);//假象//ＯＦＦ
+    //sub_47FE72((int*)(*((int*)thisx + 3) + 96), (LPCSTR)&byte_4B00D0, 1, 0, 8, 4);//木屑
+    //sub_47FEB2(*((int*)thisx + 3) + 128, (LPCSTR)&byte_4B00E8, &byte_4B00DC, 1);//地形伤害
+    //sub_47FEB2(*((int*)thisx + 3) + 160, (LPCSTR)&byte_4B0104, &byte_4B00F8, 0);//测地仪
+
     thisx[4] = 8;
     thisx[5] = 9;
     thisx[6] = 23;
@@ -3219,7 +3227,7 @@ void* sub_4016C0(void* thisx, char a2)
 {
     sub_4013E8(thisx);
     if ((a2 & 1) != 0)
-        delete(thisx);
+        delete2(thisx);
     return thisx;
 }
 
@@ -31790,7 +31798,173 @@ int sub_441980(int thisx, int a2)
     return result;
 }
 
-//ai
+
+int __fastcall sub_4419F6(int a1)
+{
+    int result; // eax
+
+    result = a1;
+    if (*(_BYTE*)(a1 + 20))
+    {
+        ++*(_DWORD*)(a1 + 12);
+        result = *(unsigned __int8*)(a1 + 20);
+        if (result == 1)
+        {
+            if (!*(_DWORD*)(a1 + 12))
+            {
+                *(_DWORD*)(a1 + 4) -= 4;
+                *(_DWORD*)(a1 + 8) -= 4;
+            }
+            result = (*(_DWORD*)(a1 + 12) - 1) / 2;
+            *(_DWORD*)(a1 + 24) = result;
+            if (*(_DWORD*)(a1 + 12) == 6)
+            {
+                result = a1;
+                *(_BYTE*)(a1 + 20) = 0;
+            }
+        }
+        else if (*(unsigned __int8*)(a1 + 20) < 2u || (result = a1, *(unsigned __int8*)(a1 + 20) > 0x10u))
+        {
+            switch (*(_BYTE*)(a1 + 20))
+            {
+            case 0x11:
+                if (*(_DWORD*)(a1 + 12) != 75
+                    && *(_DWORD*)(a1 + 16)
+                    && SchedulerBase::GetSchedulerProxy(*(SchedulerBase**)(a1 + 16)) == (struct Concurrency::ISchedulerProxy*)96)
+                {
+                    if (!*(_DWORD*)(a1 + 12))
+                    {
+                        if (*(_DWORD*)(a1 + 28))
+                            *(_DWORD*)(a1 + 4) = -*(_DWORD*)(a1 + 4);
+                        *(_DWORD*)(a1 + 4) -= 4;
+                        *(_DWORD*)(a1 + 8) -= 4;
+                    }
+                    *(_DWORD*)(a1 + 24) = 3;
+                    result = a1;
+                    *(_DWORD*)(a1 + 32) = *(_DWORD*)(a1 + 12) % 2 == 0;
+                }
+                else
+                {
+                    result = a1;
+                    *(_BYTE*)(a1 + 20) = 0;
+                }
+                break;
+            case 0x12:
+                result = *(_DWORD*)(a1 + 12) / 8 + 4;
+                *(_DWORD*)(a1 + 24) = result;
+                if (*(int*)(a1 + 12) >= 24)
+                {
+                    result = a1;
+                    *(_BYTE*)(a1 + 20) = 0;
+                }
+                break;
+            case 0x13:
+                result = a1;
+                if (*(int*)(a1 + 12) >= 15)
+                {
+                    result = (*(_DWORD*)(a1 + 12) - 15) / 4 + 1;
+                    *(_DWORD*)(a1 + 24) = result;
+                }
+                else
+                {
+                    *(_DWORD*)(a1 + 24) = 0;
+                }
+                if (*(int*)(a1 + 12) >= 31)
+                {
+                    result = a1;
+                    *(_BYTE*)(a1 + 20) = 0;
+                }
+                break;
+            case 0x14:
+                result = a1;
+                if (*(int*)(a1 + 12) >= 20)
+                    *(_BYTE*)(a1 + 20) = 0;
+                break;
+            }
+        }
+        else
+        {
+            result = *(_DWORD*)(a1 + 12) / 3;
+            if (!(*(_DWORD*)(a1 + 12) % 3))
+            {
+                result = *(_DWORD*)(a1 + 8) - 1;
+                *(_DWORD*)(a1 + 8) = result;
+            }
+            if (*(int*)(a1 + 12) >= 60)
+            {
+                result = a1;
+                *(_BYTE*)(a1 + 20) = 0;
+            }
+            switch (*(_BYTE*)(a1 + 20))
+            {
+            case 2:
+                result = a1;
+                *(_DWORD*)(a1 + 24) = 3;
+                break;
+            case 3:
+                result = a1;
+                *(_DWORD*)(a1 + 24) = 4;
+                break;
+            case 4:
+                result = a1;
+                *(_DWORD*)(a1 + 24) = 4;
+                break;
+            case 5:
+                result = a1;
+                *(_DWORD*)(a1 + 24) = 1;
+                break;
+            case 6:
+                result = a1;
+                *(_DWORD*)(a1 + 24) = 0;
+                break;
+            case 7:
+                result = a1;
+                *(_DWORD*)(a1 + 24) = 2;
+                break;
+            case 8:
+                result = a1;
+                *(_DWORD*)(a1 + 24) = 5;
+                break;
+            case 9:
+                result = a1;
+                *(_DWORD*)(a1 + 24) = 5;
+                break;
+            case 0xA:
+                result = a1;
+                *(_DWORD*)(a1 + 24) = 6;
+                break;
+            case 0xB:
+                result = a1;
+                *(_DWORD*)(a1 + 24) = 7;
+                break;
+            case 0xC:
+                result = a1;
+                *(_DWORD*)(a1 + 24) = 7;
+                break;
+            case 0xD:
+                result = a1;
+                *(_DWORD*)(a1 + 24) = 8;
+                break;
+            case 0xE:
+                result = a1;
+                *(_DWORD*)(a1 + 24) = 10;
+                break;
+            case 0xF:
+                result = a1;
+                *(_DWORD*)(a1 + 24) = 8;
+                break;
+            case 0x10:
+                result = a1;
+                *(_DWORD*)(a1 + 24) = 8;
+                break;
+            }
+        }
+    }
+    return result;
+}
+
+/*
+//ai注释
 //参数只有b10[9608]
 int __fastcall sub_4419F6(int a1)
 {
@@ -31955,7 +32129,7 @@ int __fastcall sub_4419F6(int a1)
     }
     return result; // 返回 result
 }
-
+*/
 
 
 unsigned __int16* __fastcall sub_441DB3(int a1)
@@ -32391,8 +32565,103 @@ void* sub_4428A0(void* thisx, char a2)
 
 
 
-
-//ai
+//游戏的主逻辑函数
+ //thisx = unk_4B9B10 a5 = 1
+int sub_443059(_DWORD* thisx, double a2, double a3, double a4, char a5)
+{
+    sub_474DB0((char*)byte_4BDC60, a5);//set thisx[50440] = a5;,全解，设置游戏状态为正在运行
+    switch (thisx[26])//游戏场景编号 char[104] ////4B9B10 + (26*4)//0x68 = 4B9B78
+    {
+    case 1://开场动画状态
+        sub_456FC8((int)thisx);
+        break;
+    case 2://开场动画后的静态背景状态
+        sub_453AAA((int)thisx);
+        break;
+    case 3://游戏模式选择 状态
+        sub_44C60C((int)thisx);
+        break;
+    case 4://故事模式配置游戏开始设置，生存模式选择人物
+        sub_474BC1((int)thisx);
+        break;
+    case 5://设置界面
+        sub_44E835((int)thisx);
+        break;
+    case 6:
+        sub_46753B((int)thisx);
+        break;
+    case 7:
+        sub_44ED4D((UINT)thisx);//内有键盘输入。。但这个状态是什么时候还未知
+        break;
+    case 8://对战模式，选择人物
+        sub_447651((int)thisx);
+        break;
+    case 9:
+        sub_452368((int)thisx);
+        break;
+    case 0xA://战斗场景，人物开始动作
+        sub_44E5BA(thisx, a2, a3, a4);
+        break;
+    case 0xB://战斗场景
+        sub_448929((int)thisx, a2, a3, a4);
+        break;
+    case 0xC://战斗场景，战斗判定输赢
+        sub_44B63F((int)thisx, a2, a3, a4);
+        break;
+    case 0xD://故事模式，选择名字界面
+        sub_457F11((int)thisx);
+        break;
+    case 0xE://故事模式，人物信息界面
+        sub_45AB5E((int)thisx);
+        break;
+    case 0xF://故事模式，休息室后准备界面
+        sub_45BDE8((int)thisx);
+        break;
+    case 0x10://16，排名面板
+        sub_45C809((int)thisx);
+        break;
+    case 0x11://故事模式，排名
+        sub_45CC4E((int)thisx);
+        break;
+    case 0x12:
+        sub_45D7AB((int)thisx);
+        break;
+    case 0x13://休息室
+        sub_45E773((int)thisx);
+        break;
+    case 0x14://故事模式，选择记录界面
+        sub_4617E5((int)thisx);
+        break;
+    case 0x15:////格斗比赛，选择场景
+        sub_47336A((int)thisx);
+        break;
+    case 0x16://格斗比赛，选择人物界面
+        sub_46881A((int)thisx);
+        break;
+    case 0x17://格斗比赛，选择场景后，选择队员
+        sub_46E35A((int)thisx, a2, a3, a4);
+        break;
+    case 0x18://格斗比赛，战斗场景后，啦啦队
+        sub_470C48((int)thisx);
+        break;
+    case 0x19:
+        sub_47188C((int)thisx);
+        break;
+    case 0x1A:
+        sub_4724BD((int)thisx);
+        break;
+    case 0x1B:
+        sub_473D4B((int)thisx);
+        break;
+    default:
+        break;
+    }
+    sub_4532F2((int)thisx, a2, a3, a4);//
+    sub_457408((int)thisx);
+    return sub_48E8E1((int)(thisx + 325));
+}
+/*
+//ai注释
  //thisx = B10 a5 = 1 //游戏的主逻辑函数
 int sub_443059(int* thisx, double a2, double a3, double a4, char a5)
 {
@@ -32493,8 +32762,7 @@ int sub_443059(int* thisx, double a2, double a3, double a4, char a5)
 
     // 最后调用一个函数返回结果，这里将指针偏移325后传递给 sub_48E8E1
     return sub_48E8E1((int)(thisx + 325));
-}
-
+}*/
 //this = b10
 int sub_44325C(int thisx)
 {
@@ -32686,7 +32954,148 @@ int sub_44325C(int thisx)
     return result;
 }
 
-//ai
+BOOL __stdcall sub_443B2A(_DWORD* a1, _DWORD* a2)
+{
+    //    int v3; // eax
+    //    int v4; // eax
+    //    int* v5; // eax
+    //    int v6; // esi
+    //    int v7; // esi
+    //    int v8; // esi
+    //    int v9; // eax
+    //    int v10; // eax
+    //    int v11; // eax
+    //    int v12; // eax
+    //    int v13; // eax
+    //    int ExecutingProxy; // eax
+    //    int v15; // eax
+    //    int v16; // eax
+    //    int v17; // eax
+    //    int v18; // eax
+    //    int v19; // eax
+    //    int v20; // [esp+4h] [ebp-68h]
+    //    int v21[4]; // [esp+Ch] [ebp-60h] BYREF
+    //    struct tagRECT v22; // [esp+1Ch] [ebp-50h] BYREF
+    //    int v23[4]; // [esp+2Ch] [ebp-40h] BYREF
+    //    int v24; // [esp+3Ch] [ebp-30h]
+    //    int v25; // [esp+40h] [ebp-2Ch]
+    //    int v26; // [esp+44h] [ebp-28h]
+    //    int v27; // [esp+48h] [ebp-24h]
+    //    struct tagRECT v28; // [esp+4Ch] [ebp-20h]
+    //    char* v29; // [esp+5Ch] [ebp-10h]
+    //    char* v30; // [esp+60h] [ebp-Ch]
+    //    Concurrency::details::UMSFreeVirtualProcessorRoot* v31; // [esp+64h] [ebp-8h]
+    //    int v32; // [esp+68h] [ebp-4h]
+
+
+    //修正堆栈
+    check_stack c(__FILE__, __LINE__);
+    int v32; // [esp+68h] [ebp-4h]
+    Concurrency::details::UMSFreeVirtualProcessorRoot* v31; // [esp+64h] [ebp-8h]
+    char* v30; // [esp+60h] [ebp-Ch]
+    char* v29; // [esp+5Ch] [ebp-10h]
+    struct tagRECT v28; // [esp+4Ch] [ebp-20h]
+    int v27; // [esp+48h] [ebp-24h]
+    int v26; // [esp+44h] [ebp-28h]
+    int v25; // [esp+40h] [ebp-2Ch]
+    int v24; // [esp+3Ch] [ebp-30h]
+    int v23[4]; // [esp+2Ch] [ebp-40h] BYREF
+    struct tagRECT v22; // [esp+1Ch] [ebp-50h] BYREF
+    int v21[4]; // [esp+Ch] [ebp-60h] BYREF
+    int v20; // [esp+4h] [ebp-68h]
+    int v19; // eax
+    int v18; // eax
+    int v17; // eax
+    int v16; // eax
+    int v15; // eax
+    int ExecutingProxy; // eax
+    int v13; // eax
+    int v12; // eax
+    int v11; // eax
+    int v10; // eax
+    int v9; // eax
+    int v8; // esi
+    int v7; // esi
+    int v6; // esi
+    int* v5; // eax
+    int v4; // eax
+    int v3; // eax
+
+
+    v30 = (char*)sub_41C915((_DWORD)a1);
+    v29 = (char*)sub_41C915((_DWORD)a2);
+    if (!v30 || !v29)
+        return 0;
+    v3 = sub_425D70(a1);
+    v28 = *(struct tagRECT*)sub_425B90(v30, v23, v3, 0);
+    v31 = (Concurrency::details::UMSFreeVirtualProcessorRoot*)sub_426910(a1);
+    v32 = 0;
+    if (v31 && !v28.left && !v28.top && !v28.right && !v28.bottom)
+    {
+        v28 = *sub_491709((int)v31, &v22, 0);
+        v32 = 1;
+    }
+    v4 = sub_425D70(a2);
+    v5 = sub_425BD0(v29, v21, v4, 0);
+    v24 = *v5;
+    v25 = v5[1];
+    v26 = v5[2];
+    v27 = v5[3];
+    if (!sub_474E10((unsigned char*)a1) && !v28.left && !v28.top && !v28.right && !v28.bottom)
+        return 0;
+    if (!v24 && !v25 && !v26 && !v27)
+        return 0;
+    if (sub_474E10((unsigned char*)a1))
+        return 1;
+    v6 = sub_4260B0(a1) / 100;
+    if (v6 - sub_4260B0(a2) / 100 <= 0)
+    {
+        v8 = sub_4260B0(a1) / 100;
+        v20 = sub_4260B0(a2) / 100 - v8;
+    }
+    else
+    {
+        v7 = sub_4260B0(a1) / 100;
+        v20 = v7 - sub_4260B0(a2) / 100;
+    }
+    if (v20 > (unsigned __int8)sub_4264B0((char*)a1))
+        return 0;
+    if (v32)
+    {
+        v13 = sub_426470((_DWORD*)v31);
+        v28.left += v13 / 100;
+        ExecutingProxy = (int)Concurrency::details::UMSFreeVirtualProcessorRoot::GetExecutingProxy(v31);
+        v28.top += ExecutingProxy / 100;
+        v15 = sub_426470((_DWORD*)v31);
+        v28.right += v15 / 100;
+        v12 = (int)Concurrency::details::UMSFreeVirtualProcessorRoot::GetExecutingProxy(v31);
+    }
+    else
+    {
+        v9 = sub_426090(a1);
+        v28.left += v9 / 100;
+        v10 = sub_4260D0(a1);
+        v28.top += v10 / 100;
+        v11 = sub_426090(a1);
+        v28.right += v11 / 100;
+        v12 = sub_4260D0(a1);
+    }
+    v28.bottom += v12 / 100;
+    v16 = sub_426090(a2);
+    v24 += v16 / 100;
+    v17 = sub_4260D0(a2);
+    v25 += v17 / 100;
+    v18 = sub_426090(a2);
+    v26 += v18 / 100;
+    v19 = sub_4260D0(a2);
+    v27 += v19 / 100;
+    return v28.left - v24 <= v26 - v24
+        && v24 - v28.left <= v28.right - v28.left
+        && v28.top - v25 <= v27 - v25
+        && v25 - v28.top <= v28.bottom - v28.top;
+}
+/*
+//ai注释
 //主要用于碰撞检测
 BOOL __stdcall sub_443B2A(int* a1, int* a2)
 {
@@ -32809,8 +33218,319 @@ BOOL __stdcall sub_443B2A(int* a1, int* a2)
         && v28.top - v25 <= v27 - v25
         && v25 - v28.top <= v28.bottom - v28.top;
 }
+*/
 
-//ai
+
+
+int sub_443E80(int thisx)
+{
+    //    int v1; // eax
+    //    int v2; // eax
+    //    unsigned __int16 v3; // ax
+    //    int v4; // esi
+    //    int v5; // eax
+    //    int v6; // eax
+    //    unsigned __int16 v7; // ax
+    //    char v8; // al
+    //    int result; // eax
+    //    int v10; // [esp-10h] [ebp-5F0h]
+    //    CHAR v12[1024]; // [esp+10h] [ebp-5D0h] BYREF
+    //    struct tagRECT v13; // [esp+410h] [ebp-1D0h] BYREF
+    //    struct tagRECT v14; // [esp+420h] [ebp-1C0h] BYREF
+    //    int v15; // [esp+430h] [ebp-1B0h]
+    //    int v16; // [esp+434h] [ebp-1ACh]
+    //    int v17; // [esp+438h] [ebp-1A8h]
+    //    __int16 v18; // [esp+43Ch] [ebp-1A4h]
+    //    struct tagRECT v19; // [esp+440h] [ebp-1A0h] BYREF
+    //    int v20; // [esp+450h] [ebp-190h]
+    //    struct tagRECT v21; // [esp+454h] [ebp-18Ch] BYREF
+    //    int v22; // [esp+464h] [ebp-17Ch]
+    //    struct tagRECT v23; // [esp+468h] [ebp-178h] BYREF
+    //    struct tagRECT rc; // [esp+478h] [ebp-168h] BYREF
+    //    int v25; // [esp+488h] [ebp-158h]
+    //    int v26; // [esp+48Ch] [ebp-154h]
+    //    int v27; // [esp+490h] [ebp-150h]
+    //    int v28; // [esp+494h] [ebp-14Ch]
+    //    int v29; // [esp+498h] [ebp-148h]
+    //    int xLeft; // [esp+49Ch] [ebp-144h]
+    //    int v31; // [esp+4A0h] [ebp-140h]
+    //    int i; // [esp+4A4h] [ebp-13Ch]
+    //    CHAR String[256]; // [esp+4A8h] [ebp-138h] BYREF
+    //    int v34; // [esp+5A8h] [ebp-38h] BYREF
+    //    int v35; // [esp+5ACh] [ebp-34h]
+    //    int v36; // [esp+5B0h] [ebp-30h]
+
+
+    //修正堆栈
+    check_stack c(__FILE__, __LINE__);
+    char v36_tc[44];
+    int v36; // [esp+5B0h] [ebp-30h]
+    int v35; // [esp+5ACh] [ebp-34h]
+    int v34; // [esp+5A8h] [ebp-38h] BYREF
+    CHAR String[256]; // [esp+4A8h] [ebp-138h] BYREF
+    int i; // [esp+4A4h] [ebp-13Ch]
+    int v31; // [esp+4A0h] [ebp-140h]
+    int xLeft; // [esp+49Ch] [ebp-144h]
+    int v29; // [esp+498h] [ebp-148h]
+    int v28; // [esp+494h] [ebp-14Ch]
+    int v27; // [esp+490h] [ebp-150h]
+    int v26; // [esp+48Ch] [ebp-154h]
+    int v25; // [esp+488h] [ebp-158h]
+    struct tagRECT rc; // [esp+478h] [ebp-168h] BYREF
+    struct tagRECT v23; // [esp+468h] [ebp-178h] BYREF
+    int v22; // [esp+464h] [ebp-17Ch]
+    struct tagRECT v21; // [esp+454h] [ebp-18Ch] BYREF
+    int v20; // [esp+450h] [ebp-190h]
+    struct tagRECT v19; // [esp+440h] [ebp-1A0h] BYREF
+    __int16 v18; // [esp+43Ch] [ebp-1A4h]
+    int v17; // [esp+438h] [ebp-1A8h]
+    int v16; // [esp+434h] [ebp-1ACh]
+    int v15; // [esp+430h] [ebp-1B0h]
+    struct tagRECT v14; // [esp+420h] [ebp-1C0h] BYREF
+    struct tagRECT v13; // [esp+410h] [ebp-1D0h] BYREF
+    CHAR v12[1024]; // [esp+10h] [ebp-5D0h] BYREF
+    int v10; // [esp-10h] [ebp-5F0h]
+    int result; // eax
+    char v8; // al
+    unsigned __int16 v7; // ax
+    int v6; // eax
+    int v5; // eax
+    int v4; // esi
+    unsigned __int16 v3; // ax
+    int v2; // eax
+    int v1; // eax
+
+
+    sub_49C15E((int)&v34);
+    v35 = 0;
+    v36 = 176;
+    if (*(_DWORD*)(thisx + 116) == 3)
+        v34 = dword_4B9208;
+    else
+        v34 = dword_4B920C;
+    sub_49AB05((int)byte_4BDC60, &v34);
+    for (i = 0; i < 8 && (*(_DWORD*)(thisx + 116) != 3 || i <= 0); ++i)
+    {
+        LOBYTE(v29) = byte_4B9988[i];
+        LOBYTE(v27) = sub_425E70((_BYTE*)(thisx + 612 * (unsigned __int8)v29 + 2628));
+        if (unknown_libname_7((_DWORD*)(thisx + 612 * (unsigned __int8)v29 + 2628)))
+        {
+            xLeft = 79 * (i % 4) + 8;
+            v28 = 28 * (i / 4) + 182;
+            if (sub_41BEA6((_DWORD*)(thisx + 612 * (unsigned __int8)v29 + 2628)))
+            {
+                v35 = xLeft;
+                v36 = v28;
+                v34 = dword_4B9200 + 9;
+                sub_49AB05((int)byte_4BDC60, &v34);
+                v35 += 8;
+                v34 = dword_4B9200 + 10;
+            }
+            else
+            {
+                v35 = xLeft;
+                v36 = v28;
+                v34 = (unsigned __int8)v29 + dword_4B9200;
+                sub_49AB05((int)byte_4BDC60, &v34);
+                v35 += 8;
+                v34 = dword_4B9200 + 8;
+            }
+            sub_49AB05((int)byte_4BDC60, &v34);
+            sub_422C10((char*)(thisx + 612 * (unsigned __int8)v29 + 2628), String);
+            sub_47B91A(xLeft + 18, v28, String, 0, -1);
+            v35 = xLeft + 17;
+            v36 = v28 + 10;
+            if ((unsigned __int8)byte_4B9985 <= 4u && *(_DWORD*)(thisx + 116) == 4)
+            {
+                v1 = sub_474E70((_DWORD*)thisx + 612 * (unsigned __int8)v29 + 2628);
+                wsprintfA(String, "%3d", v1);
+                sub_47B7ED(v35 - 3, v36 + 24, String, 0, -1);
+                sub_47B91A(v35 + 21, v36 + 24, byte_4B0884, 0, -1);
+            }
+            if (*(_DWORD*)(thisx + 2504) && (unsigned __int8)byte_4B9985 > 4u && *(_DWORD*)(thisx + 116) == 4)
+            {
+                v2 = sub_474E70((_DWORD*)thisx + 612 * (unsigned __int8)v29 + 2628);
+                wsprintfA(String, "%3d", v2);
+                sub_47B7ED(v35 + 16, v36 + 4, String, 0, -1);
+                sub_47B91A(v35 + 40, v36 + 4, byte_4B088C, 0, -1);
+            }
+            else if (*(_BYTE*)(thisx + (unsigned __int8)v29 + 13052) && *(_DWORD*)(thisx + 116) != 3)
+            {
+                LOBYTE(v22) = *(_BYTE*)(thisx + (unsigned __int8)v29 + 13052);
+                wsprintfA(String, "%d", (unsigned __int8)v22);
+                if ((unsigned __int8)byte_4B9985 > 4u && *(_DWORD*)(thisx + 116) == 4)
+                {
+                    sub_47B7ED(xLeft + 20, v28 + 12, String, 0, -1);
+                    sub_47B91A(xLeft + 28, v28 + 12, byte_4B0898, 0, -1);
+                    v6 = sub_474E70((_DWORD*)thisx + 612 * (unsigned __int8)v29 + 2628);
+                    wsprintfA(String, "%3d", v6);
+                    sub_47B7ED(xLeft + 40, v28 + 12, String, 0, -1);
+                    sub_47B91A(xLeft + 64, v28 + 12, byte_4B08A0, 0, -1);
+                }
+                else
+                {
+                    sub_47B7ED(xLeft + 30, v28 + 12, String, 0, -1);
+                    sub_47B91A(xLeft + 38, v28 + 12, byte_4B08A4, 0, -1);
+                }
+            }
+            else
+            {
+                v3 = sub_474EB0((short*)thisx + 612 * (unsigned __int8)v29 + 2628);
+                v25 = v3 / 256;
+                v26 = v3 % 256;
+                if (v26 >= 128)
+                {
+                    if (v26 < 255)
+                    {
+                        v34 = dword_4B920C + 2;
+                        sub_49AB05((int)byte_4BDC60, &v34);
+                    }
+                    if (v26 == 255)
+                        SetRect(&v23, 0, 0, 48, 8);
+                    else
+                        SetRect(&v23, 0, 0, 48 * (v26 - 128) / 128, 8);
+                    v34 = dword_4B920C + 3;
+                    sub_49C8A6((int)byte_4BDC60, &v34, (_DWORD*)&v23);
+                }
+                else
+                {
+                    if (v25 <= 0)
+                        v34 = dword_4B920C + 1;
+                    else
+                        v34 = dword_4B920C + 3;
+                    sub_49AB05((int)byte_4BDC60, &v34);
+                    SetRect(&rc, 0, 0, 48 * v26 / 128, 8);
+                    v34 = dword_4B920C + 2;
+                    sub_49C8A6((int)byte_4BDC60, &v34, (_DWORD*)&rc);
+                }
+                if (v25 > 0)
+                {
+                    wsprintfA(String, "%d", v25);
+                    v10 = v28 + 10;
+                    v4 = xLeft + 64;
+                    v5 = lstrlenA(String);
+                    sub_47B7ED(v4 - 8 * v5, v10, String, 0, -1);
+                }
+            }
+            v35 = xLeft;
+            v36 = v28 + 8;
+            if ((unsigned __int8)v27 == 1)
+            {
+                v34 = dword_4B9204;
+                sub_49AB05((int)byte_4BDC60, &v34);
+            }
+            else
+            {
+                v34 = dword_4B9204
+                    + *((__int16*)dword_4B9394 + (unsigned __int16)sub_43E5A0((short*)thisx + 612 * (unsigned __int8)v29 + 2628))
+                    + 1;
+                if (sub_4264F0((_BYTE*)(thisx + 612 * (unsigned __int8)v29 + 2628)) == 4)
+                {
+                    SetRect(&v21, 16, 0, 16, 16);
+                    v34 = dword_4B9204 + 1;
+                    sub_49C8A6((int)byte_4BDC60, &v34, (_DWORD*)&v21);
+                    ++v36;
+                    v7 = sub_420F74(thisx + 612 * (unsigned __int8)v29 + 2628);
+                    sub_478682(&v34, 1u, v7, 0, -1, -1);
+                }
+                else if (Concurrency::details::SchedulerBase::GetSchedulerProxy((Concurrency::details::SchedulerBase*)(thisx + 612 * (unsigned __int8)v29 + 2628)) == (struct Concurrency::ISchedulerProxy*)80)
+                {
+                    SetRect(&v21, 48, 0, 16, 16);
+                    sub_49C8A6((int)byte_4BDC60, &v34, (_DWORD*)&v21);
+                }
+                else
+                {
+                    SetRect(&v21, 0, 0, 16, 16);
+                    sub_49C8A6((int)byte_4BDC60, &v34, (_DWORD*)&v21);
+                    LOWORD(v20) = sub_420F74(thisx + 612 * (unsigned __int8)v29 + 2628);
+                    ++v35;
+                    ++v36;
+                    sub_478682(&v34, 1u, (unsigned __int16)v20, 0, -1, -1);
+                }
+            }
+            if (!*(_BYTE*)(thisx + (unsigned __int8)v29 + 13052) && ((unsigned __int8)v27 == 2 || (unsigned __int8)v27 == 3))
+            {
+                v16 = xLeft + 17;
+                v15 = v28 + 14;
+                v35 = xLeft + 17;
+                v36 = v28 + 18;
+                v34 = dword_4B91DC;
+                sub_49AB05((int)byte_4BDC60, &v34);
+                v18 = sub_474E30((short*)thisx + 612 * (unsigned __int8)v29 + 2628);
+                SetRect(&v19, 0, 0, 48 * v18 / 300, 8);
+                v34 = dword_4B91DC + 1;
+                sub_49C8A6((int)byte_4BDC60, &v34, (_DWORD*)&v19);
+                v35 = v16 + 32;
+                v36 = v15;
+                v34 = dword_4B91DC + 2;
+                sub_49AB05((int)byte_4BDC60, &v34);
+                LOBYTE(v17) = v18 / 100;
+                v35 = v16 + 40;
+                v36 = v15;
+                v34 = dword_4B91DC + (unsigned __int8)v17 + 3;
+                sub_49AB05((int)byte_4BDC60, &v34);
+            }
+            LOBYTE(v31) = sub_474E90((char*)thisx + 612 * (unsigned __int8)v29 + 2628);
+            if ((_BYTE)v31)
+            {
+                SetRect(&v14, xLeft + 16, v28 + 14, xLeft + 64, v28 + 24);
+                sub_49EF70((int)byte_4BDC60, (_DWORD*)&v14, 0, 0, 0, 0x20u);
+                if ((unsigned __int8)v31 >= 0x80u)
+                    sub_47B91A(xLeft + 16, v28 + 16, (LPCSTR)&unk_4B1D15[13 * (unsigned __int8)v31 - 1664], 0, -1);
+                else
+                    sub_47B91A(xLeft + 16, v28 + 16, (LPCSTR)&unk_4B1CE0[13 * (unsigned __int8)v31 - 13], 0, -1);
+            }
+            if (*(_DWORD*)(thisx + 116) == 4)
+            {
+                if (sub_474E50((_DWORD*)thisx + 612 * (unsigned __int8)v29 + 2628))
+                {
+                    v8 = sub_474E50((_DWORD*)thisx + 612 * (unsigned __int8)v29 + 2628);
+                    *(_BYTE*)(thisx + (unsigned __int8)v29 + 16120) = v8;
+                    *(_BYTE*)(thisx + (unsigned __int8)v29 + 16128) = 60;
+                    if (!*(_DWORD*)(thisx + 2504))
+                    {
+                        if (*(_DWORD*)(thisx + 2372))
+                            sub_43FFC3((_DWORD*)byte_4BDC60, dword_4B99FC[0], -1, 100, 100, 0);
+                    }
+                }
+            }
+            if (*(_BYTE*)(thisx + (unsigned __int8)v29 + 16128))
+            {
+                --*(_BYTE*)(thisx + (unsigned __int8)v29 + 16128);
+                if (*(_DWORD*)(thisx + 2372))
+                {
+                    wsprintfA(String, "%2d", *(char*)(thisx + (unsigned __int8)v29 + 16120));
+                    if ((unsigned __int8)byte_4B9985 <= 4u)
+                    {
+                        sub_47B7ED(xLeft + 48, v28 + 34, String, 0, -1);
+                    }
+                    else
+                    {
+                        SetRect(&v13, xLeft, v28 + 14, xLeft + 16, v28 + 24);
+                        sub_49EF70((int)byte_4BDC60, (_DWORD*)&v13, 0, 0, 0, 0x20u);
+                        sub_47B7ED(xLeft, v28 + 16, String, 0, -1);
+                    }
+                }
+            }
+        }
+    }
+    result = thisx;
+    if (*(_DWORD*)(thisx + 116) == 3)
+    {
+        sub_47B91A(10, 211, (LPCSTR)& unk_4B2F0C, 0, -1);
+        wsprintfA(v12, "%3d", *(_DWORD*)(thisx + 11376));
+        sub_47B7ED(90, 211, v12, 0, -1);
+        sub_47B91A(114, 211, (LPCSTR)& unk_4B08BC, 0, -1);
+        sub_47B91A(10, 227, (LPCSTR)& unk_4B08AC, 0, -1);
+        wsprintfA(v12, "%3d", *(_DWORD*)(thisx + 4 * *(unsigned __int8*)(thisx + 11372) + 11380));
+        sub_47B7ED(90, 227, v12, 0, -1);
+        return sub_47B91A(114, 227, (LPCSTR)&unk_4B08BC, 0, -1);
+    }
+    return result;
+}
+
+/*
+//ai注释
 //这个函数 sub_443E80 看起来是一个游戏中的渲染函数，专门用来处理特定UI元素的显示，可能与游戏中的状态显示、人物属性、或装备信息有关
 int sub_443E80(int thisx)
 {
@@ -32930,8 +33650,8 @@ int sub_443E80(int thisx)
             {
                 v2 = sub_474E70((int*)thisx + 612 * (unsigned __int8)v29 + 2628);
                 wsprintfA(String, "%3d", v2);
-                sub_47B7ED(v35 + 16, v36 + 4, String, 0, -1);
-                sub_47B91A(v35 + 40, v36 + 4, byte_4B088C, 0, -1);
+                sub_47B7ED(v35 + 24, v36 + 4, String, 0, -1);
+                sub_47B91A(v35 + 40, v36 + 4, unk_4AFF01, 0, -1);
             }
             else if (*(char*)(thisx + (unsigned __int8)v29 + 13052) && *(int*)(thisx + 116) != 3)
             {
@@ -32940,17 +33660,17 @@ int sub_443E80(int thisx)
                 wsprintfA(String, "%d", (unsigned __int8)v22);
                 if ((unsigned __int8)byte_4B9985 > 4u && *(int*)(thisx + 116) == 4)
                 {
-                    sub_47B7ED(xLeft + 20, v28 + 12, String, 0, -1);
-                    sub_47B91A(xLeft + 28, v28 + 12, byte_4B0898, 0, -1);
+                    sub_47B7ED(xLeft + 28, v28 + 12, String, 0, -1);
+                    sub_47B91A(xLeft + 20, v28 + 12, unk_4AFEF9, 0, -1);
                     v6 = sub_474E70((int*)thisx + 612 * (unsigned __int8)v29 + 2628);
                     wsprintfA(String, "%3d", v6);
-                    sub_47B7ED(xLeft + 40, v28 + 12, String, 0, -1);
-                    sub_47B91A(xLeft + 64, v28 + 12, byte_4B08A0, 0, -1);
+                    sub_47B7ED(xLeft + 48, v28 + 12, String, 0, -1);
+                    sub_47B91A(xLeft + 64, v28 + 12, unk_4AFF01, 0, -1);
                 }
                 else
                 {
-                    sub_47B7ED(xLeft + 30, v28 + 12, String, 0, -1);
-                    sub_47B91A(xLeft + 38, v28 + 12, byte_4B08A4, 0, -1);
+                    sub_47B7ED(xLeft + 34, v28 + 13, String, 0, -1);
+                    sub_47B91A(xLeft + 38, v28 + 12, unk_4B0B24, 0, -1);
                 }
             }
             else
@@ -32998,9 +33718,95 @@ int sub_443E80(int thisx)
 
     // 函数执行完毕，返回结果
     return result;
+}*/
+
+
+int sub_444DE2(_DWORD* thisx, int a2, struct Concurrency::ISchedulerProxy* a3, int a4, int a5, char a6)
+{
+    //    int v7; // [esp+4h] [ebp-44h]
+    //    int v8; // [esp+8h] [ebp-40h]
+    //    int v9; // [esp+Ch] [ebp-3Ch]
+    //    int v11; // [esp+18h] [ebp-30h]
+    //    int v12; // [esp+1Ch] [ebp-2Ch]
+    //    int v13; // [esp+24h] [ebp-24h]
+    //    int v14; // [esp+28h] [ebp-20h]
+    //    int v15; // [esp+2Ch] [ebp-1Ch]
+    //    int i; // [esp+30h] [ebp-18h]
+    //    int v17; // [esp+34h] [ebp-14h]
+    //    int v18; // [esp+38h] [ebp-10h]
+    //    int v19; // [esp+3Ch] [ebp-Ch]
+    //    char v20; // [esp+40h] [ebp-8h]
+    //    int v21; // [esp+44h] [ebp-4h]
+
+
+    //修正堆栈
+    check_stack c(__FILE__, __LINE__);
+    int v21; // [esp+44h] [ebp-4h]
+    char v20; // [esp+40h] [ebp-8h]
+    int v19; // [esp+3Ch] [ebp-Ch]
+    int v18; // [esp+38h] [ebp-10h]
+    int v17; // [esp+34h] [ebp-14h]
+    int i; // [esp+30h] [ebp-18h]
+    int v15; // [esp+2Ch] [ebp-1Ch]
+    int v14; // [esp+28h] [ebp-20h]
+    int v13; // [esp+24h] [ebp-24h]
+    int v12; // [esp+1Ch] [ebp-2Ch]
+    int v11; // [esp+18h] [ebp-30h]
+    int v9; // [esp+Ch] [ebp-3Ch]
+    int v8; // [esp+8h] [ebp-40h]
+    int v7; // [esp+4h] [ebp-44h]
+
+
+    v15 = -1;
+    v14 = 0;
+    v18 = sub_426090(&thisx[153 * a2 + 657]) / 100;
+    v17 = sub_4260B0(&thisx[153 * a2 + 657]) / 100;
+    v19 = sub_4260D0(&thisx[153 * a2 + 657]) / 100;
+    v20 = sub_426070((char*)&thisx[153 * a2 + 657]);
+    v21 = sub_425D70(&thisx[153 * a2 + 657]);
+    for (i = 0; i < 8; ++i)
+    {
+        if (i != a2
+            && unknown_libname_7(&thisx[153 * i + 657])
+            && SchedulerBase::GetSchedulerProxy((SchedulerBase*)&thisx[153 * i + 657]) == a3
+            && ((a6 != 1 || byte_4B99CC) && a6 != 2 || v20 != sub_426070((char*)&thisx[153 * i + 657])))
+        {
+            v12 = sub_4260D0(&thisx[153 * i + 657]) / 100;
+            if (v19 - v12 <= 0)
+                v9 = v12 - v19;
+            else
+                v9 = v19 - v12;
+            if (v9 <= 16)
+            {
+                if ((v13 = sub_426090(&thisx[153 * i + 657]) / 100, v11 = sub_4260B0(&thisx[153 * i + 657]) / 100, !a4)
+                    || v21 && v18 < v13
+                    || !v21 && v18 > v13)
+                {
+                    if (v18 - v13 <= 0)
+                        v8 = v13 - v18;
+                    else
+                        v8 = v18 - v13;
+                    if (v8 < a5)
+                    {
+                        if (v17 - v11 <= 0)
+                            v7 = v11 - v17;
+                        else
+                            v7 = v17 - v11;
+                        if (v7 <= 5 && (v15 == -1 || v8 < v14))
+                        {
+                            v15 = i;
+                            v14 = v8;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return v15;
 }
 
-//ai
+/*
+//ai注释
 //寻找最佳匹配项：敌人或NPC选择，物体的选择，道具的选择，任务的选择
 int sub_444DE2(int* thisx, int a2, struct Concurrency::ISchedulerProxy* a3, int a4, int a5, char a6)
 {
@@ -33086,7 +33892,7 @@ int sub_444DE2(int* thisx, int a2, struct Concurrency::ISchedulerProxy* a3, int 
     // 返回找到的最优项的索引，如果没有找到符合条件的项，则返回 -1
     return v15;
 }
-
+*/
 
 int sub_44508E(int a1, double a2, double a3, double a4)
 {
@@ -38258,7 +39064,7 @@ int* sub_451EB5(char* thisx, int a2, int a3)
     if (a3)
     {
         SetRect(&rc, 0, 200, 320, 240);
-        return sub_4A02E9((int*)byte_4BDC60, dword_4B9248, (int)&rc, 0, dword_4B9248);
+        return sub_4A02E9(byte_4BDC60, dword_4B9248, &rc, 0, dword_4B9248);
     }
     return result;
 }
@@ -39975,7 +40781,7 @@ int v12; // [esp-4h] [ebp-1D0h]
     if (a2 == -1)
     {
         SetRect(&rc, 0, 0, 320, 16);
-        sub_4A02E9((int*)byte_4BDC60, (int)&rc, (int)&rc, 0, dword_4B9248);
+        sub_4A02E9(byte_4BDC60, (int)&rc, &rc, 0, dword_4B9248);
         sub_49C15E((int)&v38);
         v38 = dword_4B91F8;
         for (i = 1; i < 30; ++i)
@@ -39995,11 +40801,11 @@ int v12; // [esp-4h] [ebp-1D0h]
     {
         yTop = 56 * (a2 % 4) + 20;
         SetRect(&v30, 160 * (a2 / 4) + 4, yTop, 160 * (a2 / 4) + 156, 56 * (a2 % 4) + 68);
-        sub_4A02E9((int*)byte_4BDC60, v2, (int)&v30, 0, dword_4B9248);
+        sub_4A02E9(byte_4BDC60, v2, &v30, 0, dword_4B9248);
         SetRect(&v30, 160 * (a2 / 4) + 8, 56 * (a2 % 4) + 40, 160 * (a2 / 4) + 32, 56 * (a2 % 4) + 64);
         v12 = dword_4B9248;
         v3 = sub_49FFEC(198, 113, 0);
-        sub_4A02E9((int*)byte_4BDC60, (int)&v30, (int)&v30, v3, v12);
+        sub_4A02E9(byte_4BDC60, (int)&v30, &v30, v3, v12);
         v28 = (unsigned __int8)byte_4B9988[a2];
         if (thisx[a2 + 2588] == 1)
         {
@@ -40040,7 +40846,7 @@ int v12; // [esp-4h] [ebp-1D0h]
         sub_485E5A((int)dword_4B93A4 + 24 * v26, (unsigned short*)word_4B9290);
         SetRect(&v30, 24 * (unsigned __int8)thisx[a2 + 2580], 0, 24, 16);
         v31 = dword_4B9234;
-        sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v31, (int*)&v30);
+        sub_4A03B3(byte_4BDC60, dword_4B9248, &v31, &v30);
         v27 = (char*)(36 * *(unsigned __int16*)&thisx[2 * a2 + 2564] + dword_4B92E0);
         if (thisx[a2 + 2596])
         {
@@ -42596,7 +43402,7 @@ void sub_459E91(int thisx, int a2)
         v33[3] = 60;
         v10 = dword_4B9248;
         v2 = sub_49FFEC(197, 113, 0);
-        sub_4A02E9((int*)byte_4BDC60, v3, (int)v33, v2, v10);
+        sub_4A02E9(byte_4BDC60, v3, (tagRECT*)v33, v2, v10);
         sub_452045((char*)thisx, 13, 1, 24, 7);
         sub_452045((char*)thisx, 1, 9, 21, 14);
         sub_452045((char*)thisx, 23, 9, 15, 11);
@@ -42681,7 +43487,7 @@ void sub_459E91(int thisx, int a2)
         v25 = *((__int16*)Src + (unsigned __int8)sub_426550((char*)v22)) + dword_4B9234;
         RuntimeOwnsLifetime = Concurrency::details::_UnrealizedChore::_GetRuntimeOwnsLifetime(v22);
         SetRect(&rc, 24 * RuntimeOwnsLifetime, 0, 24, 24);
-        sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v25, (int*)&rc);
+        sub_4A03B3(byte_4BDC60, dword_4B9248, &v25, &rc);
         v26 += 4;
         v27 -= 8;
         if (*(char*)(thisx + 2562))
@@ -48243,7 +49049,7 @@ void sub_466F20(int thisx, int a2)
     else
     {
         SetRect(&rc, 96, 18, 204, 26);
-        sub_4A02E9((int*)byte_4BDC60, (int)&rc, (int)&rc, 0, dword_4B9248);
+        sub_4A02E9(byte_4BDC60, (int)&rc, &rc, 0, dword_4B9248);
         v11 = 10000 * *(unsigned __int16*)(thisx + 2566) / 140;
         wsprintfA(String, "%4dP(%3d.%02d%%)", *(unsigned __int16*)(thisx + 2566), v11 / 100, v11 % 100);
         sub_47B7ED(96, 18, String, 0, dword_4B9248);
@@ -48253,14 +49059,14 @@ void sub_466F20(int thisx, int a2)
             yTop = 34 * (j / 2) + 44;
             sub_49C15E((int)Src);
             SetRect(&rc, xLeft + 40, yTop + 4, xLeft + 64, yTop + 12);
-            sub_4A02E9((int*)byte_4BDC60, dword_4B9248, (int)&rc, 0, dword_4B9248);
+            sub_4A02E9(byte_4BDC60, dword_4B9248, &rc, 0, dword_4B9248);
             SetRect(&rc, xLeft + 40, yTop + 16, xLeft + 88, yTop + 24);
-            sub_4A02E9((int*)byte_4BDC60, v2, (int)&rc, 0, dword_4B9248);
+            sub_4A02E9(byte_4BDC60, v2, &rc, 0, dword_4B9248);
             v9 = j + 2 * *(unsigned __int16*)(thisx + 2564);
             SetRect(&rc, xLeft, yTop, xLeft + 24, yTop + 24);
             v5 = dword_4B9248;
             v3 = sub_49FFEC(198, 113, 0);
-            sub_4A02E9((int*)byte_4BDC60, v4, (int)&rc, v3, v5);
+            sub_4A02E9(byte_4BDC60, v4, &rc, v3, v5);
             if (v9 < 14)
             {
                 Src[1] = xLeft + 12;
@@ -50335,7 +51141,7 @@ void sub_46B8AE(char* thisx, int a2)
         TO(v16)
         TO(v15)
         TO(v14)
-        }, 0x228, var))
+        }, 0x228, var,1))
     {
         __asm int 3
     }
@@ -50362,11 +51168,11 @@ void sub_46B8AE(char* thisx, int a2)
         xLeft = 160 * (a2 / 2) + 4;
         yTop = 120 * (a2 % 2) + 4;
         SetRect(&rc, xLeft, yTop, 160 * (a2 / 2) + 125, 120 * (a2 % 2) + 23);
-        sub_4A02E9((int*)byte_4BDC60, dword_4B9248, (int)&rc, 0, dword_4B9248);
+        sub_4A02E9(byte_4BDC60, dword_4B9248, &rc, 0, dword_4B9248);
         SetRect(&rc, 160 * (a2 / 2) + 135, yTop, 160 * (a2 / 2) + 156, 120 * (a2 % 2) + 23);
-        sub_4A02E9((int*)byte_4BDC60, v2, (int)&rc, 0, dword_4B9248);
+        sub_4A02E9(byte_4BDC60, v2, &rc, 0, dword_4B9248);
         SetRect(&rc, xLeft, 120 * (a2 % 2) + 28, 160 * (a2 / 2) + 156, 120 * (a2 % 2) + 116);
-        sub_4A02E9((int*)byte_4BDC60, (int)&rc, (int)&rc, 0, dword_4B9248);
+        sub_4A02E9(byte_4BDC60, (int)&rc, &rc, 0, dword_4B9248);
         sub_49C15E((int)&v102);
         v100 = (unsigned __int8)thisx[a2 + 2584];
         v96 = (unsigned __int8)thisx[a2 + 2600];
@@ -50378,9 +51184,9 @@ void sub_46B8AE(char* thisx, int a2)
             SetRect(&rc, v106, yTop, v106 + 21, yTop + 19);
             v14 = dword_4B9248;
             v3 = sub_49FFEC(255, 255, 255);
-            sub_4A02E9((int*)byte_4BDC60, v4, (int)&rc, v3, v14);
+            sub_4A02E9(byte_4BDC60, v4, &rc, v3, v14);
             SetRect(&rc, v106 + 1, yTop + 1, v106 + 20, yTop + 18);
-            sub_4A02E9((int*)byte_4BDC60, (int)&rc, (int)&rc, 0, dword_4B9248);
+            sub_4A02E9(byte_4BDC60, (int)&rc, &rc, 0, dword_4B9248);
         }
         if (v100)
         {
@@ -50405,7 +51211,7 @@ void sub_46B8AE(char* thisx, int a2)
                         SetRect(&rc, v106, v93, v106 + 28, v93 + 40);
                         v15 = dword_4B9248;
                         v5 = sub_49FFEC(198, 113, 0);
-                        sub_4A02E9((int*)byte_4BDC60, v6, (int)&rc, v5, v15);
+                        sub_4A02E9(byte_4BDC60, v6, &rc, v5, v15);
                     }
                     v106 += 2;
                     v93 += 6;
@@ -50418,30 +51224,30 @@ void sub_46B8AE(char* thisx, int a2)
                             v104 = v93 + 8;
                             v102 = dword_4B91E0 + 1;
                             SetRect(&rc, 0, 0, 16, 24);
-                            sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v102, (int*)&rc);
+                            sub_4A03B3(byte_4BDC60, dword_4B9248, &v102, &rc);
                             v103 = v106 - 4;
                             v104 = v93;
                             v102 = dword_4B91E0;
                             v37 = (unsigned __int16)sub_475CB0((short*)v39);
                             SetRect(&rc, 0, 16 * v37, 32, 16);
-                            sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v102, (int*)&rc);
+                            sub_4A03B3(byte_4BDC60, dword_4B9248, &v102, &rc);
                             v103 = v106 - 2;
                             v104 = v93 + 12;
                             v102 = dword_4B91E0 + 1;
                             SetRect(&rc, 16 * a2 + 18, 0, 14, 16);
-                            sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v102, (int*)&rc);
+                            sub_4A03B3(byte_4BDC60, dword_4B9248, &v102, &rc);
                             v103 = v106 + 17;
                             v104 = v93 + 12;
                             v102 = dword_4B91E0 + 1;
                             SetRect(&rc, 16 * a2 + 24, 0, 8, 16);
-                            sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v102, (int*)&rc);
+                            sub_4A03B3(byte_4BDC60, dword_4B9248, &v102, &rc);
                             if (!thisx[81] && sub_46D516((__int16*)thisx + 696, v94, -1))
                             {
                                 v103 = v106;
                                 v104 = v93 + 4;
                                 v102 = dword_4B91E0 + 1;
                                 SetRect(&rc, 16, 24, 24, 24);
-                                sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v102, (int*)&rc);
+                                sub_4A03B3(byte_4BDC60, dword_4B9248, &v102, &rc);
                             }
                             v106 = xLeft + 8;
                             v17 = dword_4B9248;
@@ -50488,14 +51294,14 @@ void sub_46B8AE(char* thisx, int a2)
                             v92 = (char)thisx[244 * a2 + 1396 + 28 * v96];
                         SetRect(&rc, 24 * v92, 0, 24, 24);
                         v102 = dword_4B9234;
-                        sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v102, (int*)&rc);
+                        sub_4A03B3(byte_4BDC60, dword_4B9248, &v102, &rc);
                         if (!thisx[81] && *((char*)dword_4B92DC + v94))
                         {
                             v103 = v106;
                             v104 = v93 + 4;
                             v102 = dword_4B91E0 + 1;
                             SetRect(&rc, 16, 24, 24, 24);
-                            sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v102, (int*)&rc);
+                            sub_4A03B3(byte_4BDC60, dword_4B9248, &v102, &rc);
                         }
                         v106 = xLeft + 8;
                         v93 = yTop + 28;
@@ -50616,7 +51422,7 @@ void sub_46B8AE(char* thisx, int a2)
                 SetRect(&rc, xLeft + 2, yTop + 46, xLeft + 30, yTop + 86);
                 v19 = dword_4B9248;
                 v10 = sub_49FFEC(198, 113, 0);
-                sub_4A02E9((int*)byte_4BDC60, (int)&rc, (int)&rc, v10, v19);
+                sub_4A02E9(byte_4BDC60, (int)&rc, &rc, v10, v19);
                 v106 += 2;
                 v33 = *(int*)&thisx[244 * a2 + 1392 + 28 * v96];
                 v103 = v106 + 4;
@@ -50630,7 +51436,7 @@ void sub_46B8AE(char* thisx, int a2)
                 v36 = (char)thisx[244 * a2 + 1396 + 28 * v96];
                 SetRect(&rc, 24 * v36, 0, 24, 24);
                 v102 = dword_4B9234;
-                sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v102, (int*)&rc);
+                sub_4A03B3(byte_4BDC60, dword_4B9248, &v102, &rc);
                 v106 = xLeft + 8;
                 v34 = yTop + 28;
                 sub_47B91A(xLeft + 8, yTop + 28, byte_4B362C, 0, dword_4B9248);
@@ -50668,7 +51474,7 @@ void sub_46B8AE(char* thisx, int a2)
                 SetRect(&rc, v31, yTop + 1, xLeft + 20 * jj + 20, yTop + 18);
                 v20 = dword_4B9248;
                 v11 = sub_49FFEC(198, 113, 0);
-                sub_4A02E9((int*)byte_4BDC60, v12, (int)&rc, v11, v20);
+                sub_4A02E9(byte_4BDC60, v12, &rc, v11, v20);
                 v103 = v31 + 3;
                 v104 = v29 + 1;
                 sub_47900E(&v102, 1, v28, dword_4B9248);
@@ -50679,7 +51485,7 @@ void sub_46B8AE(char* thisx, int a2)
                 sub_485E5A((int)dword_4B93A4 + 24 * v27, (unsigned short*)word_4B9290);
                 SetRect(&rc, 24 * v30 + 1, 0, 19, 8);
                 v102 = dword_4B9234;
-                sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v102, (int*)&rc);
+                sub_4A03B3(byte_4BDC60, dword_4B9248, &v102, &rc);
                 if (!thisx[81])
                 {
                     if (sub_46D48E((int*)thisx + 348, v28, a2, jj))
@@ -50688,7 +51494,7 @@ void sub_46B8AE(char* thisx, int a2)
                         v104 = v29 + 1;
                         v102 = dword_4B91E0 + 1;
                         SetRect(&rc, 0, 24, 16, 16);
-                        sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v102, (int*)&rc);
+                        sub_4A03B3(byte_4BDC60, dword_4B9248, &v102, &rc);
                     }
                 }
             }
@@ -50704,20 +51510,20 @@ void sub_46B8AE(char* thisx, int a2)
             SetRect(&rc, xLeft + 132, yTop + 1, xLeft + 151, yTop + 18);
             v21 = dword_4B9248;
             v13 = sub_49FFEC(198, 113, 0);
-            sub_4A02E9((int*)byte_4BDC60, (int)&rc, (int)&rc, v13, v21);
+            sub_4A02E9(byte_4BDC60, (int)&rc, &rc, v13, v21);
             v103 = v26 + 1;
             v104 = v25 + 8;
             v105 = 1;
             v102 = dword_4B91E0 + 1;
             SetRect(&rc, 0, 0, 16, 9);
-            sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v102, (int*)&rc);
+            sub_4A03B3(byte_4BDC60, dword_4B9248, &v102, &rc);
             v103 = v26;
             v104 = v25;
             v105 = 1;
             v102 = dword_4B91E0;
             v23 = (unsigned __int16)sub_475CB0(v24);
             SetRect(&rc, 6, 16 * v23, 19, 16);
-            sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v102, (int*)&rc);
+            sub_4A03B3(byte_4BDC60, dword_4B9248, &v102, &rc);
             if (!thisx[81])
             {
                 if (sub_46D516((__int16*)thisx + 696, v98, a2))
@@ -50726,7 +51532,7 @@ void sub_46B8AE(char* thisx, int a2)
                     v104 = v25 + 1;
                     v102 = dword_4B91E0 + 1;
                     SetRect(&rc, 0, 24, 16, 16);
-                    sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v102, (int*)&rc);
+                    sub_4A03B3(byte_4BDC60, dword_4B9248, &v102, &rc);
                 }
             }
         }
@@ -51608,10 +52414,11 @@ unsigned __int16* sub_46E35A(int thisx, double a2, double a3, double a4)
 }
 
 
+
 void sub_46F18C(int thisx, int a2)
 {
 
-   Warning();//修正堆栈
+    Warning();//修正堆栈
     check_stack c(__FILE__, __LINE__);
     int v107; // [esp+1FCh] [ebp-30h]
     int v106; // [esp+1F8h] [ebp-34h]
@@ -51729,7 +52536,7 @@ void sub_46F18C(int thisx, int a2)
     if (a2 == -1)
     {
         SetRect(&rc, 0, 0, 320, 16);
-        sub_4A02E9((int*)byte_4BDC60, (int)&rc, (int)&rc, 0, dword_4B9248);
+        sub_4A02E9(byte_4BDC60, (int)&rc, &rc, 0, dword_4B9248);
         sub_49C15E((int)&v105);
         v105 = dword_4B91F8;
         for (i = 1; i < 31; ++i)
@@ -51757,7 +52564,7 @@ void sub_46F18C(int thisx, int a2)
         xLeft = 160 * (a2 / 2) + 4;
         yTop = 112 * (a2 & 0x80000001) + 20;
         SetRect(&v91, xLeft, yTop, 160 * (a2 / 2) + 156, 112 * (a2 & 0x80000001) + 36);
-        sub_4A02E9((int*)byte_4BDC60, v2, (int)&v91, 0, dword_4B9248);
+        sub_4A02E9(byte_4BDC60, v2, &v91, 0, dword_4B9248);
         v98 = 160 * (a2 / 2) + 115;
         v89 = yTop;
         for (m = *(int*)(thisx + 2368) == 0; m < 2; ++m)
@@ -51766,16 +52573,16 @@ void sub_46F18C(int thisx, int a2)
             SetRect(&v91, v98, v89, xLeft + 19 * m + 132, v89 + 16);
             v17 = dword_4B9248;
             v3 = sub_49FFEC(198, 113, 0);
-            sub_4A02E9((int*)byte_4BDC60, v4, (int)&v91, v3, v17);
+            sub_4A02E9(byte_4BDC60, v4, &v91, v3, v17);
         }
         v98 = xLeft;
         SetRect(&v91, xLeft, yTop + 24, xLeft + 152, yTop + 104);
-        sub_4A02E9((int*)byte_4BDC60, v5, (int)&v91, 0, dword_4B9248);
+        sub_4A02E9(byte_4BDC60, v5, &v91, 0, dword_4B9248);
         v98 = xLeft + 3;
         SetRect(&v91, xLeft + 3, yTop + 56, xLeft + 28, yTop + 100);
         v18 = dword_4B9248;
         v6 = sub_49FFEC(198, 113, 0);
-        sub_4A02E9((int*)byte_4BDC60, v7, (int)&v91, v6, v18);
+        sub_4A02E9(byte_4BDC60, v7, &v91, v6, v18);
         v84 = thisx + 244 * a2 + 1392;
         v98 = xLeft + 8;
         sub_47B91A(xLeft + 8, yTop + 4, (LPCSTR)(thisx + 244 * a2 + 1564), 0, dword_4B9248);
@@ -51801,7 +52608,7 @@ void sub_46F18C(int thisx, int a2)
                     v93 = dword_4B91E0;
                     v78 = (unsigned __int16)sub_475CB0(v79);
                     SetRect(&v91, 8, 16 * v78, 16, 16);
-                    sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v93, (int*)&v91);
+                    sub_4A03B3(byte_4BDC60, dword_4B9248, &v93, &v91);
                     v96 = 0;
                 }
             }
@@ -51819,7 +52626,7 @@ void sub_46F18C(int thisx, int a2)
                 v93 = v92 + dword_4B9234;
                 v97 = 8 * (m + 2 * a2) + (int)word_4B9290;// ddd 4B9290
                 SetRect(&v91, 0, 0, 16, 8);
-                sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v93, (int*)&v91);
+                sub_4A03B3(byte_4BDC60, dword_4B9248, &v93,&v91);
             }
             v98 += 19;
         }
@@ -51834,23 +52641,23 @@ void sub_46F18C(int thisx, int a2)
                 v95 = yTop + 72;
                 v93 = dword_4B91E0 + 1;
                 SetRect(&v91, 0, 0, 16, 24);
-                sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v93, (int*)&v91);
+                sub_4A03B3(byte_4BDC60, dword_4B9248, &v93, &v91);
                 v94 = v98 - 4;
                 v95 = yTop + 64;
                 v93 = dword_4B91E0;
                 v23 = (unsigned __int16)sub_475CB0((short*)v25);
                 SetRect(&v91, 0, 16 * v23, 32, 16);
-                sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v93, (int*)&v91);
+                sub_4A03B3(byte_4BDC60, dword_4B9248, &v93, &v91);
                 v94 = v98 - 4;
                 v95 = yTop + 76;
                 v93 = dword_4B91E0 + 1;
                 SetRect(&v91, 16 * a2 + 16, 0, 16, 16);
-                sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v93, (int*)&v91);
+                sub_4A03B3(byte_4BDC60, dword_4B9248, &v93, &v91);
                 v94 = v98 + 17;
                 v95 = yTop + 76;
                 v93 = dword_4B91E0 + 1;
                 SetRect(&v91, 16 * a2 + 24, 0, 8, 16);
-                sub_4A03B3((short*)byte_4BDC60, dword_4B9248, &v93, (int*)&v91);
+                sub_4A03B3(byte_4BDC60, dword_4B9248, &v93, &v91);
                 v98 = xLeft + 8;
                 v20 = dword_4B9248;
                 v15 = unknown_libname_18(v25);
@@ -52254,7 +53061,7 @@ int sub_470968(int thisx)
     sub_47B91A(296, v6 + 8, byte_4B3864, 0, v12);
     *(int*)(v9 + 168) += v10;
     SetRect(&rc, 24, 144, 104, 160);
-    sub_4A02E9((int*)byte_4BDC60, v1, (int)&rc, 0, v12);
+    sub_4A02E9(byte_4BDC60, v1, &rc, 0, v12);
     v2 = unknown_libname_18((char*)v11);
     v13 = lstrlenA(v2);
     v3 = unknown_libname_18((char*)v11);
@@ -52430,7 +53237,7 @@ int sub_4710B5(int thisx)
     *(char*)(thisx + 2562) = 0;
     *(char*)(thisx + 2580) = 0;
     sub_440B78((int)byte_4BDB28);
-    sub_4A02E9((int*)byte_4BDC60, dword_4B9248, 0, 0, dword_4B9248);
+    sub_4A02E9(byte_4BDC60, dword_4B9248, 0, 0, dword_4B9248);
     sub_49DB90(v28);
     if (sub_49DA45((int*)byte_4BDC60, aGraphicKkResul, (int)v28) >= 0)
     {
@@ -55081,8 +55888,10 @@ BOOL sub_476485(int* thisx, char a2)
     BOOL result; // eax
     char v3; // [esp+8h] [ebp-4h]
 
+    //判断按键区是否被按下
     if (!*thisx)
         return ((BOOL(*)(int*))funcs_476478[a2])(thisx);
+
     v3 = *((char*)thisx + a2 + 80);
     if (v3 >= 0)
         return ((BOOL(*)(int*))funcs_476478[v3])(thisx);
@@ -57700,7 +58509,7 @@ int sub_47AC9D()
         v2 = (unsigned __int8)sub_401710(v4);
         v3 = (unsigned __int8)MarkedForDetachment(v4);//call return thisxx[20]; 
         if (v2 < (int)dword_4B93A0 && v3 < 4)
-            *((short*)*(&dword_4B9380 + v3) + v2) = 1;
+            *((short*)*(&dword_4B9380 + v3) + v2) = 1;//这里就与ida的反编译代码不同了，对ida来说dword_4B9380是一个变量取他的地址加偏移来取代数组，但是我直接把它改造成数组还加&符号变成双重指针了，所以报错
     }
     v10 = 0;
     for (i = 0; i < 4; ++i)
@@ -57734,18 +58543,18 @@ void sub_47B2C4()
     int m; // [esp+94h] [ebp-4h]
 
     if (Src)
-        delete(Src);
+        delete2(Src);
     Src = 0;
     if (dword_4B9394)
-        delete(dword_4B9394);
+        delete2(dword_4B9394);
     dword_4B9394 = 0;
     for (i = 0; i < 4; ++i)
     {
         if (*(&dword_4B9380 + i))
-            delete(*(&dword_4B9380 + i));
+            delete2(*(&dword_4B9380 + i));
         *(int*)(&dword_4B9380 + i) = 0;
         if (dword_4B9370[i])
-            delete(int*)(dword_4B9370[i]);
+            delete2((int*)(dword_4B9370[i]));
         dword_4B9370[i] = 0;
     }
     if (dword_4B93A4)
@@ -57762,17 +58571,17 @@ void sub_47B2C4()
         *((int*)dword_4B9360 + j) = 0;
     }
     if (dword_4B9364)
-        delete(dword_4B9364);
+        delete2(dword_4B9364);
     dword_4B9364 = 0;
     if (dword_4B9360)
-        delete(dword_4B9360);
+        delete2(dword_4B9360);
     dword_4B9360 = 0;
     dword_4B9368 = 0;
     if (dword_4B92E0)
         (**(void(__thiscall***)(int, int))dword_4B92E0)(dword_4B92E0, 3);
     dword_4B92E0 = 0;
     if (dword_4B92DC)
-        delete(dword_4B92DC);
+        delete2(dword_4B92DC);
     dword_4B92DC = 0;
     Size = 0;
     if (dword_4B92D4)
@@ -57811,7 +58620,7 @@ void sub_47B2C4()
                 (**v0)((int)v0, 3);
         }
         if (*(dword_4B9310 + m))
-            delete(int*)(*(dword_4B9310 + m));
+            delete2((int*)(*(dword_4B9310 + m)));
         dword_4B9308[m] = 0;
         dword_4B92FC[m] = 0;
         *(dword_4B9310 + m) = 0;
@@ -57889,11 +58698,11 @@ int __cdecl sub_47B7ED(int a1, int a2, LPCSTR lpString, int a4, int a5)
     {
         v9 = dword_4B9218;
         SetRect(&rc, 8 * ((lpString[i] - 32) % 32), 8 * ((lpString[i] - 32) / 32), 8, 8);
-        sub_4A03B3((short*)byte_4BDC60, a5, &v9, (int*)&rc);
+        sub_4A03B3(byte_4BDC60, a5, &v9, &rc);
         if ((a4 & 1) != 0)
         {
             ++v10;
-            sub_4A03B3((short*)byte_4BDC60, a5, &v9, (int*)&rc);
+            sub_4A03B3(byte_4BDC60, a5, &v9, &rc);
             v10 += 7;
         }
         else
@@ -57913,23 +58722,25 @@ int __cdecl sub_47B91A(int a1, int a2, LPCSTR lpString, int a4, int a5)
 
     //修正堆栈
     check_stack c(__FILE__, __LINE__);
-    int v20; // [esp+68h] [ebp-4h]
-    struct tagRECT rc; // [esp+58h] [ebp-14h] BYREF
+    int v20; // [esp+68h] [ebp-4h]                  // 当前文字渲染的横坐标
+    struct tagRECT rc; // [esp+58h] [ebp-14h] BYREF// 用于存储绘制矩形区域
 
     char v18_tc[44];
-    int v18; // [esp+28h] [ebp-44h]
-    int v17[2]; // [esp+20h] [ebp-4Ch] BYREF
+    int v18; // [esp+28h] [ebp-44h]                 // 中间变量，表示当前绘制的纵坐标
+    int v17[2]; // [esp+20h] [ebp-4Ch] BYREF        // 绘制位置数组，存储横纵坐标
 
-    int v16; // [esp+1Ch] [ebp-50h]
-    int v15; // [esp+18h] [ebp-54h]
+    int v16; // [esp+1Ch] [ebp-50h]                 // 字符串长度
+    int v15; // [esp+18h] [ebp-54h]                 // 当前文字渲染的纵坐标
     //char tc_52[2]; //3
     //char v14; // [esp+15h] [ebp-57h],改改改
-    CHAR String1[2]; // [esp+14h] [ebp-58h] BYREF
-    int i; // [esp+10h] [ebp-5Ch]
-    int v11; // [esp+Ch] [ebp-60h]
-    int v10; // [esp+8h] [ebp-64h]
-    int m; // [esp+4h] [ebp-68h]
+    CHAR String1[2]; // [esp+14h] [ebp-58h] BYREF       // 临时字符变量，存储前一个字符[1]// 当前处理的字符[0]
+    int i; // [esp+10h] [ebp-5Ch]                       // 循环变量
 
+    int v11; // [esp+Ch] [ebp-60h]                      // 匹配标志
+    int v10; // [esp+8h] [ebp-64h]                      // 匹配标志
+
+
+    int m; // [esp+4h] [ebp-68h]
     int n; // [esp+0h] [ebp-6Ch]
     int result; // eax
     int k; // [esp+4h] [ebp-68h],改改改
@@ -57976,283 +58787,131 @@ int __cdecl sub_47B91A(int a1, int a2, LPCSTR lpString, int a4, int a5)
 
     sub_49C15E((int)v17);//初始化，赋值常数
 
-    v20 = a1 - 8;
-    v15 = a2;
+    v20 = a1 - 8; // 初始化横坐标，a1 是初始横坐标，减去固定偏移量 8
+    v15 = a2;// 初始化纵坐标，a2 是初始纵坐标
     v16 = lstrlenA(lpString);
-    result = a4 & 2;
+    result = a4 & 2;// 检查参数 a4 中的第 2 位标志，初始化 result
+    // 根据标志位调整横坐标
     if ((a4 & 2) != 0)
     {
+        // 如果第 2 位标志为真，每个字符占用宽度为 2
         v20 -= 2 * v16;
     }
     else
     {
-        result = a4 & 4;
-        if ((a4 & 4) != 0)
-            v20 -= 4 * v16;
-    }
-    for (i = 0; i < v16; i += 2)
-    {
-        v20 += 8;
-        lstrcpynA(String1, &lpString[i], 3);
-        if (String1[0] == 92 && String1[1] == 110)
-        {
-            v15 += 16;
-            v20 = a1 - 8;
-        }
-        else
-        {
-            v10 = 0;
-            v11 = 0;
-            for (j = 0; j < 81; ++j)
-            {
-                if (String1[0] == byte_4B443C[3 * j] && String1[1] == byte_4B443D[3 * j])
-                {
-                    v10 = 1;
-                    String1[0] = byte_4B4530[3 * j];
-                    String1[1] = byte_4B4531[3 * j];
-                    break;
-                }
-            }
-            if (!v10)
-            {
-                for (k = 0; k < 10; ++k)
-                {
-                    if (String1[0] == byte_4B4624[3 * k] && String1[1] == byte_4B4625[3 * k])
-                    {
-                        v11 = 1;
-                        String1[0] = byte_4B4644[3 * k];
-                        String1[1] = byte_4B4645[3 * k];
-                        break;
-                    }
-                }
-            }
-
-            for (m = 0; m < 246 && (String1[0] != byte_4B4158[3 * m] || String1[1] != byte_4B4159[3 * m]); ++m)
-                ;//????
-            if (m != 246)
-            {
-                for (n = 0; n < (a4 & 1) + 1; ++n)
-                {
-                    v17[1] = n + v20;
-                    v18 = v15;
-                    v17[0] = dword_4B921C;
-                    SetRect(&rc, 8 * (m % 16), 8 * (m / 16), 8, 8);
-                    if (a5 == -1)
-                        sub_49C8A6((int)byte_4BDC60, v17, (int*)&rc);
-                    else
-                        sub_4A03B3((short*)byte_4BDC60, a5, v17, (int*)&rc);
-                    if (v10 || v11)
-                    {
-                        v18 = v15 - 8;
-                        v17[0] = dword_4B921C;
-                        if (v10)
-                            SetRect(&rc, 120, 56, 8, 8);
-                        else
-                            SetRect(&rc, 0, 64, 8, 8);
-                        if (a5 == -1)
-                            sub_49C8A6((int)byte_4BDC60, v17, (int*)&rc);
-                        else
-                            sub_4A03B3((short*)byte_4BDC60, a5, v17, (int*)&rc);
-                    }
-                }
-            }
-
-            /*
-            for (m = 0; m < 246 && (String1[0] != byte_4B4158[3 * m] || String1[1] != byte_4B4159[3 * m]); ++m)
-            {
-                if (m != 246)
-                {
-                    for (n = 0; n < (a4 & 1) + 1; ++n)
-                    {
-                        v17[1] = n + v20;
-                        v18 = v15;
-                        v17[0] = dword_4B921C;
-                        int pa1 = 8 * (m % 16);
-                        int pa2 = 8 * (m / 16);
-                        int pa3 = 8;
-                        int pa4 = 8;
-                        SetRect(&rc, pa1, pa2, pa3, pa4);
-                        if (a5 == -1)
-                            sub_49C8A6((int)byte_4BDC60, v17, (int*)&rc);
-                        else
-                            sub_4A03B3((short*)byte_4BDC60, a5, v17, (int*)&rc);
-                        if (v10 || v11)
-                        {
-                            v18 = v15 - 8;
-                            v17[0] = dword_4B921C;
-                            if (v10)
-                                SetRect(&rc, 120, 56, 8, 8);
-                            else
-                                SetRect(&rc, 0, 64, 8, 8);
-                            if (a5 == -1)
-                                sub_49C8A6((int)byte_4BDC60, v17, (int*)&rc);
-                            else
-                                sub_4A03B3((short*)byte_4BDC60, a5, v17, (int*)&rc);
-                        }
-                    }
-                }
-            }
-            */
-        }
-        result = i + 2;
-    }
-    return result;
-}
-
-
-/*
-//ai
-// 文字显示函数
-int __cdecl sub_47B91A(int a1, int a2, LPCSTR lpString, int a4, int a5)
-{
-    // 修正堆栈，用于检查内存操作
-    check_stack c(__FILE__, __LINE__);
-
-    // 定义局部变量
-    int v20; // 当前文字渲染的横坐标
-    struct tagRECT rc; // 用于存储绘制矩形区域
-
-    int v18_tc[44]; // 未明确用途的数组
-    int v18; // 中间变量，表示当前绘制的纵坐标
-    int v17[2]; // 绘制位置数组，存储横纵坐标
-
-    int v16; // 字符串长度
-    int v15; // 当前文字渲染的纵坐标
-    char v14; // 临时字符变量，存储前一个字符
-    CHAR String1; // 当前处理的字符
-    int i, j, k, m, n; // 循环变量
-    int v10, v11; // 匹配标志
-    int result; // 函数返回值
-
-    // 初始化数组 v17，并为变量赋初值
-    sub_49C15E((int)v17);
-
-    // 初始化横坐标，a1 是初始横坐标，减去固定偏移量 8
-    v20 = a1 - 8;
-
-    // 初始化纵坐标，a2 是初始纵坐标
-    v15 = a2;
-
-    // 获取字符串长度
-    v16 = lstrlenA(lpString);
-
-    // 检查参数 a4 中的第 2 位标志，初始化 result
-    result = a4 & 2;
-
-    // 根据标志位调整横坐标
-    if ((a4 & 2) != 0) {
-        // 如果第 2 位标志为真，每个字符占用宽度为 2
-        v20 -= 2 * v16;
-    }
-    else {
         // 如果第 4 位标志为真，每个字符占用宽度为 4
         result = a4 & 4;
         if ((a4 & 4) != 0)
             v20 -= 4 * v16;
     }
-
     // 遍历字符串中的每两个字符
-    for (i = 0; i < v16; i += 2) {
+    for (i = 0; i < v16; i += 2)
+    {
         // 每次处理字符，横坐标增加固定值 8
         v20 += 8;
-
         // 从字符串中复制两个字符到 String1
-        lstrcpynA(&String1, &lpString[i], 3);
+        lstrcpynA(String1, &lpString[i], 3);
 
         // 处理换行符 '\n'
-        if (String1 == 92 && v14 == 110) {
+        if (String1[0] == 92 && String1[1] == 110)
+        {
             // 遇到换行符，纵坐标增加固定值 16
             v15 += 16;
-
             // 横坐标重置为初始值
             v20 = a1 - 8;
         }
-        else {
+        else
+        {
             // 初始化匹配标志
             v10 = 0;
             v11 = 0;
 
             // 匹配字符替换规则 1
-            for (j = 0; j < 81; ++j) {
+            for (j = 0; j < 81; ++j)
+            {
                 // 如果字符匹配规则 1 的条件
-                if (String1 == byte_4B443C[3 * j] && v14 == byte_4B443D[3 * j]) {
+                if (String1[0] == byte_4B443C[3 * j] && String1[1] == byte_4B443D[3 * j])
+                {
                     // 设置标志 v10 表示规则 1 匹配
                     v10 = 1;
-
                     // 替换字符为规则 1 的目标字符
-                    String1 = byte_4B4530[3 * j];
-                    v14 = byte_4B4531[3 * j];
-                    break; // 匹配后退出循环
+                    String1[0] = byte_4B4530[3 * j];
+                    String1[1] = byte_4B4531[3 * j];
+                    break;// 匹配后退出循环
                 }
             }
-
             // 如果未匹配规则 1，继续匹配规则 2
-            if (!v10) {
-                for (k = 0; k < 10; ++k) {
+            if (!v10)
+            {
+                for (k = 0; k < 10; ++k)
+                {
                     // 如果字符匹配规则 2 的条件
-                    if (String1 == byte_4B4624[3 * k] && v14 == byte_4B4625[3 * k]) {
+                    if (String1[0] == byte_4B4624[3 * k] && String1[1] == byte_4B4625[3 * k])
+                    {
                         // 设置标志 v11 表示规则 2 匹配
                         v11 = 1;
-
                         // 替换字符为规则 2 的目标字符
-                        String1 = byte_4B4644[3 * k];
-                        v14 = byte_4B4645[3 * k];
+                        String1[0] = byte_4B4644[3 * k];
+                        String1[1] = byte_4B4645[3 * k];
                         break; // 匹配后退出循环
                     }
                 }
             }
-
             // 查找当前字符在规则 3 的匹配项
-            for (m = 0; m < 246 && (String1 != byte_4B4158[3 * m] || v14 != byte_4B4159[3 * m]); ++m);
-
+            for (m = 0; m < 246 && (String1[0] != byte_4B4158[3 * m] || String1[1] != byte_4B4159[3 * m]); ++m)
+            {
+                
+            }
+            if (m == 246)
+            {
+                printf("需要显示的字符串是%s   ", lpString);
+                printf("未找到字符 %C数字是%d", String1[0],String1[0]);
+                printf("和%C数字是%d\n",String1[1],String1[1]);
+            }
             // 如果找到匹配项（m 未达到 246）
-            if (m != 246) {
+            if (m != 246)
+            {
                 // 根据标志 a4 的最低位，决定绘制次数
-                for (n = 0; n < (a4 & 1) + 1; ++n) {
+                for (n = 0; n < (a4 & 1) + 1; ++n)
+                {
                     // 设置绘制位置，横坐标和纵坐标
                     v17[1] = n + v20;
                     v18 = v15;
-                    v17[0] = dword_4B921C; // 绘制上下文
-
+                    v17[0] = dword_4B921C;// 绘制上下文
                     // 计算绘制矩形区域
                     SetRect(&rc, 8 * (m % 16), 8 * (m / 16), 8, 8);
-
                     // 根据参数 a5 的值选择绘制函数
                     if (a5 == -1)
                         sub_49C8A6((int)byte_4BDC60, v17, (int*)&rc); // 绘制方式 1
                     else
-                        sub_4A03B3((short*)byte_4BDC60, a5, v17, (int*)&rc); // 绘制方式 2
-
+                        sub_4A03B3(byte_4BDC60, a5, v17, &rc);// 绘制方式 2
+                    
                     // 如果字符经过替换，绘制附加修饰
-                    if (v10 || v11) {
+                    if (v10 || v11)
+                    {
                         // 修改纵坐标位置，绘制附加修饰
                         v18 = v15 - 8;
-                        v17[0] = dword_4B921C; // 绘制上下文
-
+                        v17[0] = dword_4B921C;// 绘制上下文
                         // 设置附加修饰区域
                         if (v10)
-                            SetRect(&rc, 120, 56, 8, 8); // 替换规则 1 的修饰
+                            SetRect(&rc, 120, 56, 8, 8);// 替换规则 1 的修饰
                         else
-                            SetRect(&rc, 0, 64, 8, 8); // 替换规则 2 的修饰
-
+                            SetRect(&rc, 0, 64, 8, 8);// 替换规则 2 的修饰
                         // 根据参数 a5 的值选择绘制函数
                         if (a5 == -1)
                             sub_49C8A6((int)byte_4BDC60, v17, (int*)&rc);
                         else
-                            sub_4A03B3((short*)byte_4BDC60, a5, v17, (int*)&rc);
+                            sub_4A03B3(byte_4BDC60, a5, v17, &rc);
                     }
                 }
             }
         }
-
         // 更新循环变量，每次处理两个字符
         result = i + 2;
     }
-
-    // 返回处理的字符数量
     return result;
 }
-*/
+
 
 //画帧数
 //lpString = 要画的帧数数字
@@ -58319,11 +58978,11 @@ int __cdecl sub_47BC5A(int a1, int a2, LPCSTR lpString, int a4, int a5)
             v11 = v6 + 8 * i;
             v10 = dword_4B921C;//可能是显示帧数DDSf对象的下标，这个对象专门用来显示字体字符相关的
             SetRect(&rc, 8 * ((lpString[i] + 15) % 16), 8 * ((lpString[i] + 15) / 16), 8, 8);//计算字符的矩形
-            sub_4A03B3((short*)byte_4BDC60, a5, &v10, (int*)&rc);
+            sub_4A03B3(byte_4BDC60, a5, &v10, &rc);
             if ((a4 & 1) != 0)
             {
                 ++v11;
-                sub_4A03B3((short*)byte_4BDC60, a5, &v10, (int*)&rc);
+                sub_4A03B3(byte_4BDC60, a5, &v10, &rc);
             }
         }
         result = i + 1;
@@ -60838,8 +61497,29 @@ int* sub_47F98B(int* thisx)
     }
     return result;
 }
+void sub_47F9D6(int thisx, LPCSTR lpString, int a3)
+{
+    int iMaxLength; // [esp+4h] [ebp-4h]
 
-//ai
+    if (lpString)
+    {
+        sub_47FBA3(thisx);
+        iMaxLength = lstrlenA(lpString) + 1;
+        if (iMaxLength > 256)
+            iMaxLength = 256;
+        lstrcpynA((LPSTR)(thisx + 4), lpString, iMaxLength);
+        *(_DWORD*)(thisx + 272) = a3;
+        *(_BYTE*)(thisx + 264) = 0;
+        *(_BYTE*)(thisx + 265) = 0;
+        *(_DWORD*)(thisx + 260) = -1;
+        *(_DWORD*)(thisx + 268) = *(_DWORD*)(thisx + 272);
+        *(_DWORD*)(thisx + 552) = 0;
+        sub_47FA81((_DWORD*)thisx);
+    }
+}
+
+/*
+//ai注释
 //sub_47F190的set函数
 void sub_47F9D6(int thisx, LPCSTR lpString, int a3)
 {
@@ -60873,7 +61553,7 @@ void sub_47F9D6(int thisx, LPCSTR lpString, int a3)
         sub_47FA81((int*)thisx);
     }
 }
-
+*/
 //get
 int* sub_47FA81(int* thisx)
 {
@@ -60881,7 +61561,7 @@ int* sub_47FA81(int* thisx)
 
     result = thisx;
     if (thisx[69] >= 0)
-        return sub_4A02E9((int*)byte_4BDC60, thisx[69], 0, 0, thisx[69]);
+        return sub_4A02E9(byte_4BDC60, thisx[69], 0, 0, thisx[69]);
     return result;
 }
 
@@ -60894,7 +61574,41 @@ BOOL sub_47FAB0(int thisx)
     return num <= num2;
 }
 
-//ai
+
+void sub_47FADE(int thisx, LPCSTR lpString)
+{
+    //    int iMaxLength; // [esp+4h] [ebp-8h]
+    //    int v4; // [esp+8h] [ebp-4h]
+
+
+    //修正堆栈
+    check_stack c(__FILE__, __LINE__);
+    int v4; // [esp+8h] [ebp-4h]
+    int iMaxLength; // [esp+4h] [ebp-8h]
+
+
+    if (lpString)
+    {
+        v4 = lstrlenA((LPCSTR)(thisx + 4));
+        if (v4)
+        {
+            iMaxLength = v4 + lstrlenA(lpString) + 1;
+            if (iMaxLength > 256)
+                iMaxLength = 256;
+            lstrcpynA((LPSTR)(thisx + v4 + 4), lpString, iMaxLength - v4);
+            if (v4 == *(_DWORD*)(thisx + 260))
+                *(_DWORD*)(thisx + 260) = v4 - 1;
+            *(_DWORD*)(thisx + 268) = *(_DWORD*)(thisx + 272);
+            *(_DWORD*)(thisx + 552) = 0;
+        }
+        else
+        {
+            sub_47F9D6(thisx, lpString, 4);
+        }
+    }
+}
+/*
+//ai注释
 //字符串拼接
 void sub_47FADE(int thisx, LPCSTR lpString)
 {
@@ -60936,7 +61650,7 @@ void sub_47FADE(int thisx, LPCSTR lpString)
         }
     }
 }
-
+*/
 
 //初始化
 int sub_47FBA3(int thisx)
@@ -61027,19 +61741,20 @@ LPSTR sub_47FE10(void** thisx, LPCSTR lpString)
 }
 
 //汇编的push还是从左到右的顺序的
-int  sub_47FE72(int* thisx, LPCSTR lpString, int a3, int a4, int a5, int a6)
+//设置字符串显示的函数
+int sub_47FE72(int thisx, LPCSTR lpString, int a3, int a4, int a5, int a6)
 {
     sub_47FE10((void**)thisx, lpString);
-    thisx[1] = a3;
-    thisx[5] = a4;
-    thisx[6] = a5;
-    return sub_480016(thisx, a6);
+    *(_DWORD*)(thisx + 4) = a3;
+    *(_DWORD*)(thisx + 20) = a4;
+    *(_DWORD*)(thisx + 24) = a5;
+    return sub_480016((_DWORD*)thisx, a6);
 }
 
 //初始化
 // *byte_4B9B10[15800] 是这个位置的值，这个值是内存块地址
 //this本身是一块内存，a4 = 2
-//初始化并设置战场难度
+//初始化并设置战场配置
 int  sub_47FEB2(int thisx, LPCSTR lpString, void* Src, int a4)
 {
     //修正堆栈
@@ -61178,7 +61893,7 @@ int sub_480054(int thisx, int a2)
     v8 = 0;
     for (j = 0; j < i; ++j)
     {
-        sub_47FE72((int*)(*(int*)(thisx + 12) + 32 * j), (LPCSTR)(v8 + a2), 0, 0, 0, 0);
+        sub_47FE72((*(int*)(thisx + 12) + 32 * j), (LPCSTR)(v8 + a2), 0, 0, 0, 0);
         v8 += lstrlenA((LPCSTR)(v8 + a2)) + 1;
     }
     *(char*)(thisx + 6) = v10 / 2 + 5;
@@ -61584,11 +62299,11 @@ int* sub_480BC0(int* thisx)
     sub_47FC70(thisx);
     *thisx = (int)off_4AC304;
     sub_480737(thisx, 8);
-    sub_47FE72((int*)thisx[3], (LPCSTR)&byte_4AF907, 1, 1, 9, 3);
+    sub_47FE72(thisx[3], (LPCSTR)&byte_4AF907, 1, 1, 9, 3);
     sub_47FEB2(thisx[3] + 32, (LPCSTR)&byte_4AF949, &byte_4AF9BB, 0);
-    sub_47FE72((int*)(thisx[3] + 64), (LPCSTR)&byte_4AF9CC, 1, 1, 4, 1);
+    sub_47FE72((thisx[3] + 64), (LPCSTR)&byte_4AF9CC, 1, 1, 4, 1);
     sub_47FEB2(thisx[3] + 96, (LPCSTR)&byte_4AFA1C, &byte_4AFA76, 1);
-    sub_47FE72((int*)(thisx[3] + 128), (LPCSTR)&byte_4AFA83, 1, 0, 8, 4);
+    sub_47FE72((thisx[3] + 128), (LPCSTR)&byte_4AFA83, 1, 0, 8, 4);
     sub_47FEB2(thisx[3] + 160, (LPCSTR)&byte_4AFAD7, &byte_4AFB11, 0);
     sub_47FEB2(thisx[3] + 192, (LPCSTR)&byte_4AFB1E, &byte_4AFB11, 1);
     sub_47FEB2(thisx[3] + 224, (LPCSTR)&byte_4AFB6C, &byte_4AFC02, 0);
@@ -61663,10 +62378,10 @@ int* sub_480F30(int* thisx)
     sub_47FC70(thisx);
     *thisx = (int)off_4AC318;
     sub_480737(thisx, 4);
-    sub_47FE72((int*)thisx[3], (LPCSTR)&byte_4AFC1A, 0, 0, 0, 0);
+    sub_47FE72(thisx[3], (LPCSTR)&byte_4AFC1A, 0, 0, 0, 0);
     sub_47FEB2(thisx[3] + 32, (LPCSTR)&byte_4AFC4C, &byte_4AFB11, 1);
     sub_47FEB2(thisx[3] + 64, (LPCSTR)&byte_4AFCA0, &byte_4AFD14, 0); //关....
-    sub_47FE72((int*)(thisx[3] + 96), (LPCSTR)&byte_4AFD21, 0, 0, 0, 0);
+    sub_47FE72((thisx[3] + 96), (LPCSTR)&byte_4AFD21, 0, 0, 0, 0);
     *((char*)thisx + 4) = 9;
     *((char*)thisx + 5) = 10;
     *((char*)thisx + 6) = 21;
@@ -67513,8 +68228,28 @@ int sub_4891BA(int* thisx, int a2)
         return 0;
 }
 
-//ai
-//检查过ai代码
+
+int sub_4891E4(_DWORD* thisx, LPCSTR lpFileName)
+{
+    int v4; // [esp+4h] [ebp-4h]
+
+    sub_48151A((int)(thisx + 1));//初始化
+    thisx[7] = 0;
+    thisx[85] = 100;
+    thisx[86] = 0;
+    v4 = sub_49CB92((int)byte_4BDC60, -1, 320, 240, 0, 0);
+    if (v4 < 0)
+        return 0;
+    thisx[8] = v4;
+    sub_489289(thisx);
+    if (!sub_486B0E((int)thisx, lpFileName))
+        return 0;
+    thisx[9] = 0;
+    sub_46259F((char*)byte_4BDC60);
+    return 1;
+}
+/*
+//ai注释
 //处理demo文件夹下的txt文件
 //this = 4B9B10+128
 int sub_4891E4(int* thisx, LPCSTR lpFileName)
@@ -67553,8 +68288,7 @@ int sub_4891E4(int* thisx, LPCSTR lpFileName)
 
     // 如果所有操作成功，返回 1
     return 1;
-}
-
+}*/
 
 //初始化
 int(***sub_489289(void* thisx))(int, int)
@@ -67612,7 +68346,19 @@ int sub_48933F(int thisx, int a2, LPCSTR lpString)
     }
 }
 
-//ai
+int sub_4893BC(_DWORD* thisx, int a2)
+{
+    int i; // [esp+4h] [ebp-4h]
+
+    for (i = 0; i < thisx[84]; ++i)//4B9B90.0x54; thisx[84] = 4B9BE4 = 4B9B10.128.336 = 4B9B10.464 ;   int34 = char336;    this.int84 = 4B9CE0
+    {
+        if (unknown_libname_30((_DWORD*)(thisx[83] + (8 * i))) == a2)//return [0];        thisx[83] = 4B9BE0.char[0-256]; last adder = 4B9CE0
+            return unknown_libname_22((_DWORD*)(thisx[83] + (8 * i)));//return thisx[1];
+    }
+    return 0;
+}
+/*
+//ai注释
 //this = b10[128]
 //查找
 int sub_4893BC(int* thisx, int a2)
@@ -67634,7 +68380,7 @@ int sub_4893BC(int* thisx, int a2)
     // 如果没有找到符合条件的元素，返回 0
     return 0;
 }
-
+*/
 
 //加载资源函数，lpFileName为文件地址
 int sub_48941E(int* thisx, LPCSTR lpFileName)
@@ -68216,10 +68962,82 @@ void** sub_48A150(void** thisx)
     return result;
 }
 
+//thisx是一个原版地图内存的首地址，内存大小20字节，a2是地图编号，从1开始
+void sub_48A1AD(void** thisx, int a2)
+{
+    //    int v2; // eax
+    //    int v3; // eax
+    //    int v5[4]; // [esp+18h] [ebp-120h] BYREF
+    //    char v6; // [esp+28h] [ebp-110h]
+    //    CHAR String1[256]; // [esp+2Ch] [ebp-10Ch] BYREF
+    //    int v8; // [esp+134h] [ebp-4h]
 
-//ai
+
+    //修正堆栈
+    check_stack c(__FILE__, __LINE__);
+    int v8; // [esp+134h] [ebp-4h]
+    CHAR String1[256]; // [esp+2Ch] [ebp-10Ch] BYREF
+    char v6; // [esp+28h] [ebp-110h]
+    int v5[4]; // [esp+18h] [ebp-120h] BYREF
+    int v3; // eax
+    int v2; // eax
+
+
+    sub_48A150(thisx);//判断内存内的几个地址的值是否为0，否则就释放内存，如果释放内存这妥妥的会报错啊。。不过构造函数的时候就初始化为0了
+    wsprintfA(String1, "Stage\\Stage%02d_data.txt", a2);
+
+    //这个把v5全初始化为0
+    sub_482BF0(v5);
+
+    v8 = 0;
+
+    if (sub_482C74((int)v5, String1))//成功返回1，读取文件数据保存到内存，内存地址保存到v5[0]，v5[1]为文件大小
+    {
+        v6 = 0;
+        while (sub_482D44(v5, String1))//里面用奇怪的方法取在内存出一行字符串了
+        {
+            if (v6)//离谱，v6在sub_482D44()被赋值了
+            {
+                if (v6 == 1)
+                {
+                    if (thisx[3])
+                        delete2(thisx[3]);
+                    v2 = lstrlenA(String1);
+                    thisx[3] = new2(v2 + 1);
+                    lstrcpyA((LPSTR)thisx[3], String1);
+                    v6 = 0;
+                }
+                else if (v6 == 2)
+                {
+                    if (thisx[2])
+                        delete2(thisx[2]);
+                    v3 = lstrlenA(String1);
+                    thisx[2] = new2(v3 + 1);
+                    lstrcpyA((LPSTR)thisx[2], String1);
+                    v6 = 0;
+                }
+            }
+            else if (lstrcmpiA(String1, aHelp_0))
+            {
+                if (!lstrcmpiA(String1, aName))
+                    v6 = 2;
+            }
+            else
+            {
+                v6 = 1;
+            }
+        }
+    }
+    v8 = -1;//所以这个v8有什么用。。
+
+    //初始化内存
+    sub_482C2F(v5);
+}
+
 /*
-* 代码功能说明：
+ai注释
+
+代码功能说明：
 该函数似乎是在处理一个地图数据的文件，并将数据从文件解析到内存中，然后根据不同的条件将数据存储到 thisx 对应的内存位置。以下是主要步骤：
 
 构造和初始化操作：调用 sub_48A150 函数来初始化 thisx 相关的内存和检查数据结构。
@@ -68234,7 +69052,7 @@ v6：作为标志位，指示当前的处理阶段。v6 == 0 表示未处理特定部分，v6 == 1 和 v6 ==
 v8：在代码中没有被实际使用，可能是准备给某些后续操作保留的变量。
 总结：
 这个函数的主要作用是读取指定的文件，将数据按行解析，并根据特定的字符串内容存储到 thisx 的相关位置。它还包括了动态内存管理的操作，确保根据需要分配或释放内存。
-*/
+
 //地图外部构造函数，处理地图dat数据相关的data.txt文件
 //thisx是一个地图内存的地址，内存大小20字节，a2是地图编号，从1开始
 void sub_48A1AD(void** thisx, int a2)
@@ -68327,6 +69145,7 @@ void sub_48A1AD(void** thisx, int a2)
     sub_482C2F(v5);
 }
 
+*/
 
 void sub_48A1AD_noai(void** thisx, int a2)
 {
@@ -69099,9 +69918,9 @@ void sub_48A94C(int thisx, char* a2, int a3)
                 v9 = sub_48A4E3(v144, 3u);
                 SetRect(&rc, v9, v31, v32, v35);
                 if (rc.top || rc.left || rc.bottom || rc.right)
-                    sub_4A02E9((int*)byte_4BDC60, (int)&rc, (int)&rc, v120, v119);
+                    sub_4A02E9(byte_4BDC60, (int)&rc, &rc, v120, v119);
                 else
-                    sub_4A02E9((int*)byte_4BDC60, v120, 0, v120, v119);
+                    sub_4A02E9(byte_4BDC60, v120, 0, v120, v119);
             }
             break;
         case 9u:
@@ -70623,7 +71442,21 @@ unsigned __int16* sub_48DD3C(int thisx)
     return result;
 }
 
-//ai
+int sub_48E02B(_DWORD* thisx)
+{
+    int result; // eax
+    int i; // [esp+4h] [ebp-4h]
+
+    for (i = 0; i < 7; ++i)
+    {
+        thisx[2 * i + 43] = -1;
+        result = i + 1;
+    }
+    return result;
+}
+
+/*
+//ai注释
 //这个函数可能被用于重置或初始化一个对象的状态或属性，尤其是在处理游戏或应用程序的状态数组时。它确保了特定范围内的元素都被初始化为 -1，表示这些位置上的数据已被重置或未使用
 int sub_48E02B(int* thisx)
 {
@@ -70640,6 +71473,7 @@ int sub_48E02B(int* thisx)
     // 返回最终的索引值 i + 1（即 7）
     return result;
 }
+*/
 
 
 //初始化或改变状态
@@ -76216,7 +77050,45 @@ int sub_49A518(int thisx)
     return result;
 }
 
-//ai
+
+
+//thisx = unk_4BDC60
+unsigned __int16* sub_49AB05(int thisx, int* a2)
+{
+    //    unsigned __int16* result; // eax
+    //    struct tagRECT rc; // [esp+4h] [ebp-10h] BYREF
+
+
+    //修正堆栈
+    check_stack c(__FILE__, __LINE__);
+    struct tagRECT rc; // [esp+4h] [ebp-10h] BYREF
+    unsigned __int16* result; // eax
+
+
+    result = (unsigned __int16*)thisx;
+    if (*(_BYTE*)(thisx + 50440) && *a2 < 2048)
+    {
+        if (a2[8])
+        {
+            a2[3] = thisx + 50452;
+        }
+        else
+        {
+            SetRect(&rc, 0, 0, *(__int16*)(thisx + 50448), *(__int16*)(thisx + 50450));
+            a2[3] = (int)&rc;
+        }
+        a2[4] = 256;
+        a2[5] = 256;
+        if (*(_BYTE*)(thisx + 50443))
+            return sub_49ABE2((unsigned __int16*)(24 * *a2 + thisx), *(_DWORD*)(thisx + 50520), (int)a2);
+        else
+            return sub_49ABE2((unsigned __int16*)(24 * *a2 + thisx), *(_DWORD*)(thisx + 50516), (int)a2);
+    }
+    return result;
+}
+
+/*
+//ai注释
 //thisx = C60，a2[0]是C60大数组里的一个表面下标
 unsigned __int16* sub_49AB05(int thisx, int* a2)
 {
@@ -76261,8 +77133,7 @@ unsigned __int16* sub_49AB05(int thisx, int* a2)
     // 如果条件不满足，返回 result
     return result;
 }
-
-
+*/
 
 //绘制函数,thisx是C60里的某个表面
 unsigned __int16* sub_49ABE2(unsigned __int16* thisx, int a2, int a3)
@@ -76900,7 +77771,6 @@ int sub_49C541(int* thisx, int a2, int a3, struct tagRECT* a4)
 }
 
 //this = byte_4BDC60 a2 = DDSf对象下标,a3 = rc对象
-
 int sub_49C8A6(int thisx, int* a2, int* a3)
 {
     int result; // eax
@@ -79135,15 +80005,15 @@ int sub_4A00C6(int thisx, int* a2, int a3, int* a4)
 }
 
 
-int* __fastcall sub_4A02E9(int* thisx, int edx0, int a1, int a2, int a3)
+_DWORD *__fastcall sub_4A02E9(char *thisx, int a2, tagRECT *a3, int a4, int a5)
 {
-    int* result; // eax
+  _DWORD *result; // eax
 
-    if (a3 == -1)
-        return sub_49EDC1((int)thisx, edx0, (int*)a1, a2);
-    if (a3 >= 0 && a3 < 2048)
-        return sub_4A0337(&thisx[6 * a3], (int*)a1, a2);
-    return result;
+  if ( a5 == -1 )
+    return sub_49EDC1((int)thisx, a2, (int*)a3, a4);
+  if ( a5 >= 0 && a5 < 2048 )
+    return (_DWORD *)sub_4A0337((int*) & thisx[24 * a5], (int*)a3, a4);
+  return result;
 }
 
 int* sub_4A0337(int* thisx, int* a2, int a3)
@@ -79203,33 +80073,29 @@ int v5[25]; // [esp+4h] [ebp-64h] BYREF
     return result;
 }
 
-//this = byte_4BDC60 a3 = DDSf对象下标
-
-void sub_4A03B3(short* thisx, int a2, int* a3, int* a4)
+void sub_4A03B3(char* thisx, int a2, int* a3, tagRECT* a4)
 {
-
-
-    //修正堆栈
-    check_stack c(__FILE__, __LINE__);
-    int v8; // [esp+10h] [ebp-4h]
-    int v7; // [esp+Ch] [ebp-8h]
-    int v6[2]; // [esp+4h] [ebp-10h] BYREF
-    int v4; // eax
-
-    const char* var = R"(
-    int v8; // [esp+10h] [ebp-4h]
-    int v7; // [esp+Ch] [ebp-8h]
-    int v6[2]; // [esp+4h] [ebp-10h] BYREF
-    )";
-    if (!check_stack_fun2({
-        TO(c)
-        TO(v8)
-        TO(v7)
-        TO(v6)
-        }, 0x10, var))
-    {
-        __asm int 3
-    }
+        //修正堆栈
+        check_stack c(__FILE__, __LINE__);
+        int v8; // [esp+10h] [ebp-4h]
+        int v7; // [esp+Ch] [ebp-8h]
+        int v6[2]; // [esp+4h] [ebp-10h] BYREF
+        int v4; // eax
+    
+        const char* var = R"(
+        int v8; // [esp+10h] [ebp-4h]
+        int v7; // [esp+Ch] [ebp-8h]
+        int v6[2]; // [esp+4h] [ebp-10h] BYREF
+        )";
+        if (!check_stack_fun2({
+            TO(c)
+            TO(v8)
+            TO(v7)
+            TO(v6)
+            }, 0x10, var))
+        {
+            __asm int 3
+        }
 
     if (a2 >= 0)
     {
@@ -79237,20 +80103,21 @@ void sub_4A03B3(short* thisx, int a2, int* a3, int* a4)
         {
             v6[1] = 0;
             v6[0] = 0;
-            LOWORD(v7) = sub_4260F0(&thisx[12 * a2]);//return thisx[3];
+            LOWORD(v7) = sub_4260F0((short*) & thisx[24 * a2]);
             v7 = (unsigned __int16)v7;
-            LOWORD(v8) = sub_48E130(&thisx[12 * a2]); //return thisx[4];
+            LOWORD(v8) = sub_48E130((short*)&thisx[24 * a2]);
             v8 = (unsigned __int16)v8;
             a3[3] = (int)v6;
-            v4 = unknown_libname_30((int*)&thisx[12 * a2]);//return *(int *)thisx;
-            sub_49C541((int*)&thisx[12 * *a3], v4, (int)a3, (tagRECT*)a4);
+            v4 = unknown_libname_30((int*)&thisx[24 * a2]);
+            sub_49C541((int*) & thisx[24 * *a3], v4, (int)a3, a4);
         }
     }
     else
     {
-        sub_49C8A6((int)thisx, a3, a4);
+        sub_49C8A6((int)thisx, a3, (int*)a4);
     }
 }
+
 
 void sub_4A0A0D(void* thisx)
 {
@@ -79651,7 +80518,86 @@ void sub_4A148B(void** thisx)
     }
 }
 
-//ai
+
+//把文件内的数据读取到内存
+int sub_4A14C0(_WORD* thisx, LPCSTR lpFileName)
+{
+    //    int v4; // [esp+Ch] [ebp-10h]
+    //    HANDLE hFile; // [esp+10h] [ebp-Ch]
+    //    int v6; // [esp+14h] [ebp-8h]
+    //    DWORD NumberOfBytesRead; // [esp+18h] [ebp-4h] BYREF
+
+
+    //修正堆栈
+    check_stack c(__FILE__, __LINE__);
+    DWORD NumberOfBytesRead; // [esp+18h] [ebp-4h] BYREF
+    int v6; // [esp+14h] [ebp-8h]
+    HANDLE hFile; // [esp+10h] [ebp-Ch]
+    int v4; // [esp+Ch] [ebp-10h]
+
+
+    hFile = CreateFileA(lpFileName,
+        0x80000000,//请求对文件或设备的访问权限，可以汇总为读取、写入或 0，以指示两者都不) 。
+        0,//请求的文件或设备的共享模式
+        0, //指向 SECURITY_ATTRIBUTES结构
+        3,//要对存在或不存在的文件或设备执行的操作。
+        128,//文件或设备属性和标志 ，FILE_ATTRIBUTE_NORMAL 是文件最常见的默认值。
+        0);//具有 GENERIC_READ 访问权限的模板文件的有效句柄。
+    if (hFile == (HANDLE)-1)
+        return 0;
+    ReadFile(hFile, thisx, 14, (LPDWORD)&NumberOfBytesRead, 0);
+    if (NumberOfBytesRead != 14 || *thisx != 19778)
+        return 0;
+
+    //以char来说，this + 16
+    ReadFile(hFile, thisx + 8, 40, (LPDWORD)&NumberOfBytesRead, 0);
+    if (NumberOfBytesRead != 40)
+        return 0;
+    //以char来说，this + 30
+    if (thisx[15] != 8)
+        return 0;
+    //以char来说，this + 32
+    if (*((_DWORD*)thisx + 8))
+        return 0;
+    //以char来说，this + 48
+    v6 = *((_DWORD*)thisx + 12);
+    if (!v6)
+    {
+        //以char来说，this + 48
+        *((_DWORD*)thisx + 12) = 256;
+        v6 = 256;
+    }
+    //以char来说，this + 56
+    *((_DWORD*)thisx + 14) = (*((_DWORD*)thisx + 5) + 3) & 0xFFFFFFFC;
+    //以char来说，this + 36
+    if (!*((_DWORD*)thisx + 9))
+    {
+        //以char来说，this + 24
+        v4 = *((_DWORD*)thisx + 6);
+        if (v4 < 0)
+            v4 = -v4;
+        //以char来说，this + 36                         //以char来说，this + 56
+        *((_DWORD*)thisx + 9) = v4 * *((_DWORD*)thisx + 14);
+    }
+    //以char来说，this + 64
+    memset(thisx + 32, 0, 1024);
+    //以char来说，this + 64
+    ReadFile(hFile, thisx + 32, 4 * v6, (LPDWORD)&NumberOfBytesRead, 0);
+    //以char来说，this + 60
+    if (*((_DWORD*)thisx + 15))
+        //以char来说，this + 60
+        delete2(*((void**)thisx + 15));
+    //以char来说，this + 60                             //以char来说，this + 36
+    *((_DWORD*)thisx + 15) = (_DWORD)new2(*((_DWORD*)thisx + 9));
+    SetFilePointer(hFile, *(_DWORD*)(thisx + 5), 0, 0);
+    //以char来说，this + 60                     //以char来说，this + 36
+    ReadFile(hFile, *((LPVOID*)thisx + 15), *((_DWORD*)thisx + 9), (LPDWORD)&NumberOfBytesRead, 0);
+    *((_BYTE*)thisx + 1344) = 0;
+    CloseHandle(hFile);
+    return 1;
+}
+/*
+//ai注释
 //thisx =  *byte_4BDC60[12609]申请的内存块    lpFileName = aGraphicSystem的路径
 //把文件内的数据读取到内存
 ////加载文件函数3
@@ -79776,6 +80722,7 @@ int sub_4A14C0(short* thisx, LPCSTR lpFileName)
     CloseHandle(hFile);
     return 1;
 }
+*/
 
 int sub_4A1694(int thisx, void* a2, int a3, int a4, size_t Size, int a6)
 {
@@ -80477,7 +81424,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
 
 
 /*
-//ai之前
+//ai注释
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
 
@@ -82641,11 +83588,11 @@ int* sub_48E210(int* thisx)
     //CPU队伍设置初始化
     sub_47FEB2(thisx[3] + 64, (LPCSTR)&byte_4B2246, &byte_4B1FC8, 0); //队伍设置//　　Ａ　　Ｂ
     //武器初始化
-    sub_47FE72((int*)&thisx[3] + 96, (LPCSTR)&byte_4B22F2, 1, 0, 8, 4); //武器//这里可能不是取地址数据再强转类型，而是取地址,这里和反编译的代码不一样
+    sub_47FE72(thisx[3] + 96, (LPCSTR)&byte_4B22F2, 1, 0, 8, 4); //武器//这里可能不是取地址数据再强转类型，而是取地址,这里和反编译的代码不一样
     //全部人员数量初始化
-    sub_47FE72((int*)&thisx[3] + 128, (LPCSTR)&byte_4B2352, 1, 2, 16, 8);//队伍数量
+    sub_47FE72(thisx[3] + 128, (LPCSTR)&byte_4B2352, 1, 2, 16, 8);//队伍数量
     //比赛队伍数量初始化
-    sub_47FE72((int*)&thisx[3] + 160, byte_4B23F0, 1, 2, 4, 4);//日文字符串参数？？？？
+    sub_47FE72(thisx[3] + 160, byte_4B23F0, 1, 2, 4, 4);//日文字符串参数？？？？
     //合体技初始
     sub_47FEB2(thisx[3] + 192, (LPCSTR)&byte_4B2746, &byte_4B0C59, 1);//合体技//ＯＦＦＯＮ
     //伤害陷阱初始化
