@@ -1,5 +1,9 @@
 #pragma once
-
+//只有头文件声名出变量的内存地址才会连续
+//还必须头文件和cpp文件内的定义都紧连着，内存才会连续
+//为什么byte_4B4158按照上面的规则又不能连续呢
+//void* dword_4B9380 = (int*)1;//因为dword_4B9380如果被赋值了，就不能和下面的变量内存连续了，可能是为了内存安全考虑的底层机制吧，如果是等于0或者={0}, ={0,0,0}则依然可以连续
+//void* dword_4B9380_1[4] = { 0 };
 
 #include "s.h" 
 
@@ -3181,10 +3185,12 @@ extern dword dword_4B9368;
 
 extern dword dword_4B936C;
 
-extern dword dword_4B9370[4];
+extern void* dword_4B9370;
+extern dword dword_4B9370_1[3];
 
-extern dword dword_4B9380[5];
-//extern void* dword_4B9380[];
+
+extern void* dword_4B9380;
+extern void* dword_4B9380_1[4];
 
 extern void* dword_4B9394;
 
@@ -3645,7 +3651,7 @@ extern int dword_4CC7D4;
 //------------------------------------
 extern  CHAR dword_4ABAEC[];
 
-extern  int dword_4ABB0C;
+extern  int dword_4ABB0C[1];
 
 extern  int dword_4ABB10;
 

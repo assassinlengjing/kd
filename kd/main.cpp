@@ -72,6 +72,9 @@ int my() {
 
 int main() //对应start函数
 {
+	printf("%d\n", byte_4B4158);
+	printf("%d\n", &byte_4B4158);
+	printf("%d\n", *&byte_4B4158);
 
 	add(1, 2);
 	int* b = new int[2];

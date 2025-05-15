@@ -1,11 +1,13 @@
 #pragma once
+
 #include <cstdint>
 #include "kd.h"
 #include "stdbool.h"
 
-#ifdef LOWORD
-#undef LOWORD   //取消宏定义
-#endif
+//#ifdef LOWORD
+//#undef LOWORD   //取消宏定义
+//#endif
+//可以注释掉了是因为LOWORD被修正了，它们不会冲突了
 #include "defs.h"
 
 /*
@@ -64,7 +66,7 @@
 #define WORD  short
 #define DWORD short
 #define LOBYTE(w)          (*((BYTE*)&(w)))
-#define LOWORD(w)          (*((BYTE*)&(w))) //？？？和上面重复了
+#define LOWORD(w)          (*((short*)&(w))) //？？？和上面重复了,WORD是short类型啊，修改一下不会重复，，和defs.h的不会冲突了，它们的功能是一样的
 #define HIBYTE(w)          (*((BYTE*)&(w) + sizeof(BYTE)))
 #define BYTEn(x, n)   (*((BYTE*)&(x)+n))
 #define WORDn(x, n)   (*((WORD*)&(x)+n))
