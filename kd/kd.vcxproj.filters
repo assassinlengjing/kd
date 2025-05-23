@@ -99,5 +99,9 @@
   <ItemGroup>
     <Text Include="对象.txt" />
     <Text Include="备份函数.txt" />
+    <Text Include="编译参数说明.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

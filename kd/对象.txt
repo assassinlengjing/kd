@@ -1,1 +1,7 @@
-sub_482BF0
+sub_482BF0 读取txt文件的辅助对象，16字节大小
+
+sub_49B98C byte_4BDC60对象50532大小
+
+sub_4A1450	0X4CA164[50436]//读取资源文件，new内存的地址，sub_49B9E0 Block = (_DWORD*)operator new(1356);1356大小
+
+sub_49DB90	//15个int，60字节，bmp图形文件多的结构对象
