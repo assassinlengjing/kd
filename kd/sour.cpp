@@ -80072,7 +80072,6 @@ int sub_49D318(int thisx, int a2)
         return 0;
     }
 }
-
 /*
 //ai注释
 //把加载的资源内存，把读取到的内存数据关联到DDSf对象上
