@@ -52784,7 +52784,8 @@ BOOL sub_46D3E1()
 	return sub_49DA45((int*)byte_4BDC60, aGraphicCheergi_0, (int)&v1) != 0;
 }
 
-
+//“在 4 个槽位 × 每槽位 6 个子项” 中，某个值 a2 是否已被其它位置占用、
+//常用于技能/招式/装备等列表的重复检测。
 int sub_46D48E(int* thisx, int a2, int a3, int a4)
 {
 	//    int v5; // [esp+4h] [ebp-Ch]
@@ -52813,7 +52814,8 @@ int sub_46D48E(int* thisx, int a2, int a3, int a4)
 	return 0;
 }
 
-
+//sub_46D516 是“避免主槽位 ID 冲突”的检查函数
+//与下面的函数功能一样，检测的字段不同
 int sub_46D516(__int16* thisx, int a2, int a3)
 {
 	int i; // [esp+4h] [ebp-4h]
@@ -52826,7 +52828,9 @@ int sub_46D516(__int16* thisx, int a2, int a3)
 	return 0;
 }
 
-
+//sub_46D56B 是“避免槽位 ID 冲突”的检查函数
+//返回 1 表示冲突，0 表示无冲突
+//thisx 指向槽位 ID 数组的指针，a2 是要检查的槽位 ID，a3 是当前槽位索引
 int sub_46D56B(__int16* thisx, int a2, int a3)
 {
 	int i; // [esp+4h] [ebp-4h]
