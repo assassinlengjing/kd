@@ -33164,7 +33164,7 @@ int sub_443059(_DWORD* thisx, double a2, double a3, double a4, char a5)
 	default:
 		break;
 	}
-	sub_4532F2((int)thisx, a2, a3, a4);//// 在执行完场景对应的逻辑后，调用两个函数进行进一步处理
+	sub_4532F2((int)thisx, a2, a3, a4);//unk_4B9B10// 在执行完场景对应的逻辑后，调用两个函数进行进一步处理
 	sub_457408((int)thisx);// 可能是更新游戏状态或画面
 	return sub_48E8E1((int)(thisx + 325));// 可能是刷新屏幕或更新某些状态
 }
@@ -37437,7 +37437,7 @@ int sub_44C3D6(int thisx)
 		streambuf::unbuffered((streambuf*)(thisx + 36 * j + 15644), 1);
 		sub_475670((int*)(thisx + 36 * j + 15644), 0);
 	}
-	sub_453B85(thisx, 1, 1);
+	sub_453B85(thisx, 1, 1);//unk_4B9B10
 	return sub_456D33((const CHAR*)thisx, aMenuWav, 1, 0);
 }
 
@@ -40008,273 +40008,273 @@ int sub_452368(int thisx)
 	v18 = 0;
 
 	// 检查条件并设置 v18 和 v19 的值
-if (!*(char*)(thisx + 2516))
-{
-	// 根据条件设置 v18 的值
-	if (sub_476CDA(0))
+	if (!*(char*)(thisx + 2516))
 	{
-		v18 = 1; // 设置 v18 为 1
+		// 根据条件设置 v18 的值
+		if (sub_476CDA(0))
+		{
+			v18 = 1; // 设置 v18 为 1
+		}
+		else if (sub_476C8B(0))
+		{
+			v18 = -1; // 设置 v18 为 -1
+		}
+		// 根据条件设置 v19 的值
+		if (sub_476D29(0))
+		{
+			v19 = -1; // 设置 v19 为 -1
+		}
+		else if (sub_476D78(0))
+		{
+			v19 = 1; // 设置 v19 为 1
+		}
 	}
-	else if (sub_476C8B(0))
-	{
-		v18 = -1; // 设置 v18 为 -1
-	}
-	// 根据条件设置 v19 的值
-	if (sub_476D29(0))
-	{
-		v19 = -1; // 设置 v19 为 -1
-	}
-	else if (sub_476D78(0))
-	{
-		v19 = 1; // 设置 v19 为 1
-	}
-}
 
-// 判断 v19 和其他条件，决定是否执行特定操作
-if (!v19 || *(int*)(thisx + 2540) || *(int*)(thisx + 2532))
-{
-	// 如果 v18 非零且其他条件满足，更新状态
-	if (v18 && !*(int*)(thisx + 2540) && !*(int*)(thisx + 2532))
+	// 判断 v19 和其他条件，决定是否执行特定操作
+	if (!v19 || *(int*)(thisx + 2540) || *(int*)(thisx + 2532))
 	{
-		*(int*)(thisx + 2540) = 0;
-		*(int*)(thisx + 2532) = v18;
+		// 如果 v18 非零且其他条件满足，更新状态
+		if (v18 && !*(int*)(thisx + 2540) && !*(int*)(thisx + 2532))
+		{
+			*(int*)(thisx + 2540) = 0;
+			*(int*)(thisx + 2532) = v18;
+			// 调用函数更新显示
+			sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
+		}
+	}
+	else
+	{
+		// 否则，更新不同的状态
+		*(int*)(thisx + 2540) = v19;
+		*(int*)(thisx + 2532) = 0;
 		// 调用函数更新显示
 		sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
 	}
-}
-else
-{
-	// 否则，更新不同的状态
-	*(int*)(thisx + 2540) = v19;
-	*(int*)(thisx + 2532) = 0;
-	// 调用函数更新显示
-	sub_43FFC3((int*)byte_4BDB28, dword_4B99FC[0], -1, 100, 100, 0);
-}
 
-// 调用函数处理相关数据
-sub_49C15E((int)&v24);
-v24 = dword_4B9248;
-sub_49AB05((int)byte_4BDC60, &v24);
-sub_47B91A(128, 32, byte_4B1550, 0, -1);
+	// 调用函数处理相关数据
+	sub_49C15E((int)&v24);
+	v24 = dword_4B9248;
+	sub_49AB05((int)byte_4BDC60, &v24);
+	sub_47B91A(128, 32, byte_4B1550, 0, -1);
 
-// 根据条件设置 v17 的值并处理字符串
-v17 = 0;
-if (*(char*)(thisx + 29))
-v17 = (int*)(20 * (*(unsigned __int8*)(thisx + 29) - 1) + *(int*)(thisx + 13392));
-if (*(char*)(thisx + 29))
-{
-	if (unknown_libname_26(v17))
+	// 根据条件设置 v17 的值并处理字符串
+	v17 = 0;
+	if (*(char*)(thisx + 29))
+		v17 = (int*)(20 * (*(unsigned __int8*)(thisx + 29) - 1) + *(int*)(thisx + 13392));
+	if (*(char*)(thisx + 29))
 	{
-		v1 = (const CHAR*)unknown_libname_26(v17);
-		lstrcpyA(String1, v1); // 将字符串复制到 String1
-	}
-	else
-	{
-		wsprintfA(String1, byte_4B1574); // byte_4B1574使用默认格式化字符串到String1
-	}
-}
-else
-{
-	wsprintfA(String1, "%s", (int*)byte_4B1564); // 使用另一种格式化字符串
-}
-
-// 获取字符串长度并调用函数显示
-v2 = lstrlenA(String1);
-sub_47B91A(160 - 2 * v2, 94, String1, 0, -1);
-
-// 如果 v17 被设置且未设置，则显示另一种信息
-if (v17 && !unknown_libname_26(v17))
-{
-	wsprintfA(String1, "%02d", *(unsigned __int8*)(thisx + 29));
-	sub_47BC5A(168, 94, String1, 0, -1);
-}
-
-// 设置矩形 rc 的位置
-SetRect(&rc, 0, 200, 320, 240);
-sub_49EDC1((int)byte_4BDC60, (int)&rc, (int*)&rc, 0);
-
-// 根据条件处理 v17 并显示信息
-if (*(char*)(thisx + 29))
-{
-	if (unknown_libname_12(v17))
-	{
-		v3 = (const CHAR*)unknown_libname_12(v17);
-		sub_47B91A(24, 208, v3, 0, -1);
-	}
-}
-else
-{
-	sub_47B91A(24, 208, byte_4B158C, 0, -1);//随机选择舞台
-}
-
-// 根据不同条件处理多个值并调用相关函数
-v21 = 0;
-v22 = 3;
-if (*(int*)(thisx + 2540) >= 0)
-{
-	if (*(int*)(thisx + 2540) > 0)
-		v22 = 4;
-}
-else
-{
-	v21 = -1;
-}
-
-// 循环处理多个值
-for (i = v21; i < v22; ++i)
-{
-	// 计算矩形的位置
-	v25 = (i << 6) + 80 - 8 * *(int*)(thisx + 2540);
-	if (*(int*)(thisx + 2532) <= 0)
-		v11 = -*(int*)(thisx + 2532);
-	else
-		v11 = *(int*)(thisx + 2532);
-
-	// 根据 v11 的值计算 v26
-	if (v11 > 4)
-	{
-		if (*(int*)(thisx + 2532) <= 0)
-			v10 = (*(int*)(thisx + 2532) >= 0) - 1;
+		if (unknown_libname_26(v17))
+		{
+			v1 = (const CHAR*)unknown_libname_26(v17);
+			lstrcpyA(String1, v1); // 将字符串复制到 String1
+		}
 		else
-			v10 = 1;
-		if (v10 <= 0)
+		{
+			wsprintfA(String1, byte_4B1574); // byte_4B1574使用默认格式化字符串到String1
+		}
+	}
+	else
+	{
+		wsprintfA(String1, "%s", (int*)byte_4B1564); // 使用另一种格式化字符串
+	}
+
+	// 获取字符串长度并调用函数显示
+	v2 = lstrlenA(String1);
+	sub_47B91A(160 - 2 * v2, 94, String1, 0, -1);
+
+	// 如果 v17 被设置且未设置，则显示另一种信息
+	if (v17 && !unknown_libname_26(v17))
+	{
+		wsprintfA(String1, "%02d", *(unsigned __int8*)(thisx + 29));
+		sub_47BC5A(168, 94, String1, 0, -1);
+	}
+
+	// 设置矩形 rc 的位置
+	SetRect(&rc, 0, 200, 320, 240);
+	sub_49EDC1((int)byte_4BDC60, (int)&rc, (int*)&rc, 0);
+
+	// 根据条件处理 v17 并显示信息
+	if (*(char*)(thisx + 29))
+	{
+		if (unknown_libname_12(v17))
+		{
+			v3 = (const CHAR*)unknown_libname_12(v17);
+			sub_47B91A(24, 208, v3, 0, -1);
+		}
+	}
+	else
+	{
+		sub_47B91A(24, 208, byte_4B158C, 0, -1);//随机选择舞台
+	}
+
+	// 根据不同条件处理多个值并调用相关函数
+	v21 = 0;
+	v22 = 3;
+	if (*(int*)(thisx + 2540) >= 0)
+	{
+		if (*(int*)(thisx + 2540) > 0)
+			v22 = 4;
+	}
+	else
+	{
+		v21 = -1;
+	}
+
+	// 循环处理多个值
+	for (i = v21; i < v22; ++i)
+	{
+		// 计算矩形的位置
+		v25 = (i << 6) + 80 - 8 * *(int*)(thisx + 2540);
+		if (*(int*)(thisx + 2532) <= 0)
+			v11 = -*(int*)(thisx + 2532);
+		else
+			v11 = *(int*)(thisx + 2532);
+
+		// 根据 v11 的值计算 v26
+		if (v11 > 4)
 		{
 			if (*(int*)(thisx + 2532) <= 0)
-				v9 = (*(int*)(thisx + 2532) >= 0) - 1;
+				v10 = (*(int*)(thisx + 2532) >= 0) - 1;
 			else
-				v9 = 1;
-			if (v9 < 0)
-				v26 = 112 - 8 * *(int*)(thisx + 2532) - 64;
+				v10 = 1;
+			if (v10 <= 0)
+			{
+				if (*(int*)(thisx + 2532) <= 0)
+					v9 = (*(int*)(thisx + 2532) >= 0) - 1;
+				else
+					v9 = 1;
+				if (v9 < 0)
+					v26 = 112 - 8 * *(int*)(thisx + 2532) - 64;
+			}
+			else
+			{
+				v26 = 144 - 8 * *(int*)(thisx + 2532) + 32;
+			}
 		}
 		else
 		{
-			v26 = 144 - 8 * *(int*)(thisx + 2532) + 32;
+			v26 = 112 - 8 * *(int*)(thisx + 2532);
 		}
-	}
-	else
-	{
-		v26 = 112 - 8 * *(int*)(thisx + 2532);
-	}
 
-	// 计算矩形的大小和位置
-	v15 = *(unsigned __int8*)(thisx + 29) + i - 1;
-	if (v15 >= 0)
-	{
-		if (v15 > *(int*)(thisx + 13388))
-			v15 = 0;
-	}
-	else
-	{
-		v15 = *(int*)(thisx + 13388);
-	}
-	v17 = 0;
-	if (v15 > 0)
-		v17 = (int*)(20 * (v15 - 1) + *(int*)(thisx + 13392));
-	if (v15)
-	{
-		if (sub_475790((short*)v17) <= 0)
-			v24 = dword_4B9244;
-		else
-			v24 = sub_475790((short*)v17);
-	}
-	else
-	{
-		v24 = dword_4B9244 + 1;
-	}
-
-	// 设置矩形 v16 的大小和位置
-	SetRect(&v16, 0, 0, 32, 32);
-	if (v25 >= 88)
-	{
-		if (v25 + 32 > 232)
-			v16.right = 232 - v25;
-	}
-	else
-	{
-		v16.left = 88 - v25;
-		v16.right = 32 - (88 - v25);
-		v25 = 88;
-	}
-	if (v26 >= 112)
-	{
-		if (v26 + 32 > 144)
-			v16.bottom = 144 - v26;
-	}
-	else
-	{
-		v16.top = 112 - v26;
-		v16.bottom = 32 - (112 - v26);
-		v26 = 112;
-	}
-
-	// 调用函数显示矩形
-	sub_49C8A6((int)byte_4BDC60, &v24, (int*)&v16);
-}
-
-// 根据状态更新相关值
-if (*(int*)(thisx + 2540))
-{
-	if (*(int*)(thisx + 2540) <= 0)
-	{
-		if ((int)-- * (int*)(thisx + 2540) <= -8)
+		// 计算矩形的大小和位置
+		v15 = *(unsigned __int8*)(thisx + 29) + i - 1;
+		if (v15 >= 0)
 		{
+			if (v15 > *(int*)(thisx + 13388))
+				v15 = 0;
+		}
+		else
+		{
+			v15 = *(int*)(thisx + 13388);
+		}
+		v17 = 0;
+		if (v15 > 0)
+			v17 = (int*)(20 * (v15 - 1) + *(int*)(thisx + 13392));
+		if (v15)
+		{
+			if (sub_475790((short*)v17) <= 0)
+				v24 = dword_4B9244;
+			else
+				v24 = sub_475790((short*)v17);
+		}
+		else
+		{
+			v24 = dword_4B9244 + 1;
+		}
+
+		// 设置矩形 v16 的大小和位置
+		SetRect(&v16, 0, 0, 32, 32);
+		if (v25 >= 88)
+		{
+			if (v25 + 32 > 232)
+				v16.right = 232 - v25;
+		}
+		else
+		{
+			v16.left = 88 - v25;
+			v16.right = 32 - (88 - v25);
+			v25 = 88;
+		}
+		if (v26 >= 112)
+		{
+			if (v26 + 32 > 144)
+				v16.bottom = 144 - v26;
+		}
+		else
+		{
+			v16.top = 112 - v26;
+			v16.bottom = 32 - (112 - v26);
+			v26 = 112;
+		}
+
+		// 调用函数显示矩形
+		sub_49C8A6((int)byte_4BDC60, &v24, (int*)&v16);
+	}
+
+	// 根据状态更新相关值
+	if (*(int*)(thisx + 2540))
+	{
+		if (*(int*)(thisx + 2540) <= 0)
+		{
+			if ((int)-- * (int*)(thisx + 2540) <= -8)
+			{
+				*(int*)(thisx + 2540) = 0;
+				v14 = *(unsigned __int8*)(thisx + 29) - 1;
+				if (v14 >= 0)
+					*(char*)(thisx + 29) = v14;
+				else
+					*(char*)(thisx + 29) = *(char*)(thisx + 13388);
+			}
+		}
+		else if ((int)++ * (int*)(thisx + 2540) >= 8)
+		{
+			++* (char*)(thisx + 29);
 			*(int*)(thisx + 2540) = 0;
-			v14 = *(unsigned __int8*)(thisx + 29) - 1;
-			if (v14 >= 0)
-				*(char*)(thisx + 29) = v14;
-			else
-				*(char*)(thisx + 29) = *(char*)(thisx + 13388);
+			if (*(unsigned __int8*)(thisx + 29) >= *(int*)(thisx + 13388) + 1)
+				*(char*)(thisx + 29) = 0;
 		}
 	}
-	else if ((int)++ * (int*)(thisx + 2540) >= 8)
+	else if (*(int*)(thisx + 2532))
 	{
-		++*(char*)(thisx + 29);
-		*(int*)(thisx + 2540) = 0;
-		if (*(unsigned __int8*)(thisx + 29) >= *(int*)(thisx + 13388) + 1)
-			*(char*)(thisx + 29) = 0;
-	}
-}
-else if (*(int*)(thisx + 2532))
-{
-	if (*(int*)(thisx + 2532) <= 0)
-		v8 = (*(int*)(thisx + 2532) >= 0) - 1;
-	else
-		v8 = 1;
-	*(int*)(thisx + 2532) += v8;
-	if (*(int*)(thisx + 2532) <= 0)
-		v7 = -*(int*)(thisx + 2532);
-	else
-		v7 = *(int*)(thisx + 2532);
-	if (v7 == 4)
-	{
-		v13 = 10;
-		if (*(int*)(thisx + 13388) + 1 < 10)
-			v13 = 10 - (*(int*)(thisx + 13388) + 1);
 		if (*(int*)(thisx + 2532) <= 0)
-			v6 = (*(int*)(thisx + 2532) >= 0) - 1;
+			v8 = (*(int*)(thisx + 2532) >= 0) - 1;
 		else
-			v6 = 1;
-		*(char*)(thisx + 29) = (v13 * v6 + *(unsigned __int8*)(thisx + 29) + *(int*)(thisx + 13388) + 1)
-			% (*(int*)(thisx + 13388) + 1);
+			v8 = 1;
+		*(int*)(thisx + 2532) += v8;
+		if (*(int*)(thisx + 2532) <= 0)
+			v7 = -*(int*)(thisx + 2532);
+		else
+			v7 = *(int*)(thisx + 2532);
+		if (v7 == 4)
+		{
+			v13 = 10;
+			if (*(int*)(thisx + 13388) + 1 < 10)
+				v13 = 10 - (*(int*)(thisx + 13388) + 1);
+			if (*(int*)(thisx + 2532) <= 0)
+				v6 = (*(int*)(thisx + 2532) >= 0) - 1;
+			else
+				v6 = 1;
+			*(char*)(thisx + 29) = (v13 * v6 + *(unsigned __int8*)(thisx + 29) + *(int*)(thisx + 13388) + 1)
+				% (*(int*)(thisx + 13388) + 1);
+		}
+		if (*(int*)(thisx + 2532) <= 0)
+			v5 = -*(int*)(thisx + 2532);
+		else
+			v5 = *(int*)(thisx + 2532);
+		if (v5 >= 8)
+			*(int*)(thisx + 2532) = 0;
 	}
-	if (*(int*)(thisx + 2532) <= 0)
-		v5 = -*(int*)(thisx + 2532);
-	else
-		v5 = *(int*)(thisx + 2532);
-	if (v5 >= 8)
-		*(int*)(thisx + 2532) = 0;
-}
 
-// 调用函数检查某些条件，并根据结果更新状态
-result = sub_476DC7(0, 0);
-if (result && !*(char*)(thisx + 2516))
-{
-	result = sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
-	*(int*)(thisx + 108) = 11;
-	*(char*)(thisx + 2516) = 2;
-}
+	// 调用函数检查某些条件，并根据结果更新状态
+	result = sub_476DC7(0, 0);
+	if (result && !*(char*)(thisx + 2516))
+	{
+		result = sub_43FFC3((int*)byte_4BDB28, dword_4B9A00, -1, 100, 100, 0);
+		*(int*)(thisx + 108) = 11;
+		*(char*)(thisx + 2516) = 2;
+	}
 
-return result; // 返回函数结果
+	return result; // 返回函数结果
 }
 */
 
@@ -40732,7 +40732,7 @@ void sub_4532F2(int a1, double a2, double a3, double a4)
 							sub_453A31(a1);
 							break;
 						case 3:
-							sub_44C3D6(a1);//a1 = b10
+							sub_44C3D6(a1);//a1 = unk_4B9B10
 							break;
 						case 4:
 							sub_47482E(a1);
@@ -40950,10 +40950,10 @@ int sub_453B66(int thisx)
 }
 
 
-//test2
+
 //绘制菜单文字
-//thisx = byte_4B9B10
-void sub_453B85(int thisx, int a2, int a3)
+
+void sub_453B85(int thisx, int a2, int a3)//thisx = byte_4B9B10
 {
 
 
@@ -65011,8 +65011,8 @@ int sub_482D44(int* thisx, LPSTR lpString1)
 			if (v5 != 32 || v7)
 			{
 				++v7;  // 增加字符串长度
-++thisx[2];  // 增加读取位置
-thisx[3] = 1;  // 标志位设为 1，表示有内容是有效字符串
+				++thisx[2];  // 增加读取位置
+				thisx[3] = 1;  // 标志位设为 1，表示有内容是有效字符串
 			}
 			else
 			{
@@ -80014,176 +80014,176 @@ int sub_49D318(int thisx, int a2)
 			{
 				// 计算资源的尺寸，适应宽度和高度的设置
 				if (*(int*)(a2 + 12) == -1) //12*4=48
-Size = v16;
+					Size = v16;
 				else
 					Size = *(int*)(a2 + 12);//16*4=64
-					if (*(int*)(a2 + 16) == -1)
-						cy = v25;
-					else
-						cy = *(int*)(a2 + 16);
+				if (*(int*)(a2 + 16) == -1)
+					cy = v25;
+				else
+					cy = *(int*)(a2 + 16);
 
-					// 如果资源类型为1，则重新设置资源的宽度和高度
-					if (v23 == 1)
+				// 如果资源类型为1，则重新设置资源的宽度和高度
+				if (v23 == 1)
+				{
+					Size = *(int*)(a2 + 4);
+					cy = *(int*)(a2 + 8);
+				}
+
+				v15 = 0; // 初始化索引
+				v24 = 0; // 初始化资源处理阶段的计数器
+
+				// 为资源分配内存空间
+				v21 = new2(cy * Size);
+
+				// 如果资源已经加载过数据，则进行内存拷贝
+				if (*(int*)(a2 + 44))
+					memcpy(Src, *(const void**)(a2 + 44), sizeof(Src)); // 从 a2 + 44 加载已有数据
+				else
+					sub_4A1AA5(*(int*)(a2 + 52), Src); // 否则，调用函数从地址 a2 + 52 读取数据
+
+				*(int*)a2 = v20; // 更新资源的数量
+
+				// 计算资源数量的大小，并初始化资源数量的最大值
+				if (*(int*)(a2 + 20) == -1)
+					*(int*)(a2 + 20) = v25 / cy * (v16 / (int)Size);
+
+				// 根据资源的状态进行额外的调整
+				if (*(char*)(a2 + 48))
+				{
+					if (*(char*)(a2 + 48) != 1 && *(char*)(thisx + 50442))
 					{
-						Size = *(int*)(a2 + 4);
-						cy = *(int*)(a2 + 8);
-					}
-
-					v15 = 0; // 初始化索引
-					v24 = 0; // 初始化资源处理阶段的计数器
-
-					// 为资源分配内存空间
-					v21 = new2(cy * Size);
-
-					// 如果资源已经加载过数据，则进行内存拷贝
-					if (*(int*)(a2 + 44))
-						memcpy(Src, *(const void**)(a2 + 44), sizeof(Src)); // 从 a2 + 44 加载已有数据
-					else
-						sub_4A1AA5(*(int*)(a2 + 52), Src); // 否则，调用函数从地址 a2 + 52 读取数据
-
-					*(int*)a2 = v20; // 更新资源的数量
-
-					// 计算资源数量的大小，并初始化资源数量的最大值
-					if (*(int*)(a2 + 20) == -1)
-						*(int*)(a2 + 20) = v25 / cy * (v16 / (int)Size);
-
-					// 根据资源的状态进行额外的调整
-					if (*(char*)(a2 + 48))
-					{
-						if (*(char*)(a2 + 48) != 1 && *(char*)(thisx + 50442))
-						{
-							if (*(char*)(a2 + 48) == 2 && *(char*)(thisx + 50442))
-								v22 = 0;
-						}
-						else
-						{
-							v22 = 1;
-						}
+						if (*(char*)(a2 + 48) == 2 && *(char*)(thisx + 50442))
+							v22 = 0;
 					}
 					else
 					{
-						v22 = *(char*)(thisx + 50443); // 如果没有指定标志，使用默认值
+						v22 = 1;
+					}
+				}
+				else
+				{
+					v22 = *(char*)(thisx + 50443); // 如果没有指定标志，使用默认值
+				}
+
+				// 遍历资源块，依次加载每个资源
+				for (i = v20; i < *(int*)(a2 + 20) + v20; ++i)
+				{
+					// 如果资源索引超过最大数量，弹出错误
+					if (i >= 2048)
+					{
+						MessageBoxA(*(HWND*)(thisx + 50500), aI_0, aEntrypat_8, 0); // 超过最大数量限制
+						break;
 					}
 
-					// 遍历资源块，依次加载每个资源
-					for (i = v20; i < *(int*)(a2 + 20) + v20; ++i)
+					// 如果资源的尺寸超出了设定的大小，则更新状态，处理新的一块资源
+					if (!v23 && v16 <= (int)(Size * v15 + *(int*)(a2 + 4)))
 					{
-						// 如果资源索引超过最大数量，弹出错误
-						if (i >= 2048)
+						v15 = 0;
+						++v24;
+					}
+					if (!v23 && v25 <= cy * v24 + *(int*)(a2 + 8))
+					{
+						MessageBoxA(*(HWND*)(thisx + 50500), aBitmap_0, aEntrypat_9, 0); // 超过了Bitmap处理终点
+						break;
+					}
+
+					// 设置当前资源的偏移
+					v10 = Size * v15 + *(int*)(a2 + 4);
+					v9 = cy * v24 + *(int*)(a2 + 8);
+
+					*(int*)(thisx + 24 * i + 20) = i;
+
+					// 根据条件创建和更新资源的处理，可能涉及曲面创建、数据填充等
+					if (*(int*)(a2 + 56))
+					{
+						sub_4A1216(24 * i + thisx, Size, cy, *(int*)(a2 + 56));//数据填充
+					}
+					else if (!sub_49B578((int*)(24 * i + thisx), *(int*)(thisx + 50508), Size, cy, v22))// 创建曲面
+					{
+						MessageBoxA(*(HWND*)(thisx + 50500), byte_4B7F04, aEntrypat_10, 0); // 创建曲面失败
+						break;
+					}
+
+					// 处理不同的资源类型或数据
+					if (v23)
+					{
+						if (v23 == 1)
+							v7 = sub_4A1C28(*(int**)(a2 + 52), v21, Size, cy, 1);
+					}
+					else
+					{
+						v7 = sub_4A1694(*(int*)(a2 + 52), v21, v10, v9, Size, cy);
+					}
+
+					// 如果返回值不正常，则弹出错误消息
+					if (!v7)
+					{
+						MessageBoxA(*(HWND*)(thisx + 50500), aCutbit_0, aEntrypat_11, 0); // 处理资源时发生错误
+						break;
+					}
+
+					// 更新资源的额外处理
+					if (*(int*)(a2 + 56))
+					{
+						sub_4A1299(24 * i + thisx, (int)v21, Size, cy);
+					}
+					else if (!sub_49D0B7((int*)(24 * i + thisx), (int)v21, Size, cy, Src))
+					{
+						MessageBoxA(*(HWND*)(thisx + 50500), aEntrybit3, aEntrypat_12, 0); // 处理路径错误
+						break;
+					}
+
+					// 检查资源类型和特定条件，执行相应的数据检查
+					v8 = *(int*)(a2 + 36);
+					if (v8 == -1)
+					{
+						v11[0] = 0;
+					}
+					else
+					{
+						v11[0] = 0;
+						if (v8 > 255)
+							v8 = (unsigned __int8)v8;
+						for (j = 0; j < (int)(cy * Size); ++j)
 						{
-							MessageBoxA(*(HWND*)(thisx + 50500), aI_0, aEntrypat_8, 0); // 超过最大数量限制
-							break;
+							if (*((unsigned __int8*)v21 + j) == v8)
+							{
+								v11[0] = 1;
+								break;
+							}
 						}
 
-						// 如果资源的尺寸超出了设定的大小，则更新状态，处理新的一块资源
-						if (!v23 && v16 <= (int)(Size * v15 + *(int*)(a2 + 4)))
-						{
-							v15 = 0;
-							++v24;
-						}
-						if (!v23 && v25 <= cy * v24 + *(int*)(a2 + 8))
-						{
-							MessageBoxA(*(HWND*)(thisx + 50500), aBitmap_0, aEntrypat_9, 0); // 超过了Bitmap处理终点
-							break;
-						}
-
-						// 设置当前资源的偏移
-						v10 = Size * v15 + *(int*)(a2 + 4);
-						v9 = cy * v24 + *(int*)(a2 + 8);
-
-						*(int*)(thisx + 24 * i + 20) = i;
-
-						// 根据条件创建和更新资源的处理，可能涉及曲面创建、数据填充等
+						// 处理资源类型并更新资源状态
 						if (*(int*)(a2 + 56))
 						{
-							sub_4A1216(24 * i + thisx, Size, cy, *(int*)(a2 + 56));//数据填充
-						}
-						else if (!sub_49B578((int*)(24 * i + thisx), *(int*)(thisx + 50508), Size, cy, v22))// 创建曲面
-						{
-							MessageBoxA(*(HWND*)(thisx + 50500), byte_4B7F04, aEntrypat_10, 0); // 创建曲面失败
-							break;
-						}
-
-						// 处理不同的资源类型或数据
-						if (v23)
-						{
-							if (v23 == 1)
-								v7 = sub_4A1C28(*(int**)(a2 + 52), v21, Size, cy, 1);
+							v12 = v8;
 						}
 						else
 						{
-							v7 = sub_4A1694(*(int*)(a2 + 52), v21, v10, v9, Size, cy);
+							v4 = ((unsigned __int8)Src[4 * v8] << 16) | ((unsigned __int8)Src[4 * v8 + 1] << 8) | (unsigned __int8)Src[4 * v8 + 2];
+							v3 = unknown_libname_30((int*)(void*)(24 * i + thisx)); // 获取库函数返回值 *this
+							v12 = sub_4A246A(v3, v4);
 						}
-
-						// 如果返回值不正常，则弹出错误消息
-						if (!v7)
-						{
-							MessageBoxA(*(HWND*)(thisx + 50500), aCutbit_0, aEntrypat_11, 0); // 处理资源时发生错误
-							break;
-						}
-
-						// 更新资源的额外处理
-						if (*(int*)(a2 + 56))
-						{
-							sub_4A1299(24 * i + thisx, (int)v21, Size, cy);
-						}
-						else if (!sub_49D0B7((int*)(24 * i + thisx), (int)v21, Size, cy, Src))
-						{
-							MessageBoxA(*(HWND*)(thisx + 50500), aEntrybit3, aEntrypat_12, 0); // 处理路径错误
-							break;
-						}
-
-						// 检查资源类型和特定条件，执行相应的数据检查
-						v8 = *(int*)(a2 + 36);
-						if (v8 == -1)
-						{
-							v11[0] = 0;
-						}
-						else
-						{
-							v11[0] = 0;
-							if (v8 > 255)
-								v8 = (unsigned __int8)v8;
-							for (j = 0; j < (int)(cy * Size); ++j)
-							{
-								if (*((unsigned __int8*)v21 + j) == v8)
-								{
-									v11[0] = 1;
-									break;
-								}
-							}
-
-							// 处理资源类型并更新资源状态
-							if (*(int*)(a2 + 56))
-							{
-								v12 = v8;
-							}
-							else
-							{
-								v4 = ((unsigned __int8)Src[4 * v8] << 16) | ((unsigned __int8)Src[4 * v8 + 1] << 8) | (unsigned __int8)Src[4 * v8 + 2];
-								v3 = unknown_libname_30((int*)(void*)(24 * i + thisx)); // 获取库函数返回值 *this
-								v12 = sub_4A246A(v3, v4);
-							}
-						}
-
-						// 更新资源状态
-						sub_49CDF4((int*)(24 * i + thisx), (int)v11);
-						++v15;
-						++v17;
-
-						// 更新最大资源数量
-						if ((unsigned int)i >= *(int*)(thisx + 49152))
-							++*(int*)(thisx + 49152);
 					}
 
-					// 释放内存
-					delete2(v21);
+					// 更新资源状态
+					sub_49CDF4((int*)(24 * i + thisx), (int)v11);
+					++v15;
+					++v17;
 
-					// 清理资源关联信息
-					if (*(int*)(a2 + 52) == *(int*)(thisx + 50436))
-						*(int*)(a2 + 52) = 0;
+					// 更新最大资源数量
+					if ((unsigned int)i >= *(int*)(thisx + 49152))
+						++* (int*)(thisx + 49152);
+				}
 
-					return v17; // 返回加载成功的资源数量
+				// 释放内存
+				delete2(v21);
+
+				// 清理资源关联信息
+				if (*(int*)(a2 + 52) == *(int*)(thisx + 50436))
+					*(int*)(a2 + 52) = 0;
+
+				return v17; // 返回加载成功的资源数量
 			}
 			else
 			{
