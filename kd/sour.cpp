@@ -2507,6 +2507,7 @@ unsigned int setSBUpLow()
 
 
 //堆栈正确，启动函数，没什么用不管
+//
 void  start()
 {
 
@@ -40970,7 +40971,7 @@ void sub_453B85(int thisx, int a2, int a3)//thisx = byte_4B9B10
 		for (i = 0; i < 4; ++i)
 		{
 			if (!unknown_libname_14((int*)(thisx + 36 * i + 15644)))
-				//函数位置是*(thisx + 36 * i + 15644)会等于off_4AC2E8，然后 +12
+				//函数位置是*(thisx + 36 * i + 15644)会等于&off_4AC2E8，然后 +12
 				(*(void(**)(int))(*(int*)(thisx + 36 * i + 15644) + 12)) (thisx + 36 * i + 15644);
 			if (*(int*)(thisx + 15640) == thisx + 36 * i + 15644)
 				v4 = 0;
@@ -82879,6 +82880,12 @@ inline MH_STATUS MH_CreateHookEx(LPVOID pTarget, LPVOID pDetour, T** ppOriginal)
 
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
+	//子系统必须是控制台否则不会执行main函数，只会从WinMain开始执行
+	if (m2 == 0)
+	{
+		start();
+	}
+	// 
 	// Initialize MinHook.
 	if (MH_Initialize() != MH_OK)
 	{
