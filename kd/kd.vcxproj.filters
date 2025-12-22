@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="sqlite">
+      <UniqueIdentifier>{955c9219-9eaf-40af-ae37-2a39e7c00728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hiredis">
+      <UniqueIdentifier>{c713b862-a5ce-408a-a758-2faab43f8b3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="redis-plus-plus">
+      <UniqueIdentifier>{d86052a9-0705-4e45-96fb-87df8cbf8b0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,7 +30,7 @@
     <ClCompile Include="data.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="utils.cpp">
+    <ClCompile Include="utils.ixx">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="concurrency.cpp">
@@ -45,9 +54,6 @@
     <ClCompile Include="player_list.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test.cppm">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="data_2.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -56,6 +62,84 @@
     </ClCompile>
     <ClCompile Include="sour.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite\sqlite3.c">
+      <Filter>sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="hiredis\hiredis.c">
+      <Filter>hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="hiredis\net.c">
+      <Filter>hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="hiredis\sds.c">
+      <Filter>hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="hiredis\sockcompat.c">
+      <Filter>hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="hiredis\alloc.c">
+      <Filter>hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="hiredis\async.c">
+      <Filter>hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="hiredis\dict.c">
+      <Filter>hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="hiredis\read.c">
+      <Filter>hiredis</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\async_subscriber_impl.cpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\command.cpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\command_options.cpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\connection.cpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\connection_pool.cpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\crc16.cpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\errors.cpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\pipeline.cpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\redis.cpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\redis_cluster.cpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\redis_uri.cpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\reply.cpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\sentinel.cpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\shards.cpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\shards_pool.cpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\subscriber.cpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\transaction.cpp">
+      <Filter>redis-plus-plus</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,9 +164,6 @@
     <ClInclude Include="text.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="utils.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="defs.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -94,6 +175,135 @@
     </ClInclude>
     <ClInclude Include="concrtinternal.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite\sqlite3.h">
+      <Filter>sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="hiredis\alloc.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="hiredis\async.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="hiredis\async_private.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="hiredis\dict.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="hiredis\fmacros.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="hiredis\hiredis.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="hiredis\hiredis_ssl.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="hiredis\net.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="hiredis\read.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="hiredis\sds.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="hiredis\sdsalloc.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="hiredis\sockcompat.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="hiredis\win32.h">
+      <Filter>hiredis</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\async_redis++.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\async_subscriber_impl.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\cmd_formatter.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\co_redis.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\co_redis_cluster.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\co_redis++.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\command.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\command_args.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\command_options.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\connection.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\connection_pool.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\errors.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\pipeline.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\queued_redis.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\queued_redis.hpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\redis.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\redis.hpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\redis_cluster.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\redis_cluster.hpp">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\redis_uri.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\redis++.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\reply.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\sentinel.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\shards.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\shards_pool.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\subscriber.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\transaction.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\utils.h">
+      <Filter>redis-plus-plus</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\version.h">
+      <Filter>redis-plus-plus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

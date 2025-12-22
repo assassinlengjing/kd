@@ -1,5 +1,5 @@
 //#pragma execution_character_set("utf-8")
-import utils;
+
 #include "sub.h"
 #include "MinHook.h"
 
@@ -28,7 +28,39 @@ import utils;
 #include <Shlwapi.h>
 #pragma comment(lib, "Shlwapi.lib")
 
-import utils;
+std::string GBKToUTF8(const char* gbk)
+{
+	if (!gbk) return {};
+
+	// GBK → UTF-16
+	int wlen = MultiByteToWideChar(936, 0, gbk, -1, nullptr, 0);
+	if (wlen <= 0) return {};
+
+	std::wstring wstr(wlen, 0);
+	MultiByteToWideChar(936, 0, gbk, -1, &wstr[0], wlen);
+
+	// UTF-16 → UTF-8
+	int ulen = WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, nullptr, 0, nullptr, nullptr);
+	if (ulen <= 0) return {};
+
+	std::string u8(ulen, 0);
+	WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, &u8[0], ulen, nullptr, nullptr);
+
+	return u8;
+}
+
+std::string SJISToUTF8(const char* s)
+{
+	int wlen = MultiByteToWideChar(932, 0, s, -1, NULL, 0);
+	std::wstring w(wlen, 0);
+	MultiByteToWideChar(932, 0, s, -1, &w[0], wlen);
+
+	int ulen = WideCharToMultiByte(CP_UTF8, 0, w.c_str(), -1, NULL, 0, NULL, NULL);
+	std::string u8(ulen, 0);
+	WideCharToMultiByte(CP_UTF8, 0, w.c_str(), -1, &u8[0], ulen, NULL, NULL);
+	return u8;
+}
+
 
 // 类型列表
 const char* types[] = {
@@ -19372,7 +19404,7 @@ void sub_42455B(int thisx, __int16* a2)
 {
 
 
-	//修正堆栈
+	Warning();//修正堆栈
 	check_stack c(__FILE__, __LINE__);
 	int v17[6]; // [esp+44h] [ebp-18h]
 	int i; // [esp+40h] [ebp-1Ch]
@@ -47163,7 +47195,7 @@ int sub_4611A8(char* thisx, int a2, int a3)
 int sub_461335(int thisx)
 {
 
-	//修正堆栈
+	//Warning();//修正堆栈
 	check_stack c(__FILE__, __LINE__);
 	CHAR String[256]; // [esp+18Ch] [ebp-100h] BYREF
 	char tc[122];//124
@@ -57069,95 +57101,6 @@ BOOL sub_476009(char* thisx)
 		BYTE1(v9) |= 1u;
 		*((int*)thisx + 14) = v9;
 	}
-
-	{//{}这里处理测试自动按键操作
-		if (*(int*)&byte_4B9B10[104] == 1 || *(int*)&byte_4B9B10[104] == 2)
-		{
-			printf("测试自动按键操作，按下J键\n");
-			v1 = *((int*)thisx + 14);
-			LOBYTE(v1) = v1 | 1;
-			*((int*)thisx + 14) = v1;
-		}
-		if (*(int*)&byte_4B9B10[104] == 3)//0X4B9B78 //在游戏模式选择界面
-		{
-			if (*(int*)&byte_4B9B10[15700] != 0)//0X4BD864
-			{
-				printf("测试自动按键操作，按下W键\n");
-				*((int*)thisx + 9) = 0;//按下W键
-			}
-			if (*(int*)&byte_4B9B10[2528] == 0)
-			{
-				printf("测试自动按键操作，按下J键\n");
-				v1 = *((int*)thisx + 14);
-				LOBYTE(v1) = v1 | 1;
-				*((int*)thisx + 14) = v1;
-			}
-			return 1;
-		}
-		if (*(int*)&byte_4B9B10[104] == 4)//场景id
-		{
-			printf("测试自动按键操作，按下J键\n");
-			v1 = *((int*)thisx + 14);
-			LOBYTE(v1) = v1 | 1;
-			*((int*)thisx + 14) = v1;
-			return 1;
-		}
-		if (*(int*)&byte_4B9B10[104] == 13)//场景id,选择人物名字
-		{
-			if (*(int*)&byte_4B9B10[2528] == 0)
-			{
-				printf("测试自动按键操作，按下J键\n");
-				v1 = *((int*)thisx + 14);
-				LOBYTE(v1) = v1 | 1;
-				*((int*)thisx + 14) = v1;
-			}
-			else
-			{
-				printf("D被按下\n");
-				//*((int*)thisx + 8) = 2;
-			}
-			if (*(int*)&byte_4B9B10[2566] == 0)
-			{
-				if (*(int*)&byte_4B9B10[2570] == 0)
-				{
-					printf("测试自动按键操作，按下J键\n");
-					v1 = *((int*)thisx + 14);
-					LOBYTE(v1) = v1 | 1;
-					*((int*)thisx + 14) = v1;
-					return 1;
-				}
-				*(int*)&byte_4B9B10[2528] = 10;
-				*(int*)&byte_4B9B10[2532] = 5;
-				printf("测试自动按键操作，按下J键\n");
-				v1 = *((int*)thisx + 14);
-				LOBYTE(v1) = v1 | 1;
-				*((int*)thisx + 14) = v1;
-			}
-			int a = *(int*)&byte_4B9B10[2528];
-			if (a == 0 || a == 1 || a == 2)
-			{
-				printf("测试自动按键操作，按下J键\n");
-				v1 = *((int*)thisx + 14);
-				LOBYTE(v1) = v1 | 1;
-				*((int*)thisx + 14) = v1;
-			}
-			return 1;
-		}
-		if (*(int*)&byte_4B9B10[104] == 14)//场景id
-		{
-			printf("测试自动按键操作，按下J键\n");
-			v1 = *((int*)thisx + 14);
-			LOBYTE(v1) = v1 | 1;
-			*((int*)thisx + 14) = v1;
-		}
-		if (*(int*)&byte_4B9B10[104] == 15)//场景id
-		{
-			printf("测试自动按键操作，按下J键\n");
-			v1 = *((int*)thisx + 14);
-			LOBYTE(v1) = v1 | 1;
-			*((int*)thisx + 14) = v1;
-		}
-	}
 	return 1;
 }
 //this是player_list
@@ -57913,7 +57856,7 @@ BOOL __cdecl sub_47744C(unsigned __int8 a1, unsigned __int8 a2)
 
 
 
-	//修正堆栈
+	//Warning();//修正堆栈
 	check_stack c(__FILE__, __LINE__);
 	char v24; // [esp+74h] [ebp-4h]
 	char v23; // [esp+70h] [ebp-8h]
@@ -69664,7 +69607,7 @@ _UnrealizedChore* sub_488FA2(
 {
 
 
-	//修正堆栈
+	Warning();//修正堆栈
 	check_stack c(__FILE__, __LINE__);
 	__int16 v15; // [esp+24h] [ebp-4h]
 	char tc_24[4]; //8，系统填充
@@ -74362,12 +74305,9 @@ int __fastcall sub_490D23(int a1)
 
 
 	//修正堆栈
-	//修正
 	check_stack c(__FILE__, __LINE__);
-	//__int16 v46; // [esp+CEh] [ebp-6h]
-	//__int16 v45; // [esp+CCh] [ebp-8h]
-	//__int16 v44; // [esp+CAh] [ebp-Ah]
-	int v46; // [esp+CEh] [ebp-6h]
+	char tc[1];
+	__int16 v46; // [esp+CEh] [ebp-6h]
 	__int16 v45; // [esp+CCh] [ebp-8h]
 	__int16 v44; // [esp+CAh] [ebp-Ah]
 	char v43; // [esp+C9h] [ebp-Bh]
@@ -74460,7 +74400,7 @@ int __fastcall sub_490D23(int a1)
     )";
 	if (!check_stack_fun2({
 		TO(c)
-		//TO(v46)
+		TO(v46)
 		TO(v45)
 		TO(v44)
 		TO(v43)
@@ -83006,20 +82946,11 @@ inline MH_STATUS MH_CreateHookEx(LPVOID pTarget, LPVOID pDetour, T** ppOriginal)
 
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
 {
-	add(1,2);
-	//设置控制台输入 / 输出为 UTF-8
+	// 设置控制台输入 / 输出为 UTF-8
 	SetConsoleOutputCP(CP_UTF8);
 	SetConsoleCP(CP_UTF8);
-	SetConsoleOutputCP(936);
-	SetConsoleCP(936);
-
-	hMap = OpenFileMappingA(FILE_MAP_ALL_ACCESS, FALSE, "Global\\MySharedMemory");
-	void* table = MapViewOfFile(
-		hMap,
-		FILE_MAP_WRITE,
-		0, 0,
-		sizeof(SharedData)*500
-	);
+	//SetConsoleOutputCP(936);
+	//SetConsoleCP(936);
 
 	//子系统必须是控制台否则不会执行main函数，只会从WinMain开始执行
 	if (m2 == 0)

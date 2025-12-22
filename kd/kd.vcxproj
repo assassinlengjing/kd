@@ -74,6 +74,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>D:\Users\lengjing\source\repos\kd\kd;D:\Users\lengjing\source\repos\kd\Debug;D:\Users\lengjing\source\repos\kd\kd\vc;$(IncludePath)</IncludePath>
     <PublicIncludeDirectories>D:\Users\lengjing\source\repos\kd\kd\vc;$(PublicIncludeDirectories)</PublicIncludeDirectories>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -101,11 +102,13 @@
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>D:\Users\lengjing\source\repos\kd\kd\redis-plus-plus\src;D:\Users\lengjing\source\repos\kd\kd\hiredis;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>winmm.lib;Ddraw.lib;dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;Ddraw.lib;dsound.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <BaseAddress>
       </BaseAddress>
       <FixedBaseAddress>true</FixedBaseAddress>
@@ -173,14 +176,39 @@
     <ClCompile Include="concurrency.cpp" />
     <ClCompile Include="data.cpp" />
     <ClCompile Include="data3.cpp" />
+    <ClCompile Include="hiredis\alloc.c" />
+    <ClCompile Include="hiredis\async.c" />
+    <ClCompile Include="hiredis\dict.c" />
+    <ClCompile Include="hiredis\hiredis.c" />
+    <ClCompile Include="hiredis\net.c" />
+    <ClCompile Include="hiredis\read.c" />
+    <ClCompile Include="hiredis\sds.c" />
+    <ClCompile Include="hiredis\sockcompat.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player_list.cpp" />
     <ClCompile Include="rdata.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\async_subscriber_impl.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\command.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\command_options.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\connection.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\connection_pool.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\crc16.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\errors.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\pipeline.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\redis.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\redis_cluster.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\redis_uri.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\reply.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\sentinel.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\shards.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\shards_pool.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\subscriber.cpp" />
+    <ClCompile Include="redis-plus-plus\src\sw\redis++\transaction.cpp" />
     <ClCompile Include="sour.cpp" />
+    <ClCompile Include="sqlite\sqlite3.c" />
     <ClCompile Include="sub.cpp" />
-    <ClCompile Include="test.cppm" />
     <ClCompile Include="text.cpp" />
-    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="utils.ixx" />
     <ClCompile Include="data_2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -188,14 +216,56 @@
     <ClInclude Include="concurrency.h" />
     <ClInclude Include="data.h" />
     <ClInclude Include="defs.h" />
+    <ClInclude Include="hiredis\alloc.h" />
+    <ClInclude Include="hiredis\async.h" />
+    <ClInclude Include="hiredis\async_private.h" />
+    <ClInclude Include="hiredis\dict.h" />
+    <ClInclude Include="hiredis\fmacros.h" />
+    <ClInclude Include="hiredis\hiredis.h" />
+    <ClInclude Include="hiredis\hiredis_ssl.h" />
+    <ClInclude Include="hiredis\net.h" />
+    <ClInclude Include="hiredis\read.h" />
+    <ClInclude Include="hiredis\sds.h" />
+    <ClInclude Include="hiredis\sdsalloc.h" />
+    <ClInclude Include="hiredis\sockcompat.h" />
+    <ClInclude Include="hiredis\win32.h" />
     <ClInclude Include="kd.h" />
     <ClInclude Include="mytype.h" />
     <ClInclude Include="rdata.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\async_redis++.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\async_subscriber_impl.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\cmd_formatter.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\command.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\command_args.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\command_options.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\connection.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\connection_pool.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\co_redis++.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\co_redis.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\co_redis_cluster.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\errors.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\pipeline.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\queued_redis.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\queued_redis.hpp" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\redis++.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\redis.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\redis.hpp" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\redis_cluster.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\redis_cluster.hpp" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\redis_uri.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\reply.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\sentinel.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\shards.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\shards_pool.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\subscriber.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\transaction.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\utils.h" />
+    <ClInclude Include="redis-plus-plus\src\sw\redis++\version.h" />
     <ClInclude Include="s.h" />
+    <ClInclude Include="sqlite\sqlite3.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="sub.h" />
     <ClInclude Include="text.h" />
-    <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="备份函数.txt" />

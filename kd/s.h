@@ -7,7 +7,7 @@ extern char ida_chars[];
 using namespace Concurrency;
 
 #ifdef code_t
-    
+
 #else
 
 using namespace Concurrency::details;
@@ -1062,12 +1062,12 @@ _BYTE* sub_488E57(_BYTE* thisx);
 _DWORD* sub_488E76(_DWORD* thisx);
 unsigned __int8* sub_488EAC(unsigned __int8* thisx, int a2, int a3);
 _UnrealizedChore* sub_488FA2(
-    void* thisx,
-    unsigned __int8 a2,
-    unsigned __int8 a3,
-    int a4,
-    int a5,
-    int a6);
+	void* thisx,
+	unsigned __int8 a2,
+	unsigned __int8 a3,
+	int a4,
+	int a5,
+	int a6);
 int sub_4891BA(_DWORD* thisx, int a2);
 int sub_4891E4(_DWORD* thisx, LPCSTR lpFileName);
 int(***sub_489289(void* thisx))(_DWORD, int);
@@ -1409,13 +1409,13 @@ void __cdecl fast_error_exit(DWORD NumberOfBytesWritten);//不管
 //int __cdecl unknown_libname_33(_DWORD** a1);
 //void __cdecl CatchIt(PEXCEPTION_RECORD ExceptionRecord, struct EHRegistrationNode* a2, struct _CONTEXT* a3, void* a4, const struct _s_FuncInfo* a5, const struct _s_HandlerType* a6, const struct _s_CatchableType* a7, const struct _s_TryBlockMapEntry* a8, int a9, PVOID TargetFrame);
 //int __cdecl CallCatchBlock(
-    //struct EHExceptionRecord* a1,
-    //struct EHRegistrationNode* a2,
-    //struct _CONTEXT* a3,
-    //const struct _s_FuncInfo* a4,
-    //void* a5,
-    //int a6,
-    //unsigned int a7);
+	//struct EHExceptionRecord* a1,
+	//struct EHRegistrationNode* a2,
+	//struct _CONTEXT* a3,
+	//const struct _s_FuncInfo* a4,
+	//void* a5,
+	//int a6,
+	//unsigned int a7);
 BOOL __cdecl ExFilterRethrow(struct _EXCEPTION_POINTERS* a1);//不管
 //void BuildCatchObject(
 //    struct EHExceptionRecord* a1,
@@ -1557,9 +1557,9 @@ int __dtold(unsigned int a1, int a2, int* a3);//不管
 //int unknown_libname_52(double a1, double a2);//int <ecx, st0> unknown_libname_52(double a1, double a2);
 BOOL __cdecl __crtGetStringTypeA(DWORD dwInfoType, LPCSTR lpSrcStr, int cchSrc, LPWORD lpCharType, UINT CodePage, LCID Locale, int a7);//不管
 int __cdecl _lseek(int FileHandle, int Offset, int Origin);//不管
-int __cdecl _write(int FileHandle, const void* Buf, unsigned int MaxCharCount);//不管
+//int __cdecl _write(int FileHandle, const void* Buf, unsigned int MaxCharCount);//不管
 int __cdecl _getbuf(_DWORD* a1);//不管
-int __cdecl _isatty(int FileHandle);//不管
+//int __cdecl _isatty(int FileHandle);//不管
 int __initstdio();//不管
 int __endstdio();//不管
 //int __cdecl wctomb(char* MbCh, wchar_t WCh);
@@ -1601,7 +1601,7 @@ int __cdecl _I10_OUTPUT(__int64 a1, int a2, int a3, char a4, int a5);//不管
 //int __cdecl _fpclass(double X);
 _DWORD* __cdecl _dosmaperr(unsigned int a1);//不管
 //int __cdecl _free_osfhnd(int a1);
-intptr_t __cdecl _get_osfhandle(int FileHandle);//不管
+//intptr_t __cdecl _get_osfhandle(int FileHandle);//不管
 //void* __cdecl calloc(size_t Count, size_t Size);
 //int __cdecl _fcloseall();
 //int __cdecl fflush(myFILE* Stream);
