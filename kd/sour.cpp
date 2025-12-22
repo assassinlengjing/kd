@@ -189,7 +189,7 @@ myMessageBoxA(
 	_In_opt_ LPCSTR lpCaption,
 	_In_ UINT uType)
 {
-	__asm int 3
+	//__asm int 3
 	return 0;
 }
 
@@ -348,7 +348,7 @@ static int a = 0;
 
 int myTimeGetTime()
 {
-	a = a + 1;
+	a = a + 10;
 	return a;
 }
 
@@ -555,6 +555,7 @@ void check_stack_fun()
 std::string name;
 bool check_stack_fun2(std::initializer_list<std::pair<const char*, void*>> list, int a2 = 0, const char* vartable = 0, int use = 0) {
 	int is_show = 0;
+	use = 0;
 	if (0 && use == 0)
 	{
 		return true;
@@ -3841,7 +3842,7 @@ void VirtualProcessorRoot::~VirtualProcessorRoot(
 
 void __fastcall sub_40230C(int a1)
 {
-	Warning();//ÐÞÕý¶ÑÕ»
+	//ÐÞÕý¶ÑÕ»
 	check_stack c(__FILE__, __LINE__);
 
 	//56×Ö½Ú£¬sub_49C15E½á¹¹
@@ -3893,6 +3894,87 @@ void __fastcall sub_40230C(int a1)
 	unsigned __int8 v2; // al
 	int v1; // esi
 
+
+	const char* var = R"(
+	int v42; // [esp+C4h] [ebp-4h]      u4          s1 end 4
+	char v41_tc[23]; //                 u27         s 5 end 1a  1C-4=18 18-1=17 17µÄ10½øÖÆ=23
+	BOOL v41; // [esp+ACh] [ebp-1Ch]    u28         s 1b end 1c
+	int v40; // [esp+A8h] [ebp-20h]     u32         s28-end32
+	char v39_tc[12]; //                 []          s33-end44    [end48-s45]Õ¼4¸ö£¬48-32 = 16£¬16-4 = 12
+	int v39; // [esp+98h] [ebp-30h]     u48         s45-end48
+	int v38; // [esp+94h] [ebp-34h]     u52
+	int Src; // [esp+90h] [ebp-38h] BYREF   u56
+
+	char* v36; // [esp+8Ch] [ebp-3Ch]
+	char v35; // [esp+88h] [ebp-40h]
+	int v34; // [esp+84h] [ebp-44h]
+	char* v33; // [esp+80h] [ebp-48h]
+	int v32; // [esp+7Ch] [ebp-4Ch]
+	int i; // [esp+78h] [ebp-50h]
+	int v30; // [esp+74h] [ebp-54h]
+	int v29; // [esp+70h] [ebp-58h]
+	int v28; // [esp+6Ch] [ebp-5Ch]
+	int v27; // [esp+68h] [ebp-60h]
+	int v26; // [esp+64h] [ebp-64h]
+	int v25; // [esp+60h] [ebp-68h]
+	int v24; // [esp+5Ch] [ebp-6Ch]
+	//
+	int v23[2]; // [esp+54h] [ebp-74h] BYREF
+	int v22; // [esp+50h] [ebp-78h]
+	char* v21; // [esp+4Ch] [ebp-7Ch] BYREF
+	int yTop; // [esp+48h] [ebp-80h]
+	int v19; // [esp+44h] [ebp-84h]
+	int v18; // [esp+40h] [ebp-88h]
+	int v17; // [esp+3Ch] [ebp-8Ch]
+	int v16; // [esp+38h] [ebp-90h]
+	int v15; // [esp+34h] [ebp-94h]
+	int j; // [esp+30h] [ebp-98h]
+	int v13; // [esp+2Ch] [ebp-9Ch]
+	int v12; // [esp+28h] [ebp-A0h]
+	//
+	char v11[16]; // [esp+18h] [ebp-B0h] BYREF 4¸öint
+	//
+	char v10[16]; // [esp+8h] [ebp-C0h] BYREF 4¸öint
+    )";
+	if (!check_stack_fun2({
+		TO(c)
+		TO(v42)
+		TO(v41)
+		TO(v40)
+		TO(v39)
+		TO(v38)
+		TO(Src)
+		TO(v36)
+		TO(v35)
+		TO(v34)
+		TO(v33)
+		TO(v32)
+		TO(i)
+		TO(v30)
+		TO(v29)
+		TO(v28)
+		TO(v27)
+		TO(v26)
+		TO(v25)
+		TO(v24)
+		TO(v23)
+		TO(v22)
+		TO(v21)
+		TO(yTop)
+		TO(v19)
+		TO(v18)
+		TO(v17)
+		TO(v16)
+		TO(v15)
+		TO(j)
+		TO(v13)
+		TO(v12)
+		TO(v11)
+		TO(v10)
+		}, 0xC0, var, 1))
+	{
+		__asm int 3
+	}
 
 
 
@@ -13317,7 +13399,7 @@ void** sub_418130(void** thisx)
 __int16 __fastcall sub_4181B5(int a1)
 {
 
-	Warning();//ÐÞÕý¶ÑÕ»
+	//ÐÞÕý¶ÑÕ»
 	check_stack c(__FILE__, __LINE__);
 	int v174; // [esp+268h] [ebp-4h]
 	int v173; // [esp+264h] [ebp-8h]
@@ -13498,6 +13580,302 @@ __int16 __fastcall sub_4181B5(int a1)
 	int v3; // ebx
 	int v2; // edx
 	struct Concurrency::ISchedulerProxy* v1; // eax
+
+
+	const char* var = R"(
+int v174; // [esp+268h] [ebp-4h]
+int v173; // [esp+264h] [ebp-8h]
+struct Concurrency::ISchedulerProxy* v172; // [esp+260h] [ebp-Ch]
+struct Concurrency::ISchedulerProxy* SchedulerProxy; // [esp+25Ch] [ebp-10h]
+int v170; // [esp+258h] [ebp-14h]
+int i; // [esp+254h] [ebp-18h]
+unsigned int v168; // [esp+250h] [ebp-1Ch]
+int v167; // [esp+24Ch] [ebp-20h]
+int v166; // [esp+248h] [ebp-24h]
+int v165; // [esp+244h] [ebp-28h]
+int v164; // [esp+240h] [ebp-2Ch]
+int v163; // [esp+23Ch] [ebp-30h]
+int v162; // [esp+238h] [ebp-34h]
+int v161; // [esp+234h] [ebp-38h]
+char* v160; // [esp+230h] [ebp-3Ch]
+int j; // [esp+22Ch] [ebp-40h]
+struct Concurrency::ISchedulerProxy* v158; // [esp+228h] [ebp-44h]
+Concurrency::details::SchedulerBase* v157; // [esp+224h] [ebp-48h]
+int* v156; // [esp+220h] [ebp-4Ch]
+char* v155; // [esp+21Ch] [ebp-50h]
+int* v154; // [esp+218h] [ebp-54h]
+int v153; // [esp+214h] [ebp-58h]
+int v152; // [esp+210h] [ebp-5Ch]
+int v151; // [esp+20Ch] [ebp-60h]
+int v150; // [esp+208h] [ebp-64h]
+struct Concurrency::ISchedulerProxy* v149; // [esp+204h] [ebp-68h]
+unsigned __int8* v148; // [esp+200h] [ebp-6Ch]
+int* v147; // [esp+1FCh] [ebp-70h]
+int k; // [esp+1F8h] [ebp-74h]
+int v145; // [esp+1F4h] [ebp-78h]
+int v144; // [esp+1F0h] [ebp-7Ch]
+int v143; // [esp+1ECh] [ebp-80h]
+int v142; // [esp+1E8h] [ebp-84h]
+int v141; // [esp+1E4h] [ebp-88h]
+char tc_76[4]; //8
+int v140; // [esp+1DCh] [ebp-90h]
+int v139[2]; // [esp+1D4h] [ebp-98h] BYREF
+int v138; // [esp+1D0h] [ebp-9Ch]
+char* v137; // [esp+1CCh] [ebp-A0h]
+int v136; // [esp+1C8h] [ebp-A4h]
+int v135; // [esp+1C4h] [ebp-A8h]
+int v134; // [esp+1C4h] [ebp-A8h]
+unsigned int v133; // [esp+1C0h] [ebp-ACh]
+int v132; // [esp+1BCh] [ebp-B0h]
+char tc[8];//12
+int v131; // [esp+1B0h] [ebp-BCh]
+int v130; // [esp+1ACh] [ebp-C0h]
+int v129; // [esp+1A8h] [ebp-C4h]
+int v128; // [esp+1A4h] [ebp-C8h]
+signed int v127; // [esp+1A0h] [ebp-CCh]
+int v126; // [esp+19Ch] [ebp-D0h]
+char v125; // [esp+198h] [ebp-D4h]
+int v124; // [esp+194h] [ebp-D8h]
+int v123; // [esp+190h] [ebp-DCh]
+char tc2[8];//12
+int v122; // [esp+184h] [ebp-E8h]
+int v121; // [esp+180h] [ebp-ECh]
+char tc3[16];//20
+int v120; // [esp+16Ch] [ebp-100h]
+int v119; // [esp+168h] [ebp-104h]
+int v118; // [esp+164h] [ebp-108h]
+char tc_70[4]; //8
+int v117; // [esp+15Ch] [ebp-110h]
+char tc4[16];//20
+int v115; // [esp+148h] [ebp-124h]
+int v114; // [esp+144h] [ebp-128h]
+int v113; // [esp+140h] [ebp-12Ch]
+int v112; // [esp+13Ch] [ebp-130h]
+int v111; // [esp+138h] [ebp-134h]
+char v110; // [esp+134h] [ebp-138h]
+char v109; // [esp+130h] [ebp-13Ch]
+char v108; // [esp+12Ch] [ebp-140h]
+char v107; // [esp+128h] [ebp-144h]
+int v106; // [esp+124h] [ebp-148h]
+int v105; // [esp+120h] [ebp-14Ch]
+int v104; // [esp+11Ch] [ebp-150h]
+int v103; // [esp+118h] [ebp-154h]
+int v102; // [esp+114h] [ebp-158h]
+int v101; // [esp+110h] [ebp-15Ch]
+int v100; // [esp+10Ch] [ebp-160h]
+char v99; // [esp+108h] [ebp-164h]
+int v98; // [esp+104h] [ebp-168h]
+char v97; // [esp+100h] [ebp-16Ch]
+char v96; // [esp+FCh] [ebp-170h]
+int v95; // [esp+F8h] [ebp-174h]
+char v94; // [esp+F4h] [ebp-178h]
+int v93; // [esp+F0h] [ebp-17Ch]
+int v92; // [esp+ECh] [ebp-180h]
+int v91; // [esp+E8h] [ebp-184h]
+int v90; // [esp+E4h] [ebp-188h]
+int v89; // [esp+E0h] [ebp-18Ch]
+int v88; // [esp+DCh] [ebp-190h]
+int v87; // [esp+D8h] [ebp-194h]
+int v86; // [esp+D4h] [ebp-198h]
+int v85; // [esp+D0h] [ebp-19Ch]
+int v84; // [esp+CCh] [ebp-1A0h]
+char v83; // [esp+C8h] [ebp-1A4h]
+int v82; // [esp+C4h] [ebp-1A8h]
+int v81; // [esp+C0h] [ebp-1ACh]
+char v80; // [esp+BCh] [ebp-1B0h]
+int v79; // [esp+B8h] [ebp-1B4h]
+int v78; // [esp+B4h] [ebp-1B8h]
+int v77; // [esp+B0h] [ebp-1BCh]
+char v76; // [esp+ACh] [ebp-1C0h]
+int v75; // [esp+A8h] [ebp-1C4h]
+int v74; // [esp+A4h] [ebp-1C8h]
+int v73; // [esp+A0h] [ebp-1CCh]
+char v72; // [esp+9Ch] [ebp-1D0h]
+int v71; // [esp+98h] [ebp-1D4h]
+int v70; // [esp+94h] [ebp-1D8h]
+char v69; // [esp+90h] [ebp-1DCh]
+int v68; // [esp+8Ch] [ebp-1E0h]
+char v67; // [esp+88h] [ebp-1E4h]
+int v66; // [esp+84h] [ebp-1E8h]
+int v65; // [esp+80h] [ebp-1ECh]
+char v64; // [esp+7Ch] [ebp-1F0h]
+int v63; // [esp+78h] [ebp-1F4h]
+char v62; // [esp+74h] [ebp-1F8h]
+int v61; // [esp+70h] [ebp-1FCh]
+int v60; // [esp+6Ch] [ebp-200h]
+int v59; // [esp+68h] [ebp-204h]
+int v58; // [esp+64h] [ebp-208h]
+int v57; // [esp+60h] [ebp-20Ch]
+int v56; // [esp+5Ch] [ebp-210h]
+int v55; // [esp+58h] [ebp-214h]
+char v54; // [esp+54h] [ebp-218h]
+char v53; // [esp+50h] [ebp-21Ch]
+int v52; // [esp+4Ch] [ebp-220h]
+int v51; // [esp+48h] [ebp-224h]
+int v50; // [esp+44h] [ebp-228h]
+int v49; // [esp+40h] [ebp-22Ch]
+char v48; // [esp+3Ch] [ebp-230h]
+int v47; // [esp+38h] [ebp-234h]
+int v46; // [esp+34h] [ebp-238h]
+char v45; // [esp+30h] [ebp-23Ch]
+int v44; // [esp+2Ch] [ebp-240h]
+int v43; // [esp+28h] [ebp-244h]
+int v42; // [esp+24h] [ebp-248h]
+int v41; // [esp+20h] [ebp-24Ch]
+int v40; // [esp+1Ch] [ebp-250h]
+char v39; // [esp+18h] [ebp-254h]
+int v38; // [esp+14h] [ebp-258h]
+int v37; // [esp+10h] [ebp-25Ch]
+int v36; // [esp+Ch] [ebp-260h]
+int v35; // [esp+8h] [ebp-264h]
+char tc5[8];//12
+int v34; // [esp-4h] [ebp-270h]
+    )";
+	if (!check_stack_fun2({
+		TO(c)
+		TO(v174)
+		TO(v173)
+		TO(v172)
+		TO(SchedulerProxy)
+		TO(v170)
+		TO(i)
+		TO(v168)
+		TO(v167)
+		TO(v166)
+		TO(v165)
+		TO(v164)
+		TO(v163)
+		TO(v162)
+		TO(v161)
+		TO(v160)
+		TO(j)
+		TO(v158)
+		TO(v156)
+		TO(v155)
+		TO(v154)
+		TO(v153)
+		TO(v152)
+		TO(v151)
+		TO(v150)
+		TO(v149)
+		TO(v148)
+		TO(v147)
+		TO(k)
+		TO(v145)
+		TO(v144)
+		TO(v143)
+		TO(v142)
+		TO(v141)
+		TO(v140)
+		TO(v139)
+		TO(v138)
+		TO(v137)
+		TO(v136)
+		TO(v135)
+		TO(v134)
+		TO(v133)
+		TO(v132)
+		TO(v131)
+		TO(v130)
+		TO(v129)
+		TO(v128)
+		TO(v127)
+		TO(v126)
+		TO(v125)
+		TO(v124)
+		TO(v123)
+		TO(v122)
+		TO(v121)
+		TO(v120)
+		TO(v119)
+		TO(v118)
+		TO(v117)
+		TO(v115)
+		TO(v114)
+		TO(v113)
+		TO(v112)
+		TO(v111)
+		TO(v110)
+		TO(v109)
+		TO(v108)
+		TO(v107)
+		TO(v106)
+		TO(v105)
+		TO(v104)
+		TO(v103)
+		TO(v102)
+		TO(v101)
+		TO(v100)
+		TO(v99)
+		TO(v98)
+		TO(v97)
+		TO(v96)
+		TO(v95)
+		TO(v94)
+		TO(v93)
+		TO(v92)
+		TO(v91)
+		TO(v90)
+		TO(v89)
+		TO(v88)
+		TO(v87)
+		TO(v86)
+		TO(v85)
+		TO(v84)
+		TO(v83)
+		TO(v82)
+		TO(v81)
+		TO(v80)
+		TO(v79)
+		TO(v78)
+		TO(v77)
+		TO(v76)
+		TO(v75)
+		TO(v74)
+		TO(v73)
+		TO(v72)
+		TO(v71)
+		TO(v70)
+		TO(v69)
+		TO(v68)
+		TO(v67)
+		TO(v66)
+		TO(v65)
+		TO(v64)
+		TO(v63)
+		TO(v62)
+		TO(v61)
+		TO(v60)
+		TO(v59)
+		TO(v58)
+		TO(v57)
+		TO(v56)
+		TO(v55)
+		TO(v54)
+		TO(v53)
+		TO(v52)
+		TO(v51)
+		TO(v50)
+		TO(v49)
+		TO(v48)
+		TO(v47)
+		TO(v46)
+		TO(v45)
+		TO(v44)
+		TO(v43)
+		TO(v42)
+		TO(v41)
+		TO(v40)
+		TO(v39)
+		TO(v38)
+		TO(v37)
+		TO(v36)
+		TO(v35)
+		TO(v34)
+		}, 0x270, var, 1))
+	{
+		__asm int 3
+	}
 
 
 	*(char*)(a1 + 141) = 0;
@@ -14873,7 +15251,7 @@ int sub_41BA53(int thisx, unsigned __int8 a2, int a3)
 int sub_41BB24(int* thisx)
 {
 
-	Warning();//ÐÞÕý¶ÑÕ»
+	//ÐÞÕý¶ÑÕ»
 	check_stack c(__FILE__, __LINE__);
 	char v28; // [esp+74h] [ebp-4h]
 	char tc_35[4]; //8£¬ÏµÍ³Ìî³ä
@@ -14905,6 +15283,70 @@ int sub_41BB24(int* thisx)
 	int v4; // [esp+Ch] [ebp-6Ch]
 	int v3; // [esp+8h] [ebp-70h]
 	int v2; // [esp+4h] [ebp-74h]
+
+
+	const char* var = R"(
+char v28; // [esp+74h] [ebp-4h]
+char tc_35[4]; //8£¬ÏµÍ³Ìî³ä
+unsigned __int8 v27; // [esp+6Ch] [ebp-Ch]
+int j; // [esp+68h] [ebp-10h]
+int i; // [esp+68h] [ebp-10h]
+int v24; // [esp+64h] [ebp-14h]
+int v23; // [esp+60h] [ebp-18h]
+int v22; // [esp+5Ch] [ebp-1Ch]
+char v21; // [esp+58h] [ebp-20h]
+int v20; // [esp+54h] [ebp-24h]
+int v19; // [esp+50h] [ebp-28h]
+int v18; // [esp+4Ch] [ebp-2Ch]
+int SchedulerProxy; // [esp+48h] [ebp-30h]
+char tc_59[4]; //8
+int v16; // [esp+40h] [ebp-38h]
+int v15; // [esp+3Ch] [ebp-3Ch]
+Concurrency::details::SchedulerBase* v14; // [esp+38h] [ebp-40h]
+char tc_6[4]; //8
+int v13; // [esp+30h] [ebp-48h]
+int v12; // [esp+2Ch] [ebp-4Ch]
+int v11; // [esp+28h] [ebp-50h]
+int v10; // [esp+24h] [ebp-54h]
+Concurrency::details::UMSFreeVirtualProcessorRoot* v9; // [esp+20h] [ebp-58h]
+char tc_15[4]; //8
+BOOL v7; // [esp+18h] [ebp-60h]
+int v6; // [esp+14h] [ebp-64h]
+int v5; // [esp+10h] [ebp-68h]
+int v4; // [esp+Ch] [ebp-6Ch]
+int v3; // [esp+8h] [ebp-70h]
+int v2; // [esp+4h] [ebp-74h]
+    )";
+	if (!check_stack_fun2({
+		TO(c)
+		TO(v28)
+		TO(v27)
+		TO(j)
+		TO(i)
+		TO(v24)
+		TO(v23)
+		TO(v22)
+		TO(v21)
+		TO(v20)
+		TO(v19)
+		TO(v18)
+		TO(SchedulerProxy)
+		TO(v16)
+		TO(v15)
+		TO(v13)
+		TO(v12)
+		TO(v11)
+		TO(v10)
+		TO(v7)
+		TO(v6)
+		TO(v5)
+		TO(v4)
+		TO(v3)
+		TO(v2)
+		}, 0x74, var, 1))
+	{
+		__asm int 3
+	}
 
 
 	if (!thisx[31])
@@ -15289,7 +15731,7 @@ int sub_41C915(int thisx)
 	//    int v3; // [esp+8h] [ebp-4h]
 
 
-	Warning();//ÐÞÕý¶ÑÕ»
+	//ÐÞÕý¶ÑÕ»
 	check_stack c(__FILE__, __LINE__);
 	int v3; // [esp+8h] [ebp-4h]
 	int v2; // [esp+4h] [ebp-8h]
@@ -16397,7 +16839,7 @@ int sub_41EEB5(char* thisx, int* a2, char a3)
 	//    int v5; // [esp+8h] [ebp-4h]
 
 
-	Warning();//ÐÞÕý¶ÑÕ»
+	//ÐÞÕý¶ÑÕ»
 	check_stack c(__FILE__, __LINE__);
 	int v5; // [esp+8h] [ebp-4h]
 	int v4; // [esp+4h] [ebp-8h]
@@ -17866,7 +18308,7 @@ LONG sub_42142F(LONG thisx)
 {
 
 
-	Warning();//ÐÞÕý¶ÑÕ»
+	//ÐÞÕý¶ÑÕ»
 	check_stack c(__FILE__, __LINE__);
 	struct tagRECT rc; // [esp+80h] [ebp-10h] BYREF
 	char tc_40[4]; //8
@@ -17899,6 +18341,71 @@ LONG sub_42142F(LONG thisx)
 	LONG v4; // [esp+8h] [ebp-88h]
 	int v3; // [esp+4h] [ebp-8Ch]
 	LONG result; // eax
+
+
+	const char* var = R"(
+struct tagRECT rc; // [esp+80h] [ebp-10h] BYREF
+char tc_40[4]; //8
+int v25; // [esp+78h] [ebp-18h]
+char tc_32[4]; //8
+int v24; // [esp+70h] [ebp-20h]
+int v23; // [esp+6Ch] [ebp-24h]
+char tc_21[4]; //8
+int v22; // [esp+64h] [ebp-2Ch]
+int v21; // [esp+64h] [ebp-2Ch]
+char tc_34[12]; //16
+int i; // [esp+54h] [ebp-3Ch]
+char* v19; // [esp+50h] [ebp-40h]
+int v18; // [esp+4Ch] [ebp-44h]
+LONG xLeft; // [esp+48h] [ebp-48h]
+LONG xRight; // [esp+44h] [ebp-4Ch]
+LONG j; // [esp+40h] [ebp-50h]
+LONG yBottom; // [esp+3Ch] [ebp-54h]
+LONG yTop; // [esp+38h] [ebp-58h]
+LONG k; // [esp+34h] [ebp-5Ch]
+int v11; // [esp+30h] [ebp-60h]
+char v10; // [esp+2Ch] [ebp-64h]
+int n; // [esp+28h] [ebp-68h]
+int m; // [esp+24h] [ebp-6Ch]
+char tc_24[4]; //8
+int v7; // [esp+1Ch] [ebp-74h]
+int v6; // [esp+18h] [ebp-78h]
+char tc_69[8]; //12
+int v5; // [esp+Ch] [ebp-84h]
+LONG v4; // [esp+8h] [ebp-88h]
+int v3; // [esp+4h] [ebp-8Ch]
+    )";
+	if (!check_stack_fun2({
+		TO(c)
+		TO(rc)
+		TO(v25)
+		TO(v24)
+		TO(v23)
+		TO(v22)
+		TO(v21)
+		TO(i)
+		TO(v19)
+		TO(v18)
+		TO(xLeft)
+		TO(xRight)
+		TO(j)
+		TO(yBottom)
+		TO(yTop)
+		TO(k)
+		TO(v11)
+		TO(v10)
+		TO(n)
+		TO(m)
+		TO(v7)
+		TO(v6)
+		TO(v5)
+		TO(v4)
+		TO(v3)
+		}, 0x8C, var, 1))
+	{
+		__asm int 3
+	}
+
 
 
 	result = thisx;
@@ -18024,7 +18531,7 @@ LONG sub_42142F(LONG thisx)
 int __fastcall sub_4219B1(int* a1)
 {
 
-	Warning();//ÐÞÕý¶ÑÕ»
+	//ÐÞÕý¶ÑÕ»
 	check_stack c(__FILE__, __LINE__);
 	int v54; // [esp+FCh] [ebp-4h]
 	int v53; // [esp+F8h] [ebp-8h]
@@ -18088,6 +18595,121 @@ int __fastcall sub_4219B1(int* a1)
 	int v3; // eax
 	unsigned __int16 v2; // ax
 	int result; // eax
+
+
+	const char* var = R"(
+int v54; // [esp+FCh] [ebp-4h]
+int v53; // [esp+F8h] [ebp-8h]
+int v52; // [esp+F4h] [ebp-Ch]
+int v51; // [esp+F0h] [ebp-10h]
+int v50[2]; // [esp+E8h] [ebp-18h]
+int v49; // [esp+E4h] [ebp-1Ch]
+int v48; // [esp+E0h] [ebp-20h]
+char v47[11]; // [esp+D5h] [ebp-2Bh] BYREF
+char v46; // [esp+D4h] [ebp-2Ch]
+int v45; // [esp+D0h] [ebp-30h]
+//
+int v44[9]; // [esp+ACh] [ebp-54h]
+char tc_49[4]; //8
+int v43; // [esp+A4h] [ebp-5Ch]
+char tc_76[4]; //8
+int v42; // [esp+9Ch] [ebp-64h]
+int v41; // [esp+98h] [ebp-68h]
+int v40; // [esp+94h] [ebp-6Ch]
+int v39; // [esp+90h] [ebp-70h]
+int v38; // [esp+8Ch] [ebp-74h]
+char* v37; // [esp+88h] [ebp-78h]
+int v36; // [esp+84h] [ebp-7Ch]
+int v35; // [esp+80h] [ebp-80h]
+char tc_5[4]; //8
+int k; // [esp+78h] [ebp-88h]
+int j; // [esp+78h] [ebp-88h]
+int i; // [esp+78h] [ebp-88h]
+char tc_33[4]; //8
+int v31; // [esp+70h] [ebp-90h]
+int v30; // [esp+6Ch] [ebp-94h]
+int v29; // [esp+68h] [ebp-98h]
+char tc_25[4]; //8
+int v28; // [esp+60h] [ebp-A0h]
+char tc_45[4]; //8
+int v27; // [esp+58h] [ebp-A8h]
+int v26; // [esp+54h] [ebp-ACh]
+int v25; // [esp+50h] [ebp-B0h]
+int v24; // [esp+4Ch] [ebp-B4h]
+char tc_70[8]; //12
+BOOL v22; // [esp+40h] [ebp-C0h]
+BOOL v21; // [esp+3Ch] [ebp-C4h]
+BOOL v20; // [esp+38h] [ebp-C8h]
+BOOL v19; // [esp+34h] [ebp-CCh]
+BOOL v18; // [esp+30h] [ebp-D0h]
+BOOL v17; // [esp+2Ch] [ebp-D4h]
+BOOL v16; // [esp+28h] [ebp-D8h]
+BOOL v15; // [esp+24h] [ebp-DCh]
+int v14; // [esp+20h] [ebp-E0h]
+int v13; // [esp+1Ch] [ebp-E4h]
+int v12; // [esp+18h] [ebp-E8h]
+int v11; // [esp+14h] [ebp-ECh]
+BOOL v10; // [esp+10h] [ebp-F0h]
+BOOL v9; // [esp+Ch] [ebp-F4h]
+BOOL v8; // [esp+8h] [ebp-F8h]
+BOOL v7; // [esp+4h] [ebp-FCh]
+char tc_1[4]; //8
+int v6; // [esp-4h] [ebp-104h]
+    )";
+	if (!check_stack_fun2({
+		TO(c)
+		TO(v54)
+		TO(v53)
+		TO(v52)
+		TO(v51)
+		TO(v50)
+		TO(v49)
+		TO(v48)
+		TO(v47)
+		TO(v46)
+		TO(v45)
+		TO(v44)
+		TO(v43)
+		TO(v42)
+		TO(v41)
+		TO(v40)
+		TO(v39)
+		TO(v38)
+		TO(v37)
+		TO(v36)
+		TO(v35)
+		TO(k)
+		TO(j)
+		TO(i)
+		TO(v31)
+		TO(v30)
+		TO(v29)
+		TO(v28)
+		TO(v27)
+		TO(v26)
+		TO(v25)
+		TO(v24)
+		TO(v22)
+		TO(v21)
+		TO(v20)
+		TO(v19)
+		TO(v18)
+		TO(v17)
+		TO(v16)
+		TO(v15)
+		TO(v14)
+		TO(v13)
+		TO(v12)
+		TO(v11)
+		TO(v10)
+		TO(v9)
+		TO(v8)
+		TO(v7)
+		TO(v6)
+		}, 0x104, var, 1))
+	{
+		__asm int 3
+	}
 
 
 	result = (int)a1;
@@ -36081,7 +36703,7 @@ int sub_448750(int thisx)
 unsigned __int16* sub_448929(int a1, double a2, double a3, double a4)
 {
 
-	Warning();//ÐÞÕý¶ÑÕ»
+	//ÐÞÕý¶ÑÕ»
 	check_stack c(__FILE__, __LINE__);
 	int v121; // [esp+248h] [ebp-4h]
 	int v120; // [esp+244h] [ebp-8h]
@@ -36215,6 +36837,207 @@ unsigned __int16* sub_448929(int a1, double a2, double a3, double a4)
 	struct Concurrency::details::UMSThreadProxy* ExecutingProxy; // esi
 	int v5; // eax
 	int v4; // eax
+
+
+	const char* var = R"(
+int v121; // [esp+248h] [ebp-4h]
+int v120; // [esp+244h] [ebp-8h]
+int i; // [esp+240h] [ebp-Ch]
+BOOL v118; // [esp+23Ch] [ebp-10h]
+int v117; // [esp+238h] [ebp-14h]
+BOOL v116; // [esp+234h] [ebp-18h]
+int v115; // [esp+230h] [ebp-1Ch]
+int v114; // [esp+22Ch] [ebp-20h]
+int v113; // [esp+228h] [ebp-24h]
+int v112; // [esp+224h] [ebp-28h]
+int v111; // [esp+220h] [ebp-2Ch]
+int v110; // [esp+21Ch] [ebp-30h]
+int v109; // [esp+218h] [ebp-34h]
+int v108; // [esp+214h] [ebp-38h]
+int v107; // [esp+210h] [ebp-3Ch]
+char v106_ct[4];
+int v106; // [esp+208h] [ebp-44h] BYREF
+int j; // [esp+204h] [ebp-48h]
+Concurrency::details::ContextBase* v104; // [esp+200h] [ebp-4Ch]
+int ExecutingCollection; // [esp+1FCh] [ebp-50h]
+int v102; // [esp+1F8h] [ebp-54h]
+void* Src; // [esp+1F4h] [ebp-58h]
+Concurrency::details::SchedulerBase* v100; // [esp+1F0h] [ebp-5Ch]
+//
+__int16 v99[28]; // [esp+1B8h] [ebp-94h] BYREF
+int v98; // [esp+1B4h] [ebp-98h]
+//
+int v97[13]; // [esp+180h] [ebp-CCh] BYREF
+int v96; // [esp+17Ch] [ebp-D0h]
+int k; // [esp+178h] [ebp-D4h]
+int m; // [esp+174h] [ebp-D8h]
+int v93; // [esp+170h] [ebp-DCh]
+BOOL v92; // [esp+16Ch] [ebp-E0h]
+int v91; // [esp+168h] [ebp-E4h]
+int v90; // [esp+164h] [ebp-E8h]
+int v89; // [esp+160h] [ebp-ECh]
+int v88; // [esp+15Ch] [ebp-F0h]
+int v87; // [esp+158h] [ebp-F4h]
+int v86; // [esp+154h] [ebp-F8h]
+char v85; // [esp+150h] [ebp-FCh]
+struct Concurrency::ISchedulerProxy* v84; // [esp+14Ch] [ebp-100h]
+int v83; // [esp+148h] [ebp-104h]
+//char tc_94[1]; //2
+char v82; // [esp+146h] [ebp-106h]
+char v81; // [esp+145h] [ebp-107h]
+char v80; // [esp+144h] [ebp-108h]
+char tc_49[4]; //8
+int v79; // [esp+13Ch] [ebp-110h]
+//char tc_54[2]; //3
+char v78; // [esp+139h] [ebp-113h]
+char v77; // [esp+138h] [ebp-114h]
+int v76; // [esp+134h] [ebp-118h]
+int v75; // [esp+130h] [ebp-11Ch]
+char v74; // [esp+12Ch] [ebp-120h]
+int v73; // [esp+128h] [ebp-124h] BYREF
+int v72; // [esp+124h] [ebp-128h]
+int v71; // [esp+120h] [ebp-12Ch]
+int v70; // [esp+11Ch] [ebp-130h]
+int n; // [esp+118h] [ebp-134h]
+int v68; // [esp+114h] [ebp-138h]
+int v67; // [esp+110h] [ebp-13Ch]
+int QueueLength; // [esp+10Ch] [ebp-140h]
+int v65; // [esp+108h] [ebp-144h]
+int v64; // [esp+104h] [ebp-148h]
+int v63; // [esp+100h] [ebp-14Ch]
+char tc_1[4]; //8
+int v62; // [esp+F8h] [ebp-154h]
+char v61; // [esp+F4h] [ebp-158h]
+int v60; // [esp+F0h] [ebp-15Ch]
+int v59; // [esp+ECh] [ebp-160h]
+char v58; // [esp+E8h] [ebp-164h]
+char tc_44[4]; //8
+int v57; // [esp+E0h] [ebp-16Ch]
+//char tc_96[2]; //3
+char v56; // [esp+DDh] [ebp-16Fh]
+char v55; // [esp+DCh] [ebp-170h]
+int v54; // [esp+D8h] [ebp-174h]
+char tc_75[4]; //8,ÏµÍ³Ìî³ä
+char v53; // [esp+D0h] [ebp-17Ch]
+int v52; // [esp+CCh] [ebp-180h] BYREF
+int v51; // [esp+C8h] [ebp-184h]
+int v50; // [esp+C4h] [ebp-188h]
+int* v49; // [esp+C0h] [ebp-18Ch]
+int v48; // [esp+BCh] [ebp-190h]
+char v47[8]; // [esp+B4h] [ebp-198h] BYREF
+int v46; // [esp+B0h] [ebp-19Ch]
+int ii; // [esp+ACh] [ebp-1A0h]
+Concurrency::details::SchedulerBase* v44; // [esp+A8h] [ebp-1A4h]
+int v43; // [esp+A4h] [ebp-1A8h]
+int jj; // [esp+A0h] [ebp-1ACh]
+struct Concurrency::ISchedulerProxy* v41; // [esp+9Ch] [ebp-1B0h]
+struct Concurrency::ISchedulerProxy* v40; // [esp+98h] [ebp-1B4h]
+
+struct tagRECT rc; // [esp+88h] [ebp-1C4h] BYREF
+
+struct tagRECT v38; // [esp+78h] [ebp-1D4h] BYREF
+Concurrency::details::SchedulerBase* v37; // [esp+74h] [ebp-1D8h]
+
+struct tagRECT v36; // [esp+64h] [ebp-1E8h] BYREF
+//
+CHAR String[64]; // [esp+24h] [ebp-228h] BYREF
+int yTop; // [esp+20h] [ebp-22Ch]
+char tc_57[4]; //8
+int v32; // [esp+18h] [ebp-234h]
+int v31; // [esp+14h] [ebp-238h]
+    )";
+	if (!check_stack_fun2({
+		TO(c)
+		TO(v121)
+		TO(v120)
+		TO(i)
+		TO(v118)
+		TO(v117)
+		TO(v116)
+		TO(v115)
+		TO(v114)
+		TO(v113)
+		TO(v112)
+		TO(v111)
+		TO(v110)
+		TO(v109)
+		TO(v108)
+		TO(v107)
+		TO(v106)
+		TO(j)
+		TO(ExecutingCollection)
+		TO(v102)
+		TO(Src)
+		TO(v99)
+		TO(v98)
+		TO(v97)
+		TO(v96)
+		TO(k)
+		TO(m)
+		TO(v93)
+		TO(v92)
+		TO(v91)
+		TO(v90)
+		TO(v89)
+		TO(v88)
+		TO(v87)
+		TO(v86)
+		TO(v85)
+		TO(v84)
+		TO(v83)
+		TO(v82)
+		TO(v81)
+		TO(v80)
+		TO(v79)
+		TO(v78)
+		TO(v77)
+		TO(v76)
+		TO(v75)
+		TO(v74)
+		TO(v73)
+		TO(v72)
+		TO(v71)
+		TO(v70)
+		TO(n)
+		TO(v68)
+		TO(v67)
+		TO(QueueLength)
+		TO(v65)
+		TO(v64)
+		TO(v63)
+		TO(v62)
+		TO(v61)
+		TO(v60)
+		TO(v59)
+		TO(v58)
+		TO(v57)
+		TO(v56)
+		TO(v55)
+		TO(v54)
+		TO(v53)
+		TO(v52)
+		TO(v51)
+		TO(v50)
+		TO(v49)
+		TO(v48)
+		TO(v47)
+		TO(v46)
+		TO(ii)
+		TO(v43)
+		TO(jj)
+		TO(v41)
+		TO(v40)
+		TO(rc)
+		TO(v38)
+		TO(v36)
+		TO(String)
+		TO(yTop)
+		TO(v32)
+		TO(v31)
+		}, 0x238, var, 1))
+	{
+		__asm int 3
+	}
 
 
 	if (*(int*)(a1 + 2488) > 100)
@@ -42223,7 +43046,7 @@ int sub_456B0D(unsigned __int8* thisx, int* a2, int a3)
 
 
 
-	Warning();//ÐÞÕý¶ÑÕ»
+	//ÐÞÕý¶ÑÕ»
 	check_stack c(__FILE__, __LINE__);
 	int v15; // [esp+38h] [ebp-4h]
 	int i; // [esp+34h] [ebp-8h]
@@ -42238,6 +43061,37 @@ int sub_456B0D(unsigned __int8* thisx, int* a2, int a3)
 	int v5; // [esp+4h] [ebp-38h]
 	int v4; // [esp+0h] [ebp-3Ch]
 
+	const char* var = R"(
+	int v15; // [esp+38h] [ebp-4h]
+	int i; // [esp+34h] [ebp-8h]
+	int v13; // [esp+30h] [ebp-Ch]
+	int v12; // [esp+2Ch] [ebp-10h]
+	int v11; // [esp+28h] [ebp-14h]
+	int v10; // [esp+24h] [ebp-18h]
+	int v9; // [esp+20h] [ebp-1Ch]
+	int v8; // [esp+1Ch] [ebp-20h]
+	char tc_46[16]; //20
+	int v6; // [esp+8h] [ebp-34h]
+	int v5; // [esp+4h] [ebp-38h]
+	int v4; // [esp+0h] [ebp-3Ch]
+    )";
+	if (!check_stack_fun2({
+		TO(c)
+		TO(v15)
+		TO(i)
+		TO(v13)
+		TO(v12)
+		TO(v11)
+		TO(v10)
+		TO(v9)
+		TO(v8)
+		TO(v6)
+		TO(v5)
+		TO(v4)
+		}, 0x3C, var, 1))
+	{
+		__asm int 3
+	}
 
 	v10 = sub_426090(a2) / 100;
 	v8 = sub_4260B0(a2) / 100;
@@ -47993,7 +48847,7 @@ unsigned __int8* sub_463101(unsigned __int8* thisx, int a2, int a3)
 	//    int i; // [esp+8h] [ebp-Ch]
 
 
-	Warning();//ÐÞÕý¶ÑÕ»
+	//ÐÞÕý¶ÑÕ»
 	check_stack c(__FILE__, __LINE__);
 	int i; // [esp+8h] [ebp-Ch]
 	int v4; // [esp+4h] [ebp-10h]
@@ -49275,7 +50129,7 @@ int* sub_465B44(int* thisx, SchedulerBase* a2)
 {
 
 
-	Warning();//ÐÞÕý¶ÑÕ»
+	//ÐÞÕý¶ÑÕ»
 	check_stack c(__FILE__, __LINE__);
 	unsigned __int8 v16; // [esp+40h] [ebp-4h]
 	int v15; // [esp+3Ch] [ebp-8h]
@@ -49294,6 +50148,43 @@ int* sub_465B44(int* thisx, SchedulerBase* a2)
 	int v4; // [esp+8h] [ebp-3Ch]
 	int v3; // [esp+4h] [ebp-40h]
 
+	const char* var = R"(
+unsigned __int8 v16; // [esp+40h] [ebp-4h]
+int v15; // [esp+3Ch] [ebp-8h]
+char v14; // [esp+38h] [ebp-Ch]
+int v13; // [esp+34h] [ebp-10h]
+int i; // [esp+30h] [ebp-14h]
+int v11; // [esp+2Ch] [ebp-18h]
+char tc_36[4]; //8
+int v10; // [esp+24h] [ebp-20h]
+int v9; // [esp+20h] [ebp-24h]
+char tc_33[4]; //8
+struct Concurrency::ISchedulerProxy* SchedulerProxy; // [esp+18h] [ebp-2Ch]
+int v7; // [esp+14h] [ebp-30h]
+char tc_9[4]; //8
+BOOL v5; // [esp+Ch] [ebp-38h]
+int v4; // [esp+8h] [ebp-3Ch]
+int v3; // [esp+4h] [ebp-40h]
+    )";
+	if (!check_stack_fun2({
+		TO(c)
+		TO(v16)
+		TO(v15)
+		TO(v14)
+		TO(v13)
+		TO(i)
+		TO(v11)
+		TO(v10)
+		TO(v9)
+		TO(SchedulerProxy)
+		TO(v7)
+		TO(v5)
+		TO(v4)
+		TO(v3)
+		}, 0x40, var, 1))
+	{
+		__asm int 3
+	}
 
 	v11 = sub_426090((int*)a2);
 	v13 = sub_4260B0((int*)a2);
@@ -49675,7 +50566,7 @@ int sub_46622B(char* thisx, char* a2, unsigned __int8 a3)
 int sub_4666C5(char* thisx, char* a2)
 {
 
-	Warning();//ÐÞÕý¶ÑÕ»
+	//ÐÞÕý¶ÑÕ»
 	check_stack c(__FILE__, __LINE__);
 	char v8; // [esp+14h] [ebp-4h]
 	unsigned __int8 v7; // [esp+10h] [ebp-8h]
@@ -49683,6 +50574,24 @@ int sub_4666C5(char* thisx, char* a2)
 	int i; // [esp+8h] [ebp-10h]
 	char* v4; // [esp+4h] [ebp-14h]
 
+	const char* var = R"(
+	char v8; // [esp+14h] [ebp-4h]
+	unsigned __int8 v7; // [esp+10h] [ebp-8h]
+	unsigned __int8 v6; // [esp+Ch] [ebp-Ch]
+	int i; // [esp+8h] [ebp-10h]
+	char* v4; // [esp+4h] [ebp-14h]
+    )";
+	if (!check_stack_fun2({
+		TO(c)
+		TO(v8)
+		TO(v7)
+		TO(v6)
+		TO(i)
+		TO(v4)
+		}, 0x14, var, 1))
+	{
+		__asm int 3
+	}
 
 	v8 = sub_426070(a2);
 	v6 = sub_425EF0(a2);
@@ -73695,7 +74604,7 @@ int __fastcall sub_48FB00(int a1, int a2, int a3, void* Src, int yTop)
 {
 
 
-	Warning();//ÐÞÕý¶ÑÕ»
+	//ÐÞÕý¶ÑÕ»
 	check_stack c(__FILE__, __LINE__);
 	struct tagRECT rc; // [esp+60h] [ebp-10h] BYREF
 	int v15[14]; // [esp+28h] [ebp-48h] BYREF
@@ -73710,6 +74619,35 @@ int __fastcall sub_48FB00(int a1, int a2, int a3, void* Src, int yTop)
 	unsigned __int16 v7; // [esp+4h] [ebp-6Ch]
 	int result; // eax
 
+	const char* var = R"(
+	struct tagRECT rc; // [esp+60h] [ebp-10h] BYREF
+	int v15[14]; // [esp+28h] [ebp-48h] BYREF
+	int v14; // [esp+24h] [ebp-4Ch]
+	int v13; // [esp+20h] [ebp-50h]
+	int i; // [esp+1Ch] [ebp-54h]
+	int v11; // [esp+18h] [ebp-58h]
+	int v10; // [esp+14h] [ebp-5Ch]
+	int v9; // [esp+10h] [ebp-60h]
+	char tc_49[4]; //8
+	int j; // [esp+8h] [ebp-68h]
+	unsigned __int16 v7; // [esp+4h] [ebp-6Ch]
+    )";
+	if (!check_stack_fun2({
+		TO(c)
+		TO(rc)
+		TO(v15)
+		TO(v14)
+		TO(v13)
+		TO(i)
+		TO(v11)
+		TO(v10)
+		TO(v9)
+		TO(j)
+		TO(v7)
+		}, 0x6C, var, 1))
+	{
+		__asm int 3
+	}
 
 	if (yTop < 0)
 		yTop = 0;
@@ -74362,24 +75300,21 @@ int __fastcall sub_490D23(int a1)
 
 
 	//ÐÞÕý¶ÑÕ»
-	//ÐÞÕý
+	//ÐÞÕýÁË±äÁ¿ºÍ´úÂë
 	check_stack c(__FILE__, __LINE__);
-	//__int16 v46; // [esp+CEh] [ebp-6h]
-	//__int16 v45; // [esp+CCh] [ebp-8h]
-	//__int16 v44; // [esp+CAh] [ebp-Ah]
-	int v46; // [esp+CEh] [ebp-6h]
-	__int16 v45; // [esp+CCh] [ebp-8h]
-	__int16 v44; // [esp+CAh] [ebp-Ah]
-	char v43; // [esp+C9h] [ebp-Bh]
-	char tc_17[12]; //17
-	int v42; // [esp+B8h] [ebp-1Ch]
+	//__int16 v46; // [esp+CEh] [ebp-6h]6	[18]
+	//__int16 v45; // [esp+CCh] [ebp-8h]8	[16]
+	//__int16 v44; // [esp+CAh] [ebp-Ah]10	[14]
+	//char v43; // [esp+C9h] [ebp-Bh]	//11[13]
+	char tc[24]; //17
+	int v42; // [esp+B8h] [ebp-1Ch]28
 	int v41; // [esp+B4h] [ebp-20h]
 	char tc_81[12]; //16
 	int v40; // [esp+A4h] [ebp-30h]
 	int v39; // [esp+A0h] [ebp-34h]
 	int Src; // [esp+9Ch] [ebp-38h] BYREF
 	char* v37; // [esp+98h] [ebp-3Ch]
-	char v36; // [esp+94h] [ebp-40h]
+	int v36; // [esp+94h] [ebp-40h]//.
 	int v35; // [esp+90h] [ebp-44h]
 	int v34; // [esp+8Ch] [ebp-48h]
 	int i; // [esp+88h] [ebp-4Ch]
@@ -74399,8 +75334,8 @@ int __fastcall sub_490D23(int a1)
 	int v19; // [esp+4Ch] [ebp-88h]
 	int v18; // [esp+48h] [ebp-8Ch]
 	int yTop; // [esp+44h] [ebp-90h]
-	char v16; // [esp+40h] [ebp-94h]
-	char v15; // [esp+3Ch] [ebp-98h]
+	int v16; // [esp+40h] [ebp-94h]//
+	int v15; // [esp+3Ch] [ebp-98h]//
 	int v14; // [esp+38h] [ebp-9Ch]
 	int v13; // [esp+34h] [ebp-A0h]
 	int v12; // [esp+30h] [ebp-A4h]
@@ -74461,9 +75396,9 @@ int __fastcall sub_490D23(int a1)
 	if (!check_stack_fun2({
 		TO(c)
 		//TO(v46)
-		TO(v45)
-		TO(v44)
-		TO(v43)
+		//TO(v45)
+		//TO(v44)
+		//TO(v43)
 		TO(v42)
 		TO(v41)
 		TO(v40)
@@ -74550,22 +75485,40 @@ int __fastcall sub_490D23(int a1)
 			switch (v27)
 			{
 			case 1u:
+				/*
 				v43 = 4;
 				v44 = 31;
 				v45 = 15;
 				v46 = 0;
+				*/
+				tc[13] = 4;
+				tc[14] = 31;
+				tc[16] = 15;
+				tc[18] = 0;
 				break;
 			case 2u:
+				/*
 				v43 = 1;
 				v44 = 31;
 				v45 = 15;
 				v46 = 0;
+				*/
+				tc[13] = 1;
+				tc[14] = 31;
+				tc[16] = 15;
+				tc[18] = 0;
 				break;
 			case 3u:
+				/*
 				v43 = 3;
 				v44 = 31;
 				v45 = 15;
 				v46 = 0;
+				*/
+				tc[13] = 3;
+				tc[14] = 31;
+				tc[16] = 15;
+				tc[18] = 0;
 				break;
 			}
 		}
@@ -74574,10 +75527,16 @@ int __fastcall sub_490D23(int a1)
 			result = *(unsigned __int8*)(a1 + 71);
 			if (result == 2)
 			{
+				/*
 				v43 = 4;
 				v44 = 31;
 				v45 = 15;
 				v46 = 0;
+				*/
+				tc[13] = 4;
+				tc[14] = 31;
+				tc[16] = 15;
+				tc[18] = 0;
 			}
 		}
 		for (i = 0; ; ++i)
@@ -83032,9 +83991,9 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int n
 	{
 		return 1;
 	}
-	//InstallDetour(timeGetTime, myTimeGetTime, (void**)&TrueMessageBoxA);
-	//InstallDetour(Sleep, mySleep, (void**)&TrueMessageBoxA);
-	//InstallDetour(MessageBoxA, myMessageBoxA, (void**)&TrueMessageBoxA);
+	InstallDetour(timeGetTime, myTimeGetTime, (void**)&TrueMessageBoxA);
+	InstallDetour(Sleep, mySleep, (void**)&TrueMessageBoxA);
+	InstallDetour(MessageBoxA, myMessageBoxA, (void**)&TrueMessageBoxA);
 	//InstallHook_ReadFile();
 	// Create a hook for MessageBoxW, in disabled state.
 	if (MH_CreateHookEx(GetAsyncKeyState, &myGetAsyncKeyState, &fpGetAsyncKeyState) != MH_OK)
