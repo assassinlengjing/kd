@@ -20,8 +20,43 @@ export HANDLE hMap;
 START_EXPORT
 using namespace sw::redis;
 
+
 HANDLE hMap;
 Redis* redis;
+
+// 类型列表
+const char* types[] = {
+	"__int8*",
+	"__int8",
+	"short*",
+	"__int16",
+	"int", "char", "tagRECT", "float", "_cpinfo", "CHAR",
+	"WORD", "_STARTUPINFOA", "CPPEH_RECORD", "int", "void", "bool",
+	"BOOL", "ISchedulerProxy", "IUMSCompletionList", "UMSThreadScheduler",
+	"_MMIOINFO", "MMRESULT", "streambuf", "HANDLE",
+	"char",
+	"LONG",
+	"UINT",
+	"HINSTANCE",
+	"tagMSG",
+	"tagJOYCAPSA",
+	"joyinfo_tag",
+	"INT",
+	"HDC",
+	"HBITMAP",
+	"HGDIOBJ",
+	"_MMCKINFO",
+	"HMMIO",
+	"size_t",
+	"SchedulingNode","_UnrealizedChore","_CancellationTokenRegistration","_CancellationTokenState",
+	"details::InternalContextBase",
+	"SchedulerProxy",
+	"Concurrency::details::ContextBase",
+	"Concurrency::details::SchedulerBase",
+	"Concurrency::ISchedulerProxy",
+	"Concurrency::details::UMSFreeVirtualProcessorRoot",
+
+};
 
 int add(int a, int b) {
 	return a + b;
