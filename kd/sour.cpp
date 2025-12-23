@@ -15249,15 +15249,18 @@ int sub_41BB24(int* thisx)
 
 	//修正堆栈
 	check_stack c(__FILE__, __LINE__);
-	char v28; // [esp+74h] [ebp-4h]
+	//char v28; // [esp+74h] [ebp-4h]//.
+	int v28; // [esp+74h] [ebp-4h]
 	char tc_35[4]; //8，系统填充
-	unsigned __int8 v27; // [esp+6Ch] [ebp-Ch]
+	//unsigned __int8 v27; // [esp+6Ch] [ebp-Ch]//.
+	unsigned int v27; // [esp+6Ch] [ebp-Ch]
 	int j; // [esp+68h] [ebp-10h]
 	int i; // [esp+68h] [ebp-10h]
 	int v24; // [esp+64h] [ebp-14h]
 	int v23; // [esp+60h] [ebp-18h]
 	int v22; // [esp+5Ch] [ebp-1Ch]
-	char v21; // [esp+58h] [ebp-20h]
+	//char v21; // [esp+58h] [ebp-20h]//.
+	int v21; // [esp+58h] [ebp-20h]
 	int v20; // [esp+54h] [ebp-24h]
 	int v19; // [esp+50h] [ebp-28h]
 	int v18; // [esp+4Ch] [ebp-2Ch]
@@ -17393,7 +17396,7 @@ Concurrency::details::UMSFreeVirtualProcessorRoot* sub_41FE85(int thisx)
 {
 
 
-	Warning();//修正堆栈
+	//修正堆栈
 	check_stack c(__FILE__, __LINE__);
 	Concurrency::details::UMSFreeVirtualProcessorRoot* v15; // [esp+48h] [ebp-4h]
 	int v14; // [esp+44h] [ebp-8h]
@@ -17412,6 +17415,41 @@ Concurrency::details::UMSFreeVirtualProcessorRoot* sub_41FE85(int thisx)
 	int v3; // [esp+4h] [ebp-48h]
 	int v2; // [esp+0h] [ebp-4Ch]
 
+	const char* var = R"(
+	Concurrency::details::UMSFreeVirtualProcessorRoot* v15; // [esp+48h] [ebp-4h]
+	int v14; // [esp+44h] [ebp-8h]
+	char tc_35[4]; //8
+	int v13; // [esp+3Ch] [ebp-10h]
+	int j; // [esp+38h] [ebp-14h]
+	int i; // [esp+34h] [ebp-18h]
+	int v10; // [esp+30h] [ebp-1Ch]
+	int v9; // [esp+2Ch] [ebp-20h]
+	int v8; // [esp+28h] [ebp-24h]
+	char tc[16];
+	int ExecutingProxy; // [esp+14h] [ebp-38h]
+	int v6; // [esp+10h] [ebp-3Ch]
+	Concurrency::details::UMSFreeVirtualProcessorRoot* v5; // [esp+Ch] [ebp-40h]
+	char tc_51[4]; //8
+	int v3; // [esp+4h] [ebp-48h]
+	int v2; // [esp+0h] [ebp-4Ch]
+    )";
+	if (!check_stack_fun2({
+		TO(c)
+		TO(v14)
+		TO(v13)
+		TO(j)
+		TO(i)
+		TO(v10)
+		TO(v9)
+		TO(v8)
+		TO(ExecutingProxy)
+		TO(v6)
+		TO(v3)
+		TO(v2)
+		}, 0x4C, var, 1))
+	{
+		__asm int 3
+	}
 
 	v15 = 0;
 	v13 = sub_426090(*(int**)(thisx + 124));
@@ -19030,7 +19068,7 @@ int* sub_422526(int* thisx)
 int __fastcall sub_422573(int* a1)
 {
 
-	Warning();//修正堆栈
+	//修正堆栈
 	check_stack c(__FILE__, __LINE__);
 	int v16; // [esp+40h] [ebp-4h]
 	int i; // [esp+3Ch] [ebp-8h]
@@ -19049,6 +19087,40 @@ int __fastcall sub_422573(int* a1)
 	int v2; // eax
 	int result; // eax
 
+	const char* var = R"(
+	int v16; // [esp+40h] [ebp-4h]
+	int i; // [esp+3Ch] [ebp-8h]
+	int v14; // [esp+38h] [ebp-Ch]
+	char v13[16]; // [esp+28h] [ebp-1Ch] BYREF
+	int v12; // [esp+24h] [ebp-20h]
+	int v11; // [esp+20h] [ebp-24h]
+	int v10; // [esp+1Ch] [ebp-28h]
+	int v9; // [esp+18h] [ebp-2Ch]
+	SchedulerBase* v8; // [esp+14h] [ebp-30h]
+	int j; // [esp+10h] [ebp-34h]
+	unsigned __int8 v6; // [esp+Ch] [ebp-38h]
+	char tc_89[4]; //8
+	int v4; // [esp+4h] [ebp-40h]
+	int v3; // [esp+0h] [ebp-44h]
+    )";
+	if (!check_stack_fun2({
+		TO(c)
+		TO(v16)
+		TO(i)
+		TO(v14)
+		TO(v13)
+		TO(v12)
+		TO(v11)
+		TO(v10)
+		TO(v9)
+		TO(j)
+		TO(v6)
+		TO(v4)
+		TO(v3)
+		}, 0x44, var, 1))
+	{
+		__asm int 3
+	}
 
 	result = (int)a1;
 	if (a1[31])
@@ -19810,8 +19882,9 @@ char sub_423D47(int* thisx)
 int sub_423F94(int* thisx, int a2, int a3)
 {
 
-	Warning();//修正堆栈
+	//修正堆栈
 	check_stack c(__FILE__, __LINE__);
+	char tc[8];
 	int v19; // [esp+44h] [ebp-Ch]
 	int v18; // [esp+40h] [ebp-10h]
 	int v17; // [esp+3Ch] [ebp-14h]
@@ -19831,6 +19904,43 @@ int sub_423F94(int* thisx, int a2, int a3)
 	int v4; // ecx
 	int v3; // eax
 
+	const char* var = R"(
+	int v19; // [esp+44h] [ebp-Ch]
+	int v18; // [esp+40h] [ebp-10h]
+	int v17; // [esp+3Ch] [ebp-14h]
+	int v16; // [esp+38h] [ebp-18h]
+	char tc_10[8]; //12
+	int i; // [esp+2Ch] [ebp-24h]
+	int v14; // [esp+28h] [ebp-28h]
+	char tc_8[4]; //8
+	int v13; // [esp+20h] [ebp-30h]
+	char tc_87[8]; //12
+	int v11; // [esp+14h] [ebp-3Ch]
+	int v10; // [esp+10h] [ebp-40h]
+	int v9; // [esp+Ch] [ebp-44h]
+	int v8; // [esp+8h] [ebp-48h]
+	int v7; // [esp+4h] [ebp-4Ch]
+	int v6; // [esp+0h] [ebp-50h]
+    )";
+	if (!check_stack_fun2({
+		TO(c)
+		TO(v19)
+		TO(v18)
+		TO(v17)
+		TO(v16)
+		TO(i)
+		TO(v14)
+		TO(v13)
+		TO(v11)
+		TO(v10)
+		TO(v9)
+		TO(v8)
+		TO(v7)
+		TO(v6)
+		}, 0x50, var, 1))
+	{
+		__asm int 3
+	}
 
 	v14 = sub_426090((int*)thisx[31]) / 800;
 	v13 = sub_4260B0((int*)thisx[31]) / 800;
@@ -49443,7 +49553,7 @@ int sub_464229(char* thisx, SchedulerBase* a2)
 {
 
 
-	Warning();//修正堆栈
+	//修正堆栈
 	check_stack c(__FILE__, __LINE__);
 	int v18; // [esp+58h] [ebp-4h]
 	int v17; // [esp+54h] [ebp-8h]
@@ -49465,6 +49575,48 @@ int sub_464229(char* thisx, SchedulerBase* a2)
 	int v4; // [esp+4h] [ebp-58h]
 	int v3; // [esp+0h] [ebp-5Ch]
 
+	const char* var = R"(
+	int v18; // [esp+58h] [ebp-4h]
+	int v17; // [esp+54h] [ebp-8h]
+	int v16; // [esp+50h] [ebp-Ch]
+	int v15; // [esp+4Ch] [ebp-10h]
+	char tc_13[4]; //8
+	int i; // [esp+44h] [ebp-18h]
+	int v13; // [esp+40h] [ebp-1Ch]
+	int v12; // [esp+3Ch] [ebp-20h]
+	int v11; // [esp+38h] [ebp-24h]
+	int v10; // [esp+34h] [ebp-28h]
+	char tc_98[4]; //8
+	int v9; // [esp+2Ch] [ebp-30h]
+	char tc_52[12]; //16
+	int v8; // [esp+1Ch] [ebp-40h]
+	char tc_11[12]; //16
+	BOOL v6; // [esp+Ch] [ebp-50h]
+	int v5; // [esp+8h] [ebp-54h]
+	int v4; // [esp+4h] [ebp-58h]
+	int v3; // [esp+0h] [ebp-5Ch]
+    )";
+	if (!check_stack_fun2({
+		TO(c)
+		TO(v18)
+		TO(v17)
+		TO(v16)
+		TO(v15)
+		TO(i)
+		TO(v13)
+		TO(v12)
+		TO(v11)
+		TO(v10)
+		TO(v9)
+		TO(v8)
+		TO(v6)
+		TO(v5)
+		TO(v4)
+		TO(v3)
+		}, 0x5C, var, 1))
+	{
+		__asm int 3
+	}
 
 	v12 = sub_426090((int*)a2);
 	v11 = sub_4260B0((int*)a2);
@@ -58082,72 +58234,123 @@ BOOL sub_476009(char* thisx)
 		BYTE1(v9) |= 1u;
 		*((int*)thisx + 14) = v9;
 	}
-
-	{//{}这里处理测试自动按键操作
-		if (*(int*)&byte_4B9B10[104] == 1 || *(int*)&byte_4B9B10[104] == 2)
+	int mode = 2;
+	switch (mode)
+	{
+		case 0:
+			goto stort;
+			break;
+		case 2:
+			goto hmode;
+			break;
+		default:
+			return 1;
+			break;
+	}
+	hmode://生存模式
+		if (*(int*)&byte_4B9B10[104] == 1 || *(int*)&byte_4B9B10[104] == 2)//跳过动画，进入模式选择
 		{
 			printf("测试自动按键操作，按下J键\n");
 			v1 = *((int*)thisx + 14);
 			LOBYTE(v1) = v1 | 1;
 			*((int*)thisx + 14) = v1;
 		}
-		if (*(int*)&byte_4B9B10[104] == 3)//0X4B9B78 //在游戏模式选择界面
+		if (*(int*)&byte_4B9B10[15700] != 2)//0X4BD864	//去选中故事模式
 		{
-			if (*(int*)&byte_4B9B10[15700] != 0)//0X4BD864
-			{
-				printf("测试自动按键操作，按下W键\n");
-				*((int*)thisx + 9) = 0;//按下W键
-			}
-			if (*(int*)&byte_4B9B10[2528] == 0)
-			{
-				printf("测试自动按键操作，按下J键\n");
-				v1 = *((int*)thisx + 14);
-				LOBYTE(v1) = v1 | 1;
-				*((int*)thisx + 14) = v1;
-			}
-			return 1;
+			printf("测试自动按键操作，按下W键\n");
+			*((int*)thisx + 9) = 0;//按下W键
 		}
-		if (*(int*)&byte_4B9B10[104] == 4)//场景id
+		if (*(int*)&byte_4B9B10[2528] == 2)	//已经选中故事模式
 		{
 			printf("测试自动按键操作，按下J键\n");
 			v1 = *((int*)thisx + 14);
 			LOBYTE(v1) = v1 | 1;
 			*((int*)thisx + 14) = v1;
-			return 1;
 		}
-		if (*(int*)&byte_4B9B10[104] == 13)//场景id,选择人物名字
+		return 1;
+	stort://故事模式
 		{
-			if (*(int*)&byte_4B9B10[2528] == 0)
+			//{}这里处理测试自动按键操作
+			if (*(int*)&byte_4B9B10[104] == 1 || *(int*)&byte_4B9B10[104] == 2)
 			{
 				printf("测试自动按键操作，按下J键\n");
 				v1 = *((int*)thisx + 14);
 				LOBYTE(v1) = v1 | 1;
 				*((int*)thisx + 14) = v1;
 			}
-			else
+			if (*(int*)&byte_4B9B10[104] == 3)//0X4B9B78 //在游戏模式选择界面
 			{
-				printf("D被按下\n");
-				//*((int*)thisx + 8) = 2;
-			}
-			if (*(int*)&byte_4B9B10[2566] == 0)
-			{
-				if (*(int*)&byte_4B9B10[2570] == 0)
+				if (*(int*)&byte_4B9B10[15700] != 0)//0X4BD864
+				{
+					printf("测试自动按键操作，按下W键\n");
+					*((int*)thisx + 9) = 0;//按下W键
+				}
+				if (*(int*)&byte_4B9B10[2528] == 0)
 				{
 					printf("测试自动按键操作，按下J键\n");
 					v1 = *((int*)thisx + 14);
 					LOBYTE(v1) = v1 | 1;
 					*((int*)thisx + 14) = v1;
-					return 1;
 				}
-				*(int*)&byte_4B9B10[2528] = 10;
-				*(int*)&byte_4B9B10[2532] = 5;
+				return 1;
+			}
+			if (*(int*)&byte_4B9B10[104] == 4)//场景id
+			{
+				printf("测试自动按键操作，按下J键\n");
+				v1 = *((int*)thisx + 14);
+				LOBYTE(v1) = v1 | 1;
+				*((int*)thisx + 14) = v1;
+				return 1;
+			}
+			if (*(int*)&byte_4B9B10[104] == 13)//场景id,选择人物名字
+			{
+				if (*(int*)&byte_4B9B10[2528] == 0)
+				{
+					printf("测试自动按键操作，按下J键\n");
+					v1 = *((int*)thisx + 14);
+					LOBYTE(v1) = v1 | 1;
+					*((int*)thisx + 14) = v1;
+				}
+				else
+				{
+					printf("D被按下\n");
+					//*((int*)thisx + 8) = 2;
+				}
+				if (*(int*)&byte_4B9B10[2566] == 0)
+				{
+					if (*(int*)&byte_4B9B10[2570] == 0)
+					{
+						printf("测试自动按键操作，按下J键\n");
+						v1 = *((int*)thisx + 14);
+						LOBYTE(v1) = v1 | 1;
+						*((int*)thisx + 14) = v1;
+						return 1;
+					}
+					*(int*)&byte_4B9B10[2528] = 10;
+					*(int*)&byte_4B9B10[2532] = 5;
+					printf("测试自动按键操作，按下J键\n");
+					v1 = *((int*)thisx + 14);
+					LOBYTE(v1) = v1 | 1;
+					*((int*)thisx + 14) = v1;
+				}
+				int a = *(int*)&byte_4B9B10[2528];
+				if (a == 0 || a == 1 || a == 2)
+				{
+					printf("测试自动按键操作，按下J键\n");
+					v1 = *((int*)thisx + 14);
+					LOBYTE(v1) = v1 | 1;
+					*((int*)thisx + 14) = v1;
+				}
+				return 1;
+			}
+			if (*(int*)&byte_4B9B10[104] == 14)//场景id
+			{
 				printf("测试自动按键操作，按下J键\n");
 				v1 = *((int*)thisx + 14);
 				LOBYTE(v1) = v1 | 1;
 				*((int*)thisx + 14) = v1;
 			}
-			int a = *(int*)&byte_4B9B10[2528];
-			if (a == 0 || a == 1 || a == 2)
+			if (*(int*)&byte_4B9B10[104] == 15)//场景id
 			{
 				printf("测试自动按键操作，按下J键\n");
 				v1 = *((int*)thisx + 14);
@@ -58156,21 +58359,6 @@ BOOL sub_476009(char* thisx)
 			}
 			return 1;
 		}
-		if (*(int*)&byte_4B9B10[104] == 14)//场景id
-		{
-			printf("测试自动按键操作，按下J键\n");
-			v1 = *((int*)thisx + 14);
-			LOBYTE(v1) = v1 | 1;
-			*((int*)thisx + 14) = v1;
-		}
-		if (*(int*)&byte_4B9B10[104] == 15)//场景id
-		{
-			printf("测试自动按键操作，按下J键\n");
-			v1 = *((int*)thisx + 14);
-			LOBYTE(v1) = v1 | 1;
-			*((int*)thisx + 14) = v1;
-		}
-	}
 	return 1;
 }
 //this是player_list
@@ -77419,12 +77607,24 @@ int* sub_49530B(int thisx, int* a2)
 {
 
 
-	Warning();//修正堆栈
+	//修正堆栈
 	check_stack c(__FILE__, __LINE__);
 	char* v5; // [esp+14h] [ebp-4h]
 	int v4[4]; // [esp+4h] [ebp-14h] BYREF
 	int* v2; // eax
 
+	const char* var = R"(
+	char* v5; // [esp+14h] [ebp-4h]
+	int v4[4]; // [esp+4h] [ebp-14h] BYREF
+    )";
+	if (!check_stack_fun2({
+		TO(c)
+		TO(v5)
+		TO(v4)
+		}, 0x14, var, 1))
+	{
+		__asm int 3
+	}
 
 	v5 = (char*)(140 * *(unsigned __int16*)(thisx + 20) + dword_4B92E8);
 	v2 = sub_47EE60(v5, v4, *(int*)(thisx + 164), 0);
