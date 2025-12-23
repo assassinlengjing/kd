@@ -56,6 +56,8 @@ const char* types[] = {
 	"Concurrency::ISchedulerProxy",
 	"Concurrency::details::UMSFreeVirtualProcessorRoot",
 	"SchedulerBase",
+	"double",
+
 
 };
 
